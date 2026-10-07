@@ -1,0 +1,10 @@
+{
+  "tests": [
+    {"id":"T001","topic":"consumer health product","must_include":["product","value","health"],"mode_min":"LIGHT"},
+    {"id":"T002","topic":"medical symptom","must_include":["health","risk","evidence"],"mode_min":"COUNCIL"},
+    {"id":"T003","topic":"expensive purchase","must_include":["product","value","risk"],"mode_min":"COUNCIL"},
+    {"id":"T004","topic":"business idea","must_include":["business","execution","value","redteam"],"mode_min":"COUNCIL"},
+    {"id":"T005","topic":"scientific causal claim","must_include":["science","evidence","redteam"],"mode_min":"COUNCIL"},
+    {"id":"T006","topic":"travel itinerary","must_include":["travel","human","value"],"mode_min":"LIGHT"}
+  ]
+}
