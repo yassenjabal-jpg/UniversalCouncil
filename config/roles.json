@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "core_roles": [
     {"id":"chair","name":"Chair / Decision Controller","owns":["framing","routing","mode","synthesis","dissent"]},
     {"id":"evidence","name":"Evidence & Research Lead","owns":["evidence_quality","external_research","uncertainty"]},
@@ -24,6 +24,8 @@
     {"id":"design","name":"Design & UX Specialist"},
     {"id":"travel","name":"Travel & Local Planning Specialist"},
     {"id":"data","name":"Data & Statistics Specialist"},
-    {"id":"career","name":"Career & Work Specialist"}
+    {"id":"career","name":"Career & Work Specialist"},
+    {"id":"customer_skeptic","name":"Customer Skeptic","owns":["willingness_to_pay","free_alternatives","do_nothing_option","switching_resistance"]},
+    {"id":"moat_auditor","name":"Commoditization & Moat Auditor","owns":["substitutability","ai_displacement","copyability","defensibility","retention_advantage"]}
   ]
 }
