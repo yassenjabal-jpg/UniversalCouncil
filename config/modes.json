@@ -1,8 +1,37 @@
 {
-  "version":"0.1.0",
-  "modes": {
-    "LIGHT": {"default_core":["chair"],"required_pattern":"1-2 relevant owners + compact challenge when useful","independent_positions":false,"external_research":"only when freshness or evidence materially matters"},
-    "COUNCIL": {"default_core":["chair","evidence","redteam","synthesis"],"required_pattern":"2-5 relevant owners/specialists","independent_positions":false,"external_research":"when decision-sensitive"},
-    "ARENA": {"default_core":["chair","evidence","redteam","execution","risk","human","value","synthesis"],"required_pattern":"all materially relevant specialists","independent_positions":true,"external_research":"required when a resolvable pivotal external unknown exists"}
+  "version":"0.3.0",
+  "modes":{
+    "LIGHT":{
+      "default_core":["chair"],
+      "required_pattern":"smallest useful set of relevant owners; compact challenge only when decision-changing",
+      "independent_positions":"not_required",
+      "confidence_field":"optional",
+      "evidence_matrix":"not_required",
+      "premortem":"not_required",
+      "selective_debate":true,
+      "external_research":"only when freshness or evidence materially matters"
+    },
+    "COUNCIL":{
+      "default_core":["chair","evidence","redteam","synthesis"],
+      "required_pattern":"2-5 relevant owners/specialists; include at least one serious challenge",
+      "independent_positions":"required_when_material_disagreement_uncertainty_or_anchoring_risk",
+      "confidence_field":"required_for_material_positions",
+      "evidence_matrix":"required_when_contested",
+      "premortem":"required_before_difficult_to_reverse_execution",
+      "selective_debate":true,
+      "external_research":"when decision-sensitive"
+    },
+    "ARENA":{
+      "default_core":["chair","evidence","redteam","execution","risk","human","value","synthesis"],
+      "required_pattern":"all materially relevant specialists; preserve minority positions",
+      "independent_positions":"required_blind_first_round",
+      "confidence_field":"required",
+      "evidence_matrix":"required",
+      "premortem":"required",
+      "selective_debate":true,
+      "consensus_required":false,
+      "decision_expiry_trigger":"required",
+      "external_research":"required when a resolvable pivotal external unknown exists"
+    }
   }
 }
