@@ -1,0 +1,8 @@
+{
+  "version":"0.1.0",
+  "modes": {
+    "LIGHT": {"default_core":["chair"],"required_pattern":"1-2 relevant owners + compact challenge when useful","independent_positions":false,"external_research":"only when freshness or evidence materially matters"},
+    "COUNCIL": {"default_core":["chair","evidence","redteam","synthesis"],"required_pattern":"2-5 relevant owners/specialists","independent_positions":false,"external_research":"when decision-sensitive"},
+    "ARENA": {"default_core":["chair","evidence","redteam","execution","risk","human","value","synthesis"],"required_pattern":"all materially relevant specialists","independent_positions":true,"external_research":"required when a resolvable pivotal external unknown exists"}
+  }
+}
