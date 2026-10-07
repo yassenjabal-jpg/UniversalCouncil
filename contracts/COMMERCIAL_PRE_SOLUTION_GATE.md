@@ -1,38 +1,52 @@
-# Commercial Pre-Solution Gate
+# Commercial Pre-Solution Gate — v0.3
 
-This gate exists to stop the Council from confusing buildability with business viability.
+This gate stops the Council from confusing buildability, user praise or AI novelty with business viability.
 
-A revenue project cannot become SELECTED until all twelve questions are answered with evidence or a clearly justified assumption:
+A revenue project cannot become SELECTED until all required questions are answered with evidence or clearly bounded assumptions:
 
-1. Pain
-2. Buyer
-3. Urgency
-4. Current Alternative
-5. Free-AI Test
-6. DIY Test
-7. Moat / Retention
-8. Distribution
-9. Payment
-10. Economics
-11. Autonomy
-12. Kill Criterion
+1. **Pain** — what costly, risky or frustrating problem exists?
+2. **Buyer / Budget Owner / Approver** — who uses, pays and approves?
+3. **Urgency** — why act now rather than later?
+4. **Current Alternative / Do Nothing** — what happens today without us?
+5. **Free-AI Test** — why is a general-purpose free AI assistant not enough?
+6. **DIY Test** — why not do it internally?
+7. **Moat / Retention** — what value persists after the customer sees the workflow?
+8. **Foundation Model Uplift Test** — if general AI becomes 10x better/cheaper, does the venture strengthen, survive, weaken or die?
+9. **Distribution** — how do we reach the buyer within constraints?
+10. **Payment** — how can money actually be collected?
+11. **Economics** — how many customers/transactions are needed and what is the current-workaround cost?
+12. **Autonomy** — what can the system operate without ongoing user labor?
+13. **Adoption Path** — whose behavior or process must change for the solution to work?
+14. **Kill Criterion** — what evidence causes rejection or pivot?
 
 ## Mandatory challengers
-
 - Customer Skeptic
 - Commoditization & Moat Auditor
 - Red Team
-- Evidence Lead
-- Value Analyst
+- Evidence & Research Lead
+- Cost-Benefit & Value Analyst
+- Business & Operations Specialist when the project is commercial
+
+## Commitment evidence ladder
+Weakest to strongest:
+1. praise / stated interest;
+2. contact details / waitlist;
+3. meeting / workflow disclosure;
+4. internal time, real data or operational access;
+5. LOI with concrete obligations;
+6. deposit / paid pilot / purchase.
+
+Levels 1–2 are not willingness-to-pay validation.
+
+## Required premortem
+Before SELECTED, assume the project failed. Convert the most plausible material failure causes into tests, safeguards or kill criteria.
 
 ## Decision rule
+Any unresolved PIVOTAL failure in buyer/payment, Free-AI, DIY, Foundation Model Uplift, distribution, economics or adoption prevents unconditional SELECTED status.
 
-Any unresolved PIVOTAL failure in Free-AI, DIY, buyer/payment, distribution, or economics prevents SELECTED status.
-
-Execution progress, branding, prototypes, sunk time, or prior enthusiasm are not counter-evidence.
+Execution progress, branding, prototypes, sunk time, prior enthusiasm or user praise are not counter-evidence.
 
 ## Output states
-
 - PASS
 - PASS-WITH-CONDITIONS
 - PROVISIONAL
