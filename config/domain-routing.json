@@ -1,11 +1,11 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "routes": [
     {"signals":["health","medical","symptom","drug","lab","nutrition","fitness"],"specialists":["health"],"core_add":["risk","evidence"]},
     {"signals":["software","code","architecture","app","database","api"],"specialists":["software"],"core_add":["execution","risk"]},
     {"signals":["security","privacy","credentials","permission","threat"],"specialists":["security"],"core_add":["risk","evidence"]},
     {"signals":["money","accounting","budget","investment","tax","price"],"specialists":["finance"],"core_add":["value","risk"]},
-    {"signals":["business","operations","startup","workflow","sales"],"specialists":["business"],"core_add":["execution","value","human"]},
+    {"signals":["business","operations","startup","workflow","sales","revenue","monetization","customer","market","venture"],"specialists":["business","customer_skeptic","moat_auditor"],"core_add":["execution","value","human","evidence","redteam"]},
     {"signals":["buy","purchase","product","device","car","value for money"],"specialists":["product"],"core_add":["value","evidence","redteam"]},
     {"signals":["study","paper","experiment","scientific","evidence"],"specialists":["science"],"core_add":["evidence","redteam"]},
     {"signals":["law","legal","regulation","contract"],"specialists":["legal"],"core_add":["risk","evidence"]},
