@@ -1,16 +1,16 @@
 {
-  "version": "0.2.0",
-  "core_roles": [
-    {"id":"chair","name":"Chair / Decision Controller","owns":["framing","routing","mode","synthesis","dissent"]},
-    {"id":"evidence","name":"Evidence & Research Lead","owns":["evidence_quality","external_research","uncertainty"]},
-    {"id":"redteam","name":"Red Team / Devil's Advocate","owns":["falsification","counterexamples","failure_modes"]},
-    {"id":"execution","name":"Practicality & Execution Reviewer","owns":["feasibility","dependencies","reversibility","operational_burden"]},
-    {"id":"risk","name":"Risk & Consequence Analyst","owns":["downside","second_order_effects","irreversibility"]},
-    {"id":"human","name":"Human / User Advocate","owns":["usability","cognitive_load","accessibility","human_error"]},
-    {"id":"value","name":"Cost-Benefit & Value Analyst","owns":["price","time","effort","opportunity_cost","utility"]},
-    {"id":"synthesis","name":"Synthesis & Alternatives Designer","owns":["option_diversity","hybrids","tradeoffs"]}
+  "version":"0.3.0",
+  "core_roles":[
+    {"id":"chair","name":"Chair / Decision Controller","owns":["framing","routing","mode","decision_rights","synthesis","dissent","expiry_triggers"]},
+    {"id":"evidence","name":"Evidence & Research Lead","owns":["evidence_quality","source_diversity","external_research","contradicting_evidence","uncertainty","freshness"]},
+    {"id":"redteam","name":"Red Team / Devil's Advocate","owns":["falsification","counterexamples","premortem","failure_modes","invalidation_evidence"]},
+    {"id":"execution","name":"Practicality & Execution Reviewer","owns":["feasibility","dependencies","reversibility","operational_burden","assumption_tests","adoption_path"]},
+    {"id":"risk","name":"Risk & Consequence Analyst","owns":["downside","second_order_effects","severity","likelihood","detectability","irreversibility"]},
+    {"id":"human","name":"Human / User Advocate","owns":["user_vs_buyer","observed_behavior","workflow_burden","cognitive_load","accessibility","human_error"]},
+    {"id":"value","name":"Cost-Benefit & Value Analyst","owns":["price","time","effort","opportunity_cost","utility","willingness_to_pay","commitment_evidence"]},
+    {"id":"synthesis","name":"Synthesis & Alternatives Designer","owns":["option_diversity","hybrids","tradeoffs","minority_preservation","consensus_free_synthesis"]}
   ],
-  "specialist_roles": [
+  "specialist_roles":[
     {"id":"health","name":"Health & Medicine Specialist"},
     {"id":"software","name":"Software & Systems Specialist"},
     {"id":"security","name":"Cybersecurity & Privacy Specialist"},
@@ -25,7 +25,7 @@
     {"id":"travel","name":"Travel & Local Planning Specialist"},
     {"id":"data","name":"Data & Statistics Specialist"},
     {"id":"career","name":"Career & Work Specialist"},
-    {"id":"customer_skeptic","name":"Customer Skeptic","owns":["willingness_to_pay","free_alternatives","do_nothing_option","switching_resistance"]},
-    {"id":"moat_auditor","name":"Commoditization & Moat Auditor","owns":["substitutability","ai_displacement","copyability","defensibility","retention_advantage"]}
+    {"id":"customer_skeptic","name":"Customer Skeptic","owns":["willingness_to_pay","do_nothing_option","current_workaround","free_alternatives","free_ai","switching_resistance","commitment_quality"]},
+    {"id":"moat_auditor","name":"Commoditization & Moat Auditor","owns":["substitutability","foundation_model_uplift","copyability","defensibility","accumulating_advantage","retention_advantage"]}
   ]
 }
