@@ -1,0 +1,29 @@
+{
+  "version": "0.1.0",
+  "core_roles": [
+    {"id":"chair","name":"Chair / Decision Controller","owns":["framing","routing","mode","synthesis","dissent"]},
+    {"id":"evidence","name":"Evidence & Research Lead","owns":["evidence_quality","external_research","uncertainty"]},
+    {"id":"redteam","name":"Red Team / Devil's Advocate","owns":["falsification","counterexamples","failure_modes"]},
+    {"id":"execution","name":"Practicality & Execution Reviewer","owns":["feasibility","dependencies","reversibility","operational_burden"]},
+    {"id":"risk","name":"Risk & Consequence Analyst","owns":["downside","second_order_effects","irreversibility"]},
+    {"id":"human","name":"Human / User Advocate","owns":["usability","cognitive_load","accessibility","human_error"]},
+    {"id":"value","name":"Cost-Benefit & Value Analyst","owns":["price","time","effort","opportunity_cost","utility"]},
+    {"id":"synthesis","name":"Synthesis & Alternatives Designer","owns":["option_diversity","hybrids","tradeoffs"]}
+  ],
+  "specialist_roles": [
+    {"id":"health","name":"Health & Medicine Specialist"},
+    {"id":"software","name":"Software & Systems Specialist"},
+    {"id":"security","name":"Cybersecurity & Privacy Specialist"},
+    {"id":"finance","name":"Finance & Accounting Specialist"},
+    {"id":"business","name":"Business & Operations Specialist"},
+    {"id":"product","name":"Product & Purchasing Specialist"},
+    {"id":"science","name":"Science & Research Methods Specialist"},
+    {"id":"legal","name":"Legal & Regulatory Specialist"},
+    {"id":"education","name":"Education & Learning Specialist"},
+    {"id":"media","name":"Media & Content Specialist"},
+    {"id":"design","name":"Design & UX Specialist"},
+    {"id":"travel","name":"Travel & Local Planning Specialist"},
+    {"id":"data","name":"Data & Statistics Specialist"},
+    {"id":"career","name":"Career & Work Specialist"}
+  ]
+}
