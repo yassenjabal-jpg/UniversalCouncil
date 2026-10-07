@@ -1,21 +1,28 @@
 {
-  "version":"0.2.0",
+  "version":"0.3.0",
   "enabled":true,
   "default_cadence":"daily",
   "notify_on":["WATCH","REOPEN-SLICE","REOPEN-DECISION","PIVOT-RECOMMENDED","KILL-RECOMMENDED","USER-DECISION-REQUIRED"],
   "silent_on":["NO-CHANGE"],
   "checks":[
     "external_change",
+    "decision_expiry_trigger",
     "pivotal_unknowns",
     "stale_assumptions",
     "execution_enthusiasm_bias",
     "sunk_cost_bias",
     "free_ai_substitution",
+    "foundation_model_uplift",
     "new_competitor_or_substitute",
     "user_friction",
     "operator_burden",
     "new_blockers",
     "superior_alternatives",
+    "commitment_evidence_quality",
     "metric_drift"
-  ]
+  ],
+  "anti_churn":{
+    "reopen_only_if":"new evidence, failed assumption, expiry trigger, material execution signal, or superior alternative can plausibly change the decision",
+    "no_change_is_silent":true
+  }
 }
