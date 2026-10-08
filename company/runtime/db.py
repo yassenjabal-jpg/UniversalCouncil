@@ -1,7 +1,7 @@
 import sqlite3
 from pathlib import Path
 
-SCHEMA_VERSION=3
+SCHEMA_VERSION=4
 
 def connect(path):
     path=Path(path); path.parent.mkdir(parents=True, exist_ok=True)
@@ -26,6 +26,7 @@ def migrate(db):
     CREATE TABLE IF NOT EXISTS ledger_lines(entry_id TEXT NOT NULL, account TEXT NOT NULL, currency TEXT NOT NULL, debit_minor INTEGER NOT NULL DEFAULT 0, credit_minor INTEGER NOT NULL DEFAULT 0, FOREIGN KEY(entry_id) REFERENCES ledger_entries(id));
     CREATE TABLE IF NOT EXISTS experiments(id TEXT PRIMARY KEY, venture_id TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1, state TEXT NOT NULL, qualified_contacts INTEGER NOT NULL DEFAULT 0, replies INTEGER NOT NULL DEFAULT 0, paid INTEGER NOT NULL DEFAULT 0, contribution_minor INTEGER, currency TEXT, end_at TEXT);
     CREATE TABLE IF NOT EXISTS cost_records(id TEXT PRIMARY KEY, venture_id TEXT NOT NULL, category TEXT NOT NULL, amount_minor INTEGER NOT NULL DEFAULT 0, currency TEXT, owner_minutes INTEGER NOT NULL DEFAULT 0, meta_work INTEGER NOT NULL DEFAULT 0);
+    CREATE TABLE IF NOT EXISTS fx_rates(id TEXT PRIMARY KEY, source_currency TEXT NOT NULL, target_currency TEXT NOT NULL, rate_text TEXT NOT NULL, evidence_ref TEXT NOT NULL, effective_at TEXT, expires_at TEXT, UNIQUE(source_currency,target_currency,evidence_ref), FOREIGN KEY(evidence_ref) REFERENCES evidence(id));
     ''')
     cols={r[1] for r in db.execute('PRAGMA table_info(grants)').fetchall()}
     if 'reserved_amount' not in cols: db.execute('ALTER TABLE grants ADD COLUMN reserved_amount INTEGER NOT NULL DEFAULT 0')
