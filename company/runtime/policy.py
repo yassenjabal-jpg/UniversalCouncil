@@ -76,3 +76,15 @@ def release(db,grant_id,venture_id,currency,amount_minor):
     with db:
         db.execute('UPDATE budgets SET reserved_minor=MAX(0,reserved_minor-?) WHERE venture_id=? AND currency=?',(amount_minor,venture_id,currency))
         db.execute('UPDATE grants SET reserved_amount=MAX(0,reserved_amount-?), reserved_uses=MAX(0,reserved_uses-1) WHERE id=?',(amount_minor,grant_id))
+
+def reserve_use(db, grant_id):
+    with db:
+        db.execute('UPDATE grants SET reserved_uses=reserved_uses+1 WHERE id=?',(grant_id,))
+
+def consume_use(db, grant_id):
+    with db:
+        db.execute('UPDATE grants SET reserved_uses=MAX(0,reserved_uses-1), uses=uses+1 WHERE id=?',(grant_id,))
+
+def release_use(db, grant_id):
+    with db:
+        db.execute('UPDATE grants SET reserved_uses=MAX(0,reserved_uses-1) WHERE id=?',(grant_id,))
