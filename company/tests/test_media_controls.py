@@ -27,6 +27,9 @@ class MediaCapabilityTests(unittest.TestCase):
         cfg=self.load_config()
         by_id={x["id"]:x for x in cfg["production_functions"]}
         self.assertEqual(by_id["audience_growth_packaging"]["default_status"],"ON_DEMAND")
+        self.assertFalse(cfg["live_publish_authority"])
+        self.assertEqual(cfg["media_toolchain"]["platform_publishing"],"CAPABILITY_GAP")
+        self.assertEqual(cfg["media_toolchain"]["ai_video_generation"],"NEEDS_RUNTIME_VERIFICATION")
 
     def test_scale_is_forbidden_before_three_videos(self):
         record={
