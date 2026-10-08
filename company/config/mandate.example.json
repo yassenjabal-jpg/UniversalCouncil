@@ -1,0 +1,1 @@
+{"synthetic":true,"venture_id":"EXAMPLE","allowed_commands":["SEND_MESSAGE"],"channel":"mock","destination":"buyer@example.test","data_scopes":["synthetic"],"currency":"USD","per_action_cap_minor":0,"total_cap_minor":0,"max_uses":1,"note":"Examples are inert and never authorize live work."}
