@@ -48,25 +48,27 @@ def authorize(db, *, grant_id, venture_id, command_type, operation, account, des
     if g['currency'] and currency!=g['currency']: raise PolicyError('currency mismatch')
     if data_scope and data_scope not in json.loads(g['data_scopes_json']): raise PolicyError('data scope mismatch')
     if g['per_action_cap'] is not None and amount_minor>g['per_action_cap']: raise PolicyError('per-action cap exceeded')
-    if g['total_cap'] is not None and g['used_amount']+amount_minor>g['total_cap']: raise PolicyError('grant total cap exceeded')
-    if g['max_uses'] is not None and g['uses']>=g['max_uses']: raise PolicyError('grant use limit exceeded')
+    if g['total_cap'] is not None and g['used_amount']+g['reserved_amount']+amount_minor>g['total_cap']: raise PolicyError('grant total cap exceeded')
+    if g['max_uses'] is not None and g['uses']+g['reserved_uses']>=g['max_uses']: raise PolicyError('grant use limit exceeded')
     c=db.execute('SELECT * FROM capabilities WHERE operation=? AND account=?',(operation,account)).fetchone()
     if not c: raise PolicyError('capability not registered')
     allowed={CapabilityStatus.WRITE_SANDBOX_VERIFIED.value} if simulated else {CapabilityStatus.LIVE_VERIFIED.value}
     if c['status'] not in allowed: raise PolicyError(f'capability not ready: {c["status"]}')
     return g
 
-def reserve(db, venture_id,currency,amount_minor):
+def reserve(db, grant_id, venture_id,currency,amount_minor):
     with db:
         b=db.execute('SELECT * FROM budgets WHERE venture_id=? AND currency=?',(venture_id,currency)).fetchone()
         if not b or b['spent_minor']+b['reserved_minor']+amount_minor>b['cap_minor']: raise PolicyError('budget exceeded')
         db.execute('UPDATE budgets SET reserved_minor=reserved_minor+? WHERE venture_id=? AND currency=?',(amount_minor,venture_id,currency))
+        db.execute('UPDATE grants SET reserved_amount=reserved_amount+?, reserved_uses=reserved_uses+1 WHERE id=?',(amount_minor,grant_id))
 
 def consume(db, grant_id, venture_id,currency,amount_minor):
     with db:
-        db.execute('UPDATE grants SET used_amount=used_amount+?, uses=uses+1 WHERE id=?',(amount_minor,grant_id))
+        db.execute('UPDATE grants SET reserved_amount=MAX(0,reserved_amount-?), reserved_uses=MAX(0,reserved_uses-1), used_amount=used_amount+?, uses=uses+1 WHERE id=?',(amount_minor,amount_minor,grant_id))
         db.execute('UPDATE budgets SET reserved_minor=reserved_minor-?, spent_minor=spent_minor+? WHERE venture_id=? AND currency=?',(amount_minor,amount_minor,venture_id,currency))
 
-def release(db,venture_id,currency,amount_minor):
+def release(db,grant_id,venture_id,currency,amount_minor):
     with db:
         db.execute('UPDATE budgets SET reserved_minor=MAX(0,reserved_minor-?) WHERE venture_id=? AND currency=?',(amount_minor,venture_id,currency))
+        db.execute('UPDATE grants SET reserved_amount=MAX(0,reserved_amount-?), reserved_uses=MAX(0,reserved_uses-1) WHERE id=?',(amount_minor,grant_id))
