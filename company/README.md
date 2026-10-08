@@ -24,3 +24,9 @@ These overlays are implemented in config and deterministic validators, not only 
 Commercial project generation now starts with the Market Reality Definition Gate. The company must define the relevant geography, age + life stage, social/occupational segment, user/buyer/payer, purchasing capacity, buying behavior and evidence locality before a venture candidate is allowed.
 
 Project-first reasoning is treated as a process failure. Both SEGMENT_FIRST and PAIN_FIRST discovery are supported.
+
+
+## Media venture capability
+Media ventures now use a venture-scoped production layer with an Editorial Director / Showrunner, AI Visual & Post-Production Producer, and on-demand Audience Growth & Packaging Operator.
+
+A 3-video production pilot is mandatory before scale. Publishing remains separately gated and is not authorized by the media capability layer.
