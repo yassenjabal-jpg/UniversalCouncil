@@ -12,7 +12,7 @@ A revenue project cannot become SELECTED until all required questions are answer
 6. **DIY Test** — why not do it internally?
 7. **Moat / Retention** — what value persists after the customer sees the workflow?
 8. **Foundation Model Uplift Test** — if general AI becomes 10x better/cheaper, does the venture strengthen, survive, weaken or die?
-9. **Distribution** — how do we reach the buyer within constraints?
+9. **Distribution & Local Market Fit** — where does the actual buyer spend attention, who is the decision maker, how do new commercial approaches normally begin, what channel should be used for first touch, conversation and formal documents, what is the normal response window and fallback channel, and what local-market evidence supports those choices? Tool availability must not determine the channel.
 10. **Payment** — how can money actually be collected?
 11. **Economics** — how many customers/transactions are needed and what is the current-workaround cost?
 12. **Autonomy** — what can the system operate without ongoing user labor?
@@ -42,7 +42,9 @@ Levels 1–2 are not willingness-to-pay validation.
 Before SELECTED, assume the project failed. Convert the most plausible material failure causes into tests, safeguards or kill criteria.
 
 ## Decision rule
-Any unresolved PIVOTAL failure in buyer/payment, Free-AI, DIY, Foundation Model Uplift, distribution, economics or adoption prevents unconditional SELECTED status.
+Any unresolved PIVOTAL failure in buyer/payment, Free-AI, DIY, Foundation Model Uplift, distribution/local-market fit, economics or adoption prevents unconditional SELECTED status.
+
+When used by the Universal Venture Company before first collected payment, the company Zero-Revenue Founder Mode overlay also applies: members must take explicit SUPPORT / OPPOSE / KILL / PIVOT / TEST_NOW positions, and PASS-WITH-CONDITIONS is invalid unless the condition is measurable, time-bounded and has a declared default failure action.
 
 Execution progress, branding, prototypes, sunk time, prior enthusiasm or user praise are not counter-evidence.
 
