@@ -1,1 +1,41 @@
-{"version":"1.0","functions":["Owner","Board","Venture Operator","Commercial Operator","Product & Delivery Operator","Finance Controller","Assurance Reviewer","Technical Operator","Domain Specialists"],"naming_rule":"Never use ambiguous CRO. Use Commercial/Revenue Function and Risk/Assurance Function explicitly.","split_rule":"No permanent role split without a measured bottleneck and target metric."}
+{
+  "version":"1.1",
+  "functions":[
+    "Owner",
+    "Board",
+    "Venture Operator",
+    "Commercial Operator",
+    "Product & Delivery Operator",
+    "Finance Controller",
+    "Assurance Reviewer",
+    "Technical Operator",
+    "HR & Capability Director",
+    "Domain Specialists"
+  ],
+  "hr_capability_director":{
+    "owns":[
+      "workforce_performance",
+      "role_roi",
+      "duplication_detection",
+      "role_merge_remove_replace_recommendations",
+      "skills_plugins_tools_environment",
+      "capability_gap_escalation",
+      "protected_dissent"
+    ],
+    "recommendations":[
+      "KEEP",
+      "IMPROVEMENT_TRIAL",
+      "MERGE",
+      "REMOVE_WITHOUT_REPLACEMENT",
+      "REPLACE",
+      "FIRE_RECOMMENDATION"
+    ],
+    "may_fire_unilaterally":false,
+    "final_authority":"Owner",
+    "self_evaluation_forbidden":true,
+    "complaints_about_hr_route_directly_to":"Owner"
+  },
+  "naming_rule":"Never use ambiguous CRO. Use Commercial/Revenue Function and Risk/Assurance Function explicitly.",
+  "split_rule":"No permanent role split without a measured bottleneck, unique missing capability and target metric.",
+  "smallest_effective_team":true
+}
