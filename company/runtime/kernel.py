@@ -30,7 +30,7 @@ class Kernel:
         existing=self.db.execute('SELECT * FROM actions WHERE idempotency_key=?',(idempotency_key,)).fetchone()
         if existing: return dict(existing)
         authorize(self.db,grant_id=grant_id,venture_id=venture_id,command_type=command_type,operation=operation,account=account,destination=destination,amount_minor=amount_minor,currency=currency,data_scope=data_scope,simulated=simulated)
-        if amount_minor and currency: reserve(self.db,venture_id,currency,amount_minor)
+        if amount_minor and currency: reserve(self.db,grant_id,venture_id,currency,amount_minor)
         try:
             with self.db:
                 self.db.execute('INSERT INTO actions(id,idempotency_key,venture_id,command_type,amount_minor,currency,state,grant_id,input_hash,simulated) VALUES(?,?,?,?,?,?,?,?,?,?)',(action_id,idempotency_key,venture_id,command_type,amount_minor,currency,ActionState.RUNNING.value,grant_id,h(payload or {}),int(simulated)))
@@ -48,7 +48,7 @@ class Kernel:
                 self.db.execute('UPDATE actions SET state=?,provider_ref=?,result_json=? WHERE id=?',(ActionState.SUCCEEDED.value,result.get('provider_ref'),json.dumps(result),action_id))
             return dict(self.db.execute('SELECT * FROM actions WHERE id=?',(action_id,)).fetchone())
         except Exception:
-            if amount_minor and currency: release(self.db,venture_id,currency,amount_minor)
+            if amount_minor and currency: release(self.db,grant_id,venture_id,currency,amount_minor)
             with self.db:
                 self.db.execute('UPDATE actions SET state=? WHERE id=?',(ActionState.FAILED.value,action_id))
             raise
