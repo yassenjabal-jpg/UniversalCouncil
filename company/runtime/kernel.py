@@ -6,8 +6,14 @@ class Kernel:
     def __init__(self,db): self.db=db
 
     def set_budget(self,venture_id,currency,cap_minor):
+        cap_minor=int(cap_minor)
+        if cap_minor < 0:
+            raise ValueError('budget cap cannot be negative')
+        current=self.db.execute('SELECT reserved_minor,spent_minor FROM budgets WHERE venture_id=? AND currency=?',(venture_id,currency)).fetchone()
+        if current and current['reserved_minor']+current['spent_minor']>cap_minor:
+            raise ValueError('budget cap below existing exposure')
         with self.db:
-            self.db.execute('INSERT INTO budgets(venture_id,currency,cap_minor,reserved_minor,spent_minor) VALUES(?,?,?,0,0) ON CONFLICT(venture_id,currency) DO UPDATE SET cap_minor=excluded.cap_minor',(venture_id,currency,int(cap_minor)))
+            self.db.execute('INSERT INTO budgets(venture_id,currency,cap_minor,reserved_minor,spent_minor) VALUES(?,?,?,0,0) ON CONFLICT(venture_id,currency) DO UPDATE SET cap_minor=excluded.cap_minor',(venture_id,currency,cap_minor))
 
     def record_event(self,event_id,idempotency_key,type_,aggregate_id,venture_id,payload,simulated=True,evidence_ref=None):
         try:
