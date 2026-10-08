@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "functions": [
     "Owner",
     "Board",
@@ -21,7 +21,9 @@
       "skills_plugins_tools_environment",
       "capability_gap_escalation",
       "protected_dissent",
-      "local_market_research_capability"
+      "local_market_research_capability",
+      "media_workforce_capability",
+      "media_toolchain_capability"
     ],
     "recommendations": [
       "KEEP",
@@ -59,5 +61,53 @@
   },
   "naming_rule": "Never use ambiguous CRO. Use Commercial/Revenue Function and Risk/Assurance Function explicitly.",
   "split_rule": "No permanent role split without a measured bottleneck, unique missing capability and target metric.",
-  "smallest_effective_team": true
+  "smallest_effective_team": true,
+  "venture_scoped_functions": [
+    {
+      "id": "editorial_director",
+      "name": "Editorial Director / Showrunner",
+      "scope": "media_venture",
+      "activation": "required_for_media_pilot",
+      "owns": [
+        "hook",
+        "angle",
+        "story_structure",
+        "script_quality",
+        "editorial_pacing",
+        "final_cut_editorial_approval"
+      ]
+    },
+    {
+      "id": "ai_visual_post_producer",
+      "name": "AI Visual & Post-Production Producer",
+      "scope": "media_venture",
+      "activation": "required_for_media_pilot",
+      "owns": [
+        "storyboard_translation",
+        "ai_visual_generation",
+        "b_roll",
+        "visual_continuity",
+        "editing",
+        "sound",
+        "subtitles",
+        "technical_export"
+      ]
+    },
+    {
+      "id": "audience_growth_packaging",
+      "name": "Audience Growth & Packaging Operator",
+      "scope": "media_venture",
+      "activation": "on_demand_until_measured_bottleneck",
+      "owns": [
+        "titles",
+        "thumbnails",
+        "first_30_seconds",
+        "ctr",
+        "retention",
+        "platform_adaptation",
+        "shorts_reels_tiktok_cutdowns",
+        "performance_analysis"
+      ]
+    }
+  ]
 }
