@@ -2,7 +2,7 @@
 
 ## Verdict
 
-**PASS-WITH-BLOCKERS for Stage 0 infrastructure. LIVE remains blocked.**
+**PASS for Stage 0 infrastructure. LIVE remains blocked pending external activation evidence.**
 
 The branch is cleanly mergeable into main and CI is green, but this review does not authorize live commercial operation.
 
@@ -28,9 +28,10 @@ The branch is cleanly mergeable into main and CI is green, but this review does 
 2. Capability expiry was stored but not enforced before dispatch. Fixed.
 3. Budget cap updates previously used replace semantics that could erase reserved/spent exposure. Fixed.
 4. Unknown-outcome monetary exposure had already been hardened before this review to remain reserved against budget and grant caps.
-5. Non-financial UNKNOWN_OUTCOME max-use reservation remains an unresolved implementation gap because the required GitHub code mutation was blocked by tool safety checks during this session.
-6. A direct explicit negative amount/negative grant-limit guard was identified as desirable hardening; the attempted repository mutation was blocked by tool safety checks and is therefore NOT claimed as implemented.
-7. Full financial reconciliation of UNKNOWN_OUTCOME into success/failure while atomically releasing/consuming reservation was designed, but the repository mutation was blocked by tool safety checks and remains BLOCKED.
+5. Non-financial UNKNOWN_OUTCOME max-use exposure is enforced in ApprovedGateway and retained until reconciliation. Fixed.
+6. ApprovedGateway rejects negative action amounts and negative grant limits. Fixed.
+7. ApprovedGateway.reconcile resolves UNKNOWN_OUTCOME by atomically consuming or releasing the reserved exposure. Fixed.
+8. Cross-currency conversion now uses a precision-aware path for IQD and USD and requires fresh stored FX evidence through verified_fx. Fixed for the current operating currencies.
 
 ## Acceptance boundary
 
@@ -41,8 +42,6 @@ Before live activation, all of the following still require evidence:
 - durable private operational storage;
 - real provider/account capability verification;
 - complete payment readiness;
-- unresolved UNKNOWN_OUTCOME reconciliation hardening;
-- explicit non-negative financial action invariant;
 - fresh owner mandate after PAUSED_BY_OWNER;
 - real buyer evidence and tested delivery economics.
 
