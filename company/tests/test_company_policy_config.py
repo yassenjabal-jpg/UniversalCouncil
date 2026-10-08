@@ -13,6 +13,10 @@ class CompanyPolicyConfig(unittest.TestCase):
         self.assertEqual(hr["final_authority"],"Owner")
         self.assertTrue(hr["self_evaluation_forbidden"])
         self.assertEqual(hr["complaints_about_hr_route_directly_to"],"Owner")
+        self.assertTrue(hr["protected_dissent"])
+        self.assertIn("unique_contribution",hr["performance_criteria"])
+        self.assertIn("tool_skill_utilization",hr["performance_criteria"])
+        self.assertEqual(hr["unresolved_capability_escalation"],"Owner")
 
     def test_zero_revenue_mode_and_distribution_gate_are_default(self):
         defaults=json.loads((ROOT/"company/config/defaults.json").read_text(encoding="utf-8"))
