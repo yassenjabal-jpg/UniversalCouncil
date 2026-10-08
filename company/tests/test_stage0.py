@@ -37,6 +37,14 @@ class Stage0(unittest.TestCase):
         resume(self.db); r=self.k.execute(action_id='a',idempotency_key='i',venture_id=self.v,command_type='SEND_MESSAGE',operation='SEND_MESSAGE',account='mock',adapter=MockAdapter('unknown_after_accept'),grant_id='g',destination='buyer@example.test',currency='USD',data_scope='synthetic',payload={}); self.assertEqual(r['state'],'UNKNOWN_OUTCOME')
         r2=self.k.execute(action_id='b',idempotency_key='i',venture_id=self.v,command_type='SEND_MESSAGE',operation='SEND_MESSAGE',account='mock',adapter=MockAdapter(),grant_id='g',destination='buyer@example.test',currency='USD',data_scope='synthetic',payload={}); self.assertEqual(r2['id'],'a')
 
+    def test_05b_unknown_outcome_reserves_grant_exposure(self):
+        resume(self.db)
+        create_grant(self.db,'gx',self.v,['PAYMENT'],data_scopes=['synthetic'],currency='USD',per_action_cap=8000,total_cap=8000,max_uses=1)
+        r=self.k.execute(action_id='ux',idempotency_key='ux1',venture_id=self.v,command_type='PAYMENT',operation='PAYMENT',account='mockpay',adapter=MockAdapter('unknown_after_accept'),grant_id='gx',amount_minor=7000,currency='USD',data_scope='synthetic',payload={})
+        self.assertEqual(r['state'],'UNKNOWN_OUTCOME')
+        with self.assertRaises(PolicyError):
+            self.k.execute(action_id='ux2',idempotency_key='ux2',venture_id=self.v,command_type='PAYMENT',operation='PAYMENT',account='mockpay',adapter=MockAdapter(),grant_id='gx',amount_minor=1000,currency='USD',data_scope='synthetic',payload={})
+
     def test_06_duplicate_event_dedupes(self):
         self.assertTrue(self.k.record_event('e1','idem','X','agg',self.v,{},True)); self.assertFalse(self.k.record_event('e2','idem','X','agg',self.v,{},True))
 
