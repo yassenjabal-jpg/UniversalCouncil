@@ -2,9 +2,11 @@
 
 This gate stops the Council from confusing buildability, user praise or AI novelty with business viability.
 
+Before these solution questions are evaluated, the Universal Venture Company must first pass its Market Reality Definition Gate for the target segment. A project may not be invented first and then assigned a convenient market.
+
 A revenue project cannot become SELECTED until all required questions are answered with evidence or clearly bounded assumptions:
 
-1. **Pain** — what costly, risky or frustrating problem exists?
+1. **Market Reality + Pain** — in what geography, age/life stage, social/occupational segment and purchasing-capacity profile does the costly, risky or frustrating problem exist, and does the evidence actually match that target?
 2. **Buyer / Budget Owner / Approver** — who uses, pays and approves?
 3. **Urgency** — why act now rather than later?
 4. **Current Alternative / Do Nothing** — what happens today without us?
