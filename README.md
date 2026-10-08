@@ -74,6 +74,14 @@ Evidence and domain authority outweigh headcount.
 - `docs/decisions/` — architecture decisions
 - `ventures/` — Council-managed venture records
 
+## Optional Venture Operating System
+
+The `company/` module is a bounded Stage 0 operating layer around the Council. It preserves Universal Council as the general-purpose Board/decision system and adds deterministic controls for grants, capabilities, budgets, actions, evidence/events, obligations, accounting, recovery, and synthetic acceptance tests.
+
+Stage 0 defaults to `PAUSED_BY_OWNER` and `DRY_RUN`. It does not authorize prospect contact, publishing, spending, payment collection, or restarting stopped ventures. Live operation remains blocked until operation-scoped capability evidence, payment readiness, durable private storage, and real enforcement isolation are verified.
+
+Its governing commercial principle is **External Reality Supremacy**: verified customer behavior, settled money, accepted delivery, and provider state outrank model prose, forecasts, dashboards, or internal consensus.
+
 ## Specialist councils
 Universal Council can federate specialist councils without absorbing their domain rules. RevenueSystem Council 2.2.1 is the first specialist-council precedent.
 
