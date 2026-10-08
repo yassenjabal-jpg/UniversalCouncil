@@ -1,28 +1,54 @@
 {
-  "version":"1.0",
-  "enabled":true,
-  "team_model":"venture_scoped_smallest_effective_team",
-  "production_functions":[
+  "version": "1.0",
+  "enabled": true,
+  "team_model": "venture_scoped_smallest_effective_team",
+  "production_functions": [
     {
-      "id":"editorial_director",
-      "name":"Editorial Director / Showrunner",
-      "default_status":"ACTIVE_FOR_MEDIA_PILOT",
-      "owns":["idea_selection","hook","angle","story_structure","script_quality","editorial_pacing","final_cut_editorial_approval"]
+      "id": "editorial_director",
+      "name": "Editorial Director / Showrunner",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "owns": [
+        "idea_selection",
+        "hook",
+        "angle",
+        "story_structure",
+        "script_quality",
+        "editorial_pacing",
+        "final_cut_editorial_approval"
+      ]
     },
     {
-      "id":"ai_visual_post_producer",
-      "name":"AI Visual & Post-Production Producer",
-      "default_status":"ACTIVE_FOR_MEDIA_PILOT",
-      "owns":["storyboard_translation","ai_visual_generation","b_roll","visual_continuity","editing","sound","subtitles","technical_export"]
+      "id": "ai_visual_post_producer",
+      "name": "AI Visual & Post-Production Producer",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "owns": [
+        "storyboard_translation",
+        "ai_visual_generation",
+        "b_roll",
+        "visual_continuity",
+        "editing",
+        "sound",
+        "subtitles",
+        "technical_export"
+      ]
     },
     {
-      "id":"audience_growth_packaging",
-      "name":"Audience Growth & Packaging Operator",
-      "default_status":"ON_DEMAND",
-      "owns":["titles","thumbnails","first_30_seconds","ctr","retention","platform_adaptation","shorts_reels_tiktok_cutdowns","performance_analysis"]
+      "id": "audience_growth_packaging",
+      "name": "Audience Growth & Packaging Operator",
+      "default_status": "ON_DEMAND",
+      "owns": [
+        "titles",
+        "thumbnails",
+        "first_30_seconds",
+        "ctr",
+        "retention",
+        "platform_adaptation",
+        "shorts_reels_tiktok_cutdowns",
+        "performance_analysis"
+      ]
     }
   ],
-  "existing_function_dependencies":[
+  "existing_function_dependencies": [
     "Venture Operator",
     "Finance Controller",
     "Assurance Reviewer",
@@ -30,13 +56,13 @@
     "HR & Capability Director",
     "Domain Specialists"
   ],
-  "pilot":{
-    "required_before_scale":true,
-    "video_count":3,
-    "publication_required_for_capability_pilot":false,
-    "hr_review_after_pilot":true
+  "pilot": {
+    "required_before_scale": true,
+    "video_count": 3,
+    "publication_required_for_capability_pilot": false,
+    "hr_review_after_pilot": true
   },
-  "performance_metrics":[
+  "performance_metrics": [
     "production_time_per_video",
     "owner_human_minutes_per_video",
     "tool_cost_per_video",
@@ -51,6 +77,18 @@
     "subscribers_per_video",
     "returning_viewers"
   ],
-  "post_publish_split_review_after_videos":10,
-  "full_scale_without_pilot_forbidden":true
+  "post_publish_split_review_after_videos": 10,
+  "full_scale_without_pilot_forbidden": true,
+  "live_publish_authority": false,
+  "media_toolchain": {
+    "research": "AVAILABLE_FOR_ASSISTED_WORK",
+    "script_drafting": "AVAILABLE_FOR_ASSISTED_WORK",
+    "image_generation": "AVAILABLE_FOR_ASSISTED_WORK",
+    "ai_video_generation": "NEEDS_RUNTIME_VERIFICATION",
+    "audio_cleanup": "NEEDS_RUNTIME_VERIFICATION",
+    "video_editing": "NEEDS_RUNTIME_VERIFICATION",
+    "captions": "CAN_BUILD_OR_VERIFY",
+    "platform_publishing": "CAPABILITY_GAP",
+    "analytics_ingestion": "NEEDS_RUNTIME_VERIFICATION"
+  }
 }
