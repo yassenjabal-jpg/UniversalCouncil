@@ -18,3 +18,9 @@ Stage 0 now includes three mandatory operating overlays for pre-revenue commerci
 - HR & Capability Director with Owner-controlled workforce decisions.
 
 These overlays are implemented in config and deterministic validators, not only prose.
+
+
+## Market Reality before project generation
+Commercial project generation now starts with the Market Reality Definition Gate. The company must define the relevant geography, age + life stage, social/occupational segment, user/buyer/payer, purchasing capacity, buying behavior and evidence locality before a venture candidate is allowed.
+
+Project-first reasoning is treated as a process failure. Both SEGMENT_FIRST and PAIN_FIRST discovery are supported.
