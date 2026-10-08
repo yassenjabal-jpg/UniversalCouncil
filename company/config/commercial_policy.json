@@ -1,19 +1,32 @@
 {
-  "version":"1.1",
-  "zero_revenue_founder_mode":{
-    "enabled":true,
-    "until_first_collected_payment":true,
-    "default_venture_burden":"KILL_UNLESS_NEXT_EXPERIMENT_JUSTIFIED",
-    "allowed_position_verdicts":["SUPPORT","OPPOSE","KILL","PIVOT","TEST_NOW"],
-    "forced_conviction_fields":["verdict","confidence_0_100","next_10_hours_yes_no","own_money_yes_no","single_strongest_reason","one_evidence_that_changes_view"],
-    "pass_with_conditions_rule":"allowed_only_with_measurable_condition_deadline_and_default_failure_action",
-    "time_is_capital":true,
-    "cost_of_delay_required":true,
-    "strong_opinion_cheap_reversal":true
+  "version": "1.2",
+  "zero_revenue_founder_mode": {
+    "enabled": true,
+    "until_first_collected_payment": true,
+    "default_venture_burden": "KILL_UNLESS_NEXT_EXPERIMENT_JUSTIFIED",
+    "allowed_position_verdicts": [
+      "SUPPORT",
+      "OPPOSE",
+      "KILL",
+      "PIVOT",
+      "TEST_NOW"
+    ],
+    "forced_conviction_fields": [
+      "verdict",
+      "confidence_0_100",
+      "next_10_hours_yes_no",
+      "own_money_yes_no",
+      "single_strongest_reason",
+      "one_evidence_that_changes_view"
+    ],
+    "pass_with_conditions_rule": "allowed_only_with_measurable_condition_deadline_and_default_failure_action",
+    "time_is_capital": true,
+    "cost_of_delay_required": true,
+    "strong_opinion_cheap_reversal": true
   },
-  "distribution_local_market_fit":{
-    "mandatory_for_commercial_validation":true,
-    "required_fields":[
+  "distribution_local_market_fit": {
+    "mandatory_for_commercial_validation": true,
+    "required_fields": [
       "buyer",
       "decision_maker",
       "where_buyer_spends_attention",
@@ -25,7 +38,7 @@
       "local_market_evidence",
       "channel_capability_status"
     ],
-    "no_reply_diagnosis_states":[
+    "no_reply_diagnosis_states": [
       "INSUFFICIENT_EVIDENCE",
       "DELIVERY_FAILURE",
       "CHANNEL_FAILURE",
@@ -34,7 +47,30 @@
       "OFFER_FAILURE",
       "NOT_INTERESTED"
     ],
-    "tool_availability_must_not_select_channel":true,
-    "capability_gap_is_explicit_state":true
+    "tool_availability_must_not_select_channel": true,
+    "capability_gap_is_explicit_state": true
+  },
+  "market_reality_definition": {
+    "mandatory_before_project_candidate": true,
+    "discovery_modes": [
+      "SEGMENT_FIRST",
+      "PAIN_FIRST"
+    ],
+    "dimensions": [
+      "geography",
+      "age_life_stage",
+      "social_occupational",
+      "buyer_user_payer",
+      "purchasing_capacity",
+      "buying_behavior",
+      "evidence_scope"
+    ],
+    "geography_precision_rule": "only_to_level_that_materially_changes_behavior",
+    "age_requires_life_stage": true,
+    "individual_wealth_inference_forbidden": true,
+    "foreign_pain_evidence_default": "SECONDARY_CONTEXT",
+    "target_geography_and_segment_evidence_required": true,
+    "project_price_must_fit_segment_capacity": true,
+    "project_first_reasoning_forbidden": true
   }
 }
