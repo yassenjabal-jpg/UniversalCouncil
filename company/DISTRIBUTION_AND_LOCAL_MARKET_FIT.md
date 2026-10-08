@@ -2,6 +2,8 @@
 
 A commercial venture cannot enter VALIDATION until it explains how the actual buyer in the actual market is reached.
 
+This gate is downstream of the Market Reality Definition Gate. The company must first know WHERE, WHO, MONEY and BEHAVIOR for the target segment before choosing distribution.
+
 Tool availability never selects the market channel.
 
 ## Required evidence
