@@ -20,15 +20,19 @@ class CompanyPolicyConfig(unittest.TestCase):
 
     def test_zero_revenue_mode_and_distribution_gate_are_default(self):
         defaults=json.loads((ROOT/"company/config/defaults.json").read_text(encoding="utf-8"))
-        self.assertEqual(defaults["version"],"1.1")
+        self.assertEqual(defaults["version"],"1.2")
         self.assertTrue(defaults["zero_revenue_founder_mode"])
         self.assertTrue(defaults["founder_mode_until_first_collected_payment"])
         self.assertTrue(defaults["distribution_local_market_fit_gate"])
         self.assertTrue(defaults["forced_conviction_required"])
         self.assertTrue(defaults["hr_capability_director_required"])
+        self.assertTrue(defaults["market_reality_definition_gate"])
+        self.assertTrue(defaults["market_reality_required_before_project_candidate"])
+        self.assertTrue(defaults["market_scope_must_precede_solution"])
 
     def test_commercial_policy_forbids_safe_neutral_position(self):
         policy=json.loads((ROOT/"company/config/commercial_policy.json").read_text(encoding="utf-8"))
+        self.assertEqual(policy["version"],"1.2")
         founder=policy["zero_revenue_founder_mode"]
         self.assertEqual(
             set(founder["allowed_position_verdicts"]),
@@ -39,6 +43,11 @@ class CompanyPolicyConfig(unittest.TestCase):
         self.assertTrue(distribution["tool_availability_must_not_select_channel"])
         self.assertIn("CHANNEL_FAILURE",distribution["no_reply_diagnosis_states"])
         self.assertIn("INSUFFICIENT_EVIDENCE",distribution["no_reply_diagnosis_states"])
+        reality=policy["market_reality_definition"]
+        self.assertTrue(reality["mandatory_before_project_candidate"])
+        self.assertTrue(reality["age_requires_life_stage"])
+        self.assertTrue(reality["project_price_must_fit_segment_capacity"])
+        self.assertTrue(reality["project_first_reasoning_forbidden"])
 
 if __name__=="__main__":
     unittest.main()
