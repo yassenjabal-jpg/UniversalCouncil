@@ -1,0 +1,31 @@
+name: Company Stage 0
+
+on:
+  pull_request:
+    paths:
+      - "company/**"
+      - "config/**"
+      - "tools/validate_config.py"
+      - ".github/workflows/company-stage0.yml"
+  push:
+    branches:
+      - "codex/venture-operating-system-v1"
+    paths:
+      - "company/**"
+      - "config/**"
+      - "tools/validate_config.py"
+
+jobs:
+  stage0:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile
+        run: python -m compileall -q company
+      - name: Preserve Universal Council invariants
+        run: python tools/validate_config.py
+      - name: Stage 0 behavior tests
+        run: python -m unittest discover -s company/tests -v
