@@ -58,3 +58,19 @@ Neither direction may protect a preferred solution by reverse-engineering eviden
 Foreign or mismatched-segment pain may be secondary context only until transfer to the target market is supported.
 
 A project whose proposed price exceeds the evidence-supported segment price ceiling is rejected or redesigned before validation.
+
+
+## Media venture production gate
+A media venture may enter production capability testing only with:
+- Editorial Director / Showrunner ownership;
+- AI Visual & Post-Production Producer ownership;
+- Evidence/Research grounding;
+- Finance cost tracking;
+- Assurance copyright/platform-policy review;
+- HR capability oversight.
+
+Before scale, complete a 3-video pilot and record production time, owner/human minutes, tool cost, cost per published minute, revision count, factual/policy defects and packaging quality.
+
+If the pilot is actually published under separate authorization, also record CTR, first-30-second retention, average percentage viewed, watch time, subscribers per video and returning viewers.
+
+After video 3, HR reviews the media functions. After 10 published videos, dedicated scriptwriter/editor/packaging/analytics splits may be proposed only if a measured bottleneck justifies them.
