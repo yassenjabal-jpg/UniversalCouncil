@@ -33,3 +33,28 @@ Tool availability never determines channel choice. An unavailable but market-cor
 HR & Capability Director continuously reviews whether active roles earn their organizational cost. HR may recommend KEEP / IMPROVEMENT_TRIAL / MERGE / REMOVE_WITHOUT_REPLACEMENT / REPLACE / FIRE_RECOMMENDATION, but final workforce authority remains with the Owner.
 
 Evidence-backed dissent is protected and cannot be penalized.
+
+
+## Market Reality Definition Gate
+Before the company proposes a commercial venture candidate, it must define the market reality that can support it.
+
+The required order is:
+
+Market Reality → Observed Pain → Existing Workaround / Existing Spend → Buyer & Reachability → Purchasing Capacity → Market Pull Score → Project Candidate → Offer / Price → Validation.
+
+Market Reality records:
+- WHERE: country and only the deeper geographic precision that materially changes behavior;
+- WHO: age range plus life stage, social/occupational segment, user, buyer and payer;
+- MONEY: segment-level purchasing capacity, discretionary budget evidence, existing spend, willingness-to-pay evidence, supported price band and payment methods;
+- BEHAVIOR: discovery, conversation, trust, payment, delivery/infrastructure and reachability behavior;
+- EVIDENCE SCOPE: whether the evidence actually matches the geography and segment.
+
+Two discovery directions are permitted:
+- SEGMENT_FIRST: justified segment first, then discover pain;
+- PAIN_FIRST: strong pain first, then identify the segment in which it is actually strong.
+
+Neither direction may protect a preferred solution by reverse-engineering evidence.
+
+Foreign or mismatched-segment pain may be secondary context only until transfer to the target market is supported.
+
+A project whose proposed price exceeds the evidence-supported segment price ceiling is rejected or redesigned before validation.

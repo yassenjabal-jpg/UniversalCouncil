@@ -20,7 +20,8 @@
       "role_merge_remove_replace_recommendations",
       "skills_plugins_tools_environment",
       "capability_gap_escalation",
-      "protected_dissent"
+      "protected_dissent",
+      "local_market_research_capability"
     ],
     "recommendations": [
       "KEEP",

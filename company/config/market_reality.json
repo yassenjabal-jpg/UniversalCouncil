@@ -1,0 +1,44 @@
+{
+  "version": "1.0",
+  "enabled": true,
+  "mandatory_before_project_candidate": true,
+  "discovery_modes": [
+    "SEGMENT_FIRST",
+    "PAIN_FIRST"
+  ],
+  "required_dimensions": [
+    "geography",
+    "demography",
+    "social_occupational",
+    "purchasing_capacity",
+    "buying_behavior",
+    "evidence_scope"
+  ],
+  "geography_rule": "use_only_precision_that_materially_changes_behavior",
+  "age_rule": "age_must_be_paired_with_life_stage",
+  "financial_rule": "ability_to_pay_willingness_to_pay_and_existing_spend_are_separate",
+  "privacy_rule": "never_infer_individual_wealth_from_sensitive_or_personal_characteristics",
+  "evidence_locality_rule": "foreign_or_mismatched_segment_evidence_is_secondary_until_transfer_is_supported",
+  "project_first_reasoning_forbidden": true,
+  "price_must_fit_segment_capacity": true,
+  "market_pull_weights": {
+    "pain_frequency": 12,
+    "existing_spend": 12,
+    "urgency": 10,
+    "workaround_burden": 8,
+    "buyer_clarity": 8,
+    "reachability": 10,
+    "free_ai_resistance": 8,
+    "repeatability": 6,
+    "margin_potential": 6,
+    "evidence_diversity": 6,
+    "purchasing_capacity": 8,
+    "local_price_fit": 6
+  },
+  "score_thresholds": {
+    "reject_below": 60,
+    "discovery_below": 75,
+    "validation_candidate_below": 85,
+    "priority_candidate_at_or_above": 85
+  }
+}
