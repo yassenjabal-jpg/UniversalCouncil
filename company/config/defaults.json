@@ -1,1 +1,18 @@
-{"version":"1.0","operation":"PAUSED_BY_OWNER","autonomy":"DRY_RUN","live_enabled":false,"external_spend_minor":0,"refund_authority_minor":0,"wip_limit":1,"governance_freeze_days_default":30,"meta_work_alert_ratio":0.20,"external_reality_supremacy":true}
+{
+  "version":"1.1",
+  "operation":"PAUSED_BY_OWNER",
+  "autonomy":"DRY_RUN",
+  "live_enabled":false,
+  "external_spend_minor":0,
+  "refund_authority_minor":0,
+  "wip_limit":1,
+  "governance_freeze_days_default":30,
+  "meta_work_alert_ratio":0.20,
+  "external_reality_supremacy":true,
+  "zero_revenue_founder_mode":true,
+  "founder_mode_until_first_collected_payment":true,
+  "distribution_local_market_fit_gate":true,
+  "forced_conviction_required":true,
+  "time_is_capital":true,
+  "hr_capability_director_required":true
+}
