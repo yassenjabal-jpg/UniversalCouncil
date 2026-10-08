@@ -9,6 +9,9 @@ class PolicyError(PermissionError): pass
 def now_iso(): return datetime.now(timezone.utc).isoformat()
 def h(obj): return hashlib.sha256(json.dumps(obj,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
+def _expired(value):
+    return bool(value and value < now_iso())
+
 def pause(db):
     with db:
         gen=int(get_meta(db,'stop_generation','1'))+1
@@ -36,7 +39,7 @@ def _grant(db, grant_id):
     g=db.execute('SELECT * FROM grants WHERE id=?',(grant_id,)).fetchone()
     if not g: raise PolicyError('missing grant')
     if g['revoked'] or g['generation']!=int(get_meta(db,'stop_generation','1')): raise PolicyError('stale or revoked grant')
-    if g['expires_at'] and g['expires_at'] < now_iso(): raise PolicyError('expired grant')
+    if _expired(g['expires_at']): raise PolicyError('expired grant')
     return g
 
 def authorize(db, *, grant_id, venture_id, command_type, operation, account, destination=None, amount_minor=0, currency=None, data_scope=None, simulated=True):
@@ -52,6 +55,7 @@ def authorize(db, *, grant_id, venture_id, command_type, operation, account, des
     if g['max_uses'] is not None and g['uses']+g['reserved_uses']>=g['max_uses']: raise PolicyError('grant use limit exceeded')
     c=db.execute('SELECT * FROM capabilities WHERE operation=? AND account=?',(operation,account)).fetchone()
     if not c: raise PolicyError('capability not registered')
+    if _expired(c['expires_at']): raise PolicyError('capability verification expired')
     allowed={CapabilityStatus.WRITE_SANDBOX_VERIFIED.value} if simulated else {CapabilityStatus.LIVE_VERIFIED.value}
     if c['status'] not in allowed: raise PolicyError(f'capability not ready: {c["status"]}')
     return g
