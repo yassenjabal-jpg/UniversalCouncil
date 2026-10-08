@@ -1,7 +1,7 @@
 import sqlite3
 from pathlib import Path
 
-SCHEMA_VERSION=2
+SCHEMA_VERSION=3
 
 def connect(path):
     path=Path(path); path.parent.mkdir(parents=True, exist_ok=True)
@@ -30,8 +30,9 @@ def migrate(db):
     cols={r[1] for r in db.execute('PRAGMA table_info(grants)').fetchall()}
     if 'reserved_amount' not in cols: db.execute('ALTER TABLE grants ADD COLUMN reserved_amount INTEGER NOT NULL DEFAULT 0')
     if 'reserved_uses' not in cols: db.execute('ALTER TABLE grants ADD COLUMN reserved_uses INTEGER NOT NULL DEFAULT 0')
-    defaults={'schema_version':str(SCHEMA_VERSION),'operation':'PAUSED_BY_OWNER','autonomy':'DRY_RUN','stop_generation':'1','live_enabled':'0'}
+    defaults={'operation':'PAUSED_BY_OWNER','autonomy':'DRY_RUN','stop_generation':'1','live_enabled':'0'}
     for k,v in defaults.items(): db.execute('INSERT OR IGNORE INTO meta(key,value) VALUES(?,?)',(k,v))
+    set_meta(db,'schema_version',SCHEMA_VERSION)
     db.commit()
 
 def get_meta(db,key,default=None):
