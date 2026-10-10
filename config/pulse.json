@@ -1,5 +1,5 @@
 {
-  "version":"0.3.0",
+  "version":"0.3.1",
   "enabled":true,
   "default_cadence":"daily",
   "notify_on":["WATCH","REOPEN-SLICE","REOPEN-DECISION","PIVOT-RECOMMENDED","KILL-RECOMMENDED","USER-DECISION-REQUIRED"],
@@ -16,13 +16,17 @@
     "new_competitor_or_substitute",
     "user_friction",
     "operator_burden",
+    "capability_gap",
+    "tooling_or_external_capability_change",
+    "hr_capability_scouting_due",
     "new_blockers",
     "superior_alternatives",
     "commitment_evidence_quality",
     "metric_drift"
   ],
   "anti_churn":{
-    "reopen_only_if":"new evidence, failed assumption, expiry trigger, material execution signal, or superior alternative can plausibly change the decision",
-    "no_change_is_silent":true
+    "reopen_only_if":"new evidence, failed assumption, expiry trigger, material execution signal, superior alternative, or a material capability change can plausibly change the decision",
+    "no_change_is_silent":true,
+    "capability_scan_no_change_is_silent":true
   }
 }
