@@ -1,0 +1,113 @@
+{
+  "version": "1.0",
+  "enabled": true,
+  "owner": "HR & Capability Director",
+  "function_name": "Technology & Capability Scout",
+  "permanent_new_role": false,
+  "mode": "READ_ONLY_DISCOVERY_BY_DEFAULT",
+  "cadence": {
+    "event_driven": true,
+    "periodic_active_days": 7,
+    "periodic_inactive_days": 30
+  },
+  "gap_triggers": [
+    "CAPABILITY_UNAVAILABLE",
+    "REPEATED_MANUAL_WORK",
+    "RECURRING_TOOL_FAILURE",
+    "EVIDENCE_CHANNEL_GAP",
+    "REPEATED_HUMAN_HANDOFF",
+    "SLOW_OR_HIGH_FRICTION_WORKFLOW",
+    "DUPLICATE_TOOLING",
+    "SECURITY_OR_COST_REGRESSION",
+    "EXTERNAL_CAPABILITY_ADVANCE"
+  ],
+  "manual_work_repeat_threshold": 2,
+  "discovery_sources": [
+    "official_vendor_or_maintainer_docs",
+    "github_and_open_source_registries",
+    "plugin_connector_skill_directories",
+    "mcp_and_agent_tool_ecosystems",
+    "professional_communities",
+    "reddit_and_practitioner_forums",
+    "release_notes_and_security_advisories"
+  ],
+  "candidate_required_fields": [
+    "gap_id",
+    "candidate_name",
+    "source_url_or_identifier",
+    "capability_added",
+    "existing_capability_overlap",
+    "maintenance_signal",
+    "license_or_terms",
+    "install_or_connection_method",
+    "permissions_required",
+    "data_access",
+    "external_write_capable",
+    "cost_model",
+    "security_risks",
+    "rollback_plan",
+    "sandbox_test",
+    "success_metric",
+    "kill_trigger",
+    "version_or_commit_pin"
+  ],
+  "approval_gates": [
+    "HR_DISCOVERY",
+    "SECURITY_REVIEW",
+    "ARCHITECTURE_AND_DUPLICATION_REVIEW",
+    "COUNCIL_REVIEW",
+    "SANDBOX_PILOT",
+    "OWNER_ADOPTION_DECISION"
+  ],
+  "hr_read_only_actions": [
+    "DISCOVER",
+    "COMPARE",
+    "READ_DOCS",
+    "INSPECT_PUBLIC_REPO",
+    "SEARCH_COMMUNITY",
+    "REVIEW_RELEASE_NOTES",
+    "REVIEW_SECURITY_ADVISORIES"
+  ],
+  "hr_forbidden_unilateral_actions": [
+    "INSTALL_TOOL",
+    "CONNECT_CREDENTIALS",
+    "AUTHENTICATE_ACCOUNT",
+    "PURCHASE",
+    "CHANGE_PERMISSIONS",
+    "ENABLE_BROWSER_EXTENSION",
+    "WRITE_EXTERNAL",
+    "PUBLISH",
+    "SEND_MESSAGE"
+  ],
+  "authenticated_tool_requirements": {
+    "separate_research_account_preferred": true,
+    "least_privilege": true,
+    "session_cookie_is_sensitive": true,
+    "isolation_plan_required": true,
+    "sensitive_primary_browser_forbidden_without_owner_exception": true
+  },
+  "supply_chain_requirements": {
+    "verify_project_identity": true,
+    "verify_install_source": true,
+    "moving_branch_install_for_pilot_forbidden": true,
+    "version_or_commit_pin_required": true,
+    "rollback_required": true
+  },
+  "kpis": [
+    "capability_gap_detection_latency",
+    "scouting_coverage",
+    "candidate_decision_quality",
+    "time_or_cost_saved_after_adoption",
+    "manual_steps_removed",
+    "security_or_reliability_regressions",
+    "duplicate_candidates_rejected",
+    "adopted_candidates_still_useful_at_review"
+  ],
+  "anti_bureaucracy": {
+    "no_candidate_quota": true,
+    "no_installation_quota": true,
+    "report_no_change_silently": true,
+    "scout_only_when_gap_or_material_external_change_exists": false,
+    "periodic_scan_is_bounded": true
+  }
+}
