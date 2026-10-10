@@ -139,5 +139,59 @@ class IntelligenceGatewayRouting(unittest.TestCase):
         self.assertIn("boom", result.metadata["fallback_reason"])
 
 
+    def test_blocked_policy_does_not_health_check_provider(self):
+        class CountingProvider(StubProvider):
+            def __init__(self, provider_id):
+                super().__init__(provider_id)
+                self.health_calls = 0
+
+            def health(self):
+                self.health_calls += 1
+                return super().health()
+
+        provider = CountingProvider("agent_reach")
+        req = ResearchRequest(
+            request_id="R9",
+            intent="instagram_authenticated",
+            query="trend",
+            auth_requirement=AuthRequirement.AUTHENTICATED,
+        )
+        result = route_request(req, POLICY, {"agent_reach": provider})
+        self.assertEqual(result.status, GatewayStatus.BLOCKED)
+        self.assertEqual(provider.health_calls, 0)
+
+    def test_agent_reach_health_cannot_elevate_public_request_auth(self):
+        req = ResearchRequest(
+            request_id="R-AUTH",
+            intent="youtube_transcript_public",
+            query="video",
+        )
+        elevated = ProviderHealth(
+            provider_id="agent_reach",
+            status=ProviderStatus.HEALTHY,
+            backend="unexpected-authenticated-backend",
+            auth_level=AuthRequirement.AUTHENTICATED,
+        )
+        result = select_route(req, POLICY, {"agent_reach": elevated})
+        self.assertEqual(result.status, GatewayStatus.BLOCKED)
+        self.assertIsNone(result.provider)
+
+    def test_explicit_fallback_on_primary_health_failure_is_recorded(self):
+        req = ResearchRequest(
+            request_id="R10",
+            intent="web_read_public",
+            target_url="https://example.com",
+        )
+        providers = {
+            "native_web": StubProvider("native_web", status=ProviderStatus.UNAVAILABLE),
+            "agent_reach": StubProvider("agent_reach"),
+        }
+        result = route_request(req, POLICY, providers)
+        self.assertEqual(result.status, GatewayStatus.OK)
+        self.assertEqual(result.provider, "agent_reach")
+        self.assertEqual(result.metadata["fallback_from"], "native_web")
+        self.assertIn("health", result.metadata["fallback_reason"])
+
+
 if __name__ == "__main__":
     unittest.main()

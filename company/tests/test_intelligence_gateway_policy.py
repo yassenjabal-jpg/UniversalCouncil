@@ -61,11 +61,24 @@ class IntelligenceGatewayPolicy(unittest.TestCase):
         self.assertEqual(cfg["agent_reach"]["launcher_env"], "COUNCIL_AGENT_REACH_LAUNCHER")
         self.assertEqual(cfg["agent_reach"]["commit_env"], "COUNCIL_AGENT_REACH_COMMIT")
 
+    def test_web_read_agent_reach_is_explicit_fallback_not_peer_provider(self):
+        cfg = self._cfg()
+        self.assertEqual(cfg["routes"]["web_read_public"]["providers"], ["native_web"])
+        self.assertEqual(cfg["routes"]["web_read_public"]["fallbacks"], ["agent_reach"])
+
     def test_validator_rejects_gateway_policy_drift(self):
         from tools import validate_config as validator
 
         bad = self._cfg()
         bad["default_mode"] = "WRITE"
+        with self.assertRaises(AssertionError):
+            validator.validate_intelligence_gateway(bad)
+
+    def test_validator_rejects_implicit_agent_reach_web_peer(self):
+        from tools import validate_config as validator
+
+        bad = self._cfg()
+        bad["routes"]["web_read_public"]["providers"] = ["native_web", "agent_reach"]
         with self.assertRaises(AssertionError):
             validator.validate_intelligence_gateway(bad)
 

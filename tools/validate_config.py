@@ -109,6 +109,8 @@ def validate_intelligence_gateway(cfg):
     assert required_blocked.issubset(set(cfg.get("blocked_intents", ()))), "authenticated social route missing block"
     assert cfg["routes"]["github"]["providers"] == ["native_github"], "GitHub must remain native-only"
     assert cfg["routes"]["private_drive"]["providers"] == ["native_drive"], "private Drive must remain native-only"
+    assert cfg["routes"]["web_read_public"]["providers"] == ["native_web"], "web read primary must remain native"
+    assert cfg["routes"]["web_read_public"]["fallbacks"] == ["agent_reach"], "Agent Reach web use must remain explicit fallback"
 
 
 validate_intelligence_gateway(gateway)

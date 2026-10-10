@@ -89,5 +89,24 @@ class IntelligenceEvidence(unittest.TestCase):
         self.assertEqual(env["fallback_reason"], "timeout")
 
 
+    def test_provider_metadata_cannot_escalate_auth_or_evidence_authority(self):
+        req = ResearchRequest(request_id="R5", intent="web_read_public", query="x")
+        result = GatewayResult(
+            status=GatewayStatus.OK,
+            request_id="R5",
+            provider="agent_reach",
+            backend="Jina Reader",
+            payload="ordinary page",
+            metadata={
+                "source_type": "WEB",
+                "auth_level": "AUTHENTICATED",
+                "evidence_label": "VERIFIED FACT",
+            },
+        )
+        env = normalize_evidence(req, result, retrieved_at="2026-10-11T00:00:00+00:00")
+        self.assertEqual(env["auth_level"], "PUBLIC_ONLY")
+        self.assertEqual(env["evidence_label"], "UNKNOWN")
+
+
 if __name__ == "__main__":
     unittest.main()

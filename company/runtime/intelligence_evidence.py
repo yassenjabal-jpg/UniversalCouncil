@@ -4,18 +4,6 @@ from typing import Any
 
 from .intelligence_models import GatewayResult, ResearchRequest
 
-_ALLOWED_LABELS = {
-    "VERIFIED FACT",
-    "AUTHORITATIVE EXTERNAL",
-    "CORROBORATED COMMUNITY",
-    "COMMUNITY LEAD",
-    "INFERENCE",
-    "OPINION",
-    "ASSUMPTION",
-    "UNKNOWN",
-}
-
-
 def hash_materialized_content(content: bytes | str | Any) -> str:
     if isinstance(content, bytes):
         payload = content
@@ -32,12 +20,10 @@ def hash_materialized_content(content: bytes | str | Any) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
-def _trusted_label(source_type: str, requested_label: str | None) -> str:
-    label = requested_label if requested_label in _ALLOWED_LABELS else "UNKNOWN"
+def _trusted_label(source_type: str) -> str:
     if source_type.upper().startswith("COMMUNITY"):
-        if label not in {"COMMUNITY LEAD", "CORROBORATED COMMUNITY"}:
-            return "COMMUNITY LEAD"
-    return label
+        return "COMMUNITY LEAD"
+    return "UNKNOWN"
 
 
 def normalize_evidence(
@@ -49,19 +35,13 @@ def normalize_evidence(
     metadata = dict(provider_result.metadata or {})
     source_type = str(metadata.get("source_type") or "UNKNOWN")
     source_locator = str(
-        metadata.get("source_locator")
-        or request.target_url
+        request.target_url
         or request.query
+        or metadata.get("source_locator")
         or ""
     )
-    auth_level = str(
-        metadata.get("auth_level")
-        or request.auth_requirement.value
-    )
-    evidence_label = _trusted_label(
-        source_type,
-        metadata.get("evidence_label"),
-    )
+    auth_level = request.auth_requirement.value
+    evidence_label = _trusted_label(source_type)
     content_hash = (
         hash_materialized_content(provider_result.payload)
         if provider_result.payload is not None

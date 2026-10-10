@@ -1,6 +1,9 @@
+import ipaddress
 import json
 import os
 import subprocess
+import time
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -22,6 +25,14 @@ ALLOWED_OPERATIONS = {
     "doctor_read_only",
 }
 APPROVED_DOCTOR_CHANNELS = ("web", "youtube", "rss", "bilibili")
+_OPERATION_BACKENDS = {
+    "web_read_public": "Jina Reader",
+    "youtube_metadata_public": "yt-dlp",
+    "youtube_transcript_public": "yt-dlp",
+    "rss_read_public": "feedparser",
+    "bilibili_basic_public": "Bilibili API",
+    "doctor_read_only": "Agent Reach doctor",
+}
 
 
 def run_argv(argv: list[str], timeout_s: int):
@@ -41,6 +52,17 @@ def _http_url(value: str) -> str:
     parsed = urlparse(value)
     if parsed.scheme not in {"http", "https"} or not parsed.netloc:
         raise ValueError("target_url must be an absolute http(s) URL")
+    host = (parsed.hostname or "").rstrip(".").lower()
+    if not host:
+        raise ValueError("target_url must include a host")
+    if host == "localhost" or host.endswith((".localhost", ".local", ".internal")):
+        raise ValueError("local/private network targets are not allowed")
+    try:
+        address = ipaddress.ip_address(host)
+    except ValueError:
+        address = None
+    if address is not None and not address.is_global:
+        raise ValueError("local/private network targets are not allowed")
     return value
 
 
@@ -54,6 +76,7 @@ class AgentReachProvider:
         strict_pin: bool = True,
         runner=run_argv,
         timeout_s: int = 30,
+        health_ttl_s: int = 60,
     ):
         self.launcher_path = Path(launcher_path)
         self.approved_commit = approved_commit
@@ -61,6 +84,9 @@ class AgentReachProvider:
         self.strict_pin = strict_pin
         self.runner = runner
         self.timeout_s = timeout_s
+        self.health_ttl_s = max(0, int(health_ttl_s))
+        self._cached_health: ProviderHealth | None = None
+        self._cached_health_at: float | None = None
 
     def _venv_root(self) -> Path:
         parent = self.launcher_path.parent
@@ -92,6 +118,8 @@ class AgentReachProvider:
             target = request.target_url or request.query
             if not target:
                 raise ValueError("YouTube operation requires target_url or query")
+            if str(target).lower().startswith(("http://", "https://")):
+                target = _http_url(str(target))
             return [
                 self._tool("yt-dlp"),
                 "--skip-download",
@@ -138,20 +166,39 @@ class AgentReachProvider:
 
         raise ValueError(f"unsupported allowlisted operation: {operation}")
 
+    def _health_snapshot(
+        self,
+        status: ProviderStatus,
+        *,
+        backend: str | None = None,
+        warnings: tuple[str, ...] = (),
+    ) -> ProviderHealth:
+        return ProviderHealth(
+            provider_id="agent_reach",
+            status=status,
+            backend=backend,
+            auth_level=AuthRequirement.PUBLIC_ONLY,
+            verified_at=datetime.now(timezone.utc).isoformat(),
+            identity=self.runtime_commit,
+            warnings=warnings,
+        )
+
     def health(self) -> ProviderHealth:
+        if (
+            self._cached_health is not None
+            and self._cached_health_at is not None
+            and time.monotonic() - self._cached_health_at < self.health_ttl_s
+        ):
+            return self._cached_health
+
         if not self.launcher_path.exists():
-            return ProviderHealth(
-                provider_id="agent_reach",
-                status=ProviderStatus.UNAVAILABLE,
-                auth_level=AuthRequirement.PUBLIC_ONLY,
+            return self._health_snapshot(
+                ProviderStatus.UNAVAILABLE,
                 warnings=("launcher missing",),
             )
         if self.strict_pin and self.runtime_commit != self.approved_commit:
-            return ProviderHealth(
-                provider_id="agent_reach",
-                status=ProviderStatus.BLOCKED,
-                auth_level=AuthRequirement.PUBLIC_ONLY,
-                identity=self.runtime_commit,
+            return self._health_snapshot(
+                ProviderStatus.BLOCKED,
                 warnings=("runtime commit does not match approved pin",),
             )
 
@@ -164,29 +211,20 @@ class AgentReachProvider:
                 self.timeout_s,
             )
         except Exception as exc:
-            return ProviderHealth(
-                provider_id="agent_reach",
-                status=ProviderStatus.UNAVAILABLE,
-                auth_level=AuthRequirement.PUBLIC_ONLY,
-                identity=self.runtime_commit,
+            return self._health_snapshot(
+                ProviderStatus.UNAVAILABLE,
                 warnings=(f"doctor failed: {exc}",),
             )
         if completed.returncode != 0:
-            return ProviderHealth(
-                provider_id="agent_reach",
-                status=ProviderStatus.UNAVAILABLE,
-                auth_level=AuthRequirement.PUBLIC_ONLY,
-                identity=self.runtime_commit,
+            return self._health_snapshot(
+                ProviderStatus.UNAVAILABLE,
                 warnings=("doctor returned non-zero",),
             )
         try:
             doctor = json.loads(completed.stdout or "{}")
         except json.JSONDecodeError:
-            return ProviderHealth(
-                provider_id="agent_reach",
-                status=ProviderStatus.UNAVAILABLE,
-                auth_level=AuthRequirement.PUBLIC_ONLY,
-                identity=self.runtime_commit,
+            return self._health_snapshot(
+                ProviderStatus.UNAVAILABLE,
                 warnings=("doctor output was not valid JSON",),
             )
 
@@ -196,21 +234,18 @@ class AgentReachProvider:
             if item.get("status") == "ok":
                 healthy.append((name, item.get("active_backend") or name))
         if not healthy:
-            return ProviderHealth(
-                provider_id="agent_reach",
-                status=ProviderStatus.UNAVAILABLE,
-                auth_level=AuthRequirement.PUBLIC_ONLY,
-                identity=self.runtime_commit,
+            return self._health_snapshot(
+                ProviderStatus.UNAVAILABLE,
                 warnings=("no approved public-read channel is healthy",),
             )
-        return ProviderHealth(
-            provider_id="agent_reach",
-            status=ProviderStatus.HEALTHY,
-            backend=healthy[0][1],
-            auth_level=AuthRequirement.PUBLIC_ONLY,
-            identity=self.runtime_commit,
-            warnings=tuple(f"{name}:{backend}" for name, backend in healthy[1:]),
+        snapshot = self._health_snapshot(
+            ProviderStatus.HEALTHY,
+            backend="Agent Reach public-read",
+            warnings=tuple(f"{name}:{backend}" for name, backend in healthy),
         )
+        self._cached_health = snapshot
+        self._cached_health_at = time.monotonic()
+        return snapshot
 
     def _fetch_caption(self, info: dict) -> str | None:
         captions = info.get("subtitles") or info.get("automatic_captions") or {}
@@ -256,6 +291,8 @@ class AgentReachProvider:
                 warnings=health.warnings,
             )
 
+        operation_backend = _OPERATION_BACKENDS.get(request.intent, health.backend)
+
         try:
             argv = self.build_argv(request.intent, request)
             completed = self.runner(argv, self.timeout_s)
@@ -264,7 +301,7 @@ class AgentReachProvider:
                 status=GatewayStatus.PROVIDER_ERROR,
                 request_id=request.request_id,
                 provider="agent_reach",
-                backend=health.backend,
+                backend=operation_backend,
                 message=str(exc),
             )
         if completed.returncode != 0:
@@ -272,7 +309,7 @@ class AgentReachProvider:
                 status=GatewayStatus.PROVIDER_ERROR,
                 request_id=request.request_id,
                 provider="agent_reach",
-                backend=health.backend,
+                backend=operation_backend,
                 message=completed.stderr or "provider command returned non-zero",
             )
 
@@ -291,7 +328,7 @@ class AgentReachProvider:
             status=GatewayStatus.OK,
             request_id=request.request_id,
             provider="agent_reach",
-            backend=health.backend,
+            backend=operation_backend,
             payload=payload,
             limitations=("PUBLIC_ONLY", "NO_EXTERNAL_WRITES"),
         )

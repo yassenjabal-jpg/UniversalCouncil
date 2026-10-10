@@ -8,6 +8,7 @@ from subprocess import CompletedProcess
 from company.runtime.agent_reach_provider import AgentReachProvider, run_argv
 from company.runtime.intelligence_models import (
     AuthRequirement,
+    ProviderHealth,
     ProviderStatus,
     ResearchRequest,
 )
@@ -141,6 +142,69 @@ class AgentReachProviderSecurity(unittest.TestCase):
         for operation, request in requests:
             argv = provider.build_argv(operation, request)
             self.assertIn("stdout.buffer.write", argv[2], operation)
+
+
+    def test_operation_result_uses_actual_backend_provenance(self):
+        provider = AgentReachProvider(self._launcher(), APPROVED, runtime_commit=APPROVED, runner=FakeRunner("{}"))
+        provider.health = lambda: ProviderHealth(
+            provider_id="agent_reach",
+            status=ProviderStatus.HEALTHY,
+            backend="Agent Reach public-read",
+            auth_level=AuthRequirement.PUBLIC_ONLY,
+            identity=APPROVED,
+        )
+        cases = [
+            ("youtube_metadata_public", "https://www.youtube.com/watch?v=test", "yt-dlp"),
+            ("rss_read_public", "https://example.com/feed", "feedparser"),
+            ("web_read_public", "https://example.com", "Jina Reader"),
+        ]
+        for intent, target, expected_backend in cases:
+            req = ResearchRequest(request_id=intent, intent=intent, target_url=target)
+            result = provider.read(req)
+            self.assertEqual(result.backend, expected_backend, intent)
+
+    def test_health_records_verification_timestamp(self):
+        payload = json.dumps({"web": {"status": "ok", "active_backend": "Jina Reader"}})
+        provider = AgentReachProvider(
+            self._launcher(),
+            APPROVED,
+            runtime_commit=APPROVED,
+            runner=FakeRunner(payload),
+        )
+        self.assertIsNotNone(provider.health().verified_at)
+
+    def test_health_reuses_recent_verified_snapshot(self):
+        payload = json.dumps({"web": {"status": "ok", "active_backend": "Jina Reader"}})
+        runner = FakeRunner(payload)
+        provider = AgentReachProvider(
+            self._launcher(),
+            APPROVED,
+            runtime_commit=APPROVED,
+            runner=runner,
+            health_ttl_s=60,
+        )
+        first = provider.health()
+        second = provider.health()
+        self.assertEqual(first, second)
+        self.assertEqual(len(runner.calls), 1)
+
+    def test_public_read_rejects_local_network_targets(self):
+        provider = AgentReachProvider(self._launcher(), APPROVED, runtime_commit=APPROVED, runner=FakeRunner())
+        for intent in ("web_read_public", "rss_read_public"):
+            for target in ("http://127.0.0.1:8080/x", "http://localhost/x", "http://[::1]/x"):
+                req = ResearchRequest(request_id=intent, intent=intent, target_url=target)
+                with self.assertRaises(ValueError, msg=f"{intent} {target}"):
+                    provider.build_argv(intent, req)
+
+    def test_youtube_url_rejects_local_network_target(self):
+        provider = AgentReachProvider(self._launcher(), APPROVED, runtime_commit=APPROVED, runner=FakeRunner())
+        req = ResearchRequest(
+            request_id="YT-LOCAL",
+            intent="youtube_metadata_public",
+            target_url="http://127.0.0.1:8080/video",
+        )
+        with self.assertRaises(ValueError):
+            provider.build_argv("youtube_metadata_public", req)
 
 
 if __name__ == "__main__":
