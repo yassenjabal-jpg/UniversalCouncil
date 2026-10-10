@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "launcher_env": "COUNCIL_AGENT_REACH_LAUNCHER",
+  "commit_env": "COUNCIL_AGENT_REACH_COMMIT",
+  "approved_commit": "94f06c1969dfc1834001269d79d3ad0972d9dee6",
+  "strict_pin": true,
+  "default_mode": "READ_ONLY",
+  "default_auth_requirement": "PUBLIC_ONLY"
+}
