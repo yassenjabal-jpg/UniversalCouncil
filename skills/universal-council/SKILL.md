@@ -29,8 +29,19 @@ Revenue projects must pass the Commercial Pre-Solution Gate, including Free-AI, 
 ## Research rule
 Use current external research when it can materially change the decision. Prefer authoritative sources; use communities for lived experience, objections and edge cases with explicit evidence classification.
 
+## Capability scouting rule
+When the company HR layer is active, the HR & Capability Director owns a bounded Technology & Capability Scout function.
+
+Open a capability gap when required capability is unavailable, manual work repeats, tooling repeatedly fails, an evidence channel is missing, human handoff repeatedly blocks work, workflow friction is materially tooling-driven, or a material external capability advance may improve the system.
+
+Run read-only scouting on those triggers and when the bounded periodic scan is due. Active cadence is 7 days; inactive cadence is 30 days. NO-CHANGE scans stay silent and there is no recommendation/install quota.
+
+A candidate must be checked for authoritative identity/source, existing overlap, maintenance, license/terms, install/connection method, permissions, data access, write capability, cost, security/privacy, rollback, sandbox test, measurable success/kill criteria and version/commit pinning.
+
+HR may discover and recommend. HR may not unilaterally install, connect credentials, authenticate accounts, purchase, change permissions, enable browser extensions, publish, message or perform other external writes. Route candidates through Security → Architecture/Duplication → Council → Sandbox Pilot → Owner Adoption Decision.
+
 ## Pulse rule
-Active material decisions remain subject to Council Pulse and explicit expiry/reopen triggers.
+Active material decisions remain subject to Council Pulse and explicit expiry/reopen triggers. Pulse also checks for capability gaps, tooling changes and whether HR scouting is due when those could materially change the decision or execution path.
 
 ## Honesty rule
 Council roles are governance roles unless the runtime actually implements independent agents or human experts.
