@@ -1,9 +1,9 @@
 # Council Intelligence Gateway v1 — Design Spec
 
-Date: 2026-10-11  
-Status: PROPOSED FOR OWNER REVIEW  
-Scope: UniversalCouncil / company research capability  
-Related finding: HR-001 proactive capability scouting  
+Date: 2026-10-11
+Status: PROPOSED FOR OWNER REVIEW
+Scope: UniversalCouncil / company research capability
+Related finding: HR-001 proactive capability scouting
 Related candidate: Agent Reach pinned on YASSIN at commit `94f06c1969dfc1834001269d79d3ad0972d9dee6`
 
 ## 1. Goal
@@ -34,13 +34,13 @@ v1 does not:
 ## 3. Considered approaches
 
 ### A. Make Agent Reach the universal router
-Pros: simple mental model.  
+Pros: simple mental model.
 Cons: duplicates native tools, increases dependency surface, weakens source-specific controls, and gives one external project too much architectural importance.
 
 Rejected.
 
 ### B. Hard-code per-feature Agent Reach commands directly into Council logic
-Pros: fast to implement.  
+Pros: fast to implement.
 Cons: brittle, Windows/path-specific, difficult to test, mixes policy with execution, and makes security boundaries hard to audit.
 
 Rejected.
