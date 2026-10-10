@@ -1,5 +1,5 @@
 {
-  "version":"0.3.1",
+  "version":"0.3.0",
   "enabled":true,
   "default_cadence":"daily",
   "notify_on":["WATCH","REOPEN-SLICE","REOPEN-DECISION","PIVOT-RECOMMENDED","KILL-RECOMMENDED","USER-DECISION-REQUIRED"],
