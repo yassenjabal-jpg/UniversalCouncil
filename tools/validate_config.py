@@ -8,6 +8,7 @@ routes = json.loads((ROOT / "config" / "domain-routing.json").read_text(encoding
 pulse = json.loads((ROOT / "config" / "pulse.json").read_text(encoding="utf-8"))
 company_roles = json.loads((ROOT / "company" / "config" / "roles.json").read_text(encoding="utf-8"))
 scouting = json.loads((ROOT / "company" / "config" / "capability_scouting.json").read_text(encoding="utf-8"))
+gateway = json.loads((ROOT / "company" / "config" / "intelligence_gateway.json").read_text(encoding="utf-8"))
 
 core = {r["id"] for r in roles["core_roles"]}
 specialists = {r["id"] for r in roles["specialist_roles"]}

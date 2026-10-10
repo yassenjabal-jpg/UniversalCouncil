@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "enabled": true,
+  "default_mode": "READ_ONLY",
+  "default_auth_requirement": "PUBLIC_ONLY",
+  "agent_reach": {
+    "provider_id": "agent_reach",
+    "strict_pin": true,
+    "approved_commit": "94f06c1969dfc1834001269d79d3ad0972d9dee6",
+    "launcher_env": "COUNCIL_AGENT_REACH_LAUNCHER",
+    "commit_env": "COUNCIL_AGENT_REACH_COMMIT",
+    "allowed_operations": [
+      "web_read_public",
+      "youtube_metadata_public",
+      "youtube_transcript_public",
+      "rss_read_public",
+      "bilibili_basic_public",
+      "doctor_read_only"
+    ]
+  },
+  "routes": {
+    "github": {"providers": ["native_github"], "fallbacks": []},
+    "general_web_search": {"providers": ["native_web"], "fallbacks": []},
+    "web_read_public": {"providers": ["native_web", "agent_reach"], "fallbacks": ["agent_reach"]},
+    "youtube_discovery": {"providers": ["native_web"], "fallbacks": []},
+    "youtube_metadata_public": {"providers": ["agent_reach"], "fallbacks": []},
+    "youtube_transcript_public": {"providers": ["agent_reach"], "fallbacks": []},
+    "rss_read_public": {"providers": ["agent_reach"], "fallbacks": []},
+    "bilibili_basic_public": {"providers": ["agent_reach"], "fallbacks": []},
+    "private_drive": {"providers": ["native_drive"], "fallbacks": []},
+    "private_gmail": {"providers": ["native_gmail"], "fallbacks": []},
+    "private_calendar": {"providers": ["native_calendar"], "fallbacks": []}
+  },
+  "blocked_intents": [
+    "instagram_authenticated",
+    "facebook_authenticated",
+    "reddit_authenticated",
+    "x_authenticated",
+    "linkedin_authenticated",
+    "xiaohongshu_authenticated"
+  ],
+  "provider_classes": {
+    "native_github": "NATIVE_PRIVATE_CAPABLE",
+    "native_web": "NATIVE_PUBLIC",
+    "native_drive": "NATIVE_PRIVATE",
+    "native_gmail": "NATIVE_PRIVATE",
+    "native_calendar": "NATIVE_PRIVATE",
+    "agent_reach": "PUBLIC_READ_ONLY"
+  }
+}
