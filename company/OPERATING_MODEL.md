@@ -10,7 +10,7 @@ Company operation, health, maturity, and autonomy are separate axes. Initial WIP
 - Meta-work alarm: governance/planning effort above 20% in two weekly windows triggers removal of discretionary ceremony.
 - Evidence freshness: time-sensitive evidence must be revalidated before use.
 - Payment Readiness Gate: beneficiary, collection route, fees, settlement/withdrawal, refund handling, and reconciliation must be verified before a paid live pilot.
-
+- Capability Scouting Guard: HR may proactively discover and compare tools, but adoption remains gated by security, architecture/duplication, sandbox and Owner authority.
 
 ## Zero-Revenue Founder Mode
 Until the first externally verified collected payment, Zero-Revenue Founder Mode is mandatory.
@@ -32,8 +32,18 @@ Tool availability never determines channel choice. An unavailable but market-cor
 ## Workforce governance
 HR & Capability Director continuously reviews whether active roles earn their organizational cost. HR may recommend KEEP / IMPROVEMENT_TRIAL / MERGE / REMOVE_WITHOUT_REPLACEMENT / REPLACE / FIRE_RECOMMENDATION, but final workforce authority remains with the Owner.
 
-Evidence-backed dissent is protected and cannot be penalized.
+HR also owns the internal Technology & Capability Scout function. It is not a new permanent Council role. HR must convert observable tooling/environment problems into explicit capability gaps and proactively scan for material external improvements rather than waiting for the Owner to name a candidate.
 
+### Capability scouting loop
+`Signal → Capability Gap → Read-only Scouting → Candidate Dossier → Security Review → Architecture/Duplication Review → Council Review → Sandbox Pilot → Owner Adoption Decision → Outcome Review`
+
+Event-driven scouting is triggered by unavailable capability, repeated manual work, recurring tool failure, unavailable evidence channels, repeated human handoff, tooling-driven friction, duplicate tooling, security/cost regression or a material external capability advance.
+
+Periodic scouting is bounded to every 7 days while active and every 30 days while inactive. NO-CHANGE scans remain silent. There is no quota for tools, recommendations or installations.
+
+HR cannot use scouting as execution authority. Installation, authenticated connection, credentials, paid commitment, permission change, browser extension, publishing, messaging or other external write remains outside unilateral HR authority.
+
+Evidence-backed dissent is protected and cannot be penalized.
 
 ## Market Reality Definition Gate
 Before the company proposes a commercial venture candidate, it must define the market reality that can support it.
@@ -58,7 +68,6 @@ Neither direction may protect a preferred solution by reverse-engineering eviden
 Foreign or mismatched-segment pain may be secondary context only until transfer to the target market is supported.
 
 A project whose proposed price exceeds the evidence-supported segment price ceiling is rejected or redesigned before validation.
-
 
 ## Media venture production gate
 A media venture may enter production capability testing only with:
