@@ -1,5 +1,6 @@
 from dataclasses import replace
 
+from .capability_scout import build_evidence_channel_gap
 from .intelligence_models import (
     AuthRequirement,
     GatewayResult,
@@ -166,3 +167,33 @@ def route_request(
             return replace(fallback_result, metadata=metadata)
 
     return primary
+
+
+_MATERIAL_EVIDENCE_PURPOSES = {
+    "DECISION_HINGE",
+    "MATERIAL_DECISION",
+    "COMMERCIAL_VALIDATION",
+    "SECURITY_REVIEW",
+    "LEGAL_REVIEW",
+    "HIGH_STAKES",
+}
+
+
+def capability_gap_from_gateway(
+    request: ResearchRequest,
+    result: GatewayResult,
+) -> dict | None:
+    if result.status not in {GatewayStatus.BLOCKED, GatewayStatus.UNAVAILABLE}:
+        return None
+    purpose = str(request.evidence_purpose or "").strip().upper()
+    if purpose not in _MATERIAL_EVIDENCE_PURPOSES:
+        return None
+    summary = (
+        f"Research evidence channel '{request.intent}' is "
+        f"{result.status.value.lower()} for purpose '{purpose}'."
+    )
+    return build_evidence_channel_gap(
+        f"INTEL-{request.request_id}",
+        summary,
+        impact_metric="evidence_coverage",
+    )
