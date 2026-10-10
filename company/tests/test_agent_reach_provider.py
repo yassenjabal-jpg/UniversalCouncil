@@ -1,10 +1,11 @@
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 from subprocess import CompletedProcess
 
-from company.runtime.agent_reach_provider import AgentReachProvider
+from company.runtime.agent_reach_provider import AgentReachProvider, run_argv
 from company.runtime.intelligence_models import (
     AuthRequirement,
     ProviderStatus,
@@ -122,6 +123,24 @@ class AgentReachProviderSecurity(unittest.TestCase):
             auth_requirement=AuthRequirement.AUTHENTICATED,
         )
         self.assertFalse(provider.can_handle(req))
+
+    def test_runner_decodes_utf8_independently_of_windows_codepage(self):
+        expected = "اختبار"
+        code = "import sys;sys.stdout.buffer.write('اختبار'.encode('utf-8'))"
+        completed = run_argv([sys.executable, "-c", code], 10)
+        self.assertEqual(completed.returncode, 0)
+        self.assertEqual(completed.stdout, expected)
+
+    def test_public_python_argv_uses_binary_stdout(self):
+        provider = AgentReachProvider(self._launcher(), APPROVED, runtime_commit=APPROVED, runner=FakeRunner())
+        requests = [
+            ("web_read_public", ResearchRequest(request_id="W", intent="web_read_public", target_url="https://example.com")),
+            ("rss_read_public", ResearchRequest(request_id="R", intent="rss_read_public", target_url="https://example.com/feed")),
+            ("bilibili_basic_public", ResearchRequest(request_id="B", intent="bilibili_basic_public", query="اختبار")),
+        ]
+        for operation, request in requests:
+            argv = provider.build_argv(operation, request)
+            self.assertIn("stdout.buffer.write", argv[2], operation)
 
 
 if __name__ == "__main__":

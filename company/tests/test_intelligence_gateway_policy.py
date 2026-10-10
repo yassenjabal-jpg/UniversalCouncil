@@ -61,6 +61,14 @@ class IntelligenceGatewayPolicy(unittest.TestCase):
         self.assertEqual(cfg["agent_reach"]["launcher_env"], "COUNCIL_AGENT_REACH_LAUNCHER")
         self.assertEqual(cfg["agent_reach"]["commit_env"], "COUNCIL_AGENT_REACH_COMMIT")
 
+    def test_validator_rejects_gateway_policy_drift(self):
+        from tools import validate_config as validator
+
+        bad = self._cfg()
+        bad["default_mode"] = "WRITE"
+        with self.assertRaises(AssertionError):
+            validator.validate_intelligence_gateway(bad)
+
 
 if __name__ == "__main__":
     unittest.main()

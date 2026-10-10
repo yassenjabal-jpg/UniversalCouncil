@@ -30,6 +30,8 @@ def run_argv(argv: list[str], timeout_s: int):
         shell=False,
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         timeout=timeout_s,
         check=False,
     )
@@ -104,7 +106,7 @@ class AgentReachProvider:
                 "import sys,urllib.request;"
                 "u='https://r.jina.ai/'+sys.argv[1];"
                 "r=urllib.request.Request(u,headers={'User-Agent':'CouncilGateway/1.0'});"
-                "print(urllib.request.urlopen(r,timeout=20).read().decode('utf-8','replace'))"
+                "sys.stdout.buffer.write(urllib.request.urlopen(r,timeout=20).read())"
             )
             return [self._tool("python"), "-c", script, target]
 
@@ -114,9 +116,10 @@ class AgentReachProvider:
                 "import sys,json,feedparser;"
                 "f=feedparser.parse(sys.argv[1]);"
                 "n=int(sys.argv[2]);"
-                "print(json.dumps({'title':getattr(f.feed,'title',''),"
+                "payload=json.dumps({'title':getattr(f.feed,'title',''),"
                 "'entries':[{'title':getattr(e,'title',''),'link':getattr(e,'link','')}"
-                " for e in f.entries[:n]]},ensure_ascii=False))"
+                " for e in f.entries[:n]]},ensure_ascii=False).encode('utf-8');"
+                "sys.stdout.buffer.write(payload)"
             )
             return [self._tool("python"), "-c", script, target, str(request.max_results)]
 
@@ -125,11 +128,11 @@ class AgentReachProvider:
             if not query:
                 raise ValueError("Bilibili operation requires query")
             script = (
-                "import sys,json,urllib.parse,urllib.request;"
+                "import sys,urllib.parse,urllib.request;"
                 "q=urllib.parse.quote(sys.argv[1]);"
                 "u='https://api.bilibili.com/x/web-interface/search/type?search_type=video&keyword='+q;"
                 "r=urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0'});"
-                "print(urllib.request.urlopen(r,timeout=20).read().decode('utf-8','replace'))"
+                "sys.stdout.buffer.write(urllib.request.urlopen(r,timeout=20).read())"
             )
             return [self._tool("python"), "-c", script, query]
 
@@ -225,7 +228,7 @@ class AgentReachProvider:
         script = (
             "import sys,urllib.request;"
             "r=urllib.request.Request(sys.argv[1],headers={'User-Agent':'Mozilla/5.0'});"
-            "print(urllib.request.urlopen(r,timeout=20).read().decode('utf-8','replace'))"
+            "sys.stdout.buffer.write(urllib.request.urlopen(r,timeout=20).read())"
         )
         completed = self.runner([self._tool("python"), "-c", script, _http_url(url)], self.timeout_s)
         if completed.returncode != 0:
