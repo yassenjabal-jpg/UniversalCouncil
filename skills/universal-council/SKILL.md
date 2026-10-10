@@ -45,3 +45,13 @@ Active material decisions remain subject to Council Pulse and explicit expiry/re
 
 ## Honesty rule
 Council roles are governance roles unless the runtime actually implements independent agents or human experts.
+
+
+## Intelligence Gateway rule
+Use **native-first routing** for research. Keep GitHub, private Drive/Gmail/Calendar and other stronger native connectors on their native paths. Use Agent Reach only for the approved public-read allowlist and preserve evidence provenance for every result.
+
+Authenticated social channels remain blocked in v1. Do not use OpenCLI, cookies, credentials, browser-session extraction, installation/configuration commands, publishing, messaging, or other external writes through the gateway.
+
+When a blocked or unavailable evidence channel is material to the decision, open a capability gap for HR review. The gap is a research/capability signal only and does not authorize installation, authentication, or credential collection.
+
+The Intelligence Gateway is routing infrastructure, not a Council member, and has no decision authority.

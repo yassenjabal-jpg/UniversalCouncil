@@ -92,6 +92,15 @@ def build_gap(gap_id, signal_type, summary, *, repeat_count=1, impact_metric=Non
     }
 
 
+def build_evidence_channel_gap(gap_id, summary, *, impact_metric=None):
+    return build_gap(
+        gap_id,
+        "EVIDENCE_CHANNEL_GAP",
+        summary,
+        impact_metric=impact_metric,
+    )
+
+
 def scouting_due(last_scan_at, now_at=None, *, active=True):
     now = _parse_iso(now_at or datetime.now(timezone.utc))
     if not last_scan_at:

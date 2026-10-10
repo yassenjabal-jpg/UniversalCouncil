@@ -34,3 +34,10 @@ Project-first reasoning is treated as a process failure. Both SEGMENT_FIRST and 
 Media ventures use a venture-scoped production layer with an Editorial Director / Showrunner, AI Visual & Post-Production Producer, and on-demand Audience Growth & Packaging Operator.
 
 A 3-video production pilot is mandatory before scale. Publishing remains separately gated and is not authorized by the media capability layer.
+
+
+## Council Intelligence Gateway v1
+
+The company research layer includes a policy-first Intelligence Gateway for source selection and provenance. It is **not a Council member** and has **no decision authority**.
+
+The gateway uses native-first routing, keeps private/native sources on their existing connectors, and exposes Agent Reach only as a read-only public provider for the approved v1 capability set. Authenticated social channels remain blocked in v1. Any material blocked channel is escalated as an HR capability gap rather than automatically installing tools or requesting credentials.

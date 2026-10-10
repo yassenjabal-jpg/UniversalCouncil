@@ -8,6 +8,7 @@ routes = json.loads((ROOT / "config" / "domain-routing.json").read_text(encoding
 pulse = json.loads((ROOT / "config" / "pulse.json").read_text(encoding="utf-8"))
 company_roles = json.loads((ROOT / "company" / "config" / "roles.json").read_text(encoding="utf-8"))
 scouting = json.loads((ROOT / "company" / "config" / "capability_scouting.json").read_text(encoding="utf-8"))
+gateway = json.loads((ROOT / "company" / "config" / "intelligence_gateway.json").read_text(encoding="utf-8"))
 
 core = {r["id"] for r in roles["core_roles"]}
 specialists = {r["id"] for r in roles["specialist_roles"]}
@@ -78,8 +79,44 @@ assert scouting["supply_chain_requirements"]["moving_branch_install_for_pilot_fo
 for action in ("INSTALL_TOOL","CONNECT_CREDENTIALS","AUTHENTICATE_ACCOUNT","PURCHASE","CHANGE_PERMISSIONS","ENABLE_BROWSER_EXTENSION","WRITE_EXTERNAL","PUBLISH","SEND_MESSAGE"):
     assert action in scouting["hr_forbidden_unilateral_actions"], f"missing HR action boundary: {action}"
 
+
+def validate_intelligence_gateway(cfg):
+    assert cfg.get("version") == "1.0", "intelligence gateway config must be v1.0"
+    assert cfg.get("default_mode") == "READ_ONLY", "gateway must default to read-only"
+    assert cfg.get("default_auth_requirement") == "PUBLIC_ONLY", "gateway must default to public-only"
+    ar = cfg["agent_reach"]
+    assert ar.get("strict_pin") is True, "Agent Reach strict pinning must be enabled"
+    assert ar.get("approved_commit") == "94f06c1969dfc1834001269d79d3ad0972d9dee6", "unexpected Agent Reach pin"
+    expected_ops = {
+        "web_read_public",
+        "youtube_metadata_public",
+        "youtube_transcript_public",
+        "rss_read_public",
+        "bilibili_basic_public",
+        "doctor_read_only",
+    }
+    assert set(ar.get("allowed_operations", ())) == expected_ops, "Agent Reach allowlist drift"
+    forbidden = {"install", "configure", "opencli", "publish", "message"}
+    assert forbidden.isdisjoint(set(ar.get("allowed_operations", ()))), "forbidden Agent Reach operation enabled"
+    required_blocked = {
+        "instagram_authenticated",
+        "facebook_authenticated",
+        "reddit_authenticated",
+        "x_authenticated",
+        "linkedin_authenticated",
+        "xiaohongshu_authenticated",
+    }
+    assert required_blocked.issubset(set(cfg.get("blocked_intents", ()))), "authenticated social route missing block"
+    assert cfg["routes"]["github"]["providers"] == ["native_github"], "GitHub must remain native-only"
+    assert cfg["routes"]["private_drive"]["providers"] == ["native_drive"], "private Drive must remain native-only"
+    assert cfg["routes"]["web_read_public"]["providers"] == ["native_web"], "web read primary must remain native"
+    assert cfg["routes"]["web_read_public"]["fallbacks"] == ["agent_reach"], "Agent Reach web use must remain explicit fallback"
+
+
+validate_intelligence_gateway(gateway)
+
 print(
     f"OK v{expected_version}: {len(core)} core roles, "
     f"{len(specialists)} specialists, {len(routes['routes'])} routing rules, "
-    f"{len(modes['modes'])} modes, pulse enabled, HR capability scouting enforced"
+    f"{len(modes['modes'])} modes, pulse enabled, HR capability scouting + intelligence gateway enforced"
 )
