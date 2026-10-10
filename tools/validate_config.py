@@ -6,6 +6,8 @@ roles = json.loads((ROOT / "config" / "roles.json").read_text(encoding="utf-8"))
 modes = json.loads((ROOT / "config" / "modes.json").read_text(encoding="utf-8"))
 routes = json.loads((ROOT / "config" / "domain-routing.json").read_text(encoding="utf-8"))
 pulse = json.loads((ROOT / "config" / "pulse.json").read_text(encoding="utf-8"))
+company_roles = json.loads((ROOT / "company" / "config" / "roles.json").read_text(encoding="utf-8"))
+scouting = json.loads((ROOT / "company" / "config" / "capability_scouting.json").read_text(encoding="utf-8"))
 
 core = {r["id"] for r in roles["core_roles"]}
 specialists = {r["id"] for r in roles["specialist_roles"]}
@@ -45,12 +47,39 @@ required_pulse_checks = {
     "sunk_cost_bias",
     "free_ai_substitution",
     "foundation_model_uplift",
-    "commitment_evidence_quality"
+    "commitment_evidence_quality",
+    "capability_gap",
+    "tooling_or_external_capability_change",
+    "hr_capability_scouting_due",
 }
-assert required_pulse_checks.issubset(set(pulse["checks"])), "Council Pulse missing v0.3 checks"
+assert required_pulse_checks.issubset(set(pulse["checks"])), "Council Pulse missing required checks"
+
+hr = company_roles["hr_capability_director"]
+assert company_roles.get("version") == "1.3", "company HR role config must be v1.3"
+assert hr.get("may_run_read_only_capability_discovery") is True, "HR read-only scouting must be enabled"
+for key in (
+    "may_install_tools_unilaterally",
+    "may_connect_credentials_unilaterally",
+    "may_authenticate_accounts_unilaterally",
+    "may_purchase_tools_unilaterally",
+    "may_change_permissions_unilaterally",
+    "may_enable_browser_extensions_unilaterally",
+    "may_execute_external_writes_unilaterally",
+):
+    assert hr.get(key) is False, f"{key} must fail closed"
+
+assert scouting.get("enabled") is True, "capability scouting must be enabled"
+assert scouting.get("owner") == "HR & Capability Director", "capability scouting owner mismatch"
+assert scouting.get("permanent_new_role") is False, "scouting must not add a permanent role"
+assert scouting["cadence"]["periodic_active_days"] == 7, "active scouting cadence mismatch"
+assert scouting["cadence"]["periodic_inactive_days"] == 30, "inactive scouting cadence mismatch"
+assert scouting["supply_chain_requirements"]["version_or_commit_pin_required"] is True, "pilot pinning required"
+assert scouting["supply_chain_requirements"]["moving_branch_install_for_pilot_forbidden"] is True, "moving pilot installs must be forbidden"
+for action in ("INSTALL_TOOL","CONNECT_CREDENTIALS","AUTHENTICATE_ACCOUNT","PURCHASE","CHANGE_PERMISSIONS","ENABLE_BROWSER_EXTENSION","WRITE_EXTERNAL","PUBLISH","SEND_MESSAGE"):
+    assert action in scouting["hr_forbidden_unilateral_actions"], f"missing HR action boundary: {action}"
 
 print(
     f"OK v{expected_version}: {len(core)} core roles, "
     f"{len(specialists)} specialists, {len(routes['routes'])} routing rules, "
-    f"{len(modes['modes'])} modes, pulse enabled"
+    f"{len(modes['modes'])} modes, pulse enabled, HR capability scouting enforced"
 )
