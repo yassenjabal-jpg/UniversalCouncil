@@ -58,6 +58,24 @@ class WorkEnvironmentHardeningContracts(unittest.TestCase):
         self.assertIn("tools/coverage_gate.py", text)
         self.assertIn("company/config/coverage_baseline.json", text)
 
+    def test_codeql_workflow_is_python_scoped_and_immutably_pinned(self):
+        path = ROOT / ".github" / "workflows" / "codeql.yml"
+        text = path.read_text(encoding="utf-8")
+        self.assertIn("pull_request:", text)
+        self.assertIn("push:", text)
+        self.assertIn('- "main"', text)
+        self.assertIn("name: CodeQL Python", text)
+        self.assertIn("languages: python", text)
+        self.assertIn(
+            "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            text,
+        )
+        pin = "24c54180a607b1449ed407dd24f251e4e9147c8d"
+        self.assertIn(f"github/codeql-action/init@{pin}", text)
+        self.assertIn(f"github/codeql-action/analyze@{pin}", text)
+        self.assertNotIn("github/codeql-action/init@v4", text)
+        self.assertNotIn("github/codeql-action/analyze@v4", text)
+
 
 if __name__ == "__main__":
     unittest.main()
