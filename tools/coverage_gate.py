@@ -48,9 +48,7 @@ def evaluate_coverage(
         return ["invalid current coverage: missing files mapping"]
 
     production_files = [
-        path
-        for path in normalize_paths(changed_files)
-        if path.startswith("company/runtime/") and path.endswith(".py")
+        path for path in normalize_paths(changed_files) if path.startswith("company/runtime/") and path.endswith(".py")
     ]
     for path in production_files:
         entry = current_files.get(path)
