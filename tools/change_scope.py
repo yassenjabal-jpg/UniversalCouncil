@@ -21,11 +21,7 @@ def filter_python_files(paths: list[str]) -> list[str]:
 
 
 def filter_production_files(paths: list[str]) -> list[str]:
-    return [
-        path
-        for path in filter_python_files(paths)
-        if path.startswith("company/runtime/")
-    ]
+    return [path for path in filter_python_files(paths) if path.startswith("company/runtime/")]
 
 
 def git_changed_files(base: str, head: str = "HEAD") -> list[str]:
