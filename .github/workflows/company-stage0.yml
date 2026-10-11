@@ -19,9 +19,11 @@ jobs:
           python-version: "3.13"
       - name: Install pinned quality tools
         run: python -c "import subprocess,sys,tomllib; d=tomllib.load(open('pyproject.toml','rb'))['project']['optional-dependencies']['dev']; subprocess.check_call([sys.executable,'-m','pip','install',*d])"
-      - name: Ruff lint changed Python
+      - name: Determine changed Python
+        id: change_scope
         shell: bash
         run: |
+          mkdir -p build
           if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
             BASE="origin/$GITHUB_BASE_REF"
           else
@@ -30,9 +32,21 @@ jobs:
               BASE="HEAD^"
             fi
           fi
-          CHANGED="$(git diff --name-only --diff-filter=ACMR "$BASE"...HEAD -- '*.py')"
-          if [ -n "$CHANGED" ]; then
-            python -m ruff check $CHANGED
+          python tools/change_scope.py --base "$BASE" --python > build/changed-python.txt
+          echo "base=$BASE" >> "$GITHUB_OUTPUT"
+      - name: Ruff lint changed Python
+        shell: bash
+        run: |
+          mapfile -t FILES < build/changed-python.txt
+          if [ "${#FILES[@]}" -gt 0 ]; then
+            python -m ruff check "${FILES[@]}"
+          fi
+      - name: Ruff format changed Python
+        shell: bash
+        run: |
+          mapfile -t FILES < build/changed-python.txt
+          if [ "${#FILES[@]}" -gt 0 ]; then
+            python -m ruff format --check "${FILES[@]}"
           fi
       - name: Compile
         run: python -m compileall -q company tools
