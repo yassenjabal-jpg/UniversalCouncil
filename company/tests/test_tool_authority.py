@@ -88,6 +88,76 @@ class ToolAuthorityTests(unittest.TestCase):
         self.assertEqual(record["approval_policy"], "ASK_BEFORE_WRITE")
         self.assertTrue(requires_explicit_approval(record))
 
+    def test_wrong_registry_version_is_rejected(self):
+        cfg = copy.deepcopy(self.cfg)
+        cfg["version"] = "2.0"
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+    def test_capabilities_must_be_a_list(self):
+        cfg = copy.deepcopy(self.cfg)
+        cfg["capabilities"] = {}
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+    def test_non_object_capability_is_rejected(self):
+        cfg = copy.deepcopy(self.cfg)
+        cfg["capabilities"].append("invalid")
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+    def test_missing_required_fields_are_rejected(self):
+        cfg = copy.deepcopy(self.cfg)
+        cfg["capabilities"].append({"id": "incomplete"})
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+    def test_duplicate_capability_id_is_rejected(self):
+        cfg = copy.deepcopy(self.cfg)
+        duplicate = copy.deepcopy(cfg["capabilities"][0])
+        duplicate["operation"] = "test.unique_operation"
+        cfg["capabilities"].append(duplicate)
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+    def test_unknown_evidence_level_is_rejected(self):
+        cfg = copy.deepcopy(self.cfg)
+        cfg["capabilities"][0]["evidence_level"] = "UNVERIFIED_MAGIC"
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+    def test_missing_minimum_operation_is_rejected(self):
+        cfg = copy.deepcopy(self.cfg)
+        cfg["capabilities"] = [record for record in cfg["capabilities"] if record["operation"] != "github.merge"]
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+    def test_authenticated_browser_drift_is_rejected(self):
+        cfg = copy.deepcopy(self.cfg)
+        record = next(item for item in cfg["capabilities"] if item["operation"] == "browser.authenticated")
+        record["classification"] = "AVAILABLE"
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+    def test_external_publish_drift_is_rejected(self):
+        cfg = copy.deepcopy(self.cfg)
+        record = next(item for item in cfg["capabilities"] if item["operation"] == "external.publish")
+        record["classification"] = "AVAILABLE"
+        record["approval_policy"] = "ASK_BEFORE_WRITE"
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+    def test_agent_reach_authenticated_drift_is_rejected(self):
+        cfg = copy.deepcopy(self.cfg)
+        record = next(item for item in cfg["capabilities"] if item["operation"] == "agent_reach.public_read")
+        record["authentication_class"] = "AUTHENTICATED"
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+    def test_unknown_operation_lookup_is_rejected(self):
+        with self.assertRaises(ToolAuthorityError):
+            get_capability(self.cfg, "missing.operation")
+
 
 if __name__ == "__main__":
     unittest.main()
