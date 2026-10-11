@@ -95,6 +95,18 @@ class WorkEnvironmentHardeningContracts(unittest.TestCase):
         self.assertNotIn("credential", serialized)
         self.assertNotIn("telemetry", serialized)
 
+    def test_github_permission_receipt_records_reduced_write_authority(self):
+        receipt = json.loads(
+            (ROOT / "company" / "docs" / "evidence" / "tool_permissions_2026-10-11.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(receipt["provider"], "GitHub")
+        self.assertEqual(receipt["requested"], "ask_before_writes")
+        self.assertEqual(receipt["after"], "ask_before_writes")
+        self.assertNotEqual(receipt["after"], "full_access")
+        self.assertTrue(receipt["changed"])
+        self.assertIn("Plugin Management", receipt["evidence_source"])
+        self.assertIn("provider-reported", receipt["enforcement_claim"])
+
 
 if __name__ == "__main__":
     unittest.main()

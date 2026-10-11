@@ -1,0 +1,14 @@
+{
+  "provider": "GitHub",
+  "action_family": "ChatGPT plugin permission",
+  "observed_at": "2026-10-11",
+  "before": "full_access",
+  "requested": "ask_before_writes",
+  "after": "ask_before_writes",
+  "changed": true,
+  "provider_reported_after_label": "Allow read actions; ask before making changes",
+  "evidence_source": "Plugin Management get_app_permissions / update_app_permissions readback",
+  "enforcement_claim": "provider-reported setting, not backend resource proof",
+  "readback_at": "2026-10-12",
+  "notes": "Global/default permission was not changed; the GitHub app-specific override was reduced."
+}
