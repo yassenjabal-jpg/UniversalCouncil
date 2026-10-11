@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from tools.change_scope import filter_production_files, git_changed_files
+from tools.change_scope import git_changed_files, normalize_paths
 
 TOLERANCE = 0.01
 
@@ -47,7 +47,12 @@ def evaluate_coverage(
     if not isinstance(current_files, dict):
         return ["invalid current coverage: missing files mapping"]
 
-    for path in filter_production_files(changed_files):
+    production_files = [
+        path
+        for path in normalize_paths(changed_files)
+        if path.startswith("company/runtime/") and path.endswith(".py")
+    ]
+    for path in production_files:
         entry = current_files.get(path)
         if not isinstance(entry, dict):
             failures.append(f"{path}: missing current coverage")
@@ -61,9 +66,7 @@ def evaluate_coverage(
         prior = baseline_files.get(path)
         if prior is None:
             if metrics["line"] + TOLERANCE < new_file_min:
-                failures.append(
-                    f"{path}: new file line coverage {metrics['line']:.2f}% is below {new_file_min:.2f}%"
-                )
+                failures.append(f"{path}: new file line coverage {metrics['line']:.2f}% is below {new_file_min:.2f}%")
             continue
         if not isinstance(prior, dict) or not isinstance(prior.get("line"), (int, float)):
             failures.append(f"{path}: invalid baseline entry")
@@ -71,9 +74,7 @@ def evaluate_coverage(
 
         baseline_line = float(prior["line"])
         if metrics["line"] + TOLERANCE < baseline_line:
-            failures.append(
-                f"{path}: line coverage regressed from {baseline_line:.2f}% to {metrics['line']:.2f}%"
-            )
+            failures.append(f"{path}: line coverage regressed from {baseline_line:.2f}% to {metrics['line']:.2f}%")
 
         baseline_branch = prior.get("branch")
         if baseline_branch is not None:
@@ -83,8 +84,7 @@ def evaluate_coverage(
                 failures.append(f"{path}: branch coverage disappeared from current report")
             elif metrics["branch"] + TOLERANCE < float(baseline_branch):
                 failures.append(
-                    f"{path}: branch coverage regressed from {float(baseline_branch):.2f}% "
-                    f"to {metrics['branch']:.2f}%"
+                    f"{path}: branch coverage regressed from {float(baseline_branch):.2f}% to {metrics['branch']:.2f}%"
                 )
 
     return failures
