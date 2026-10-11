@@ -2,29 +2,40 @@ name: Company Stage 0
 
 on:
   pull_request:
-    paths:
-      - "company/**"
-      - "config/**"
-      - "tools/validate_config.py"
-      - ".github/workflows/company-stage0.yml"
   push:
     branches:
-      - "codex/venture-operating-system-v1"
-    paths:
-      - "company/**"
-      - "config/**"
-      - "tools/validate_config.py"
+      - "main"
 
 jobs:
-  stage0:
+  quality:
+    name: Quality Gate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.13"
+      - name: Compile
+        run: python -m compileall -q company tools
+      - name: Preserve Universal Council invariants
+        run: python tools/validate_config.py
+      - name: Stage 0 behavior tests
+        run: python -m unittest discover -s company/tests -v
+
+  python312:
+    name: Python 3.12 Compatibility
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: "3.12"
       - name: Compile
-        run: python -m compileall -q company
+        run: python -m compileall -q company tools
       - name: Preserve Universal Council invariants
         run: python tools/validate_config.py
       - name: Stage 0 behavior tests
