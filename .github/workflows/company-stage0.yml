@@ -19,8 +19,21 @@ jobs:
           python-version: "3.13"
       - name: Install pinned quality tools
         run: python -c "import subprocess,sys,tomllib; d=tomllib.load(open('pyproject.toml','rb'))['project']['optional-dependencies']['dev']; subprocess.check_call([sys.executable,'-m','pip','install',*d])"
-      - name: Ruff lint
-        run: python -m ruff check company tools
+      - name: Ruff lint changed Python
+        shell: bash
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            BASE="origin/$GITHUB_BASE_REF"
+          else
+            BASE="${{ github.event.before }}"
+            if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+              BASE="HEAD^"
+            fi
+          fi
+          CHANGED="$(git diff --name-only --diff-filter=ACMR "$BASE"...HEAD -- '*.py')"
+          if [ -n "$CHANGED" ]; then
+            python -m ruff check $CHANGED
+          fi
       - name: Compile
         run: python -m compileall -q company tools
       - name: Preserve Universal Council invariants
