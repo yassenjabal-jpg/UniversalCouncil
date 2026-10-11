@@ -41,3 +41,11 @@ A 3-video production pilot is mandatory before scale. Publishing remains separat
 The company research layer includes a policy-first Intelligence Gateway for source selection and provenance. It is **not a Council member** and has **no decision authority**.
 
 The gateway uses native-first routing, keeps private/native sources on their existing connectors, and exposes Agent Reach only as a read-only public provider for the approved v1 capability set. Authenticated social channels remain blocked in v1. Any material blocked channel is escalated as an HR capability gap rather than automatically installing tools or requesting credentials.
+
+## Engineering tool authority
+
+Engineering tools are governed by `company/config/tool_authority.json`. Connector/plugin catalog visibility is not proof that a capability is usable, safe, or backend-enforced. Read, write, and execute effects are recorded separately with evidence level, authentication class, approval policy, allowed/prohibited scope, verification date, review trigger, source/pin, and enforcement boundary.
+
+GitHub repository writes and merges require the configured ask-before-write control. Remote shell execution is high-impact authority and is policy-governed unless an actual backend enforcement boundary is proven. `POLICY_ENFORCED_ONLY` must never be described as `BOUNDARY_ENFORCED`.
+
+The Git repository remains the canonical technical/governance source. Linear tracks intent and status, but does not replace committed specs, configuration, CI evidence, or tests.
