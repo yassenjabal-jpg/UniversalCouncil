@@ -200,7 +200,7 @@
       "provider": "External channels",
       "operation": "external.publish",
       "classification": "BLOCKED",
-      "evidence_level": "BOUNDARY_ENFORCED",
+      "evidence_level": "METADATA_OBSERVED",
       "authentication_class": "NONE",
       "effect": "WRITE",
       "approval_policy": "BLOCKED",
