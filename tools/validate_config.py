@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from company.runtime.tool_authority import get_capability, validate_registry
+from company.runtime.tool_authority import get_capability, validate_registry  # noqa: E402 - repo root is inserted above for direct script execution
 roles = json.loads((ROOT / "config" / "roles.json").read_text(encoding="utf-8"))
 modes = json.loads((ROOT / "config" / "modes.json").read_text(encoding="utf-8"))
 routes = json.loads((ROOT / "config" / "domain-routing.json").read_text(encoding="utf-8"))
