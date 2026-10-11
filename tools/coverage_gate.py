@@ -5,7 +5,10 @@ import json
 from pathlib import Path
 from typing import Any
 
-from tools.change_scope import git_changed_files, normalize_paths
+try:
+    from tools.change_scope import git_changed_files, normalize_paths
+except ModuleNotFoundError:  # direct script execution: python tools/coverage_gate.py
+    from change_scope import git_changed_files, normalize_paths
 
 TOLERANCE = 0.01
 
