@@ -1,7 +1,11 @@
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from company.runtime.tool_authority import get_capability, validate_registry
 roles = json.loads((ROOT / "config" / "roles.json").read_text(encoding="utf-8"))
 modes = json.loads((ROOT / "config" / "modes.json").read_text(encoding="utf-8"))
 routes = json.loads((ROOT / "config" / "domain-routing.json").read_text(encoding="utf-8"))
@@ -9,6 +13,7 @@ pulse = json.loads((ROOT / "config" / "pulse.json").read_text(encoding="utf-8"))
 company_roles = json.loads((ROOT / "company" / "config" / "roles.json").read_text(encoding="utf-8"))
 scouting = json.loads((ROOT / "company" / "config" / "capability_scouting.json").read_text(encoding="utf-8"))
 gateway = json.loads((ROOT / "company" / "config" / "intelligence_gateway.json").read_text(encoding="utf-8"))
+tool_authority = json.loads((ROOT / "company" / "config" / "tool_authority.json").read_text(encoding="utf-8"))
 
 core = {r["id"] for r in roles["core_roles"]}
 specialists = {r["id"] for r in roles["specialist_roles"]}
@@ -114,9 +119,14 @@ def validate_intelligence_gateway(cfg):
 
 
 validate_intelligence_gateway(gateway)
+validate_registry(tool_authority)
+assert (
+    get_capability(tool_authority, "agent_reach.public_read")["source_or_pin"]
+    == gateway["agent_reach"]["approved_commit"]
+), "Agent Reach tool authority pin must match Intelligence Gateway pin"
 
 print(
     f"OK v{expected_version}: {len(core)} core roles, "
     f"{len(specialists)} specialists, {len(routes['routes'])} routing rules, "
-    f"{len(modes['modes'])} modes, pulse enabled, HR capability scouting + intelligence gateway enforced"
+    f"{len(modes['modes'])} modes, pulse enabled, HR capability scouting + intelligence gateway + tool authority registry enforced"
 )
