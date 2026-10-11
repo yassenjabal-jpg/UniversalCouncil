@@ -28,10 +28,25 @@ def file_metrics(coverage_file: dict[str, Any]) -> dict[str, float | None]:
     return {"line": float(line), "branch": branch}
 
 
+def _normalize_file_map(files: dict[str, Any]) -> dict[str, Any]:
+    normalized: dict[str, Any] = {}
+    for raw_path, entry in files.items():
+        if not isinstance(raw_path, str):
+            raise ValueError("coverage file path must be a string")
+        paths = normalize_paths([raw_path])
+        if len(paths) != 1:
+            raise ValueError("coverage file path must not be empty")
+        path = paths[0]
+        if path in normalized:
+            raise ValueError(f"duplicate normalized coverage path: {path}")
+        normalized[path] = entry
+    return normalized
+
+
 def _baseline_files(baseline: dict[str, Any]) -> dict[str, Any]:
     if baseline.get("version") != "1.0" or not isinstance(baseline.get("files"), dict):
         raise ValueError("baseline must contain version 1.0 and files mapping")
-    return baseline["files"]
+    return _normalize_file_map(baseline["files"])
 
 
 def evaluate_coverage(
@@ -46,9 +61,13 @@ def evaluate_coverage(
     except (TypeError, ValueError) as exc:
         return [f"invalid baseline: {exc}"]
 
-    current_files = current.get("files")
-    if not isinstance(current_files, dict):
+    raw_current_files = current.get("files")
+    if not isinstance(raw_current_files, dict):
         return ["invalid current coverage: missing files mapping"]
+    try:
+        current_files = _normalize_file_map(raw_current_files)
+    except ValueError as exc:
+        return [f"invalid current coverage: {exc}"]
 
     production_files = [
         path for path in normalize_paths(changed_files) if path.startswith("company/runtime/") and path.endswith(".py")

@@ -65,6 +65,14 @@ class CoverageGateTests(unittest.TestCase):
         self.assertEqual(metrics["line"], 80.0)
         self.assertEqual(metrics["branch"], 50.0)
 
+    def test_windows_coverage_paths_are_normalized(self):
+        current = {"files": {r"company\runtime\new_module.py": coverage_file(95.0)}}
+        baseline = {"version": "1.0", "files": {}}
+        self.assertEqual(
+            evaluate_coverage(current, baseline, ["company/runtime/new_module.py"]),
+            [],
+        )
+
     def test_missing_current_coverage_fails_closed(self):
         baseline = {
             "version": "1.0",
