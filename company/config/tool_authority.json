@@ -1,0 +1,218 @@
+{
+  "version": "1.0",
+  "observed_at": "2026-10-11",
+  "capabilities": [
+    {
+      "id": "github-read",
+      "provider": "GitHub",
+      "operation": "github.read",
+      "classification": "AVAILABLE",
+      "evidence_level": "METADATA_OBSERVED",
+      "authentication_class": "CONNECTED_APP",
+      "effect": "READ",
+      "approval_policy": "READ_ALLOWED",
+      "allowed_scope": [
+        "yassenjabal-jpg/UniversalCouncil repository reads"
+      ],
+      "prohibited_scope": [
+        "secrets endpoints",
+        "unrelated private data"
+      ],
+      "last_verified_at": "2026-10-11",
+      "review_trigger": "connector permission or installation changes",
+      "source_or_pin": "ChatGPT GitHub connector permission readback",
+      "enforcement": "CONNECTOR_POLICY"
+    },
+    {
+      "id": "github-write",
+      "provider": "GitHub",
+      "operation": "github.write",
+      "classification": "AVAILABLE",
+      "evidence_level": "METADATA_OBSERVED",
+      "authentication_class": "CONNECTED_APP",
+      "effect": "WRITE",
+      "approval_policy": "ASK_BEFORE_WRITE",
+      "allowed_scope": [
+        "approved UniversalCouncil feature-branch and PR mutations"
+      ],
+      "prohibited_scope": [
+        "silent main bypass",
+        "secrets mutation",
+        "unapproved repository writes"
+      ],
+      "last_verified_at": "2026-10-11",
+      "review_trigger": "connector permission or installation changes",
+      "source_or_pin": "permission_mode=ask_before_writes",
+      "enforcement": "CONNECTOR_POLICY"
+    },
+    {
+      "id": "github-merge",
+      "provider": "GitHub",
+      "operation": "github.merge",
+      "classification": "AVAILABLE",
+      "evidence_level": "METADATA_OBSERVED",
+      "authentication_class": "CONNECTED_APP",
+      "effect": "WRITE",
+      "approval_policy": "ASK_BEFORE_WRITE",
+      "allowed_scope": [
+        "approved PR merge after required verification"
+      ],
+      "prohibited_scope": [
+        "merge with blocking checks",
+        "force update main"
+      ],
+      "last_verified_at": "2026-10-11",
+      "review_trigger": "merge-policy or connector permission changes",
+      "source_or_pin": "permission_mode=ask_before_writes",
+      "enforcement": "CONNECTOR_POLICY"
+    },
+    {
+      "id": "linear-read",
+      "provider": "Linear",
+      "operation": "linear.read",
+      "classification": "AVAILABLE",
+      "evidence_level": "METADATA_OBSERVED",
+      "authentication_class": "CONNECTED_APP",
+      "effect": "READ",
+      "approval_policy": "READ_ALLOWED",
+      "allowed_scope": [
+        "workspace yassin / team YAS work-tracking reads"
+      ],
+      "prohibited_scope": [
+        "unrelated workspace data"
+      ],
+      "last_verified_at": "2026-10-11",
+      "review_trigger": "Linear connection changes",
+      "source_or_pin": "connected workspace yassin; team YAS",
+      "enforcement": "CONNECTOR_POLICY"
+    },
+    {
+      "id": "linear-write",
+      "provider": "Linear",
+      "operation": "linear.write",
+      "classification": "AVAILABLE",
+      "evidence_level": "METADATA_OBSERVED",
+      "authentication_class": "CONNECTED_APP",
+      "effect": "WRITE",
+      "approval_policy": "ASK_BEFORE_WRITE",
+      "allowed_scope": [
+        "Universal Council project/issues and approved status updates"
+      ],
+      "prohibited_scope": [
+        "unrelated issue/project mutation",
+        "workspace administration"
+      ],
+      "last_verified_at": "2026-10-11",
+      "review_trigger": "Linear connection or permission changes",
+      "source_or_pin": "connected workspace yassin; team YAS",
+      "enforcement": "POLICY_ENFORCED_ONLY"
+    },
+    {
+      "id": "remote-shell-read",
+      "provider": "Remote Desktop Commander",
+      "operation": "remote_shell.read",
+      "classification": "AVAILABLE",
+      "evidence_level": "HOST_INVOKED",
+      "authentication_class": "HOST_SESSION",
+      "effect": "READ",
+      "approval_policy": "OWNER_EXPLICIT",
+      "allowed_scope": [
+        "authorized user-controlled YASSIN device inspection"
+      ],
+      "prohibited_scope": [
+        "credential extraction",
+        "browser session extraction",
+        "unrelated private files"
+      ],
+      "last_verified_at": "2026-10-11",
+      "review_trigger": "device or remote-tool authorization changes",
+      "source_or_pin": "YASSIN host session",
+      "enforcement": "POLICY_ENFORCED_ONLY"
+    },
+    {
+      "id": "remote-shell-execute",
+      "provider": "Remote Desktop Commander",
+      "operation": "remote_shell.execute",
+      "classification": "OWNER_GATED",
+      "evidence_level": "HOST_INVOKED",
+      "authentication_class": "HOST_SESSION",
+      "effect": "EXECUTE",
+      "approval_policy": "OWNER_EXPLICIT",
+      "allowed_scope": [
+        "approved repository/system execution steps on user-controlled devices"
+      ],
+      "prohibited_scope": [
+        "credential extraction",
+        "hidden session extraction",
+        "permission widening",
+        "unapproved destructive system actions"
+      ],
+      "last_verified_at": "2026-10-11",
+      "review_trigger": "device or remote-tool authorization changes",
+      "source_or_pin": "YASSIN host session",
+      "enforcement": "POLICY_ENFORCED_ONLY"
+    },
+    {
+      "id": "agent-reach-public-read",
+      "provider": "Agent Reach",
+      "operation": "agent_reach.public_read",
+      "classification": "AVAILABLE",
+      "evidence_level": "BOUNDARY_ENFORCED",
+      "authentication_class": "PUBLIC_ONLY",
+      "effect": "READ",
+      "approval_policy": "READ_ALLOWED",
+      "allowed_scope": [
+        "public-read Intelligence Gateway operations only"
+      ],
+      "prohibited_scope": [
+        "OpenCLI",
+        "cookies",
+        "credentials",
+        "authenticated social",
+        "publish",
+        "message"
+      ],
+      "last_verified_at": "2026-10-11",
+      "review_trigger": "gateway config, provider code, or approved pin changes",
+      "source_or_pin": "94f06c1969dfc1834001269d79d3ad0972d9dee6",
+      "enforcement": "GATEWAY_ENFORCED"
+    },
+    {
+      "id": "browser-authenticated",
+      "provider": "Browser",
+      "operation": "browser.authenticated",
+      "classification": "BLOCKED",
+      "evidence_level": "BOUNDARY_ENFORCED",
+      "authentication_class": "AUTHENTICATED",
+      "effect": "READ",
+      "approval_policy": "BLOCKED",
+      "allowed_scope": [],
+      "prohibited_scope": [
+        "authenticated browser session access in Intelligence Gateway v1"
+      ],
+      "last_verified_at": "2026-10-11",
+      "review_trigger": "separately approved authenticated-browser architecture",
+      "source_or_pin": "company/config/intelligence_gateway.json",
+      "enforcement": "GATEWAY_ENFORCED"
+    },
+    {
+      "id": "external-publish",
+      "provider": "External channels",
+      "operation": "external.publish",
+      "classification": "BLOCKED",
+      "evidence_level": "BOUNDARY_ENFORCED",
+      "authentication_class": "NONE",
+      "effect": "WRITE",
+      "approval_policy": "BLOCKED",
+      "allowed_scope": [],
+      "prohibited_scope": [
+        "publish without separately governed owner grant",
+        "message/send side effects"
+      ],
+      "last_verified_at": "2026-10-11",
+      "review_trigger": "separately approved publishing capability",
+      "source_or_pin": "company governance + approved gateway policy",
+      "enforcement": "POLICY_ENFORCED_ONLY"
+    }
+  ]
+}
