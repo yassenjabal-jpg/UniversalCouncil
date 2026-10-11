@@ -51,6 +51,13 @@ class WorkEnvironmentHardeningContracts(unittest.TestCase):
         self.assertEqual(cfg["tool"]["ruff"]["lint"]["select"], ["E4", "E7", "E9", "F"])
         self.assertTrue(cfg["tool"]["coverage"]["run"]["branch"])
 
+    def test_company_workflow_enforces_branch_coverage_ratchet(self):
+        text = self._workflow_text()
+        self.assertIn("coverage run --branch", text)
+        self.assertIn("coverage json -o build/coverage.json", text)
+        self.assertIn("tools/coverage_gate.py", text)
+        self.assertIn("company/config/coverage_baseline.json", text)
+
 
 if __name__ == "__main__":
     unittest.main()
