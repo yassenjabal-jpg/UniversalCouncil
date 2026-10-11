@@ -19,6 +19,9 @@ def coverage_file(line_percent, branch_percent=None):
     }
 
 
+ROOT = Path(__file__).resolve().parents[2]
+
+
 class CoverageGateTests(unittest.TestCase):
     def test_legacy_file_equal_to_baseline_passes_below_95(self):
         current = {"files": {"company/runtime/policy.py": coverage_file(70.0, 60.0)}}
@@ -74,6 +77,16 @@ class CoverageGateTests(unittest.TestCase):
             ["company/runtime/policy.py"],
         )
         self.assertTrue(any("invalid baseline" in failure for failure in failures))
+
+    def test_direct_cli_import_path_is_valid(self):
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "tools" / "coverage_gate.py"), "--help"],
+            shell=False,
+            check=False,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
 
 
 if __name__ == "__main__":
