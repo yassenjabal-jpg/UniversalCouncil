@@ -33,6 +33,14 @@ EVIDENCE_LEVELS = {
     "BOUNDARY_ENFORCED",
 }
 
+AUTHORITY_ENUMS = {
+    "classification": {"AVAILABLE", "OWNER_GATED", "BLOCKED", "UNAVAILABLE", "ADMIN_BLOCKED"},
+    "authentication_class": {"CONNECTED_APP", "HOST_SESSION", "PUBLIC_ONLY", "AUTHENTICATED", "NONE"},
+    "effect": {"READ", "WRITE", "EXECUTE"},
+    "approval_policy": {"READ_ALLOWED", "ASK_BEFORE_WRITE", "OWNER_EXPLICIT", "BLOCKED"},
+    "enforcement": {"CONNECTOR_POLICY", "POLICY_ENFORCED_ONLY", "GATEWAY_ENFORCED"},
+}
+
 MINIMUM_OPERATIONS = {
     "github.read",
     "github.write",
@@ -73,6 +81,9 @@ def validate_registry(cfg: dict[str, Any]) -> bool:
 
         if record["evidence_level"] not in EVIDENCE_LEVELS:
             raise ToolAuthorityError(f"{operation}: unknown evidence level")
+        for field, allowed_values in AUTHORITY_ENUMS.items():
+            if record[field] not in allowed_values:
+                raise ToolAuthorityError(f"{operation}: unknown {field}")
         if record["effect"] in {"WRITE", "EXECUTE"}:
             if record["approval_policy"] == "READ_ALLOWED":
                 raise ToolAuthorityError(f"{operation}: write/execute cannot be READ_ALLOWED")

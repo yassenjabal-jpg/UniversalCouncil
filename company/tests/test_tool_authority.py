@@ -126,6 +126,20 @@ class ToolAuthorityTests(unittest.TestCase):
         with self.assertRaises(ToolAuthorityError):
             validate_registry(cfg)
 
+    def test_unknown_authority_enums_are_rejected(self):
+        for field in (
+            "classification",
+            "authentication_class",
+            "effect",
+            "approval_policy",
+            "enforcement",
+        ):
+            with self.subTest(field=field):
+                cfg = copy.deepcopy(self.cfg)
+                cfg["capabilities"][0][field] = "UNVERIFIED_MAGIC"
+                with self.assertRaises(ToolAuthorityError):
+                    validate_registry(cfg)
+
     def test_missing_minimum_operation_is_rejected(self):
         cfg = copy.deepcopy(self.cfg)
         cfg["capabilities"] = [record for record in cfg["capabilities"] if record["operation"] != "github.merge"]
