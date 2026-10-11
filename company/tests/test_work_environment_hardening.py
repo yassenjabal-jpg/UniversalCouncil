@@ -107,6 +107,19 @@ class WorkEnvironmentHardeningContracts(unittest.TestCase):
         self.assertIn("Plugin Management", receipt["evidence_source"])
         self.assertIn("provider-reported", receipt["enforcement_claim"])
 
+    def test_acceptance_document_has_explicit_security_and_completion_states(self):
+        text = (ROOT / "company" / "docs" / "WORK_ENVIRONMENT_HARDENING_ACCEPTANCE.md").read_text(encoding="utf-8")
+        for number in range(1, 23):
+            self.assertIn(f"AC-{number:02d}", text)
+        self.assertIn("CodeQL: PASS_BASELINE", text)
+        self.assertIn("Secret scanning: CONNECTOR_ENDPOINT_UNSUPPORTED", text)
+        self.assertIn("Push protection: CONNECTOR_ENDPOINT_UNSUPPORTED", text)
+        self.assertIn("Dependabot alerts: CONNECTOR_ENDPOINT_UNSUPPORTED", text)
+        self.assertIn("Codex Security callable capability: UNAVAILABLE_IN_CURRENT_SESSION", text)
+        self.assertIn("Main ruleset: UNPROTECTED_BASELINE", text)
+        self.assertNotIn("Codex Security: PASS", text)
+        self.assertIn("## Reopen triggers", text)
+
 
 if __name__ == "__main__":
     unittest.main()
