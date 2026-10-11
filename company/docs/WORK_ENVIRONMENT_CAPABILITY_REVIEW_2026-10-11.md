@@ -1,9 +1,9 @@
 # Work Environment Capability Review - 2026-10-11
 
-Status: GO_FOR_SANDBOX_PILOT  
-Owner: HR & Capability Director  
-Decision scope: Work Environment Hardening v1 candidate toolchain  
-Spec: `docs/superpowers/specs/2026-10-11-work-environment-hardening-v1-design.md`  
+Status: GO_FOR_SANDBOX_PILOT
+Owner: HR & Capability Director
+Decision scope: Work Environment Hardening v1 candidate toolchain
+Spec: `docs/superpowers/specs/2026-10-11-work-environment-hardening-v1-design.md`
 Plan: `docs/superpowers/plans/2026-10-11-work-environment-hardening-v1.md`
 
 ## Evidence standard
@@ -158,7 +158,7 @@ Verdict: PASS_WITH_BOUNDARIES.
 - Moving-branch installs are forbidden; package versions and GitHub Actions are pinned.
 - Unknown license/version facts are not promoted to verified.
 
-Security blocker count: 0 for sandbox pilot.  
+Security blocker count: 0 for sandbox pilot.
 Security condition: GitHub write authority must be reduced before final v1 acceptance.
 
 ## Architecture and Duplication Review
