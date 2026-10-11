@@ -1,6 +1,6 @@
 # Work Environment Hardening v1 - Acceptance Evidence
 
-Status: IN_PROGRESS
+Status: IMPLEMENTATION_COMPLETE_ADMIN_BLOCKED
 Observed: 2026-10-12
 Repository baseline: `main@bfc08b5ea98f352f595029f62fcefe6cc93395fb`
 Execution branch: `feat/work-environment-hardening-v1`
@@ -9,13 +9,13 @@ This document records acceptance evidence. It does not promote UNKNOWN, UNAVAILA
 
 ## Current security and repository state
 
-- CodeQL: PASS_BASELINE - GitHub Actions run `38133650804`, job `CodeQL Python`, Initialize + Analyze completed successfully.
+- CodeQL: PASS_BASELINE / PASS_POST_MERGE - PR baseline and main push both completed successfully; main run `38180289825`, job `CodeQL Python`, Initialize + Analyze SUCCESS on `ffa3567d6a225f5a97c420c5cd354f6be4fa7248`.
 - Secret scanning: CONNECTOR_ENDPOINT_UNSUPPORTED - the current GitHub connector does not expose this repository endpoint through its approved fetch surface; this is not evidence that the feature is disabled.
 - Push protection: CONNECTOR_ENDPOINT_UNSUPPORTED - the current GitHub connector does not expose the required administration/security endpoint; this is not evidence that the feature is disabled.
 - Dependabot alerts: CONNECTOR_ENDPOINT_UNSUPPORTED - the current GitHub connector does not expose the alerts endpoint through its approved fetch surface; this is not evidence that alerts are disabled.
 - Code scanning alerts endpoint: CONNECTOR_ENDPOINT_UNSUPPORTED - CodeQL workflow execution itself is independently proven by Actions evidence.
 - Codex Security callable capability: UNAVAILABLE_IN_CURRENT_SESSION - no callable Codex Security tool or skill is present in the current tool inventory. Catalog metadata is not enforcement evidence.
-- Main ruleset: UNPROTECTED_BASELINE - rulesets readback returned `[]`; `main` readback reports `protected: false`.
+- Main ruleset: UNPROTECTED_BASELINE / ADMIN_BLOCKED - rulesets readback returned `[]`; `main` reports `protected: false`; current connector exposes reads but no repository-administration write operation.
 - Repository permission readback: ADMIN_REPORTED - the connected GitHub account reports `admin: true`, but the managed connector's available tools do not expose repository administration writes.
 - GitHub ChatGPT permission: PASS - app-specific permission is read-allowed / ask-before-write; receipt: `company/docs/evidence/tool_permissions_2026-10-11.json`.
 
@@ -23,11 +23,11 @@ This document records acceptance evidence. It does not promote UNKNOWN, UNAVAILA
 
 - AC-01 - ADMIN_BLOCKED - `main` protection remains unresolved because the connected GitHub tool surface exposes branch/ruleset reads but no repository-administration write action; no credential/token workaround was used.
 - AC-02 - ADMIN_BLOCKED - required status-check enforcement cannot be configured through the currently exposed GitHub administration surface; actual check names are proven as `Quality Gate`, `Python 3.12 Compatibility`, and `CodeQL Python`.
-- AC-03 - CONFIG_PASS_REMOTE_MAIN_PENDING - core workflow is configured for push to `main`; post-merge run still required.
+- AC-03 - PASS - core workflow ran on push to `main` at merge SHA `ffa3567d6a225f5a97c420c5cd354f6be4fa7248`; Company Stage 0 run `38180289803` succeeded.
 - AC-04 - PASS - company tests are green on Python 3.12 CI and Python 3.13 local/CI execution.
 - AC-05 - PASS - Ruff 0.17.0 lint plus changed-file format checking is active without legacy-wide formatting churn.
 - AC-06 - PASS - branch coverage is measured; changed legacy runtime files cannot regress and new runtime files require at least 95% line coverage.
-- AC-07 - PASS_BASELINE - CodeQL Python baseline completed successfully; final branch/main evidence will be refreshed before acceptance.
+- AC-07 - PASS_POST_MERGE - CodeQL Python completed successfully on the hardening PR and on post-merge `main`; main run `38180289825` succeeded.
 - AC-08 - PARTIAL_CONNECTOR_ENDPOINT_UNSUPPORTED - Secret Scanning, Push Protection, and Dependabot state cannot currently be read or changed through the exposed GitHub connector administration surface.
 - AC-09 - PASS - checkout, setup-python, and CodeQL Actions are pinned to full immutable commit SHAs.
 - AC-10 - PASS - GitHub ChatGPT plugin no longer has the previous unqualified full-access override; writes require confirmation.
@@ -40,9 +40,9 @@ This document records acceptance evidence. It does not promote UNKNOWN, UNAVAILA
 - AC-17 - PASS - historical remote branches were classified; only the proven merged-equivalent Council Intelligence Gateway branch was deleted, and all unmerged branches were preserved.
 - AC-18 - PASS - final local verification on `58c21f336c1e0cc730bd63fabd23a543a8c10ff9` passed: 169 tests, one expected skip, Ruff lint/format, compileall, config validator, coverage ratchet, diff check, and secret heuristic.
 - AC-19 - PASS - PR #7 at `0e6664e11e874ae70a5e7acd59f5f07bd5985cf1` passed Company Stage 0 run `38179817328` (`Quality Gate` + `Python 3.12 Compatibility`) and CodeQL run `38179817363` (`CodeQL Python`).
-- AC-20 - PENDING - post-merge `main` workflow and CodeQL runs must be observed.
-- AC-21 - PASS_SO_FAR - no unnecessary new platform/plugin was installed; only Ruff and coverage.py were added as pinned development dependencies.
-- AC-22 - PASS_SO_FAR_FINAL_REVIEW_PENDING - no credential, cookie, session token, browser-debugger access, or secret has been intentionally introduced; final review/scan remains required.
+- AC-20 - PASS - post-merge `main` evidence is complete: Company Stage 0 run `38180289803` and CodeQL run `38180289825` both succeeded on `ffa3567d6a225f5a97c420c5cd354f6be4fa7248`; YASSIN post-merge local smoke also passed 169 tests with one expected skip.
+- AC-21 - PASS - no unnecessary new platform/plugin was installed; only Ruff and coverage.py were added as pinned development dependencies.
+- AC-22 - PASS_REVIEWED - final VibeSec/PR review, local secret heuristic, CodeQL, and post-merge verification found no blocking secret/session/credential issue in the hardening change.
 
 ## Evidence notes
 
