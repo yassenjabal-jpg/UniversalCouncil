@@ -17,11 +17,7 @@ def normalize_paths(paths: list[str]) -> list[str]:
 
 
 def filter_python_files(paths: list[str]) -> list[str]:
-    return [
-        path
-        for path in normalize_paths(paths)
-        if path.endswith(".py") and Path(path).is_file()
-    ]
+    return [path for path in normalize_paths(paths) if path.endswith(".py") and Path(path).is_file()]
 
 
 def filter_production_files(paths: list[str]) -> list[str]:
