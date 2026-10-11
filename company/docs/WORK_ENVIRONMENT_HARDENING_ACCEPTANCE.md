@@ -21,8 +21,8 @@ This document records acceptance evidence. It does not promote UNKNOWN, UNAVAILA
 
 ## Acceptance criteria
 
-- AC-01 - PENDING_REMOTE_ENFORCEMENT - `main` must be protected against force-push and normal direct-push bypass.
-- AC-02 - PENDING_REMOTE_ENFORCEMENT - required PR status checks must be enforced.
+- AC-01 - ADMIN_BLOCKED - `main` protection remains unresolved because the connected GitHub tool surface exposes branch/ruleset reads but no repository-administration write action; no credential/token workaround was used.
+- AC-02 - ADMIN_BLOCKED - required status-check enforcement cannot be configured through the currently exposed GitHub administration surface; actual check names are proven as `Quality Gate`, `Python 3.12 Compatibility`, and `CodeQL Python`.
 - AC-03 - CONFIG_PASS_REMOTE_MAIN_PENDING - core workflow is configured for push to `main`; post-merge run still required.
 - AC-04 - PASS - company tests are green on Python 3.12 CI and Python 3.13 local/CI execution.
 - AC-05 - PASS - Ruff 0.17.0 lint plus changed-file format checking is active without legacy-wide formatting churn.
@@ -39,7 +39,7 @@ This document records acceptance evidence. It does not promote UNKNOWN, UNAVAILA
 - AC-16 - PASS_CLASSIFICATION - Codex Security is classified truthfully as unavailable in the current callable tool inventory; no metadata-only PASS exists.
 - AC-17 - PASS - historical remote branches were classified; only the proven merged-equivalent Council Intelligence Gateway branch was deleted, and all unmerged branches were preserved.
 - AC-18 - PASS - final local verification on `58c21f336c1e0cc730bd63fabd23a543a8c10ff9` passed: 169 tests, one expected skip, Ruff lint/format, compileall, config validator, coverage ratchet, diff check, and secret heuristic.
-- AC-19 - PENDING - PR #7 must be updated with the reconciled local branch and pass all remote checks.
+- AC-19 - PASS - PR #7 at `0e6664e11e874ae70a5e7acd59f5f07bd5985cf1` passed Company Stage 0 run `38179817328` (`Quality Gate` + `Python 3.12 Compatibility`) and CodeQL run `38179817363` (`CodeQL Python`).
 - AC-20 - PENDING - post-merge `main` workflow and CodeQL runs must be observed.
 - AC-21 - PASS_SO_FAR - no unnecessary new platform/plugin was installed; only Ruff and coverage.py were added as pinned development dependencies.
 - AC-22 - PASS_SO_FAR_FINAL_REVIEW_PENDING - no credential, cookie, session token, browser-debugger access, or secret has been intentionally introduced; final review/scan remains required.
