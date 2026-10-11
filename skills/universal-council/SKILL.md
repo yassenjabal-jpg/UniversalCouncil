@@ -55,3 +55,10 @@ Authenticated social channels remain blocked in v1. Do not use OpenCLI, cookies,
 When a blocked or unavailable evidence channel is material to the decision, open a capability gap for HR review. The gap is a research/capability signal only and does not authorize installation, authentication, or credential collection.
 
 The Intelligence Gateway is routing infrastructure, not a Council member, and has no decision authority.
+
+
+## Engineering tool authority rule
+
+Do not treat plugin or catalog metadata as proof that an engineering capability is usable or enforced. Consult company/config/tool_authority.json for the operation-level evidence, effect, approval policy, scope, source or pin, and enforcement boundary.
+
+READ, WRITE, and EXECUTE are distinct authority classes. WRITE and EXECUTE operations must respect their explicit approval policy. Policy-only enforcement must stay labeled policy-only. Remote shell execution is high-impact authority and does not gain extra permission merely because the tool is connected.

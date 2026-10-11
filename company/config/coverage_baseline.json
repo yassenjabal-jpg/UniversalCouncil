@@ -1,0 +1,132 @@
+{
+  "version": "1.0",
+  "source_commit": "bfc08b5ea98f352f595029f62fcefe6cc93395fb",
+  "generated_date": "2026-10-11",
+  "files": {
+    "company/runtime/__init__.py": {
+      "branch": null,
+      "line": 100,
+      "statements": 0
+    },
+    "company/runtime/adapters.py": {
+      "branch": 75,
+      "line": 88.23529411764706,
+      "statements": 9
+    },
+    "company/runtime/agent_reach_provider.py": {
+      "branch": 65.625,
+      "line": 71.55963302752293,
+      "statements": 154
+    },
+    "company/runtime/approved_gateway.py": {
+      "branch": 57.14285714285714,
+      "line": 66.66666666666667,
+      "statements": 68
+    },
+    "company/runtime/backup.py": {
+      "branch": null,
+      "line": 100,
+      "statements": 18
+    },
+    "company/runtime/capability_scout.py": {
+      "branch": 64.70588235294117,
+      "line": 76.76767676767676,
+      "statements": 65
+    },
+    "company/runtime/cli.py": {
+      "branch": 0,
+      "line": 0,
+      "statements": 13
+    },
+    "company/runtime/currency.py": {
+      "branch": 50,
+      "line": 90.47619047619048,
+      "statements": 19
+    },
+    "company/runtime/db.py": {
+      "branch": null,
+      "line": 100,
+      "statements": 25
+    },
+    "company/runtime/evidence.py": {
+      "branch": 100,
+      "line": 100,
+      "statements": 14
+    },
+    "company/runtime/experiments.py": {
+      "branch": 75,
+      "line": 88.23529411764706,
+      "statements": 13
+    },
+    "company/runtime/export.py": {
+      "branch": 87.5,
+      "line": 88.23529411764706,
+      "statements": 9
+    },
+    "company/runtime/governance_controls.py": {
+      "branch": 65.21739130434783,
+      "line": 72.88135593220339,
+      "statements": 72
+    },
+    "company/runtime/health.py": {
+      "branch": 75,
+      "line": 90.9090909090909,
+      "statements": 18
+    },
+    "company/runtime/intelligence_evidence.py": {
+      "branch": 100,
+      "line": 100,
+      "statements": 30
+    },
+    "company/runtime/intelligence_gateway.py": {
+      "branch": 65.71428571428571,
+      "line": 74.74747474747475,
+      "statements": 128
+    },
+    "company/runtime/intelligence_models.py": {
+      "branch": 70,
+      "line": 91.66666666666667,
+      "statements": 62
+    },
+    "company/runtime/kernel.py": {
+      "branch": 76.92307692307693,
+      "line": 85.26315789473684,
+      "statements": 69
+    },
+    "company/runtime/ledger.py": {
+      "branch": 77.27272727272727,
+      "line": 90.625,
+      "statements": 42
+    },
+    "company/runtime/market_reality.py": {
+      "branch": 63.33333333333333,
+      "line": 72.32704402515724,
+      "statements": 99
+    },
+    "company/runtime/media_controls.py": {
+      "branch": 64.28571428571429,
+      "line": 73.33333333333333,
+      "statements": 47
+    },
+    "company/runtime/payment_readiness.py": {
+      "branch": 100,
+      "line": 100,
+      "statements": 9
+    },
+    "company/runtime/policy.py": {
+      "branch": 73.68421052631578,
+      "line": 89.38053097345133,
+      "statements": 75
+    },
+    "company/runtime/states.py": {
+      "branch": null,
+      "line": 100,
+      "statements": 9
+    },
+    "company/runtime/verified_fx.py": {
+      "branch": 50,
+      "line": 77.77777777777777,
+      "statements": 14
+    }
+  }
+}

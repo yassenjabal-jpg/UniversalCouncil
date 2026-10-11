@@ -117,3 +117,11 @@ A new role must answer:
 5. What is the review/kill trigger for the new role?
 
 A role must prove its reason to continue. The company does not carry a role merely because it existed before.
+
+## Engineering tool authority review
+
+HR capability scouting includes the authority surface of engineering tools. A tool appearing in a catalog, connector list, plugin directory, or model tool inventory is evidence of visibility only; it is not proof that the operation is callable, authenticated, safe, or enforced.
+
+Engineering capability decisions must distinguish READ, WRITE, and EXECUTE effects and must record the approval and enforcement boundary in `company/config/tool_authority.json`. Remote shell execution is treated as high-impact authority. Policy-only controls must remain labeled policy-only.
+
+This registry does not expand HR authority. HR still may not unilaterally install tools, connect credentials, change permissions, publish, message, or execute external writes. Those operations remain subject to the existing Security, Architecture/Duplication, Council, sandbox, and Owner gates.
