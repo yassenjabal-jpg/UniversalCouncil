@@ -38,7 +38,7 @@ This document records acceptance evidence. It does not promote UNKNOWN, UNAVAILA
 - AC-15 - PASS - Agent Reach remains public-read only at pin `94f06c1969dfc1834001269d79d3ad0972d9dee6`; authenticated social remains blocked.
 - AC-16 - PASS_CLASSIFICATION - Codex Security is classified truthfully as unavailable in the current callable tool inventory; no metadata-only PASS exists.
 - AC-17 - PASS - historical remote branches were classified; only the proven merged-equivalent Council Intelligence Gateway branch was deleted, and all unmerged branches were preserved.
-- AC-18 - PENDING_FINAL_RERUN - local verification has passed intermediate gates; one final full run is required after Tasks 10-11.
+- AC-18 - PASS - final local verification on `58c21f336c1e0cc730bd63fabd23a543a8c10ff9` passed: 169 tests, one expected skip, Ruff lint/format, compileall, config validator, coverage ratchet, diff check, and secret heuristic.
 - AC-19 - PENDING - PR #7 must be updated with the reconciled local branch and pass all remote checks.
 - AC-20 - PENDING - post-merge `main` workflow and CodeQL runs must be observed.
 - AC-21 - PASS_SO_FAR - no unnecessary new platform/plugin was installed; only Ruff and coverage.py were added as pinned development dependencies.
@@ -50,6 +50,7 @@ This document records acceptance evidence. It does not promote UNKNOWN, UNAVAILA
 - `company/runtime/tool_authority.py` reached 100% line and branch coverage in its focused test run before full-suite revalidation.
 - The Git repository remains canonical for technical/governance truth; Linear tracks work status and linkage only.
 - Provider administration limitations are reported explicitly and do not authorize workarounds involving token extraction, cookie/session reuse, or browser credential harvesting.
+- Fullstack PR Review + VibeSec source/config review found one blocking contract gap (unknown authority enums were not fail-closed); it was fixed with RED/GREEN tests before final local verification. No blocking finding remains in the reviewed hardening diff.
 
 ## Reopen triggers
 
