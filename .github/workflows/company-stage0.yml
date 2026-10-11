@@ -59,32 +59,11 @@ jobs:
           python -m coverage erase
           python -m coverage run --branch -m unittest discover -s company/tests -v
           python -m coverage json -o build/coverage.json
-          python - <<'PY'
-          import json
-          from pathlib import Path
+          python tools/coverage_gate.py \
+            --coverage build/coverage.json \
+            --baseline company/config/coverage_baseline.json \
+            --base "${{ steps.change_scope.outputs.base }}"
 
-          raw = json.loads(Path("build/coverage.json").read_text(encoding="utf-8"))
-          files = {}
-          for path, entry in sorted(raw["files"].items()):
-              path = path.replace("\\", "/")
-              if not path.startswith("company/runtime/") or not path.endswith(".py"):
-                  continue
-              summary = entry["summary"]
-              branches = summary.get("num_branches", 0)
-              branch = None if not branches else summary.get("covered_branches", 0) / branches * 100.0
-              files[path] = {
-                  "line": float(summary["percent_covered"]),
-                  "branch": branch,
-                  "statements": int(summary["num_statements"]),
-              }
-          baseline = {
-              "version": "1.0",
-              "source_commit": "bfc08b5ea98f352f595029f62fcefe6cc93395fb",
-              "generated_date": "2026-10-11",
-              "files": files,
-          }
-          print("COVERAGE_BASELINE_JSON=" + json.dumps(baseline, sort_keys=True, separators=(",", ":")))
-          PY
 
   python312:
     name: Python 3.12 Compatibility
