@@ -1,8 +1,10 @@
+import tomllib
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 WORKFLOW = ROOT / ".github" / "workflows" / "company-stage0.yml"
+PYPROJECT = ROOT / "pyproject.toml"
 
 
 class WorkEnvironmentHardeningContracts(unittest.TestCase):
@@ -36,6 +38,18 @@ class WorkEnvironmentHardeningContracts(unittest.TestCase):
         self.assertIn("name: Python 3.12 Compatibility", text)
         self.assertIn('python-version: "3.13"', text)
         self.assertIn('python-version: "3.12"', text)
+
+    def test_pyproject_pins_supported_python_and_dev_tools(self):
+        with PYPROJECT.open("rb") as handle:
+            cfg = tomllib.load(handle)
+        self.assertEqual(cfg["project"]["requires-python"], ">=3.12,<3.14")
+        self.assertEqual(
+            cfg["project"]["optional-dependencies"]["dev"],
+            ["ruff==0.17.0", "coverage==7.16.2"],
+        )
+        self.assertEqual(cfg["tool"]["ruff"]["target-version"], "py312")
+        self.assertEqual(cfg["tool"]["ruff"]["lint"]["select"], ["E4", "E7", "E9", "F"])
+        self.assertTrue(cfg["tool"]["coverage"]["run"]["branch"])
 
 
 if __name__ == "__main__":
