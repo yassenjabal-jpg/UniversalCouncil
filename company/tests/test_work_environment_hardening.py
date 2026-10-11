@@ -1,3 +1,4 @@
+import json
 import tomllib
 import unittest
 from pathlib import Path
@@ -75,6 +76,24 @@ class WorkEnvironmentHardeningContracts(unittest.TestCase):
         self.assertIn(f"github/codeql-action/analyze@{pin}", text)
         self.assertNotIn("github/codeql-action/init@v4", text)
         self.assertNotIn("github/codeql-action/analyze@v4", text)
+
+    def test_dev_kit_config_uses_linear_github_and_measured_coverage_floor(self):
+        baseline = json.loads((ROOT / "company" / "config" / "coverage_baseline.json").read_text(encoding="utf-8"))
+        measured = [int(entry["line"]) for entry in baseline["files"].values() if entry.get("statements", 0) > 0]
+        expected_floor = min(95, max(0, min(measured)))
+        cfg = json.loads((ROOT / ".claude" / "dev-kit.json").read_text(encoding="utf-8"))
+        self.assertEqual(cfg["tracker"]["type"], "linear")
+        self.assertEqual(cfg["tracker"]["teamKey"], "YAS")
+        self.assertEqual(cfg["tracker"]["workspace"], "yassin")
+        self.assertEqual(cfg["prHost"], "github")
+        self.assertEqual(cfg["stacks"], ["python"])
+        self.assertEqual(cfg["gates"]["coverage"]["mode"], "auto")
+        self.assertEqual(cfg["gates"]["coverage"]["min"], expected_floor)
+        self.assertEqual(cfg["gates"]["e2e"]["mode"], "off")
+        serialized = json.dumps(cfg).lower()
+        self.assertNotIn("token", serialized)
+        self.assertNotIn("credential", serialized)
+        self.assertNotIn("telemetry", serialized)
 
 
 if __name__ == "__main__":

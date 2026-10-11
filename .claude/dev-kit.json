@@ -1,0 +1,20 @@
+{
+    "tracker":  {
+                    "type":  "linear",
+                    "teamKey":  "YAS",
+                    "workspace":  "yassin"
+                },
+    "stacks":  [
+                   "python"
+               ],
+    "prHost":  "github",
+    "gates":  {
+                  "coverage":  {
+                                   "mode":  "auto",
+                                   "min":  0
+                               },
+                  "e2e":  {
+                              "mode":  "off"
+                          }
+              }
+}
