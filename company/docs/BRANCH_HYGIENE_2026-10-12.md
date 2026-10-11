@@ -47,4 +47,4 @@ All other historical branches remain untouched.
 
 ## Post-delete readback
 
-PENDING until the safe branch deletion is executed and `git fetch origin --prune` confirms absence.
+PASS. `feat/council-intelligence-gateway-v1` was deleted from `origin`; a subsequent `git fetch origin --prune` and remote-ref listing confirmed that `origin/feat/council-intelligence-gateway-v1` is absent. No `UNMERGED_REQUIRES_REVIEW` branch was deleted.

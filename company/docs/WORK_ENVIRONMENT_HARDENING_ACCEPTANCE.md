@@ -37,7 +37,7 @@ This document records acceptance evidence. It does not promote UNKNOWN, UNAVAILA
 - AC-14 - PASS - remote shell execution is classified as high-impact and policy-governed, not falsely represented as backend-enforced.
 - AC-15 - PASS - Agent Reach remains public-read only at pin `94f06c1969dfc1834001269d79d3ad0972d9dee6`; authenticated social remains blocked.
 - AC-16 - PASS_CLASSIFICATION - Codex Security is classified truthfully as unavailable in the current callable tool inventory; no metadata-only PASS exists.
-- AC-17 - PENDING - historical remote branches must be classified before cleanup.
+- AC-17 - PASS - historical remote branches were classified; only the proven merged-equivalent Council Intelligence Gateway branch was deleted, and all unmerged branches were preserved.
 - AC-18 - PENDING_FINAL_RERUN - local verification has passed intermediate gates; one final full run is required after Tasks 10-11.
 - AC-19 - PENDING - PR #7 must be updated with the reconciled local branch and pass all remote checks.
 - AC-20 - PENDING - post-merge `main` workflow and CodeQL runs must be observed.
