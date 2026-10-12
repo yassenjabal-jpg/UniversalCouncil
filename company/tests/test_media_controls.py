@@ -3,10 +3,12 @@ import unittest
 from pathlib import Path
 
 from company.runtime.media_controls import (
+    REQUIRED_MEDIA_FUNCTIONS,
+    REQUIRED_PILOT_METRICS,
     MediaControlError,
-    validate_media_team,
     validate_media_pilot_record,
     validate_media_scale_request,
+    validate_media_team,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -16,21 +18,49 @@ class MediaCapabilityTests(unittest.TestCase):
     def load_config(self):
         return json.loads((ROOT / "company/config/media_venture.json").read_text(encoding="utf-8"))
 
+    def base_metrics(self):
+        return sorted(REQUIRED_PILOT_METRICS)
+
     def test_required_media_functions_exist(self):
         cfg = self.load_config()
         self.assertTrue(validate_media_team(cfg))
         ids = {x["id"] for x in cfg["production_functions"]}
-        self.assertEqual(ids, {"editorial_director", "ai_visual_post_producer", "audience_growth_packaging"})
+        self.assertEqual(ids, REQUIRED_MEDIA_FUNCTIONS)
 
-    def test_growth_packaging_is_on_demand_by_default(self):
+    def test_audio_roles_are_distinct_and_active(self):
         cfg = self.load_config()
         by_id = {x["id"]: x for x in cfg["production_functions"]}
-        self.assertEqual(by_id["audience_growth_packaging"]["default_status"], "ON_DEMAND")
+        self.assertEqual(by_id["music_sound_supervisor"]["default_status"], "ACTIVE_FOR_MEDIA_PILOT")
+        self.assertEqual(by_id["dialogue_mix_engineer"]["default_status"], "ACTIVE_FOR_MEDIA_PILOT")
+        self.assertNotEqual(
+            set(by_id["music_sound_supervisor"]["owns"]),
+            set(by_id["dialogue_mix_engineer"]["owns"]),
+        )
+        self.assertEqual(by_id["localization_producer"]["default_status"], "ON_DEMAND")
+        self.assertIn(
+            "music_sound_supervisor_does_not_self_approve_final_mix_qc",
+            cfg["function_independence_rules"],
+        )
+        self.assertIn(
+            "owner_voice_approval_is_separate_from_technical_mix_approval",
+            cfg["function_independence_rules"],
+        )
+
+    def test_media_toolchain_is_bounded_and_honest(self):
+        cfg = self.load_config()
         self.assertFalse(cfg["live_publish_authority"])
         self.assertEqual(cfg["media_toolchain"]["platform_publishing"], "CAPABILITY_GAP")
         self.assertEqual(cfg["media_toolchain"]["ai_video_generation"], "NEEDS_RUNTIME_VERIFICATION")
         self.assertEqual(cfg["media_toolchain"]["video_editing"], "PARTIAL_RUNTIME_VERIFIED")
         self.assertEqual(cfg["media_toolchain"]["after_effects_motion_assembly"], "RUNTIME_VERIFIED")
+        self.assertEqual(
+            cfg["media_toolchain"]["music_supervision"],
+            "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
+        )
+        self.assertEqual(
+            cfg["media_toolchain"]["mix_mastering"],
+            "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
+        )
         ae = cfg["runtime_evidence"]["after_effects_2026"]
         self.assertEqual(ae["status"], "RUNTIME_VERIFIED")
         self.assertEqual(ae["host"], "YASSIN")
@@ -55,22 +85,14 @@ class MediaCapabilityTests(unittest.TestCase):
     def test_scale_is_forbidden_before_three_videos(self):
         record = {
             "videos_completed": 2,
-            "metrics": [
-                "production_time_per_video",
-                "owner_human_minutes_per_video",
-                "tool_cost_per_video",
-                "cost_per_published_minute",
-                "revision_count",
-                "factual_policy_defects",
-                "packaging_quality",
-            ],
+            "metrics": self.base_metrics(),
             "hr_review_status": "KEEP",
             "scale_decision": "SCALE_CANDIDATE",
         }
         with self.assertRaises(MediaControlError):
             validate_media_scale_request(record)
 
-    def test_three_video_pilot_requires_cost_quality_metrics(self):
+    def test_three_video_pilot_requires_audio_and_cost_quality_metrics(self):
         record = {
             "videos_completed": 3,
             "metrics": ["production_time_per_video"],
@@ -80,18 +102,13 @@ class MediaCapabilityTests(unittest.TestCase):
         with self.assertRaises(MediaControlError):
             validate_media_pilot_record(record)
 
+        record["metrics"] = self.base_metrics()
+        self.assertTrue(validate_media_pilot_record(record))
+
     def test_published_pilot_requires_audience_metrics(self):
         base = {
             "videos_completed": 3,
-            "metrics": [
-                "production_time_per_video",
-                "owner_human_minutes_per_video",
-                "tool_cost_per_video",
-                "cost_per_published_minute",
-                "revision_count",
-                "factual_policy_defects",
-                "packaging_quality",
-            ],
+            "metrics": self.base_metrics(),
             "hr_review_status": "KEEP",
             "scale_decision": "CONTINUE_PILOT",
         }
@@ -111,15 +128,7 @@ class MediaCapabilityTests(unittest.TestCase):
     def test_valid_scale_candidate_passes_after_pilot(self):
         record = {
             "videos_completed": 3,
-            "metrics": [
-                "production_time_per_video",
-                "owner_human_minutes_per_video",
-                "tool_cost_per_video",
-                "cost_per_published_minute",
-                "revision_count",
-                "factual_policy_defects",
-                "packaging_quality",
-            ],
+            "metrics": self.base_metrics(),
             "hr_review_status": "KEEP",
             "scale_decision": "SCALE_CANDIDATE",
         }

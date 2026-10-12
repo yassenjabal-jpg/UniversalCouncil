@@ -88,7 +88,7 @@ required_pulse_checks = {
 assert required_pulse_checks.issubset(set(pulse["checks"])), "Council Pulse missing required checks"
 
 hr = company_roles["hr_capability_director"]
-assert company_roles.get("version") == "1.3", "company HR role config must be v1.3"
+assert company_roles.get("version") == "1.4", "company HR role config must be v1.4"
 assert hr.get("may_run_read_only_capability_discovery") is True, "HR read-only scouting must be enabled"
 for key in (
     "may_install_tools_unilaterally",

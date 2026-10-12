@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
   "visual_system": "Editorial Renaissance Motion",
   "primary_language": "Arabic",
@@ -104,12 +104,17 @@
     "story_thesis",
     "script_and_voice_direction",
     "visual_treatment",
+    "audio_spotting_and_sonic_concept",
     "reference_frame_assignment",
-    "storyboard_and_transition_map",
+    "storyboard_transition_audio_map",
     "asset_registry",
     "animatic",
+    "narration_recording_and_dialogue_edit",
     "production",
-    "audio_and_music",
+    "picture_lock",
+    "music_sound_design",
+    "mix_master",
+    "audiovisual_sync_qc",
     "multilingual_preflight",
     "anti_slop_gate",
     "fact_policy_qc",
@@ -123,6 +128,7 @@
       "trend radar",
       "topic mining",
       "title/thumbnail hypotheses",
+      "first-30-second packaging",
       "post-publish packaging analysis"
     ],
     "Evidence & Research Lead": [
@@ -136,24 +142,67 @@
       "thesis",
       "story architecture",
       "script lock",
-      "visual-story coherence"
+      "visual-story coherence",
+      "picture lock approval",
+      "final editorial approval"
     ],
-    "Human / User Advocate": [
-      "voice authenticity",
-      "clarity",
-      "audience comprehension",
-      "owner narration fit"
+    "Script & Voice Director": [
+      "scene-aware script",
+      "narration intent",
+      "emotion direction",
+      "pace/pitch/emphasis",
+      "pronunciation guide",
+      "recording direction",
+      "pickup list"
     ],
-    "AI Visual & Post-Production Producer": [
+    "Visual Art Director / Frame Curator": [
       "visual treatment",
-      "frame bible",
-      "storyboard",
-      "asset plan",
-      "motion/edit",
-      "continuity"
+      "reference frame board",
+      "palette/type/grid",
+      "episode-specific motifs",
+      "visual continuity"
+    ],
+    "Motion & Picture Editor": [
+      "storyboard timing",
+      "animatic",
+      "motion design",
+      "picture edit",
+      "transition execution",
+      "picture lock conform"
+    ],
+    "Music Supervisor & Sound Designer": [
+      "sonic concept",
+      "spotting session",
+      "music brief",
+      "music cue sheet",
+      "music source/license",
+      "sound effects",
+      "sonic motifs",
+      "silence map",
+      "audio-visual sync intent"
+    ],
+    "Dialogue & Mix Engineer": [
+      "dialogue cleanup",
+      "dialogue edit",
+      "eq/de-ess/noise control",
+      "level automation",
+      "music ducking",
+      "stem management",
+      "mix/master",
+      "audio QC",
+      "dub mix parity"
+    ],
+    "Localization Producer": [
+      "translation adaptation",
+      "dub script",
+      "subtitle timing",
+      "localized metadata",
+      "localized thumbnail text",
+      "language-version QC"
     ],
     "Risk & Assurance": [
       "copyright",
+      "music/asset licensing",
       "AI disclosure",
       "policy",
       "sensitive-domain framing",
@@ -164,20 +213,24 @@
       "render/export",
       "project structure",
       "automation/routines",
-      "artifact integrity"
+      "artifact integrity",
+      "audio stem/export integrity"
     ],
     "Finance Controller": [
       "credits/cost/time logging",
       "cost per minute",
+      "audio post cost",
       "budget gate"
     ],
     "Red Team": [
       "anti-slop challenge",
       "generic-template detection",
-      "story/visual differentiation challenge"
+      "story/visual differentiation challenge",
+      "generic sound-design detection"
     ],
     "Owner": [
       "human narration",
+      "voice identity approval",
       "L4 decisions",
       "public publish approval",
       "brand taste veto"
@@ -297,13 +350,16 @@
     "G1 Evidence Gate",
     "G2 Packaging Gate",
     "G3 Script Lock",
-    "G4 Visual Treatment Lock",
-    "G5 Animatic Gate",
-    "G6 Anti-Slop Gate",
-    "G7 Fact/Policy QC",
-    "G8 Export QC",
-    "G9 Owner Publish Gate",
-    "G10 Post-Publish Learning Gate"
+    "G4 Visual + Sonic Treatment Lock",
+    "G5 Animatic + Spotting Gate",
+    "G6 Picture Lock Gate",
+    "G7 Audio-Visual Sync Gate",
+    "G8 Anti-Slop Gate",
+    "G9 Fact/Policy/Continuity QC",
+    "G10 Mix/Master QC",
+    "G11 Export QC",
+    "G12 Owner Publish Gate",
+    "G13 Post-Publish Learning Gate"
   ],
   "analytics": {
     "pre_publish": [
@@ -325,6 +381,95 @@
       "top_moments",
       "spikes",
       "dips"
+    ]
+  },
+  "audio_system": {
+    "principle": "sound is designed with picture, not added after picture",
+    "spotting_required_before_reference_frame_lock": true,
+    "picture_lock_required_before_final_sound_design": true,
+    "post_picture_lock_timing_change_requires_audio_reconform": true,
+    "sonic_concept_fields": [
+      "episode_sound_world",
+      "music_states",
+      "instrumentation_palette",
+      "sonic_motifs",
+      "silence_map",
+      "transition_sound_palette",
+      "dialogue_density_map"
+    ],
+    "music_states": [
+      "M0 silence/room",
+      "M1 curiosity",
+      "M2 motion/build",
+      "M3 explanation bed",
+      "M4 tension",
+      "M5 reveal",
+      "M6 reflection",
+      "M7 resolution"
+    ],
+    "cue_sheet_required_fields": [
+      "cue_id",
+      "in_time",
+      "out_time",
+      "duration",
+      "music_state",
+      "narrative_purpose",
+      "energy",
+      "tempo_bpm",
+      "tonal_center",
+      "instrumentation",
+      "source_or_license",
+      "stem_availability",
+      "dialogue_density",
+      "sync_hits",
+      "ducking_note",
+      "edit_points"
+    ],
+    "av_beat_map_required_fields": [
+      "beat_id",
+      "timecode",
+      "narrative_function",
+      "visual_event",
+      "voice_state",
+      "music_state",
+      "sfx_event",
+      "sync_anchor",
+      "prelap_postlap",
+      "dynamic_intent",
+      "transition_link"
+    ],
+    "mix_targets_internal_not_platform_requirements": {
+      "program_integrated_lufs_target": "-14 LUFS ±1",
+      "true_peak_ceiling": "-1 dBTP",
+      "dialogue_priority": "always intelligible; music automated around speech rather than static gain",
+      "music_under_dense_dialogue_guideline": "typically 12–18 dB perceptually below narration, adjusted by arrangement",
+      "loudness_range_guideline": "approximately 6–10 LU for documentary dynamics",
+      "intentional_sync_hit_tolerance": "±1 frame",
+      "action_sfx_sync_tolerance": "±1–2 frames unless deliberate prelap/postlap",
+      "localized_mix_match": "within ±1 LU perceived loudness of Arabic master where practical"
+    },
+    "mandatory_stems": [
+      "DX dialogue",
+      "MX music",
+      "FX sound design",
+      "AMB atmosphere",
+      "FULL master"
+    ],
+    "monitoring_checks": [
+      "studio/headphones",
+      "ordinary earbuds",
+      "phone speaker",
+      "mono compatibility",
+      "low-volume intelligibility"
+    ],
+    "anti_patterns": [
+      "wall-to-wall music with no breathing space",
+      "generic cinematic riser every reveal",
+      "swoosh on every transition",
+      "sidechain pumping audible as an effect",
+      "SFX louder than key narration without narrative reason",
+      "music chosen after final cut with no spotting",
+      "same music bed across unrelated episodes"
     ]
   }
 }

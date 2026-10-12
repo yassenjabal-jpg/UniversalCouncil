@@ -1,341 +1,337 @@
-# Channel Operating System v1
+# Channel Operating System v1.1
 
-This document is the normative production method for the broad, format-first multilingual visual-documentary channel.
+Normative operating method for the broad, format-first, multilingual visual-documentary channel.
 
-## Operating principle
+Governing config:
+`company/config/channel_operating_system.json`
 
-The channel is not a topic niche. It is a repeatable editorial promise:
+Companion systems:
+- `MEDIA_PRODUCTION_CELL.md`
+- `EDITORIAL_RENAISSANCE_VISUAL_BIBLE.md`
+- `REFERENCE_FRAME_SPECS.md`
+- `PACKAGING_BIBLE.md`
+- `AUDIO_NARRATION_BIBLE.md`
+- `AUDIOVISUAL_SOUND_SYSTEM.md`
 
+## Core doctrine
+
+The channel is not a subject niche.
+
+Its recurring promise is:
 **Reveal the hidden logic behind something familiar, strange, important, or easy to overlook.**
 
-Consistency comes from editorial and visual grammar. Topic variety is intentional.
+Consistency comes from:
+- editorial question grammar;
+- narrator identity;
+- evidence standard;
+- visual system;
+- sonic system;
+- transition grammar;
+- packaging discipline.
 
-## Weekly rhythm
+Variation comes from:
+- topic;
+- evidence;
+- visual metaphors;
+- episode-specific motifs;
+- diagrams;
+- music world;
+- sound-design palette.
 
-### Daily — Trend Radar
-Audience Growth & Packaging collects signals into the Topic Inbox.
+## Production functions
 
-Sources:
-- Google Trends Trending Now;
-- TikTok Creative Center;
-- YouTube Ask Studio, search/autocomplete and competitor observations;
-- Reddit and specialist communities;
-- public news/science/technology/business feeds;
-- Instagram/Threads/X recurrence or Metricool when connected;
-- first-party comments/search terms/retention after launch.
+Venture-scoped functions:
+1. Editorial Director / Showrunner
+2. Script & Voice Director
+3. Visual Art Director / Frame Curator
+4. Motion & Picture Editor
+5. Music Supervisor & Sound Designer
+6. Dialogue & Mix Engineer
+7. Audience Growth & Packaging Operator
+8. Localization Producer
 
-No raw trend becomes an episode automatically.
+Support:
+- Evidence & Research Lead
+- Assurance Reviewer
+- Technical Operator
+- Finance Controller
+- Venture Operator
+- Owner
 
-### Twice weekly — Topic Triage
-Participants:
-Audience Growth, Editorial, Evidence, Red Team, Visual Producer.
+These are functions, not mandatory headcount.
 
-Output:
-- reject;
-- backlog;
-- research;
-- priority research.
+During the pilot one person/tool may cover more than one function, but critical approvals remain separated.
 
-### Weekly — Greenlight
-One topic gets G0 approval only after scorecard + one-sentence promise.
+## 26-stage workflow
 
-## End-to-end workflow
+### 1. Signal Capture
+Growth captures cross-platform signals.
 
-### Stage 0 — Signal Capture
-Owner: Audience Growth & Packaging.
-Deliverable: Trend Signal Cards.
+### 2. Topic Clustering
+Signals are converted into durable candidate questions.
 
-A signal contains:
-- source;
-- date/time;
-- region;
-- observed phrase/topic;
-- velocity evidence;
-- related queries;
-- cross-platform recurrence;
-- why now;
-- potential evergreen question.
+### 3. Topic Scorecard
+100-point scoring; minimum 75.
 
-### Stage 1 — Topic Clustering
-Merge duplicate signals into a durable question.
+### 4. Evidence Pack
+Claims, sources, freshness, confidence, provenance.
 
-Trend:
-"undersea cable outage"
+### 5. Packaging Hypotheses
+5 titles, 3 thumbnail concepts, click promise, answer promise.
 
-Episode candidate:
-"What actually happens when one undersea internet cable breaks?"
+### 6. Story Thesis
+One question, one answer, one narrative turn.
 
-### Stage 2 — Topic Scorecard
-Use the 100-point model in company/config/channel_operating_system.json.
+### 7. Script + Voice Direction
+Scene-aware narration with intent/emotion/pacing/pitch/emphasis/pauses/evidence.
 
-Hard fail:
-- cannot form a narrow question;
-- weak evidence;
-- weak visual potential;
-- only meaningful for a very short news cycle.
+### 8. Visual Treatment
+Episode visual thesis, palette subset, three unique motifs, diagram language.
 
-### Stage 3 — Evidence Pack
-Owner: Evidence Lead.
+### 9. Audio Spotting + Sonic Concept
+Before Reference Frame Lock.
 
-No script before:
-- claim ledger;
-- source table;
-- confidence labels;
-- date/freshness;
-- provenance;
-- visual evidence availability.
+Define:
+- sound world;
+- music arc;
+- sonic motifs;
+- silence map;
+- transition sound palette;
+- dialogue-density map.
 
-### Stage 4 — Packaging First
-Owner: Growth + Showrunner.
+### 10. Reference Frame Assignment
+8 minimum, target 12.
 
-Required:
-- 5 titles;
-- 3 thumbnail concepts;
-- one-sentence click promise;
-- one-sentence answer promise;
-- why now;
-- why this channel.
+### 11. Storyboard + Transition + Audio Map
+Every major beat links:
+picture → narration → music → SFX → transition.
 
-If packaging is vague, return to topic stage.
+### 12. Asset Registry
+No unregistered asset enters timeline.
 
-### Stage 5 — Story Thesis
-Owner: Showrunner.
+### 13. Animatic
+Low-cost rhythm test with temporary dialogue/music/SFX where useful.
 
-Write:
-- central question;
-- central answer;
-- viewer misconception;
-- narrative turn;
-- final change in perspective.
+### 14. Narration Recording + Dialogue Edit
+Owner narration directed by Script & Voice Director.
+Dialogue & Mix Engineer performs cleanup/edit.
 
-### Stage 6 — Script + Voice Direction
-Owner: Showrunner.
-Voice performance approval: Owner/Human Advocate.
+### 15. Production
+Generate/gather/animate visual assets according to locked treatment.
 
-Use the Script & Voice template.
+### 16. Picture Lock
+Approved by Showrunner.
 
-A narration line is not final until it has:
-- intention;
-- emotion;
+After Picture Lock, timing changes require AUDIO_RECONFORM_REQUIRED.
+
+### 17. Music + Sound Design
+Music Supervisor/Sound Designer finishes cues and FX against locked picture.
+
+### 18. Mix + Master
+Dialogue/Mix Engineer balances DX/MX/FX/AMB and creates final master.
+
+### 19. Audio-Visual Sync QC
+Picture, dialogue, music and effects reviewed as one system.
+
+### 20. Multilingual Preflight
+Text remains editable; audio/subtitles/metadata replaceable.
+
+### 21. Anti-Slop Gate
+Reject interchangeable scripts, repeated AI compositions, generic sound language and filler.
+
+### 22. Fact / Policy / Continuity QC
+Claims, rights, disclosure, maps, dates, visual/audio continuity.
+
+### 23. Export QC
+Resolution, frame rate, audio, stems, subtitles, offline media, archive.
+
+### 24. Owner Publish Gate
+Public publishing requires explicit Owner approval.
+
+### 25. Analytics Postmortem
+CTR, retention, watch time, returning viewers, comments, language share.
+
+### 26. Memory + Routine Update
+Persist durable lessons and graduate deterministic repeated workflows.
+
+## Lock points
+
+### G0 Trend/Topic Gate
+Topic deserves research.
+
+### G1 Evidence Gate
+Evidence supports the story.
+
+### G2 Packaging Gate
+The story has a truthful clickable promise.
+
+### G3 Script Lock
+Narration and claims stable.
+
+### G4 Visual + Sonic Treatment Lock
+Visual and audio worlds defined before expensive execution.
+
+### G5 Animatic + Spotting Gate
+Timing and AV concept work together.
+
+### G6 Picture Lock Gate
+Image timing frozen.
+
+### G7 Audio-Visual Sync Gate
+Dialogue/music/SFX and picture feel intentional.
+
+### G8 Anti-Slop Gate
+No generic AI/template feel.
+
+### G9 Fact/Policy/Continuity QC
+Truth/rights/continuity pass.
+
+### G10 Mix/Master QC
+Audio technical quality pass.
+
+### G11 Export QC
+Delivery pass.
+
+### G12 Owner Publish Gate
+Human approval.
+
+### G13 Post-Publish Learning Gate
+Data converted into specific lessons.
+
+## Topic selection
+
+Trend is a signal, not a story.
+
+Pipeline:
+Signal → cluster → durable question → score → evidence → packaging.
+
+A candidate fails if:
+- it is only short-lived news;
+- evidence is weak;
+- it has low visual explainability;
+- no narrow one-sentence question exists.
+
+## Script system
+
+Every narration unit includes:
+- timecode;
+- narration;
+- intent;
+- emotion tag;
 - energy;
 - pace;
-- pitch;
+- pitch contour;
 - emphasis;
 - pauses;
-- visual beat;
-- evidence IDs.
+- breath note;
+- pronunciation;
+- visual beat ID;
+- music state;
+- SFX;
+- evidence IDs;
+- localization note.
 
-### Stage 7 — Visual Treatment
-Owner: AI Visual & Post-Production Producer.
+## Visual system
 
-Before images are generated or footage gathered, define:
-- episode-specific visual thesis;
-- 3 unique motifs;
-- palette subset;
-- source-image strategy;
-- diagram strategy;
-- historical/modern balance;
-- transition motifs;
-- prohibited visual shortcuts.
+Use Editorial Renaissance Motion.
 
-### Stage 8 — Reference Frame Board
-Minimum 8, target 12.
+Channel-wide:
+- palette;
+- typography;
+- grid;
+- texture;
+- shot taxonomy;
+- motion grammar.
 
-Frame families:
-F01 Hero Question
-F02 Evidence Document
-F03 Editorial Portrait
-F04 Scientific Engraving
-F05 Mechanism Diagram
-F06 Number / Scale
-F07 Map / Spatial
-F08 Object Macro
-F09 Historical Collage
-F10 Modern Reality
-F11 Breathing Reset
-F12 Ending Reflection
+Episode-specific:
+- at least 3 motifs;
+- hero object;
+- diagram language;
+- transition motif.
 
-These frames become the visual contract for the episode.
+## Audio system
 
-### Stage 9 — Storyboard + Transition Map
-Every cut/transition is planned.
+Sound is designed with picture, not added after picture.
 
-A transition must be motivated by:
-- object;
-- shape;
-- color;
-- camera direction;
-- time;
-- cause/effect;
-- scale;
-- semantic contrast.
+Creative audio:
+Music Supervisor & Sound Designer.
 
-### Stage 10 — Asset Registry
-No asset enters production without:
-- ID;
-- source;
-- provenance;
-- AI flag;
-- disclosure flag;
-- language dependency;
-- intended frames;
-- path.
+Technical audio:
+Dialogue & Mix Engineer.
 
-### Stage 11 — Animatic
-Cheap timing test before expensive production.
+Required stems:
+- DX
+- MX
+- FX
+- AMB
+- FULL
 
-Check:
-- story rhythm;
-- frame dwell time;
-- narration density;
-- transition clarity;
-- visual variety;
-- first 30 seconds.
+Internal master targets are documented in `AUDIOVISUAL_SOUND_SYSTEM.md`; they are internal production goals, not platform requirements.
 
-### Stage 12 — Production
-Preferred execution:
-native tool/API → deterministic routine → DC → semantic GUI → visual GUI.
+## Transition system
 
-Do not use expensive open-ended GUI work for tasks that can be deterministic.
+Every planned transition declares:
+- semantic link;
+- visual link;
+- motion;
+- audio cue;
+- sync anchor;
+- duration;
+- fallback clean cut.
 
-### Stage 13 — Audio
-Owner narration remains default.
+If no transition has a reason, use a clean cut.
 
-Audio chain:
-- clean recording;
-- edit breaths only when distracting;
-- maintain natural micro-pauses;
-- music supports structure, not constant stimulation;
-- SFX explain transitions/actions rather than decorate every cut.
+## Anti-Slop standard
 
-### Stage 14 — Multilingual Preflight
-All master comps checked for:
-- editable text;
-- text expansion;
-- language-neutral diagrams;
-- replaceable metadata;
-- replaceable audio/subtitles.
-
-### Stage 15 — Anti-Slop Gate
-Red Team + Editorial + Visual Producer.
+Consistency is not repetition.
 
 Fail if:
-- visuals could be swapped into another episode with no semantic loss;
-- same AI composition repeats;
-- filler dominates;
-- script is a generic summary;
-- transitions are preset-driven;
-- voice has machine-like constant cadence;
-- evidence is invisible or weak.
+- same shot sequence could serve another episode unchanged;
+- music/SFX language is generic and repeated;
+- AI B-roll fills time rather than explains;
+- every reveal gets the same sound cue;
+- visuals and sound are decorative rather than semantic;
+- narration cadence becomes synthetic;
+- transitions are presets rather than storytelling.
 
-### Stage 16 — Fact / Policy / Continuity QC
-Evidence + Assurance + Visual Producer.
+## Initial six-video portfolio balance
 
-Check:
-- facts;
-- dates;
-- names;
-- maps;
-- numbers;
-- copyright;
-- synthetic disclosure;
-- palette/type/grid;
-- character/object continuity;
-- Arabic text;
-- language version integrity.
+Before strong first-party evidence:
+- 6-video window;
+- at least 4 topic families;
+- maximum 2 videos from one family.
 
-### Stage 17 — Export QC
-Technical Operator:
-- frame rate;
-- resolution;
-- audio loudness;
-- dropped frames;
-- missing fonts/media;
-- spelling;
-- subtitles;
-- chapters/metadata manifest;
-- checksum/archive.
+Relax only after audience evidence justifies it.
 
-### Stage 18 — Owner Publish Gate
-No public publish without explicit Owner approval.
+## Measurement
 
-### Stage 19 — Analytics Postmortem
-After data is available:
+Production:
+- total time/video;
+- owner minutes;
+- research/script/visual/edit hours;
+- dialogue cleanup minutes;
+- music/sound-design minutes;
+- mix/master minutes;
+- audio/visual sync defects;
+- revisions;
+- tool cost;
+- cost per finished minute.
+
+Audience after publish:
+- impressions;
 - CTR;
 - first-30-second retention;
 - APV;
 - watch time;
 - returning viewers;
 - subscribers/video;
-- top moments;
-- spikes;
-- dips;
-- comments;
+- top moments/spikes/dips;
+- comment themes;
 - language audio share.
 
-### Stage 20 — Learning / Memory
-Persist only durable learning:
-- winning hook pattern;
-- failed visual motif;
-- cost bottleneck;
-- reusable routine;
-- audience finding;
-- policy change.
+## Rule of authority
 
-Do not store transient speculation as canonical memory.
-
-## Responsibility matrix
-
-| Deliverable | Accountable | Required reviewers |
-|---|---|---|
-| Trend Radar | Audience Growth | Editorial |
-| Topic Score | Audience Growth | Evidence, Red Team |
-| Evidence Pack | Evidence Lead | Assurance |
-| Packaging | Audience Growth | Showrunner |
-| Thesis/Story | Showrunner | Red Team |
-| Script | Showrunner | Evidence, Human Advocate |
-| Voice Direction | Showrunner | Owner |
-| Visual Treatment | Visual Producer | Showrunner |
-| Reference Frames | Visual Producer | Showrunner, Owner taste check |
-| Transition Map | Visual Producer | Editorial |
-| Asset Registry | Visual Producer | Assurance |
-| Animatic | Visual Producer | Editorial, Growth |
-| Final Cut | Visual Producer | Editorial |
-| Policy QC | Assurance | Evidence |
-| Export | Technical Operator | Visual Producer |
-| Publish | Owner | Council recommendation only |
-| Postmortem | Growth | Editorial, Finance, Evidence |
-
-## Stop rules
-
-Stop immediately if:
-- evidence collapses;
-- copyright/provenance cannot be resolved;
-- topic cannot sustain a truthful title/thumbnail promise;
-- visual treatment is only decoration;
-- two consecutive revisions remain generic/interchangeable;
-- cost/time exceeds pilot bounds with no learning trend.
-
-## Production philosophy
-
-We automate structure, not taste.
-
-Deterministic:
-- folders;
-- manifests;
-- checklists;
-- file naming;
-- asset IDs;
-- render/export checks;
-- metrics logging.
-
-Human/Council judgment:
-- topic;
-- thesis;
-- story;
-- humor;
-- narrator intent;
-- hero frames;
-- visual metaphor;
-- transitions;
-- final taste.
+The config + validators define non-negotiable workflow boundaries.
+The craft documents define how each specialist function executes them.
+The Showrunner resolves creative tradeoffs.
+The Owner retains public-publish and L4 brand authority.

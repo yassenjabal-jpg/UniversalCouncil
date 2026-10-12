@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 class CompanyPolicyConfig(unittest.TestCase):
     def test_hr_role_and_owner_authority(self):
         roles = json.loads((ROOT / "company/config/roles.json").read_text(encoding="utf-8"))
-        self.assertEqual(roles["version"], "1.3")
+        self.assertEqual(roles["version"], "1.4")
         self.assertIn("HR & Capability Director", roles["functions"])
         hr = roles["hr_capability_director"]
         self.assertFalse(hr["may_fire_unilaterally"])
@@ -36,7 +36,19 @@ class CompanyPolicyConfig(unittest.TestCase):
         self.assertIn("media_toolchain_capability", hr["owns"])
         self.assertEqual(hr["capability_scouting_policy"], "company/config/capability_scouting.json")
         media_scoped = {x["id"] for x in roles["venture_scoped_functions"]}
-        self.assertEqual(media_scoped, {"editorial_director", "ai_visual_post_producer", "audience_growth_packaging"})
+        self.assertEqual(
+            media_scoped,
+            {
+                "editorial_director",
+                "script_voice_director",
+                "visual_art_director",
+                "motion_picture_editor",
+                "music_sound_supervisor",
+                "dialogue_mix_engineer",
+                "audience_growth_packaging",
+                "localization_producer",
+            },
+        )
 
     def test_zero_revenue_mode_and_distribution_gate_are_default(self):
         defaults = json.loads((ROOT / "company/config/defaults.json").read_text(encoding="utf-8"))
