@@ -198,6 +198,13 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise HybridExecutionError("single physical controller must be enforced")
     if cfg.get("verification", {}).get("unknown_is_never_success") is not True:
         raise HybridExecutionError("unknown outcome must never be treated as success")
+    projection = cfg.get("result_projection", {})
+    if projection.get("enabled") is not True:
+        raise HybridExecutionError("compact result projection must remain enabled")
+    if projection.get("raw_output_default") is not False:
+        raise HybridExecutionError("raw output must remain opt-in")
+    if int(projection.get("max_items", 0)) < 1 or int(projection.get("max_text_chars", 0)) < 64:
+        raise HybridExecutionError("result projection bounds are too small")
     if cfg.get("automation_graduation", {}).get("verified_repeats_required", 0) < 2:
         raise HybridExecutionError("automation graduation requires repeated verification")
     return True
@@ -415,6 +422,7 @@ class HybridExecutor:
         requester: str,
         task_approved: bool,
         owner_confirmed: bool = False,
+        retain_controller: bool = False,
     ) -> dict[str, Any]:
         planned = plan_action(action, self.cfg)
         authority_record = None
@@ -474,6 +482,59 @@ class HybridExecutor:
                 "planned": planned,
                 "result": result,
                 "verification": verification,
+            }
+        finally:
+            if controls_desktop and not retain_controller and state.controller_lease == requester:
+                state.release_controller(requester)
+
+    def execute_batch(
+        self,
+        actions: list[dict[str, Any]],
+        state: SharedExecutionState,
+        *,
+        requester: str,
+        task_approved: bool,
+        owner_confirmed: bool = False,
+    ) -> dict[str, Any]:
+        if not isinstance(actions, list) or not actions:
+            raise HybridExecutionError("batch requires at least one action")
+        maximum = int(self.cfg["batching"]["max_deterministic_steps"])
+        if len(actions) > maximum:
+            raise HybridExecutionError(f"batch exceeds max deterministic steps: {maximum}")
+
+        planned = [plan_action(action, self.cfg) for action in actions]
+        controls_desktop = any(
+            item.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}
+            and item.authority_operation == "desktop_computer_use.control"
+            for item in planned
+        )
+        if controls_desktop:
+            state.acquire_controller(requester)
+
+        results: list[dict[str, Any]] = []
+        try:
+            for index, action in enumerate(actions):
+                result = self.execute(
+                    action,
+                    state,
+                    requester=requester,
+                    task_approved=task_approved,
+                    owner_confirmed=owner_confirmed,
+                    retain_controller=controls_desktop,
+                )
+                results.append(result)
+                if result["state"] != ResultState.SUCCEEDED.value:
+                    return {
+                        "state": result["state"],
+                        "completed": index,
+                        "stopped_at": index,
+                        "results": results,
+                    }
+            return {
+                "state": ResultState.SUCCEEDED.value,
+                "completed": len(results),
+                "stopped_at": None,
+                "results": results,
             }
         finally:
             if controls_desktop and state.controller_lease == requester:

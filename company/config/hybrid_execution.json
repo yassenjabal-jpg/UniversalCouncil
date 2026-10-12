@@ -37,6 +37,12 @@
     "max_deterministic_steps": 6,
     "stop_on_unknown": true
   },
+  "result_projection": {
+    "enabled": true,
+    "max_items": 6,
+    "max_text_chars": 320,
+    "raw_output_default": false
+  },
   "automation_graduation": {
     "verified_repeats_required": 3,
     "max_unknown_results": 0,

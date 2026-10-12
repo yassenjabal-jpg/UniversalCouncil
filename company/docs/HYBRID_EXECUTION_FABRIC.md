@@ -157,3 +157,41 @@ Before expanding autonomy:
 - company/runtime/hybrid_execution.py
 - company/tests/test_hybrid_execution.py
 - CouncilVideoStudio/docs/YASSIN_CONTROL_BRIDGE.md
+## Slice 2 — batching, projection and independent verification
+
+Implemented after prototype v0.1 acceptance:
+
+### Deterministic batching
+- up to 6 configured deterministic steps;
+- one controller lease across a GUI-control batch;
+- immediate stop on any non-SUCCEEDED result;
+- no controller lease for non-GUI-control batches.
+
+### Compact result projection
+Model-facing output is compact by default.
+
+The projection keeps execution state, authority-relevant metadata, compact host requests, bounded verification results and operation-specific summaries. Raw provider stdout remains local unless explicitly needed.
+
+For list_windows, the projection reduces the payload to:
+- total item count;
+- process-count summary;
+- foreground process/class.
+
+Live YASSIN measurement on 2026-10-12:
+- raw: 13,062 bytes;
+- projected: 3,026 bytes;
+- reduction: 76.8%.
+
+### Independent GUI post-state verifier
+State-changing GUI actions may define a separate read-only verification request and expected fields.
+
+The verifier performs a new GUI observation after the action. Provider success alone is insufficient.
+
+A real reversible T2 Notepad test demonstrated:
+- mismatched expected post-state -> UNKNOWN and batch stop;
+- corrected exact post-state -> SUCCEEDED;
+- two-step CHANGED -> ORIGINAL batch succeeded under one controller lease.
+
+Evidence:
+company/docs/evidence/HYBRID_EXECUTION_SLICE2_2026-10-12.md
+
