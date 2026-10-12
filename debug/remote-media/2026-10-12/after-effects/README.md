@@ -24,3 +24,10 @@ From this incident forward, every remote screenshot or material blocker encounte
 ### Next action
 
 Capture the current elevated After Effects state, add the screenshot here, then continue debugging from the actual UI state.
+
+### 22:49 current live state
+- Crash Repair dialog HWND 394816 is foreground.
+- Scripting-error dialog HWND 329406 still exists behind it.
+- Evidence: 03-current-crash-repair-2249.png
+- Next: target Crash Repair HWND directly, press Continue, verify main AE workspace appears, then redispatch JSX.
+
