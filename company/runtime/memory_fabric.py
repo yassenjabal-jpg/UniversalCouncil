@@ -434,6 +434,13 @@ def rebuild_memory(memory_root: Path, cfg: dict[str, Any] | None = None) -> dict
 
 def build_search_index(memory_root: Path, db_path: Path, cfg: dict[str, Any] | None = None) -> Path:
     events = load_events(memory_root, cfg)
+    reduction = reduce_events(events)
+    if reduction.conflicts:
+        conflict_text = "; ".join(
+            f"{item.scope}:{item.subject}={','.join(item.event_ids)}" for item in reduction.conflicts
+        )
+        raise MemoryFabricError(f"cannot build search index with unresolved conflicts: {conflict_text}")
+    events = reduction.active
     db_path.parent.mkdir(parents=True, exist_ok=True)
     if db_path.exists():
         db_path.unlink()

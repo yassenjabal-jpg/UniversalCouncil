@@ -362,6 +362,39 @@ class MemoryFabricTests(unittest.TestCase):
             with self.assertRaises(MemoryFabricError):
                 search_index(db, '"')
 
+    def test_search_index_contains_only_active_events_and_rejects_conflicts(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            memory = root / "memory"
+            old = make_event(
+                "MEM-20261012-120000-old001",
+                summary="old value",
+            )
+            newer = make_event(
+                "MEM-20261012-120100-new001",
+                summary="new value",
+                supersedes=[old["event_id"]],
+                created_at="2026-10-12T12:01:00+03:00",
+            )
+            write_event(memory, old, BASE_CFG)
+            write_event(memory, newer, BASE_CFG)
+            db = build_search_index(memory, root / "memory.sqlite", BASE_CFG)
+            rows = search_index(db, "demo.subject", 10)
+            self.assertEqual([row["event_id"] for row in rows], [newer["event_id"]])
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            memory = root / "memory"
+            first = make_event("MEM-20261012-120000-con001")
+            second = make_event(
+                "MEM-20261012-120100-con002",
+                created_at="2026-10-12T12:01:00+03:00",
+            )
+            write_event(memory, first, BASE_CFG)
+            write_event(memory, second, BASE_CFG)
+            with self.assertRaises(MemoryFabricError):
+                build_search_index(memory, root / "memory.sqlite", BASE_CFG)
+
     def test_safe_tar_extract_and_traversal_rejection(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
