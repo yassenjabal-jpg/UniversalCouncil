@@ -1,0 +1,330 @@
+{
+  "version": "1.0",
+  "channel_model": "broad_format_first_multilingual_visual_documentary",
+  "visual_system": "Editorial Renaissance Motion",
+  "primary_language": "Arabic",
+  "secondary_language_rollout": [
+    "English",
+    "Spanish",
+    "German",
+    "French"
+  ],
+  "publication_authority": "GATED",
+  "portfolio_balance": {
+    "initial_window_videos": 6,
+    "max_same_family_in_window": 2,
+    "minimum_distinct_families_in_initial_window": 4,
+    "relax_only_after_first_party_audience_evidence": true
+  },
+  "trend_radar": {
+    "cadence": "daily",
+    "sources": [
+      {
+        "name": "Google Trends Trending Now",
+        "type": "public_search_velocity",
+        "weight": 18
+      },
+      {
+        "name": "TikTok Creative Center",
+        "type": "short_form_trend_velocity",
+        "weight": 15
+      },
+      {
+        "name": "YouTube Ask Studio",
+        "type": "channel_native_ideas_and_audience_insights",
+        "weight": 15,
+        "availability": "after_channel_data_exists"
+      },
+      {
+        "name": "YouTube search/autocomplete/competitor outliers",
+        "type": "platform_demand",
+        "weight": 15
+      },
+      {
+        "name": "Reddit and specialist communities",
+        "type": "early_question_signal",
+        "weight": 10
+      },
+      {
+        "name": "news/science/technology/business feeds",
+        "type": "why_now_signal",
+        "weight": 8
+      },
+      {
+        "name": "Instagram/Threads/X public signals or Metricool when connected",
+        "type": "social_cross_platform_recurrence",
+        "weight": 9
+      },
+      {
+        "name": "internal comments/retention/search terms",
+        "type": "first_party_audience_signal",
+        "weight": 10,
+        "availability": "after_publish"
+      }
+    ],
+    "regions": [
+      "Arabic markets",
+      "US",
+      "UK",
+      "Germany",
+      "France",
+      "Spain"
+    ],
+    "candidate_expiry_hours": 72,
+    "evergreen_reframe_required": true
+  },
+  "topic_scoring": {
+    "scale": 100,
+    "fields": {
+      "cross_platform_velocity": 15,
+      "curiosity_gap": 15,
+      "channel_format_fit": 12,
+      "evergreen_half_life": 10,
+      "visual_explainability": 12,
+      "evidence_sourceability": 10,
+      "multilingual_portability": 8,
+      "competition_opportunity": 6,
+      "production_cost": 5,
+      "policy_brand_safety": 7
+    },
+    "gates": {
+      "minimum_total": 75,
+      "minimum_evidence_sourceability": 6,
+      "minimum_visual_explainability": 7,
+      "require_one_sentence_question": true,
+      "reject_if_only_trending_without_durable_question": true
+    }
+  },
+  "workflow": [
+    "signal_capture",
+    "topic_clustering",
+    "topic_scorecard",
+    "evidence_pack",
+    "packaging_hypotheses",
+    "story_thesis",
+    "script_and_voice_direction",
+    "visual_treatment",
+    "reference_frame_assignment",
+    "storyboard_and_transition_map",
+    "asset_registry",
+    "animatic",
+    "production",
+    "audio_and_music",
+    "multilingual_preflight",
+    "anti_slop_gate",
+    "fact_policy_qc",
+    "export_qc",
+    "publish_gate",
+    "analytics_postmortem",
+    "memory_and_routine_update"
+  ],
+  "roles": {
+    "Audience Growth & Packaging Operator": [
+      "trend radar",
+      "topic mining",
+      "title/thumbnail hypotheses",
+      "post-publish packaging analysis"
+    ],
+    "Evidence & Research Lead": [
+      "source pack",
+      "fact table",
+      "claim confidence",
+      "source freshness"
+    ],
+    "Editorial Director / Showrunner": [
+      "final topic gate",
+      "thesis",
+      "story architecture",
+      "script lock",
+      "visual-story coherence"
+    ],
+    "Human / User Advocate": [
+      "voice authenticity",
+      "clarity",
+      "audience comprehension",
+      "owner narration fit"
+    ],
+    "AI Visual & Post-Production Producer": [
+      "visual treatment",
+      "frame bible",
+      "storyboard",
+      "asset plan",
+      "motion/edit",
+      "continuity"
+    ],
+    "Risk & Assurance": [
+      "copyright",
+      "AI disclosure",
+      "policy",
+      "sensitive-domain framing",
+      "claim risk"
+    ],
+    "Technical Operator": [
+      "tool routing",
+      "render/export",
+      "project structure",
+      "automation/routines",
+      "artifact integrity"
+    ],
+    "Finance Controller": [
+      "credits/cost/time logging",
+      "cost per minute",
+      "budget gate"
+    ],
+    "Red Team": [
+      "anti-slop challenge",
+      "generic-template detection",
+      "story/visual differentiation challenge"
+    ],
+    "Owner": [
+      "human narration",
+      "L4 decisions",
+      "public publish approval",
+      "brand taste veto"
+    ]
+  },
+  "script_schema": {
+    "required_columns": [
+      "timecode",
+      "narration",
+      "intent",
+      "emotion_tag",
+      "energy_1_5",
+      "pace",
+      "pitch_contour",
+      "emphasis_words",
+      "pause_before_ms",
+      "pause_after_ms",
+      "breath_note",
+      "pronunciation",
+      "visual_beat_id",
+      "music_state",
+      "sfx",
+      "evidence_ids",
+      "translation_note"
+    ],
+    "allowed_emotion_tags": [
+      "فضول هادئ",
+      "سؤال حقيقي",
+      "سر صغير",
+      "دهشة مضبوطة",
+      "ابتسامة خفيفة",
+      "جدية",
+      "تأمل",
+      "تأكيد",
+      "تحذير هادئ",
+      "همس خفيف",
+      "تسارع",
+      "خاتمة مفتوحة"
+    ],
+    "voice_rules": {
+      "default": "warm conversational Iraqi + MSA",
+      "avoid": [
+        "news-anchor delivery",
+        "constant hype",
+        "synthetic overacting",
+        "same cadence every sentence"
+      ],
+      "pause_logic": "semantic, not mechanical",
+      "emphasis_limit": "maximum 1–2 emphasized words per sentence unless dramatically justified"
+    }
+  },
+  "frame_bible": {
+    "canonical_frame_types": [
+      "F01 Hero Question",
+      "F02 Evidence Document",
+      "F03 Editorial Portrait",
+      "F04 Scientific Engraving",
+      "F05 Mechanism Diagram",
+      "F06 Number/Scale Reveal",
+      "F07 Map/Spatial",
+      "F08 Object Macro",
+      "F09 Historical Collage",
+      "F10 Modern Reality",
+      "F11 Breathing Reset",
+      "F12 Ending Reflection"
+    ],
+    "composition_rules": {
+      "negative_space_percent": "35-55",
+      "dominant_hero_objects": 1,
+      "max_primary_text_blocks": 1,
+      "max_micro_captions": 1,
+      "editable_language_layers": true
+    }
+  },
+  "transition_system": {
+    "rule": "transition must be motivated by shape, object, camera direction, semantic link, time shift, or cause/effect",
+    "canonical": [
+      "object wipe",
+      "mask reveal",
+      "shape match cut",
+      "color match cut",
+      "illustration-to-photo morph",
+      "photo-to-diagram extraction",
+      "zoom through object",
+      "editorial page shift",
+      "line-drawing build",
+      "parallax drift",
+      "foreground occlusion",
+      "cobalt reset frame"
+    ],
+    "forbidden_default": [
+      "random preset wipes",
+      "constant whip-pan",
+      "glitch for no narrative reason",
+      "hard cut chains with no rhythm"
+    ]
+  },
+  "anti_slop_gate": {
+    "required": true,
+    "checks": [
+      "episode has unique thesis and question",
+      "visual grammar consistent but shot substance not interchangeable",
+      "no repeated AI template sequence",
+      "no filler AI B-roll",
+      "every shot has EVIDENCE/EXPLANATION/ATMOSPHERE/TRANSITION purpose",
+      "atmosphere does not dominate runtime",
+      "primary claims source-linked",
+      "human narrator identity preserved",
+      "visual assets pass continuity palette/type/grid check",
+      "at least three episode-specific visual motifs",
+      "transition map has narrative motivation"
+    ],
+    "fail_action": "RETURN_TO_EDITORIAL_OR_VISUAL_TREATMENT"
+  },
+  "quality_gates": [
+    "G0 Trend/Topic Gate",
+    "G1 Evidence Gate",
+    "G2 Packaging Gate",
+    "G3 Script Lock",
+    "G4 Visual Treatment Lock",
+    "G5 Animatic Gate",
+    "G6 Anti-Slop Gate",
+    "G7 Fact/Policy QC",
+    "G8 Export QC",
+    "G9 Owner Publish Gate",
+    "G10 Post-Publish Learning Gate"
+  ],
+  "analytics": {
+    "pre_publish": [
+      "topic_score",
+      "packaging_score",
+      "estimated_cost",
+      "owner_minutes"
+    ],
+    "post_publish": [
+      "impressions",
+      "ctr",
+      "first_30_second_retention",
+      "average_percentage_viewed",
+      "watch_time",
+      "returning_viewers",
+      "subscribers_per_video",
+      "comments_by_theme",
+      "language_audio_share",
+      "top_moments",
+      "spikes",
+      "dips"
+    ]
+  }
+}
