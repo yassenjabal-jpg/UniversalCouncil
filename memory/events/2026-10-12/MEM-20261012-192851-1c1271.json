@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-1c1271",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/youtube",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "youtube.ideation.review_process",
+  "summary": "Channel ideation should use a long Council session with market analysis, adversarial objections among members, and a final shortlist of five diverse channel concepts with narrative, visual, storytelling and dialogue direction.",
+  "details": {
+    "required_outputs": [
+      "five differentiated channel concepts",
+      "presentation/deck per channel",
+      "narration direction",
+      "art direction",
+      "storytelling direction",
+      "dialogue approach",
+      "five illustrative visuals per channel"
+    ],
+    "challenge_mode": "members must object and compare before selection",
+    "exact_historical_channel_names": "not yet recovered"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "council",
+    "ideation",
+    "five-channels"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "historical owner request for five channel concepts and Council objection session"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-eda6d5",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "policy",
+  "subject": "revenuesystem.currency_model",
+  "summary": "Keep Iraqi coarse cash, Iraqi change and USD separated throughout the application; USD is converted to IQD and summed only in matching/comparison logic where required.",
+  "details": {
+    "currencies": [
+      "IQD coarse",
+      "IQD change",
+      "USD"
+    ],
+    "separate_everywhere": true,
+    "usd_conversion_scope": "matching/comparison only",
+    "financial_precision_required": true,
+    "implementation_status": "requirement; repository remains execution truth"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "currency",
+    "financial"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "historical owner currency-separation directive"
+  }
+}

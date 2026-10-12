@@ -1,13 +1,58 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T15:50:06+00:00",
-  "event_count": 7,
-  "active_count": 7,
+  "generated_at": "2026-10-12T19:29:10+03:00",
+  "event_count": 27,
+  "active_count": 27,
   "superseded_count": 0,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-12T18:49:51+03:00",
+  "latest_event_at": "2026-10-12T19:28:51+03:00",
   "scopes": {
     "council": [
+      {
+        "event_id": "MEM-20261012-192851-8f2e25",
+        "subject": "council.agent_runtime_truthfulness",
+        "level": "L3_CANONICAL",
+        "kind": "policy",
+        "summary": "Do not describe Council role perspectives as physically independent agents unless separate model/runtime processes actually exist; role simulations in one ChatGPT execution context must be labeled honestly.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "evidence_backed"
+      },
+      {
+        "event_id": "MEM-20261012-192851-a4376c",
+        "subject": "council.desktop_computer_use.contract",
+        "level": "L3_CANONICAL",
+        "kind": "architecture",
+        "summary": "Full Windows desktop control is a first-class execution capability, not a permanent Council member; prefer application-native automation, then semantic UI Automation, and use physical mouse/keyboard only as fallback with verified before/after state.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-192851-1c158b",
+        "subject": "council.governance.current_structure",
+        "level": "L3_CANONICAL",
+        "kind": "status",
+        "summary": "UniversalCouncil core governance remains v0.3.0; later layered v0.4+ restructuring is a candidate pending measured bake-off and is not yet the governing role structure.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-192851-ec1124",
+        "subject": "council.hybrid_execution.contract",
+        "level": "L3_CANONICAL",
+        "kind": "architecture",
+        "summary": "Council execution uses a hybrid DC+GUI fabric: native/API first, then Desktop Commander control plane, reusable routines, semantic UIA and visual GUI assistance; state-changing work requires verification and UNKNOWN is never success.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-192851-99b4c6",
+        "subject": "council.restructure.layered_candidate",
+        "level": "L3_CANONICAL",
+        "kind": "proposal",
+        "summary": "The preferred restructuring candidate is a layered Council with a Decision Orchestrator, bounded core challenge capabilities, on-demand specialist federation, separate operators and meta-governance; adoption requires bake-off evidence before changing governing role files.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "evidence_backed"
+      },
       {
         "event_id": "MEM-20261012-184951-a40fa1",
         "subject": "memory.fabric.queue_runtime",
@@ -24,6 +69,15 @@
         "kind": "capability",
         "summary": "Universal Memory Fabric completed a real YASSIN-to-GitHub autosync round trip and is runtime verified for append-only event persistence, canonical rebuild, Git-backed preflight, and local FTS retrieval.",
         "created_at": "2026-10-12T18:37:37+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-192851-bfc437",
+        "subject": "memory.migration.legacy_chat_round1",
+        "level": "L3_CANONICAL",
+        "kind": "status",
+        "summary": "Legacy memory migration round 1 captures durable YouTube/Media strategy, RevenueSystem requirements, and Council architecture/governance context; exact historical five-channel concepts and detailed prior YouTube policy findings remain intentionally unresolved rather than guessed.",
+        "created_at": "2026-10-12T19:28:51+03:00",
         "confidence": "verified"
       }
     ],
@@ -49,6 +103,24 @@
     ],
     "project/media": [
       {
+        "event_id": "MEM-20261012-192851-3f76af",
+        "subject": "media.pilot.measurement",
+        "level": "L3_CANONICAL",
+        "kind": "requirement",
+        "summary": "No full-scale media operation before a three-video pilot; measure production cost/effort and quality, and if published also measure CTR and audience-retention outcomes before scaling.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-192851-eae0a7",
+        "subject": "media.production.workflow",
+        "level": "L3_CANONICAL",
+        "kind": "architecture",
+        "summary": "The media venture uses an end-to-end production workflow from market/research and scripting through storyboard/assets, Adobe/AI production, finishing, packaging, QC and performance learning.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "verified"
+      },
+      {
         "event_id": "MEM-20261012-182200-c3d4e5",
         "subject": "media.venture.capability",
         "level": "L3_CANONICAL",
@@ -60,6 +132,60 @@
     ],
     "project/revenuesystem": [
       {
+        "event_id": "MEM-20261012-192851-eda6d5",
+        "subject": "revenuesystem.currency_model",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "policy",
+        "summary": "Keep Iraqi coarse cash, Iraqi change and USD separated throughout the application; USD is converted to IQD and summed only in matching/comparison logic where required.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-192851-478e5a",
+        "subject": "revenuesystem.import_contract",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "requirement",
+        "summary": "Imported cashier/branch data must preserve and display point of sale, cashier name, meal/shift and branch; negative spreadsheet values are valid returns and must be handled correctly.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-192851-5805a3",
+        "subject": "revenuesystem.matching_accounts.contract",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "requirement",
+        "summary": "Matching is cashier-centric and integrates manual matching, e-payment breakdowns and customer-account transfer; Rafidain and SWITCH bank amounts must remain distributable per cashier for later reconciliation.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-192851-a842ac",
+        "subject": "revenuesystem.operational_day.rule",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "policy",
+        "summary": "Operational days remain open for date differences of 0–2 days; at 3 days or more they become read-only and auto-closure is logged.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-192851-e7b13e",
+        "subject": "revenuesystem.product_identity",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "decision",
+        "summary": "The desktop revenue application is named «المطابقة» and exists to replace/streamline the legacy daily revenue workflow.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-192851-84a323",
+        "subject": "revenuesystem.revenue_entry.contract",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "requirement",
+        "summary": "Cashier revenue entry must support autosave, direct Iraqi-total input, and arithmetic expressions in denomination fields; cash denominations are entered in-app rather than imported from Excel.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
         "event_id": "MEM-20261012-182400-e5f6a7",
         "subject": "revenuesystem.source_of_truth",
         "level": "L4_OWNER_DIRECTIVE",
@@ -67,9 +193,63 @@
         "summary": "RevenueSystem execution must use the actual yassenjabal-jpg/RevenueSystem5 repository, current main SHA, governing files, commits/PRs/CI/tests/migrations/artifacts as evidence; chat history is inference only.",
         "created_at": "2026-10-12T18:24:00+03:00",
         "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-192851-879e93",
+        "subject": "revenuesystem.ui_hardening.contract",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "requirement",
+        "summary": "RevenueSystem UI must minimize wasted title-bar space, prevent overlapping text, show popup fields without unnecessary sidebars/scrolling where feasible, keep window controls top-right, and preserve reliable keyboard navigation.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
       }
     ],
     "project/youtube": [
+      {
+        "event_id": "MEM-20261012-192851-f3d4f0",
+        "subject": "youtube.adaptation.policy",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "policy",
+        "summary": "Use successful US and European channel formats as research benchmarks, but rebuild them for the Arabic market with original scripting, structure and creative execution rather than simple dubbing or minor copying.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-192851-1c1271",
+        "subject": "youtube.ideation.review_process",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "requirement",
+        "summary": "Channel ideation should use a long Council session with market analysis, adversarial objections among members, and a final shortlist of five diverse channel concepts with narrative, visual, storytelling and dialogue direction.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-192851-1da653",
+        "subject": "youtube.narration_visual_preferences",
+        "level": "L2_PROJECT",
+        "kind": "preference",
+        "summary": "Default documentary voice and visual direction: warm conversational narration mixing Iraqi Arabic and MSA, medium-slow reflective delivery with light humor, user-recorded voice with emotion tags, and editorial documentary visuals rather than a news-like style.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-192851-2a0c4a",
+        "subject": "youtube.policy_research.status",
+        "level": "L3_CANONICAL",
+        "kind": "status",
+        "summary": "A prior Council review covered YouTube policy/monetization and channel operations, but the exact detailed policy findings are not fully canonical yet; operational policy decisions must be revalidated against current YouTube rules before use.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "evidence_backed"
+      },
+      {
+        "event_id": "MEM-20261012-192851-e6ae1a",
+        "subject": "youtube.portfolio.target",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "decision",
+        "summary": "Treat the YouTube initiative as a portfolio of multiple differentiated Arabic channels rather than a single-channel-only plan; channel concepts should be evaluated against market evidence before production.",
+        "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
       {
         "event_id": "MEM-20261012-182300-d4e5f6",
         "subject": "youtube.strategy.migration",

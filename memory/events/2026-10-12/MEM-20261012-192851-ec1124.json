@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-ec1124",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "council",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "council.hybrid_execution.contract",
+  "summary": "Council execution uses a hybrid DC+GUI fabric: native/API first, then Desktop Commander control plane, reusable routines, semantic UIA and visual GUI assistance; state-changing work requires verification and UNKNOWN is never success.",
+  "details": {
+    "execution_order": [
+      "native_api_or_connector",
+      "dc_control_plane",
+      "reusable_routine",
+      "gui_semantic_uia",
+      "gui_visual_assist"
+    ],
+    "single_physical_controller": true,
+    "delta_context": true,
+    "max_deterministic_batch_steps": 6,
+    "compact_projection": true,
+    "automation_graduation_after_verified_repeats": 3,
+    "t3_owner_confirmation_required": true,
+    "raw_coordinates_enabled": false,
+    "source_file": "company/config/hybrid_execution.json"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "council",
+    "hybrid",
+    "dc",
+    "gui",
+    "verification"
+  ],
+  "source": {
+    "type": "repository",
+    "commit": "830dd405a8dd3cea6c618d73531d07066a3e51d1"
+  }
+}

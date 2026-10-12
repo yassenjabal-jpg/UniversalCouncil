@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-3f76af",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/media",
+  "level": "L3_CANONICAL",
+  "kind": "requirement",
+  "subject": "media.pilot.measurement",
+  "summary": "No full-scale media operation before a three-video pilot; measure production cost/effort and quality, and if published also measure CTR and audience-retention outcomes before scaling.",
+  "details": {
+    "pilot_videos": 3,
+    "pre_scale_required": true,
+    "operational_metrics": [
+      "production_time_per_video",
+      "owner_human_minutes_per_video",
+      "tool_cost_per_video",
+      "cost_per_published_minute",
+      "revision_count",
+      "factual_policy_defects",
+      "packaging_quality"
+    ],
+    "published_metrics": [
+      "ctr",
+      "first_30_second_retention",
+      "average_percentage_viewed",
+      "watch_time",
+      "subscribers_per_video",
+      "returning_viewers"
+    ],
+    "source_file": "company/config/media_venture.json"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "pilot",
+    "metrics"
+  ],
+  "source": {
+    "type": "repository",
+    "commit": "830dd405a8dd3cea6c618d73531d07066a3e51d1"
+  }
+}

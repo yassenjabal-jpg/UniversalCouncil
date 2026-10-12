@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-f3d4f0",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/youtube",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "policy",
+  "subject": "youtube.adaptation.policy",
+  "summary": "Use successful US and European channel formats as research benchmarks, but rebuild them for the Arabic market with original scripting, structure and creative execution rather than simple dubbing or minor copying.",
+  "details": {
+    "benchmark_sources": [
+      "successful US formats",
+      "successful European formats"
+    ],
+    "required_transformation": [
+      "Arabic market fit",
+      "original script",
+      "original packaging",
+      "original visual/story execution"
+    ],
+    "simple_dubbing_as_strategy": false,
+    "copyright_policy_review_required": true
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "adaptation",
+    "copyright",
+    "market-fit"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "historical owner-approved international benchmark strategy"
+  }
+}

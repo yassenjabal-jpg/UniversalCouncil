@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-a4376c",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "council",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "council.desktop_computer_use.contract",
+  "summary": "Full Windows desktop control is a first-class execution capability, not a permanent Council member; prefer application-native automation, then semantic UI Automation, and use physical mouse/keyboard only as fallback with verified before/after state.",
+  "details": {
+    "implementation_repo": "CouncilVideoStudio",
+    "control_hierarchy": [
+      "application-native API/script",
+      "semantic UIA",
+      "pywinauto fallback",
+      "physical keyboard/mouse last"
+    ],
+    "observe_and_control_separate": true,
+    "credential_entry_forbidden": true,
+    "state_change_verification_required": true,
+    "raw_coordinate_only_when_semantic_exists": false
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "council",
+    "desktop",
+    "uia",
+    "computer-use"
+  ],
+  "source": {
+    "type": "repository",
+    "ref": "company/evidence/imported/council-video-studio/desktop_computer_use.json"
+  }
+}

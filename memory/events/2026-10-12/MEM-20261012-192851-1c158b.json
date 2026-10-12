@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-1c158b",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "council",
+  "level": "L3_CANONICAL",
+  "kind": "status",
+  "subject": "council.governance.current_structure",
+  "summary": "UniversalCouncil core governance remains v0.3.0; later layered v0.4+ restructuring is a candidate pending measured bake-off and is not yet the governing role structure.",
+  "details": {
+    "governing_version": "0.3.0",
+    "restructure_adopted": false,
+    "source_file": "config/roles.json"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "council",
+    "governance",
+    "roles"
+  ],
+  "source": {
+    "type": "repository",
+    "commit": "830dd405a8dd3cea6c618d73531d07066a3e51d1"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-478e5a",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "revenuesystem.import_contract",
+  "summary": "Imported cashier/branch data must preserve and display point of sale, cashier name, meal/shift and branch; negative spreadsheet values are valid returns and must be handled correctly.",
+  "details": {
+    "required_display_fields": [
+      "نقطة البيع",
+      "اسم الكاشير",
+      "الوجبة",
+      "الفرع"
+    ],
+    "negative_values_mean_returns": true,
+    "cash_denominations_imported_from_excel": false,
+    "implementation_status": "requirement; verify importer behavior from RevenueSystem5"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "import",
+    "excel",
+    "returns"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "historical owner Excel/import contract"
+  }
+}

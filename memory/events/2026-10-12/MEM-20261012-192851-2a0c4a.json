@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-2a0c4a",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "status",
+  "subject": "youtube.policy_research.status",
+  "summary": "A prior Council review covered YouTube policy/monetization and channel operations, but the exact detailed policy findings are not fully canonical yet; operational policy decisions must be revalidated against current YouTube rules before use.",
+  "details": {
+    "historical_review_exists": true,
+    "exact_policy_details_fully_recovered": false,
+    "revalidate_before": [
+      "monetization decisions",
+      "reused-content decisions",
+      "copyright decisions",
+      "publishing workflow"
+    ],
+    "do_not_guess_missing_historical_policy_text": true
+  },
+  "supersedes": [],
+  "confidence": "evidence_backed",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "policy",
+    "monetization",
+    "migration"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "2026-10-12 migration from prior Council YouTube review context"
+  }
+}

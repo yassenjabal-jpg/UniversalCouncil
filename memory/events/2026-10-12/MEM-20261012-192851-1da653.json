@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-1da653",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/youtube",
+  "level": "L2_PROJECT",
+  "kind": "preference",
+  "subject": "youtube.narration_visual_preferences",
+  "summary": "Default documentary voice and visual direction: warm conversational narration mixing Iraqi Arabic and MSA, medium-slow reflective delivery with light humor, user-recorded voice with emotion tags, and editorial documentary visuals rather than a news-like style.",
+  "details": {
+    "voice_language": "Iraqi Arabic + MSA",
+    "delivery": [
+      "warm",
+      "conversational",
+      "medium-slow",
+      "reflective",
+      "slight humor"
+    ],
+    "voice_source": "owner records own voice",
+    "emotion_tags": true,
+    "visual_direction": "editorial documentary",
+    "avoid": [
+      "news-like presentation",
+      "postman/mailman motif"
+    ],
+    "historical_visual_reference": "vintage scientific / retro-futurism was explored but later direction became broader editorial documentary"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "private_non_sensitive",
+  "tags": [
+    "youtube",
+    "voice",
+    "visual-identity",
+    "documentary"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "historical media project preferences"
+  }
+}

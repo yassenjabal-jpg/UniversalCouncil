@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-eae0a7",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/media",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "media.production.workflow",
+  "summary": "The media venture uses an end-to-end production workflow from market/research and scripting through storyboard/assets, Adobe/AI production, finishing, packaging, QC and performance learning.",
+  "details": {
+    "workflow": [
+      "market and topic research",
+      "idea and hook selection",
+      "fact research",
+      "script",
+      "storyboard",
+      "asset generation/collection",
+      "motion assembly and editing",
+      "audio/captions",
+      "title/thumbnail packaging",
+      "QC/export",
+      "distribution when authorized",
+      "analytics and iteration"
+    ],
+    "authority_boundary": "publishing remains separately gated",
+    "source_files": [
+      "company/config/media_venture.json",
+      "company/docs/MEDIA_VENTURE_CAPABILITY_ACCEPTANCE.md"
+    ]
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "workflow",
+    "production"
+  ],
+  "source": {
+    "type": "repository",
+    "commit": "830dd405a8dd3cea6c618d73531d07066a3e51d1"
+  }
+}

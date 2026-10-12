@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-879e93",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "revenuesystem.ui_hardening.contract",
+  "summary": "RevenueSystem UI must minimize wasted title-bar space, prevent overlapping text, show popup fields without unnecessary sidebars/scrolling where feasible, keep window controls top-right, and preserve reliable keyboard navigation.",
+  "details": {
+    "window_controls": "top-right",
+    "avoid": [
+      "duplicate title bars",
+      "text overlap",
+      "wasted header space"
+    ],
+    "popup_goal": "show all important fields without sidebars when feasible",
+    "keyboard_requirements": [
+      "Enter field flow",
+      "arrow navigation",
+      "PageUp/PageDown cashier navigation",
+      "Home/End where specified",
+      "Ctrl+Z"
+    ],
+    "implementation_status": "historical hardening requirement; current repository must be audited before claiming complete"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "ui",
+    "keyboard",
+    "hardening"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "historical owner UI hardening and keyboard requirements"
+  }
+}

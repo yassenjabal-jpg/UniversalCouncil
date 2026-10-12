@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-99b4c6",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "council",
+  "level": "L3_CANONICAL",
+  "kind": "proposal",
+  "subject": "council.restructure.layered_candidate",
+  "summary": "The preferred restructuring candidate is a layered Council with a Decision Orchestrator, bounded core challenge capabilities, on-demand specialist federation, separate operators and meta-governance; adoption requires bake-off evidence before changing governing role files.",
+  "details": {
+    "candidate_layers": [
+      "Owner",
+      "Decision Orchestrator",
+      "Core challenge capabilities",
+      "Specialist federation",
+      "Operators",
+      "Venture cells",
+      "Meta-governance"
+    ],
+    "core_challenges": [
+      "Evidence & Verification",
+      "Red Team / Falsification",
+      "Execution & Feasibility",
+      "Risk & Assurance",
+      "Human & Adoption",
+      "Value & Economics"
+    ],
+    "adoption_state": "PROVISIONAL_RESTRUCTURE_CANDIDATE",
+    "do_not_change_governing_roles_without_bakeoff": true
+  },
+  "supersedes": [],
+  "confidence": "evidence_backed",
+  "sensitivity": "normal",
+  "tags": [
+    "council",
+    "restructure",
+    "candidate",
+    "bakeoff"
+  ],
+  "source": {
+    "type": "repository",
+    "ref": "docs/research/2026-10-12-full-council-restructure-arena.md"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-a842ac",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "policy",
+  "subject": "revenuesystem.operational_day.rule",
+  "summary": "Operational days remain open for date differences of 0–2 days; at 3 days or more they become read-only and auto-closure is logged.",
+  "details": {
+    "open_day_difference": [
+      0,
+      1,
+      2
+    ],
+    "read_only_from_day_difference": 3,
+    "auto_closure_logged": true,
+    "implementation_status": "requirement; verify repository implementation"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "operational-day",
+    "policy"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "historical saved operational-day rule"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-e6ae1a",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/youtube",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "decision",
+  "subject": "youtube.portfolio.target",
+  "summary": "Treat the YouTube initiative as a portfolio of multiple differentiated Arabic channels rather than a single-channel-only plan; channel concepts should be evaluated against market evidence before production.",
+  "details": {
+    "portfolio_model": "multiple differentiated channels",
+    "market": "Arabic audience",
+    "exact_final_channel_set": "not yet canonical from historical work",
+    "implementation_status": "strategy directive, not production evidence"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "portfolio",
+    "arabic-market"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "historical Council media discussions migrated 2026-10-12"
+  }
+}

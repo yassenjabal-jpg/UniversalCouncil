@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-5805a3",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "revenuesystem.matching_accounts.contract",
+  "summary": "Matching is cashier-centric and integrates manual matching, e-payment breakdowns and customer-account transfer; Rafidain and SWITCH bank amounts must remain distributable per cashier for later reconciliation.",
+  "details": {
+    "cashier_cards": true,
+    "manual_matching": true,
+    "e_payment_banks": [
+      "Rafidain",
+      "SWITCH"
+    ],
+    "per_cashier_bank_distribution": true,
+    "customer_account_transfer_integrated": true,
+    "customer_account_system": "كشف الحساب",
+    "usd_conversion_in_matching_only": true,
+    "implementation_status": "requirement; verify repository state"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "matching",
+    "accounts",
+    "epayment"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "historical owner matching/accounts requirements"
+  }
+}

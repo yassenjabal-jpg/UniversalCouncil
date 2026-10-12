@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-192851-84a323",
+  "created_at": "2026-10-12T19:28:51+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "revenuesystem.revenue_entry.contract",
+  "summary": "Cashier revenue entry must support autosave, direct Iraqi-total input, and arithmetic expressions in denomination fields; cash denominations are entered in-app rather than imported from Excel.",
+  "details": {
+    "denominations": [
+      25000,
+      10000,
+      5000,
+      50000
+    ],
+    "expression_example": "80+2",
+    "expression_behavior": "evaluate note count expression then multiply by denomination",
+    "direct_iqd_total": true,
+    "autosave": true,
+    "excel_denomination_import": false,
+    "implementation_status": "requirement; verify current code/tests before claiming complete"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "cash-entry",
+    "autosave",
+    "denominations"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "historical owner revenue-entry requirements"
+  }
+}
