@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-205612-59de13",
+  "created_at": "2026-10-12T20:56:12+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "youtube.channel_operating_system.current",
+  "summary": "Council adopted Channel Operating System v1 as the default end-to-end method for the broad multilingual visual-documentary channel, covering trend radar, topic scoring, evidence, packaging, scene-aware script and voice direction, reference frames, transitions, asset provenance, anti-slop QC, multilingual delivery, publishing gate and analytics learning.",
+  "details": {
+    "version": "1.0",
+    "governing_config": "company/config/channel_operating_system.json",
+    "governing_ops": "docs/operations/media/CHANNEL_OPERATING_SYSTEM.md",
+    "visual_bible": "docs/operations/media/EDITORIAL_RENAISSANCE_VISUAL_BIBLE.md",
+    "reference_frames": "docs/operations/media/REFERENCE_FRAME_SPECS.md",
+    "packaging_bible": "docs/operations/media/PACKAGING_BIBLE.md",
+    "audio_bible": "docs/operations/media/AUDIO_NARRATION_BIBLE.md",
+    "arena": "docs/research/2026-10-12-channel-operating-system-arena.md",
+    "workflow_stages": 21,
+    "canonical_frame_families": 12,
+    "anti_slop_gate_required": true,
+    "publication_authority": "OWNER_GATED",
+    "initial_portfolio_balance": {
+      "videos": 6,
+      "max_same_family": 2,
+      "minimum_distinct_families": 4
+    },
+    "topic_score_minimum": 75,
+    "trend_rule": "No raw trend becomes an episode until reframed as a durable question.",
+    "script_rule": "Every narration unit carries intent, emotion, energy, pace, pitch, emphasis, pauses, visual beat, evidence IDs and localization note.",
+    "visual_rule": "Consistency comes from palette/type/grid/motion grammar; each episode must still define at least three unique visual motifs.",
+    "transition_rule": "Transitions must be motivated by object, shape, color, direction, time, cause/effect, scale or semantic contrast.",
+    "merge_commit": "124453ea2e33d2338f61fcac4a81f70bfabfffc4"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "channel-operating-system",
+    "workflow",
+    "anti-slop",
+    "visual-bible",
+    "voice-direction",
+    "trend-radar"
+  ],
+  "source": {
+    "type": "council",
+    "ref": "Channel Operating System ARENA 2026-10-12",
+    "commit": "124453ea2e33d2338f61fcac4a81f70bfabfffc4"
+  }
+}

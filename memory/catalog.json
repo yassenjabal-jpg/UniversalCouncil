@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T17:33:58+00:00",
-  "event_count": 57,
-  "active_count": 50,
+  "generated_at": "2026-10-12T20:56:15+03:00",
+  "event_count": 58,
+  "active_count": 51,
   "superseded_count": 7,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-12T20:33:29+03:00",
+  "latest_event_at": "2026-10-12T20:56:12+03:00",
   "scopes": {
     "council": [
       {
@@ -374,6 +374,15 @@
         "kind": "architecture",
         "summary": "«ماذا لو؟» is a speculative documentary channel using fact-grounded alternate history and near-future scenarios, with explicit separation between fact and hypothesis and Arabic retro-futurist visual language.",
         "created_at": "2026-10-12T19:33:14+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-205612-59de13",
+        "subject": "youtube.channel_operating_system.current",
+        "level": "L3_CANONICAL",
+        "kind": "architecture",
+        "summary": "Council adopted Channel Operating System v1 as the default end-to-end method for the broad multilingual visual-documentary channel, covering trend radar, topic scoring, evidence, packaging, scene-aware script and voice direction, reference frames, transitions, asset provenance, anti-slop QC, multilingual delivery, publishing gate and analytics learning.",
+        "created_at": "2026-10-12T20:56:12+03:00",
         "confidence": "verified"
       },
       {
