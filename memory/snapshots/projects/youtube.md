@@ -236,3 +236,21 @@
   - `source_artifacts`: ["00_Council_Synthesis_Media_Venture(1).pdf", "01_What_If_Arabia.pdf", "02_Inside_The_Deal.pdf", "03_File_404.pdf", "04_Behind_The_System.pdf", "05_City_2099.pdf"]
 - **Supersedes:** `MEM-20261012-182300-d4e5f6`
 - **Tags:** youtube, migration, round2, recovered
+
+## youtube.visual_system.current
+- **Event:** `MEM-20261012-203320-369b9c`
+- **Level:** `L4_OWNER_DIRECTIVE`
+- **Kind:** `requirement`
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-12T20:33:20+03:00`
+- **Summary:** Channel visuals must stay close in visual grammar to the user-supplied reference video: Editorial Renaissance Motion with cobalt/sky-blue fields, paper/ivory space, classical and botanical cutouts, sparse editorial serif typography, illustrated diagrams and object-led transitions.
+- **Details:**
+  - `composition`: ["35–55% negative space on editorial frames", "one dominant visual hero per shot", "one headline plus at most one micro-caption", "alternate sparse editorial and full-visual frames", "diagrams feel printed/illustrated rather than SaaS/news UI"]
+  - `governing_report`: docs/research/2026-10-12-broad-format-channel-reselection.md
+  - `internal_name`: Editorial Renaissance Motion
+  - `motion`: ["oversized object wipe", "masked object reveal", "illustration-photo-diagram match cut", "slow camera drift/parallax", "zoom through object", "line-drawing build", "editorial page/panel shift", "botanical/engraving reveal", "full cobalt breathing reset frame", "shape/color match cut"]
+  - `palette`: {"brass_gold": "#B58A3E", "charcoal": "#151515", "clear_blue": "#2B73C9", "cobalt": "#174FA6", "deep_forest": "#173C32", "paper_ivory": "#F6F1E8", "sky_blue": "#8EACD2", "warm_parchment": "#D9C8B1"}
+  - `reference`: user-supplied video shown on computer screen
+  - `reject`: ["generic glitch packs", "constant kinetic typography", "random zoom presets", "filler AI cinematic B-roll", "news tickers", "unearned cyberpunk neon"]
+  - `shot_taxonomy`: ["EVIDENCE", "EXPLANATION", "ATMOSPHERE", "TRANSITION"]
+- **Tags:** youtube, visual-system, editorial, renaissance, motion, reference-style
