@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-212638-4d1282",
+  "created_at": "2026-10-12T21:26:38+03:00",
+  "scope": "project/media",
+  "level": "L3_CANONICAL",
+  "kind": "policy",
+  "subject": "media.specialized_tool_policy.current",
+  "summary": "Media production now follows SPECIALIZED TOOL FIRST / CODE LAST FOR CRAFT. Code may orchestrate, validate, automate and QC, but may not substitute for missing professional editing, motion, sound-design, mixing/mastering or finishing tools. Missing craft capability is a CAPABILITY_GAP.",
+  "details": {
+    "policy": "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
+    "current_verified_tools": {
+      "after_effects_2026": "RUNTIME_VERIFIED",
+      "descript": "CONNECTED_AND_AVAILABLE",
+      "runway": "AUTHENTICATED_IMAGE_ONLY_NO_VIDEO_MODELS",
+      "openart": "INSTALLED",
+      "canva": "INSTALLED",
+      "figma": "INSTALLED"
+    },
+    "current_desktop_gaps": {
+      "premiere_pro_2026": "NOT_RUNTIME_VERIFIED",
+      "audition_2026": "NOT_RUNTIME_VERIFIED",
+      "media_encoder_2026": "NOT_RUNTIME_VERIFIED",
+      "davinci_resolve_fairlight": "NOT_RUNTIME_VERIFIED"
+    },
+    "hard_gate": "Public final master is blocked until professional NLE + professional audio finishing are runtime-verified.",
+    "code_allowed_for": [
+      "orchestration",
+      "manifests",
+      "versioning",
+      "automation",
+      "QC",
+      "provenance",
+      "metrics"
+    ],
+    "code_not_default_substitute_for": [
+      "picture editing",
+      "motion design",
+      "sound design",
+      "dialogue mastering",
+      "final mix/master",
+      "professional export/finishing"
+    ],
+    "governing_config": "company/config/media_specialized_tool_policy.json",
+    "governing_doc": "docs/operations/media/SPECIALIZED_TOOL_FIRST_POLICY.md",
+    "merge_commit": "a0365b82fe47cd709847c7a4eff7a45f89465fe3"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "specialized-tools",
+    "code-last",
+    "capability-gap",
+    "quality"
+  ],
+  "source": {
+    "type": "council",
+    "ref": "Owner quality challenge 2026-10-12",
+    "commit": "a0365b82fe47cd709847c7a4eff7a45f89465fe3"
+  }
+}

@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T18:13:10+00:00",
-  "event_count": 60,
-  "active_count": 52,
+  "generated_at": "2026-10-12T21:26:41+03:00",
+  "event_count": 61,
+  "active_count": 53,
   "superseded_count": 8,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-12T21:12:52+03:00",
+  "latest_event_at": "2026-10-12T21:26:38+03:00",
   "scopes": {
     "council": [
       {
@@ -190,6 +190,15 @@
         "kind": "architecture",
         "summary": "Media production now uses venture-scoped specialist functions with separate creative-audio and technical-audio ownership. Functions may share headcount during the pilot, but critical approvals remain cross-functional.",
         "created_at": "2026-10-12T21:12:52+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-212638-4d1282",
+        "subject": "media.specialized_tool_policy.current",
+        "level": "L3_CANONICAL",
+        "kind": "policy",
+        "summary": "Media production now follows SPECIALIZED TOOL FIRST / CODE LAST FOR CRAFT. Code may orchestrate, validate, automate and QC, but may not substitute for missing professional editing, motion, sound-design, mixing/mastering or finishing tools. Missing craft capability is a CAPABILITY_GAP.",
+        "created_at": "2026-10-12T21:26:38+03:00",
         "confidence": "verified"
       },
       {

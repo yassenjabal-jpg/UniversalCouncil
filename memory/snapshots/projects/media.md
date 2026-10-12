@@ -47,6 +47,25 @@
   - `required_pilot_functions`: ["Editorial Director / Showrunner", "Script & Voice Director", "Visual Art Director / Frame Curator", "Motion & Picture Editor", "Music Supervisor & Sound Designer", "Dialogue & Mix Engineer", "Audience Growth & Packaging Operator"]
 - **Tags:** media, production-cell, music, sound-design, mix, role-structure
 
+## media.specialized_tool_policy.current
+- **Event:** `MEM-20261012-212638-4d1282`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `policy`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T21:26:38+03:00`
+- **Summary:** Media production now follows SPECIALIZED TOOL FIRST / CODE LAST FOR CRAFT. Code may orchestrate, validate, automate and QC, but may not substitute for missing professional editing, motion, sound-design, mixing/mastering or finishing tools. Missing craft capability is a CAPABILITY_GAP.
+- **Details:**
+  - `code_allowed_for`: ["orchestration", "manifests", "versioning", "automation", "QC", "provenance", "metrics"]
+  - `code_not_default_substitute_for`: ["picture editing", "motion design", "sound design", "dialogue mastering", "final mix/master", "professional export/finishing"]
+  - `current_desktop_gaps`: {"audition_2026": "NOT_RUNTIME_VERIFIED", "davinci_resolve_fairlight": "NOT_RUNTIME_VERIFIED", "media_encoder_2026": "NOT_RUNTIME_VERIFIED", "premiere_pro_2026": "NOT_RUNTIME_VERIFIED"}
+  - `current_verified_tools`: {"after_effects_2026": "RUNTIME_VERIFIED", "canva": "INSTALLED", "descript": "CONNECTED_AND_AVAILABLE", "figma": "INSTALLED", "openart": "INSTALLED", "runway": "AUTHENTICATED_IMAGE_ONLY_NO_VIDEO_MODELS"}
+  - `governing_config`: company/config/media_specialized_tool_policy.json
+  - `governing_doc`: docs/operations/media/SPECIALIZED_TOOL_FIRST_POLICY.md
+  - `hard_gate`: Public final master is blocked until professional NLE + professional audio finishing are runtime-verified.
+  - `merge_commit`: a0365b82fe47cd709847c7a4eff7a45f89465fe3
+  - `policy`: SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT
+- **Tags:** media, specialized-tools, code-last, capability-gap, quality
+
 ## media.venture.capability
 - **Event:** `MEM-20261012-182200-c3d4e5`
 - **Level:** `L3_CANONICAL`
