@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261013-015655-c15cc7",
+  "created_at": "2026-10-13T01:56:55+03:00",
+  "scope": "project/media",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "media.production_cell.current",
+  "summary": "Media Production Cell v1.2 is studio-benchmarked: Producer-led execution, independent fact checking, separate growth and thumbnail craft, editor/art/sound participation in pre-production, and specialist craft functions with independent review boundaries.",
+  "details": {
+    "version": "1.2",
+    "required_pilot_functions": [
+      "Media Producer / Production Coordinator",
+      "Editorial Director / Showrunner",
+      "Independent Fact Checker",
+      "Script & Voice Director",
+      "Visual Art Director / Frame Curator",
+      "Motion & Picture Editor",
+      "Music Supervisor & Sound Designer",
+      "Dialogue & Mix Engineer",
+      "Audience Growth & Packaging Strategist",
+      "Thumbnail & Packaging Designer"
+    ],
+    "on_demand_functions": [
+      "Localization Producer"
+    ],
+    "independence_rules": [
+      "Researcher/writer cannot self-clear material facts",
+      "Growth strategy does not replace thumbnail design review",
+      "Producer controls schedule/resources but not editorial truth",
+      "Motion Editor participates before Script Lock",
+      "Motion Editor cannot self-approve Picture Lock",
+      "Music/Sound cannot self-approve final technical mix"
+    ],
+    "new_pilot_metrics": [
+      "schedule_variance",
+      "milestone_slips",
+      "script_revision_rounds",
+      "fact_check_defects_caught_prelock",
+      "visual_story_case_rework",
+      "thumbnail_variants_produced",
+      "production_readiness_failures",
+      "edit_rework_after_script_lock"
+    ],
+    "governing_config": "company/config/media_venture.json",
+    "governing_doc": "docs/operations/media/MEDIA_PRODUCTION_CELL.md",
+    "benchmark_artifact": "docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md",
+    "merge_commit": "b42b80f89e8053c8506f03300e0dc3fb058ca11f"
+  },
+  "supersedes": [
+    "MEM-20261012-211252-9ffb75"
+  ],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "production-cell",
+    "studio-benchmark",
+    "producer",
+    "fact-check",
+    "thumbnail",
+    "preproduction"
+  ],
+  "source": {
+    "type": "council",
+    "ref": "YouTube Studio Benchmark Arena 2026-10-13",
+    "commit": "b42b80f89e8053c8506f03300e0dc3fb058ca11f"
+  }
+}

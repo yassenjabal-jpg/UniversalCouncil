@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-13T01:56:48+03:00",
-  "event_count": 63,
+  "generated_at": "2026-10-13T01:56:58+03:00",
+  "event_count": 64,
   "active_count": 53,
-  "superseded_count": 10,
+  "superseded_count": 11,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-13T01:56:45+03:00",
+  "latest_event_at": "2026-10-13T01:56:55+03:00",
   "scopes": {
     "council": [
       {
@@ -184,12 +184,12 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261012-211252-9ffb75",
+        "event_id": "MEM-20261013-015655-c15cc7",
         "subject": "media.production_cell.current",
         "level": "L3_CANONICAL",
         "kind": "architecture",
-        "summary": "Media production now uses venture-scoped specialist functions with separate creative-audio and technical-audio ownership. Functions may share headcount during the pilot, but critical approvals remain cross-functional.",
-        "created_at": "2026-10-12T21:12:52+03:00",
+        "summary": "Media Production Cell v1.2 is studio-benchmarked: Producer-led execution, independent fact checking, separate growth and thumbnail craft, editor/art/sound participation in pre-production, and specialist craft functions with independent review boundaries.",
+        "created_at": "2026-10-13T01:56:55+03:00",
         "confidence": "verified"
       },
       {

@@ -31,21 +31,24 @@
 - **Tags:** media, workflow, production
 
 ## media.production_cell.current
-- **Event:** `MEM-20261012-211252-9ffb75`
+- **Event:** `MEM-20261013-015655-c15cc7`
 - **Level:** `L3_CANONICAL`
 - **Kind:** `architecture`
 - **Confidence:** `verified`
-- **Updated:** `2026-10-12T21:12:52+03:00`
-- **Summary:** Media production now uses venture-scoped specialist functions with separate creative-audio and technical-audio ownership. Functions may share headcount during the pilot, but critical approvals remain cross-functional.
+- **Updated:** `2026-10-13T01:56:55+03:00`
+- **Summary:** Media Production Cell v1.2 is studio-benchmarked: Producer-led execution, independent fact checking, separate growth and thumbnail craft, editor/art/sound participation in pre-production, and specialist craft functions with independent review boundaries.
 - **Details:**
+  - `benchmark_artifact`: docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md
   - `governing_config`: company/config/media_venture.json
   - `governing_doc`: docs/operations/media/MEDIA_PRODUCTION_CELL.md
-  - `key_independence_rules`: ["Motion Editor cannot self-approve Picture Lock", "Music/Sound Supervisor cannot self-approve final technical mix", "Mix Engineer cannot approve editorial story", "Owner voice approval is separate from technical mix approval"]
-  - `merge_commit`: 99f5e76d597784817d710976d78cacb36d1f7026
+  - `independence_rules`: ["Researcher/writer cannot self-clear material facts", "Growth strategy does not replace thumbnail design review", "Producer controls schedule/resources but not editorial truth", "Motion Editor participates before Script Lock", "Motion Editor cannot self-approve Picture Lock", "Music/Sound cannot self-approve final technical mix"]
+  - `merge_commit`: b42b80f89e8053c8506f03300e0dc3fb058ca11f
+  - `new_pilot_metrics`: ["schedule_variance", "milestone_slips", "script_revision_rounds", "fact_check_defects_caught_prelock", "visual_story_case_rework", "thumbnail_variants_produced", "production_readiness_failures", "edit_rework_after_script_lock"]
   - `on_demand_functions`: ["Localization Producer"]
-  - `pilot_review_metrics`: ["audio_revision_count", "dialogue_cleanup_minutes", "music_sound_design_minutes", "mix_master_minutes", "av_sync_defects", "audio_qc_defects"]
-  - `required_pilot_functions`: ["Editorial Director / Showrunner", "Script & Voice Director", "Visual Art Director / Frame Curator", "Motion & Picture Editor", "Music Supervisor & Sound Designer", "Dialogue & Mix Engineer", "Audience Growth & Packaging Operator"]
-- **Tags:** media, production-cell, music, sound-design, mix, role-structure
+  - `required_pilot_functions`: ["Media Producer / Production Coordinator", "Editorial Director / Showrunner", "Independent Fact Checker", "Script & Voice Director", "Visual Art Director / Frame Curator", "Motion & Picture Editor", "Music Supervisor & Sound Designer", "Dialogue & Mix Engineer", "Audience Growth & Packaging Strategist", "Thumbnail & Packaging Designer"]
+  - `version`: 1.2
+- **Supersedes:** `MEM-20261012-211252-9ffb75`
+- **Tags:** media, production-cell, studio-benchmark, producer, fact-check, thumbnail, preproduction
 
 ## media.specialized_tool_policy.current
 - **Event:** `MEM-20261012-212638-4d1282`
