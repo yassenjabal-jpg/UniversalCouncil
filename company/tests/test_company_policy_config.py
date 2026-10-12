@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 class CompanyPolicyConfig(unittest.TestCase):
     def test_hr_role_and_owner_authority(self):
         roles = json.loads((ROOT / "company/config/roles.json").read_text(encoding="utf-8"))
-        self.assertEqual(roles["version"], "1.4")
+        self.assertEqual(roles["version"], "1.5")
         self.assertIn("HR & Capability Director", roles["functions"])
         hr = roles["hr_capability_director"]
         self.assertFalse(hr["may_fire_unilaterally"])
@@ -39,13 +39,16 @@ class CompanyPolicyConfig(unittest.TestCase):
         self.assertEqual(
             media_scoped,
             {
+                "media_producer",
                 "editorial_director",
+                "independent_fact_checker",
                 "script_voice_director",
                 "visual_art_director",
                 "motion_picture_editor",
                 "music_sound_supervisor",
                 "dialogue_mix_engineer",
-                "audience_growth_packaging",
+                "audience_growth_strategist",
+                "thumbnail_packaging_designer",
                 "localization_producer",
             },
         )

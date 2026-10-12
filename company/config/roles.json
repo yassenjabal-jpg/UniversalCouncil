@@ -1,5 +1,5 @@
 {
-  "version": "1.4",
+  "version": "1.5",
   "functions": [
     "Owner",
     "Board",
@@ -81,15 +81,31 @@
     "protected_dissent": true
   },
   "naming_rule": "Never use ambiguous CRO. Use Commercial/Revenue Function and Risk/Assurance Function explicitly.",
-  "split_rule": "No permanent Council role split without a measured bottleneck. Venture-scoped production functions may be separated when handoff quality, independent approval, or specialist craft materially requires it.",
+  "split_rule": "No permanent Council role split without a measured bottleneck. Media venture-scoped production functions may be specialized when benchmark evidence shows a distinct craft, independent clearance, or project-control responsibility. Functions do not imply separate headcount.",
   "smallest_effective_team": true,
   "venture_scoped_functions": [
     {
+      "id": "media_producer",
+      "name": "Media Producer / Production Coordinator",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "owns": [
+        "master_schedule",
+        "milestones",
+        "dependencies",
+        "resource_plan",
+        "review_calendar",
+        "vendor_coordination",
+        "production_risk",
+        "delivery_readiness",
+        "schedule_budget_visibility"
+      ]
+    },
+    {
       "id": "editorial_director",
       "name": "Editorial Director / Showrunner",
-      "scope": "media_venture",
-      "activation": "required_for_media_pilot",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
       "owns": [
+        "idea_selection",
         "hook",
         "angle",
         "story_structure",
@@ -100,11 +116,23 @@
       ]
     },
     {
+      "id": "independent_fact_checker",
+      "name": "Independent Fact Checker",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "owns": [
+        "material_claim_verification",
+        "numbers_dates_names",
+        "contradiction_review",
+        "fact_check_notes",
+        "script_clearance"
+      ]
+    },
+    {
       "id": "script_voice_director",
       "name": "Script & Voice Director",
-      "scope": "media_venture",
-      "activation": "required_for_media_pilot",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
       "owns": [
+        "five_pass_script_development",
         "scene_aware_script",
         "voice_intent",
         "emotion_direction",
@@ -118,9 +146,10 @@
     {
       "id": "visual_art_director",
       "name": "Visual Art Director / Frame Curator",
-      "scope": "media_venture",
-      "activation": "required_for_media_pilot",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
       "owns": [
+        "visual_story_case",
+        "key_visual",
         "visual_treatment",
         "reference_frames",
         "palette_typography_grid",
@@ -132,12 +161,17 @@
     {
       "id": "motion_picture_editor",
       "name": "Motion & Picture Editor",
-      "scope": "media_venture",
-      "activation": "required_for_media_pilot",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
       "owns": [
+        "preproduction_craft_review",
+        "visual_story_feasibility",
+        "story_skeleton_review",
+        "visual_script_review",
+        "first_30_second_pacing",
         "storyboard_timing",
         "animatic",
         "motion_design",
+        "editorial_rough_cut",
         "picture_edit",
         "transition_execution",
         "picture_lock_conform",
@@ -147,9 +181,9 @@
     {
       "id": "music_sound_supervisor",
       "name": "Music Supervisor & Sound Designer",
-      "scope": "media_venture",
-      "activation": "required_for_media_pilot",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
       "owns": [
+        "preproduction_craft_review",
         "sonic_concept",
         "spotting_session",
         "music_brief",
@@ -165,8 +199,7 @@
     {
       "id": "dialogue_mix_engineer",
       "name": "Dialogue & Mix Engineer",
-      "scope": "media_venture",
-      "activation": "required_for_media_pilot",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
       "owns": [
         "dialogue_cleanup",
         "dialogue_edit",
@@ -181,27 +214,40 @@
       ]
     },
     {
-      "id": "audience_growth_packaging",
-      "name": "Audience Growth & Packaging Operator",
-      "scope": "media_venture",
-      "activation": "required_for_media_pilot",
+      "id": "audience_growth_strategist",
+      "name": "Audience Growth & Packaging Strategist",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
       "owns": [
         "trend_radar",
-        "titles",
-        "thumbnails",
+        "topic_mining",
+        "audience_hypothesis",
+        "title_strategy",
         "first_30_seconds",
         "ctr",
         "retention",
+        "ab_test_design",
         "platform_adaptation",
-        "shorts_reels_tiktok_cutdowns",
         "performance_analysis"
+      ]
+    },
+    {
+      "id": "thumbnail_packaging_designer",
+      "name": "Thumbnail & Packaging Designer",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "owns": [
+        "thumbnail_concepts",
+        "image_selection_retouching",
+        "typography",
+        "visual_hierarchy",
+        "brand_consistency",
+        "test_ready_variants",
+        "mobile_legibility"
       ]
     },
     {
       "id": "localization_producer",
       "name": "Localization Producer",
-      "scope": "media_venture",
-      "activation": "on_demand_for_multilingual_versions",
+      "default_status": "ON_DEMAND",
       "owns": [
         "translation_adaptation",
         "dub_script",

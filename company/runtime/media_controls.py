@@ -3,25 +3,20 @@ class MediaControlError(ValueError):
 
 
 REQUIRED_MEDIA_FUNCTIONS = {
+    "media_producer",
     "editorial_director",
+    "independent_fact_checker",
     "script_voice_director",
     "visual_art_director",
     "motion_picture_editor",
     "music_sound_supervisor",
     "dialogue_mix_engineer",
-    "audience_growth_packaging",
+    "audience_growth_strategist",
+    "thumbnail_packaging_designer",
     "localization_producer",
 }
 
-ACTIVE_PILOT_FUNCTIONS = {
-    "editorial_director",
-    "script_voice_director",
-    "visual_art_director",
-    "motion_picture_editor",
-    "music_sound_supervisor",
-    "dialogue_mix_engineer",
-    "audience_growth_packaging",
-}
+ACTIVE_PILOT_FUNCTIONS = REQUIRED_MEDIA_FUNCTIONS - {"localization_producer"}
 
 REQUIRED_PILOT_METRICS = {
     "production_time_per_video",
@@ -37,6 +32,14 @@ REQUIRED_PILOT_METRICS = {
     "mix_master_minutes",
     "av_sync_defects",
     "audio_qc_defects",
+    "schedule_variance",
+    "milestone_slips",
+    "script_revision_rounds",
+    "fact_check_defects_caught_prelock",
+    "visual_story_case_rework",
+    "thumbnail_variants_produced",
+    "production_readiness_failures",
+    "edit_rework_after_script_lock",
 }
 
 PUBLISHED_PERFORMANCE_METRICS = {
@@ -50,6 +53,9 @@ PUBLISHED_PERFORMANCE_METRICS = {
 
 
 def validate_media_team(config):
+    if config.get("version") != "1.4":
+        raise MediaControlError("media venture must be version 1.4")
+
     functions = {f["id"]: f for f in config.get("production_functions", [])}
     missing = REQUIRED_MEDIA_FUNCTIONS - set(functions)
     if missing:
@@ -70,9 +76,16 @@ def validate_media_team(config):
         "picture_editor_cannot_self_approve_picture_lock",
         "music_sound_supervisor_does_not_self_approve_final_mix_qc",
         "owner_voice_approval_is_separate_from_technical_mix_approval",
+        "research_or_writer_cannot_self_clear_material_fact_check",
+        "growth_strategist_does_not_replace_thumbnail_design_review",
+        "producer_controls_schedule_resources_not_editorial_truth",
+        "motion_editor_participates_before_script_lock",
     }
     if not required_independence.issubset(independence):
         raise MediaControlError("media function independence rules are incomplete")
+
+    if "benchmark_artifact" not in config:
+        raise MediaControlError("studio benchmark artifact is required")
 
     toolchain = config.get("media_toolchain", {})
     for capability in {

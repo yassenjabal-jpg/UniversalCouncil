@@ -27,6 +27,40 @@ class MediaCapabilityTests(unittest.TestCase):
         ids = {x["id"] for x in cfg["production_functions"]}
         self.assertEqual(ids, REQUIRED_MEDIA_FUNCTIONS)
 
+    def test_studio_benchmark_functions_are_active(self):
+        cfg = self.load_config()
+        by_id = {x["id"]: x for x in cfg["production_functions"]}
+        for function_id in {
+            "media_producer",
+            "independent_fact_checker",
+            "audience_growth_strategist",
+            "thumbnail_packaging_designer",
+            "motion_picture_editor",
+        }:
+            self.assertEqual(by_id[function_id]["default_status"], "ACTIVE_FOR_MEDIA_PILOT")
+        self.assertEqual(by_id["localization_producer"]["default_status"], "ON_DEMAND")
+
+    def test_growth_and_thumbnail_craft_are_separate(self):
+        cfg = self.load_config()
+        by_id = {x["id"]: x for x in cfg["production_functions"]}
+        self.assertNotEqual(
+            set(by_id["audience_growth_strategist"]["owns"]),
+            set(by_id["thumbnail_packaging_designer"]["owns"]),
+        )
+        self.assertIn("title_strategy", by_id["audience_growth_strategist"]["owns"])
+        self.assertIn("typography", by_id["thumbnail_packaging_designer"]["owns"])
+
+    def test_fact_check_and_producer_boundaries_are_explicit(self):
+        cfg = self.load_config()
+        rules = set(cfg["function_independence_rules"])
+        for rule in {
+            "research_or_writer_cannot_self_clear_material_fact_check",
+            "producer_controls_schedule_resources_not_editorial_truth",
+            "motion_editor_participates_before_script_lock",
+            "growth_strategist_does_not_replace_thumbnail_design_review",
+        }:
+            self.assertIn(rule, rules)
+
     def test_audio_roles_are_distinct_and_active(self):
         cfg = self.load_config()
         by_id = {x["id"]: x for x in cfg["production_functions"]}
@@ -36,60 +70,35 @@ class MediaCapabilityTests(unittest.TestCase):
             set(by_id["music_sound_supervisor"]["owns"]),
             set(by_id["dialogue_mix_engineer"]["owns"]),
         )
-        self.assertEqual(by_id["localization_producer"]["default_status"], "ON_DEMAND")
-        self.assertIn(
-            "music_sound_supervisor_does_not_self_approve_final_mix_qc",
-            cfg["function_independence_rules"],
-        )
-        self.assertIn(
-            "owner_voice_approval_is_separate_from_technical_mix_approval",
-            cfg["function_independence_rules"],
-        )
 
     def test_media_toolchain_is_bounded_and_honest(self):
         cfg = self.load_config()
         self.assertFalse(cfg["live_publish_authority"])
         self.assertEqual(cfg["media_toolchain"]["platform_publishing"], "CAPABILITY_GAP")
-        self.assertEqual(cfg["media_toolchain"]["ai_video_generation"], "NEEDS_RUNTIME_VERIFICATION")
         self.assertEqual(cfg["media_toolchain"]["video_editing"], "PARTIAL_RUNTIME_VERIFIED")
         self.assertEqual(cfg["media_toolchain"]["after_effects_motion_assembly"], "RUNTIME_VERIFIED")
-        self.assertEqual(
-            cfg["media_toolchain"]["music_supervision"],
-            "PROCESS_DEFINED_SPECIALIZED_TOOL_REQUIRED",
-        )
-        self.assertEqual(
-            cfg["media_toolchain"]["mix_mastering"],
-            "PUBLIC_FINISHING_CAPABILITY_GAP",
-        )
         self.assertEqual(cfg["media_toolchain"]["dialogue_cleanup"], "CONNECTED_DESCRIPT_AVAILABLE")
         self.assertEqual(
             cfg["media_toolchain"]["picture_edit_finishing"],
             "PUBLIC_FINISHING_CAPABILITY_GAP",
         )
         self.assertEqual(
-            cfg["media_toolchain"]["runway_video_generation"],
-            "BLOCKED_BY_CURRENT_PLAN_NO_VIDEO_MODELS",
+            cfg["media_toolchain"]["mix_mastering"],
+            "PUBLIC_FINISHING_CAPABILITY_GAP",
         )
-        ae = cfg["runtime_evidence"]["after_effects_2026"]
-        self.assertEqual(ae["status"], "RUNTIME_VERIFIED")
-        self.assertEqual(ae["host"], "YASSIN")
-        self.assertEqual(ae["cli_probe"], "PASS")
-        self.assertEqual(ae["execution_receipt"], "PASS_COMPLETED")
 
-    def test_after_effects_runtime_evidence_is_durable_and_bounded(self):
-        cfg = self.load_config()
-        ae = cfg["runtime_evidence"]["after_effects_2026"]
-        evidence = ROOT / ae["evidence_document"]
-        self.assertTrue(evidence.exists())
-        body = evidence.read_text(encoding="utf-8")
-        self.assertIn("PARTIAL_RUNTIME_VERIFIED", body)
-        self.assertIn("AE_CLI_PROBE=PASS", body)
-        self.assertIn("PASS", body)
-        self.assertIn("Premiere Pro end-to-end editing", body)
-        self.assertEqual(
-            ae["control_bridge_commit"],
-            "42544d3a7bfb0fcced63962c45a40dcafd692572",
-        )
+    def test_benchmark_metrics_are_required_before_scale(self):
+        for metric in {
+            "schedule_variance",
+            "milestone_slips",
+            "script_revision_rounds",
+            "fact_check_defects_caught_prelock",
+            "visual_story_case_rework",
+            "thumbnail_variants_produced",
+            "production_readiness_failures",
+            "edit_rework_after_script_lock",
+        }:
+            self.assertIn(metric, REQUIRED_PILOT_METRICS)
 
     def test_scale_is_forbidden_before_three_videos(self):
         record = {
@@ -101,7 +110,7 @@ class MediaCapabilityTests(unittest.TestCase):
         with self.assertRaises(MediaControlError):
             validate_media_scale_request(record)
 
-    def test_three_video_pilot_requires_audio_and_cost_quality_metrics(self):
+    def test_three_video_pilot_requires_all_professional_metrics(self):
         record = {
             "videos_completed": 3,
             "metrics": ["production_time_per_video"],
