@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-193314-fa1354",
+  "created_at": "2026-10-12T19:33:14+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "youtube.channel.city_2099",
+  "summary": "«مدينة 2099» is a serialized Arabic sci-fi microdrama/IP bet set in one future city with recurring characters, using Shorts for episodes and long-form compilations for story arcs.",
+  "details": {
+    "concept": "serialized AI microdrama / original IP",
+    "audience": "Arabic 15–30 interested in anime, games, science fiction and short-form drama",
+    "scores": {
+      "reach": 8.5,
+      "monetization": 6.8,
+      "moat": 9.8,
+      "production": 5.8,
+      "policy_safety": 8
+    },
+    "narrative": "each Short = abnormal situation -> character goal -> decision/paradox -> result + light cliffhanger; every 6–8 episodes form an arc",
+    "visual_direction": "Neo-Arab futurism; purple/cyan; modern Arab architecture without clichés; Arabic signage; markets, trains, rooftops, night light; stable character silhouette/wardrobe",
+    "guardrails": [
+      "Character/World Bible",
+      "reference frames",
+      "human review",
+      "no generic repeated AI stories",
+      "world continuity"
+    ],
+    "pilot": [
+      "Short 45s: the last store that accepts cash",
+      "Short 60s: an ID card that knows you lied",
+      "4–5 min compilation: first three episodes + linking scene"
+    ],
+    "source_artifact": "05_City_2099.pdf"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "channel",
+    "city2099",
+    "ip",
+    "microdrama"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "Library: 05_City_2099.pdf"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-193314-1b9bff",
+  "created_at": "2026-10-12T19:33:14+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "youtube.channel.file_404",
+  "summary": "«ملف 404» is a digital mystery/internet investigation channel built around checkable evidence, confidence-labelled conclusions and cyber-safety boundaries rather than conspiracy or harmful instructions.",
+  "details": {
+    "concept": "digital mystery / internet investigation",
+    "audience": "Arabic 16–34 interested in mystery, technology, short stories and non-violent digital crime",
+    "scores": {
+      "reach": 9.1,
+      "monetization": 7.6,
+      "moat": 8.2,
+      "production": 7.6,
+      "policy_safety": 6.9
+    },
+    "narrative": "weirdest evidence cold open -> one question -> timeline -> narrow hypotheses -> simplified technical explanation -> verdict with confidence",
+    "visual_direction": "digital dossier; dark blue + teal/coral; limited CRT/glitch; node maps; timestamps; designed system windows rather than stolen screenshots",
+    "guardrails": [
+      "no conspiracy without checkable evidence",
+      "avoid explicit violence",
+      "explain what happened, not how to execute an attack",
+      "advertiser-friendly focus on tech/fraud/mystery"
+    ],
+    "pilot": [
+      "Short: the account that posts every day at the exact same second",
+      "7 min: how is a digital store identity stolen?",
+      "Short: three signs that reveal fake evidence"
+    ],
+    "source_artifact": "03_File_404.pdf"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "channel",
+    "file404",
+    "digital-investigation"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "Library: 03_File_404.pdf"
+  }
+}

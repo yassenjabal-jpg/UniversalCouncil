@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-193314-354f51",
+  "created_at": "2026-10-12T19:33:14+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "youtube.channel.behind_the_system",
+  "summary": "«العالم خلف الستار» is an evergreen hidden-systems/infrastructure channel explaining how unseen systems move matter, money, energy or data from an everyday action to its result.",
+  "details": {
+    "concept": "infrastructure / hidden systems",
+    "audience": "Arabic 18–45 general-curiosity viewers plus students, engineers and employees interested in how real-world systems work",
+    "scores": {
+      "reach": 7.8,
+      "monetization": 9,
+      "moat": 8.8,
+      "production": 8,
+      "policy_safety": 9.6
+    },
+    "narrative": "everyday action -> go behind the screen/wall -> follow 4–6 system nodes -> biggest failure point -> return to everyday scene with new meaning",
+    "visual_direction": "industrial editorial; technical blue + safety orange; isometric maps, arrows, cross-sections, process icons and large infrastructure",
+    "visual_rule": "every diagram must explain movement of material, money, energy or data",
+    "pilot": [
+      "7 min: how does the internet actually reach your phone?",
+      "Short: what happens to your bag after the black conveyor belt?",
+      "6 min: journey of an online order from factory to your door"
+    ],
+    "source_artifact": "04_Behind_The_System.pdf"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "channel",
+    "behind-the-system",
+    "evergreen"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "Library: 04_Behind_The_System.pdf"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-193314-b67e0d",
+  "created_at": "2026-10-12T19:33:14+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "status",
+  "subject": "youtube.strategy.migration",
+  "summary": "Legacy YouTube strategy migration round 2 recovered the exact five-channel portfolio, ranking, individual concept decks, historical policy findings, anti-slop rules and the first pilot decision from the original Library artifacts.",
+  "details": {
+    "recovered": [
+      "five exact channel names",
+      "selection scores and ranking",
+      "individual audience/narrative/visual direction",
+      "pilot ideas",
+      "historical YouTube policy findings",
+      "anti-AI-slop rules",
+      "distribution model",
+      "first pilot choice"
+    ],
+    "source_artifacts": [
+      "00_Council_Synthesis_Media_Venture(1).pdf",
+      "01_What_If_Arabia.pdf",
+      "02_Inside_The_Deal.pdf",
+      "03_File_404.pdf",
+      "04_Behind_The_System.pdf",
+      "05_City_2099.pdf"
+    ],
+    "remaining_gap": "current platform policies still require live revalidation; historical artifacts are not a substitute for fresh policy checks"
+  },
+  "supersedes": [
+    "MEM-20261012-182300-d4e5f6"
+  ],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "migration",
+    "round2",
+    "recovered"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "2026-10-12 Library artifact recovery"
+  }
+}

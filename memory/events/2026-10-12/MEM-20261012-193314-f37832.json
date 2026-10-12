@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-193314-f37832",
+  "created_at": "2026-10-12T19:33:14+03:00",
+  "scope": "council",
+  "level": "L3_CANONICAL",
+  "kind": "status",
+  "subject": "memory.migration.legacy_artifacts_round2",
+  "summary": "Legacy memory migration round 2 recovered the original Media Venture Council synthesis and all five channel concept decks from the ChatGPT Library and converted their durable strategy into canonical GitHub memory.",
+  "details": {
+    "recovered_files": [
+      "00_Council_Synthesis_Media_Venture(1).pdf",
+      "01_What_If_Arabia.pdf",
+      "02_Inside_The_Deal.pdf",
+      "03_File_404.pdf",
+      "04_Behind_The_System.pdf",
+      "05_City_2099.pdf"
+    ],
+    "recovery_scope": "YouTube/Media venture only",
+    "policy_boundary": "historical platform policy findings are timestamped context and must be refreshed before operational decisions",
+    "no_sensitive_personal_data_migrated": true
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "memory",
+    "migration",
+    "library",
+    "round2"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "2026-10-12 ChatGPT Library artifact recovery"
+  }
+}

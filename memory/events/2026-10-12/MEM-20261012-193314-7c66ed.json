@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-193314-7c66ed",
+  "created_at": "2026-10-12T19:33:14+03:00",
+  "scope": "project/youtube",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "youtube.ideation.review_process",
+  "summary": "The prior Council ideation process is now artifact-backed: market evidence and adversarial objections reduced many ideas to five differentiated channel concepts, each with its own narrative, visual direction, sample episodes and three-video pilot.",
+  "details": {
+    "recovered_channels": [
+      "ماذا لو؟",
+      "داخل الصفقة",
+      "ملف 404",
+      "العالم خلف الستار",
+      "مدينة 2099"
+    ],
+    "rejected_directions": [
+      "AI animal/children farms",
+      "generic emotional TTS stories",
+      "daily AI news",
+      "AI tools-only education",
+      "premium AI cinema-only as first bet",
+      "direct political content"
+    ],
+    "selection_dimensions": [
+      "reach",
+      "monetization",
+      "moat",
+      "production",
+      "policy safety"
+    ],
+    "source_artifact": "00_Council_Synthesis_Media_Venture(1).pdf"
+  },
+  "supersedes": [
+    "MEM-20261012-192851-1c1271"
+  ],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "council",
+    "ideation",
+    "recovered"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "Library: 00_Council_Synthesis_Media_Venture(1).pdf"
+  }
+}

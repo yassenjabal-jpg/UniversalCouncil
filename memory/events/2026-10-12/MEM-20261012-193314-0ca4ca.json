@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-193314-0ca4ca",
+  "created_at": "2026-10-12T19:33:14+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "youtube.channel.inside_the_deal",
+  "summary": "«داخل الصفقة» is the first recommended revenue test: business/money stories showing how companies, products, prices and deals move money inside a narrative rather than a generic finance lesson.",
+  "details": {
+    "concept": "business / money stories",
+    "audience": "Arabic 20–44 employees, business owners, business/tech students and viewers who like success/failure stories without empty motivation",
+    "scores": {
+      "reach": 8.4,
+      "monetization": 9.4,
+      "moat": 8.2,
+      "production": 8.1,
+      "policy_safety": 9.2
+    },
+    "narrative": "specific money hook -> company/person decision -> reveal revenue model -> risk or mistake -> number that explains the story -> repeatability test",
+    "visual_direction": "financial noir; charcoal/black + cash green + paper white; documents, receipts, money-flow maps, cost breakdowns and abstracted buildings",
+    "editorial_guardrail": "Evidence Lead rejects numbers without traceable sources; each episode centers on a deal/model/number rather than generic personal finance advice",
+    "pilot": [
+      "6–8 min: why do some companies sell at a loss?",
+      "Short: where does each IQD 10,000 of a delivery order go?",
+      "7 min: how does free become a business model?"
+    ],
+    "source_artifact": "02_Inside_The_Deal.pdf"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "channel",
+    "inside-the-deal",
+    "business"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "Library: 02_Inside_The_Deal.pdf"
+  }
+}

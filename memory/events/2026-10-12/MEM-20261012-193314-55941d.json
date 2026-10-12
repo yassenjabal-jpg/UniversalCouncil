@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-193314-55941d",
+  "created_at": "2026-10-12T19:33:14+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "status",
+  "subject": "youtube.policy_research.status",
+  "summary": "The historical 2026-10-09 Council artifacts recover the main YouTube policy/monetization findings and anti-AI-slop rules; these are historical evidence and must still be revalidated against current platform policy before operational use.",
+  "details": {
+    "as_of": "2026-10-09",
+    "historical_findings": [
+      "YouTube Partner Program was documented as available in Iraq",
+      "repetitive or mass-produced inauthentic content was treated as monetization risk",
+      "originality is part of the product, not a post-production check",
+      "human-reviewed scripts and clear thesis/question are mandatory",
+      "FACT, INFERENCE and SPECULATION must remain separated where relevant",
+      "no AI shot merely to fill visual space",
+      "human voice is a core identity unless deliberately tested otherwise",
+      "no scale before the three-video pilot"
+    ],
+    "source_artifacts": [
+      "00_Council_Synthesis_Media_Venture(1).pdf",
+      "01_What_If_Arabia.pdf",
+      "02_Inside_The_Deal.pdf",
+      "03_File_404.pdf",
+      "04_Behind_The_System.pdf",
+      "05_City_2099.pdf"
+    ],
+    "current_policy_revalidation_required": true
+  },
+  "supersedes": [
+    "MEM-20261012-192851-2a0c4a"
+  ],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "policy",
+    "monetization",
+    "recovered"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "Library Council Media Venture artifacts dated 2026-10-09"
+  }
+}

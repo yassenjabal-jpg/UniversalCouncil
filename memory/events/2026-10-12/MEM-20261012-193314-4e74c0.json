@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-193314-4e74c0",
+  "created_at": "2026-10-12T19:33:14+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "policy",
+  "subject": "youtube.operating_rules",
+  "summary": "The recovered Council strategy treats long-form YouTube as the main revenue/library destination, Shorts as discovery and hook testing, and TikTok/Reels/Facebook as deliberate platform-specific redistribution rather than automatic copy-paste.",
+  "details": {
+    "funnel": {
+      "youtube_long_form": "primary revenue/watch-time/evergreen library destination",
+      "youtube_shorts": "discovery and hook laboratory; short views alone do not define success",
+      "tiktok_reels_facebook": "platform-specific cuts and redistribution, not automatic duplication"
+    },
+    "anti_slop_rules": [
+      "no script without human review",
+      "no video without a clear thesis or question",
+      "no mass-produced repetitive visual/narrative template",
+      "keep FACT / INFERENCE / SPECULATION distinct where relevant",
+      "no AI shot solely as filler",
+      "human voice remains core identity unless deliberately tested",
+      "do not create a new platform account without a defined funnel role",
+      "do not scale before three-video pilot and review"
+    ],
+    "source_artifact": "00_Council_Synthesis_Media_Venture(1).pdf"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "operating-model",
+    "anti-slop",
+    "distribution"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "Library: 00_Council_Synthesis_Media_Venture(1).pdf"
+  }
+}

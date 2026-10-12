@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-193314-1ce858",
+  "created_at": "2026-10-12T19:33:14+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "decision",
+  "subject": "youtube.execution.pilot_choice",
+  "summary": "The recovered Council execution decision is to pilot only «داخل الصفقة» first; the other four concepts remain fully designed backlog and should not become serious new channel accounts until pilot data justifies expansion.",
+  "details": {
+    "first_pilot_channel": "داخل الصفقة",
+    "pilot_goal": "prove accurate research -> narration -> visuals -> packaging -> sustainable cost across three videos",
+    "next_gate": "if three videos pass quality and cost, allow limited publishing only after publishing capability is verified",
+    "backlog": [
+      "ماذا لو؟",
+      "العالم خلف الستار",
+      "ملف 404",
+      "مدينة 2099"
+    ],
+    "no_parallel_five_channel_launch": true,
+    "source_artifact": "00_Council_Synthesis_Media_Venture(1).pdf"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "pilot",
+    "inside-the-deal",
+    "execution"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "Library: 00_Council_Synthesis_Media_Venture(1).pdf"
+  }
+}

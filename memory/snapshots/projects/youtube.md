@@ -16,18 +16,126 @@
   - `simple_dubbing_as_strategy`: false
 - **Tags:** youtube, adaptation, copyright, market-fit
 
+## youtube.channel.behind_the_system
+- **Event:** `MEM-20261012-193314-354f51`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `architecture`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:33:14+03:00`
+- **Summary:** «العالم خلف الستار» is an evergreen hidden-systems/infrastructure channel explaining how unseen systems move matter, money, energy or data from an everyday action to its result.
+- **Details:**
+  - `audience`: Arabic 18–45 general-curiosity viewers plus students, engineers and employees interested in how real-world systems work
+  - `concept`: infrastructure / hidden systems
+  - `narrative`: everyday action -> go behind the screen/wall -> follow 4–6 system nodes -> biggest failure point -> return to everyday scene with new meaning
+  - `pilot`: ["7 min: how does the internet actually reach your phone?", "Short: what happens to your bag after the black conveyor belt?", "6 min: journey of an online order from factory to your door"]
+  - `scores`: {"moat": 8.8, "monetization": 9, "policy_safety": 9.6, "production": 8, "reach": 7.8}
+  - `source_artifact`: 04_Behind_The_System.pdf
+  - `visual_direction`: industrial editorial; technical blue + safety orange; isometric maps, arrows, cross-sections, process icons and large infrastructure
+  - `visual_rule`: every diagram must explain movement of material, money, energy or data
+- **Tags:** youtube, channel, behind-the-system, evergreen
+
+## youtube.channel.city_2099
+- **Event:** `MEM-20261012-193314-fa1354`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `architecture`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:33:14+03:00`
+- **Summary:** «مدينة 2099» is a serialized Arabic sci-fi microdrama/IP bet set in one future city with recurring characters, using Shorts for episodes and long-form compilations for story arcs.
+- **Details:**
+  - `audience`: Arabic 15–30 interested in anime, games, science fiction and short-form drama
+  - `concept`: serialized AI microdrama / original IP
+  - `guardrails`: ["Character/World Bible", "reference frames", "human review", "no generic repeated AI stories", "world continuity"]
+  - `narrative`: each Short = abnormal situation -> character goal -> decision/paradox -> result + light cliffhanger; every 6–8 episodes form an arc
+  - `pilot`: ["Short 45s: the last store that accepts cash", "Short 60s: an ID card that knows you lied", "4–5 min compilation: first three episodes + linking scene"]
+  - `scores`: {"moat": 9.8, "monetization": 6.8, "policy_safety": 8, "production": 5.8, "reach": 8.5}
+  - `source_artifact`: 05_City_2099.pdf
+  - `visual_direction`: Neo-Arab futurism; purple/cyan; modern Arab architecture without clichés; Arabic signage; markets, trains, rooftops, night light; stable character silhouette/wardrobe
+- **Tags:** youtube, channel, city2099, ip, microdrama
+
+## youtube.channel.file_404
+- **Event:** `MEM-20261012-193314-1b9bff`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `architecture`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:33:14+03:00`
+- **Summary:** «ملف 404» is a digital mystery/internet investigation channel built around checkable evidence, confidence-labelled conclusions and cyber-safety boundaries rather than conspiracy or harmful instructions.
+- **Details:**
+  - `audience`: Arabic 16–34 interested in mystery, technology, short stories and non-violent digital crime
+  - `concept`: digital mystery / internet investigation
+  - `guardrails`: ["no conspiracy without checkable evidence", "avoid explicit violence", "explain what happened, not how to execute an attack", "advertiser-friendly focus on tech/fraud/mystery"]
+  - `narrative`: weirdest evidence cold open -> one question -> timeline -> narrow hypotheses -> simplified technical explanation -> verdict with confidence
+  - `pilot`: ["Short: the account that posts every day at the exact same second", "7 min: how is a digital store identity stolen?", "Short: three signs that reveal fake evidence"]
+  - `scores`: {"moat": 8.2, "monetization": 7.6, "policy_safety": 6.9, "production": 7.6, "reach": 9.1}
+  - `source_artifact`: 03_File_404.pdf
+  - `visual_direction`: digital dossier; dark blue + teal/coral; limited CRT/glitch; node maps; timestamps; designed system windows rather than stolen screenshots
+- **Tags:** youtube, channel, file404, digital-investigation
+
+## youtube.channel.inside_the_deal
+- **Event:** `MEM-20261012-193314-0ca4ca`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `architecture`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:33:14+03:00`
+- **Summary:** «داخل الصفقة» is the first recommended revenue test: business/money stories showing how companies, products, prices and deals move money inside a narrative rather than a generic finance lesson.
+- **Details:**
+  - `audience`: Arabic 20–44 employees, business owners, business/tech students and viewers who like success/failure stories without empty motivation
+  - `concept`: business / money stories
+  - `editorial_guardrail`: Evidence Lead rejects numbers without traceable sources; each episode centers on a deal/model/number rather than generic personal finance advice
+  - `narrative`: specific money hook -> company/person decision -> reveal revenue model -> risk or mistake -> number that explains the story -> repeatability test
+  - `pilot`: ["6–8 min: why do some companies sell at a loss?", "Short: where does each IQD 10,000 of a delivery order go?", "7 min: how does free become a business model?"]
+  - `scores`: {"moat": 8.2, "monetization": 9.4, "policy_safety": 9.2, "production": 8.1, "reach": 8.4}
+  - `source_artifact`: 02_Inside_The_Deal.pdf
+  - `visual_direction`: financial noir; charcoal/black + cash green + paper white; documents, receipts, money-flow maps, cost breakdowns and abstracted buildings
+- **Tags:** youtube, channel, inside-the-deal, business
+
+## youtube.channel.what_if
+- **Event:** `MEM-20261012-193314-8ee7c3`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `architecture`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:33:14+03:00`
+- **Summary:** «ماذا لو؟» is a speculative documentary channel using fact-grounded alternate history and near-future scenarios, with explicit separation between fact and hypothesis and Arabic retro-futurist visual language.
+- **Details:**
+  - `audience`: Arabic 18–34 interested in history, technology and realistic speculation
+  - `concept`: speculative documentary / alternate history / near future
+  - `editorial_guardrail`: visually distinguish FACT / INFERENCE / SPECULATION
+  - `narrative`: shocking question -> fixed fact -> branching point -> three logical consequences -> closing question
+  - `pilot`: ["Short: what if internet stopped in the Middle East for 24 hours?", "6–8 min: what if oil had not been discovered in the Gulf?", "Short/Long hybrid: Baghdad without cars — one day in 2045"]
+  - `scores`: {"moat": 8.5, "monetization": 8.3, "policy_safety": 8.5, "production": 7.2, "reach": 9}
+  - `source_artifact`: 01_What_If_Arabia.pdf
+  - `visual_direction`: Arabic retro-futurism; cool cyan + desert gold; timelines; contemporary/future Arab cities; reality-vs-possibility split screens
+- **Tags:** youtube, channel, what-if, speculative-documentary
+
+## youtube.execution.pilot_choice
+- **Event:** `MEM-20261012-193314-1ce858`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `decision`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:33:14+03:00`
+- **Summary:** The recovered Council execution decision is to pilot only «داخل الصفقة» first; the other four concepts remain fully designed backlog and should not become serious new channel accounts until pilot data justifies expansion.
+- **Details:**
+  - `backlog`: ["ماذا لو؟", "العالم خلف الستار", "ملف 404", "مدينة 2099"]
+  - `first_pilot_channel`: داخل الصفقة
+  - `next_gate`: if three videos pass quality and cost, allow limited publishing only after publishing capability is verified
+  - `no_parallel_five_channel_launch`: true
+  - `pilot_goal`: prove accurate research -> narration -> visuals -> packaging -> sustainable cost across three videos
+  - `source_artifact`: 00_Council_Synthesis_Media_Venture(1).pdf
+- **Tags:** youtube, pilot, inside-the-deal, execution
+
 ## youtube.ideation.review_process
-- **Event:** `MEM-20261012-192851-1c1271`
+- **Event:** `MEM-20261012-193314-7c66ed`
 - **Level:** `L4_OWNER_DIRECTIVE`
 - **Kind:** `requirement`
 - **Confidence:** `owner_confirmed`
-- **Updated:** `2026-10-12T19:28:51+03:00`
-- **Summary:** Channel ideation should use a long Council session with market analysis, adversarial objections among members, and a final shortlist of five diverse channel concepts with narrative, visual, storytelling and dialogue direction.
+- **Updated:** `2026-10-12T19:33:14+03:00`
+- **Summary:** The prior Council ideation process is now artifact-backed: market evidence and adversarial objections reduced many ideas to five differentiated channel concepts, each with its own narrative, visual direction, sample episodes and three-video pilot.
 - **Details:**
-  - `challenge_mode`: members must object and compare before selection
-  - `exact_historical_channel_names`: not yet recovered
-  - `required_outputs`: ["five differentiated channel concepts", "presentation/deck per channel", "narration direction", "art direction", "storytelling direction", "dialogue approach", "five illustrative visuals per channel"]
-- **Tags:** youtube, council, ideation, five-channels
+  - `recovered_channels`: ["ماذا لو؟", "داخل الصفقة", "ملف 404", "العالم خلف الستار", "مدينة 2099"]
+  - `rejected_directions`: ["AI animal/children farms", "generic emotional TTS stories", "daily AI news", "AI tools-only education", "premium AI cinema-only as first bet", "direct political content"]
+  - `selection_dimensions`: ["reach", "monetization", "moat", "production", "policy safety"]
+  - `source_artifact`: 00_Council_Synthesis_Media_Venture(1).pdf
+- **Supersedes:** `MEM-20261012-192851-1c1271`
+- **Tags:** youtube, council, ideation, recovered
 
 ## youtube.narration_visual_preferences
 - **Event:** `MEM-20261012-192851-1da653`
@@ -46,43 +154,60 @@
   - `voice_source`: owner records own voice
 - **Tags:** youtube, voice, visual-identity, documentary
 
+## youtube.operating_rules
+- **Event:** `MEM-20261012-193314-4e74c0`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `policy`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:33:14+03:00`
+- **Summary:** The recovered Council strategy treats long-form YouTube as the main revenue/library destination, Shorts as discovery and hook testing, and TikTok/Reels/Facebook as deliberate platform-specific redistribution rather than automatic copy-paste.
+- **Details:**
+  - `anti_slop_rules`: ["no script without human review", "no video without a clear thesis or question", "no mass-produced repetitive visual/narrative template", "keep FACT / INFERENCE / SPECULATION distinct where relevant", "no AI shot solely as filler", "human voice remains core identity unless deliberately tested", "do not create a new platform account without a defined funnel role", "do not scale before three-video pilot and review"]
+  - `funnel`: {"tiktok_reels_facebook": "platform-specific cuts and redistribution, not automatic duplication", "youtube_long_form": "primary revenue/watch-time/evergreen library destination", "youtube_shorts": "discovery and hook laboratory; short views alone do not define success"}
+  - `source_artifact`: 00_Council_Synthesis_Media_Venture(1).pdf
+- **Tags:** youtube, operating-model, anti-slop, distribution
+
 ## youtube.policy_research.status
-- **Event:** `MEM-20261012-192851-2a0c4a`
+- **Event:** `MEM-20261012-193314-55941d`
 - **Level:** `L3_CANONICAL`
 - **Kind:** `status`
-- **Confidence:** `evidence_backed`
-- **Updated:** `2026-10-12T19:28:51+03:00`
-- **Summary:** A prior Council review covered YouTube policy/monetization and channel operations, but the exact detailed policy findings are not fully canonical yet; operational policy decisions must be revalidated against current YouTube rules before use.
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:33:14+03:00`
+- **Summary:** The historical 2026-10-09 Council artifacts recover the main YouTube policy/monetization findings and anti-AI-slop rules; these are historical evidence and must still be revalidated against current platform policy before operational use.
 - **Details:**
-  - `do_not_guess_missing_historical_policy_text`: true
-  - `exact_policy_details_fully_recovered`: false
-  - `historical_review_exists`: true
-  - `revalidate_before`: ["monetization decisions", "reused-content decisions", "copyright decisions", "publishing workflow"]
-- **Tags:** youtube, policy, monetization, migration
+  - `as_of`: 2026-10-09
+  - `current_policy_revalidation_required`: true
+  - `historical_findings`: ["YouTube Partner Program was documented as available in Iraq", "repetitive or mass-produced inauthentic content was treated as monetization risk", "originality is part of the product, not a post-production check", "human-reviewed scripts and clear thesis/question are mandatory", "FACT, INFERENCE and SPECULATION must remain separated where relevant", "no AI shot merely to fill visual space", "human voice is a core identity unless deliberately tested otherwise", "no scale before the three-video pilot"]
+  - `source_artifacts`: ["00_Council_Synthesis_Media_Venture(1).pdf", "01_What_If_Arabia.pdf", "02_Inside_The_Deal.pdf", "03_File_404.pdf", "04_Behind_The_System.pdf", "05_City_2099.pdf"]
+- **Supersedes:** `MEM-20261012-192851-2a0c4a`
+- **Tags:** youtube, policy, monetization, recovered
 
 ## youtube.portfolio.target
-- **Event:** `MEM-20261012-192851-e6ae1a`
+- **Event:** `MEM-20261012-193314-9d4195`
 - **Level:** `L4_OWNER_DIRECTIVE`
 - **Kind:** `decision`
 - **Confidence:** `owner_confirmed`
-- **Updated:** `2026-10-12T19:28:51+03:00`
-- **Summary:** Treat the YouTube initiative as a portfolio of multiple differentiated Arabic channels rather than a single-channel-only plan; channel concepts should be evaluated against market evidence before production.
+- **Updated:** `2026-10-12T19:33:14+03:00`
+- **Summary:** The five-channel portfolio recovered from the Council artifacts is: «ماذا لو؟», «داخل الصفقة», «ملف 404», «العالم خلف الستار», and «مدينة 2099»; it is an idea portfolio, not permission to operate five channels simultaneously.
 - **Details:**
-  - `exact_final_channel_set`: not yet canonical from historical work
-  - `implementation_status`: strategy directive, not production evidence
-  - `market`: Arabic audience
-  - `portfolio_model`: multiple differentiated channels
-- **Tags:** youtube, portfolio, arabic-market
+  - `channels`: ["ماذا لو؟", "داخل الصفقة", "ملف 404", "العالم خلف الستار", "مدينة 2099"]
+  - `portfolio_not_parallel_operations`: true
+  - `recommended_test_order`: ["داخل الصفقة", "ماذا لو؟", "العالم خلف الستار", "ملف 404", "مدينة 2099"]
+  - `source_artifact`: 00_Council_Synthesis_Media_Venture(1).pdf
+  - `strategic_roles`: {"first_revenue_bet": "داخل الصفقة", "long_term_ip": "مدينة 2099", "strongest_evergreen": "العالم خلف الستار", "viral_curiosity": ["ملف 404", "ماذا لو؟"]}
+- **Supersedes:** `MEM-20261012-192851-e6ae1a`
+- **Tags:** youtube, portfolio, five-channels, recovered
 
 ## youtube.strategy.migration
-- **Event:** `MEM-20261012-182300-d4e5f6`
+- **Event:** `MEM-20261012-193314-b67e0d`
 - **Level:** `L3_CANONICAL`
 - **Kind:** `status`
-- **Confidence:** `owner_confirmed`
-- **Updated:** `2026-10-12T18:23:00+03:00`
-- **Summary:** A prior Council process produced broad YouTube policy research, multiple channel concepts and operating recommendations, but not all detailed outputs are canonical in the repository yet; recover/migrate them before treating exact historical channel details as authoritative.
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:33:14+03:00`
+- **Summary:** Legacy YouTube strategy migration round 2 recovered the exact five-channel portfolio, ranking, individual concept decks, historical policy findings, anti-slop rules and the first pilot decision from the original Library artifacts.
 - **Details:**
-  - `do_not_guess_missing_details`: true
-  - `known_structure`: ["multi-channel portfolio discussion", "Arabic market adaptation", "editorial and visual direction", "production workflow", "packaging and retention metrics"]
-  - `migration_required`: true
-- **Tags:** youtube, strategy, migration
+  - `recovered`: ["five exact channel names", "selection scores and ranking", "individual audience/narrative/visual direction", "pilot ideas", "historical YouTube policy findings", "anti-AI-slop rules", "distribution model", "first pilot choice"]
+  - `remaining_gap`: current platform policies still require live revalidation; historical artifacts are not a substitute for fresh policy checks
+  - `source_artifacts`: ["00_Council_Synthesis_Media_Venture(1).pdf", "01_What_If_Arabia.pdf", "02_Inside_The_Deal.pdf", "03_File_404.pdf", "04_Behind_The_System.pdf", "05_City_2099.pdf"]
+- **Supersedes:** `MEM-20261012-182300-d4e5f6`
+- **Tags:** youtube, migration, round2, recovered

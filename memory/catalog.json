@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T16:29:26+00:00",
-  "event_count": 27,
-  "active_count": 27,
-  "superseded_count": 0,
+  "generated_at": "2026-10-12T19:33:28+03:00",
+  "event_count": 39,
+  "active_count": 35,
+  "superseded_count": 4,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-12T19:28:51+03:00",
+  "latest_event_at": "2026-10-12T19:33:14+03:00",
   "scopes": {
     "council": [
       {
@@ -69,6 +69,15 @@
         "kind": "capability",
         "summary": "Universal Memory Fabric completed a real YASSIN-to-GitHub autosync round trip and is runtime verified for append-only event persistence, canonical rebuild, Git-backed preflight, and local FTS retrieval.",
         "created_at": "2026-10-12T18:37:37+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-193314-f37832",
+        "subject": "memory.migration.legacy_artifacts_round2",
+        "level": "L3_CANONICAL",
+        "kind": "status",
+        "summary": "Legacy memory migration round 2 recovered the original Media Venture Council synthesis and all five channel concept decks from the ChatGPT Library and converted their durable strategy into canonical GitHub memory.",
+        "created_at": "2026-10-12T19:33:14+03:00",
         "confidence": "verified"
       },
       {
@@ -215,12 +224,66 @@
         "confidence": "owner_confirmed"
       },
       {
-        "event_id": "MEM-20261012-192851-1c1271",
+        "event_id": "MEM-20261012-193314-354f51",
+        "subject": "youtube.channel.behind_the_system",
+        "level": "L3_CANONICAL",
+        "kind": "architecture",
+        "summary": "«العالم خلف الستار» is an evergreen hidden-systems/infrastructure channel explaining how unseen systems move matter, money, energy or data from an everyday action to its result.",
+        "created_at": "2026-10-12T19:33:14+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-193314-fa1354",
+        "subject": "youtube.channel.city_2099",
+        "level": "L3_CANONICAL",
+        "kind": "architecture",
+        "summary": "«مدينة 2099» is a serialized Arabic sci-fi microdrama/IP bet set in one future city with recurring characters, using Shorts for episodes and long-form compilations for story arcs.",
+        "created_at": "2026-10-12T19:33:14+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-193314-1b9bff",
+        "subject": "youtube.channel.file_404",
+        "level": "L3_CANONICAL",
+        "kind": "architecture",
+        "summary": "«ملف 404» is a digital mystery/internet investigation channel built around checkable evidence, confidence-labelled conclusions and cyber-safety boundaries rather than conspiracy or harmful instructions.",
+        "created_at": "2026-10-12T19:33:14+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-193314-0ca4ca",
+        "subject": "youtube.channel.inside_the_deal",
+        "level": "L3_CANONICAL",
+        "kind": "architecture",
+        "summary": "«داخل الصفقة» is the first recommended revenue test: business/money stories showing how companies, products, prices and deals move money inside a narrative rather than a generic finance lesson.",
+        "created_at": "2026-10-12T19:33:14+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-193314-8ee7c3",
+        "subject": "youtube.channel.what_if",
+        "level": "L3_CANONICAL",
+        "kind": "architecture",
+        "summary": "«ماذا لو؟» is a speculative documentary channel using fact-grounded alternate history and near-future scenarios, with explicit separation between fact and hypothesis and Arabic retro-futurist visual language.",
+        "created_at": "2026-10-12T19:33:14+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-193314-1ce858",
+        "subject": "youtube.execution.pilot_choice",
+        "level": "L3_CANONICAL",
+        "kind": "decision",
+        "summary": "The recovered Council execution decision is to pilot only «داخل الصفقة» first; the other four concepts remain fully designed backlog and should not become serious new channel accounts until pilot data justifies expansion.",
+        "created_at": "2026-10-12T19:33:14+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-193314-7c66ed",
         "subject": "youtube.ideation.review_process",
         "level": "L4_OWNER_DIRECTIVE",
         "kind": "requirement",
-        "summary": "Channel ideation should use a long Council session with market analysis, adversarial objections among members, and a final shortlist of five diverse channel concepts with narrative, visual, storytelling and dialogue direction.",
-        "created_at": "2026-10-12T19:28:51+03:00",
+        "summary": "The prior Council ideation process is now artifact-backed: market evidence and adversarial objections reduced many ideas to five differentiated channel concepts, each with its own narrative, visual direction, sample episodes and three-video pilot.",
+        "created_at": "2026-10-12T19:33:14+03:00",
         "confidence": "owner_confirmed"
       },
       {
@@ -233,31 +296,40 @@
         "confidence": "owner_confirmed"
       },
       {
-        "event_id": "MEM-20261012-192851-2a0c4a",
+        "event_id": "MEM-20261012-193314-4e74c0",
+        "subject": "youtube.operating_rules",
+        "level": "L3_CANONICAL",
+        "kind": "policy",
+        "summary": "The recovered Council strategy treats long-form YouTube as the main revenue/library destination, Shorts as discovery and hook testing, and TikTok/Reels/Facebook as deliberate platform-specific redistribution rather than automatic copy-paste.",
+        "created_at": "2026-10-12T19:33:14+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-193314-55941d",
         "subject": "youtube.policy_research.status",
         "level": "L3_CANONICAL",
         "kind": "status",
-        "summary": "A prior Council review covered YouTube policy/monetization and channel operations, but the exact detailed policy findings are not fully canonical yet; operational policy decisions must be revalidated against current YouTube rules before use.",
-        "created_at": "2026-10-12T19:28:51+03:00",
-        "confidence": "evidence_backed"
+        "summary": "The historical 2026-10-09 Council artifacts recover the main YouTube policy/monetization findings and anti-AI-slop rules; these are historical evidence and must still be revalidated against current platform policy before operational use.",
+        "created_at": "2026-10-12T19:33:14+03:00",
+        "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261012-192851-e6ae1a",
+        "event_id": "MEM-20261012-193314-9d4195",
         "subject": "youtube.portfolio.target",
         "level": "L4_OWNER_DIRECTIVE",
         "kind": "decision",
-        "summary": "Treat the YouTube initiative as a portfolio of multiple differentiated Arabic channels rather than a single-channel-only plan; channel concepts should be evaluated against market evidence before production.",
-        "created_at": "2026-10-12T19:28:51+03:00",
+        "summary": "The five-channel portfolio recovered from the Council artifacts is: «ماذا لو؟», «داخل الصفقة», «ملف 404», «العالم خلف الستار», and «مدينة 2099»; it is an idea portfolio, not permission to operate five channels simultaneously.",
+        "created_at": "2026-10-12T19:33:14+03:00",
         "confidence": "owner_confirmed"
       },
       {
-        "event_id": "MEM-20261012-182300-d4e5f6",
+        "event_id": "MEM-20261012-193314-b67e0d",
         "subject": "youtube.strategy.migration",
         "level": "L3_CANONICAL",
         "kind": "status",
-        "summary": "A prior Council process produced broad YouTube policy research, multiple channel concepts and operating recommendations, but not all detailed outputs are canonical in the repository yet; recover/migrate them before treating exact historical channel details as authoritative.",
-        "created_at": "2026-10-12T18:23:00+03:00",
-        "confidence": "owner_confirmed"
+        "summary": "Legacy YouTube strategy migration round 2 recovered the exact five-channel portfolio, ranking, individual concept decks, historical policy findings, anti-slop rules and the first pilot decision from the original Library artifacts.",
+        "created_at": "2026-10-12T19:33:14+03:00",
+        "confidence": "verified"
       }
     ]
   },
