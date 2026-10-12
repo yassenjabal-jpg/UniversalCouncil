@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-194447-65dab9",
+  "created_at": "2026-10-12T19:44:47+03:00",
+  "scope": "council",
+  "level": "L3_CANONICAL",
+  "kind": "proposal",
+  "subject": "council.history.no_winner_arena_2026_10_06",
+  "summary": "A historical RevenueSystem Council 'No-Winner' arena established adversarial self-check patterns: self-attack before criticism, steelman before objection, evidence-backed bias alerts, no vote overriding a documented domain blocker, bounded debate rounds, and no member leaderboard.",
+  "details": {
+    "historical_rules": [
+      "each role begins with self-attack",
+      "steelman before strong objection",
+      "objection states assumption, risk, required evidence and mitigation",
+      "bias alerts require evidence or pattern",
+      "majority vote cannot override a documented domain blocker",
+      "debate closes after two rounds unless material new evidence appears",
+      "unresolved is preferable to false approval",
+      "no leaderboard or winning member"
+    ],
+    "chair_constraints": [
+      "L/XL closure requires strongest dissent and strongest counter-evidence",
+      "time expiry yields DEFERRED/UNRESOLVED rather than APPROVED",
+      "routing derives from risk and affected domains"
+    ],
+    "current_governance_override": false,
+    "source_artifact": "RevenueSystem_Council_No_Winner_Internal_Battle_2026-10-06.md"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "council",
+    "history",
+    "no-winner",
+    "dissent",
+    "bias"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "Library: RevenueSystem_Council_No_Winner_Internal_Battle_2026-10-06(1).md"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-194447-55b9c1",
+  "created_at": "2026-10-12T19:44:47+03:00",
+  "scope": "council",
+  "level": "L3_CANONICAL",
+  "kind": "status",
+  "subject": "memory.migration.legacy_artifacts_round4",
+  "summary": "Legacy memory migration round 4 preserves Council governance-design lineage and dated RevenueSystem strengths without changing current governance or promoting historical source observations to current implementation claims.",
+  "details": {
+    "migrated_domains": [
+      "council",
+      "project/revenuesystem"
+    ],
+    "source_artifacts": [
+      "RevenueSystem_Council_No_Winner_Internal_Battle_2026-10-06(1).md",
+      "docs/research/2026-10-07-council-self-review.md",
+      "RevenueSystem_Council_Comprehensive_Review_2026-10-05(1).md"
+    ],
+    "safeguards": [
+      "current governance remains authoritative",
+      "historical RevenueSystem observations require current-main revalidation",
+      "no sensitive personal/health data migrated"
+    ]
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "memory",
+    "migration",
+    "round4",
+    "governance-lineage"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "2026-10-12 legacy artifact migration round 4"
+  }
+}

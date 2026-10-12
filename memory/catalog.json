@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T16:42:20+00:00",
-  "event_count": 47,
-  "active_count": 43,
+  "generated_at": "2026-10-12T19:44:59+03:00",
+  "event_count": 51,
+  "active_count": 47,
   "superseded_count": 4,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-12T19:41:51+03:00",
+  "latest_event_at": "2026-10-12T19:44:47+03:00",
   "scopes": {
     "council": [
       {
@@ -33,6 +33,24 @@
         "kind": "status",
         "summary": "UniversalCouncil core governance remains v0.3.0; later layered v0.4+ restructuring is a candidate pending measured bake-off and is not yet the governing role structure.",
         "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-194447-7a445f",
+        "subject": "council.history.external_self_review_2026_10_07",
+        "level": "L3_CANONICAL",
+        "kind": "proposal",
+        "summary": "A historical Universal Council external-research self-review proposed evidence-focused protocol upgrades including blind first positions, confidence calibration, evidence matrices, selective debate, consensus-free decisions, decision expiry, premortems, commitment-evidence ladders, foundation-model uplift tests and an anti-bureaucracy budget.",
+        "created_at": "2026-10-12T19:44:47+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-194447-65dab9",
+        "subject": "council.history.no_winner_arena_2026_10_06",
+        "level": "L3_CANONICAL",
+        "kind": "proposal",
+        "summary": "A historical RevenueSystem Council 'No-Winner' arena established adversarial self-check patterns: self-attack before criticism, steelman before objection, evidence-backed bias alerts, no vote overriding a documented domain blocker, bounded debate rounds, and no member leaderboard.",
+        "created_at": "2026-10-12T19:44:47+03:00",
         "confidence": "verified"
       },
       {
@@ -108,6 +126,15 @@
         "confidence": "verified"
       },
       {
+        "event_id": "MEM-20261012-194447-55b9c1",
+        "subject": "memory.migration.legacy_artifacts_round4",
+        "level": "L3_CANONICAL",
+        "kind": "status",
+        "summary": "Legacy memory migration round 4 preserves Council governance-design lineage and dated RevenueSystem strengths without changing current governance or promoting historical source observations to current implementation claims.",
+        "created_at": "2026-10-12T19:44:47+03:00",
+        "confidence": "verified"
+      },
+      {
         "event_id": "MEM-20261012-192851-bfc437",
         "subject": "memory.migration.legacy_chat_round1",
         "level": "L3_CANONICAL",
@@ -174,6 +201,15 @@
         "kind": "evidence",
         "summary": "Historical source-only audit closure at RevenueSystem SHA 7c6e5d4 remained incomplete and NO-GO for comprehensive closure/remediation planning; it is preserved as a dated audit baseline, not as a claim about current main.",
         "created_at": "2026-10-12T19:41:51+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-194447-6a1d5e",
+        "subject": "revenuesystem.audit.historical_strengths_2026_10_05",
+        "level": "L3_CANONICAL",
+        "kind": "evidence",
+        "summary": "The 2026-10-05 source review recorded several financial/data/security protections worth preserving if still present, but these are historical source observations tied to the reviewed SHA and must be revalidated on current main.",
+        "created_at": "2026-10-12T19:44:47+03:00",
         "confidence": "verified"
       },
       {

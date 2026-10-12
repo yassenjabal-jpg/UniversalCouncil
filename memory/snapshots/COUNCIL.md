@@ -43,6 +43,35 @@
   - `source_file`: config/roles.json
 - **Tags:** council, governance, roles
 
+## council.history.external_self_review_2026_10_07
+- **Event:** `MEM-20261012-194447-7a445f`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `proposal`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:44:47+03:00`
+- **Summary:** A historical Universal Council external-research self-review proposed evidence-focused protocol upgrades including blind first positions, confidence calibration, evidence matrices, selective debate, consensus-free decisions, decision expiry, premortems, commitment-evidence ladders, foundation-model uplift tests and an anti-bureaucracy budget.
+- **Details:**
+  - `artifact_status_at_time`: PROPOSALS PRESENTED TO COUNCIL — NOT YET MERGED INTO GOVERNANCE
+  - `current_governance_override`: false
+  - `key_principles`: ["minority position may win when evidence/domain authority is stronger", "do not debate when materially relevant positions already agree with strong evidence", "material decisions require reopen/review triggers", "governance mechanisms must justify their process cost"]
+  - `proposed_protocols`: ["Blind First Position", "Confidence Field that never substitutes for evidence", "Evidence Matrix", "Selective Debate", "Consensus-Free Decision", "Decision Expiry", "Premortem Gate", "Commitment Evidence Ladder", "Foundation Model Uplift Test", "Anti-Bureaucracy Budget"]
+  - `source_file`: docs/research/2026-10-07-council-self-review.md
+- **Tags:** council, history, self-review, protocol, anti-bureaucracy
+
+## council.history.no_winner_arena_2026_10_06
+- **Event:** `MEM-20261012-194447-65dab9`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `proposal`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:44:47+03:00`
+- **Summary:** A historical RevenueSystem Council 'No-Winner' arena established adversarial self-check patterns: self-attack before criticism, steelman before objection, evidence-backed bias alerts, no vote overriding a documented domain blocker, bounded debate rounds, and no member leaderboard.
+- **Details:**
+  - `chair_constraints`: ["L/XL closure requires strongest dissent and strongest counter-evidence", "time expiry yields DEFERRED/UNRESOLVED rather than APPROVED", "routing derives from risk and affected domains"]
+  - `current_governance_override`: false
+  - `historical_rules`: ["each role begins with self-attack", "steelman before strong objection", "objection states assumption, risk, required evidence and mitigation", "bias alerts require evidence or pattern", "majority vote cannot override a documented domain blocker", "debate closes after two rounds unless material new evidence appears", "unresolved is preferable to false approval", "no leaderboard or winning member"]
+  - `source_artifact`: RevenueSystem_Council_No_Winner_Internal_Battle_2026-10-06.md
+- **Tags:** council, history, no-winner, dissent, bias
+
 ## council.history.specialist_expansion_2026_10_06
 - **Event:** `MEM-20261012-194151-a5889b`
 - **Level:** `L3_CANONICAL`
@@ -160,6 +189,19 @@
   - `safeguards`: ["historical audit tied to exact SHA", "no old finding promoted to current defect", "current repository remains execution truth", "no sensitive personal/health data migrated"]
   - `source_artifacts`: ["19_Comprehensive_Audit_Closure_Report(1).md", "RevenueSystem_Council_Specialist_Expansion_Arena_2026-10-06(1).md"]
 - **Tags:** memory, migration, round3, revenuesystem, council
+
+## memory.migration.legacy_artifacts_round4
+- **Event:** `MEM-20261012-194447-55b9c1`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `status`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:44:47+03:00`
+- **Summary:** Legacy memory migration round 4 preserves Council governance-design lineage and dated RevenueSystem strengths without changing current governance or promoting historical source observations to current implementation claims.
+- **Details:**
+  - `migrated_domains`: ["council", "project/revenuesystem"]
+  - `safeguards`: ["current governance remains authoritative", "historical RevenueSystem observations require current-main revalidation", "no sensitive personal/health data migrated"]
+  - `source_artifacts`: ["RevenueSystem_Council_No_Winner_Internal_Battle_2026-10-06(1).md", "docs/research/2026-10-07-council-self-review.md", "RevenueSystem_Council_Comprehensive_Review_2026-10-05(1).md"]
+- **Tags:** memory, migration, round4, governance-lineage
 
 ## memory.migration.legacy_chat_round1
 - **Event:** `MEM-20261012-192851-bfc437`

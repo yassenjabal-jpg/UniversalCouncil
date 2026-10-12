@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-194447-7a445f",
+  "created_at": "2026-10-12T19:44:47+03:00",
+  "scope": "council",
+  "level": "L3_CANONICAL",
+  "kind": "proposal",
+  "subject": "council.history.external_self_review_2026_10_07",
+  "summary": "A historical Universal Council external-research self-review proposed evidence-focused protocol upgrades including blind first positions, confidence calibration, evidence matrices, selective debate, consensus-free decisions, decision expiry, premortems, commitment-evidence ladders, foundation-model uplift tests and an anti-bureaucracy budget.",
+  "details": {
+    "proposed_protocols": [
+      "Blind First Position",
+      "Confidence Field that never substitutes for evidence",
+      "Evidence Matrix",
+      "Selective Debate",
+      "Consensus-Free Decision",
+      "Decision Expiry",
+      "Premortem Gate",
+      "Commitment Evidence Ladder",
+      "Foundation Model Uplift Test",
+      "Anti-Bureaucracy Budget"
+    ],
+    "key_principles": [
+      "minority position may win when evidence/domain authority is stronger",
+      "do not debate when materially relevant positions already agree with strong evidence",
+      "material decisions require reopen/review triggers",
+      "governance mechanisms must justify their process cost"
+    ],
+    "artifact_status_at_time": "PROPOSALS PRESENTED TO COUNCIL — NOT YET MERGED INTO GOVERNANCE",
+    "current_governance_override": false,
+    "source_file": "docs/research/2026-10-07-council-self-review.md"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "council",
+    "history",
+    "self-review",
+    "protocol",
+    "anti-bureaucracy"
+  ],
+  "source": {
+    "type": "repository",
+    "ref": "docs/research/2026-10-07-council-self-review.md"
+  }
+}

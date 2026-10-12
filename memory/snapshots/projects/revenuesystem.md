@@ -26,6 +26,21 @@
   - `verdict`: COMPREHENSIVE AUDIT INCOMPLETE — BLOCKERS REMAIN
 - **Tags:** revenuesystem, audit, historical, source-only
 
+## revenuesystem.audit.historical_strengths_2026_10_05
+- **Event:** `MEM-20261012-194447-6a1d5e`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `evidence`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:44:47+03:00`
+- **Summary:** The 2026-10-05 source review recorded several financial/data/security protections worth preserving if still present, but these are historical source observations tied to the reviewed SHA and must be revalidated on current main.
+- **Details:**
+  - `current_main_revalidation_required`: true
+  - `historical_only`: true
+  - `historical_source_sha`: a86702f7feefc2b7e6a909add07aee02cc2ee577
+  - `historical_strengths`: ["IQD stored as integers and USD in cents", "decimal financial calculations with AwayFromZero rounding", "negative returns/signs preserved", "invoice/cashier/branch identity protections", "transactions/version checks and payment reversal history", "import content fingerprint/preview behavior", "atomic recovery-draft writes with conflict warnings", "PBKDF2 password hashing with salt and fixed-time comparison"]
+  - `source_artifact`: RevenueSystem_Council_Comprehensive_Review_2026-10-05.md
+- **Tags:** revenuesystem, historical, strengths, audit
+
 ## revenuesystem.currency_model
 - **Event:** `MEM-20261012-192851-eda6d5`
 - **Level:** `L4_OWNER_DIRECTIVE`
