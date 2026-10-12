@@ -54,10 +54,15 @@ After 10 published videos, specialist splits may be proposed only if measured bo
 - image generation: AVAILABLE_FOR_ASSISTED_WORK
 - AI video generation: NEEDS_RUNTIME_VERIFICATION
 - audio cleanup: NEEDS_RUNTIME_VERIFICATION
-- video editing: NEEDS_RUNTIME_VERIFICATION
+- video editing: PARTIAL_RUNTIME_VERIFIED (After Effects motion assembly RUNTIME_VERIFIED on YASSIN; finishing/export path still pending)
 - captions: CAN_BUILD_OR_VERIFY
 - platform publishing: CAPABILITY_GAP
 - analytics ingestion: NEEDS_RUNTIME_VERIFICATION
+
+## Runtime evidence update — 2026-10-12
+After Effects 2026 automation is now verified for the bounded motion-assembly slice. The observed CouncilVideoStudio runtime produced `AE_CLI_PROBE=PASS`, an execution receipt of `PASS / completed`, and the `motion-smoke.aep` project. Evidence is recorded in `company/docs/evidence/MEDIA_AFTER_EFFECTS_RUNTIME_2026-10-12.md`.
+
+This update does not mark the complete production toolchain ready: Premiere/finishing, audio cleanup, final export/QC, AI video generation, publishing and analytics retain their existing gates.
 
 ## Live authority
 This change does not authorize publishing or live media operations.

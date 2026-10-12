@@ -28,8 +28,14 @@ Status: NEEDS_RUNTIME_VERIFICATION
 Human narration may be used, but cleanup/mastering capability must be verified before production claims.
 
 ### Video editing / assembly
-Status: NEEDS_RUNTIME_VERIFICATION
-A repeatable edit pipeline must be demonstrated before declaring the venture production-ready.
+Status: PARTIAL_RUNTIME_VERIFIED
+The After Effects motion-assembly slice is runtime verified on YASSIN: the Council bridge launched After Effects 2026, executed the JSX/manifest flow, created the motion smoke AEP project and received an explicit PASS/completed receipt. This does not yet verify Premiere/finishing, audio, final render/export QC, or a full pilot-video path.
+
+Bounded sub-capability:
+- After Effects motion assembly: RUNTIME_VERIFIED
+- Evidence: `company/docs/evidence/MEDIA_AFTER_EFFECTS_RUNTIME_2026-10-12.md`
+
+The broader video-editing capability remains partial until the finishing and export path is independently verified.
 
 ### Captions / subtitles
 Status: CAN_BUILD_OR_VERIFY
