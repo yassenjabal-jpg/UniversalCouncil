@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-194151-83a063",
+  "created_at": "2026-10-12T19:41:51+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L3_CANONICAL",
+  "kind": "evidence",
+  "subject": "revenuesystem.audit.baseline_2026_10_06",
+  "summary": "Historical source-only audit closure at RevenueSystem SHA 7c6e5d4 remained incomplete and NO-GO for comprehensive closure/remediation planning; it is preserved as a dated audit baseline, not as a claim about current main.",
+  "details": {
+    "source_sha": "7c6e5d434c9b4ad98f263e02d197e2e7bede6667",
+    "mode": "AUDIT-ONLY / SOURCE-ONLY",
+    "product_execution_count": 0,
+    "total_capabilities": 191,
+    "total_workflows": 21,
+    "financial_invariants": 20,
+    "scoped_assertions_reviewed": 100,
+    "capabilities_with_scoped_assertion_source": 54,
+    "coverage_states": {
+      "verified": 0,
+      "partial": 155,
+      "source_only": 32,
+      "blocked": 4
+    },
+    "major_holds": [
+      "H-01 live vs archived difference semantics",
+      "H-02 DB restore/session/cache/pending-write barrier",
+      "H-03 worksheet/date scope",
+      "H-04 modifier-aware keyboard context",
+      "H-05 bank/account/signed-outstanding semantics",
+      "H-06 no-lost-capabilities before UI absorption",
+      "H-07 latest-revision durable handoff"
+    ],
+    "verdict": "COMPREHENSIVE AUDIT INCOMPLETE — BLOCKERS REMAIN",
+    "historical_only": true,
+    "current_main_revalidation_required": true,
+    "source_artifact": "19_Comprehensive_Audit_Closure_Report.md"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "audit",
+    "historical",
+    "source-only"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "Library: 19_Comprehensive_Audit_Closure_Report(1).md"
+  }
+}

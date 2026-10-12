@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-194151-603525",
+  "created_at": "2026-10-12T19:41:51+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "revenuesystem.recovery_precision.contract",
+  "summary": "As a financial application, RevenueSystem must prioritize exact financial calculations, preserve signed returns, autosave/recover unsaved work where feasible after sudden closure, and diagnose crash paths without silently losing committed or pending state.",
+  "details": {
+    "financial_precision_required": true,
+    "signed_negative_returns_supported": true,
+    "autosave_and_recovery_required": true,
+    "sudden_close_diagnostics_required": true,
+    "committed_vs_pending_state_must_be_distinguishable": true,
+    "implementation_status": "owner requirement; current code/tests/runtime evidence decide completion"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "recovery",
+    "precision",
+    "crash",
+    "returns"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "historical owner financial precision and crash-recovery requirements"
+  }
+}

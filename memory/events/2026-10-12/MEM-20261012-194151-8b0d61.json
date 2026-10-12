@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-194151-8b0d61",
+  "created_at": "2026-10-12T19:41:51+03:00",
+  "scope": "council",
+  "level": "L3_CANONICAL",
+  "kind": "proposal",
+  "subject": "council.history.specialist_methods_2026_10_06",
+  "summary": "The same historical arena deliberately kept several needs as methods/shared functions rather than permanent seats, reinforcing the Council anti-bureaucracy principle.",
+  "details": {
+    "methods": {
+      "architecture": "Dependency & Reachability Analysis",
+      "security": "Threat Modeling & Abuse Cases",
+      "test": "State-Machine / Property Testing",
+      "performance": "Telemetry & Measurement Discipline"
+    },
+    "shared_function": "Traceability & Archaeology",
+    "shared_function_trigger": [
+      "feature removal/replacement",
+      "legacy ambiguity",
+      "dead-code cleanup",
+      "conflict between historical requirement and current behavior"
+    ],
+    "current_governance_override": false
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "council",
+    "history",
+    "methods",
+    "anti-bureaucracy"
+  ],
+  "source": {
+    "type": "migration",
+    "ref": "Library: RevenueSystem_Council_Specialist_Expansion_Arena_2026-10-06(1).md"
+  }
+}

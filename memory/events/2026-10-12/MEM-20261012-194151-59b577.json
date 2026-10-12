@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-194151-59b577",
+  "created_at": "2026-10-12T19:41:51+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "revenuesystem.data_management.contract",
+  "summary": "RevenueSystem must provide protected data reset plus create/edit/delete management for branches and cashiers, while distinguishing a full reset from deletion of user-entered operational data.",
+  "details": {
+    "required": [
+      "reset application data",
+      "create branch",
+      "edit branch",
+      "delete/deactivate branch",
+      "create cashier",
+      "edit cashier",
+      "delete/deactivate cashier"
+    ],
+    "reset_requires_confirmation": true,
+    "destructive_action_audit_required": true,
+    "implementation_status": "owner requirement; verify current RevenueSystem5 implementation before claiming complete"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "data-management",
+    "reset",
+    "cashiers",
+    "branches"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "historical owner deployment/data-management requirements"
+  }
+}

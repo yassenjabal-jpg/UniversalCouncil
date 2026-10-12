@@ -43,6 +43,36 @@
   - `source_file`: config/roles.json
 - **Tags:** council, governance, roles
 
+## council.history.specialist_expansion_2026_10_06
+- **Event:** `MEM-20261012-194151-a5889b`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `proposal`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:41:51+03:00`
+- **Summary:** A historical RevenueSystem Council arena recommended selective expansion with five specialist functions; this records design lineage only and does not override the current UniversalCouncil role configuration.
+- **Details:**
+  - `anti_bureaucracy_rule`: role count may grow, but not every role participates in every decision
+  - `current_governance_override`: false
+  - `rationale`: add only recurring non-duplicative gaps with explicit activation triggers and outputs
+  - `recommended_specialists`: ["Evidence & Decision Quality Specialist", "Reconciliation Controls Specialist", "Information Architecture Specialist", "Human Factors, Accessibility & Operational Ergonomics Specialist", "Compatibility & Contract Evolution Specialist"]
+  - `reopen_trigger`: re-evaluate specialists if first 10 L/XL decisions show added latency without unique findings
+  - `source_artifact`: RevenueSystem_Council_Specialist_Expansion_Arena_2026-10-06.md
+- **Tags:** council, history, specialists, restructure
+
+## council.history.specialist_methods_2026_10_06
+- **Event:** `MEM-20261012-194151-8b0d61`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `proposal`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:41:51+03:00`
+- **Summary:** The same historical arena deliberately kept several needs as methods/shared functions rather than permanent seats, reinforcing the Council anti-bureaucracy principle.
+- **Details:**
+  - `current_governance_override`: false
+  - `methods`: {"architecture": "Dependency & Reachability Analysis", "performance": "Telemetry & Measurement Discipline", "security": "Threat Modeling & Abuse Cases", "test": "State-Machine / Property Testing"}
+  - `shared_function`: Traceability & Archaeology
+  - `shared_function_trigger`: ["feature removal/replacement", "legacy ambiguity", "dead-code cleanup", "conflict between historical requirement and current behavior"]
+- **Tags:** council, history, methods, anti-bureaucracy
+
 ## council.hybrid_execution.contract
 - **Event:** `MEM-20261012-192851-ec1124`
 - **Level:** `L3_CANONICAL`
@@ -117,6 +147,19 @@
   - `recovered_files`: ["00_Council_Synthesis_Media_Venture(1).pdf", "01_What_If_Arabia.pdf", "02_Inside_The_Deal.pdf", "03_File_404.pdf", "04_Behind_The_System.pdf", "05_City_2099.pdf"]
   - `recovery_scope`: YouTube/Media venture only
 - **Tags:** memory, migration, library, round2
+
+## memory.migration.legacy_artifacts_round3
+- **Event:** `MEM-20261012-194151-a78de1`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `status`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:41:51+03:00`
+- **Summary:** Legacy memory migration round 3 adds durable RevenueSystem owner requirements, a SHA-bounded historical audit baseline, and historical Council specialist-design lineage without promoting dated findings to current truth.
+- **Details:**
+  - `migrated_domains`: ["project/revenuesystem", "council"]
+  - `safeguards`: ["historical audit tied to exact SHA", "no old finding promoted to current defect", "current repository remains execution truth", "no sensitive personal/health data migrated"]
+  - `source_artifacts`: ["19_Comprehensive_Audit_Closure_Report(1).md", "RevenueSystem_Council_Specialist_Expansion_Arena_2026-10-06(1).md"]
+- **Tags:** memory, migration, round3, revenuesystem, council
 
 ## memory.migration.legacy_chat_round1
 - **Event:** `MEM-20261012-192851-bfc437`

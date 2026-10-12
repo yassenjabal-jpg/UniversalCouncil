@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T16:33:43+00:00",
-  "event_count": 39,
-  "active_count": 35,
+  "generated_at": "2026-10-12T19:42:05+03:00",
+  "event_count": 47,
+  "active_count": 43,
   "superseded_count": 4,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-12T19:33:14+03:00",
+  "latest_event_at": "2026-10-12T19:41:51+03:00",
   "scopes": {
     "council": [
       {
@@ -33,6 +33,24 @@
         "kind": "status",
         "summary": "UniversalCouncil core governance remains v0.3.0; later layered v0.4+ restructuring is a candidate pending measured bake-off and is not yet the governing role structure.",
         "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-194151-a5889b",
+        "subject": "council.history.specialist_expansion_2026_10_06",
+        "level": "L3_CANONICAL",
+        "kind": "proposal",
+        "summary": "A historical RevenueSystem Council arena recommended selective expansion with five specialist functions; this records design lineage only and does not override the current UniversalCouncil role configuration.",
+        "created_at": "2026-10-12T19:41:51+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-194151-8b0d61",
+        "subject": "council.history.specialist_methods_2026_10_06",
+        "level": "L3_CANONICAL",
+        "kind": "proposal",
+        "summary": "The same historical arena deliberately kept several needs as methods/shared functions rather than permanent seats, reinforcing the Council anti-bureaucracy principle.",
+        "created_at": "2026-10-12T19:41:51+03:00",
         "confidence": "verified"
       },
       {
@@ -78,6 +96,15 @@
         "kind": "status",
         "summary": "Legacy memory migration round 2 recovered the original Media Venture Council synthesis and all five channel concept decks from the ChatGPT Library and converted their durable strategy into canonical GitHub memory.",
         "created_at": "2026-10-12T19:33:14+03:00",
+        "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261012-194151-a78de1",
+        "subject": "memory.migration.legacy_artifacts_round3",
+        "level": "L3_CANONICAL",
+        "kind": "status",
+        "summary": "Legacy memory migration round 3 adds durable RevenueSystem owner requirements, a SHA-bounded historical audit baseline, and historical Council specialist-design lineage without promoting dated findings to current truth.",
+        "created_at": "2026-10-12T19:41:51+03:00",
         "confidence": "verified"
       },
       {
@@ -141,12 +168,39 @@
     ],
     "project/revenuesystem": [
       {
+        "event_id": "MEM-20261012-194151-83a063",
+        "subject": "revenuesystem.audit.baseline_2026_10_06",
+        "level": "L3_CANONICAL",
+        "kind": "evidence",
+        "summary": "Historical source-only audit closure at RevenueSystem SHA 7c6e5d4 remained incomplete and NO-GO for comprehensive closure/remediation planning; it is preserved as a dated audit baseline, not as a claim about current main.",
+        "created_at": "2026-10-12T19:41:51+03:00",
+        "confidence": "verified"
+      },
+      {
         "event_id": "MEM-20261012-192851-eda6d5",
         "subject": "revenuesystem.currency_model",
         "level": "L4_OWNER_DIRECTIVE",
         "kind": "policy",
         "summary": "Keep Iraqi coarse cash, Iraqi change and USD separated throughout the application; USD is converted to IQD and summed only in matching/comparison logic where required.",
         "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-194151-59b577",
+        "subject": "revenuesystem.data_management.contract",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "requirement",
+        "summary": "RevenueSystem must provide protected data reset plus create/edit/delete management for branches and cashiers, while distinguishing a full reset from deletion of user-entered operational data.",
+        "created_at": "2026-10-12T19:41:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-194151-7725bd",
+        "subject": "revenuesystem.deployment.contract",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "requirement",
+        "summary": "A final setup executable is a release deliverable only after required updates are merged and hardening/tests pass; installation/database locations must be explicit and the production machine role must not be inferred from chat history alone.",
+        "created_at": "2026-10-12T19:41:51+03:00",
         "confidence": "owner_confirmed"
       },
       {
@@ -183,6 +237,24 @@
         "kind": "decision",
         "summary": "The desktop revenue application is named «المطابقة» and exists to replace/streamline the legacy daily revenue workflow.",
         "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-194151-603525",
+        "subject": "revenuesystem.recovery_precision.contract",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "requirement",
+        "summary": "As a financial application, RevenueSystem must prioritize exact financial calculations, preserve signed returns, autosave/recover unsaved work where feasible after sudden closure, and diagnose crash paths without silently losing committed or pending state.",
+        "created_at": "2026-10-12T19:41:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-194151-6f0b36",
+        "subject": "revenuesystem.reporting.contract",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "requirement",
+        "summary": "RevenueSystem reporting should retain daily-revenue review, add matching-difference and cash/electronic summaries, use portrait layouts by default, and keep branch/cashier reports concise and operationally useful.",
+        "created_at": "2026-10-12T19:41:51+03:00",
         "confidence": "owner_confirmed"
       },
       {

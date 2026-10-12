@@ -2,6 +2,30 @@
 
 > Generated from append-only memory events. Do not edit manually.
 
+## revenuesystem.audit.baseline_2026_10_06
+- **Event:** `MEM-20261012-194151-83a063`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `evidence`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T19:41:51+03:00`
+- **Summary:** Historical source-only audit closure at RevenueSystem SHA 7c6e5d4 remained incomplete and NO-GO for comprehensive closure/remediation planning; it is preserved as a dated audit baseline, not as a claim about current main.
+- **Details:**
+  - `capabilities_with_scoped_assertion_source`: 54
+  - `coverage_states`: {"blocked": 4, "partial": 155, "source_only": 32, "verified": 0}
+  - `current_main_revalidation_required`: true
+  - `financial_invariants`: 20
+  - `historical_only`: true
+  - `major_holds`: ["H-01 live vs archived difference semantics", "H-02 DB restore/session/cache/pending-write barrier", "H-03 worksheet/date scope", "H-04 modifier-aware keyboard context", "H-05 bank/account/signed-outstanding semantics", "H-06 no-lost-capabilities before UI absorption", "H-07 latest-revision durable handoff"]
+  - `mode`: AUDIT-ONLY / SOURCE-ONLY
+  - `product_execution_count`: 0
+  - `scoped_assertions_reviewed`: 100
+  - `source_artifact`: 19_Comprehensive_Audit_Closure_Report.md
+  - `source_sha`: 7c6e5d434c9b4ad98f263e02d197e2e7bede6667
+  - `total_capabilities`: 191
+  - `total_workflows`: 21
+  - `verdict`: COMPREHENSIVE AUDIT INCOMPLETE — BLOCKERS REMAIN
+- **Tags:** revenuesystem, audit, historical, source-only
+
 ## revenuesystem.currency_model
 - **Event:** `MEM-20261012-192851-eda6d5`
 - **Level:** `L4_OWNER_DIRECTIVE`
@@ -16,6 +40,38 @@
   - `separate_everywhere`: true
   - `usd_conversion_scope`: matching/comparison only
 - **Tags:** revenuesystem, currency, financial
+
+## revenuesystem.data_management.contract
+- **Event:** `MEM-20261012-194151-59b577`
+- **Level:** `L4_OWNER_DIRECTIVE`
+- **Kind:** `requirement`
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-12T19:41:51+03:00`
+- **Summary:** RevenueSystem must provide protected data reset plus create/edit/delete management for branches and cashiers, while distinguishing a full reset from deletion of user-entered operational data.
+- **Details:**
+  - `destructive_action_audit_required`: true
+  - `implementation_status`: owner requirement; verify current RevenueSystem5 implementation before claiming complete
+  - `required`: ["reset application data", "create branch", "edit branch", "delete/deactivate branch", "create cashier", "edit cashier", "delete/deactivate cashier"]
+  - `reset_requires_confirmation`: true
+- **Tags:** revenuesystem, data-management, reset, cashiers, branches
+
+## revenuesystem.deployment.contract
+- **Event:** `MEM-20261012-194151-7725bd`
+- **Level:** `L4_OWNER_DIRECTIVE`
+- **Kind:** `requirement`
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-12T19:41:51+03:00`
+- **Summary:** A final setup executable is a release deliverable only after required updates are merged and hardening/tests pass; installation/database locations must be explicit and the production machine role must not be inferred from chat history alone.
+- **Details:**
+  - `database_location_must_be_explicit`: true
+  - `final_installer_required`: true
+  - `hardening_before_release`: true
+  - `implementation_status`: release requirement, not proof an installer is currently valid
+  - `installation_location_must_be_explicit`: true
+  - `merge_before_release`: true
+  - `production_machine_identity`: must be verified at execution time
+  - `tests_before_release`: true
+- **Tags:** revenuesystem, deployment, setup, release
 
 ## revenuesystem.import_contract
 - **Event:** `MEM-20261012-192851-478e5a`
@@ -75,6 +131,38 @@
   - `implementation_status`: verify current repository before claiming UI state
   - `platform`: Windows desktop / WPF
 - **Tags:** revenuesystem, identity, wpf
+
+## revenuesystem.recovery_precision.contract
+- **Event:** `MEM-20261012-194151-603525`
+- **Level:** `L4_OWNER_DIRECTIVE`
+- **Kind:** `requirement`
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-12T19:41:51+03:00`
+- **Summary:** As a financial application, RevenueSystem must prioritize exact financial calculations, preserve signed returns, autosave/recover unsaved work where feasible after sudden closure, and diagnose crash paths without silently losing committed or pending state.
+- **Details:**
+  - `autosave_and_recovery_required`: true
+  - `committed_vs_pending_state_must_be_distinguishable`: true
+  - `financial_precision_required`: true
+  - `implementation_status`: owner requirement; current code/tests/runtime evidence decide completion
+  - `signed_negative_returns_supported`: true
+  - `sudden_close_diagnostics_required`: true
+- **Tags:** revenuesystem, recovery, precision, crash, returns
+
+## revenuesystem.reporting.contract
+- **Event:** `MEM-20261012-194151-6f0b36`
+- **Level:** `L4_OWNER_DIRECTIVE`
+- **Kind:** `requirement`
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-12T19:41:51+03:00`
+- **Summary:** RevenueSystem reporting should retain daily-revenue review, add matching-difference and cash/electronic summaries, use portrait layouts by default, and keep branch/cashier reports concise and operationally useful.
+- **Details:**
+  - `branch_summary_goal`: cash and e-payment per branch on one A4 page where feasible
+  - `difference_report_goal`: per branch, cashier name and difference only
+  - `implementation_status`: owner requirement; verify current report services/artifacts before claiming complete
+  - `keep`: ["مراجعة وارد يوم", "تقرير فروقات المطابقة", "ملخص النقدي والالكتروني"]
+  - `layout`: portrait
+  - `remove_or_deprecate`: ["مجاميع الفروع as a standalone legacy report where superseded"]
+- **Tags:** revenuesystem, reports, portrait, matching
 
 ## revenuesystem.revenue_entry.contract
 - **Event:** `MEM-20261012-192851-84a323`
