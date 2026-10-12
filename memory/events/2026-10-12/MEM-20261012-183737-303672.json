@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-183737-303672",
+  "created_at": "2026-10-12T18:37:37+03:00",
+  "scope": "council",
+  "level": "L3_CANONICAL",
+  "kind": "capability",
+  "subject": "memory.fabric.runtime",
+  "summary": "Universal Memory Fabric completed a real YASSIN-to-GitHub autosync round trip and is runtime verified for append-only event persistence, canonical rebuild, Git-backed preflight, and local FTS retrieval.",
+  "details": {
+    "acceptance_host": "YASSIN",
+    "acceptance_steps": [
+      "local memory event write",
+      "detached origin/main worktree sync",
+      "GitHub main push",
+      "canonical snapshot/catalog rebuild",
+      "Git-backed Memory Preflight",
+      "SQLite FTS retrieval"
+    ],
+    "implementation_merge": "bddbf13634162d404569006499f244c3e555f299",
+    "initial_rebuild_commit": "660ba5ea172466fa5cc142c87b6e83bfef7f27ba"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "memory",
+    "github",
+    "runtime-verified",
+    "autosync"
+  ],
+  "source": {
+    "type": "tool",
+    "ref": "post-merge acceptance round trip"
+  }
+}
