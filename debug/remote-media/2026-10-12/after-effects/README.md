@@ -42,3 +42,8 @@ Capture the current elevated After Effects state, add the screenshot here, then 
 - New AE process PID 3624 opened Crash Repair (HWND 132938).
 - Evidence: 05-crash-repair-after-exact-restart.png
 - Next: elevated Continue, then verify whether JSX continues automatically.
+
+### Run Script File produced secondary Open dialog
+- Physical click on the Open button succeeded and produced a new smaller Open dialog (HWND 919810).
+- Evidence: 06-open-child-dialog.png
+- Next: inspect child controls/message and resolve before executing JSX.
