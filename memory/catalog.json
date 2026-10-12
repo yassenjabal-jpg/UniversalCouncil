@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T16:56:21+00:00",
-  "event_count": 52,
-  "active_count": 47,
+  "generated_at": "2026-10-12T20:01:00+03:00",
+  "event_count": 53,
+  "active_count": 48,
   "superseded_count": 5,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-12T19:56:01+03:00",
+  "latest_event_at": "2026-10-12T20:00:57+03:00",
   "scopes": {
     "council": [
       {
@@ -393,6 +393,15 @@
         "summary": "The prior Council ideation process is now artifact-backed: market evidence and adversarial objections reduced many ideas to five differentiated channel concepts, each with its own narrative, visual direction, sample episodes and three-video pilot.",
         "created_at": "2026-10-12T19:33:14+03:00",
         "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261012-200057-ed834a",
+        "subject": "youtube.language_expansion.strategy",
+        "level": "L3_CANONICAL",
+        "kind": "decision",
+        "summary": "Recovered media strategy used multilingual market research and planned language expansion after proving the Arabic format: build one media asset/production system, then create English versions of winning episodes rather than operate multiple independent production systems from day one.",
+        "created_at": "2026-10-12T20:00:57+03:00",
+        "confidence": "verified"
       },
       {
         "event_id": "MEM-20261012-192851-1da653",

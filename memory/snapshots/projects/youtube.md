@@ -146,6 +146,22 @@
 - **Supersedes:** `MEM-20261012-192851-1c1271`
 - **Tags:** youtube, council, ideation, recovered
 
+## youtube.language_expansion.strategy
+- **Event:** `MEM-20261012-200057-ed834a`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `decision`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T20:00:57+03:00`
+- **Summary:** Recovered media strategy used multilingual market research and planned language expansion after proving the Arabic format: build one media asset/production system, then create English versions of winning episodes rather than operate multiple independent production systems from day one.
+- **Details:**
+  - `expansion_rule`: localize winning episodes after proof, with English explicitly named in the recovered artifacts
+  - `operating_model`: one media asset / one production system rather than separate production systems per language
+  - `primary_launch_language`: Arabic
+  - `research_languages`: ["English", "German", "French", "Spanish"]
+  - `source_artifacts`: ["00_Format_Arbitrage_Council_v2.pptx", "01_What_If_Arabia.pdf"]
+  - `unresolved_architecture`: The recovered artifacts do not yet explicitly settle whether multilingual expansion should use one YouTube channel with multiple audio tracks or separate localized channels; this must be re-decided using current YouTube multilingual features and market evidence before launch.
+- **Tags:** youtube, multilingual, localization, english, market-strategy
+
 ## youtube.narration_visual_preferences
 - **Event:** `MEM-20261012-192851-1da653`
 - **Level:** `L2_PROJECT`
