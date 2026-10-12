@@ -279,9 +279,7 @@ def choose_path(action: dict[str, Any]) -> ExecutionPath:
     if action.get("interactive_app"):
         if action.get("dc_capable") and action.get("allow_dc_fallback") is True:
             return ExecutionPath.DC
-        raise HybridExecutionError(
-            "interactive application work requires GUI; DC fallback must be explicitly approved"
-        )
+        raise HybridExecutionError("interactive application work requires GUI; DC fallback must be explicitly approved")
 
     if action.get("task_class") == "external_service" and action.get("native_available"):
         return ExecutionPath.NATIVE
