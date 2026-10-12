@@ -458,11 +458,61 @@ Decision: NOT FIRST-LINE CANDIDATE.
 - Linear: KEEP as single work tracker; do not add Jira/ClickUp/monday in parallel.
 - Codex Security: KEEP for security scanning/review.
 - Superpowers: KEEP for structured software planning/TDD/debugging.
-- Remote Desktop Commander: KEEP owner-gated for YASSIN/local execution.
+- Remote Desktop Commander: KEEP owner-gated as transport, shell and filesystem access to YASSIN.
+- YASSIN Control Bridge / winapp UI Automation: PROMOTE TO FIRST-CLASS EXECUTION CAPABILITY. It provides screen observation, window/element inspection, screenshots, semantic UI Automation, click/hover/drag/send-keys physical input, scrolling/wait-for, recording, before/after verification and an audit log. It can therefore operate full Windows applications when native APIs/scripts are unavailable.
 - Figma: KEEP design execution capability, routed through Design/UX.
 - Descript/Runway/OpenArt/vidIQ: KEEP as media capabilities; validate per workflow rather than adding more media roles.
 - Datadog: DO NOT INSTALL now; no justified production observability gap yet.
 - GitHub AGENTS.md / path instructions: PILOT; can reduce repeated repository exploration for coding agents.
+
+## Correction — full desktop / Computer Use capability
+
+The first ARENA pass underweighted a material capability because `company/config/tool_authority.json` records Remote Desktop Commander mainly as `remote_shell.read` / `remote_shell.execute`, while the verified GUI capability lives in the separate local `CouncilVideoStudio` implementation repository.
+
+Verified implementation:
+- repository: `C:\Users\alnaseem\Desktop\CouncilVideoStudio`;
+- commit: `42544d3a7bfb0fcced63962c45a40dcafd692572` — `feat: add verified YASSIN desktop control bridge`;
+- control policy: `config/control_policy.json`;
+- bridge: `bridge/yassin_control/control_bridge.py`;
+- evidence/guide: `docs/YASSIN_CONTROL_BRIDGE.md`.
+
+Control hierarchy:
+1. application-native API/script (preferred);
+2. Microsoft winapp UI Automation semantic actions;
+3. pywinauto fallback;
+4. injected keyboard/mouse only when semantic control is unavailable.
+
+Supported modes:
+- Observe: list windows, inspect/search UI, read values/properties, screenshot;
+- Semantic control: invoke, set-value, focus, wait-for, scroll-into-view;
+- Physical input: click, hover, drag, send-keys;
+- Recording: window/element recording;
+- Verification: before screenshot -> action -> after screenshot -> optional state verification;
+- Audit: append underlying control actions to `control_logs/control_audit.jsonl`.
+
+Policy boundaries already enforced:
+- no credential/password automation;
+- no security-setting bypass;
+- no purchases;
+- no external publish;
+- no outbound message send;
+- prefer semantic selectors over coordinate-only input.
+
+### Structural impact on Council v0.4
+
+This capability changes the execution architecture materially. The Council is not limited to APIs, connectors and shell commands: it can interact with complete desktop applications and visually verify their state.
+
+Therefore:
+1. add a first-class `desktop_computer_use` capability to the future tool-authority registry;
+2. treat GUI control as an execution substrate, **not a new permanent Council member**;
+3. route it primarily through Technical Operator and authorized venture operators, with Risk/Security policy gates;
+4. allow specialists to request GUI observations but not silently gain write/control authority;
+5. prefer native APIs/scripts first, semantic UIA second, physical mouse/keyboard last;
+6. require before/after evidence for state-changing GUI operations;
+7. include GUI-task success, selector robustness, recovery from stale UI, visual-state verification and accidental-action rate in the Role/Tool Contribution Ledger;
+8. extend Evidence Sync so verified desktop actions can emit bounded evidence receipts to UniversalCouncil;
+9. make full-application tasks part of the orchestration framework bake-off, because an agent runtime that cannot safely coordinate visual/GUI actions is incomplete for YASSIN;
+10. re-evaluate whether some dedicated SaaS/API plugins are still necessary when the desktop application itself can be operated reliably — but never prefer GUI automation over a safer native API when both exist.
 
 ## Sandbox bake-off
 Run the same 12-20 historical Council cases through:
@@ -481,10 +531,17 @@ Measure:
 - tool-policy violations;
 - completion rate;
 - recovery after injected tool failure;
+- full-desktop task completion using YASSIN Control Bridge;
+- screenshot/visual-state verification accuracy;
+- UI selector stability and stale-selector recovery;
+- accidental or unintended UI action rate;
+- correct choice of native API vs semantic UIA vs physical input;
 - latency;
 - token/cost.
 
-Kill a runtime candidate if it is materially more expensive/slower without improving decision quality or recovery.
+The bake-off must include real desktop workflows, not only API/tool-call simulations: open and inspect an application, perform a bounded state change, verify the result visually/semantically, recover from one UI change, and preserve an audit receipt.
+
+Kill a runtime candidate if it is materially more expensive/slower without improving decision quality, recovery, or safe desktop execution.
 
 ## Preliminary restructuring recommendation
 1. Merge Chair + Synthesis as one runtime seat, while keeping synthesis as a required protocol stage.
@@ -498,7 +555,8 @@ Kill a runtime candidate if it is materially more expensive/slower without impro
 9. Keep the media production cell venture-scoped, not permanent Universal Core.
 10. Add Role Contribution Ledger, Evidence Sync, trace/eval layer and least-privilege tool profiles.
 11. Do not add a permanent "Observability Agent", "Prompt Engineer", "AI Engineer" or "Agent Manager" role yet; implement these as Technical/HR capabilities and measure the bottleneck first.
-12. Do not adopt a new orchestration framework until the bake-off beats the current baseline.
+12. Promote YASSIN full-desktop Computer Use to a first-class execution capability with separate observe/control authority, verified-action receipts and least-privilege routing.
+13. Do not adopt a new orchestration framework until the bake-off beats the current baseline on both decision quality and safe full-desktop execution.
 
 ## Material dissent preserved
 - Red Team: consolidation must not reduce viewpoint diversity.
