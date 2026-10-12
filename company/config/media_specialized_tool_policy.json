@@ -1,0 +1,147 @@
+{
+  "version": "1.0",
+  "policy": "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
+  "principles": [
+    "Use specialized creative tools for creative craft.",
+    "Use code for orchestration, validation, metadata, automation, reproducibility and QC.",
+    "Never substitute a homemade script for a missing professional craft tool merely because scripting is easier.",
+    "If no suitable specialized tool is available, declare CAPABILITY_GAP and stop or escalate."
+  ],
+  "prohibitions": [
+    "python_as_primary_video_editor",
+    "python_as_primary_audio_mastering_tool",
+    "python_as_primary_motion_design_tool",
+    "ffmpeg_as_primary_creative_editor",
+    "spreadsheet_or_json_as_visual_design_substitute",
+    "generated_code_as_substitute_for_unavailable_nle_or_daw"
+  ],
+  "tool_matrix": {
+    "research_trends": {
+      "preferred": [
+        "web research",
+        "vidIQ",
+        "Google Trends",
+        "TikTok Creative Center",
+        "YouTube Ask Studio"
+      ],
+      "code_role": "aggregation/normalization only"
+    },
+    "visual_direction_reference_frames": {
+      "preferred": [
+        "Figma",
+        "Canva",
+        "OpenAI image generation",
+        "OpenArt"
+      ],
+      "status": "AVAILABLE_OR_INSTALLED",
+      "code_role": "asset manifests and QA only"
+    },
+    "still_image_generation": {
+      "preferred": [
+        "OpenAI image generation",
+        "OpenArt",
+        "Runway image models"
+      ],
+      "status": "AVAILABLE",
+      "code_role": "prompt/version registry only"
+    },
+    "ai_video_generation": {
+      "preferred": [
+        "Runway",
+        "OpenArt"
+      ],
+      "status": "PARTIAL_CAPABILITY",
+      "notes": "Runway connected but current workspace exposes no video models; do not pretend video generation is available there.",
+      "code_role": "job orchestration only"
+    },
+    "motion_graphics_compositing": {
+      "preferred": [
+        "Adobe After Effects 2026"
+      ],
+      "status": "RUNTIME_VERIFIED",
+      "code_role": "JSX/automation is allowed to drive After Effects, but After Effects remains the renderer/editor."
+    },
+    "dialogue_cleanup_text_edit": {
+      "preferred": [
+        "Descript Studio Sound / Descript editor"
+      ],
+      "status": "CONNECTED_AND_AVAILABLE",
+      "code_role": "file movement/metadata only"
+    },
+    "picture_edit_finishing": {
+      "preferred": [
+        "Adobe Premiere Pro",
+        "DaVinci Resolve",
+        "Descript for rough/text edit"
+      ],
+      "status": "PUBLIC_FINISHING_CAPABILITY_GAP",
+      "notes": "Premiere Pro and DaVinci Resolve are not runtime-verified on YASSIN. Descript may support rough/text edit but does not by itself close the high-end finishing gate."
+    },
+    "audio_edit_mix_master": {
+      "preferred": [
+        "Adobe Audition",
+        "DaVinci Fairlight",
+        "equivalent professional DAW/NLE audio page"
+      ],
+      "status": "PUBLIC_FINISHING_CAPABILITY_GAP",
+      "notes": "No Audition or Resolve/Fairlight runtime verification on YASSIN."
+    },
+    "captions_transcript": {
+      "preferred": [
+        "Descript",
+        "NLE caption tools"
+      ],
+      "status": "AVAILABLE"
+    },
+    "multilingual_audio": {
+      "preferred": [
+        "Descript localization/dub tools",
+        "YouTube multi-language audio when available"
+      ],
+      "status": "PROCESS_DEFINED"
+    },
+    "render_export": {
+      "preferred": [
+        "NLE/Media Encoder/Resolve deliver page"
+      ],
+      "status": "CAPABILITY_GAP_FOR_PUBLIC_MASTER",
+      "code_role": "checksum/QC/archive only"
+    }
+  },
+  "current_verified_environment": {
+    "yassin_desktop": {
+      "after_effects_2026": true,
+      "premiere_pro_2026": false,
+      "audition_2026": false,
+      "media_encoder_2026": false,
+      "davinci_resolve_runtime_verified": false
+    },
+    "connected_plugins": {
+      "descript": true,
+      "runway": true,
+      "openart": true,
+      "canva": true,
+      "figma": true
+    },
+    "runway_current_workspace": {
+      "authenticated": true,
+      "image_models_available": true,
+      "video_models_available": false
+    }
+  },
+  "gates": {
+    "pilot_research_and_preproduction": "ALLOW",
+    "pilot_reference_frames": "ALLOW",
+    "pilot_motion_design": "ALLOW_WITH_AFTER_EFFECTS",
+    "pilot_voice_cleanup": "ALLOW_WITH_DESCRIPT",
+    "public_final_master": "BLOCK_UNTIL_PRO_AUDIO_AND_NLE_FINISHING_RUNTIME_VERIFIED",
+    "automatic_publish": "BLOCK"
+  },
+  "escalation_rule": "If a required craft stage is blocked, HR/Capability Director must scout or request a specialized tool. The Technical Operator may not fill the gap by authoring a custom craft replacement without an explicit Council exception approved by Owner.",
+  "exception_rule": {
+    "owner_approval_required": true,
+    "must_show_reason_specialized_tool_not_viable": true,
+    "must_be_time_bounded": true,
+    "must_not_become_default": true
+  }
+}
