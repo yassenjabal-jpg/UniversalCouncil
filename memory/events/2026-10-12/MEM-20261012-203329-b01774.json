@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-203329-b01774",
+  "created_at": "2026-10-12T20:33:29+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "evidence",
+  "subject": "youtube.title_mining.current",
+  "summary": "Broad-channel re-study produced an 80-title candidate pool across 10 topic families and selected a three-domain pilot to test whether one editorial/visual identity can bind unrelated subjects.",
+  "details": {
+    "candidate_count": 80,
+    "family_count": 10,
+    "top_ranked": "من قرر أن اليوم 24 ساعة؟",
+    "pilot": [
+      "من قرر أن اليوم 24 ساعة؟",
+      "ماذا يحدث لرسالتك بعد أن تضغط إرسال؟",
+      "كيف تربح الشركات من شيء تقدمه مجانًا؟"
+    ],
+    "scoring_weights": {
+      "clickability": 25,
+      "universality": 15,
+      "translatability": 10,
+      "story_strength": 15,
+      "visual_fit": 15,
+      "sourceability": 10,
+      "cost_efficiency": 5,
+      "policy_safety": 5
+    },
+    "note": "Scores are Council heuristics for research priority, not view forecasts.",
+    "artifact": "docs/research/2026-10-12-broad-channel-title-mining.json"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "title-mining",
+    "pilot",
+    "broad-channel",
+    "evidence"
+  ],
+  "source": {
+    "type": "council",
+    "ref": "Broad Format Channel Re-Study 2026-10-12",
+    "commit": "716b26f7333f8d796d841facd432a046aa7259f0"
+  }
+}

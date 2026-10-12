@@ -237,6 +237,23 @@
 - **Supersedes:** `MEM-20261012-182300-d4e5f6`
 - **Tags:** youtube, migration, round2, recovered
 
+## youtube.title_mining.current
+- **Event:** `MEM-20261012-203329-b01774`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `evidence`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T20:33:29+03:00`
+- **Summary:** Broad-channel re-study produced an 80-title candidate pool across 10 topic families and selected a three-domain pilot to test whether one editorial/visual identity can bind unrelated subjects.
+- **Details:**
+  - `artifact`: docs/research/2026-10-12-broad-channel-title-mining.json
+  - `candidate_count`: 80
+  - `family_count`: 10
+  - `note`: Scores are Council heuristics for research priority, not view forecasts.
+  - `pilot`: ["من قرر أن اليوم 24 ساعة؟", "ماذا يحدث لرسالتك بعد أن تضغط إرسال؟", "كيف تربح الشركات من شيء تقدمه مجانًا؟"]
+  - `scoring_weights`: {"clickability": 25, "cost_efficiency": 5, "policy_safety": 5, "sourceability": 10, "story_strength": 15, "translatability": 10, "universality": 15, "visual_fit": 15}
+  - `top_ranked`: من قرر أن اليوم 24 ساعة؟
+- **Tags:** youtube, title-mining, pilot, broad-channel, evidence
+
 ## youtube.visual_system.current
 - **Event:** `MEM-20261012-203320-369b9c`
 - **Level:** `L4_OWNER_DIRECTIVE`
