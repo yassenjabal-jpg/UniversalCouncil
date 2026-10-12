@@ -1,0 +1,723 @@
+{
+  "version": "1.0",
+  "date": "2026-10-12",
+  "purpose": "Broad, format-first multilingual documentary channel title mining",
+  "scoring_note": "Council heuristic scores, not measured demand. Fresh public evidence is directional; direct live vidIQ keyword/outlier credits were unavailable during this pass.",
+  "weights": {
+    "clickability": 25,
+    "universality": 15,
+    "translatability": 10,
+    "story_strength": 15,
+    "visual_fit_reference_style": 15,
+    "sourceability": 10,
+    "cost_efficiency": 5,
+    "policy_safety": 5
+  },
+  "pilot_selected": [
+    "من قرر أن اليوم 24 ساعة؟",
+    "ماذا يحدث لرسالتك بعد أن تضغط إرسال؟",
+    "كيف تربح الشركات من شيء تقدمه مجانًا؟"
+  ],
+  "candidates": [
+    {
+      "family": "hidden_systems",
+      "title_ar": "ماذا يحدث لرسالتك بعد أن تضغط إرسال؟",
+      "score": 95,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 95.7,
+        "clickability": 9.6,
+        "universality": 10,
+        "translatability": 9.8,
+        "story_strength": 9.2,
+        "visual_fit": 9.6,
+        "sourceability": 9.4,
+        "cost_efficiency": 8.8,
+        "policy_safety": 9.8
+      }
+    },
+    {
+      "family": "hidden_systems",
+      "title_ar": "كيف يصل الإنترنت إلى بيتك من قاع المحيط؟",
+      "score": 94,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 95.2,
+        "clickability": 9.4,
+        "universality": 9.8,
+        "translatability": 9.7,
+        "story_strength": 9.3,
+        "visual_fit": 9.6,
+        "sourceability": 9.6,
+        "cost_efficiency": 8.8,
+        "policy_safety": 10
+      }
+    },
+    {
+      "family": "hidden_systems",
+      "title_ar": "ماذا يحدث لحقيبتك بعد أن تختفي في المطار؟",
+      "score": 93,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 94,
+        "clickability": 9.3,
+        "universality": 9.6,
+        "translatability": 9.6,
+        "story_strength": 9.2,
+        "visual_fit": 9.4,
+        "sourceability": 9.5,
+        "cost_efficiency": 8.8,
+        "policy_safety": 10
+      }
+    },
+    {
+      "family": "hidden_systems",
+      "title_ar": "كيف تعرف خرائط جوجل أن الطريق مزدحم؟",
+      "score": 92,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 94.1,
+        "clickability": 9.4,
+        "universality": 9.8,
+        "translatability": 9.7,
+        "story_strength": 9.2,
+        "visual_fit": 9.4,
+        "sourceability": 9,
+        "cost_efficiency": 8.8,
+        "policy_safety": 9.8
+      }
+    },
+    {
+      "family": "hidden_systems",
+      "title_ar": "ماذا يحدث لطلبك بعد الضغط على «اشتر الآن»؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "hidden_systems",
+      "title_ar": "ماذا يحدث للكهرباء بعد أن تغادر محطة التوليد؟",
+      "score": 89,
+      "shortlist": false
+    },
+    {
+      "family": "hidden_systems",
+      "title_ar": "أين تذهب المياه بعد أن تختفي في الصرف؟",
+      "score": 87,
+      "shortlist": false
+    },
+    {
+      "family": "hidden_systems",
+      "title_ar": "كيف يعرف البنك أن بطاقتك سُرقت؟",
+      "score": 86,
+      "shortlist": false
+    },
+    {
+      "family": "everyday_design",
+      "title_ar": "لماذا لا تطير الطائرات في خط مستقيم؟",
+      "score": 95,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 95.5,
+        "clickability": 9.7,
+        "universality": 9.8,
+        "translatability": 9.7,
+        "story_strength": 9.1,
+        "visual_fit": 9.5,
+        "sourceability": 9.5,
+        "cost_efficiency": 8.9,
+        "policy_safety": 10
+      }
+    },
+    {
+      "family": "everyday_design",
+      "title_ar": "من قرر أن ترتيب لوحة المفاتيح يجب أن يكون هكذا؟",
+      "score": 91,
+      "shortlist": false
+    },
+    {
+      "family": "everyday_design",
+      "title_ar": "لماذا نوافذ الطائرات مستديرة؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "everyday_design",
+      "title_ar": "لماذا اختفت الأزرار من كل شيء؟",
+      "score": 92,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 94.4,
+        "clickability": 9.4,
+        "universality": 9.6,
+        "translatability": 9.6,
+        "story_strength": 9,
+        "visual_fit": 9.8,
+        "sourceability": 9.1,
+        "cost_efficiency": 9.2,
+        "policy_safety": 9.9
+      }
+    },
+    {
+      "family": "everyday_design",
+      "title_ar": "لماذا تُطفأ أضواء الطائرة عند الإقلاع والهبوط؟",
+      "score": 89,
+      "shortlist": false
+    },
+    {
+      "family": "everyday_design",
+      "title_ar": "لماذا تدور عقارب الساعة بهذا الاتجاه؟",
+      "score": 88,
+      "shortlist": false
+    },
+    {
+      "family": "everyday_design",
+      "title_ar": "لماذا إشارة التوقف لها ثمانية أضلاع؟",
+      "score": 85,
+      "shortlist": false
+    },
+    {
+      "family": "everyday_design",
+      "title_ar": "من قرر شكل زر التشغيل الذي نراه في كل جهاز؟",
+      "score": 87,
+      "shortlist": false
+    },
+    {
+      "family": "digital_world",
+      "title_ar": "من يملك الإنترنت فعليًا؟",
+      "score": 94,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 93.8,
+        "clickability": 9.5,
+        "universality": 9.7,
+        "translatability": 9.5,
+        "story_strength": 9.2,
+        "visual_fit": 9.5,
+        "sourceability": 8.9,
+        "cost_efficiency": 8.7,
+        "policy_safety": 9.5
+      }
+    },
+    {
+      "family": "digital_world",
+      "title_ar": "ماذا يحدث عندما تحذف صورة من هاتفك؟",
+      "score": 92,
+      "shortlist": false
+    },
+    {
+      "family": "digital_world",
+      "title_ar": "كيف يعرف هاتفك مكانك من دون GPS؟",
+      "score": 91,
+      "shortlist": false
+    },
+    {
+      "family": "digital_world",
+      "title_ar": "كيف تصل مكالمة فيديو إلى الطرف الآخر في جزء من الثانية؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "digital_world",
+      "title_ar": "هل يختفي شيء من الإنترنت فعلًا عندما نحذفه؟",
+      "score": 89,
+      "shortlist": false
+    },
+    {
+      "family": "digital_world",
+      "title_ar": "كيف تعرف التطبيقات ما قد نريده قبل أن نبحث عنه؟",
+      "score": 88,
+      "shortlist": false
+    },
+    {
+      "family": "digital_world",
+      "title_ar": "ماذا يحدث إذا انقطع كابل إنترنت واحد تحت البحر؟",
+      "score": 93,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 94.2,
+        "clickability": 9.4,
+        "universality": 9.5,
+        "translatability": 9.5,
+        "story_strength": 9.3,
+        "visual_fit": 9.7,
+        "sourceability": 9.4,
+        "cost_efficiency": 8.5,
+        "policy_safety": 9.7
+      }
+    },
+    {
+      "family": "digital_world",
+      "title_ar": "كيف تتحول صورة واحدة إلى ملايين النسخ في دقائق؟",
+      "score": 85,
+      "shortlist": false
+    },
+    {
+      "family": "science_nature",
+      "title_ar": "كيف يمكن لسحابة أن تزن ملايين الكيلوغرامات ولا تسقط؟",
+      "score": 94,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 95.7,
+        "clickability": 9.5,
+        "universality": 9.9,
+        "translatability": 9.8,
+        "story_strength": 9,
+        "visual_fit": 9.6,
+        "sourceability": 9.8,
+        "cost_efficiency": 9.2,
+        "policy_safety": 10
+      }
+    },
+    {
+      "family": "science_nature",
+      "title_ar": "لماذا لا تسقط الأقمار الصناعية؟",
+      "score": 93,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 94.7,
+        "clickability": 9.2,
+        "universality": 9.9,
+        "translatability": 9.8,
+        "story_strength": 9,
+        "visual_fit": 9.5,
+        "sourceability": 9.8,
+        "cost_efficiency": 9,
+        "policy_safety": 10
+      }
+    },
+    {
+      "family": "science_nature",
+      "title_ar": "كيف تعرف الطيور طريقها آلاف الكيلومترات؟",
+      "score": 91,
+      "shortlist": false
+    },
+    {
+      "family": "science_nature",
+      "title_ar": "لماذا لا تتجمد الأسماك داخل البحيرات المتجمدة؟",
+      "score": 89,
+      "shortlist": false
+    },
+    {
+      "family": "science_nature",
+      "title_ar": "لماذا لا نرى النجوم في النهار؟",
+      "score": 87,
+      "shortlist": false
+    },
+    {
+      "family": "science_nature",
+      "title_ar": "كيف تستطيع الأشجار رفع الماء عشرات الأمتار بلا مضخة؟",
+      "score": 92,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 94.5,
+        "clickability": 9.1,
+        "universality": 9.7,
+        "translatability": 9.6,
+        "story_strength": 9.1,
+        "visual_fit": 9.8,
+        "sourceability": 9.7,
+        "cost_efficiency": 9,
+        "policy_safety": 10
+      }
+    },
+    {
+      "family": "science_nature",
+      "title_ar": "لماذا رائحة المطر مختلفة عن أي رائحة أخرى؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "science_nature",
+      "title_ar": "كيف يعرف جسمك أن الوقت حان للنوم؟",
+      "score": 88,
+      "shortlist": false
+    },
+    {
+      "family": "history_origins",
+      "title_ar": "من قرر أن اليوم 24 ساعة؟",
+      "score": 96,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 96,
+        "clickability": 9.5,
+        "universality": 9.8,
+        "translatability": 9.8,
+        "story_strength": 9.3,
+        "visual_fit": 9.7,
+        "sourceability": 9.8,
+        "cost_efficiency": 8.8,
+        "policy_safety": 10
+      }
+    },
+    {
+      "family": "history_origins",
+      "title_ar": "من اخترع عطلة نهاية الأسبوع؟",
+      "score": 92,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 94.2,
+        "clickability": 9.2,
+        "universality": 9.8,
+        "translatability": 9.7,
+        "story_strength": 9.1,
+        "visual_fit": 9.4,
+        "sourceability": 9.6,
+        "cost_efficiency": 9.2,
+        "policy_safety": 9.8
+      }
+    },
+    {
+      "family": "history_origins",
+      "title_ar": "لماذا قسمت الأرض إلى مناطق زمنية؟",
+      "score": 93,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 94.7,
+        "clickability": 9.1,
+        "universality": 9.8,
+        "translatability": 9.7,
+        "story_strength": 9.1,
+        "visual_fit": 9.7,
+        "sourceability": 9.8,
+        "cost_efficiency": 9.1,
+        "policy_safety": 10
+      }
+    },
+    {
+      "family": "history_origins",
+      "title_ar": "من قرر أن المتر متر؟",
+      "score": 91,
+      "shortlist": false
+    },
+    {
+      "family": "history_origins",
+      "title_ar": "كيف أصبح هذا التقويم هو تقويم العالم؟",
+      "score": 89,
+      "shortlist": false
+    },
+    {
+      "family": "history_origins",
+      "title_ar": "لماذا نكتب الأرقام بهذا الشكل؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "history_origins",
+      "title_ar": "كيف أصبح جواز السفر بهذه القوة؟",
+      "score": 87,
+      "shortlist": false
+    },
+    {
+      "family": "history_origins",
+      "title_ar": "كيف أصبحت الساعة شيئًا يسيطر على يومنا؟",
+      "score": 91,
+      "shortlist": false
+    },
+    {
+      "family": "future_whatif",
+      "title_ar": "ماذا يحدث لو توقفت الأقمار الصناعية 24 ساعة؟",
+      "score": 93,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 95,
+        "clickability": 9.5,
+        "universality": 9.8,
+        "translatability": 9.8,
+        "story_strength": 9.4,
+        "visual_fit": 9.6,
+        "sourceability": 9.2,
+        "cost_efficiency": 8.5,
+        "policy_safety": 9.7
+      }
+    },
+    {
+      "family": "future_whatif",
+      "title_ar": "ماذا لو اختفت الخرائط الرقمية ليوم واحد؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "future_whatif",
+      "title_ar": "هل يمكن أن توجد مدينة بلا سيارات؟",
+      "score": 89,
+      "shortlist": false
+    },
+    {
+      "family": "future_whatif",
+      "title_ar": "هل يمكن للبشر أن يعيشوا تحت الأرض فعلًا؟",
+      "score": 88,
+      "shortlist": false
+    },
+    {
+      "family": "future_whatif",
+      "title_ar": "ماذا لو اختفى النقد تمامًا؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "future_whatif",
+      "title_ar": "هل يمكن أن تصبح مياه البحر المصدر الرئيسي لمياه المدن؟",
+      "score": 89,
+      "shortlist": false
+    },
+    {
+      "family": "future_whatif",
+      "title_ar": "ماذا لو نفد الرمل الذي نبني به العالم؟",
+      "score": 92,
+      "shortlist": false
+    },
+    {
+      "family": "future_whatif",
+      "title_ar": "هل يمكن أن تختفي كلمة المرور من حياتنا؟",
+      "score": 87,
+      "shortlist": false
+    },
+    {
+      "family": "engineering_failure",
+      "title_ar": "كيف يمكن لبرغي صغير أن يوقف آلة عملاقة؟",
+      "score": 92,
+      "shortlist": false
+    },
+    {
+      "family": "engineering_failure",
+      "title_ar": "لماذا تهتز بعض الجسور حتى تدمر نفسها؟",
+      "score": 93,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 93.7,
+        "clickability": 9.4,
+        "universality": 9.4,
+        "translatability": 9.3,
+        "story_strength": 9.4,
+        "visual_fit": 9.6,
+        "sourceability": 9.5,
+        "cost_efficiency": 8.4,
+        "policy_safety": 9.2
+      }
+    },
+    {
+      "family": "engineering_failure",
+      "title_ar": "كيف ينهار مبنى بسبب خطأ واحد في الرسم؟",
+      "score": 91,
+      "shortlist": false
+    },
+    {
+      "family": "engineering_failure",
+      "title_ar": "كيف تتحول سلسلة أخطاء صغيرة إلى كارثة كبيرة؟",
+      "score": 89,
+      "shortlist": false
+    },
+    {
+      "family": "engineering_failure",
+      "title_ar": "لماذا تفشل بعض البطاريات فجأة؟",
+      "score": 88,
+      "shortlist": false
+    },
+    {
+      "family": "engineering_failure",
+      "title_ar": "ماذا يحدث عندما يفشل سد؟",
+      "score": 87,
+      "shortlist": false
+    },
+    {
+      "family": "engineering_failure",
+      "title_ar": "كيف يمكن لكابل واحد أن يشل نظامًا كاملًا؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "engineering_failure",
+      "title_ar": "لماذا تفشل بعض الآلات بعد إصلاحها مباشرة؟",
+      "score": 84,
+      "shortlist": false
+    },
+    {
+      "family": "geography_cities",
+      "title_ar": "لماذا تبدو إفريقيا أصغر مما هي عليه على الخريطة؟",
+      "score": 95,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 94.8,
+        "clickability": 9.5,
+        "universality": 9.6,
+        "translatability": 9.5,
+        "story_strength": 9,
+        "visual_fit": 9.8,
+        "sourceability": 9.6,
+        "cost_efficiency": 9,
+        "policy_safety": 9.8
+      }
+    },
+    {
+      "family": "geography_cities",
+      "title_ar": "لماذا تعيش أغلب البشرية قرب الماء؟",
+      "score": 91,
+      "shortlist": false
+    },
+    {
+      "family": "geography_cities",
+      "title_ar": "لماذا تقع المطارات بعيدًا عن مراكز المدن؟",
+      "score": 89,
+      "shortlist": false
+    },
+    {
+      "family": "geography_cities",
+      "title_ar": "لماذا لا توجد طرق مستقيمة في المدن القديمة؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "geography_cities",
+      "title_ar": "كيف تنمو المدن حول خطوط لا نراها؟",
+      "score": 88,
+      "shortlist": false
+    },
+    {
+      "family": "geography_cities",
+      "title_ar": "لماذا بعض المدن باردة رغم قربها من خط الاستواء؟",
+      "score": 87,
+      "shortlist": false
+    },
+    {
+      "family": "geography_cities",
+      "title_ar": "كيف يمكن لشارع واحد أن يقسم مدينة إلى عالمين؟",
+      "score": 86,
+      "shortlist": false
+    },
+    {
+      "family": "geography_cities",
+      "title_ar": "لماذا تبدو بعض الحدود مستقيمة تمامًا؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "human_behavior",
+      "title_ar": "لماذا نشعر أن الوقت يمر أسرع كلما كبرنا؟",
+      "score": 95,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 94.9,
+        "clickability": 9.6,
+        "universality": 10,
+        "translatability": 9.8,
+        "story_strength": 9.2,
+        "visual_fit": 9,
+        "sourceability": 9.3,
+        "cost_efficiency": 9.2,
+        "policy_safety": 9.8
+      }
+    },
+    {
+      "family": "human_behavior",
+      "title_ar": "لماذا ننسى لماذا دخلنا الغرفة؟",
+      "score": 93,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 94,
+        "clickability": 9.4,
+        "universality": 10,
+        "translatability": 9.8,
+        "story_strength": 9,
+        "visual_fit": 8.7,
+        "sourceability": 9.5,
+        "cost_efficiency": 9.4,
+        "policy_safety": 10
+      }
+    },
+    {
+      "family": "human_behavior",
+      "title_ar": "لماذا نضغط زر المصعد أكثر من مرة رغم أننا نعرف أنه لن يسرع؟",
+      "score": 91,
+      "shortlist": false
+    },
+    {
+      "family": "human_behavior",
+      "title_ar": "لماذا تبدو الطوابير الأخرى أسرع دائمًا؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "human_behavior",
+      "title_ar": "لماذا نسمع أسماءنا وسط الضوضاء؟",
+      "score": 89,
+      "shortlist": false
+    },
+    {
+      "family": "human_behavior",
+      "title_ar": "لماذا نتذكر الأغاني أكثر من كلمات المرور؟",
+      "score": 88,
+      "shortlist": false
+    },
+    {
+      "family": "human_behavior",
+      "title_ar": "لماذا نحب مشاهدة الأشياء وهي تُرتب؟",
+      "score": 87,
+      "shortlist": false
+    },
+    {
+      "family": "human_behavior",
+      "title_ar": "لماذا يبدو سعر 9.99 أرخص بكثير من 10؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "business_mechanisms",
+      "title_ar": "كيف تربح الشركات من شيء تقدمه مجانًا؟",
+      "score": 93,
+      "shortlist": true,
+      "scorecard": {
+        "overall": 93.9,
+        "clickability": 9.4,
+        "universality": 9.5,
+        "translatability": 9.5,
+        "story_strength": 9.4,
+        "visual_fit": 9.2,
+        "sourceability": 9.5,
+        "cost_efficiency": 8.8,
+        "policy_safety": 9.7
+      }
+    },
+    {
+      "family": "business_mechanisms",
+      "title_ar": "لماذا تبيع بعض الشركات بخسارة… وتربح أكثر؟",
+      "score": 92,
+      "shortlist": false
+    },
+    {
+      "family": "business_mechanisms",
+      "title_ar": "كيف يقرر السوبرماركت أين يضع الحليب؟",
+      "score": 90,
+      "shortlist": false
+    },
+    {
+      "family": "business_mechanisms",
+      "title_ar": "لماذا الإرجاع المجاني ليس مجانيًا؟",
+      "score": 88,
+      "shortlist": false
+    },
+    {
+      "family": "business_mechanisms",
+      "title_ar": "كيف تربح شركة الطيران من مقعد لم يُبع؟",
+      "score": 87,
+      "shortlist": false
+    },
+    {
+      "family": "business_mechanisms",
+      "title_ar": "لماذا تدفع مقابل الماء الذي يكاد يكون مجانيًا؟",
+      "score": 89,
+      "shortlist": false
+    },
+    {
+      "family": "business_mechanisms",
+      "title_ar": "كيف تصبح بعض المنتجات أرخص كلما باعت أكثر؟",
+      "score": 86,
+      "shortlist": false
+    },
+    {
+      "family": "business_mechanisms",
+      "title_ar": "لماذا تدفع الشركات لك كي تستخدم منتجها أول مرة؟",
+      "score": 88,
+      "shortlist": false
+    }
+  ]
+}
