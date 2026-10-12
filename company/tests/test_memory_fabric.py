@@ -344,6 +344,14 @@ class MemoryFabricTests(unittest.TestCase):
             rows = search_index(db, "YouTube", 5)
             self.assertEqual(len(rows), 1)
             self.assertEqual(rows[0]["subject"], "demo.subject")
+
+            dotted = search_index(db, "demo.subject", 5)
+            self.assertEqual(len(dotted), 1)
+            self.assertEqual(dotted[0]["subject"], "demo.subject")
+
+            punctuated = search_index(db, "YouTube/Arabic", 5)
+            self.assertEqual(len(punctuated), 1)
+
             with self.assertRaises(MemoryFabricError):
                 search_index(db, "")
             with self.assertRaises(MemoryFabricError):

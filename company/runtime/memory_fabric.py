@@ -463,11 +463,19 @@ def build_search_index(memory_root: Path, db_path: Path, cfg: dict[str, Any] | N
     return db_path
 
 
+def _fts_literal_query(query: str) -> str:
+    tokens = re.findall(r"\w+", query, flags=re.UNICODE)
+    if not tokens:
+        raise MemoryFabricError("memory search query has no searchable terms")
+    return " AND ".join(f'"{token.replace(chr(34), chr(34) * 2)}"' for token in tokens)
+
+
 def search_index(db_path: Path, query: str, top_k: int = 12) -> list[dict[str, Any]]:
     if not query.strip():
         raise MemoryFabricError("memory search query is required")
     if not db_path.is_file():
         raise MemoryFabricError("memory search index is missing")
+    fts_query = _fts_literal_query(query)
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     try:
@@ -480,7 +488,7 @@ def search_index(db_path: Path, query: str, top_k: int = 12) -> list[dict[str, A
             ORDER BY rank
             LIMIT ?
             """,
-            (query, int(top_k)),
+            (fts_query, int(top_k)),
         ).fetchall()
         return [dict(row) for row in rows]
     except sqlite3.OperationalError as exc:
