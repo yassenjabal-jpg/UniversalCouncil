@@ -115,18 +115,22 @@ python tools/memory_sync.py
 
 ## GitHub autosync
 
-Local writes use a temporary detached worktree based on the latest `origin/main`.
+Local writes do **not** modify the tracked `memory/` tree first. `memory_write.py` validates the delta against the latest GitHub memory, then places it in the gitignored pending queue under `.runtime/memory/pending/events/`.
 
 The sync routine:
-- copies only new event files;
+- serializes writers with a bounded lock wait and stale-lock recovery;
+- opens a temporary detached worktree based on the latest `origin/main`;
+- takes a snapshot of pending events and copies only that snapshot;
 - refuses an event path whose content differs from the canonical copy;
-- rebuilds snapshots;
-- refuses canonical conflicts;
+- rebuilds snapshots and refuses canonical conflicts;
 - commits with a dedicated Memory Fabric identity;
 - pushes to `main`;
-- retries after a push race.
+- retries after a push race;
+- deletes only pending events confirmed present in the successful sync.
 
-The current feature/work branch is not switched or overwritten.
+A new event that arrives while a sync is already running remains queued for the next lock holder; it is never removed by the earlier sync.
+
+The current feature/work branch is not switched or overwritten, and normal memory writes do not leave tracked files dirty.
 
 ## GitHub Action
 

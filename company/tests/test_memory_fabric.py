@@ -83,7 +83,10 @@ class MemoryFabricTests(unittest.TestCase):
             lambda c: c.__setitem__("persistence_levels", ["L2_PROJECT"]),
             lambda c: c.__setitem__("event_kinds", ["decision"]),
             lambda c: c["autosync"].__setitem__("enabled", False),
+            lambda c: c.__setitem__("pending_root", ""),
             lambda c: c["autosync"].__setitem__("max_push_retries", 0),
+            lambda c: c["autosync"].__setitem__("lock_wait_seconds", 0),
+            lambda c: c["autosync"].__setitem__("lock_stale_seconds", 10),
         ]
         for mutate in mutations:
             cfg = copy.deepcopy(BASE_CFG)

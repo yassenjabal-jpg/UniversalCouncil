@@ -85,8 +85,15 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise MemoryFabricError("memory event kinds are incomplete")
     if cfg.get("autosync", {}).get("enabled") is not True:
         raise MemoryFabricError("memory autosync must stay enabled")
-    if int(cfg.get("autosync", {}).get("max_push_retries", 0)) < 1:
+    if not isinstance(cfg.get("pending_root"), str) or not cfg["pending_root"].strip():
+        raise MemoryFabricError("memory pending_root is required")
+    autosync = cfg.get("autosync", {})
+    if int(autosync.get("max_push_retries", 0)) < 1:
         raise MemoryFabricError("memory autosync retry count must be positive")
+    if float(autosync.get("lock_wait_seconds", 0)) <= 0:
+        raise MemoryFabricError("memory sync lock wait must be positive")
+    if float(autosync.get("lock_stale_seconds", 0)) <= float(autosync.get("lock_wait_seconds", 0)):
+        raise MemoryFabricError("memory sync stale-lock threshold must exceed lock wait")
     return True
 
 
