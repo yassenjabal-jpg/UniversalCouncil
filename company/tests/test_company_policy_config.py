@@ -56,6 +56,7 @@ class CompanyPolicyConfig(unittest.TestCase):
         self.assertTrue(defaults["market_scope_must_precede_solution"])
         self.assertTrue(defaults["media_venture_capability_layer"])
         self.assertTrue(defaults["capability_evidence_preflight_required"])
+        self.assertTrue(defaults["hybrid_execution_fabric_prototype"])
         self.assertTrue(defaults["media_three_video_pilot_required"])
         self.assertTrue(defaults["media_full_scale_before_pilot_forbidden"])
 

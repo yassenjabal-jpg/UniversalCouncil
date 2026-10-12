@@ -9,6 +9,7 @@ from company.runtime.evidence_sync import (  # noqa: E402 - repo root is inserte
     validate_imported_evidence,
     validate_sync_config,
 )
+from company.runtime.hybrid_execution import validate_config as validate_hybrid_execution  # noqa: E402
 from company.runtime.tool_authority import get_capability, validate_registry  # noqa: E402 - repo root is inserted above for direct script execution
 
 roles = json.loads((ROOT / "config" / "roles.json").read_text(encoding="utf-8"))
@@ -20,6 +21,7 @@ scouting = json.loads((ROOT / "company" / "config" / "capability_scouting.json")
 gateway = json.loads((ROOT / "company" / "config" / "intelligence_gateway.json").read_text(encoding="utf-8"))
 tool_authority = json.loads((ROOT / "company" / "config" / "tool_authority.json").read_text(encoding="utf-8"))
 evidence_sync = json.loads((ROOT / "company" / "config" / "evidence_sync.json").read_text(encoding="utf-8"))
+hybrid_execution = json.loads((ROOT / "company" / "config" / "hybrid_execution.json").read_text(encoding="utf-8"))
 
 core = {r["id"] for r in roles["core_roles"]}
 specialists = {r["id"] for r in roles["specialist_roles"]}
@@ -149,6 +151,7 @@ validate_intelligence_gateway(gateway)
 validate_registry(tool_authority)
 validate_sync_config(evidence_sync)
 validate_imported_evidence(ROOT, evidence_sync, tool_authority)
+validate_hybrid_execution(hybrid_execution)
 assert get_capability(tool_authority, "desktop_computer_use.observe")["effect"] == "READ"
 assert get_capability(tool_authority, "desktop_computer_use.control")["approval_policy"] == "OWNER_EXPLICIT"
 assert (
