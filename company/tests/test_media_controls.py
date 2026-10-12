@@ -152,6 +152,64 @@ class MediaCapabilityTests(unittest.TestCase):
         }
         self.assertTrue(validate_media_scale_request(record))
 
+    def test_media_team_validator_failure_paths_are_covered(self):
+        mutations = [
+            lambda c: c.__setitem__("version", "broken"),
+            lambda c: c.__setitem__(
+                "production_functions",
+                [f for f in c["production_functions"] if f["id"] != "media_producer"],
+            ),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "media_producer").__setitem__(
+                "default_status", "ON_DEMAND"
+            ),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "localization_producer").__setitem__(
+                "default_status", "DISABLED"
+            ),
+            lambda c: c.__setitem__(
+                "function_independence_rules",
+                [
+                    rule
+                    for rule in c["function_independence_rules"]
+                    if rule != "research_or_writer_cannot_self_clear_material_fact_check"
+                ],
+            ),
+            lambda c: c.pop("benchmark_artifact"),
+            lambda c: c["media_toolchain"].pop("dialogue_cleanup"),
+            lambda c: c["pilot"].__setitem__("required_before_scale", False),
+            lambda c: c["pilot"].__setitem__("video_count", 2),
+        ]
+        for mutate in mutations:
+            cfg = self.load_config()
+            mutate(cfg)
+            with self.assertRaises(MediaControlError):
+                validate_media_team(cfg)
+
+    def test_pilot_record_invalid_statuses_and_missing_fields_fail_closed(self):
+        base = {
+            "videos_completed": 3,
+            "metrics": self.base_metrics(),
+            "hr_review_status": "KEEP",
+            "scale_decision": "HOLD",
+        }
+
+        missing = dict(base)
+        missing.pop("metrics")
+        with self.assertRaises(MediaControlError):
+            validate_media_pilot_record(missing)
+
+        invalid_hr = dict(base)
+        invalid_hr["hr_review_status"] = "SELF_APPROVED"
+        with self.assertRaises(MediaControlError):
+            validate_media_pilot_record(invalid_hr)
+
+        invalid_scale = dict(base)
+        invalid_scale["scale_decision"] = "AUTO_SCALE"
+        with self.assertRaises(MediaControlError):
+            validate_media_pilot_record(invalid_scale)
+
+        with self.assertRaises(MediaControlError):
+            validate_media_scale_request(base)
+
 
 if __name__ == "__main__":
     unittest.main()

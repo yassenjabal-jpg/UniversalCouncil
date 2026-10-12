@@ -162,6 +162,53 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             with self.assertRaises(ChannelOperatingSystemError):
                 validate_config(cfg)
 
+    def test_validator_failure_paths_are_explicitly_covered(self):
+        mutations = [
+            lambda c: c["benchmark_profile"].__setitem__("name", "wrong"),
+            lambda c: c["portfolio_balance"].__setitem__("max_same_family_in_window", 3),
+            lambda c: c["portfolio_balance"].__setitem__("minimum_distinct_families_in_initial_window", 3),
+            lambda c: c["portfolio_balance"].__setitem__("relax_only_after_first_party_audience_evidence", False),
+            lambda c: c["trend_radar"].__setitem__("evergreen_reframe_required", False),
+            lambda c: c["topic_scoring"]["fields"].__setitem__("cross_platform_velocity", 14),
+            lambda c: c["topic_scoring"]["gates"].__setitem__("minimum_total", 50),
+            lambda c: c["topic_scoring"]["gates"].__setitem__("require_one_sentence_question", False),
+            lambda c: c["topic_scoring"]["gates"].__setitem__(
+                "reject_if_only_trending_without_durable_question", False
+            ),
+            lambda c: c["research_system"].__setitem__("visual_source_rights_sheet_required", False),
+            lambda c: c["research_system"].__setitem__("expert_consultation_required_when", []),
+            lambda c: c["visual_story_case"].__setitem__("must_precede_script_lock", False),
+            lambda c: c["visual_story_case"].__setitem__("fail_action", "IGNORE"),
+            lambda c: c["preproduction_craft_review"].__setitem__("must_precede_script_lock", False),
+            lambda c: c["script_development"].__setitem__("visual_draft_requires_editor_review", False),
+            lambda c: c["production_readiness"].__setitem__("fail_action", "CONTINUE"),
+            lambda c: c["packaging_system"].__setitem__("stage_a_before_script", []),
+            lambda c: c["packaging_system"].__setitem__("stage_b_after_rough_cut", []),
+            lambda c: c["frame_bible"].__setitem__(
+                "canonical_frame_types", c["frame_bible"]["canonical_frame_types"][:-1]
+            ),
+            lambda c: c["frame_bible"]["composition_rules"].__setitem__("editable_language_layers", False),
+            lambda c: c["transition_system"].__setitem__("canonical", ["cut"]),
+            lambda c: c["transition_system"].__setitem__("forbidden_default", []),
+            lambda c: c["audio_system"].__setitem__("spotting_required_before_reference_frame_lock", False),
+            lambda c: c["audio_system"].__setitem__("picture_lock_required_before_final_sound_design", False),
+            lambda c: c["audio_system"].__setitem__("post_picture_lock_timing_change_requires_audio_reconform", False),
+            lambda c: c["audio_system"].__setitem__("music_states", ["M0"]),
+            lambda c: c["audio_system"].__setitem__("cue_sheet_required_fields", ["cue_id"]),
+            lambda c: c["audio_system"].__setitem__("av_beat_map_required_fields", ["beat_id"]),
+            lambda c: c["audio_system"]["mix_targets_internal_not_platform_requirements"].__setitem__(
+                "program_integrated_lufs_target", "-8 LUFS"
+            ),
+            lambda c: c["audio_system"].__setitem__("anti_patterns", []),
+            lambda c: c["anti_slop_gate"].__setitem__("checks", ["one"]),
+            lambda c: c["anti_slop_gate"].__setitem__("fail_action", "IGNORE"),
+        ]
+        for mutate in mutations:
+            cfg = copy.deepcopy(CONFIG)
+            mutate(cfg)
+            with self.assertRaises(ChannelOperatingSystemError):
+                validate_config(cfg)
+
 
 if __name__ == "__main__":
     unittest.main()
