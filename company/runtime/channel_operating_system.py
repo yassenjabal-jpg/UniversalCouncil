@@ -16,12 +16,17 @@ REQUIRED_WORKFLOW = [
     "story_thesis",
     "script_and_voice_direction",
     "visual_treatment",
+    "audio_spotting_and_sonic_concept",
     "reference_frame_assignment",
-    "storyboard_and_transition_map",
+    "storyboard_transition_audio_map",
     "asset_registry",
     "animatic",
+    "narration_recording_and_dialogue_edit",
     "production",
-    "audio_and_music",
+    "picture_lock",
+    "music_sound_design",
+    "mix_master",
+    "audiovisual_sync_qc",
     "multilingual_preflight",
     "anti_slop_gate",
     "fact_policy_qc",
@@ -36,19 +41,47 @@ REQUIRED_GATES = {
     "G1 Evidence Gate",
     "G2 Packaging Gate",
     "G3 Script Lock",
-    "G4 Visual Treatment Lock",
-    "G5 Animatic Gate",
-    "G6 Anti-Slop Gate",
-    "G7 Fact/Policy QC",
-    "G8 Export QC",
-    "G9 Owner Publish Gate",
-    "G10 Post-Publish Learning Gate",
+    "G4 Visual + Sonic Treatment Lock",
+    "G5 Animatic + Spotting Gate",
+    "G6 Picture Lock Gate",
+    "G7 Audio-Visual Sync Gate",
+    "G8 Anti-Slop Gate",
+    "G9 Fact/Policy/Continuity QC",
+    "G10 Mix/Master QC",
+    "G11 Export QC",
+    "G12 Owner Publish Gate",
+    "G13 Post-Publish Learning Gate",
+}
+
+REQUIRED_PRODUCTION_ROLES = {
+    "Audience Growth & Packaging Operator",
+    "Evidence & Research Lead",
+    "Editorial Director / Showrunner",
+    "Script & Voice Director",
+    "Visual Art Director / Frame Curator",
+    "Motion & Picture Editor",
+    "Music Supervisor & Sound Designer",
+    "Dialogue & Mix Engineer",
+    "Localization Producer",
+    "Risk & Assurance",
+    "Technical Operator",
+    "Finance Controller",
+    "Red Team",
+    "Owner",
+}
+
+REQUIRED_AUDIO_STEMS = {
+    "DX dialogue",
+    "MX music",
+    "FX sound design",
+    "AMB atmosphere",
+    "FULL master",
 }
 
 
 def validate_config(cfg: dict[str, Any]) -> bool:
-    if cfg.get("version") != "1.0":
-        raise ChannelOperatingSystemError("channel operating system must be version 1.0")
+    if cfg.get("version") != "1.1":
+        raise ChannelOperatingSystemError("channel operating system must be version 1.1")
     if cfg.get("channel_model") != "broad_format_first_multilingual_visual_documentary":
         raise ChannelOperatingSystemError("channel model drifted")
     if cfg.get("visual_system") != "Editorial Renaissance Motion":
@@ -100,6 +133,8 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         "pause_before_ms",
         "pause_after_ms",
         "visual_beat_id",
+        "music_state",
+        "sfx",
         "evidence_ids",
         "translation_note",
     }:
@@ -118,6 +153,31 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     if not transitions.get("forbidden_default"):
         raise ChannelOperatingSystemError("transition anti-patterns are required")
 
+    audio = cfg.get("audio_system", {})
+    if audio.get("principle") != "sound is designed with picture, not added after picture":
+        raise ChannelOperatingSystemError("audio system principle drifted")
+    if audio.get("spotting_required_before_reference_frame_lock") is not True:
+        raise ChannelOperatingSystemError("audio spotting must precede reference-frame lock")
+    if audio.get("picture_lock_required_before_final_sound_design") is not True:
+        raise ChannelOperatingSystemError("final sound design requires picture lock")
+    if audio.get("post_picture_lock_timing_change_requires_audio_reconform") is not True:
+        raise ChannelOperatingSystemError("post-picture-lock timing changes must trigger audio reconform")
+    if len(audio.get("music_states", [])) < 8:
+        raise ChannelOperatingSystemError("music-state grammar is incomplete")
+    if len(audio.get("cue_sheet_required_fields", [])) < 12:
+        raise ChannelOperatingSystemError("music cue sheet contract is incomplete")
+    if len(audio.get("av_beat_map_required_fields", [])) < 10:
+        raise ChannelOperatingSystemError("audio-visual beat map contract is incomplete")
+    if set(audio.get("mandatory_stems", [])) != REQUIRED_AUDIO_STEMS:
+        raise ChannelOperatingSystemError("mandatory audio stems drifted")
+    mix = audio.get("mix_targets_internal_not_platform_requirements", {})
+    if mix.get("program_integrated_lufs_target") != "-14 LUFS ±1":
+        raise ChannelOperatingSystemError("internal master loudness target drifted")
+    if mix.get("true_peak_ceiling") != "-1 dBTP":
+        raise ChannelOperatingSystemError("true-peak ceiling drifted")
+    if not audio.get("anti_patterns"):
+        raise ChannelOperatingSystemError("audio anti-patterns are required")
+
     anti_slop = cfg.get("anti_slop_gate", {})
     if anti_slop.get("required") is not True:
         raise ChannelOperatingSystemError("anti-slop gate cannot be disabled")
@@ -130,17 +190,8 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("quality gates drifted")
 
     roles = cfg.get("roles", {})
-    for required_role in {
-        "Audience Growth & Packaging Operator",
-        "Evidence & Research Lead",
-        "Editorial Director / Showrunner",
-        "AI Visual & Post-Production Producer",
-        "Risk & Assurance",
-        "Technical Operator",
-        "Red Team",
-        "Owner",
-    }:
-        if required_role not in roles:
-            raise ChannelOperatingSystemError(f"missing required media role: {required_role}")
+    missing_roles = REQUIRED_PRODUCTION_ROLES - set(roles)
+    if missing_roles:
+        raise ChannelOperatingSystemError(f"missing required media roles: {sorted(missing_roles)}")
 
     return True

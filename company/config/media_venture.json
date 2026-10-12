@@ -1,7 +1,7 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "enabled": true,
-  "team_model": "venture_scoped_smallest_effective_team",
+  "team_model": "venture_scoped_smallest_effective_team_functions_not_headcount",
   "production_functions": [
     {
       "id": "editorial_director",
@@ -14,42 +14,127 @@
         "story_structure",
         "script_quality",
         "editorial_pacing",
-        "final_cut_editorial_approval"
+        "final_cut_editorial_approval",
+        "picture_lock_approval"
       ]
     },
     {
-      "id": "ai_visual_post_producer",
-      "name": "AI Visual & Post-Production Producer",
+      "id": "script_voice_director",
+      "name": "Script & Voice Director",
       "default_status": "ACTIVE_FOR_MEDIA_PILOT",
       "owns": [
-        "storyboard_translation",
-        "ai_visual_generation",
-        "b_roll",
-        "visual_continuity",
-        "editing",
-        "sound",
-        "subtitles",
-        "technical_export"
+        "scene_aware_script",
+        "voice_intent",
+        "emotion_direction",
+        "pace_pitch_emphasis",
+        "pronunciation_guide",
+        "recording_session_direction",
+        "pickup_list",
+        "narration_continuity"
+      ]
+    },
+    {
+      "id": "visual_art_director",
+      "name": "Visual Art Director / Frame Curator",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "owns": [
+        "visual_treatment",
+        "reference_frames",
+        "palette_typography_grid",
+        "episode_visual_motifs",
+        "asset_style_approval",
+        "visual_continuity"
+      ]
+    },
+    {
+      "id": "motion_picture_editor",
+      "name": "Motion & Picture Editor",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "owns": [
+        "storyboard_timing",
+        "animatic",
+        "motion_design",
+        "picture_edit",
+        "transition_execution",
+        "picture_lock_conform",
+        "subtitle_picture_integration"
+      ]
+    },
+    {
+      "id": "music_sound_supervisor",
+      "name": "Music Supervisor & Sound Designer",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "owns": [
+        "sonic_concept",
+        "spotting_session",
+        "music_brief",
+        "cue_sheet",
+        "music_source_and_license",
+        "sound_design",
+        "sonic_motifs",
+        "transition_sfx",
+        "silence_map",
+        "audio_visual_sync_intent"
+      ]
+    },
+    {
+      "id": "dialogue_mix_engineer",
+      "name": "Dialogue & Mix Engineer",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "owns": [
+        "dialogue_cleanup",
+        "dialogue_edit",
+        "eq_deess_noise_control",
+        "level_automation",
+        "music_ducking",
+        "stem_management",
+        "final_mix",
+        "master_loudness",
+        "audio_qc",
+        "dub_mix_parity"
       ]
     },
     {
       "id": "audience_growth_packaging",
       "name": "Audience Growth & Packaging Operator",
-      "default_status": "ON_DEMAND",
+      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
       "owns": [
+        "trend_radar",
         "titles",
         "thumbnails",
         "first_30_seconds",
         "ctr",
         "retention",
         "platform_adaptation",
-        "shorts_reels_tiktok_cutdowns",
         "performance_analysis"
+      ]
+    },
+    {
+      "id": "localization_producer",
+      "name": "Localization Producer",
+      "default_status": "ON_DEMAND",
+      "owns": [
+        "translation_adaptation",
+        "dub_script",
+        "subtitle_timing",
+        "localized_metadata",
+        "localized_thumbnail_text",
+        "language_version_qc",
+        "timing_reconform_request"
       ]
     }
   ],
+  "function_independence_rules": [
+    "picture_editor_cannot_self_approve_picture_lock",
+    "music_sound_supervisor_does_not_self_approve_final_mix_qc",
+    "dialogue_mix_engineer_does_not_approve_editorial_story",
+    "owner_voice_approval_is_separate_from_technical_mix_approval",
+    "same_human_or_tool_may_cover_multiple_functions_in_pilot_but_required_cross_function_reviews_remain"
+  ],
   "existing_function_dependencies": [
+    "Owner",
     "Venture Operator",
+    "Evidence & Research Lead",
     "Finance Controller",
     "Assurance Reviewer",
     "Technical Operator",
@@ -60,7 +145,8 @@
     "required_before_scale": true,
     "video_count": 3,
     "publication_required_for_capability_pilot": false,
-    "hr_review_after_pilot": true
+    "hr_review_after_pilot": true,
+    "audio_role_roi_review": true
   },
   "performance_metrics": [
     "production_time_per_video",
@@ -70,6 +156,12 @@
     "revision_count",
     "factual_policy_defects",
     "packaging_quality",
+    "audio_revision_count",
+    "dialogue_cleanup_minutes",
+    "music_sound_design_minutes",
+    "mix_master_minutes",
+    "av_sync_defects",
+    "audio_qc_defects",
     "ctr",
     "first_30_second_retention",
     "average_percentage_viewed",
@@ -85,7 +177,13 @@
     "script_drafting": "AVAILABLE_FOR_ASSISTED_WORK",
     "image_generation": "AVAILABLE_FOR_ASSISTED_WORK",
     "ai_video_generation": "NEEDS_RUNTIME_VERIFICATION",
-    "audio_cleanup": "NEEDS_RUNTIME_VERIFICATION",
+    "narration_recording": "HUMAN_OWNER_REQUIRED",
+    "dialogue_cleanup": "NEEDS_RUNTIME_VERIFICATION",
+    "music_supervision": "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
+    "music_sourcing_and_licensing": "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
+    "sound_design": "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
+    "mix_mastering": "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
+    "audiovisual_sync_qc": "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
     "video_editing": "PARTIAL_RUNTIME_VERIFIED",
     "captions": "CAN_BUILD_OR_VERIFY",
     "platform_publishing": "CAPABILITY_GAP",

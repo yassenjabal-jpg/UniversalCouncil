@@ -5,6 +5,8 @@ from pathlib import Path
 
 from company.runtime.channel_operating_system import (
     ChannelOperatingSystemError,
+    REQUIRED_AUDIO_STEMS,
+    REQUIRED_PRODUCTION_ROLES,
     REQUIRED_WORKFLOW,
     validate_config,
 )
@@ -23,6 +25,38 @@ class ChannelOperatingSystemTests(unittest.TestCase):
 
     def test_workflow_is_exact_and_ordered(self):
         self.assertEqual(CONFIG["workflow"], REQUIRED_WORKFLOW)
+        self.assertLess(
+            CONFIG["workflow"].index("audio_spotting_and_sonic_concept"),
+            CONFIG["workflow"].index("reference_frame_assignment"),
+        )
+        self.assertLess(
+            CONFIG["workflow"].index("picture_lock"),
+            CONFIG["workflow"].index("music_sound_design"),
+        )
+        self.assertLess(
+            CONFIG["workflow"].index("mix_master"),
+            CONFIG["workflow"].index("audiovisual_sync_qc"),
+        )
+
+    def test_audio_roles_are_distinct_and_required(self):
+        roles = set(CONFIG["roles"])
+        self.assertTrue(REQUIRED_PRODUCTION_ROLES.issubset(roles))
+        self.assertIn("Music Supervisor & Sound Designer", roles)
+        self.assertIn("Dialogue & Mix Engineer", roles)
+        self.assertNotEqual(
+            CONFIG["roles"]["Music Supervisor & Sound Designer"],
+            CONFIG["roles"]["Dialogue & Mix Engineer"],
+        )
+
+    def test_audio_contract(self):
+        audio = CONFIG["audio_system"]
+        self.assertTrue(audio["spotting_required_before_reference_frame_lock"])
+        self.assertTrue(audio["picture_lock_required_before_final_sound_design"])
+        self.assertTrue(audio["post_picture_lock_timing_change_requires_audio_reconform"])
+        self.assertEqual(set(audio["mandatory_stems"]), REQUIRED_AUDIO_STEMS)
+        targets = audio["mix_targets_internal_not_platform_requirements"]
+        self.assertEqual(targets["program_integrated_lufs_target"], "-14 LUFS ±1")
+        self.assertEqual(targets["true_peak_ceiling"], "-1 dBTP")
 
     def test_fail_closed_on_governance_drift(self):
         mutations = [
@@ -50,11 +84,26 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["frame_bible"]["composition_rules"].__setitem__("editable_language_layers", False),
             lambda c: c["transition_system"].__setitem__("canonical", ["cut"]),
             lambda c: c["transition_system"].__setitem__("forbidden_default", []),
+            lambda c: c["audio_system"].__setitem__("principle", "sound added after picture"),
+            lambda c: c["audio_system"].__setitem__("spotting_required_before_reference_frame_lock", False),
+            lambda c: c["audio_system"].__setitem__("picture_lock_required_before_final_sound_design", False),
+            lambda c: c["audio_system"].__setitem__("post_picture_lock_timing_change_requires_audio_reconform", False),
+            lambda c: c["audio_system"].__setitem__("music_states", ["one"]),
+            lambda c: c["audio_system"].__setitem__("cue_sheet_required_fields", ["cue_id"]),
+            lambda c: c["audio_system"].__setitem__("av_beat_map_required_fields", ["beat_id"]),
+            lambda c: c["audio_system"].__setitem__("mandatory_stems", ["FULL master"]),
+            lambda c: c["audio_system"]["mix_targets_internal_not_platform_requirements"].__setitem__(
+                "program_integrated_lufs_target", "-8 LUFS"
+            ),
+            lambda c: c["audio_system"]["mix_targets_internal_not_platform_requirements"].__setitem__(
+                "true_peak_ceiling", "0 dBTP"
+            ),
+            lambda c: c["audio_system"].__setitem__("anti_patterns", []),
             lambda c: c["anti_slop_gate"].__setitem__("required", False),
             lambda c: c["anti_slop_gate"].__setitem__("checks", ["x"]),
             lambda c: c["anti_slop_gate"].__setitem__("fail_action", "IGNORE"),
             lambda c: c.__setitem__("quality_gates", []),
-            lambda c: c["roles"].pop("Red Team"),
+            lambda c: c["roles"].pop("Music Supervisor & Sound Designer"),
         ]
         for mutate in mutations:
             cfg = copy.deepcopy(CONFIG)
