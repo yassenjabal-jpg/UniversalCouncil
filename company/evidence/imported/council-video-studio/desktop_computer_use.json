@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "receipt_id": "council-video-studio-yassin-desktop-computer-use-2026-10-12",
+  "source_project": "CouncilVideoStudio",
+  "source_commit": "42544d3a7bfb0fcced63962c45a40dcafd692572",
+  "observed_at": "2026-10-12T02:50:25+03:00",
+  "capability_id": "desktop_computer_use",
+  "status": "RUNTIME_VERIFIED",
+  "evidence_level": "HOST_INVOKED",
+  "verified_scope": [
+    "list_windows",
+    "inspect_ui",
+    "search_ui",
+    "read_values_properties",
+    "screenshot",
+    "semantic_invoke",
+    "semantic_set_value",
+    "focus",
+    "scroll_into_view",
+    "wait_for",
+    "physical_click",
+    "physical_hover",
+    "physical_drag",
+    "send_keys",
+    "window_or_element_recording",
+    "before_after_verification",
+    "audit_logging"
+  ],
+  "unverified_scope": [
+    "credential_entry",
+    "password_capture",
+    "security_setting_bypass",
+    "purchases",
+    "external_publish",
+    "external_message_send"
+  ],
+  "artifacts": [
+    {
+      "path": "docs/YASSIN_CONTROL_BRIDGE.md",
+      "sha256": "5e5cba49add7e9ea7da0ae442ec365a1ee4b7dcc9c22cc672edd6003fa9d50bc"
+    },
+    {
+      "path": "config/control_policy.json",
+      "sha256": "48105653f15fa828ee2b00c1c31ae53c364394b3123cb4c8f9cfa861601f31be"
+    },
+    {
+      "path": "bridge/yassin_control/control_bridge.py",
+      "sha256": "c4d259ddd3a4a2c677cfa9a48e66a9d0804e32631d4c13b63761d4efb0922579"
+    },
+    {
+      "path": "tests/test_yassin_control.py",
+      "sha256": "42fac4595dd5d966e438ead97aaaecc2c59cafaa2161c3362b371474aac9ca6f"
+    }
+  ]
+}

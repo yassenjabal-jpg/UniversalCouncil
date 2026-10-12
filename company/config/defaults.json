@@ -24,6 +24,7 @@
   "market_reality_required_before_project_candidate": true,
   "market_scope_must_precede_solution": true,
   "media_venture_capability_layer": true,
+  "capability_evidence_preflight_required": true,
   "media_three_video_pilot_required": true,
   "media_full_scale_before_pilot_forbidden": true
 }

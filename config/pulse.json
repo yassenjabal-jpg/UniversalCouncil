@@ -17,6 +17,7 @@
     "user_friction",
     "operator_burden",
     "capability_gap",
+    "capability_evidence_sync",
     "tooling_or_external_capability_change",
     "hr_capability_scouting_due",
     "new_blockers",
