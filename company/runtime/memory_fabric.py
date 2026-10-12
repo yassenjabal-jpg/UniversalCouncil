@@ -437,8 +437,7 @@ def build_search_index(memory_root: Path, db_path: Path, cfg: dict[str, Any] | N
     reduction = reduce_events(events)
     if reduction.conflicts:
         conflict_text = "; ".join(
-            f"{item.scope}:{item.subject}={','.join(item.event_ids)}"
-            for item in reduction.conflicts
+            f"{item.scope}:{item.subject}={','.join(item.event_ids)}" for item in reduction.conflicts
         )
         raise MemoryFabricError(f"cannot build search index with unresolved conflicts: {conflict_text}")
     events = reduction.active
