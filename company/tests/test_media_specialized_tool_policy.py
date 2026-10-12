@@ -7,9 +7,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 class MediaSpecializedToolPolicyTests(unittest.TestCase):
     def load_policy(self):
-        return json.loads(
-            (ROOT / "company/config/media_specialized_tool_policy.json").read_text(encoding="utf-8")
-        )
+        return json.loads((ROOT / "company/config/media_specialized_tool_policy.json").read_text(encoding="utf-8"))
 
     def test_specialized_tool_first_is_governing_policy(self):
         cfg = self.load_policy()
