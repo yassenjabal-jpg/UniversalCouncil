@@ -5,6 +5,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from company.runtime.channel_operating_system import (  # noqa: E402
+    validate_config as validate_channel_operating_system,
+)
 from company.runtime.evidence_sync import (  # noqa: E402 - repo root is inserted above for direct script execution
     validate_imported_evidence,
     validate_sync_config,
@@ -28,6 +31,9 @@ tool_authority = json.loads((ROOT / "company" / "config" / "tool_authority.json"
 evidence_sync = json.loads((ROOT / "company" / "config" / "evidence_sync.json").read_text(encoding="utf-8"))
 hybrid_execution = json.loads((ROOT / "company" / "config" / "hybrid_execution.json").read_text(encoding="utf-8"))
 memory_fabric = json.loads((ROOT / "company" / "config" / "memory_fabric.json").read_text(encoding="utf-8"))
+channel_operating_system = json.loads(
+    (ROOT / "company" / "config" / "channel_operating_system.json").read_text(encoding="utf-8")
+)
 
 core = {r["id"] for r in roles["core_roles"]}
 specialists = {r["id"] for r in roles["specialist_roles"]}
@@ -159,6 +165,7 @@ validate_sync_config(evidence_sync)
 validate_imported_evidence(ROOT, evidence_sync, tool_authority)
 validate_hybrid_execution(hybrid_execution)
 validate_memory_fabric(memory_fabric)
+validate_channel_operating_system(channel_operating_system)
 memory_events = load_memory_events(ROOT / memory_fabric["memory_root"], memory_fabric)
 memory_reduction = reduce_memory_events(memory_events)
 assert not memory_reduction.conflicts, "canonical memory must not contain unresolved conflicts"
