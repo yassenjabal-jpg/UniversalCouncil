@@ -65,12 +65,21 @@ class SequenceAdapter:
 class HybridExecutionTests(unittest.TestCase):
     def test_config_load_and_invariants(self):
         self.assertTrue(validate_config(BASE_CFG))
-        self.assertEqual(load_config(ROOT / "company/config/hybrid_execution.json")["version"], "0.1")
+        self.assertEqual(load_config(ROOT / "company/config/hybrid_execution.json")["version"], "0.2")
 
         bad = []
         for mutator in (
             lambda c: c.__setitem__("version", "9"),
+            lambda c: c.__setitem__("primary_plane", "DC"),
+            lambda c: c.__setitem__("secondary_plane", "GUI"),
             lambda c: c.__setitem__("execution_order", list(reversed(c["execution_order"]))),
+            lambda c: c["routing_profiles"]["interactive_app"].__setitem__(
+                "dc_fallback_requires_explicit_opt_in", False
+            ),
+            lambda c: c["routing_profiles"]["interactive_app"].__setitem__(
+                "dc_must_not_bypass_gui_when_gui_available", False
+            ),
+            lambda c: c["gui_interaction_plane"].__setitem__("semantic_first", False),
             lambda c: c["gui_interaction_plane"].__setitem__("raw_coordinates_enabled", True),
             lambda c: c["shared_state"].__setitem__("single_physical_controller", False),
             lambda c: c["verification"].__setitem__("unknown_is_never_success", False),
@@ -102,14 +111,53 @@ class HybridExecutionTests(unittest.TestCase):
         self.assertEqual(classify_risk({"effect": "READ", "policy_blocked": True}), RiskTier.T4)
 
     def test_route_preference_and_fail_closed(self):
-        self.assertEqual(choose_path({"native_available": True, "dc_capable": True}), ExecutionPath.NATIVE)
+        self.assertEqual(
+            choose_path(
+                {
+                    "gui_request": {"action": "inspect"},
+                    "dc_capable": True,
+                    "native_available": True,
+                    "routine_available": True,
+                }
+            ),
+            ExecutionPath.GUI_UIA,
+        )
+        self.assertEqual(
+            choose_path(
+                {
+                    "visual_only": True,
+                    "gui_request": {"action": "screenshot"},
+                    "dc_capable": True,
+                }
+            ),
+            ExecutionPath.GUI_VISUAL,
+        )
+        self.assertEqual(choose_path({"native_available": True, "dc_capable": True}), ExecutionPath.DC)
+        self.assertEqual(
+            choose_path(
+                {
+                    "task_class": "external_service",
+                    "native_available": True,
+                    "dc_capable": True,
+                }
+            ),
+            ExecutionPath.NATIVE,
+        )
         self.assertEqual(choose_path({"dc_capable": True, "routine_available": True}), ExecutionPath.DC)
         self.assertEqual(choose_path({"routine_available": True}), ExecutionPath.ROUTINE)
         self.assertEqual(choose_path({"gui_request": {"action": "inspect"}}), ExecutionPath.GUI_UIA)
         self.assertEqual(
-            choose_path({"visual_only": True, "gui_request": {"action": "screenshot"}}),
-            ExecutionPath.GUI_VISUAL,
+            choose_path(
+                {
+                    "interactive_app": True,
+                    "dc_capable": True,
+                    "allow_dc_fallback": True,
+                }
+            ),
+            ExecutionPath.DC,
         )
+        with self.assertRaises(HybridExecutionError):
+            choose_path({"interactive_app": True, "dc_capable": True})
         with self.assertRaises(HybridExecutionError):
             choose_path({"visual_only": True})
         with self.assertRaises(HybridExecutionError):
@@ -136,6 +184,20 @@ class HybridExecutionTests(unittest.TestCase):
         )
         self.assertEqual(control.authority_operation, "desktop_computer_use.control")
         self.assertTrue(control.requires_verification)
+
+        gui_beats_dc = plan_action(
+            {
+                "id": "gui-first",
+                "effect": "WRITE",
+                "local_state_change": True,
+                "interactive_app": True,
+                "dc_capable": True,
+                "gui_request": {"action": "click"},
+            },
+            BASE_CFG,
+        )
+        self.assertEqual(gui_beats_dc.path, ExecutionPath.GUI_UIA)
+        self.assertEqual(gui_beats_dc.authority_operation, "desktop_computer_use.control")
 
         external = plan_action(
             {
