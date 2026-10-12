@@ -26,6 +26,7 @@ class ToolAuthorityTests(unittest.TestCase):
                 "github.read",
                 "github.write",
                 "github.merge",
+                "memory.github_sync",
                 "linear.read",
                 "linear.write",
                 "remote_shell.read",
@@ -65,6 +66,15 @@ class ToolAuthorityTests(unittest.TestCase):
         record["evidence_level"] = "BOUNDARY_ENFORCED"
         with self.assertRaises(ToolAuthorityError):
             validate_registry(cfg)
+
+    def test_memory_github_sync_is_narrow_owner_gated_write(self):
+        record = get_capability(self.cfg, "memory.github_sync")
+        self.assertEqual(record["classification"], "OWNER_GATED")
+        self.assertEqual(record["effect"], "WRITE")
+        self.assertEqual(record["approval_policy"], "OWNER_EXPLICIT")
+        self.assertIn("memory/events", record["allowed_scope"][0])
+        self.assertIn("write outside memory/", record["prohibited_scope"])
+        self.assertIn("force update main", record["prohibited_scope"])
 
     def test_desktop_computer_use_is_split_between_observe_and_control(self):
         observe = get_capability(self.cfg, "desktop_computer_use.observe")

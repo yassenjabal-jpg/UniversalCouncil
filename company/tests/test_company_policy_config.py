@@ -40,7 +40,7 @@ class CompanyPolicyConfig(unittest.TestCase):
 
     def test_zero_revenue_mode_and_distribution_gate_are_default(self):
         defaults = json.loads((ROOT / "company/config/defaults.json").read_text(encoding="utf-8"))
-        self.assertEqual(defaults["version"], "1.4")
+        self.assertEqual(defaults["version"], "1.5")
         self.assertTrue(defaults["zero_revenue_founder_mode"])
         self.assertTrue(defaults["founder_mode_until_first_collected_payment"])
         self.assertTrue(defaults["distribution_local_market_fit_gate"])
@@ -56,6 +56,8 @@ class CompanyPolicyConfig(unittest.TestCase):
         self.assertTrue(defaults["market_scope_must_precede_solution"])
         self.assertTrue(defaults["media_venture_capability_layer"])
         self.assertTrue(defaults["capability_evidence_preflight_required"])
+        self.assertTrue(defaults["universal_memory_fabric_required"])
+        self.assertTrue(defaults["memory_github_autosync_required"])
         self.assertTrue(defaults["hybrid_execution_fabric_prototype"])
         self.assertTrue(defaults["media_three_video_pilot_required"])
         self.assertTrue(defaults["media_full_scale_before_pilot_forbidden"])

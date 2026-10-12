@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-182300-d4e5f6",
+  "created_at": "2026-10-12T18:23:00+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "status",
+  "subject": "youtube.strategy.migration",
+  "summary": "A prior Council process produced broad YouTube policy research, multiple channel concepts and operating recommendations, but not all detailed outputs are canonical in the repository yet; recover/migrate them before treating exact historical channel details as authoritative.",
+  "details": {
+    "known_structure": [
+      "multi-channel portfolio discussion",
+      "Arabic market adaptation",
+      "editorial and visual direction",
+      "production workflow",
+      "packaging and retention metrics"
+    ],
+    "migration_required": true,
+    "do_not_guess_missing_details": true
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "strategy",
+    "migration"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "2026-10-12 owner confirmation of prior Council YouTube work"
+  }
+}

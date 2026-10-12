@@ -1,5 +1,5 @@
 {
-  "version": "1.4",
+  "version": "1.5",
   "operation": "PAUSED_BY_OWNER",
   "autonomy": "DRY_RUN",
   "live_enabled": false,
@@ -25,6 +25,8 @@
   "market_scope_must_precede_solution": true,
   "media_venture_capability_layer": true,
   "capability_evidence_preflight_required": true,
+  "universal_memory_fabric_required": true,
+  "memory_github_autosync_required": true,
   "hybrid_execution_fabric_prototype": true,
   "media_three_video_pilot_required": true,
   "media_full_scale_before_pilot_forbidden": true

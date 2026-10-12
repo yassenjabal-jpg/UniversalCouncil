@@ -67,6 +67,30 @@
       "enforcement": "CONNECTOR_POLICY"
     },
     {
+      "id": "memory-github-sync",
+      "provider": "GitHub + Universal Memory Fabric",
+      "operation": "memory.github_sync",
+      "classification": "OWNER_GATED",
+      "evidence_level": "BOUNDARY_ENFORCED",
+      "authentication_class": "CONNECTED_APP",
+      "effect": "WRITE",
+      "approval_policy": "OWNER_EXPLICIT",
+      "allowed_scope": [
+        "append new memory/events files and regenerate memory/snapshots plus memory/catalog.json in yassenjabal-jpg/UniversalCouncil main"
+      ],
+      "prohibited_scope": [
+        "rewrite or delete published memory event files",
+        "write outside memory/",
+        "secrets or credentials",
+        "force update main",
+        "unrelated repository mutation"
+      ],
+      "last_verified_at": "2026-10-12",
+      "review_trigger": "memory autosync implementation, owner directive, GitHub connector permission, or memory path policy changes",
+      "source_or_pin": "owner directive 2026-10-12: persistent memory with automatic GitHub synchronization",
+      "enforcement": "GATEWAY_ENFORCED"
+    },
+    {
       "id": "linear-read",
       "provider": "Linear",
       "operation": "linear.read",

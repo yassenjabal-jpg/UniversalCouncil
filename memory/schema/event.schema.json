@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Universal Memory Event",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "event_id",
+    "created_at",
+    "scope",
+    "level",
+    "kind",
+    "subject",
+    "summary",
+    "details",
+    "supersedes",
+    "confidence",
+    "sensitivity",
+    "tags",
+    "source"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^MEM-[0-9]{8}-[0-9]{6}-[a-z0-9]{6}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scope": {
+      "type": "string",
+      "pattern": "^(global|council|project/[a-z0-9_-]+|venture/[a-z0-9_-]+)$"
+    },
+    "level": {
+      "enum": [
+        "L2_PROJECT",
+        "L3_CANONICAL",
+        "L4_OWNER_DIRECTIVE"
+      ]
+    },
+    "kind": {
+      "enum": [
+        "decision",
+        "requirement",
+        "status",
+        "capability",
+        "preference",
+        "cancellation",
+        "evidence",
+        "proposal",
+        "policy",
+        "architecture"
+      ]
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1200
+    },
+    "details": {
+      "type": "object"
+    },
+    "supersedes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^MEM-"
+      },
+      "uniqueItems": true
+    },
+    "confidence": {
+      "enum": [
+        "owner_confirmed",
+        "verified",
+        "evidence_backed",
+        "proposal"
+      ]
+    },
+    "sensitivity": {
+      "enum": [
+        "normal",
+        "private_non_sensitive"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 64
+      },
+      "uniqueItems": true
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "chat",
+            "council",
+            "repository",
+            "tool",
+            "migration"
+          ]
+        },
+        "ref": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

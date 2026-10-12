@@ -45,6 +45,7 @@ MINIMUM_OPERATIONS = {
     "github.read",
     "github.write",
     "github.merge",
+    "memory.github_sync",
     "linear.read",
     "linear.write",
     "remote_shell.read",

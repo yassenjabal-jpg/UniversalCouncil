@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "enabled": true,
+  "canonical_remote": "origin/main",
+  "memory_root": "memory",
+  "local_index": ".runtime/memory/memory.sqlite",
+  "cache_root": ".runtime/memory/cache",
+  "autosync": {
+    "enabled": true,
+    "remote": "origin",
+    "branch": "main",
+    "max_push_retries": 3
+  },
+  "persistence_levels": [
+    "L2_PROJECT",
+    "L3_CANONICAL",
+    "L4_OWNER_DIRECTIVE"
+  ],
+  "event_kinds": [
+    "decision",
+    "requirement",
+    "status",
+    "capability",
+    "preference",
+    "cancellation",
+    "evidence",
+    "proposal",
+    "policy",
+    "architecture"
+  ],
+  "confidence_levels": [
+    "owner_confirmed",
+    "verified",
+    "evidence_backed",
+    "proposal"
+  ],
+  "allowed_sensitivity": [
+    "normal",
+    "private_non_sensitive"
+  ],
+  "max_summary_chars": 1200,
+  "max_details_chars": 12000,
+  "search_top_k": 12,
+  "conflict_policy": "FAIL_PREFLIGHT"
+}
