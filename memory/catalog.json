@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T22:16:10+00:00",
-  "event_count": 62,
+  "generated_at": "2026-10-13T01:56:48+03:00",
+  "event_count": 63,
   "active_count": 53,
-  "superseded_count": 9,
+  "superseded_count": 10,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-13T01:04:00+03:00",
+  "latest_event_at": "2026-10-13T01:56:45+03:00",
   "scopes": {
     "council": [
       {
@@ -395,12 +395,12 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261012-211243-175c37",
+        "event_id": "MEM-20261013-015645-fbd625",
         "subject": "youtube.channel_operating_system.current",
         "level": "L3_CANONICAL",
         "kind": "architecture",
-        "summary": "Channel Operating System v1.1 is the current default production method. It separates script/voice, visual art, motion/picture, music/sound design and dialogue/mix functions, expands workflow to 26 stages, and requires early audio spotting, Picture Lock, Audio-Visual Sync QC and independent Mix/Master QC.",
-        "created_at": "2026-10-12T21:12:43+03:00",
+        "summary": "Channel Operating System v1.2 Studio-Benchmarked is the current production method. It adopts professional YouTube studio disciplines from Kurzgesagt, Veritasium, Simplicissimus/fern, Cleo Abram/Huge If True and Johnny Harris while preserving a small functions-not-headcount model.",
+        "created_at": "2026-10-13T01:56:45+03:00",
         "confidence": "verified"
       },
       {
