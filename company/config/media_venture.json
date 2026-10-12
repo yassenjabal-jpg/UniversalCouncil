@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "enabled": true,
   "team_model": "venture_scoped_smallest_effective_team",
   "production_functions": [
@@ -86,9 +86,31 @@
     "image_generation": "AVAILABLE_FOR_ASSISTED_WORK",
     "ai_video_generation": "NEEDS_RUNTIME_VERIFICATION",
     "audio_cleanup": "NEEDS_RUNTIME_VERIFICATION",
-    "video_editing": "NEEDS_RUNTIME_VERIFICATION",
+    "video_editing": "PARTIAL_RUNTIME_VERIFIED",
     "captions": "CAN_BUILD_OR_VERIFY",
     "platform_publishing": "CAPABILITY_GAP",
-    "analytics_ingestion": "NEEDS_RUNTIME_VERIFICATION"
+    "analytics_ingestion": "NEEDS_RUNTIME_VERIFICATION",
+    "after_effects_motion_assembly": "RUNTIME_VERIFIED"
+  },
+  "runtime_evidence": {
+    "after_effects_2026": {
+      "status": "RUNTIME_VERIFIED",
+      "observed_on": "2026-10-12",
+      "host": "YASSIN",
+      "implementation_repo": "C:\\Users\\alnaseem\\Desktop\\CouncilVideoStudio",
+      "bootstrap_commit": "41894368f0b45560cdb25c86f5cb9a231ba32f83",
+      "control_bridge_commit": "42544d3a7bfb0fcced63962c45a40dcafd692572",
+      "cli_probe": "PASS",
+      "execution_receipt": "PASS_COMPLETED",
+      "verified_scope": [
+        "after_effects_process_launch",
+        "jsx_execution",
+        "manifest_execution",
+        "motion_project_creation_and_save",
+        "explicit_execution_receipt"
+      ],
+      "evidence_document": "company/docs/evidence/MEDIA_AFTER_EFFECTS_RUNTIME_2026-10-12.md",
+      "broader_video_editing_status": "PARTIAL_RUNTIME_VERIFIED"
+    }
   }
 }
