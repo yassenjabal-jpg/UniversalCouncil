@@ -1,0 +1,46 @@
+{
+  "version": "0.1",
+  "status": "PROTOTYPE",
+  "execution_order": [
+    "native_api_or_connector",
+    "dc_control_plane",
+    "reusable_routine",
+    "gui_semantic_uia",
+    "gui_visual_assist"
+  ],
+  "dc_control_plane": {
+    "authority_read": "remote_shell.read",
+    "authority_execute": "remote_shell.execute",
+    "dispatch_mode": "HOST_ADAPTER_REQUIRED"
+  },
+  "gui_interaction_plane": {
+    "authority_observe": "desktop_computer_use.observe",
+    "authority_control": "desktop_computer_use.control",
+    "root_env": "COUNCIL_VIDEO_STUDIO_ROOT",
+    "root_hint": "C:\\Users\\alnaseem\\Desktop\\CouncilVideoStudio",
+    "verified_action_relative": "bridge/yassin_control/verified_action.py",
+    "control_bridge_relative": "bridge/yassin_control/control_bridge.py",
+    "raw_coordinates_enabled": false
+  },
+  "shared_state": {
+    "single_physical_controller": true,
+    "delta_context": true,
+    "max_inline_events": 12
+  },
+  "verification": {
+    "state_change_requires_verification": true,
+    "t3_owner_confirmation_required": true,
+    "unknown_is_never_success": true
+  },
+  "batching": {
+    "enabled": true,
+    "max_deterministic_steps": 6,
+    "stop_on_unknown": true
+  },
+  "automation_graduation": {
+    "verified_repeats_required": 3,
+    "max_unknown_results": 0,
+    "max_accidental_actions": 0,
+    "preferred_target": "deterministic_script_or_routine"
+  }
+}

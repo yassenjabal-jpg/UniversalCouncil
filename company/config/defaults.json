@@ -25,6 +25,7 @@
   "market_scope_must_precede_solution": true,
   "media_venture_capability_layer": true,
   "capability_evidence_preflight_required": true,
+  "hybrid_execution_fabric_prototype": true,
   "media_three_video_pilot_required": true,
   "media_full_scale_before_pilot_forbidden": true
 }
