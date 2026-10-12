@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-195601-70a991",
+  "created_at": "2026-10-12T19:56:01+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "decision",
+  "subject": "youtube.execution.final_prelaunch_decision",
+  "summary": "Final expanded Council ARENA recommends a private three-video pilot for Inside the Deal with conditions; public or automatic publishing remains unauthorized and the other four channel concepts remain backlog.",
+  "details": {
+    "verdict": "GO_WITH_CONDITIONS",
+    "selected_channel": "داخل الصفقة",
+    "pilot_videos": 3,
+    "public_publish_authorized": false,
+    "automatic_publish_authorized": false,
+    "parallel_five_channel_launch": false,
+    "backlog": [
+      "ماذا لو؟",
+      "العالم خلف الستار",
+      "ملف 404",
+      "مدينة 2099"
+    ],
+    "pilot_slate": [
+      "كيف تربح الشركات من شيء تقدمه مجانًا؟",
+      "لماذا تبيع بعض الشركات بخسارة… وتربح أكثر؟",
+      "أين يذهب كل 10,000 دينار تدفعها في طلب توصيل؟ — conditional on strong local/regional evidence"
+    ],
+    "immediate_next_action": "Video 1 pre-production only: source pack, thesis, packaging hypotheses, script, storyboard, production manifest, cost/time budget",
+    "decision_confidence": 92,
+    "review_triggers": [
+      "Video 1 end-to-end capability receipt",
+      "completion of all three pilots",
+      "material YouTube policy or copyright change",
+      "material production failure"
+    ],
+    "expiry_rule": "If production has not started within 30 days, refresh YouTube policy and market evidence.",
+    "governing_report": "docs/research/2026-10-12-media-final-launch-arena.md",
+    "governing_report_commit": "5eb19f5be8f53aa0f8a74df716673a5f37e02113"
+  },
+  "supersedes": [
+    "MEM-20261012-193314-1ce858"
+  ],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "inside-the-deal",
+    "pilot",
+    "final-prelaunch",
+    "go-with-conditions"
+  ],
+  "source": {
+    "type": "council",
+    "ref": "Final Expanded Media Launch ARENA 2026-10-12",
+    "commit": "5eb19f5be8f53aa0f8a74df716673a5f37e02113"
+  }
+}

@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T16:45:15+00:00",
-  "event_count": 51,
+  "generated_at": "2026-10-12T19:56:04+03:00",
+  "event_count": 52,
   "active_count": 47,
-  "superseded_count": 4,
+  "superseded_count": 5,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-12T19:44:47+03:00",
+  "latest_event_at": "2026-10-12T19:56:01+03:00",
   "scopes": {
     "council": [
       {
@@ -377,12 +377,12 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261012-193314-1ce858",
-        "subject": "youtube.execution.pilot_choice",
+        "event_id": "MEM-20261012-195601-70a991",
+        "subject": "youtube.execution.final_prelaunch_decision",
         "level": "L3_CANONICAL",
         "kind": "decision",
-        "summary": "The recovered Council execution decision is to pilot only «داخل الصفقة» first; the other four concepts remain fully designed backlog and should not become serious new channel accounts until pilot data justifies expansion.",
-        "created_at": "2026-10-12T19:33:14+03:00",
+        "summary": "Final expanded Council ARENA recommends a private three-video pilot for Inside the Deal with conditions; public or automatic publishing remains unauthorized and the other four channel concepts remain backlog.",
+        "created_at": "2026-10-12T19:56:01+03:00",
         "confidence": "verified"
       },
       {

@@ -106,21 +106,30 @@
   - `visual_direction`: Arabic retro-futurism; cool cyan + desert gold; timelines; contemporary/future Arab cities; reality-vs-possibility split screens
 - **Tags:** youtube, channel, what-if, speculative-documentary
 
-## youtube.execution.pilot_choice
-- **Event:** `MEM-20261012-193314-1ce858`
+## youtube.execution.final_prelaunch_decision
+- **Event:** `MEM-20261012-195601-70a991`
 - **Level:** `L3_CANONICAL`
 - **Kind:** `decision`
 - **Confidence:** `verified`
-- **Updated:** `2026-10-12T19:33:14+03:00`
-- **Summary:** The recovered Council execution decision is to pilot only «داخل الصفقة» first; the other four concepts remain fully designed backlog and should not become serious new channel accounts until pilot data justifies expansion.
+- **Updated:** `2026-10-12T19:56:01+03:00`
+- **Summary:** Final expanded Council ARENA recommends a private three-video pilot for Inside the Deal with conditions; public or automatic publishing remains unauthorized and the other four channel concepts remain backlog.
 - **Details:**
+  - `automatic_publish_authorized`: false
   - `backlog`: ["ماذا لو؟", "العالم خلف الستار", "ملف 404", "مدينة 2099"]
-  - `first_pilot_channel`: داخل الصفقة
-  - `next_gate`: if three videos pass quality and cost, allow limited publishing only after publishing capability is verified
-  - `no_parallel_five_channel_launch`: true
-  - `pilot_goal`: prove accurate research -> narration -> visuals -> packaging -> sustainable cost across three videos
-  - `source_artifact`: 00_Council_Synthesis_Media_Venture(1).pdf
-- **Tags:** youtube, pilot, inside-the-deal, execution
+  - `decision_confidence`: 92
+  - `expiry_rule`: If production has not started within 30 days, refresh YouTube policy and market evidence.
+  - `governing_report`: docs/research/2026-10-12-media-final-launch-arena.md
+  - `governing_report_commit`: 5eb19f5be8f53aa0f8a74df716673a5f37e02113
+  - `immediate_next_action`: Video 1 pre-production only: source pack, thesis, packaging hypotheses, script, storyboard, production manifest, cost/time budget
+  - `parallel_five_channel_launch`: false
+  - `pilot_slate`: ["كيف تربح الشركات من شيء تقدمه مجانًا؟", "لماذا تبيع بعض الشركات بخسارة… وتربح أكثر؟", "أين يذهب كل 10,000 دينار تدفعها في طلب توصيل؟ — conditional on strong local/regional evidence"]
+  - `pilot_videos`: 3
+  - `public_publish_authorized`: false
+  - `review_triggers`: ["Video 1 end-to-end capability receipt", "completion of all three pilots", "material YouTube policy or copyright change", "material production failure"]
+  - `selected_channel`: داخل الصفقة
+  - `verdict`: GO_WITH_CONDITIONS
+- **Supersedes:** `MEM-20261012-193314-1ce858`
+- **Tags:** youtube, inside-the-deal, pilot, final-prelaunch, go-with-conditions
 
 ## youtube.ideation.review_process
 - **Event:** `MEM-20261012-193314-7c66ed`
