@@ -49,6 +49,8 @@ MINIMUM_OPERATIONS = {
     "linear.write",
     "remote_shell.read",
     "remote_shell.execute",
+    "desktop_computer_use.observe",
+    "desktop_computer_use.control",
     "agent_reach.public_read",
     "browser.authenticated",
     "external.publish",

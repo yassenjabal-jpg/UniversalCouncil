@@ -30,6 +30,8 @@ class ToolAuthorityTests(unittest.TestCase):
                 "linear.write",
                 "remote_shell.read",
                 "remote_shell.execute",
+                "desktop_computer_use.observe",
+                "desktop_computer_use.control",
                 "agent_reach.public_read",
                 "browser.authenticated",
                 "external.publish",
@@ -63,6 +65,16 @@ class ToolAuthorityTests(unittest.TestCase):
         record["evidence_level"] = "BOUNDARY_ENFORCED"
         with self.assertRaises(ToolAuthorityError):
             validate_registry(cfg)
+
+    def test_desktop_computer_use_is_split_between_observe_and_control(self):
+        observe = get_capability(self.cfg, "desktop_computer_use.observe")
+        control = get_capability(self.cfg, "desktop_computer_use.control")
+        self.assertEqual(observe["effect"], "READ")
+        self.assertEqual(observe["approval_policy"], "OWNER_EXPLICIT")
+        self.assertEqual(control["effect"], "EXECUTE")
+        self.assertEqual(control["classification"], "OWNER_GATED")
+        self.assertEqual(control["approval_policy"], "OWNER_EXPLICIT")
+        self.assertIn("credential entry", control["prohibited_scope"])
 
     def test_authenticated_browser_is_blocked_in_v1(self):
         record = get_capability(self.cfg, "browser.authenticated")

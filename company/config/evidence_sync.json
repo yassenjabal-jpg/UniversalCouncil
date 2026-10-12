@@ -1,0 +1,47 @@
+{
+  "version": "1.0",
+  "import_dir": "company/evidence/imported",
+  "sources": [
+    {
+      "id": "council-video-studio",
+      "project_id": "CouncilVideoStudio",
+      "enabled": true,
+      "root_env": "COUNCIL_VIDEO_STUDIO_ROOT",
+      "root_hint": "C:\\Users\\alnaseem\\Desktop\\CouncilVideoStudio",
+      "receipt_glob": ".council/capability-receipts/*.json",
+      "allowed_capability_ids": [
+        "desktop_computer_use"
+      ],
+      "authority_bindings": {
+        "desktop_computer_use": {
+          "operations": [
+            "desktop_computer_use.observe",
+            "desktop_computer_use.control"
+          ],
+          "allowed_evidence_levels": [
+            "HOST_INVOKED"
+          ],
+          "allowed_verified_scope": [
+            "list_windows",
+            "inspect_ui",
+            "search_ui",
+            "read_values_properties",
+            "screenshot",
+            "semantic_invoke",
+            "semantic_set_value",
+            "focus",
+            "scroll_into_view",
+            "wait_for",
+            "physical_click",
+            "physical_hover",
+            "physical_drag",
+            "send_keys",
+            "window_or_element_recording",
+            "before_after_verification",
+            "audit_logging"
+          ]
+        }
+      }
+    }
+  ]
+}

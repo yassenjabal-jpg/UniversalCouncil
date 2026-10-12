@@ -5,6 +5,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from company.runtime.evidence_sync import (  # noqa: E402 - repo root is inserted above for direct script execution
+    validate_imported_evidence,
+    validate_sync_config,
+)
 from company.runtime.tool_authority import get_capability, validate_registry  # noqa: E402 - repo root is inserted above for direct script execution
 
 roles = json.loads((ROOT / "config" / "roles.json").read_text(encoding="utf-8"))
@@ -15,6 +19,7 @@ company_roles = json.loads((ROOT / "company" / "config" / "roles.json").read_tex
 scouting = json.loads((ROOT / "company" / "config" / "capability_scouting.json").read_text(encoding="utf-8"))
 gateway = json.loads((ROOT / "company" / "config" / "intelligence_gateway.json").read_text(encoding="utf-8"))
 tool_authority = json.loads((ROOT / "company" / "config" / "tool_authority.json").read_text(encoding="utf-8"))
+evidence_sync = json.loads((ROOT / "company" / "config" / "evidence_sync.json").read_text(encoding="utf-8"))
 
 core = {r["id"] for r in roles["core_roles"]}
 specialists = {r["id"] for r in roles["specialist_roles"]}
@@ -62,6 +67,7 @@ required_pulse_checks = {
     "foundation_model_uplift",
     "commitment_evidence_quality",
     "capability_gap",
+    "capability_evidence_sync",
     "tooling_or_external_capability_change",
     "hr_capability_scouting_due",
 }
@@ -141,6 +147,10 @@ def validate_intelligence_gateway(cfg):
 
 validate_intelligence_gateway(gateway)
 validate_registry(tool_authority)
+validate_sync_config(evidence_sync)
+validate_imported_evidence(ROOT, evidence_sync, tool_authority)
+assert get_capability(tool_authority, "desktop_computer_use.observe")["effect"] == "READ"
+assert get_capability(tool_authority, "desktop_computer_use.control")["approval_policy"] == "OWNER_EXPLICIT"
 assert (
     get_capability(tool_authority, "agent_reach.public_read")["source_or_pin"]
     == gateway["agent_reach"]["approved_commit"]

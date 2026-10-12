@@ -26,6 +26,19 @@ For every active project or material decision, check:
 
 A capability change does not automatically justify adoption. It opens or updates only the affected capability-gap slice and routes serious candidates through the applicable security, architecture/duplication, sandbox and Owner gates.
 
+## Capability evidence preflight
+Before a material Council/Pulse session on a host that has approved local subproject sources, run `python tools/council_preflight.py`.
+
+The preflight:
+- imports only standardized receipts from allowlisted sources;
+- verifies receipt schema, source project, full source commit, verified scope and artifact SHA-256 hashes;
+- updates only evidence metadata in the central tool-authority registry;
+- must not change effect, approval policy, classification, authentication class, allowed/prohibited scope or enforcement;
+- preserves unavailable sources as unavailable rather than inventing evidence;
+- revalidates Council invariants after sync.
+
+A subproject receipt is evidence, never authority. A project cannot grant itself broader permissions by emitting a receipt.
+
 ## Pulse outputs
 - NO-CHANGE
 - WATCH
