@@ -181,19 +181,45 @@ def load_config(path: Path) -> dict[str, Any]:
 
 
 def validate_config(cfg: dict[str, Any]) -> bool:
-    if cfg.get("version") != "0.1":
-        raise HybridExecutionError("hybrid execution config must be version 0.1")
+    if cfg.get("version") != "0.2":
+        raise HybridExecutionError("hybrid execution config must be version 0.2")
+    if cfg.get("primary_plane") != "GUI" or cfg.get("secondary_plane") != "DC":
+        raise HybridExecutionError("hybrid v0.2 requires GUI primary and DC secondary")
     expected_order = [
-        ExecutionPath.NATIVE.value,
-        ExecutionPath.DC.value,
-        ExecutionPath.ROUTINE.value,
         ExecutionPath.GUI_UIA.value,
         ExecutionPath.GUI_VISUAL.value,
+        ExecutionPath.DC.value,
+        ExecutionPath.NATIVE.value,
+        ExecutionPath.ROUTINE.value,
     ]
     if cfg.get("execution_order") != expected_order:
-        raise HybridExecutionError("execution_order must preserve the approved hybrid ladder")
-    if cfg.get("gui_interaction_plane", {}).get("raw_coordinates_enabled") is not False:
-        raise HybridExecutionError("raw coordinates must remain disabled in prototype")
+        raise HybridExecutionError("execution_order must preserve the GUI-primary hybrid ladder")
+
+    profiles = cfg.get("routing_profiles", {})
+    interactive = profiles.get("interactive_app", {})
+    if interactive.get("order") != [
+        ExecutionPath.GUI_UIA.value,
+        ExecutionPath.GUI_VISUAL.value,
+        ExecutionPath.DC.value,
+    ]:
+        raise HybridExecutionError("interactive_app routing must be GUI-first with DC fallback")
+    if interactive.get("dc_fallback_requires_explicit_opt_in") is not True:
+        raise HybridExecutionError("interactive DC fallback must require explicit opt-in")
+    if interactive.get("dc_must_not_bypass_gui_when_gui_available") is not True:
+        raise HybridExecutionError("DC must not bypass an available GUI path")
+
+    gui_cfg = cfg.get("gui_interaction_plane", {})
+    if gui_cfg.get("role") != "PRIMARY_INTERACTION_PLANE":
+        raise HybridExecutionError("GUI must be the primary interaction plane")
+    if gui_cfg.get("semantic_first") is not True or gui_cfg.get("visual_fallback") is not True:
+        raise HybridExecutionError("GUI plane must use semantic-first with visual fallback")
+    if gui_cfg.get("raw_coordinates_enabled") is not False:
+        raise HybridExecutionError("raw coordinates must remain disabled by default")
+
+    dc_cfg = cfg.get("dc_control_plane", {})
+    if dc_cfg.get("role") != "SECONDARY_SUPPORT_PLANE":
+        raise HybridExecutionError("DC must remain the secondary support plane")
+
     if cfg.get("shared_state", {}).get("single_physical_controller") is not True:
         raise HybridExecutionError("single physical controller must be enforced")
     if cfg.get("verification", {}).get("unknown_is_never_success") is not True:
@@ -231,19 +257,40 @@ def _gui_authority(action_name: str) -> str:
 
 
 def choose_path(action: dict[str, Any]) -> ExecutionPath:
-    if action.get("native_available"):
+    """Route interactive application work through GUI before any DC fallback.
+
+    Hybrid v0.2 treats Desktop Commander as a support plane. A GUI request is
+    authoritative for interactive work even when DC/native/routine paths also
+    exist. Interactive applications may fall back to DC only when the action
+    explicitly opts in to that recovery path.
+    """
+
+    gui_request = action.get("gui_request")
+    has_gui_request = isinstance(gui_request, dict) and bool(gui_request.get("action"))
+
+    if action.get("visual_only"):
+        if has_gui_request:
+            return ExecutionPath.GUI_VISUAL
+        raise HybridExecutionError("visual GUI path requires gui_request")
+
+    if has_gui_request:
+        return ExecutionPath.GUI_UIA
+
+    if action.get("interactive_app"):
+        if action.get("dc_capable") and action.get("allow_dc_fallback") is True:
+            return ExecutionPath.DC
+        raise HybridExecutionError(
+            "interactive application work requires GUI; DC fallback must be explicitly approved"
+        )
+
+    if action.get("task_class") == "external_service" and action.get("native_available"):
         return ExecutionPath.NATIVE
     if action.get("dc_capable"):
         return ExecutionPath.DC
+    if action.get("native_available"):
+        return ExecutionPath.NATIVE
     if action.get("routine_available"):
         return ExecutionPath.ROUTINE
-    gui_request = action.get("gui_request")
-    if action.get("visual_only"):
-        if isinstance(gui_request, dict) and gui_request.get("action"):
-            return ExecutionPath.GUI_VISUAL
-        raise HybridExecutionError("visual GUI path requires gui_request")
-    if isinstance(gui_request, dict) and gui_request.get("action"):
-        return ExecutionPath.GUI_UIA
     raise HybridExecutionError("no approved execution path is available")
 
 
