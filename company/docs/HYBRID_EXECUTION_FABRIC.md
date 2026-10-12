@@ -1,197 +1,260 @@
-# Hybrid Execution Fabric — Prototype v0.1
+# Hybrid Execution Fabric — GUI-Primary v0.2
 
 Status: IMPLEMENTED_PROTOTYPE
-Governance status: does not replace Council role governance.
+Governance status: execution substrate; does not replace Council role governance.
 
-## Purpose
-Reduce latency, token use and fragile visual interaction by combining:
-- Remote Desktop Commander / host control for filesystem, process, shell and deterministic machine operations;
-- YASSIN Control Bridge for semantic Windows UI Automation and verified GUI interaction;
-- shared resumable state;
-- independent verification;
-- routine graduation for repeated stable work.
+## Decision
 
-The fabric is an execution substrate, not a Council member.
+The Hybrid Execution Fabric is now **GUI-primary / DC-secondary**.
 
-## Core rule
-Use the least expensive reliable execution path:
+For interactive desktop applications, the application UI is the authoritative control surface. Desktop Commander is a support plane for machine-level work around the application, not the default controller of the application itself.
 
-1. native API or application-native automation;
-2. DC control plane / deterministic shell and filesystem;
-3. reusable routine;
-4. semantic GUI / UI Automation;
-5. visual assistance.
+The governing principle is:
 
-Raw coordinate control is not enabled in prototype v0.1.
-## Separation of responsibilities
+> **Use GUI to operate interactive applications. Use DC to support, inspect, stage, verify and recover the host around them.**
 
-### Brain
-Council/agent reasoning decides the goal and approved action intent.
+## Why v0.2 exists
 
-### DC Control Plane
-Preferred for:
+v0.1 preferred deterministic DC/native execution before GUI. That reduced token use, but it also created a structural bias toward controlling creative and interactive applications from outside their real UI.
+
+This is unacceptable when:
+- application state exists in menus, dialogs, panels, timelines or visual canvases;
+- the user expects real interaction with the professional application;
+- GUI state determines success;
+- a shell/script route can bypass or misrepresent the application's real state.
+
+v0.2 corrects that bias.
+
+## Primary and secondary planes
+
+### Primary — GUI Interaction Plane
+
+The GUI plane owns interactive application work:
+- inspect the live application state;
+- open menus, dialogs and panels;
+- invoke semantic controls;
+- enter text and values;
+- perform bounded clicks/keyboard actions when semantic controls are unavailable;
+- observe visual state;
+- verify post-action state.
+
+Routing inside GUI:
+1. semantic UI / UI Automation;
+2. visual GUI assistance;
+3. bounded physical interaction only through the governed bridge.
+
+Raw arbitrary coordinate control remains disabled by default in the Hybrid router.
+
+### Secondary — Desktop Commander Support Plane
+
+DC supports the GUI workflow with:
 - filesystem reads/writes;
-- Git and repository inspection;
+- Git operations;
 - process inspection;
-- deterministic shell/script execution;
-- logs and artifact verification.
+- test execution;
+- logs;
+- artifact existence/hash/size checks;
+- staging files before GUI work;
+- collecting outputs after GUI work;
+- recovery/diagnostics when the application is unhealthy.
 
-The Python prototype emits a structured HOST_DISPATCH_REQUIRED request because Remote Desktop Commander is a host connector, not a local Python dependency.
+DC **must not bypass an available GUI path for interactive application work**.
 
-### GUI Interaction Plane
-Implemented through CouncilVideoStudio's verified YASSIN Control Bridge.
+For an action marked `interactive_app=true`, DC fallback requires explicit:
+`allow_dc_fallback=true`.
 
-Used when:
-- an application function has no safer native/DC path;
-- state exists only in the application's UI;
-- visual or semantic UI verification is necessary.
+That fallback is a recovery decision, not the default route.
 
-State-changing GUI work uses the existing verified-action path.
+## Routing profiles
 
-### Shared State
-Task state can be persisted and restored as JSON.
-Consumers can request a delta since a previous revision instead of replaying the whole history.
-## Action risk tiers
+### Interactive application
 
-- T0 Observe: read-only inspection.
-- T1 Local reversible: navigation/focus and bounded reversible operation.
-- T2 Local state change: requires post-state verification.
-- T3 External consequential: requires approved task plus explicit Owner confirmation.
-- T4 Separately governed/blocked: fails closed in the Hybrid Router.
+Order:
+1. `gui_semantic_uia`
+2. `gui_visual_assist`
+3. `dc_control_plane` only as explicit fallback
 
-The router does not create authority. It maps an action to existing Tool Authority operations.
+If a valid `gui_request` exists, GUI wins even when:
+- `dc_capable=true`;
+- `native_available=true`;
+- `routine_available=true`.
+
+### Host support
+
+For tasks that are not application interaction, DC remains appropriate:
+- filesystem;
+- Git;
+- processes;
+- tests;
+- logs;
+- artifact checks;
+- recovery.
+
+Order:
+1. `dc_control_plane`
+2. `native_api_or_connector`
+3. `reusable_routine`
+
+### External service
+
+For non-desktop external services, a true native connector may remain preferable.
+
+Order:
+1. `native_api_or_connector`
+2. `dc_control_plane`
+3. `reusable_routine`
+
+This does not weaken the GUI-primary rule for desktop applications.
 
 ## Single-controller rule
-Only one state-changing GUI requester may hold the desktop control lease at a time.
 
-Observers may remain logically separate, but the prototype prevents two GUI controllers from owning the same state object simultaneously.
+Only one state-changing GUI requester may hold the desktop controller lease at a time.
 
-This is intended to prevent:
+This prevents:
 - focus races;
 - pointer/keyboard contention;
-- interleaved actions;
-- ambiguous audit ownership.
-## Verification rule
-A state-changing action is not successful merely because the provider returned without an error.
+- interleaved state changes;
+- ambiguous action ownership.
 
-T2/T3 require verification.
+GUI observation does not require the control lease. GUI control does.
 
-If the action runs but the expected post-state cannot be verified, the result is:
+## Observation before action
 
-UNKNOWN
+Interactive work should begin by observing the current application state rather than assuming a remembered state.
 
-UNKNOWN is never silently promoted to SUCCEEDED.
+The GUI configuration therefore requires:
+- pre-action observation;
+- semantic-first interaction;
+- visual fallback when semantics are insufficient.
 
-## Hybrid routing examples
+## Verification after state change
 
-A request that can be handled by both DC and GUI chooses DC first.
+Provider success is not enough.
 
-A request with a known native application automation path chooses the native path before DC.
+T2/T3 state changes require independent post-state verification.
 
-A stable registered routine is preferred before GUI only when neither a native nor DC deterministic path is available.
+If the action executes but the expected state cannot be verified, result state is:
 
-GUI observation does not require a desktop control lease.
-GUI control does.
+`UNKNOWN`
 
-## Routine graduation
-A repeated workflow becomes eligible for routine extraction only after the configured number of verified successful repetitions with:
-- no UNKNOWN result;
+`UNKNOWN` is never silently promoted to `SUCCEEDED`.
+
+## DC support examples
+
+Good DC use around a GUI workflow:
+- create a project directory before opening the app;
+- confirm a render file appeared after the app rendered it;
+- inspect process health after a crash;
+- archive evidence/screenshots;
+- run Git/tests after edits;
+- read logs when the GUI reports a failure.
+
+Bad DC use:
+- replacing an available application menu action with a shell hack merely because it is easier;
+- declaring success from filesystem/process evidence when the UI state contradicts it;
+- bypassing a live interactive application without explicit fallback approval.
+
+## Automation graduation
+
+Repeated work may graduate only after verified clean repetitions.
+
+Preferred graduation target in v0.2:
+
+`verified_gui_routine_or_app_native_macro`
+
+The goal is to make GUI work more deterministic without replacing the application UI as the authoritative interaction surface.
+
+Default threshold: 3 verified repetitions with:
+- no UNKNOWN;
 - no accidental action.
 
-Default prototype threshold: 3 verified repetitions.
-## Token/latency strategy
-The fabric is designed to reduce model involvement through:
-- plan-first local routing;
-- shared-state deltas;
-- deterministic DC execution where possible;
-- batching deterministic actions outside model reasoning;
-- GUI only for the slice that truly needs it;
-- routine graduation.
+## Batching
 
-Screenshots should not be the default state transport when semantic or machine-readable state is available.
+Bounded batches remain supported:
+- maximum configured deterministic steps: 6;
+- one controller lease across GUI-control batch;
+- stop on first non-SUCCEEDED result;
+- no lease for pure host-support/DC batches.
+
+## Compact result projection
+
+Model-facing output remains compact by default.
+
+Raw provider output stays local unless explicitly needed.
+
+For GUI observations such as `list_windows`, projection keeps only bounded state summaries needed for reasoning and verification.
+
+## Risk tiers
+
+- T0 Observe: read-only.
+- T1 Local reversible: navigation/focus/bounded reversible action.
+- T2 Local state change: post-state verification required.
+- T3 External consequential: approved task + explicit Owner confirmation.
+- T4 Separately governed/blocked: fail closed.
+
+The router maps to existing Tool Authority; it does not create new authority.
+
+## Example: After Effects
+
+Correct v0.2 flow:
+1. GUI observes After Effects window/dialog state.
+2. GUI dismisses startup/recovery dialogs.
+3. GUI invokes File → Scripts → Run Script File or equivalent application UI action.
+4. GUI observes project/timeline/render state.
+5. DC checks output files, logs and process health after the GUI action.
+6. independent verification confirms expected result.
+
+Incorrect v0.1-style flow:
+1. assume app state;
+2. push a shell command into an already-running interactive app;
+3. infer success only from process/file behavior.
 
 ## CLI
-Plan only:
 
-python tools/hybrid_execute.py action.json
+Plan:
+
+`python tools/hybrid_execute.py action.json`
 
 Execute:
 
-python tools/hybrid_execute.py action.json --execute --task-approved
+`python tools/hybrid_execute.py action.json --execute --task-approved`
 
-External consequential actions additionally require:
+External consequential action:
 
---owner-confirmed
+`--owner-confirmed`
 
-Persist/reuse state:
+Persist state:
 
---state .runtime/hybrid/<task>.json
+`--state .runtime/hybrid/<task>.json`
 
-DC actions return HOST_DISPATCH_REQUIRED for the host connector.
-GUI actions can execute locally through CouncilVideoStudio when the approved bridge is available.
-## Prototype boundaries
-This version does not:
-- change Council role counts;
-- grant new external publish/send authority;
-- implement a local Remote Desktop Commander MCP client;
-- support raw coordinate control;
-- install an RPA suite;
-- make native/routine adapters production-ready.
+## Compatibility
 
-Those remain bake-off or later implementation slices.
+Execution path enum names remain stable:
+- `gui_semantic_uia`
+- `gui_visual_assist`
+- `dc_control_plane`
+- `native_api_or_connector`
+- `reusable_routine`
 
-## Acceptance conditions for next slice
-Before expanding autonomy:
-1. full repository tests and coverage gate pass;
-2. real DC plan/handoff smoke passes;
-3. real GUI observe smoke passes;
-4. shared-state persistence passes;
-5. controller lease conflict test passes;
-6. state-changing test cannot report success without verification;
-7. Tool Authority and Council Preflight remain valid.
+The breaking change is **routing priority and policy**, not serialization names.
+
+## Acceptance conditions
+
+v0.2 is accepted only when:
+1. config validator passes;
+2. GUI beats DC/native/routine when a GUI request exists;
+3. interactive app without GUI cannot silently fall back to DC;
+4. explicit DC recovery fallback still works;
+5. controller lease behavior remains correct;
+6. independent post-state verification remains correct;
+7. full repository tests and coverage gate pass;
+8. real GUI + DC-support smoke is performed on YASSIN.
 
 ## Related governing sources
-- company/config/hybrid_execution.json
-- company/config/tool_authority.json
-- company/config/evidence_sync.json
-- company/runtime/hybrid_execution.py
-- company/tests/test_hybrid_execution.py
-- CouncilVideoStudio/docs/YASSIN_CONTROL_BRIDGE.md
-## Slice 2 — batching, projection and independent verification
 
-Implemented after prototype v0.1 acceptance:
-
-### Deterministic batching
-- up to 6 configured deterministic steps;
-- one controller lease across a GUI-control batch;
-- immediate stop on any non-SUCCEEDED result;
-- no controller lease for non-GUI-control batches.
-
-### Compact result projection
-Model-facing output is compact by default.
-
-The projection keeps execution state, authority-relevant metadata, compact host requests, bounded verification results and operation-specific summaries. Raw provider stdout remains local unless explicitly needed.
-
-For list_windows, the projection reduces the payload to:
-- total item count;
-- process-count summary;
-- foreground process/class.
-
-Live YASSIN measurement on 2026-10-12:
-- raw: 13,062 bytes;
-- projected: 3,026 bytes;
-- reduction: 76.8%.
-
-### Independent GUI post-state verifier
-State-changing GUI actions may define a separate read-only verification request and expected fields.
-
-The verifier performs a new GUI observation after the action. Provider success alone is insufficient.
-
-A real reversible T2 Notepad test demonstrated:
-- mismatched expected post-state -> UNKNOWN and batch stop;
-- corrected exact post-state -> SUCCEEDED;
-- two-step CHANGED -> ORIGINAL batch succeeded under one controller lease.
-
-Evidence:
-company/docs/evidence/HYBRID_EXECUTION_SLICE2_2026-10-12.md
-
+- `company/config/hybrid_execution.json`
+- `company/runtime/hybrid_execution.py`
+- `company/tests/test_hybrid_execution.py`
+- `company/config/tool_authority.json`
+- `company/config/evidence_sync.json`
+- `CouncilVideoStudio/docs/YASSIN_CONTROL_BRIDGE.md`
