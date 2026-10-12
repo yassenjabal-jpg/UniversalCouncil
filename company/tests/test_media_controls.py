@@ -55,11 +55,20 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertEqual(cfg["media_toolchain"]["after_effects_motion_assembly"], "RUNTIME_VERIFIED")
         self.assertEqual(
             cfg["media_toolchain"]["music_supervision"],
-            "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
+            "PROCESS_DEFINED_SPECIALIZED_TOOL_REQUIRED",
         )
         self.assertEqual(
             cfg["media_toolchain"]["mix_mastering"],
-            "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
+            "PUBLIC_FINISHING_CAPABILITY_GAP",
+        )
+        self.assertEqual(cfg["media_toolchain"]["dialogue_cleanup"], "CONNECTED_DESCRIPT_AVAILABLE")
+        self.assertEqual(
+            cfg["media_toolchain"]["picture_edit_finishing"],
+            "PUBLIC_FINISHING_CAPABILITY_GAP",
+        )
+        self.assertEqual(
+            cfg["media_toolchain"]["runway_video_generation"],
+            "BLOCKED_BY_CURRENT_PLAN_NO_VIDEO_MODELS",
         )
         ae = cfg["runtime_evidence"]["after_effects_2026"]
         self.assertEqual(ae["status"], "RUNTIME_VERIFIED")

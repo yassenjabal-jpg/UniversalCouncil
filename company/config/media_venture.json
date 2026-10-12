@@ -1,5 +1,5 @@
 {
-  "version": "1.2",
+  "version": "1.3",
   "enabled": true,
   "team_model": "venture_scoped_smallest_effective_team_functions_not_headcount",
   "production_functions": [
@@ -178,17 +178,24 @@
     "image_generation": "AVAILABLE_FOR_ASSISTED_WORK",
     "ai_video_generation": "NEEDS_RUNTIME_VERIFICATION",
     "narration_recording": "HUMAN_OWNER_REQUIRED",
-    "dialogue_cleanup": "NEEDS_RUNTIME_VERIFICATION",
-    "music_supervision": "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
+    "dialogue_cleanup": "CONNECTED_DESCRIPT_AVAILABLE",
+    "music_supervision": "PROCESS_DEFINED_SPECIALIZED_TOOL_REQUIRED",
     "music_sourcing_and_licensing": "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
-    "sound_design": "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
-    "mix_mastering": "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
+    "sound_design": "PROCESS_DEFINED_SPECIALIZED_TOOL_REQUIRED",
+    "mix_mastering": "PUBLIC_FINISHING_CAPABILITY_GAP",
     "audiovisual_sync_qc": "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
     "video_editing": "PARTIAL_RUNTIME_VERIFIED",
     "captions": "CAN_BUILD_OR_VERIFY",
     "platform_publishing": "CAPABILITY_GAP",
     "analytics_ingestion": "NEEDS_RUNTIME_VERIFICATION",
-    "after_effects_motion_assembly": "RUNTIME_VERIFIED"
+    "after_effects_motion_assembly": "RUNTIME_VERIFIED",
+    "picture_edit_finishing": "PUBLIC_FINISHING_CAPABILITY_GAP",
+    "render_export_public_master": "PUBLIC_FINISHING_CAPABILITY_GAP",
+    "descript_editing": "CONNECTED_AND_AVAILABLE",
+    "runway_video_generation": "BLOCKED_BY_CURRENT_PLAN_NO_VIDEO_MODELS",
+    "openart_visual_generation": "INSTALLED",
+    "figma_frame_design": "INSTALLED",
+    "canva_design": "INSTALLED"
   },
   "runtime_evidence": {
     "after_effects_2026": {
@@ -210,5 +217,6 @@
       "evidence_document": "company/docs/evidence/MEDIA_AFTER_EFFECTS_RUNTIME_2026-10-12.md",
       "broader_video_editing_status": "PARTIAL_RUNTIME_VERIFIED"
     }
-  }
+  },
+  "specialized_tool_policy": "company/config/media_specialized_tool_policy.json"
 }
