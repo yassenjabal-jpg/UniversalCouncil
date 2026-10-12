@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-203312-301dd4",
+  "created_at": "2026-10-12T20:33:12+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "decision",
+  "subject": "youtube.language_expansion.strategy",
+  "summary": "Current language architecture is Arabic-first with one language-portable master and one YouTube channel using multi-language audio/localized metadata when available; English is the first localization for proven winners, then Spanish/German/French only when language analytics justify expansion.",
+  "details": {
+    "primary_launch_language": "Arabic",
+    "channel_architecture": "one channel first; multi-language audio and localized metadata when available",
+    "master_asset": "one language-portable visual master",
+    "rollout": [
+      "Arabic original",
+      "English for proven winners",
+      "Spanish/German/French after language-level evidence"
+    ],
+    "separate_localized_channels": "not default; reopen only if analytics show a structural recommendation/audience conflict",
+    "production_rules": [
+      "no baked-in language text inside generated imagery where avoidable",
+      "editable AE/Premiere text layers",
+      "30–40% text-expansion tolerance",
+      "language-neutral diagrams where possible",
+      "separate audio/subtitle/title/thumbnail localization manifests"
+    ],
+    "fresh_platform_evidence": "YouTube reports >25% non-primary watch time on average for creators using Multi-language Audio; auto dubbing supports 27 languages in 2026.",
+    "governing_report": "docs/research/2026-10-12-broad-format-channel-reselection.md"
+  },
+  "supersedes": [
+    "MEM-20261012-200057-ed834a"
+  ],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "multilingual",
+    "localization",
+    "one-channel",
+    "audio-tracks"
+  ],
+  "source": {
+    "type": "council",
+    "ref": "Broad Format Channel Re-Study 2026-10-12",
+    "commit": "716b26f7333f8d796d841facd432a046aa7259f0"
+  }
+}
