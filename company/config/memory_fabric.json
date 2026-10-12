@@ -5,11 +5,14 @@
   "memory_root": "memory",
   "local_index": ".runtime/memory/memory.sqlite",
   "cache_root": ".runtime/memory/cache",
+  "pending_root": ".runtime/memory/pending",
   "autosync": {
     "enabled": true,
     "remote": "origin",
     "branch": "main",
-    "max_push_retries": 3
+    "max_push_retries": 3,
+    "lock_wait_seconds": 30,
+    "lock_stale_seconds": 300
   },
   "persistence_levels": [
     "L2_PROJECT",

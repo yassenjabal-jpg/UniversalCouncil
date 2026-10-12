@@ -34,12 +34,32 @@ def run_git(args: list[str], cwd: Path, *, check: bool = True) -> subprocess.Com
     return proc
 
 
-def acquire_lock(lock: Path) -> int:
+def acquire_lock(
+    lock: Path,
+    *,
+    wait_seconds: float = 0.0,
+    stale_seconds: float = 300.0,
+    poll_seconds: float = 0.1,
+) -> int:
     lock.parent.mkdir(parents=True, exist_ok=True)
-    try:
-        return os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-    except FileExistsError as exc:
-        raise MemoryFabricError("memory sync is already running") from exc
+    deadline = time.monotonic() + wait_seconds
+    while True:
+        try:
+            fd = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            payload = json.dumps({"pid": os.getpid(), "created_at": time.time()}).encode("utf-8")
+            os.write(fd, payload)
+            return fd
+        except FileExistsError:
+            try:
+                age = time.time() - lock.stat().st_mtime
+            except FileNotFoundError:
+                continue
+            if age > stale_seconds:
+                lock.unlink(missing_ok=True)
+                continue
+            if time.monotonic() >= deadline:
+                raise MemoryFabricError("memory sync lock wait timed out")
+            time.sleep(poll_seconds)
 
 
 def release_lock(fd: int, lock: Path) -> None:
@@ -47,23 +67,49 @@ def release_lock(fd: int, lock: Path) -> None:
     lock.unlink(missing_ok=True)
 
 
-def copy_local_events(source_root: Path, target_root: Path) -> int:
-    source = source_root / "memory/events"
+def pending_event_files(pending_root: Path) -> list[Path]:
+    events_root = pending_root / "events"
+    if not events_root.exists():
+        return []
+    return sorted(path for path in events_root.rglob("*.json") if path.is_file())
+
+
+def copy_pending_events(
+    pending_root: Path,
+    target_root: Path,
+) -> tuple[list[Path], int]:
+    source = pending_root / "events"
     target = target_root / "memory/events"
-    if not source.exists():
-        return 0
+    included: list[Path] = []
     copied = 0
-    for src in source.rglob("*.json"):
+    for src in pending_event_files(pending_root):
         rel = src.relative_to(source)
         dst = target / rel
         dst.parent.mkdir(parents=True, exist_ok=True)
         if dst.exists():
             if dst.read_bytes() != src.read_bytes():
                 raise MemoryFabricError(f"event immutability violation for {rel}")
-            continue
-        shutil.copy2(src, dst)
-        copied += 1
-    return copied
+        else:
+            shutil.copy2(src, dst)
+            copied += 1
+        included.append(src)
+    return included, copied
+
+
+def cleanup_pending(paths: list[Path], pending_root: Path) -> None:
+    for path in paths:
+        path.unlink(missing_ok=True)
+    events_root = pending_root / "events"
+    if not events_root.exists():
+        return
+    for directory in sorted(
+        (path for path in events_root.rglob("*") if path.is_dir()),
+        reverse=True,
+    ):
+        try:
+            directory.rmdir()
+        except OSError:
+            pass
 
 
 def remove_worktree(path: Path) -> None:
@@ -77,6 +123,7 @@ def sync_once(cfg: dict, attempt: int) -> dict:
     autosync = cfg["autosync"]
     remote = autosync["remote"]
     branch = autosync["branch"]
+    pending_root = ROOT / cfg["pending_root"]
     run_git(["fetch", remote, branch, "--quiet"], ROOT)
 
     worktree = ROOT / ".runtime/memory/sync" / f"attempt-{attempt}-{uuid.uuid4().hex[:8]}"
@@ -84,7 +131,7 @@ def sync_once(cfg: dict, attempt: int) -> dict:
     remove_worktree(worktree)
     run_git(["worktree", "add", "--detach", str(worktree), f"{remote}/{branch}"], ROOT)
     try:
-        copied = copy_local_events(ROOT, worktree)
+        processed, copied = copy_pending_events(pending_root, worktree)
         worktree_cfg = load_config(worktree / "company/config/memory_fabric.json")
         catalog = rebuild_memory(worktree / worktree_cfg["memory_root"], worktree_cfg)
         if catalog["conflict_count"]:
@@ -96,6 +143,7 @@ def sync_once(cfg: dict, attempt: int) -> dict:
             return {
                 "changed": False,
                 "copied_events": copied,
+                "processed_pending": [str(path) for path in processed],
                 "remote_head": run_git(["rev-parse", "HEAD"], worktree).stdout.strip(),
             }
 
@@ -117,6 +165,7 @@ def sync_once(cfg: dict, attempt: int) -> dict:
             return {
                 "changed": True,
                 "copied_events": copied,
+                "processed_pending": [str(path) for path in processed],
                 "commit": commit,
                 "push_failed": True,
                 "error": pushed.stderr.strip() or pushed.stdout.strip(),
@@ -124,6 +173,7 @@ def sync_once(cfg: dict, attempt: int) -> dict:
         return {
             "changed": True,
             "copied_events": copied,
+            "processed_pending": [str(path) for path in processed],
             "commit": commit,
             "push_failed": False,
         }
@@ -135,14 +185,23 @@ def main() -> int:
     try:
         cfg = load_config(CONFIG)
         lock = ROOT / ".runtime/memory/memory-sync.lock"
-        fd = acquire_lock(lock)
+        autosync = cfg["autosync"]
+        fd = acquire_lock(
+            lock,
+            wait_seconds=float(autosync["lock_wait_seconds"]),
+            stale_seconds=float(autosync["lock_stale_seconds"]),
+        )
         try:
-            attempts = int(cfg["autosync"]["max_push_retries"])
+            attempts = int(autosync["max_push_retries"])
             last = None
             for attempt in range(1, attempts + 1):
                 last = sync_once(cfg, attempt)
                 if not last.get("push_failed"):
-                    run_git(["fetch", cfg["autosync"]["remote"], cfg["autosync"]["branch"], "--quiet"], ROOT)
+                    cleanup_pending(
+                        [Path(path) for path in last.get("processed_pending", [])],
+                        ROOT / cfg["pending_root"],
+                    )
+                    run_git(["fetch", autosync["remote"], autosync["branch"], "--quiet"], ROOT)
                     print(json.dumps({"status": "SYNCED", "attempt": attempt, **last}, indent=2))
                     return 0
                 if attempt < attempts:
