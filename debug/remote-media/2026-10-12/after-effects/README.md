@@ -31,3 +31,9 @@ Capture the current elevated After Effects state, add the screenshot here, then 
 - Evidence: 03-current-crash-repair-2249.png
 - Next: target Crash Repair HWND directly, press Continue, verify main AE workspace appears, then redispatch JSX.
 
+
+### Workspace recovered
+- Elevated winapp dismissed the old scripting-error dialog and Crash Repair.
+- After Effects main workspace is now open as Adobe After Effects 2026 - Untitled Project.aep.
+- Evidence: 04-workspace-ready.png
+- Next: execute the pilot JSX elevated and verify project/render artifacts.
