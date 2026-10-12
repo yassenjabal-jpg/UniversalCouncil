@@ -1,0 +1,105 @@
+{
+  "schema_version": "0.4-plus-candidate-1",
+  "status": "SELECTED_FOR_BAKE_OFF",
+  "source_meeting": "docs/research/2026-10-12-full-council-restructure-arena-v2.md",
+  "persistent_runtime_council": [
+    "decision_orchestrator",
+    "evidence_verification",
+    "redteam_falsification",
+    "execution_feasibility",
+    "risk_assurance",
+    "human_adoption",
+    "value_economics"
+  ],
+  "specialist_federation": {
+    "mode": "on_demand",
+    "retain_current_16": true,
+    "blocker_scope": "evidence_backed_domain_only"
+  },
+  "operators": [
+    "venture_operator",
+    "commercial_operator",
+    "technical_operator",
+    "product_delivery_execution",
+    "finance_controller"
+  ],
+  "execution_fabric": [
+    "capability_router",
+    "observer",
+    "action_planner",
+    "policy_risk_gate",
+    "desktop_control_lease",
+    "action_broker",
+    "verifier",
+    "evidence_recorder",
+    "routine_registry"
+  ],
+  "execution_path_preference": [
+    "native_api_or_connector",
+    "deterministic_script_or_cli",
+    "reusable_routine_or_rpa",
+    "semantic_uia",
+    "visual_computer_use",
+    "raw_coordinates"
+  ],
+  "computer_use": {
+    "screen_content_is_untrusted": true,
+    "observe_control_separated": true,
+    "single_physical_controller": true,
+    "success_requires_post_state_verification": true,
+    "before_after_evidence_for_state_change": true
+  },
+  "action_risk_tiers": {
+    "T0": {
+      "name": "observe",
+      "approval": "read_authority_only"
+    },
+    "T1": {
+      "name": "local_reversible_navigation",
+      "approval": "bounded_task_authority"
+    },
+    "T2": {
+      "name": "local_state_change",
+      "approval": "app_profile_plus_verification_and_material_rollback"
+    },
+    "T3": {
+      "name": "external_consequential",
+      "approval": "explicit_owner_confirmation_at_boundary"
+    },
+    "T4": {
+      "name": "prohibited_or_separately_governed",
+      "approval": "blocked_by_default"
+    }
+  },
+  "automation_graduation": [
+    "exploratory_computer_use",
+    "verified_repeat",
+    "structured_routine",
+    "deterministic_automation",
+    "monitored_production_routine"
+  ],
+  "bakeoff": {
+    "candidates": [
+      "current_v0_3_baseline",
+      "v0_4_plus_current_python_harness",
+      "openai_agents_sdk_plus_execution_fabric",
+      "microsoft_agent_framework_plus_execution_fabric"
+    ],
+    "execution_backend_pilot": [
+      "power_automate_desktop"
+    ],
+    "architecture_reference": [
+      "uipath_delegate"
+    ],
+    "observability_interface_candidate": "opentelemetry",
+    "install_now": []
+  },
+  "prohibited_premature_actions": [
+    "replace_governing_role_files",
+    "delete_existing_roles",
+    "install_power_automate_or_uipath_or_datadog_without_bakeoff_need",
+    "grant_external_publish_or_send",
+    "widen_credentials_or_security_permissions"
+  ],
+  "confidence": 88
+}
