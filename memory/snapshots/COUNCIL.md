@@ -103,23 +103,28 @@
 - **Tags:** council, history, methods, anti-bureaucracy
 
 ## council.hybrid_execution.contract
-- **Event:** `MEM-20261012-192851-ec1124`
-- **Level:** `L3_CANONICAL`
+- **Event:** `MEM-20261013-010400-7a1c9e`
+- **Level:** `L4_OWNER_DIRECTIVE`
 - **Kind:** `architecture`
-- **Confidence:** `verified`
-- **Updated:** `2026-10-12T19:28:51+03:00`
-- **Summary:** Council execution uses a hybrid DC+GUI fabric: native/API first, then Desktop Commander control plane, reusable routines, semantic UIA and visual GUI assistance; state-changing work requires verification and UNKNOWN is never success.
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-13T01:04:00+03:00`
+- **Summary:** Hybrid execution is now GUI-primary and Desktop Commander secondary. Interactive desktop applications must be operated through GUI first; DC supports filesystem, Git, processes, tests, logs, artifacts and recovery, and may only replace GUI for an interactive app through explicit fallback approval.
 - **Details:**
-  - `automation_graduation_after_verified_repeats`: 3
-  - `compact_projection`: true
-  - `delta_context`: true
-  - `execution_order`: ["native_api_or_connector", "dc_control_plane", "reusable_routine", "gui_semantic_uia", "gui_visual_assist"]
-  - `max_deterministic_batch_steps`: 6
+  - `gui_request_beats_dc_native_routine`: true
+  - `host_support_order`: ["dc_control_plane", "native_api_or_connector", "reusable_routine"]
+  - `interactive_dc_fallback_flag`: allow_dc_fallback
+  - `interactive_dc_fallback_requires_explicit_opt_in`: true
+  - `interactive_order`: ["gui_semantic_uia", "gui_visual_assist", "dc_control_plane"]
+  - `primary_plane`: GUI
   - `raw_coordinates_enabled`: false
+  - `secondary_plane`: DC
   - `single_physical_controller`: true
   - `source_file`: company/config/hybrid_execution.json
-  - `t3_owner_confirmation_required`: true
-- **Tags:** council, hybrid, dc, gui, verification
+  - `state_change_requires_post_verification`: true
+  - `unknown_is_never_success`: true
+  - `version`: 0.2
+- **Supersedes:** `MEM-20261012-192851-ec1124`
+- **Tags:** council, hybrid, gui-primary, dc-secondary, verification
 
 ## council.restructure.layered_candidate
 - **Event:** `MEM-20261012-192851-99b4c6`
