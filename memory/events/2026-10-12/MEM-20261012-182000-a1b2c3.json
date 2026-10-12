@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-182000-a1b2c3",
+  "created_at": "2026-10-12T18:20:00+03:00",
+  "scope": "global",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "policy",
+  "subject": "source_of_truth.priority",
+  "summary": "For Council and project work, actual repositories and governing files outrank chat recollection; Universal Memory records durable deltas but does not override repository truth.",
+  "details": {
+    "priority": [
+      "actual repository state",
+      "current main SHA",
+      "governing contracts and evidence",
+      "canonical memory",
+      "chat recollection"
+    ],
+    "memory_role": "durable context and decision continuity"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "source-of-truth",
+    "governance",
+    "memory"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "owner directive confirmed across project work"
+  }
+}

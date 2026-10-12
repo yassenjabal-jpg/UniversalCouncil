@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-182100-b2c3d4",
+  "created_at": "2026-10-12T18:21:00+03:00",
+  "scope": "global",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "architecture",
+  "subject": "memory.fabric.required",
+  "summary": "Use a durable cross-chat and Council memory layer that preserves material changes, retrieves relevant context in future conversations, and synchronizes canonical memory automatically with GitHub.",
+  "details": {
+    "canonical_store": "GitHub main",
+    "local_search": "SQLite FTS rebuildable cache",
+    "change_model": "append-only events with supersedes",
+    "claude_mem_role": "optional legacy source only; not canonical"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "memory",
+    "github",
+    "cross-chat",
+    "council"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "2026-10-12 owner request for durable automatically synchronized memory"
+  }
+}

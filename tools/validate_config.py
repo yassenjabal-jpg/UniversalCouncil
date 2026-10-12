@@ -10,6 +10,11 @@ from company.runtime.evidence_sync import (  # noqa: E402 - repo root is inserte
     validate_sync_config,
 )
 from company.runtime.hybrid_execution import validate_config as validate_hybrid_execution  # noqa: E402
+from company.runtime.memory_fabric import (  # noqa: E402
+    load_events as load_memory_events,
+    reduce_events as reduce_memory_events,
+    validate_config as validate_memory_fabric,
+)
 from company.runtime.tool_authority import get_capability, validate_registry  # noqa: E402 - repo root is inserted above for direct script execution
 
 roles = json.loads((ROOT / "config" / "roles.json").read_text(encoding="utf-8"))
@@ -22,6 +27,7 @@ gateway = json.loads((ROOT / "company" / "config" / "intelligence_gateway.json")
 tool_authority = json.loads((ROOT / "company" / "config" / "tool_authority.json").read_text(encoding="utf-8"))
 evidence_sync = json.loads((ROOT / "company" / "config" / "evidence_sync.json").read_text(encoding="utf-8"))
 hybrid_execution = json.loads((ROOT / "company" / "config" / "hybrid_execution.json").read_text(encoding="utf-8"))
+memory_fabric = json.loads((ROOT / "company" / "config" / "memory_fabric.json").read_text(encoding="utf-8"))
 
 core = {r["id"] for r in roles["core_roles"]}
 specialists = {r["id"] for r in roles["specialist_roles"]}
@@ -152,6 +158,10 @@ validate_registry(tool_authority)
 validate_sync_config(evidence_sync)
 validate_imported_evidence(ROOT, evidence_sync, tool_authority)
 validate_hybrid_execution(hybrid_execution)
+validate_memory_fabric(memory_fabric)
+memory_events = load_memory_events(ROOT / memory_fabric["memory_root"], memory_fabric)
+memory_reduction = reduce_memory_events(memory_events)
+assert not memory_reduction.conflicts, "canonical memory must not contain unresolved conflicts"
 assert get_capability(tool_authority, "desktop_computer_use.observe")["effect"] == "READ"
 assert get_capability(tool_authority, "desktop_computer_use.control")["approval_policy"] == "OWNER_EXPLICIT"
 assert (

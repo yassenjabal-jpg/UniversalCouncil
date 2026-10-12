@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "universal-memory",
+  "version": "0.1.0",
+  "description": "Durable GitHub-backed memory workflow for UniversalCouncil and ongoing projects.",
+  "author": {
+    "name": "Yassin Jabal"
+  },
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Universal Memory",
+        "shortDescription": "GitHub project memory",
+        "longDescription": "Loads durable project and Council memory from yassenjabal-jpg/UniversalCouncil and records material changes as append-only GitHub memory events.",
+        "developerName": "Yassin Jabal",
+        "category": "Productivity",
+        "capabilities": [
+          "Interactive"
+        ],
+        "defaultPrompt": "Load the relevant Universal Memory before ongoing project work, and record durable changes as memory deltas."
+      }
+    }
+  }
+}
