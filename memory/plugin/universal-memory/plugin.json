@@ -2,22 +2,22 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "universal-memory",
   "version": "0.1.0",
-  "description": "Durable GitHub-backed memory workflow for UniversalCouncil and ongoing projects.",
+  "description": "Durable cross-chat memory for UniversalCouncil and ongoing projects, backed by the canonical GitHub memory ledger.",
   "author": {
-    "name": "Yassin Jabal"
+    "name": "UniversalCouncil"
   },
   "extensions": {
     "com.openai": {
       "interface": {
         "displayName": "Universal Memory",
-        "shortDescription": "GitHub project memory",
-        "longDescription": "Loads durable project and Council memory from yassenjabal-jpg/UniversalCouncil and records material changes as append-only GitHub memory events.",
-        "developerName": "Yassin Jabal",
+        "shortDescription": "Durable Council memory",
+        "longDescription": "Loads canonical project and Council memory from GitHub at the start of relevant work and records durable memory deltas after material changes.",
+        "developerName": "UniversalCouncil",
         "category": "Productivity",
         "capabilities": [
           "Interactive"
         ],
-        "defaultPrompt": "Load the relevant Universal Memory before ongoing project work, and record durable changes as memory deltas."
+        "defaultPrompt": "Use Universal Memory for this ongoing Council or project task."
       }
     }
   }
