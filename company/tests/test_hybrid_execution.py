@@ -52,6 +52,16 @@ class MockVerifier:
         return {"verified": self.verified, "mode": "mock"}
 
 
+class SequenceAdapter:
+    def __init__(self, results):
+        self.results = list(results)
+        self.calls = []
+
+    def dispatch(self, action):
+        self.calls.append(action)
+        return copy.deepcopy(self.results[len(self.calls) - 1])
+
+
 class HybridExecutionTests(unittest.TestCase):
     def test_config_load_and_invariants(self):
         self.assertTrue(validate_config(BASE_CFG))
@@ -64,6 +74,10 @@ class HybridExecutionTests(unittest.TestCase):
             lambda c: c["gui_interaction_plane"].__setitem__("raw_coordinates_enabled", True),
             lambda c: c["shared_state"].__setitem__("single_physical_controller", False),
             lambda c: c["verification"].__setitem__("unknown_is_never_success", False),
+            lambda c: c["result_projection"].__setitem__("enabled", False),
+            lambda c: c["result_projection"].__setitem__("raw_output_default", True),
+            lambda c: c["result_projection"].__setitem__("max_items", 0),
+            lambda c: c["result_projection"].__setitem__("max_text_chars", 10),
             lambda c: c["automation_graduation"].__setitem__("verified_repeats_required", 1),
         ):
             cfg = copy.deepcopy(BASE_CFG)
@@ -494,6 +508,93 @@ class HybridExecutionTests(unittest.TestCase):
                 requester="media",
                 task_approved=True,
             )
+
+    def test_batch_requires_bounds_and_keeps_single_controller_lease(self):
+        adapter = MockAdapter({"state": ResultState.SUCCEEDED.value})
+        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter)
+        state = SharedExecutionState("batch")
+        actions = [
+            {"id": "a", "effect": "EXECUTE", "gui_request": {"action": "click"}},
+            {"id": "b", "effect": "EXECUTE", "gui_request": {"action": "click"}},
+        ]
+        result = executor.execute_batch(
+            actions,
+            state,
+            requester="media",
+            task_approved=True,
+        )
+        self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
+        self.assertEqual(result["completed"], 2)
+        self.assertIsNone(result["stopped_at"])
+        self.assertIsNone(state.controller_lease)
+        controller_events = [
+            event["type"] for event in state.events if event["type"] in {"controller_acquired", "controller_released"}
+        ]
+        self.assertEqual(controller_events, ["controller_acquired", "controller_released"])
+
+        with self.assertRaises(HybridExecutionError):
+            executor.execute_batch([], state, requester="media", task_approved=True)
+        too_many = actions * 4
+        with self.assertRaises(HybridExecutionError):
+            executor.execute_batch(too_many, state, requester="media", task_approved=True)
+
+    def test_batch_without_gui_control_does_not_acquire_controller(self):
+        native = MockAdapter({"state": ResultState.SUCCEEDED.value})
+        executor = HybridExecutor(BASE_CFG, native_adapter=native)
+        state = SharedExecutionState("batch-native")
+        result = executor.execute_batch(
+            [
+                {"id": "n1", "native_available": True, "authority_operation": "github.read"},
+                {"id": "n2", "native_available": True, "authority_operation": "github.read"},
+            ],
+            state,
+            requester="tech",
+            task_approved=True,
+        )
+        self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
+        self.assertFalse(any(event["type"] == "controller_acquired" for event in state.events))
+
+    def test_batch_stops_on_first_non_success(self):
+        adapter = SequenceAdapter(
+            [
+                {"state": ResultState.SUCCEEDED.value},
+                {"state": ResultState.FAILED.value},
+                {"state": ResultState.SUCCEEDED.value},
+            ]
+        )
+        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter)
+        state = SharedExecutionState("batch-stop")
+        actions = [
+            {"id": "a", "effect": "EXECUTE", "gui_request": {"action": "click"}},
+            {"id": "b", "effect": "EXECUTE", "gui_request": {"action": "click"}},
+            {"id": "c", "effect": "EXECUTE", "gui_request": {"action": "click"}},
+        ]
+        result = executor.execute_batch(
+            actions,
+            state,
+            requester="media",
+            task_approved=True,
+        )
+        self.assertEqual(result["state"], ResultState.FAILED.value)
+        self.assertEqual(result["completed"], 1)
+        self.assertEqual(result["stopped_at"], 1)
+        self.assertEqual(len(adapter.calls), 2)
+        self.assertIsNone(state.controller_lease)
+
+    def test_retain_controller_leaves_lease_for_batch_owner(self):
+        adapter = MockAdapter({"state": ResultState.SUCCEEDED.value})
+        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter)
+        state = SharedExecutionState("retain")
+        result = executor.execute(
+            {"id": "a", "effect": "EXECUTE", "gui_request": {"action": "click"}},
+            state,
+            requester="media",
+            task_approved=True,
+            retain_controller=True,
+        )
+        self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
+        self.assertEqual(state.controller_lease, "media")
+        state.release_controller("media")
 
     def test_routine_graduation_requires_verified_clean_repeats(self):
         clean = [
