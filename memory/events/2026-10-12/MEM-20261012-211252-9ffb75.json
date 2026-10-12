@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-211252-9ffb75",
+  "created_at": "2026-10-12T21:12:52+03:00",
+  "scope": "project/media",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "media.production_cell.current",
+  "summary": "Media production now uses venture-scoped specialist functions with separate creative-audio and technical-audio ownership. Functions may share headcount during the pilot, but critical approvals remain cross-functional.",
+  "details": {
+    "required_pilot_functions": [
+      "Editorial Director / Showrunner",
+      "Script & Voice Director",
+      "Visual Art Director / Frame Curator",
+      "Motion & Picture Editor",
+      "Music Supervisor & Sound Designer",
+      "Dialogue & Mix Engineer",
+      "Audience Growth & Packaging Operator"
+    ],
+    "on_demand_functions": [
+      "Localization Producer"
+    ],
+    "key_independence_rules": [
+      "Motion Editor cannot self-approve Picture Lock",
+      "Music/Sound Supervisor cannot self-approve final technical mix",
+      "Mix Engineer cannot approve editorial story",
+      "Owner voice approval is separate from technical mix approval"
+    ],
+    "pilot_review_metrics": [
+      "audio_revision_count",
+      "dialogue_cleanup_minutes",
+      "music_sound_design_minutes",
+      "mix_master_minutes",
+      "av_sync_defects",
+      "audio_qc_defects"
+    ],
+    "governing_config": "company/config/media_venture.json",
+    "governing_doc": "docs/operations/media/MEDIA_PRODUCTION_CELL.md",
+    "merge_commit": "99f5e76d597784817d710976d78cacb36d1f7026"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "production-cell",
+    "music",
+    "sound-design",
+    "mix",
+    "role-structure"
+  ],
+  "source": {
+    "type": "council",
+    "ref": "Media Production Cell + Audio-Visual Sync ARENA 2026-10-12",
+    "commit": "99f5e76d597784817d710976d78cacb36d1f7026"
+  }
+}

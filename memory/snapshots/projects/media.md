@@ -30,6 +30,23 @@
   - `workflow`: ["market and topic research", "idea and hook selection", "fact research", "script", "storyboard", "asset generation/collection", "motion assembly and editing", "audio/captions", "title/thumbnail packaging", "QC/export", "distribution when authorized", "analytics and iteration"]
 - **Tags:** media, workflow, production
 
+## media.production_cell.current
+- **Event:** `MEM-20261012-211252-9ffb75`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `architecture`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-12T21:12:52+03:00`
+- **Summary:** Media production now uses venture-scoped specialist functions with separate creative-audio and technical-audio ownership. Functions may share headcount during the pilot, but critical approvals remain cross-functional.
+- **Details:**
+  - `governing_config`: company/config/media_venture.json
+  - `governing_doc`: docs/operations/media/MEDIA_PRODUCTION_CELL.md
+  - `key_independence_rules`: ["Motion Editor cannot self-approve Picture Lock", "Music/Sound Supervisor cannot self-approve final technical mix", "Mix Engineer cannot approve editorial story", "Owner voice approval is separate from technical mix approval"]
+  - `merge_commit`: 99f5e76d597784817d710976d78cacb36d1f7026
+  - `on_demand_functions`: ["Localization Producer"]
+  - `pilot_review_metrics`: ["audio_revision_count", "dialogue_cleanup_minutes", "music_sound_design_minutes", "mix_master_minutes", "av_sync_defects", "audio_qc_defects"]
+  - `required_pilot_functions`: ["Editorial Director / Showrunner", "Script & Voice Director", "Visual Art Director / Frame Curator", "Motion & Picture Editor", "Music Supervisor & Sound Designer", "Dialogue & Mix Engineer", "Audience Growth & Packaging Operator"]
+- **Tags:** media, production-cell, music, sound-design, mix, role-structure
+
 ## media.venture.capability
 - **Event:** `MEM-20261012-182200-c3d4e5`
 - **Level:** `L3_CANONICAL`
