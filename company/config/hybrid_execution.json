@@ -1,17 +1,27 @@
 {
-  "version": "0.1",
-  "status": "PROTOTYPE",
+  "version": "0.2",
+  "status": "GUI_PRIMARY_PROTOTYPE",
   "execution_order": [
-    "native_api_or_connector",
-    "dc_control_plane",
-    "reusable_routine",
     "gui_semantic_uia",
-    "gui_visual_assist"
+    "gui_visual_assist",
+    "dc_control_plane",
+    "native_api_or_connector",
+    "reusable_routine"
   ],
   "dc_control_plane": {
     "authority_read": "remote_shell.read",
     "authority_execute": "remote_shell.execute",
-    "dispatch_mode": "HOST_ADAPTER_REQUIRED"
+    "dispatch_mode": "HOST_ADAPTER_REQUIRED",
+    "role": "SECONDARY_SUPPORT_PLANE",
+    "allowed_primary_domains": [
+      "filesystem",
+      "git",
+      "processes",
+      "tests",
+      "logs",
+      "artifact_checks",
+      "recovery"
+    ]
   },
   "gui_interaction_plane": {
     "authority_observe": "desktop_computer_use.observe",
@@ -20,7 +30,12 @@
     "root_hint": "C:\\Users\\alnaseem\\Desktop\\CouncilVideoStudio",
     "verified_action_relative": "bridge/yassin_control/verified_action.py",
     "control_bridge_relative": "bridge/yassin_control/control_bridge.py",
-    "raw_coordinates_enabled": false
+    "raw_coordinates_enabled": false,
+    "role": "PRIMARY_INTERACTION_PLANE",
+    "semantic_first": true,
+    "visual_fallback": true,
+    "pre_action_observation_required": true,
+    "post_action_verification_required_for_state_change": true
   },
   "shared_state": {
     "single_physical_controller": true,
@@ -47,6 +62,42 @@
     "verified_repeats_required": 3,
     "max_unknown_results": 0,
     "max_accidental_actions": 0,
-    "preferred_target": "deterministic_script_or_routine"
+    "preferred_target": "verified_gui_routine_or_app_native_macro"
+  },
+  "primary_plane": "GUI",
+  "secondary_plane": "DC",
+  "routing_profiles": {
+    "interactive_app": {
+      "order": [
+        "gui_semantic_uia",
+        "gui_visual_assist",
+        "dc_control_plane"
+      ],
+      "require_gui_request": true,
+      "dc_fallback_requires_explicit_opt_in": true,
+      "dc_must_not_bypass_gui_when_gui_available": true
+    },
+    "host_support": {
+      "order": [
+        "dc_control_plane",
+        "native_api_or_connector",
+        "reusable_routine"
+      ],
+      "examples": [
+        "filesystem",
+        "git",
+        "processes",
+        "tests",
+        "logs",
+        "artifact_checks"
+      ]
+    },
+    "external_service": {
+      "order": [
+        "native_api_or_connector",
+        "dc_control_plane",
+        "reusable_routine"
+      ]
+    }
   }
 }
