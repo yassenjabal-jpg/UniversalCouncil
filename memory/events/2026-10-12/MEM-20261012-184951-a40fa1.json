@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-184951-a40fa1",
+  "created_at": "2026-10-12T18:49:51+03:00",
+  "scope": "council",
+  "level": "L3_CANONICAL",
+  "kind": "capability",
+  "subject": "memory.fabric.queue_runtime",
+  "summary": "Queue-based Universal Memory autosync is runtime verified after PR #16: writes stage in the gitignored pending queue, sync to GitHub main, and leave the working tree clean after successful delivery.",
+  "details": {
+    "pr": 16,
+    "merge_commit": "83c395de9918c70a67a3f27e3364a5e6d5465176",
+    "acceptance_host": "YASSIN",
+    "acceptance_checks": [
+      "pending queue receives event",
+      "serialized autosync pushes to GitHub main",
+      "successful sync clears processed pending event",
+      "tracked working tree remains clean",
+      "GitHub Memory Rebuild regenerates canonical catalog",
+      "Memory Preflight and FTS retrieval observe the event"
+    ]
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "memory",
+    "autosync",
+    "queue",
+    "github",
+    "runtime-verified"
+  ],
+  "source": {
+    "type": "repository",
+    "ref": "PR #16",
+    "commit": "83c395de9918c70a67a3f27e3364a5e6d5465176"
+  }
+}
