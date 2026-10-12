@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T17:01:17+00:00",
-  "event_count": 53,
+  "generated_at": "2026-10-12T20:33:07+03:00",
+  "event_count": 54,
   "active_count": 48,
-  "superseded_count": 5,
+  "superseded_count": 6,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-12T20:00:57+03:00",
+  "latest_event_at": "2026-10-12T20:33:04+03:00",
   "scopes": {
     "council": [
       {
@@ -377,13 +377,13 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261012-195601-70a991",
+        "event_id": "MEM-20261012-203304-1de95d",
         "subject": "youtube.execution.final_prelaunch_decision",
-        "level": "L3_CANONICAL",
+        "level": "L4_OWNER_DIRECTIVE",
         "kind": "decision",
-        "summary": "Final expanded Council ARENA recommends a private three-video pilot for Inside the Deal with conditions; public or automatic publishing remains unauthorized and the other four channel concepts remain backlog.",
-        "created_at": "2026-10-12T19:56:01+03:00",
-        "confidence": "verified"
+        "summary": "Owner rejected «داخل الصفقة» as the channel identity and approved a broad, format-first multilingual visual-documentary channel. «داخل الصفقة» remains only as an internal business-mechanism lane; public/automatic publishing remains unauthorized.",
+        "created_at": "2026-10-12T20:33:04+03:00",
+        "confidence": "owner_confirmed"
       },
       {
         "event_id": "MEM-20261012-193314-7c66ed",

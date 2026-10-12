@@ -107,29 +107,26 @@
 - **Tags:** youtube, channel, what-if, speculative-documentary
 
 ## youtube.execution.final_prelaunch_decision
-- **Event:** `MEM-20261012-195601-70a991`
-- **Level:** `L3_CANONICAL`
+- **Event:** `MEM-20261012-203304-1de95d`
+- **Level:** `L4_OWNER_DIRECTIVE`
 - **Kind:** `decision`
-- **Confidence:** `verified`
-- **Updated:** `2026-10-12T19:56:01+03:00`
-- **Summary:** Final expanded Council ARENA recommends a private three-video pilot for Inside the Deal with conditions; public or automatic publishing remains unauthorized and the other four channel concepts remain backlog.
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-12T20:33:04+03:00`
+- **Summary:** Owner rejected «داخل الصفقة» as the channel identity and approved a broad, format-first multilingual visual-documentary channel. «داخل الصفقة» remains only as an internal business-mechanism lane; public/automatic publishing remains unauthorized.
 - **Details:**
-  - `automatic_publish_authorized`: false
-  - `backlog`: ["ماذا لو؟", "العالم خلف الستار", "ملف 404", "مدينة 2099"]
-  - `decision_confidence`: 92
-  - `expiry_rule`: If production has not started within 30 days, refresh YouTube policy and market evidence.
-  - `governing_report`: docs/research/2026-10-12-media-final-launch-arena.md
-  - `governing_report_commit`: 5eb19f5be8f53aa0f8a74df716673a5f37e02113
-  - `immediate_next_action`: Video 1 pre-production only: source pack, thesis, packaging hypotheses, script, storyboard, production manifest, cost/time budget
-  - `parallel_five_channel_launch`: false
-  - `pilot_slate`: ["كيف تربح الشركات من شيء تقدمه مجانًا؟", "لماذا تبيع بعض الشركات بخسارة… وتربح أكثر؟", "أين يذهب كل 10,000 دينار تدفعها في طلب توصيل؟ — conditional on strong local/regional evidence"]
-  - `pilot_videos`: 3
-  - `public_publish_authorized`: false
-  - `review_triggers`: ["Video 1 end-to-end capability receipt", "completion of all three pilots", "material YouTube policy or copyright change", "material production failure"]
-  - `selected_channel`: داخل الصفقة
+  - `channel_model`: broad format-first visual documentary / curiosity explainer
+  - `governing_report`: docs/research/2026-10-12-broad-format-channel-reselection.md
+  - `governing_report_commit`: 716b26f7333f8d796d841facd432a046aa7259f0
+  - `inside_the_deal_role`: internal editorial lane / playlist only
+  - `niche_first_rejected`: true
+  - `pilot_videos`: ["من قرر أن اليوم 24 ساعة؟", "ماذا يحدث لرسالتك بعد أن تضغط إرسال؟", "كيف تربح الشركات من شيء تقدمه مجانًا؟"]
+  - `primary_language`: Arabic
+  - `publication_authority`: gated
+  - `stable_promise`: Every episode reveals the hidden logic behind something familiar, strange, important, or easy to overlook.
+  - `title_pool`: docs/research/2026-10-12-broad-channel-title-mining.json
   - `verdict`: GO_WITH_CONDITIONS
-- **Supersedes:** `MEM-20261012-193314-1ce858`
-- **Tags:** youtube, inside-the-deal, pilot, final-prelaunch, go-with-conditions
+- **Supersedes:** `MEM-20261012-195601-70a991`
+- **Tags:** youtube, broad-channel, format-first, multilingual, owner-directive
 
 ## youtube.ideation.review_process
 - **Event:** `MEM-20261012-193314-7c66ed`

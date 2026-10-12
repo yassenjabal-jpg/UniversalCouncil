@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-203304-1de95d",
+  "created_at": "2026-10-12T20:33:04+03:00",
+  "scope": "project/youtube",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "decision",
+  "subject": "youtube.execution.final_prelaunch_decision",
+  "summary": "Owner rejected «داخل الصفقة» as the channel identity and approved a broad, format-first multilingual visual-documentary channel. «داخل الصفقة» remains only as an internal business-mechanism lane; public/automatic publishing remains unauthorized.",
+  "details": {
+    "verdict": "GO_WITH_CONDITIONS",
+    "channel_model": "broad format-first visual documentary / curiosity explainer",
+    "stable_promise": "Every episode reveals the hidden logic behind something familiar, strange, important, or easy to overlook.",
+    "niche_first_rejected": true,
+    "inside_the_deal_role": "internal editorial lane / playlist only",
+    "primary_language": "Arabic",
+    "publication_authority": "gated",
+    "pilot_videos": [
+      "من قرر أن اليوم 24 ساعة؟",
+      "ماذا يحدث لرسالتك بعد أن تضغط إرسال؟",
+      "كيف تربح الشركات من شيء تقدمه مجانًا؟"
+    ],
+    "governing_report": "docs/research/2026-10-12-broad-format-channel-reselection.md",
+    "title_pool": "docs/research/2026-10-12-broad-channel-title-mining.json",
+    "governing_report_commit": "716b26f7333f8d796d841facd432a046aa7259f0"
+  },
+  "supersedes": [
+    "MEM-20261012-195601-70a991"
+  ],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "broad-channel",
+    "format-first",
+    "multilingual",
+    "owner-directive"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "2026-10-12 Owner rejected niche-first channel and ordered re-study",
+    "commit": "716b26f7333f8d796d841facd432a046aa7259f0"
+  }
+}
