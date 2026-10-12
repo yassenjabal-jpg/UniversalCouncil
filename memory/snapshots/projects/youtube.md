@@ -107,33 +107,29 @@
 - **Tags:** youtube, channel, what-if, speculative-documentary
 
 ## youtube.channel_operating_system.current
-- **Event:** `MEM-20261012-205612-59de13`
+- **Event:** `MEM-20261012-211243-175c37`
 - **Level:** `L3_CANONICAL`
 - **Kind:** `architecture`
 - **Confidence:** `verified`
-- **Updated:** `2026-10-12T20:56:12+03:00`
-- **Summary:** Council adopted Channel Operating System v1 as the default end-to-end method for the broad multilingual visual-documentary channel, covering trend radar, topic scoring, evidence, packaging, scene-aware script and voice direction, reference frames, transitions, asset provenance, anti-slop QC, multilingual delivery, publishing gate and analytics learning.
+- **Updated:** `2026-10-12T21:12:43+03:00`
+- **Summary:** Channel Operating System v1.1 is the current default production method. It separates script/voice, visual art, motion/picture, music/sound design and dialogue/mix functions, expands workflow to 26 stages, and requires early audio spotting, Picture Lock, Audio-Visual Sync QC and independent Mix/Master QC.
 - **Details:**
-  - `anti_slop_gate_required`: true
-  - `arena`: docs/research/2026-10-12-channel-operating-system-arena.md
-  - `audio_bible`: docs/operations/media/AUDIO_NARRATION_BIBLE.md
-  - `canonical_frame_families`: 12
+  - `audio_spotting_before_reference_frames`: true
+  - `audiovisual_sync_targets`: {"action_sfx": "±1–2 frames unless intentionally offset", "intentional_hits": "±1 frame"}
   - `governing_config`: company/config/channel_operating_system.json
-  - `governing_ops`: docs/operations/media/CHANNEL_OPERATING_SYSTEM.md
-  - `initial_portfolio_balance`: {"max_same_family": 2, "minimum_distinct_families": 4, "videos": 6}
-  - `merge_commit`: 124453ea2e33d2338f61fcac4a81f70bfabfffc4
-  - `packaging_bible`: docs/operations/media/PACKAGING_BIBLE.md
-  - `publication_authority`: OWNER_GATED
-  - `reference_frames`: docs/operations/media/REFERENCE_FRAME_SPECS.md
-  - `script_rule`: Every narration unit carries intent, emotion, energy, pace, pitch, emphasis, pauses, visual beat, evidence IDs and localization note.
-  - `topic_score_minimum`: 75
-  - `transition_rule`: Transitions must be motivated by object, shape, color, direction, time, cause/effect, scale or semantic contrast.
-  - `trend_rule`: No raw trend becomes an episode until reframed as a durable question.
-  - `version`: 1.0
-  - `visual_bible`: docs/operations/media/EDITORIAL_RENAISSANCE_VISUAL_BIBLE.md
-  - `visual_rule`: Consistency comes from palette/type/grid/motion grammar; each episode must still define at least three unique visual motifs.
-  - `workflow_stages`: 21
-- **Tags:** youtube, channel-operating-system, workflow, anti-slop, visual-bible, voice-direction, trend-radar
+  - `internal_mix_targets_not_platform_requirements`: {"documentary_lra": "~6–10 LU", "integrated_loudness": "-14 LUFS ±1", "true_peak": "-1 dBTP"}
+  - `merge_commit`: 99f5e76d597784817d710976d78cacb36d1f7026
+  - `picture_lock_before_final_sound_design`: true
+  - `post_picture_lock_changes_require_audio_reconform`: true
+  - `production_cell`: docs/operations/media/MEDIA_PRODUCTION_CELL.md
+  - `production_functions`: ["Editorial Director / Showrunner", "Script & Voice Director", "Visual Art Director / Frame Curator", "Motion & Picture Editor", "Music Supervisor & Sound Designer", "Dialogue & Mix Engineer", "Audience Growth & Packaging Operator", "Localization Producer"]
+  - `required_audio_stems`: ["DX", "MX", "FX", "AMB", "FULL"]
+  - `sound_doctrine`: sound is designed with picture, not added after picture
+  - `sound_system`: docs/operations/media/AUDIOVISUAL_SOUND_SYSTEM.md
+  - `version`: 1.1
+  - `workflow_stages`: 26
+- **Supersedes:** `MEM-20261012-205612-59de13`
+- **Tags:** youtube, channel-operating-system, v1.1, audio, roles, av-sync
 
 ## youtube.execution.final_prelaunch_decision
 - **Event:** `MEM-20261012-203304-1de95d`

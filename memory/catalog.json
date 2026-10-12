@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T17:56:32+00:00",
-  "event_count": 58,
+  "generated_at": "2026-10-12T21:12:47+03:00",
+  "event_count": 59,
   "active_count": 51,
-  "superseded_count": 7,
+  "superseded_count": 8,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-12T20:56:12+03:00",
+  "latest_event_at": "2026-10-12T21:12:43+03:00",
   "scopes": {
     "council": [
       {
@@ -377,12 +377,12 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261012-205612-59de13",
+        "event_id": "MEM-20261012-211243-175c37",
         "subject": "youtube.channel_operating_system.current",
         "level": "L3_CANONICAL",
         "kind": "architecture",
-        "summary": "Council adopted Channel Operating System v1 as the default end-to-end method for the broad multilingual visual-documentary channel, covering trend radar, topic scoring, evidence, packaging, scene-aware script and voice direction, reference frames, transitions, asset provenance, anti-slop QC, multilingual delivery, publishing gate and analytics learning.",
-        "created_at": "2026-10-12T20:56:12+03:00",
+        "summary": "Channel Operating System v1.1 is the current default production method. It separates script/voice, visual art, motion/picture, music/sound design and dialogue/mix functions, expands workflow to 26 stages, and requires early audio spotting, Picture Lock, Audio-Visual Sync QC and independent Mix/Master QC.",
+        "created_at": "2026-10-12T21:12:43+03:00",
         "confidence": "verified"
       },
       {

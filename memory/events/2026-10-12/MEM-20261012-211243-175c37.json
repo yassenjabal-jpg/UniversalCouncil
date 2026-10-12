@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261012-211243-175c37",
+  "created_at": "2026-10-12T21:12:43+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "youtube.channel_operating_system.current",
+  "summary": "Channel Operating System v1.1 is the current default production method. It separates script/voice, visual art, motion/picture, music/sound design and dialogue/mix functions, expands workflow to 26 stages, and requires early audio spotting, Picture Lock, Audio-Visual Sync QC and independent Mix/Master QC.",
+  "details": {
+    "version": "1.1",
+    "workflow_stages": 26,
+    "production_functions": [
+      "Editorial Director / Showrunner",
+      "Script & Voice Director",
+      "Visual Art Director / Frame Curator",
+      "Motion & Picture Editor",
+      "Music Supervisor & Sound Designer",
+      "Dialogue & Mix Engineer",
+      "Audience Growth & Packaging Operator",
+      "Localization Producer"
+    ],
+    "sound_doctrine": "sound is designed with picture, not added after picture",
+    "audio_spotting_before_reference_frames": true,
+    "picture_lock_before_final_sound_design": true,
+    "post_picture_lock_changes_require_audio_reconform": true,
+    "required_audio_stems": [
+      "DX",
+      "MX",
+      "FX",
+      "AMB",
+      "FULL"
+    ],
+    "internal_mix_targets_not_platform_requirements": {
+      "integrated_loudness": "-14 LUFS ±1",
+      "true_peak": "-1 dBTP",
+      "documentary_lra": "~6–10 LU"
+    },
+    "audiovisual_sync_targets": {
+      "intentional_hits": "±1 frame",
+      "action_sfx": "±1–2 frames unless intentionally offset"
+    },
+    "governing_config": "company/config/channel_operating_system.json",
+    "production_cell": "docs/operations/media/MEDIA_PRODUCTION_CELL.md",
+    "sound_system": "docs/operations/media/AUDIOVISUAL_SOUND_SYSTEM.md",
+    "merge_commit": "99f5e76d597784817d710976d78cacb36d1f7026"
+  },
+  "supersedes": [
+    "MEM-20261012-205612-59de13"
+  ],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "channel-operating-system",
+    "v1.1",
+    "audio",
+    "roles",
+    "av-sync"
+  ],
+  "source": {
+    "type": "council",
+    "ref": "Media Production Cell + Audio-Visual Sync ARENA 2026-10-12",
+    "commit": "99f5e76d597784817d710976d78cacb36d1f7026"
+  }
+}
