@@ -13,6 +13,7 @@ from company.runtime.evidence_sync import (  # noqa: E402 - repo root is inserte
     validate_sync_config,
 )
 from company.runtime.hybrid_execution import validate_config as validate_hybrid_execution  # noqa: E402
+from company.runtime.media_controls import validate_media_team  # noqa: E402
 from company.runtime.memory_fabric import (  # noqa: E402
     load_events as load_memory_events,
     reduce_events as reduce_memory_events,
@@ -34,6 +35,7 @@ memory_fabric = json.loads((ROOT / "company" / "config" / "memory_fabric.json").
 channel_operating_system = json.loads(
     (ROOT / "company" / "config" / "channel_operating_system.json").read_text(encoding="utf-8")
 )
+media_venture = json.loads((ROOT / "company" / "config" / "media_venture.json").read_text(encoding="utf-8"))
 
 core = {r["id"] for r in roles["core_roles"]}
 specialists = {r["id"] for r in roles["specialist_roles"]}
@@ -88,7 +90,7 @@ required_pulse_checks = {
 assert required_pulse_checks.issubset(set(pulse["checks"])), "Council Pulse missing required checks"
 
 hr = company_roles["hr_capability_director"]
-assert company_roles.get("version") == "1.4", "company HR role config must be v1.4"
+assert company_roles.get("version") == "1.5", "company HR role config must be v1.5"
 assert hr.get("may_run_read_only_capability_discovery") is True, "HR read-only scouting must be enabled"
 for key in (
     "may_install_tools_unilaterally",
@@ -166,6 +168,7 @@ validate_imported_evidence(ROOT, evidence_sync, tool_authority)
 validate_hybrid_execution(hybrid_execution)
 validate_memory_fabric(memory_fabric)
 validate_channel_operating_system(channel_operating_system)
+validate_media_team(media_venture)
 memory_events = load_memory_events(ROOT / memory_fabric["memory_root"], memory_fabric)
 memory_reduction = reduce_memory_events(memory_events)
 assert not memory_reduction.conflicts, "canonical memory must not contain unresolved conflicts"

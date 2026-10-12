@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
   "visual_system": "Editorial Renaissance Motion",
   "primary_language": "Arabic",
@@ -100,17 +100,24 @@
     "topic_clustering",
     "topic_scorecard",
     "evidence_pack",
+    "visual_story_case",
     "packaging_hypotheses",
     "story_thesis",
-    "script_and_voice_direction",
+    "preproduction_craft_review",
+    "script_development",
+    "independent_fact_check",
+    "script_lock",
     "visual_treatment",
     "audio_spotting_and_sonic_concept",
     "reference_frame_assignment",
     "storyboard_transition_audio_map",
     "asset_registry",
     "animatic",
+    "production_readiness_review",
     "narration_recording_and_dialogue_edit",
     "production",
+    "editorial_rough_cut",
+    "packaging_finalization_and_test_plan",
     "picture_lock",
     "music_sound_design",
     "mix_master",
@@ -124,18 +131,48 @@
     "memory_and_routine_update"
   ],
   "roles": {
-    "Audience Growth & Packaging Operator": [
+    "Media Producer / Production Coordinator": [
+      "master schedule",
+      "milestones",
+      "dependencies",
+      "resource plan",
+      "review calendar",
+      "vendor coordination",
+      "production risk",
+      "budget/schedule visibility",
+      "delivery readiness"
+    ],
+    "Audience Growth & Packaging Strategist": [
       "trend radar",
       "topic mining",
-      "title/thumbnail hypotheses",
+      "audience hypothesis",
+      "title strategy",
       "first-30-second packaging",
-      "post-publish packaging analysis"
+      "A/B test design",
+      "CTR/retention learning"
+    ],
+    "Thumbnail & Packaging Designer": [
+      "thumbnail visual concepts",
+      "image selection/retouching",
+      "typography",
+      "visual hierarchy",
+      "brand consistency",
+      "test-ready variants"
     ],
     "Evidence & Research Lead": [
       "source pack",
-      "fact table",
+      "claim source sheet",
+      "research synthesis",
       "claim confidence",
-      "source freshness"
+      "source freshness",
+      "expert consultation trigger"
+    ],
+    "Independent Fact Checker": [
+      "material claim verification",
+      "number/date/name verification",
+      "contradiction review",
+      "fact-check notes",
+      "script clearance"
     ],
     "Editorial Director / Showrunner": [
       "final topic gate",
@@ -147,6 +184,7 @@
       "final editorial approval"
     ],
     "Script & Voice Director": [
+      "five-pass script development",
       "scene-aware script",
       "narration intent",
       "emotion direction",
@@ -156,6 +194,8 @@
       "pickup list"
     ],
     "Visual Art Director / Frame Curator": [
+      "visual story case",
+      "key visual",
       "visual treatment",
       "reference frame board",
       "palette/type/grid",
@@ -163,14 +203,21 @@
       "visual continuity"
     ],
     "Motion & Picture Editor": [
+      "preproduction craft review",
+      "visual story feasibility",
+      "story skeleton review",
+      "visual script review",
+      "first-30-second pacing",
       "storyboard timing",
       "animatic",
       "motion design",
+      "editorial rough cut",
       "picture edit",
       "transition execution",
       "picture lock conform"
     ],
     "Music Supervisor & Sound Designer": [
+      "preproduction craft review",
       "sonic concept",
       "spotting session",
       "music brief",
@@ -202,6 +249,7 @@
     ],
     "Risk & Assurance": [
       "copyright",
+      "visual source rights",
       "music/asset licensing",
       "AI disclosure",
       "policy",
@@ -226,7 +274,8 @@
       "anti-slop challenge",
       "generic-template detection",
       "story/visual differentiation challenge",
-      "generic sound-design detection"
+      "generic sound-design detection",
+      "visual story case challenge"
     ],
     "Owner": [
       "human narration",
@@ -348,18 +397,22 @@
   "quality_gates": [
     "G0 Trend/Topic Gate",
     "G1 Evidence Gate",
-    "G2 Packaging Gate",
-    "G3 Script Lock",
-    "G4 Visual + Sonic Treatment Lock",
-    "G5 Animatic + Spotting Gate",
-    "G6 Picture Lock Gate",
-    "G7 Audio-Visual Sync Gate",
-    "G8 Anti-Slop Gate",
-    "G9 Fact/Policy/Continuity QC",
-    "G10 Mix/Master QC",
-    "G11 Export QC",
-    "G12 Owner Publish Gate",
-    "G13 Post-Publish Learning Gate"
+    "G2 Visual Story Case Gate",
+    "G3 Packaging Hypothesis Gate",
+    "G4 Pre-production Craft Review",
+    "G5 Script + Independent Fact Check Lock",
+    "G6 Visual + Sonic Treatment Lock",
+    "G7 Animatic + Spotting Gate",
+    "G8 Production Readiness Gate",
+    "G9 Picture Lock Gate",
+    "G10 Audio-Visual Sync Gate",
+    "G11 Packaging Finalization Gate",
+    "G12 Anti-Slop Gate",
+    "G13 Fact/Policy/Continuity QC",
+    "G14 Mix/Master QC",
+    "G15 Export QC",
+    "G16 Owner Publish Gate",
+    "G17 Post-Publish Learning Gate"
   ],
   "analytics": {
     "pre_publish": [
@@ -471,5 +524,98 @@
       "music chosen after final cut with no spotting",
       "same music bed across unrelated episodes"
     ]
+  },
+  "benchmark_profile": {
+    "name": "professional_youtube_studio_benchmark_2026_10_13",
+    "artifact": "docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md",
+    "reference_models": [
+      "Kurzgesagt",
+      "Veritasium",
+      "Simplicissimus/fern",
+      "Cleo Abram / Huge If True",
+      "Johnny Harris"
+    ],
+    "adopt_disciplines_not_headcount": true
+  },
+  "research_system": {
+    "claim_source_sheet_required": true,
+    "visual_source_rights_sheet_required": true,
+    "separate_claim_and_visual_ledgers": true,
+    "expert_consultation_required_when": [
+      "high_stakes_claim",
+      "scientific_core_claim",
+      "contested_claim",
+      "novel_or_uncertain_core_claim"
+    ]
+  },
+  "visual_story_case": {
+    "required": true,
+    "must_precede_script_lock": true,
+    "required_fields": [
+      "why_video_not_article",
+      "key_visual",
+      "key_demonstration_or_diagram",
+      "archive_or_real_world_evidence",
+      "visual_transformation_or_reveal",
+      "editor_feasibility_note"
+    ],
+    "fail_action": "RETURN_TOPIC_TO_BACKLOG_OR_REFRAME"
+  },
+  "preproduction_craft_review": {
+    "required": true,
+    "participants": [
+      "Editorial Director / Showrunner",
+      "Media Producer / Production Coordinator",
+      "Evidence & Research Lead",
+      "Motion & Picture Editor",
+      "Visual Art Director / Frame Curator",
+      "Music Supervisor & Sound Designer",
+      "Audience Growth & Packaging Strategist"
+    ],
+    "must_precede_script_lock": true
+  },
+  "script_development": {
+    "single_pass_forbidden": true,
+    "required_passes": [
+      "S0 Story Skeleton",
+      "S1 Evidence Draft",
+      "S2 Visual Draft",
+      "S3 Voice/Performance Draft",
+      "S4 Locked Script"
+    ],
+    "fact_check_before_lock": true,
+    "visual_draft_requires_editor_review": true
+  },
+  "production_readiness": {
+    "required": true,
+    "required_checks": [
+      "script_locked",
+      "independent_fact_check_passed",
+      "key_visuals_approved",
+      "claim_sources_complete",
+      "visual_rights_clear",
+      "storyboard_sufficient",
+      "audio_spotting_complete",
+      "asset_registry_ready",
+      "specialized_tools_available",
+      "schedule_acceptable",
+      "budget_acceptable"
+    ],
+    "fail_action": "HOLD_PRODUCTION"
+  },
+  "packaging_system": {
+    "stage_a_before_script": [
+      "five_title_hypotheses",
+      "three_thumbnail_hypotheses",
+      "click_promise",
+      "answer_promise"
+    ],
+    "stage_b_after_rough_cut": [
+      "final_title_variants",
+      "final_thumbnail_variants",
+      "test_plan",
+      "mobile_legibility_check"
+    ],
+    "thumbnail_designer_independent_craft_function": true
   }
 }

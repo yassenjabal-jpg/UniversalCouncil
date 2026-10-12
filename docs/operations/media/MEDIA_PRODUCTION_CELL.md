@@ -1,208 +1,280 @@
-# Media Production Cell v1.1
+﻿# Media Production Cell v1.2 â€” Studio-Benchmarked
 
 ## Principle
 
-These are venture-scoped production functions, not permanent Council seats and not necessarily eight different people.
+The Media Production Cell is modeled after professional explainer/documentary studios while remaining intentionally small.
 
-During the pilot one human/tool may cover more than one function, but **approval boundaries remain separate**. A function never silently self-approves its own critical output.
+Functions are not headcount.
 
-## Production hierarchy
+During the pilot:
+- one human/tool may cover multiple functions;
+- critical approvals remain separate;
+- role minutes and rework are measured;
+- after three videos HR may recommend MERGE/KEEP/REPLACE.
+
+## Hierarchy
 
 Owner
-→ Editorial Director / Showrunner
-→ craft leads
-→ Technical/Assurance/Finance support
+â†’ Editorial Director / Showrunner
+â†’ Media Producer / Production Coordinator
+â†’ craft functions
+â†’ Technical / Assurance / Finance support
 
-### 1. Editorial Director / Showrunner
-Accountable for:
-- topic/story fit;
-- thesis;
-- narrative architecture;
-- script lock;
-- visual-story coherence;
-- Picture Lock approval;
-- final editorial approval.
+The Producer manages execution.
+The Showrunner manages story.
+Neither replaces the other.
 
-Does not own:
-- final technical audio QC;
-- music licensing;
-- export integrity.
+## 1. Media Producer / Production Coordinator
 
-### 2. Script & Voice Director
-Accountable for:
-- scene-aware script;
-- intent/emotion tags;
-- pace/pitch/emphasis;
-- pronunciation guide;
-- recording-session direction;
-- pickup list;
-- narration continuity.
-
-Owner approves:
-- voice identity;
-- final narration performance.
-
-### 3. Visual Art Director / Frame Curator
-Accountable for:
-- visual treatment;
-- reference-frame board;
-- palette/type/grid;
-- episode-specific visual motifs;
-- image/illustration style;
-- visual continuity.
+Owns:
+- master schedule
+- milestones
+- dependencies
+- review calendar
+- resource plan
+- vendor coordination
+- production risk
+- delivery readiness
+- schedule/budget visibility
 
 Does not own:
-- picture timing;
-- final mix.
+- factual clearance
+- story truth
+- brand veto
 
-### 4. Motion & Picture Editor
-Accountable for:
-- storyboard timing;
-- animatic;
-- motion design;
-- picture edit;
-- transition execution;
-- subtitle picture integration;
-- technical picture conform.
+## 2. Editorial Director / Showrunner
+
+Owns:
+- topic/story fit
+- thesis
+- narrative architecture
+- script lock
+- visual-story coherence
+- picture lock
+- final editorial approval
+
+## 3. Independent Fact Checker
+
+Owns:
+- material claim verification
+- numbers/dates/names
+- contradiction review
+- uncertainty wording
+- factual clearance
+
+Rule:
+the researcher/writer cannot be the sole approver of their own material claims.
+
+## 4. Script & Voice Director
+
+Owns:
+- five-pass script development
+- narration intent
+- emotion
+- pace/pitch/emphasis
+- pronunciation
+- recording direction
+- pickup list
+- narration continuity
+
+## 5. Visual Art Director / Frame Curator
+
+Owns:
+- Visual Story Case
+- key visual
+- visual treatment
+- reference-frame board
+- palette/type/grid
+- episode motifs
+- visual continuity
+
+## 6. Motion & Picture Editor
+
+Owns:
+- visual feasibility
+- Story Skeleton review
+- Visual Draft review
+- first-30-second pacing
+- storyboard timing
+- animatic
+- motion design
+- editorial rough cut
+- picture edit
+- transition execution
+- picture-lock conform
+
+Rule:
+the Editor enters during pre-production, not after script completion.
 
 Cannot self-approve:
-- Picture Lock.
+Picture Lock.
 
-### 5. Music Supervisor & Sound Designer
-Creative audio owner.
+## 7. Music Supervisor & Sound Designer
 
-Accountable for:
-- sonic concept;
-- spotting session;
-- music brief;
-- cue sheet;
-- music source/license/provenance;
-- episode sonic motifs;
-- sound effects;
-- atmosphere design;
-- silence map;
-- transition sounds;
-- audio-visual sync intent.
+Owns:
+- sonic concept
+- spotting
+- music brief
+- cue sheet
+- music rights/provenance
+- sound design
+- sonic motifs
+- silence
+- transition SFX
+- AV sync intent
 
-Does not own:
-- final master loudness;
-- dialogue cleanup;
-- final technical audio QC.
+## 8. Dialogue & Mix Engineer
 
-### 6. Dialogue & Mix Engineer
-Technical audio owner.
+Owns:
+- dialogue cleanup/edit
+- noise/EQ/de-ess
+- automation
+- music/dialogue balance
+- stems
+- mix/master
+- technical audio QC
+- dub parity
 
-Accountable for:
-- dialogue cleanup/edit;
-- noise control;
-- EQ/de-essing;
-- level automation;
-- music/dialogue balance;
-- stem management;
-- final mix;
-- master loudness;
-- translation/dub parity;
-- audio QC.
+## 9. Audience Growth & Packaging Strategist
 
-Does not own:
-- story;
-- music selection;
-- visual edit.
+Owns:
+- trend radar
+- topic mining
+- audience hypothesis
+- title strategy
+- first-30-second packaging
+- CTR/retention learning
+- A/B test design
+- platform adaptation
 
-### 7. Audience Growth & Packaging Operator
-Accountable for:
-- daily trend radar;
-- title/thumbnail hypotheses;
-- first-30-second packaging;
-- CTR/retention interpretation;
-- post-publish packaging learning.
+## 10. Thumbnail & Packaging Designer
 
-### 8. Localization Producer
-On demand until multilingual versions exist.
+Owns:
+- thumbnail concepts
+- image selection/retouching
+- compositing
+- typography
+- visual hierarchy
+- brand consistency
+- mobile legibility
+- test-ready variants
 
-Accountable for:
-- translation adaptation;
-- dub script;
-- subtitle timing;
-- localized metadata;
-- localized thumbnail text;
-- language-version QC;
-- timing reconform requests when translation exceeds picture timing.
+## 11. Localization Producer
+
+On demand.
+
+Owns:
+- translation adaptation
+- dub script
+- subtitle timing
+- localized metadata
+- localized thumbnail text
+- language-version QC
+- reconform requests
 
 ## Shared support
 
 ### Evidence & Research Lead
-Claims, source pack, fact table, evidence IDs.
+Research, claim source sheet, synthesis, source freshness, expert-consultation trigger.
 
-### Assurance Reviewer
-Copyright, music licenses, synthetic disclosure, policy.
+### Risk & Assurance
+Visual rights, copyright, music rights, AI disclosure, policy.
 
 ### Technical Operator
-Project structure, tool routing, render/export, stem integrity, archives.
+Specialized tool routing, project structure, render/export, automation, archive integrity.
 
 ### Finance Controller
-Time/cost/credits, audio-post cost, budget.
+Time/cost/credits, cost per finished minute, budget visibility.
 
-### Venture Operator
-Schedule, handoffs, WIP=1, escalation.
+### Red Team
+Anti-slop, generic-template challenge, Visual Story Case challenge.
 
-## RACI by major stage
+### Owner
+Voice identity, brand authority, L4 decisions, publish approval.
+
+## RACI â€” benchmarked workflow
 
 | Stage | Accountable | Responsible | Required consultation | Approval |
 |---|---|---|---|---|
-| Trend radar | Growth | Growth | Editorial | Editorial |
-| Evidence | Evidence | Evidence | Assurance | Editorial |
-| Packaging | Growth | Growth | Editorial | Editorial |
-| Script | Showrunner | Script & Voice | Evidence, Human | Showrunner |
-| Voice performance | Script & Voice | Owner narrator | Showrunner | Owner |
-| Visual treatment | Visual Art Director | Visual Art Director | Showrunner | Showrunner |
-| Sonic concept | Music/Sound | Music/Sound | Showrunner, Motion | Showrunner |
-| Reference frames | Visual Art | Visual Art | Motion, Showrunner | Showrunner |
-| Storyboard | Motion | Motion | Visual, Music/Sound | Showrunner |
-| AV beat map | Music/Sound | Music/Sound + Motion | Script/Voice | Showrunner |
+| Topic | Showrunner | Growth + Research | Producer | Showrunner |
+| Evidence | Research | Research | Fact Checker | Fact Checker for material claims |
+| Visual Story Case | Art Director | Art + Motion | Research, Showrunner | Showrunner |
+| Packaging A | Growth | Growth + Thumbnail | Showrunner | Showrunner |
+| Pre-production Craft Review | Producer | Producer | Showrunner, Research, Motion, Art, Sound, Growth | Showrunner |
+| Script S0â€“S4 | Showrunner | Script/Voice | Research, Motion, Art | Showrunner |
+| Independent Fact Check | Fact Checker | Fact Checker | Research, Script | Fact Checker |
+| Visual/Sonic Treatment | Showrunner | Art + Sound | Motion | Showrunner |
 | Animatic | Motion | Motion | Showrunner, Growth, Sound | Showrunner |
-| Dialogue edit | Mix Engineer | Mix Engineer | Script/Voice | Script/Voice |
-| Picture Lock | Showrunner | Motion | Visual, Sound | Showrunner |
-| Music/SFX | Music/Sound | Music/Sound | Motion, Showrunner | Showrunner |
-| Mix/Master | Mix Engineer | Mix Engineer | Music/Sound, Showrunner | Technical audio QC |
-| AV Sync QC | Showrunner | Motion + Mix | Music/Sound | Showrunner |
-| Localization | Localization | Localization | Script/Voice, Mix | Showrunner |
+| Production Readiness | Producer | Producer | all craft leads | Producer + Showrunner |
+| Narration | Script/Voice | Owner narrator | Showrunner | Owner |
+| Production | Producer | craft functions | Technical | Producer |
+| Rough Cut | Showrunner | Motion | Growth, Art, Sound | Showrunner |
+| Packaging B | Growth | Growth + Thumbnail | Showrunner | Showrunner |
+| Picture Lock | Showrunner | Motion | Art, Sound | Showrunner |
+| Music/SFX | Sound | Sound | Motion, Showrunner | Showrunner |
+| Mix/Master | Mix Engineer | Mix Engineer | Sound, Showrunner | technical audio QC |
+| AV Sync | Showrunner | Motion + Mix | Sound | Showrunner |
+| Final Fact/Policy | Assurance | Fact Checker + Assurance | Showrunner | Assurance |
 | Export | Technical | Technical | Motion, Mix | Technical |
 | Publish | Owner | Technical when authorized | Growth, Assurance | Owner |
 
-## Change-control locks
+## Lock system
+
+### Visual Story Case Pass
+Story proved as video.
 
 ### Script Lock
-Narration words are stable.
-Material wording changes require Evidence + Showrunner review.
+S0â€“S4 complete.
+Fact check passed.
 
-### Reference Frame Lock
-Visual grammar for episode is stable.
-New style direction after this gate requires Showrunner approval.
+### Production Readiness Lock
+No expensive production starts before dependencies are clear.
 
 ### Picture Lock
-Picture timing is stable.
-
-After Picture Lock:
-- any cut-length change;
-- transition-duration change;
-- inserted/removed frame;
-- speed-ramp that changes cue timing
-
-requires an **Audio Reconform Request**.
+Timing stable.
+Any timing change after lock triggers audio reconform.
 
 ### Sound Lock
-Music/SFX/dialogue timing and mix approved.
-Only defect fixes after Sound Lock.
+Only defect fixes after approval.
 
-## Pilot staffing rule
+## Producer metrics
 
-Functions are separated conceptually, not necessarily by headcount.
+Track:
+- schedule variance
+- milestone slips
+- blocked days
+- review-delay days
+- late dependency count
+- production-readiness failures
+- downstream rework caused by upstream changes
 
-For the three-video pilot:
-- combine execution where efficient;
-- preserve independent review boundaries;
-- log minutes per function;
-- after pilot HR reviews KEEP / MERGE / REPLACE based on measured contribution.
+## Fact-check metrics
 
-The goal is specialist quality without permanent bureaucracy.
+Track:
+- material defects found before lock
+- defects found after lock
+- source contradictions
+- expert consultations triggered
+- factual corrections after rough cut
+
+## Packaging metrics
+
+Track:
+- title hypotheses
+- thumbnail hypotheses
+- final variants
+- mobile legibility failures
+- A/B test results
+- CTR by packaging version
+
+## Staffing rule
+
+Do not hire/add permanent seats merely because a benchmark studio has them.
+
+Keep a function separate only when pilot evidence shows one of:
+- distinct specialist craft
+- independent clearance requirement
+- project-control responsibility
+- measurable quality/rework benefit
+
+The goal is professional discipline without professional-studio bureaucracy.
