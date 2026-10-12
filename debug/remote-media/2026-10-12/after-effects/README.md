@@ -37,3 +37,8 @@ Capture the current elevated After Effects state, add the screenshot here, then 
 - After Effects main workspace is now open as Adobe After Effects 2026 - Untitled Project.aep.
 - Evidence: 04-workspace-ready.png
 - Next: execute the pilot JSX elevated and verify project/render artifacts.
+
+### Crash Repair after exact elevated restart
+- New AE process PID 3624 opened Crash Repair (HWND 132938).
+- Evidence: 05-crash-repair-after-exact-restart.png
+- Next: elevated Continue, then verify whether JSX continues automatically.
