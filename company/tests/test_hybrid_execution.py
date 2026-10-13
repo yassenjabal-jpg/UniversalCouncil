@@ -299,7 +299,7 @@ class HybridExecutionTests(unittest.TestCase):
         no_approval = governed.execute(
             {"id": "read", "dc_capable": True, "effect": "READ"},
             state,
-            requester="tech",
+            requester="technical_operator",
             task_approved=False,
         )
         self.assertEqual(no_approval["state"], ResultState.BLOCKED.value)
@@ -307,7 +307,7 @@ class HybridExecutionTests(unittest.TestCase):
         approved = governed.execute(
             {"id": "read2", "dc_capable": True, "effect": "READ"},
             state,
-            requester="tech",
+            requester="technical_operator",
             task_approved=True,
         )
         self.assertEqual(approved["state"], ResultState.HOST_DISPATCH_REQUIRED.value)
@@ -434,7 +434,7 @@ class HybridExecutionTests(unittest.TestCase):
         result = executor.execute(
             {"id": "read", "dc_capable": True, "effect": "READ"},
             state,
-            requester="tech",
+            requester="technical_operator",
             task_approved=True,
         )
         self.assertEqual(result["state"], ResultState.HOST_DISPATCH_REQUIRED.value)
@@ -443,7 +443,7 @@ class HybridExecutionTests(unittest.TestCase):
         blocked = executor.execute(
             {"id": "write", "dc_capable": True, "effect": "EXECUTE"},
             state,
-            requester="tech",
+            requester="technical_operator",
             task_approved=False,
         )
         self.assertEqual(blocked["state"], ResultState.BLOCKED.value)
@@ -461,7 +461,7 @@ class HybridExecutionTests(unittest.TestCase):
         result = executor.execute(
             {"id": "gui", "gui_request": {"action": "click"}},
             state,
-            requester="media",
+            requester="technical_operator",
             task_approved=True,
         )
         self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
@@ -473,7 +473,7 @@ class HybridExecutionTests(unittest.TestCase):
         result = executor.execute(
             {"id": "gui2", "gui_request": {"action": "click"}},
             state,
-            requester="media",
+            requester="technical_operator",
             task_approved=True,
         )
         self.assertEqual(result["state"], ResultState.FAILED.value)
@@ -492,7 +492,7 @@ class HybridExecutionTests(unittest.TestCase):
                 "gui_request": {"action": "set_value"},
             },
             state,
-            requester="media",
+            requester="technical_operator",
             task_approved=True,
         )
         self.assertEqual(result["state"], ResultState.UNKNOWN.value)
@@ -512,7 +512,7 @@ class HybridExecutionTests(unittest.TestCase):
                 "gui_request": {"action": "set_value"},
             },
             state,
-            requester="media",
+            requester="technical_operator",
             task_approved=True,
         )
         self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
@@ -529,7 +529,7 @@ class HybridExecutionTests(unittest.TestCase):
         n = executor.execute(
             {"id": "n", "native_available": True, "authority_operation": "github.read"},
             state,
-            requester="tech",
+            requester="technical_operator",
             task_approved=True,
         )
         self.assertEqual(n["state"], ResultState.SUCCEEDED.value)
@@ -541,7 +541,7 @@ class HybridExecutionTests(unittest.TestCase):
                 "authority_target": "YASSIN",
             },
             state,
-            requester="tech",
+            requester="technical_operator",
             task_approved=True,
         )
         self.assertEqual(r["state"], ResultState.SUCCEEDED.value)
@@ -555,7 +555,7 @@ class HybridExecutionTests(unittest.TestCase):
             executor.execute(
                 {"id": "n", "native_available": True, "authority_operation": "github.read"},
                 state,
-                requester="tech",
+                requester="technical_operator",
                 task_approved=True,
             )
         with self.assertRaises(HybridExecutionError):
@@ -567,14 +567,14 @@ class HybridExecutionTests(unittest.TestCase):
                     "authority_target": "YASSIN",
                 },
                 state,
-                requester="tech",
+                requester="technical_operator",
                 task_approved=True,
             )
         with self.assertRaises(HybridExecutionError):
             executor.execute(
                 {"id": "g", "gui_request": {"action": "screenshot"}},
                 state,
-                requester="tech",
+                requester="technical_operator",
                 task_approved=True,
             )
 
@@ -586,7 +586,7 @@ class HybridExecutionTests(unittest.TestCase):
         result = executor.execute(
             {"id": "g", "gui_request": {"action": "click"}},
             state,
-            requester="media",
+            requester="technical_operator",
             task_approved=True,
         )
         self.assertEqual(result["state"], ResultState.BLOCKED.value)
@@ -607,7 +607,7 @@ class HybridExecutionTests(unittest.TestCase):
         result = executor.execute_batch(
             actions,
             state,
-            requester="media",
+            requester="technical_operator",
             task_approved=True,
         )
         self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
@@ -620,10 +620,10 @@ class HybridExecutionTests(unittest.TestCase):
         self.assertEqual(controller_events, ["controller_acquired", "controller_released"])
 
         with self.assertRaises(HybridExecutionError):
-            executor.execute_batch([], state, requester="media", task_approved=True)
+            executor.execute_batch([], state, requester="technical_operator", task_approved=True)
         too_many = actions * 4
         with self.assertRaises(HybridExecutionError):
-            executor.execute_batch(too_many, state, requester="media", task_approved=True)
+            executor.execute_batch(too_many, state, requester="technical_operator", task_approved=True)
 
     def test_batch_without_gui_control_does_not_acquire_controller(self):
         native = MockAdapter({"state": ResultState.SUCCEEDED.value})
@@ -635,7 +635,7 @@ class HybridExecutionTests(unittest.TestCase):
                 {"id": "n2", "native_available": True, "authority_operation": "github.read"},
             ],
             state,
-            requester="tech",
+            requester="technical_operator",
             task_approved=True,
         )
         self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
@@ -665,7 +665,7 @@ class HybridExecutionTests(unittest.TestCase):
         result = executor.execute_batch(
             actions,
             state,
-            requester="media",
+            requester="technical_operator",
             task_approved=True,
         )
         self.assertEqual(result["state"], ResultState.FAILED.value)
@@ -686,14 +686,14 @@ class HybridExecutionTests(unittest.TestCase):
         result = executor.execute(
             {"id": "a", "gui_request": {"action": "click"}},
             state,
-            requester="media",
+            requester="technical_operator",
             task_approved=True,
             retain_controller=True,
         )
         self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
-        self.assertEqual(state.controller_lease, "media")
-        state.release_controller("media")
-        executor.controller_lease.release("desktop:YASSIN", "media")
+        self.assertEqual(state.controller_lease, "technical_operator")
+        state.release_controller("technical_operator")
+        executor.controller_lease.release("desktop:YASSIN", "technical_operator:retain")
 
     def test_routine_graduation_requires_verified_clean_repeats(self):
         clean = [
