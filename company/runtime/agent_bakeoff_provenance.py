@@ -142,6 +142,7 @@ def build_manifest(
 def result_provenance(manifest: dict[str, Any]) -> dict[str, Any]:
     keys = (
         "experiment_id",
+        "runner_id",
         "source_sha",
         "config_sha256",
         "cases_sha256",
