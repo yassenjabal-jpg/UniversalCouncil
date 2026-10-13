@@ -195,6 +195,18 @@ class AgentBakeoffTests(unittest.TestCase):
             mutations.append(bad)
 
         bad = copy.deepcopy(CFG)
+        bad["required_desktop_case_count"] = 0
+        mutations.append(bad)
+
+        bad = copy.deepcopy(CFG)
+        bad["require_provenance"] = False
+        mutations.append(bad)
+
+        bad = copy.deepcopy(CFG)
+        bad["required_provenance_keys"] = []
+        mutations.append(bad)
+
+        bad = copy.deepcopy(CFG)
         bad["required_mechanics_for_winner"] = []
         mutations.append(bad)
 
