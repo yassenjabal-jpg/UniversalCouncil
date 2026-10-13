@@ -8,6 +8,7 @@ import unittest
 from datetime import datetime, timezone
 from pathlib import Path
 
+from company.runtime.hybrid_execution import HybridExecutionError, enforce_tool_authority, plan_action
 from company.runtime.evidence_sync import (
     EvidenceState,
     EvidenceSyncError,
@@ -15,6 +16,11 @@ from company.runtime.evidence_sync import (
     receipt_evidence_state,
     validate_receipt,
 )
+
+
+ROOT = Path(__file__).resolve().parents[2]
+BASE_CFG = json.loads((ROOT / "company/config/hybrid_execution.json").read_text(encoding="utf-8"))
+BASE_REGISTRY = json.loads((ROOT / "company/config/tool_authority.json").read_text(encoding="utf-8"))
 
 
 class Phase2R7EvidenceModelTests(unittest.TestCase):
@@ -170,6 +176,51 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
             )
             with self.assertRaises(EvidenceSyncError):
                 validate_receipt(current, revoked_source, project)
+
+    def test_gui_execution_cannot_exceed_verified_evidence_scope(self):
+        registry = copy.deepcopy(BASE_REGISTRY)
+        observe = next(
+            item for item in registry["capabilities"]
+            if item["operation"] == "desktop_computer_use.observe"
+        )
+        control = next(
+            item for item in registry["capabilities"]
+            if item["operation"] == "desktop_computer_use.control"
+        )
+        observe["verified_scope"] = ["status", "list_windows", "inspect_ui"]
+        control["verified_scope"] = ["focus"]
+
+        status = plan_action(
+            {"id": "status", "gui_request": {"action": "status"}},
+            BASE_CFG,
+        )
+        self.assertEqual(
+            enforce_tool_authority(status, registry, principal="technical_operator")["operation"],
+            "desktop_computer_use.observe",
+        )
+
+        focus = plan_action(
+            {"id": "focus", "gui_request": {"action": "focus"}},
+            BASE_CFG,
+        )
+        self.assertEqual(
+            enforce_tool_authority(focus, registry, principal="technical_operator")["operation"],
+            "desktop_computer_use.control",
+        )
+
+        set_value = plan_action(
+            {"id": "set", "gui_request": {"action": "set_value"}},
+            BASE_CFG,
+        )
+        with self.assertRaises(HybridExecutionError):
+            enforce_tool_authority(set_value, registry, principal="technical_operator")
+
+        screenshot = plan_action(
+            {"id": "shot", "gui_request": {"action": "screenshot"}},
+            BASE_CFG,
+        )
+        with self.assertRaises(HybridExecutionError):
+            enforce_tool_authority(screenshot, registry, principal="technical_operator")
 
 
 if __name__ == "__main__":
