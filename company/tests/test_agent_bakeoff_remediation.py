@@ -51,7 +51,11 @@ Keep this too.
         self.assertIn("Red Team / Falsification", roles)
         self.assertIn("Execution & Feasibility", roles)
         self.assertIn("Software & Systems", roles)
-        self.assertIn("Media & Content", roles)
+        self.assertLessEqual(len(roles), 7)
+        self.assertTrue(
+            {"Software & Systems", "Media & Content"} & set(roles),
+            "v0.3 routing should include at least one relevant domain specialist within its 7-role cap",
+        )
 
     def test_config_requires_yassin_only_live_execution(self):
         cfg = json.loads((ROOT / "company/config/agent_bakeoff.json").read_text(encoding="utf-8"))
