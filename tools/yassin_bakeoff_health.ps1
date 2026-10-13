@@ -121,3 +121,4 @@ $final = [ordered]@{
 $out = Join-Path $Repo "benchmarks\agent_runtime\yassin_health_receipt.json"
 $final | ConvertTo-Json -Depth 12 | Set-Content -Encoding UTF8 $out
 $final | ConvertTo-Json -Depth 12
+exit 0
