@@ -173,6 +173,27 @@ validate_memory_fabric(memory_fabric)
 validate_channel_operating_system(channel_operating_system)
 validate_media_team(media_venture)
 validate_agent_bakeoff(agent_bakeoff)
+assert agent_bakeoff["required_runner_id"] == "YASSIN", "live bake-off must be YASSIN-only"
+assert agent_bakeoff["maximum_cost_usd"] == 0, "live bake-off cost ceiling must be zero"
+live_policy = agent_bakeoff["live_execution_policy"]
+assert live_policy["execution_host"] == "YASSIN_ONLY", "live execution host policy drift"
+assert live_policy["external_compute"] is False, "external compute must remain disabled"
+assert live_policy["external_paid_api"] is False, "paid model APIs must remain disabled"
+assert live_policy["staged_run_required"] is True, "staged run must remain mandatory"
+assert live_policy["resume_required"] is True, "resume support must remain mandatory"
+assert not (ROOT / ".github" / "workflows" / "agent-runtime-live-bakeoff.yml").exists(), (
+    "live bake-off GitHub Actions workflow must not exist; execution is YASSIN-only"
+)
+for required_path in (
+    "company/runtime/agent_bakeoff_baseline.py",
+    "company/runtime/agent_bakeoff_provenance.py",
+    "tools/build_agent_bakeoff_packets.py",
+    "tools/run_agent_bakeoff_live.py",
+    "tools/run_yassin_bakeoff.ps1",
+    "tools/yassin_bakeoff_health.ps1",
+    "tools/record_agent_bakeoff_desktop.py",
+):
+    assert (ROOT / required_path).is_file(), f"missing YASSIN bake-off component: {required_path}"
 assert 12 <= len(agent_bakeoff_cases) <= 20, "agent runtime bake-off must keep 12-20 historical cases"
 for case in agent_bakeoff_cases:
     assert (ROOT / case["source_artifact"]).is_file(), f"missing bake-off source artifact: {case['source_artifact']}"
