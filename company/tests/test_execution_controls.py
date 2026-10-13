@@ -1,7 +1,9 @@
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from company.runtime.execution_controls import (
     ExecutionControlError,
@@ -93,6 +95,34 @@ class ExecutionControlsTests(unittest.TestCase):
             )
             with self.assertRaises(ExecutionControlError):
                 HostControllerLease(path).acquire("desktop:YASSIN", "two")
+
+    def test_controller_lease_default_env_path_and_unreadable_payload(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            lease_path = Path(tmp) / "env-lease.json"
+            with patch.dict(os.environ, {"UNIVERSAL_COUNCIL_CONTROLLER_LEASE": str(lease_path)}):
+                lease = HostControllerLease()
+                lease.acquire("desktop:YASSIN", "env-holder")
+                self.assertEqual(lease.path, lease_path)
+                lease.release("desktop:YASSIN", "env-holder")
+
+            object_path = Path(tmp) / "object.json"
+            object_path.write_text("[]", encoding="utf-8")
+            with self.assertRaises(ExecutionControlError):
+                HostControllerLease(object_path).acquire("desktop:YASSIN", "holder")
+
+            directory_path = Path(tmp) / "directory-lease"
+            directory_path.mkdir()
+            with self.assertRaises(ExecutionControlError):
+                HostControllerLease(directory_path).release("desktop:YASSIN", "holder")
+
+    def test_execution_journal_ignores_blank_lines(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "events.jsonl"
+            path.write_text(
+                "\n" + json.dumps({"type": "intent", "action_id": "a1"}) + "\n\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(ExecutionJournal(path).pending_action_ids(), {"a1"})
 
     def test_execution_journal_tracks_pending_and_reconciliation(self):
         with tempfile.TemporaryDirectory() as tmp:
