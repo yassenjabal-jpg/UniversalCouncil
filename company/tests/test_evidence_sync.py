@@ -1,6 +1,7 @@
 import copy
 import hashlib
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -31,11 +32,23 @@ class EvidenceSyncTests(unittest.TestCase):
         artifact = project / "proof.txt"
         artifact.write_text("verified desktop capability\n", encoding="utf-8")
         digest = hashlib.sha256(artifact.read_bytes()).hexdigest()
+        subprocess.run(["git", "init"], cwd=project, check=True, capture_output=True)
+        subprocess.run(["git", "config", "user.name", "Evidence Test"], cwd=project, check=True)
+        subprocess.run(["git", "config", "user.email", "evidence@example.test"], cwd=project, check=True)
+        subprocess.run(["git", "add", "proof.txt"], cwd=project, check=True)
+        subprocess.run(["git", "commit", "-m", "proof"], cwd=project, check=True, capture_output=True)
+        source_commit = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=project,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
         receipt = {
             "schema_version": "1.0",
             "receipt_id": "test-desktop",
             "source_project": "TestProject",
-            "source_commit": "a" * 40,
+            "source_commit": source_commit,
             "observed_at": "2026-10-12T12:00:00+03:00",
             "capability_id": "desktop_computer_use",
             "status": "RUNTIME_VERIFIED",
@@ -52,6 +65,8 @@ class EvidenceSyncTests(unittest.TestCase):
             "root_env": "TEST_PROJECT_ROOT",
             "receipt_glob": ".council/capability-receipts/*.json",
             "allowed_capability_ids": ["desktop_computer_use"],
+            "max_receipt_age_days": 30,
+            "revoked_receipt_ids": [],
             "authority_bindings": {
                 "desktop_computer_use": {
                     "operations": [
@@ -80,7 +95,8 @@ class EvidenceSyncTests(unittest.TestCase):
     def test_sync_imports_receipt_and_preserves_authority(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            project, source, _ = self.make_source(root)
+            project, source, receipt = self.make_source(root)
+            source_commit = receipt["source_commit"]
             repo = self.make_repo(root, source)
             before = copy.deepcopy(BASE_REGISTRY)
             result = sync_repository(
@@ -105,7 +121,7 @@ class EvidenceSyncTests(unittest.TestCase):
                     "enforcement",
                 ):
                     self.assertEqual(old[field], new[field])
-                self.assertEqual(new["source_or_pin"], "a" * 40)
+                self.assertEqual(new["source_or_pin"], source_commit)
                 self.assertEqual(new["evidence_receipt"], imported.relative_to(repo).as_posix())
 
     def test_receipt_cannot_claim_authority_fields(self):
