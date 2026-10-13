@@ -76,6 +76,26 @@ GUI_CONTROL_ACTIONS = {
 GUI_STATE_CHANGE_ACTIONS = {"invoke", "set_value", "click", "send_keys", "drag", "record"}
 GUI_REVERSIBLE_ACTIONS = {"focus", "scroll_into_view", "wait_for", "hover"}
 
+GUI_ACTION_EVIDENCE_SCOPE = {
+    "status": "status",
+    "list_windows": "list_windows",
+    "inspect": "inspect_ui",
+    "search": "search_ui",
+    "get_value": "read_values_properties",
+    "get_property": "read_values_properties",
+    "screenshot": "screenshot",
+    "invoke": "semantic_invoke",
+    "set_value": "semantic_set_value",
+    "focus": "focus",
+    "scroll_into_view": "scroll_into_view",
+    "wait_for": "wait_for",
+    "click": "physical_click",
+    "hover": "physical_hover",
+    "drag": "physical_drag",
+    "send_keys": "send_keys",
+    "record": "window_or_element_recording",
+}
+
 
 class Adapter(Protocol):
     def dispatch(self, action: dict[str, Any]) -> dict[str, Any]: ...
@@ -463,6 +483,21 @@ def enforce_tool_authority(
             raise HybridExecutionError(f"authority scope is required: {planned.authority_operation}")
         if scope not in allowed_action_scopes:
             raise HybridExecutionError(f"authority scope is not allowed: {planned.authority_operation} -> {scope}")
+
+    verified_scope = record.get("verified_scope")
+    if (
+        verified_scope is not None
+        and planned.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}
+    ):
+        request = planned.payload.get("gui_request") or {}
+        gui_action = str(request.get("action", ""))
+        evidence_scope = GUI_ACTION_EVIDENCE_SCOPE.get(gui_action)
+        if evidence_scope is None:
+            raise HybridExecutionError(f"GUI action has no evidence-scope mapping: {gui_action}")
+        if evidence_scope not in set(verified_scope):
+            raise HybridExecutionError(
+                f"current evidence does not verify GUI scope: {planned.authority_operation} -> {evidence_scope}"
+            )
     return record
 
 
