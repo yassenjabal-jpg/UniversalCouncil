@@ -1,5 +1,6 @@
 import copy
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -9,10 +10,12 @@ from company.runtime.agent_bakeoff import (
     duplicate_content_ratio,
     evaluate,
     load_cases,
+    load_json,
     score_case,
     score_mechanics,
     select_winner,
     unique_contribution_score,
+    validate_case,
     validate_config,
     validate_result,
 )
@@ -156,6 +159,205 @@ class AgentBakeoffTests(unittest.TestCase):
         result["participants"].append("Unneeded Observer")
         score = score_case(case, result)
         self.assertLess(score["routing_accuracy"], 1.0)
+
+
+    def test_validate_config_rejects_invalid_shapes(self):
+        mutations = []
+
+        bad = copy.deepcopy(CFG)
+        bad["version"] = "2.0"
+        mutations.append(bad)
+
+        bad = copy.deepcopy(CFG)
+        bad["minimum_live_decision_cases"] = 0
+        mutations.append(bad)
+
+        bad = copy.deepcopy(CFG)
+        bad["minimum_mechanics_score"] = -1
+        mutations.append(bad)
+
+        for desktop_min in (-0.1, 1.1):
+            bad = copy.deepcopy(CFG)
+            bad["minimum_desktop_execution_score"] = desktop_min
+            mutations.append(bad)
+
+        bad = copy.deepcopy(CFG)
+        bad["required_mechanics_for_winner"] = []
+        mutations.append(bad)
+
+        bad = copy.deepcopy(CFG)
+        bad["weights"] = {}
+        mutations.append(bad)
+
+        bad = copy.deepcopy(CFG)
+        bad["weights"] = {"completion": 0.5}
+        mutations.append(bad)
+
+        bad = copy.deepcopy(CFG)
+        bad["runtimes"] = {}
+        mutations.append(bad)
+
+        for bad in mutations:
+            with self.subTest(bad=bad):
+                with self.assertRaises(BakeoffError):
+                    validate_config(bad)
+
+    def test_validate_case_rejects_missing_bad_id_and_non_list_fields(self):
+        case = copy.deepcopy(CASES[0])
+        del case["prompt"]
+        with self.assertRaises(BakeoffError):
+            validate_case(case)
+
+        case = copy.deepcopy(CASES[0])
+        case["case_id"] = "Bad ID!"
+        with self.assertRaises(BakeoffError):
+            validate_case(case)
+
+        for field in ("required_roles", "forbidden_roles", "expected_blockers", "required_dissent_tags"):
+            case = copy.deepcopy(CASES[0])
+            case[field] = "not-a-list"
+            with self.subTest(field=field):
+                with self.assertRaises(BakeoffError):
+                    validate_case(case)
+
+    def test_validate_result_rejects_schema_and_type_errors(self):
+        base = result_for(CASES[0])
+
+        bad = copy.deepcopy(base)
+        del bad["latency_ms"]
+        with self.assertRaises(BakeoffError):
+            validate_result(bad)
+
+        field_values = {
+            "mode": "INVALID",
+            "status": "INVALID",
+            "participants": {},
+            "role_outputs": [],
+            "blockers": "bad",
+            "policy_violations": "bad",
+            "desktop": [],
+            "usage": [],
+        }
+        for field, value in field_values.items():
+            bad = copy.deepcopy(base)
+            bad[field] = value
+            with self.subTest(field=field):
+                with self.assertRaises(BakeoffError):
+                    validate_result(bad)
+
+        bad = copy.deepcopy(base)
+        bad["dissent_tags"] = "bad"
+        with self.assertRaises(BakeoffError):
+            validate_result(bad)
+
+    def test_json_and_case_loading_fail_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            missing = root / "missing.json"
+            with self.assertRaises(BakeoffError):
+                load_json(missing)
+
+            invalid = root / "invalid.json"
+            invalid.write_text("{", encoding="utf-8")
+            with self.assertRaises(BakeoffError):
+                load_json(invalid)
+
+            empty = root / "empty.json"
+            empty.write_text("[]", encoding="utf-8")
+            with self.assertRaises(BakeoffError):
+                load_cases(empty)
+
+            wrong_root = root / "wrong-root.json"
+            wrong_root.write_text("{}", encoding="utf-8")
+            with self.assertRaises(BakeoffError):
+                load_cases(wrong_root)
+
+            non_object = root / "non-object.json"
+            non_object.write_text('["bad"]', encoding="utf-8")
+            with self.assertRaises(BakeoffError):
+                load_cases(non_object)
+
+            duplicate = root / "duplicate.json"
+            duplicate.write_text(json.dumps([CASES[0], CASES[0]]), encoding="utf-8")
+            with self.assertRaises(BakeoffError):
+                load_cases(duplicate)
+
+    def test_score_case_covers_empty_sets_failure_and_non_desktop_paths(self):
+        case = copy.deepcopy(CASES[0])
+        case["expected_blockers"] = []
+        case["required_dissent_tags"] = []
+        case["desktop_required"] = False
+        case["injected_failure"] = False
+
+        result = result_for(case)
+        result["blockers"] = []
+        result["dissent_tags"] = []
+        result["status"] = "FAILED"
+        result["role_outputs"] = {}
+        result["policy_violations"] = ["probe"]
+        result["human_override"] = True
+        score = score_case(case, result)
+
+        self.assertEqual(score["blocker_f1"], 1.0)
+        self.assertEqual(score["dissent_preservation"], 1.0)
+        self.assertEqual(score["desktop_execution"], 1.0)
+        self.assertEqual(score["completion"], 0.0)
+        self.assertEqual(score["policy_compliance"], 0.0)
+        self.assertEqual(score["unique_contribution"], 0.0)
+        self.assertTrue(score["human_override"])
+
+    def test_score_case_detects_id_mismatch_and_failed_recovery(self):
+        case = copy.deepcopy(CASES[1])
+        result = result_for(case)
+        result["failure_recovered"] = False
+        score = score_case(case, result)
+        self.assertEqual(score["failure_recovery"], 0.0)
+
+        result["case_id"] = "different_case"
+        with self.assertRaises(BakeoffError):
+            score_case(case, result)
+
+    def test_duplicate_content_ratio_handles_empty_and_single_outputs(self):
+        self.assertEqual(duplicate_content_ratio({}), 0.0)
+        self.assertEqual(duplicate_content_ratio({"A": "one contribution"}), 0.0)
+
+    def test_aggregate_rejects_empty_scores(self):
+        with self.assertRaises(BakeoffError):
+            aggregate_runtime("baseline", [], {}, CFG)
+
+    def test_perfect_live_runtime_can_be_selected_when_all_hard_gates_pass(self):
+        scores = [score_case(case, result_for(case, "openai_agents")) for case in CASES]
+        mechanics = {name: True for name in CFG["required_mechanics_for_winner"]}
+        summary = aggregate_runtime("openai_agents", scores, mechanics, CFG)
+        self.assertTrue(summary["hard_mechanics_pass"])
+        self.assertTrue(summary["eligible_for_winner"])
+
+        decision = select_winner([summary])
+        self.assertEqual(decision["state"], "WINNER_SELECTED")
+        self.assertEqual(decision["winner"], "openai_agents")
+
+    def test_winner_tie_break_path_and_evaluate_unknown_case_fail_closed(self):
+        first = {
+            "runtime_id": "first",
+            "eligible_for_winner": True,
+            "score": 0.9,
+            "cost_usd_total": 0.0,
+            "latency_ms_total": 20.0,
+        }
+        second = {
+            "runtime_id": "second",
+            "eligible_for_winner": True,
+            "score": 0.9,
+            "cost_usd_total": 0.0,
+            "latency_ms_total": 10.0,
+        }
+        self.assertEqual(select_winner([first, second])["winner"], "second")
+
+        result = result_for(CASES[0])
+        result["case_id"] = "unknown_case"
+        with self.assertRaises(BakeoffError):
+            evaluate(CASES, [result], {}, CFG)
 
 
 if __name__ == "__main__":
