@@ -211,6 +211,32 @@ class EvidenceSyncTests(unittest.TestCase):
                 overbound["authority_bindings"]["desktop_computer_use"]
             )
             bad_configs.append({"version": "1.0", "sources": [overbound]})
+
+            bad_age = copy.deepcopy(source)
+            bad_age["max_receipt_age_days"] = 0
+            bad_configs.append({"version": "1.0", "sources": [bad_age]})
+
+            bad_revoked = copy.deepcopy(source)
+            bad_revoked["revoked_receipt_ids"] = "receipt"
+            bad_configs.append({"version": "1.0", "sources": [bad_revoked]})
+
+            bad_scope_operation = copy.deepcopy(source)
+            bad_scope_operation["authority_bindings"]["desktop_computer_use"]["operation_verified_scope"][
+                "missing.operation"
+            ] = ["screenshot"]
+            bad_configs.append({"version": "1.0", "sources": [bad_scope_operation]})
+
+            empty_operation_scope = copy.deepcopy(source)
+            empty_operation_scope["authority_bindings"]["desktop_computer_use"]["operation_verified_scope"][
+                "desktop_computer_use.observe"
+            ] = []
+            bad_configs.append({"version": "1.0", "sources": [empty_operation_scope]})
+
+            over_operation_scope = copy.deepcopy(source)
+            over_operation_scope["authority_bindings"]["desktop_computer_use"]["operation_verified_scope"][
+                "desktop_computer_use.observe"
+            ] = ["external_publish"]
+            bad_configs.append({"version": "1.0", "sources": [over_operation_scope]})
             for cfg in bad_configs:
                 with self.subTest(cfg=cfg):
                     with self.assertRaises(EvidenceSyncError):
@@ -249,6 +275,7 @@ class EvidenceSyncTests(unittest.TestCase):
                 ("source_commit", "abc"),
                 ("observed_at", "not-a-date"),
                 ("observed_at", "2026-10-12T12:00:00"),
+                ("observed_at", "2000-01-01T00:00:00+00:00"),
                 ("verified_scope", []),
                 ("unverified_scope", "not-a-list"),
                 ("evidence_level", "BOUNDARY_ENFORCED"),
@@ -300,6 +327,17 @@ class EvidenceSyncTests(unittest.TestCase):
                 selected["desktop_computer_use"][1]["observed_at"],
                 newer["observed_at"],
             )
+
+
+            scope_missing = copy.deepcopy(receipt)
+            scope_missing["verified_scope"] = ["screenshot"]
+            with self.assertRaises(EvidenceSyncError):
+                apply_receipt_to_registry(
+                    BASE_REGISTRY,
+                    scope_missing,
+                    source,
+                    "company/evidence/imported/test.json",
+                )
 
             broken_source = copy.deepcopy(source)
             broken_source["authority_bindings"]["desktop_computer_use"]["operations"] = ["missing.operation"]
@@ -375,6 +413,7 @@ class EvidenceSyncTests(unittest.TestCase):
                 ("source_pin", lambda r, c: r.__setitem__("source_or_pin", "b" * 40)),
                 ("evidence_level", lambda r, c: r.__setitem__("evidence_level", "SCRIPT_TESTED")),
                 ("date", lambda r, c: r.__setitem__("last_verified_at", "2026-10-11")),
+                ("verified_scope", lambda r, c: r.__setitem__("verified_scope", ["physical_click"])),
             ]
 
             for name, mutate in mutations:
