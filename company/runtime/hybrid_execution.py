@@ -700,9 +700,7 @@ class HybridExecutor:
         )
         controls_desktop = controlling is not None
         controller_resource = (
-            f"desktop:{controlling.payload.get('authority_target', 'YASSIN')}"
-            if controlling is not None
-            else ""
+            f"desktop:{controlling.payload.get('authority_target', 'YASSIN')}" if controlling is not None else ""
         )
         if controls_desktop:
             try:
