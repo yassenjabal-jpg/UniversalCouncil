@@ -1,5 +1,13 @@
 # Universal Council Agent Runtime Bake-off — Phase 2 Decision Quality
 
+Status: DIAGNOSTIC_STALE_RUN — NOT FOR SELECTION
+
+The figures below are preserved only as historical diagnostics. The canonical results/report files were archived because this aggregate does not represent the latest harness and contains unfair runtime failures.
+
+See:
+`benchmarks/agent_runtime/archive/stale-08dbbf7b/`
+
+
 Date: 2026-10-13
 Provider: local Ollama on standard public GitHub-hosted runners
 Model: qwen3:4b-instruct
