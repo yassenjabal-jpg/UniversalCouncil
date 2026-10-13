@@ -98,12 +98,17 @@ async def baseline_call(endpoint: str, model: str, prompt: str, timeout: int) ->
 
 
 async def openai_agents_call(endpoint: str, model: str, prompt: str, timeout: int) -> tuple[str, dict[str, int]]:
-    from agents import Agent, AsyncOpenAI, OpenAIChatCompletionsModel, RunConfig, Runner, set_tracing_disabled
+    from agents import Agent, AsyncOpenAI, ModelSettings, OpenAIChatCompletionsModel, RunConfig, Runner, set_tracing_disabled
 
     set_tracing_disabled(True)
     client = AsyncOpenAI(api_key="ollama", base_url=f"{endpoint}/v1/", timeout=timeout)
     concrete_model = OpenAIChatCompletionsModel(model=model, openai_client=client)
-    agent = Agent(name="CouncilLiveProbe", instructions="Follow the user's requested output format exactly.", model=concrete_model)
+    agent = Agent(
+        name="CouncilLiveProbe",
+        instructions="Follow the user's requested output format exactly.",
+        model=concrete_model,
+        model_settings=ModelSettings(temperature=0.0, extra_args={"seed": 20261013}),
+    )
     result = await Runner.run(agent, prompt, run_config=RunConfig(tracing_disabled=True))
     usage = result.context_wrapper.usage
     return (
@@ -125,7 +130,12 @@ async def maf_call(endpoint: str, model: str, prompt: str, timeout: int) -> tupl
         api_key="ollama",
         timeout=float(timeout),
     )
-    agent = Agent(client=client, name="CouncilLiveProbe", instructions="Follow the user's requested output format exactly.")
+    agent = Agent(
+        client=client,
+        name="CouncilLiveProbe",
+        instructions="Follow the user's requested output format exactly.",
+        default_options={"temperature": 0.0, "seed": 20261013},
+    )
     response = await agent.run(prompt)
     usage = response.usage_details or {}
     return (
@@ -154,7 +164,7 @@ def extract_json(text: str) -> dict[str, Any]:
     raise ValueError("model did not return a JSON object")
 
 
-def case_source(case: dict[str, Any], max_chars: int = 12000) -> str:
+def case_source(case: dict[str, Any], max_chars: int = 8000) -> str:
     path = ROOT / case["source_artifact"]
     text = path.read_text(encoding="utf-8", errors="replace")
     if len(text) <= max_chars:
@@ -175,7 +185,7 @@ def global_vocab(cases: list[dict[str, Any]], field: str) -> list[str]:
 def routing_prompt(case: dict[str, Any], source: str) -> str:
     roles = [{"role": name, "purpose": ROLE_DESCRIPTIONS[name]} for name in role_registry()]
     return f"""You are the deterministic routing stage for Universal Council.
-Choose the smallest serious set of 2-6 roles needed to decide the case.
+Choose the smallest serious set of 2-7 roles needed to decide the case.
 Do not select roles because of popularity. Preserve at least one challenge perspective for consequential decisions.
 
 CASE:
@@ -281,7 +291,7 @@ async def run_case(
     for key in total_usage:
         total_usage[key] += int(usage.get(key, 0))
     route = extract_json(route_text)
-    participants = [role for role in route.get("participants", []) if role in ROLE_DESCRIPTIONS][:6]
+    participants = [role for role in route.get("participants", []) if role in ROLE_DESCRIPTIONS][:7]
     if len(participants) < 2:
         participants = ["Evidence & Verification", "Red Team / Falsification", "Execution & Feasibility"]
 
