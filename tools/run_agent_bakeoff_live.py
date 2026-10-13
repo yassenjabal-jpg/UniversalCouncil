@@ -3,6 +3,8 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import re
+import sys
 import time
 import urllib.error
 import urllib.request
@@ -11,6 +13,16 @@ from typing import Any
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from company.runtime.agent_bakeoff_provenance import (  # noqa: E402
+    build_manifest,
+    manifest_id,
+    require_yassin_runner,
+    sha256_bytes,
+    sha256_file,
+    write_manifest,
+)
 
 DECISION_OPTIONS: dict[str, list[str]] = {
     "c01_restructure_v04": ["KEEP_V0_3", "ADOPT_V0_4_NOW", "PROVISIONAL_RESTRUCTURE_CANDIDATE"],
@@ -22,8 +34,16 @@ DECISION_OPTIONS: dict[str, list[str]] = {
         "FULL_PRODUCTION_CERTIFIED",
     ],
     "c05_media_final_launch": ["NO_GO", "GO_WITH_CONDITIONS", "UNCONDITIONAL_GO"],
-    "c06_channel_operating_system": ["REJECT_CHANNEL_OS", "GO_ADOPT_CHANNEL_OPERATING_SYSTEM", "DEFER_INDEFINITELY"],
-    "c07_audio_sync_structure": ["KEEP_GENERIC_AUDIO", "ADOPT_MEDIA_PRODUCTION_CELL_V1_1", "OUTSOURCE_ALL_AUDIO"],
+    "c06_channel_operating_system": [
+        "REJECT_CHANNEL_OS",
+        "GO_ADOPT_CHANNEL_OPERATING_SYSTEM",
+        "DEFER_INDEFINITELY",
+    ],
+    "c07_audio_sync_structure": [
+        "KEEP_GENERIC_AUDIO",
+        "ADOPT_MEDIA_PRODUCTION_CELL_V1_1",
+        "OUTSOURCE_ALL_AUDIO",
+    ],
     "c08_youtube_studio_benchmark": ["REJECT", "ADOPT", "COPY_REFERENCE_STUDIOS"],
     "c09_work_environment_hardening": ["REJECT", "GO_FOR_SANDBOX_PILOT", "ADOPT_IMMEDIATELY"],
     "c10_intelligence_gateway": [
@@ -36,8 +56,16 @@ DECISION_OPTIONS: dict[str, list[str]] = {
         "PROACTIVE_READ_ONLY_SCOUTING_OWNER_GATED_ADOPTION",
         "HR_FULL_INSTALL_AUTHORITY",
     ],
-    "c12_governance_hardening": ["REJECT_GOVERNANCE_HARDENING", "ACCEPT_GOVERNANCE_HARDENING", "REMOVE_OWNER_GATES"],
-    "c13_memory_fabric": ["CHAT_MEMORY_CANONICAL", "IMPLEMENTED_GITHUB_CANONICAL_MEMORY", "UNVERSIONED_LOCAL_MEMORY"],
+    "c12_governance_hardening": [
+        "REJECT_GOVERNANCE_HARDENING",
+        "ACCEPT_GOVERNANCE_HARDENING",
+        "REMOVE_OWNER_GATES",
+    ],
+    "c13_memory_fabric": [
+        "CHAT_MEMORY_CANONICAL",
+        "IMPLEMENTED_GITHUB_CANONICAL_MEMORY",
+        "UNVERSIONED_LOCAL_MEMORY",
+    ],
     "c14_specialized_tool_policy": [
         "CODE_FIRST_FOR_ALL_MEDIA",
         "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
@@ -68,6 +96,26 @@ ROLE_DESCRIPTIONS = {
     "Business & Operations": "Assess operating model, process fit, execution ownership, and practical business constraints.",
 }
 
+BASELINE_V03_PERSPECTIVES = [
+    "Evidence & Verification",
+    "Red Team / Falsification",
+    "Execution & Feasibility",
+    "Risk & Assurance",
+    "Human & Adoption",
+    "Value & Economics",
+]
+
+STAGES: dict[str, list[str] | None] = {
+    "canary": ["c14_specialized_tool_policy"],
+    "representative": [
+        "c01_restructure_v04",
+        "c10_intelligence_gateway",
+        "c14_specialized_tool_policy",
+        "c15_market_reality_gate",
+    ],
+    "full": None,
+}
+
 OUTPUT_SCHEMA = {
     "final_decision": "one decision option exactly",
     "blockers": ["zero or more blocker labels from vocabulary"],
@@ -75,17 +123,33 @@ OUTPUT_SCHEMA = {
     "summary": "brief rationale",
 }
 
+LEAK_HEADING_RE = re.compile(
+    r"^#{1,6}\s*(final|final verdict|decision|verdict|recommendation|outcome|result|conclusion)\b",
+    re.IGNORECASE,
+)
+LEAK_LINE_RE = re.compile(
+    r"^(status|decision|final verdict|verdict|recommendation|outcome|result|conclusion)\s*[:：-]",
+    re.IGNORECASE,
+)
+
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def save_json_atomic(path: Path, value: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temp = path.with_suffix(path.suffix + ".tmp")
+    temp.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    temp.replace(path)
+
+
 def ensure_local_endpoint(endpoint: str) -> str:
     parsed = urlparse(endpoint)
-    if parsed.scheme not in {"http", "https"}:
-        raise ValueError("Ollama endpoint must be http(s)")
+    if parsed.scheme != "http":
+        raise ValueError("zero-cost local Ollama endpoint must use http")
     if parsed.hostname not in {"127.0.0.1", "localhost", "::1"}:
-        raise ValueError("LIVE bake-off is zero-cost/local-only: non-local model endpoint rejected")
+        raise ValueError("LIVE bake-off is YASSIN-local only: non-local model endpoint rejected")
     return endpoint.rstrip("/")
 
 
@@ -100,13 +164,13 @@ def ollama_native_call(endpoint: str, model: str, prompt: str, timeout: int) -> 
             "options": {"temperature": 0, "seed": 20261013, "num_ctx": 16384},
         }
     ).encode("utf-8")
-    req = urllib.request.Request(
+    request = urllib.request.Request(
         f"{endpoint}/api/chat",
         data=payload,
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=timeout) as response:
+    with urllib.request.urlopen(request, timeout=timeout) as response:
         data = json.loads(response.read().decode("utf-8"))
     return (
         str(data["message"]["content"]),
@@ -137,7 +201,7 @@ async def openai_agents_call(endpoint: str, model: str, prompt: str, timeout: in
     concrete_model = OpenAIChatCompletionsModel(model=model, openai_client=client)
     agent = Agent(
         name="CouncilLiveProbe",
-        instructions="Follow the user's requested output format exactly.",
+        instructions="Follow the user's requested JSON output exactly.",
         model=concrete_model,
         model_settings=ModelSettings(temperature=0.0, extra_args={"seed": 20261013}),
     )
@@ -164,10 +228,10 @@ async def maf_call(endpoint: str, model: str, prompt: str, timeout: int) -> tupl
     agent = Agent(
         client=client,
         name="CouncilLiveProbe",
-        instructions="Follow the user's requested output format exactly.",
+        instructions="Follow the user's requested JSON output exactly.",
         default_options={"temperature": 0.0, "seed": 20261013},
     )
-    response = await agent.run(prompt)
+    response = await asyncio.wait_for(agent.run(prompt), timeout=timeout)
     usage = response.usage_details or {}
     return (
         response.text or "",
@@ -176,6 +240,13 @@ async def maf_call(endpoint: str, model: str, prompt: str, timeout: int) -> tupl
             "output_tokens": int(usage.get("output_token_count", 0) or 0),
         },
     )
+
+
+RUNTIMES = {
+    "baseline": baseline_call,
+    "openai_agents": openai_agents_call,
+    "microsoft_agent_framework": maf_call,
+}
 
 
 def extract_json(text: str) -> dict[str, Any]:
@@ -195,14 +266,35 @@ def extract_json(text: str) -> dict[str, Any]:
     raise ValueError("model did not return a JSON object")
 
 
-def case_source(case: dict[str, Any], max_chars: int = 8000) -> str:
+def mask_historical_answer(text: str, expected_decision: str) -> str:
+    output: list[str] = []
+    skip_section = False
+    for line in text.splitlines():
+        stripped = line.strip()
+        if LEAK_HEADING_RE.match(stripped):
+            skip_section = True
+            output.append("[HISTORICAL_DECISION_SECTION_MASKED]")
+            continue
+        if skip_section and stripped.startswith("#"):
+            skip_section = False
+        if skip_section:
+            continue
+        if LEAK_LINE_RE.match(stripped):
+            output.append("[HISTORICAL_DECISION_LINE_MASKED]")
+            continue
+        output.append(line.replace(expected_decision, "[EXPECTED_DECISION_MASKED]"))
+    return "\n".join(output)
+
+
+def case_source(case: dict[str, Any], max_chars: int = 8000) -> tuple[str, str, str]:
     path = ROOT / case["source_artifact"]
-    text = path.read_text(encoding="utf-8", errors="replace")
-    if len(text) <= max_chars:
-        return text
-    head = text[: max_chars // 2]
-    tail = text[-max_chars // 2 :]
-    return f"{head}\n\n[...SOURCE TRUNCATED FOR CONTROLLED CONTEXT...]\n\n{tail}"
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    masked = mask_historical_answer(raw, case["expected_decision"])
+    if len(masked) > max_chars:
+        head = masked[: max_chars // 2]
+        tail = masked[-max_chars // 2 :]
+        masked = f"{head}\n\n[...SOURCE TRUNCATED FOR CONTROLLED CONTEXT...]\n\n{tail}"
+    return masked, sha256_bytes(masked.encode("utf-8")), sha256_file(path)
 
 
 def role_registry() -> list[str]:
@@ -213,16 +305,59 @@ def global_vocab(cases: list[dict[str, Any]], field: str) -> list[str]:
     return sorted({item for case in cases for item in case[field]})
 
 
-def routing_prompt(case: dict[str, Any], source: str) -> str:
-    roles = [{"role": name, "purpose": ROLE_DESCRIPTIONS[name]} for name in role_registry()]
-    return f"""You are the deterministic routing stage for Universal Council.
-Choose the smallest serious set of 2-7 roles needed to decide the case.
-Do not select roles because of popularity. Preserve at least one challenge perspective for consequential decisions.
+def baseline_v03_prompt(
+    case: dict[str, Any],
+    source: str,
+    decision_options: list[str],
+    blocker_vocab: list[str],
+    dissent_vocab: list[str],
+) -> str:
+    perspectives = {name: ROLE_DESCRIPTIONS[name] for name in BASELINE_V03_PERSPECTIVES}
+    return f"""You are executing the CURRENT Universal Council v0.3 baseline as one structured model run.
+The perspectives below are governance perspectives inside one run, not independent agents.
+Analyze them separately, then synthesize.
 
-CASE:
+QUESTION:
 {case["prompt"]}
 
-SOURCE ARTIFACT:
+MASKED SOURCE PACKET:
+{source}
+
+DECISION OPTIONS:
+{json.dumps(decision_options)}
+
+PERSPECTIVES:
+{json.dumps(perspectives, ensure_ascii=False)}
+
+GLOBAL BLOCKER LABEL VOCABULARY:
+{json.dumps(blocker_vocab)}
+
+GLOBAL DISSENT LABEL VOCABULARY:
+{json.dumps(dissent_vocab)}
+
+Return ONLY JSON:
+{{
+  "participants":["perspective names actually used"],
+  "role_outputs":{{"perspective":"brief independent position"}},
+  "final_decision":"one exact decision option",
+  "blockers":["supported labels only"],
+  "dissent_tags":["supported labels only"],
+  "summary":"brief synthesis"
+}}
+Do not infer the historical final answer from masked markers.
+"""
+
+
+def routing_prompt(case: dict[str, Any], source: str) -> str:
+    roles = [{"role": name, "purpose": ROLE_DESCRIPTIONS[name]} for name in role_registry()]
+    return f"""You are the routing stage for Universal Council.
+Choose the smallest serious set of 2-7 roles needed to decide the case.
+Preserve at least one challenge perspective for consequential decisions.
+
+QUESTION:
+{case["prompt"]}
+
+MASKED SOURCE PACKET:
 {source}
 
 AVAILABLE ROLES:
@@ -236,7 +371,7 @@ Return ONLY JSON:
 def role_prompt(role: str, case: dict[str, Any], source: str, decision_options: list[str]) -> str:
     return f"""You are acting as the independent Universal Council role: {role}.
 Role purpose: {ROLE_DESCRIPTIONS[role]}
-Form your position BEFORE seeing any other role's output.
+Form your position BEFORE seeing any other role output.
 
 QUESTION:
 {case["prompt"]}
@@ -244,12 +379,12 @@ QUESTION:
 DECISION OPTIONS:
 {json.dumps(decision_options)}
 
-SOURCE ARTIFACT:
+MASKED SOURCE PACKET:
 {source}
 
 Return ONLY JSON:
 {{"preferred_decision":"one exact decision option","blocker":"brief condition or empty string","dissent":"brief material challenge or empty string","rationale":"brief evidence-grounded reason"}}
-Do not invent facts outside the source.
+Do not invent facts outside the source and do not infer masked historical verdicts.
 """
 
 
@@ -262,13 +397,13 @@ def synthesis_prompt(
     dissent_vocab: list[str],
 ) -> str:
     return f"""You are the Universal Council synthesis stage.
-Use only the source artifact and independent role outputs.
+Use only the masked source packet and independent role outputs.
 Do not use majority vote blindly. Preserve material dissent.
 
 QUESTION:
 {case["prompt"]}
 
-SOURCE ARTIFACT:
+MASKED SOURCE PACKET:
 {source}
 
 INDEPENDENT ROLE OUTPUTS:
@@ -283,30 +418,130 @@ GLOBAL BLOCKER LABEL VOCABULARY:
 GLOBAL DISSENT LABEL VOCABULARY:
 {json.dumps(dissent_vocab)}
 
-Select blocker/dissent labels only when substantively supported by this case. Do not select labels merely because they are listed.
-
+Select blocker/dissent labels only when substantively supported by this case.
 Return ONLY JSON matching:
 {json.dumps(OUTPUT_SCHEMA)}
 """
 
 
+async def adapter_preflight(endpoint: str, model: str, timeout: int) -> None:
+    prompt = 'Return ONLY {"status":"ADAPTER_READY"}'
+    failures: list[str] = []
+    for runtime_id, call_fn in RUNTIMES.items():
+        try:
+            text, _ = await call_fn(endpoint, model, prompt, min(timeout, 90))
+            payload = extract_json(text)
+            if payload.get("status") != "ADAPTER_READY":
+                raise ValueError(f"unexpected adapter probe: {payload}")
+            print(f"ADAPTER_READY {runtime_id}", flush=True)
+        except Exception as exc:
+            failures.append(f"{runtime_id}:{type(exc).__name__}:{exc}")
+    if failures:
+        raise RuntimeError("adapter preflight failed: " + " | ".join(failures))
+
+
 async def guarded_call(
-    call_fn, endpoint: str, model: str, prompt: str, timeout: int, inject_failure: bool
+    call_fn,
+    endpoint: str,
+    model: str,
+    prompt: str,
+    timeout: int,
+    inject_failure: bool,
 ) -> tuple[str, dict[str, int], bool]:
     if not inject_failure:
         text, usage = await call_fn(endpoint, model, prompt, timeout)
         return text, usage, True
-
-    failed_once = False
     try:
-        failed_once = True
-        raise RuntimeError("synthetic live-recovery probe")
+        raise RuntimeError("synthetic harness recovery probe")
     except RuntimeError:
         text, usage = await call_fn(endpoint, model, prompt, timeout)
-        return text, usage, failed_once
+        return text, usage, True
 
 
-async def run_case(
+def result_provenance(
+    manifest: dict[str, Any],
+    case: dict[str, Any],
+    packet_sha256: str,
+    source_sha256: str,
+) -> dict[str, Any]:
+    return {
+        "manifest_id": manifest["manifest_id"],
+        "runner_id": manifest["runner_id"],
+        "source_head": manifest["source_head"],
+        "case_packet_sha256": packet_sha256,
+        "source_artifact_sha256": source_sha256,
+        "source_artifact": case["source_artifact"],
+    }
+
+
+async def run_baseline_case(
+    endpoint: str,
+    model: str,
+    case: dict[str, Any],
+    all_cases: list[dict[str, Any]],
+    timeout: int,
+    manifest: dict[str, Any],
+) -> dict[str, Any]:
+    started = time.perf_counter()
+    source, packet_sha, source_sha = case_source(case)
+    options = DECISION_OPTIONS[case["case_id"]]
+    text, usage = await baseline_call(
+        endpoint,
+        model,
+        baseline_v03_prompt(
+            case,
+            source,
+            options,
+            global_vocab(all_cases, "expected_blockers"),
+            global_vocab(all_cases, "required_dissent_tags"),
+        ),
+        timeout,
+    )
+    payload = extract_json(text)
+    participants = [x for x in payload.get("participants", []) if x in BASELINE_V03_PERSPECTIVES]
+    role_outputs = {
+        key: str(value)
+        for key, value in payload.get("role_outputs", {}).items()
+        if key in BASELINE_V03_PERSPECTIVES
+    }
+    final_decision = str(payload.get("final_decision", ""))
+    violations: list[str] = []
+    if final_decision not in options:
+        violations.append("INVALID_DECISION_OPTION")
+    blockers = [x for x in payload.get("blockers", []) if x in global_vocab(all_cases, "expected_blockers")]
+    dissent = [x for x in payload.get("dissent_tags", []) if x in global_vocab(all_cases, "required_dissent_tags")]
+    return {
+        "runtime_id": "baseline",
+        "case_id": case["case_id"],
+        "mode": "LIVE_DECISION",
+        "status": "COMPLETED" if not violations else "FAILED",
+        "final_decision": final_decision,
+        "participants": participants,
+        "role_outputs": role_outputs,
+        "blockers": blockers,
+        "dissent_tags": dissent,
+        "policy_violations": violations,
+        "human_override": False,
+        "failure_recovered": True,
+        "desktop": {
+            "task_completed": False,
+            "verification_passed": False,
+            "selector_recovered": False,
+            "correct_execution_path": False,
+            "no_unintended_action": True,
+        },
+        "usage": {
+            **usage,
+            "cost_usd": 0.0,
+            "provider": "local_ollama",
+            "model": model,
+        },
+        "latency_ms": round((time.perf_counter() - started) * 1000, 2),
+        "provenance": result_provenance(manifest, case, packet_sha, source_sha),
+    }
+
+
+async def run_agent_case(
     runtime_id: str,
     call_fn,
     endpoint: str,
@@ -314,9 +549,11 @@ async def run_case(
     case: dict[str, Any],
     all_cases: list[dict[str, Any]],
     timeout: int,
+    manifest: dict[str, Any],
+    role_concurrency: int,
 ) -> dict[str, Any]:
     started = time.perf_counter()
-    source = case_source(case)
+    source, packet_sha, source_sha = case_source(case)
     options = DECISION_OPTIONS[case["case_id"]]
     total_usage = {"input_tokens": 0, "output_tokens": 0}
 
@@ -328,16 +565,19 @@ async def run_case(
     if len(participants) < 2:
         participants = ["Evidence & Verification", "Red Team / Falsification", "Execution & Feasibility"]
 
+    semaphore = asyncio.Semaphore(max(1, role_concurrency))
+
     async def one_role(role: str):
-        text, role_usage, recovered = await guarded_call(
-            call_fn,
-            endpoint,
-            model,
-            role_prompt(role, case, source, options),
-            timeout,
-            bool(case["injected_failure"] and role == participants[0]),
-        )
-        return role, text, role_usage, recovered
+        async with semaphore:
+            text, role_usage, recovered = await guarded_call(
+                call_fn,
+                endpoint,
+                model,
+                role_prompt(role, case, source, options),
+                timeout,
+                bool(case["injected_failure"] and role == participants[0]),
+            )
+            return role, text, role_usage, recovered
 
     role_results = await asyncio.gather(*(one_role(role) for role in participants))
     role_outputs: dict[str, str] = {}
@@ -372,14 +612,6 @@ async def run_case(
     blockers = [x for x in synthesis.get("blockers", []) if x in global_vocab(all_cases, "expected_blockers")]
     dissent = [x for x in synthesis.get("dissent_tags", []) if x in global_vocab(all_cases, "required_dissent_tags")]
 
-    desktop = {
-        "task_completed": False,
-        "verification_passed": False,
-        "selector_recovered": False,
-        "correct_execution_path": False,
-        "no_unintended_action": True,
-    }
-
     return {
         "runtime_id": runtime_id,
         "case_id": case["case_id"],
@@ -393,7 +625,13 @@ async def run_case(
         "policy_violations": violations,
         "human_override": False,
         "failure_recovered": all(recovery_flags),
-        "desktop": desktop,
+        "desktop": {
+            "task_completed": False,
+            "verification_passed": False,
+            "selector_recovered": False,
+            "correct_execution_path": False,
+            "no_unintended_action": True,
+        },
         "usage": {
             **total_usage,
             "cost_usd": 0.0,
@@ -401,96 +639,171 @@ async def run_case(
             "model": model,
         },
         "latency_ms": round((time.perf_counter() - started) * 1000, 2),
+        "provenance": result_provenance(manifest, case, packet_sha, source_sha),
     }
+
+
+def failed_result(
+    runtime_id: str,
+    case: dict[str, Any],
+    model: str,
+    manifest: dict[str, Any],
+    exc: Exception,
+) -> dict[str, Any]:
+    _, packet_sha, source_sha = case_source(case)
+    return {
+        "runtime_id": runtime_id,
+        "case_id": case["case_id"],
+        "mode": "LIVE_DECISION",
+        "status": "FAILED",
+        "final_decision": "",
+        "participants": [],
+        "role_outputs": {},
+        "blockers": [],
+        "dissent_tags": [],
+        "policy_violations": [f"RUNTIME_ERROR:{type(exc).__name__}"],
+        "human_override": False,
+        "failure_recovered": False,
+        "desktop": {
+            "task_completed": False,
+            "verification_passed": False,
+            "selector_recovered": False,
+            "correct_execution_path": False,
+            "no_unintended_action": True,
+        },
+        "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "cost_usd": 0.0,
+            "provider": "local_ollama",
+            "model": model,
+        },
+        "latency_ms": 0.0,
+        "error": str(exc)[:500],
+        "provenance": result_provenance(manifest, case, packet_sha, source_sha),
+    }
+
+
+def select_stage_cases(all_cases: list[dict[str, Any]], stage: str) -> list[dict[str, Any]]:
+    selected = STAGES[stage]
+    if selected is None:
+        return list(all_cases)
+    by_id = {case["case_id"]: case for case in all_cases}
+    return [by_id[case_id] for case_id in selected]
 
 
 async def main_async(args: argparse.Namespace) -> int:
+    require_yassin_runner()
     endpoint = ensure_local_endpoint(args.endpoint)
-    cases = load_json(ROOT / "benchmarks" / "agent_runtime" / "cases.json")
+    all_cases = load_json(ROOT / "benchmarks" / "agent_runtime" / "cases.json")
+    cases = select_stage_cases(all_cases, args.stage)
     if args.case:
         cases = [case for case in cases if case["case_id"] == args.case]
         if not cases:
-            raise ValueError(f"unknown case: {args.case}")
+            raise ValueError(f"case {args.case} is not part of stage {args.stage}")
 
-    runtimes = {
-        "baseline": baseline_call,
-        "openai_agents": openai_agents_call,
-        "microsoft_agent_framework": maf_call,
-    }
-    selected = list(runtimes) if args.runtime == "all" else [args.runtime]
-    results: list[dict[str, Any]] = []
+    await adapter_preflight(endpoint, args.model, args.timeout)
 
-    for runtime_id in selected:
-        for index, case in enumerate(cases, start=1):
-            print(f"[{runtime_id}] {index}/{len(cases)} {case['case_id']}", flush=True)
-            try:
-                result = await run_case(
-                    runtime_id,
-                    runtimes[runtime_id],
-                    endpoint,
-                    args.model,
-                    case,
-                    load_json(ROOT / "benchmarks" / "agent_runtime" / "cases.json"),
-                    args.timeout,
-                )
-            except (Exception, urllib.error.URLError) as exc:
-                result = {
-                    "runtime_id": runtime_id,
-                    "case_id": case["case_id"],
-                    "mode": "LIVE_DECISION",
-                    "status": "FAILED",
-                    "final_decision": "",
-                    "participants": [],
-                    "role_outputs": {},
-                    "blockers": [],
-                    "dissent_tags": [],
-                    "policy_violations": [f"RUNTIME_ERROR:{type(exc).__name__}"],
-                    "human_override": False,
-                    "failure_recovered": False,
-                    "desktop": {
-                        "task_completed": False,
-                        "verification_passed": False,
-                        "selector_recovered": False,
-                        "correct_execution_path": False,
-                        "no_unintended_action": True,
-                    },
-                    "usage": {
-                        "input_tokens": 0,
-                        "output_tokens": 0,
-                        "cost_usd": 0.0,
-                        "provider": "local_ollama",
-                        "model": args.model,
-                    },
-                    "latency_ms": 0.0,
-                    "error": str(exc)[:500],
-                }
-            results.append(result)
+    manifest = build_manifest(
+        ROOT,
+        endpoint=endpoint,
+        model=args.model,
+        stage=args.stage,
+        selected_case_ids=[case["case_id"] for case in cases],
+    )
+    manifest["manifest_id"] = manifest_id(manifest)
+    manifest_path = ROOT / args.manifest
+    write_manifest(manifest_path, manifest)
+    manifest = load_json(manifest_path)
 
-    out = ROOT / args.out
-    out.parent.mkdir(parents=True, exist_ok=True)
+    out_name = args.out
+    if not out_name:
+        out_name = "benchmarks/agent_runtime/results.json" if args.stage == "full" else (
+            f"benchmarks/agent_runtime/results-{args.stage}.json"
+        )
+    out = ROOT / out_name
+
     existing: list[dict[str, Any]] = []
-    if args.append and out.exists():
-        existing = load_json(out)
-    out.write_text(json.dumps(existing + results, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    failures = [result for result in results if result["status"] != "COMPLETED"]
-    print(f"WROTE {len(results)} live results to {out}")
+    if args.resume and out.exists():
+        loaded = load_json(out)
+        if isinstance(loaded, list):
+            existing = [
+                result
+                for result in loaded
+                if result.get("provenance", {}).get("manifest_id") == manifest["manifest_id"]
+            ]
+
+    results = list(existing)
+    completed_keys = {
+        (result["runtime_id"], result["case_id"])
+        for result in results
+        if result.get("status") == "COMPLETED"
+    }
+
+    selected_runtimes = list(RUNTIMES) if args.runtime == "all" else [args.runtime]
+    failures = 0
+    for runtime_id in selected_runtimes:
+        for index, case in enumerate(cases, start=1):
+            key = (runtime_id, case["case_id"])
+            if key in completed_keys:
+                print(f"RESUME_SKIP {runtime_id} {case['case_id']}", flush=True)
+                continue
+            print(f"[{args.stage}] [{runtime_id}] {index}/{len(cases)} {case['case_id']}", flush=True)
+            try:
+                if runtime_id == "baseline":
+                    result = await run_baseline_case(
+                        endpoint,
+                        args.model,
+                        case,
+                        all_cases,
+                        args.timeout,
+                        manifest,
+                    )
+                else:
+                    result = await run_agent_case(
+                        runtime_id,
+                        RUNTIMES[runtime_id],
+                        endpoint,
+                        args.model,
+                        case,
+                        all_cases,
+                        args.timeout,
+                        manifest,
+                        args.role_concurrency,
+                    )
+            except (Exception, urllib.error.URLError) as exc:
+                result = failed_result(runtime_id, case, args.model, manifest, exc)
+                failures += 1
+
+            results = [r for r in results if (r["runtime_id"], r["case_id"]) != key]
+            results.append(result)
+            save_json_atomic(out, results)
+
+            if result["status"] != "COMPLETED":
+                failures += 1
+                if args.stage != "full":
+                    print("PRECHECK_STAGE_FAILED: stopping before a heavier stage.", flush=True)
+                    return 4
+
+    print(f"WROTE {len(results)} results to {out}", flush=True)
     if failures:
-        print(f"LIVE_BAKEOFF_FAILED: {len(failures)} result(s) were not completed")
+        print(f"LIVE_BAKEOFF_FAILED: {failures} incomplete result(s)", flush=True)
         return 4
     return 0
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run zero-cost LIVE_DECISION bake-off against local Ollama only.")
+    parser = argparse.ArgumentParser(description="Run zero-cost LIVE_DECISION bake-off on YASSIN only.")
     parser.add_argument("--endpoint", default="http://127.0.0.1:11434")
     parser.add_argument("--model", default="qwen3:4b-instruct")
-    parser.add_argument(
-        "--runtime", choices=["all", "baseline", "openai_agents", "microsoft_agent_framework"], default="all"
-    )
+    parser.add_argument("--runtime", choices=["all", *RUNTIMES], default="all")
+    parser.add_argument("--stage", choices=list(STAGES), default="canary")
     parser.add_argument("--case")
-    parser.add_argument("--timeout", type=int, default=180)
-    parser.add_argument("--out", default="benchmarks/agent_runtime/results.json")
-    parser.add_argument("--append", action="store_true")
+    parser.add_argument("--timeout", type=int, default=300)
+    parser.add_argument("--role-concurrency", type=int, default=2)
+    parser.add_argument("--out")
+    parser.add_argument("--manifest", default="benchmarks/agent_runtime/run_manifest.json")
+    parser.add_argument("--resume", action="store_true", default=True)
     args = parser.parse_args()
     return asyncio.run(main_async(args))
 
