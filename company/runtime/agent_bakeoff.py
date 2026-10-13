@@ -340,6 +340,8 @@ def aggregate_runtime(
         "live_decision_cases": live_count,
         "total_cases": len(case_scores),
         "mechanics_score": mechanics,
+        "desktop_cases_total": desktop_required_count,
+        "desktop_cases_passed": desktop_pass_count,
         "desktop_gate": {
             "required": desktop_required_count,
             "passed": desktop_pass_count,
