@@ -43,12 +43,8 @@ if (-not (Test-Path $python)) { python -m venv $venv }
 & $python -m pip install --disable-pip-version-check --no-input -r "benchmarks\\agent_runtime\\requirements.txt"
 if ($LASTEXITCODE -ne 0) { throw "Dependency installation failed." }
 
-try {
-    $null = Invoke-RestMethod -Uri "http://127.0.0.1:11434/api/tags" -TimeoutSec 3
-} catch {
-    & "$Repo\\tools\\setup_local_ollama.ps1" -Model $Model -ModelsDir "E:\\OllamaModels"
-    if ($LASTEXITCODE -ne 0) { throw "Local Ollama setup failed." }
-}
+& "$Repo\tools\setup_local_ollama.ps1" -Model $Model -ModelsDir "E:\OllamaModels"
+if ($LASTEXITCODE -ne 0) { throw "Local Ollama setup failed." }
 
 & $python "tools\\build_agent_bakeoff_packets.py"
 if ($LASTEXITCODE -ne 0) { throw "Masked packet generation failed." }
@@ -68,7 +64,14 @@ if ($Stage -eq "Preflight") {
 }
 
 if ($Stage -eq "Evaluate") {
-    & $python "tools\\run_agent_bakeoff.py"
+    $desktopReceipts = Join-Path $Repo "benchmarks\agent_runtime\desktop_receipts.json"
+    if (-not (Test-Path $desktopReceipts)) {
+        Write-Output '{"status":"DESKTOP_GATE_PENDING","required_receipts":6,"host":"YASSIN","cost_usd":0}'
+        exit 5
+    }
+    & $python "tools\apply_agent_bakeoff_desktop_receipts.py"
+    if ($LASTEXITCODE -ne 0) { throw "Desktop receipt validation failed." }
+    & $python "tools\run_agent_bakeoff.py"
     exit $LASTEXITCODE
 }
 
