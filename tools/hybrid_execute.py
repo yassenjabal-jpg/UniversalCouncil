@@ -25,6 +25,11 @@ from company.runtime.execution_recovery import (  # noqa: E402
     CheckpointStore,
     action_plan_hash,
 )
+from company.runtime.execution_trace import (  # noqa: E402
+    TraceEventType,
+    TraceRecorder,
+    evaluate_trace,
+)
 from company.runtime.hybrid_projection import project_execution_result  # noqa: E402
 from company.runtime.hybrid_verification import GuiPostStateVerifier  # noqa: E402
 
@@ -87,10 +92,25 @@ def main() -> int:
     journal_path = state_path.with_suffix(state_path.suffix + ".journal.jsonl")
     checkpoint_path = state_path.with_suffix(state_path.suffix + ".checkpoint.json")
     cancel_path = state_path.with_suffix(state_path.suffix + ".cancel.json")
+    trace_path = state_path.with_suffix(state_path.suffix + ".trace.jsonl")
     journal = ExecutionJournal(journal_path)
     checkpoint_store = CheckpointStore(checkpoint_path)
     cancellation_token = CancellationToken(cancel_path)
     plan_hash = action_plan_hash(action_list)
+    trace = TraceRecorder(
+        trace_path,
+        trace_id=f"{task_id}:{plan_hash[:16]}",
+        task_id=str(task_id),
+    )
+    trace.record(
+        TraceEventType.FRAME,
+        {
+            "goal": "hybrid execution",
+            "action_ids": [str(item["id"]) for item in action_list],
+            "resume_requested": bool(args.resume),
+            "execute_requested": bool(args.execute),
+        },
+    )
 
     if args.cancel and args.clear_cancel:
         raise HybridExecutionError("--cancel and --clear-cancel cannot be used together")
@@ -98,6 +118,15 @@ def main() -> int:
         cancellation_token.clear()
     if args.cancel:
         cancellation_token.cancel(args.cancel_reason)
+        trace.record(
+            TraceEventType.RECOVERY,
+            {
+                "action_id": str(action_list[0]["id"]),
+                "outcome": "CANCELLED",
+                "attempt": 0,
+                "reason": args.cancel_reason,
+            },
+        )
         print(
             json.dumps(
                 {
@@ -119,6 +148,15 @@ def main() -> int:
             task_id=str(task_id),
             action_id=str(action_list[0]["id"]),
             state=args.reconcile_outcome,
+        )
+        trace.record(
+            TraceEventType.RECOVERY,
+            {
+                "action_id": str(action_list[0]["id"]),
+                "outcome": "RECONCILED",
+                "attempt": 0,
+                "reconciled_state": args.reconcile_outcome,
+            },
         )
         print(
             json.dumps(
@@ -157,6 +195,7 @@ def main() -> int:
         authority_registry=authority_registry,
         journal=journal,
         cancellation_token=cancellation_token,
+        trace=trace,
     )
     projection = cfg["result_projection"]
     projection_args = {
@@ -203,7 +242,9 @@ def main() -> int:
         "journal_path": str(journal_path),
         "checkpoint_path": str(checkpoint_path),
         "cancel_path": str(cancel_path),
+        "trace_path": str(trace_path),
         "resume_from": resume_from,
+        "trace_evaluation": evaluate_trace(trace.events()),
     }
     print(json.dumps(output, indent=2, ensure_ascii=False, default=str))
     return 0
