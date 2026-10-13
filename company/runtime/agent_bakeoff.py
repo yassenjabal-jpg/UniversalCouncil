@@ -33,8 +33,14 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     desktop_min = float(cfg.get("minimum_desktop_execution_score", -1))
     if desktop_min < 0 or desktop_min > 1:
         raise BakeoffError("minimum_desktop_execution_score must be between 0 and 1")
-    if int(cfg.get("required_desktop_case_count", 0)) < 1:
+    required_desktop_case_count = int(cfg.get("required_desktop_case_count", 0))
+    if required_desktop_case_count < 1:
         raise BakeoffError("required_desktop_case_count must be positive")
+    desktop_case_ids = cfg.get("desktop_required_case_ids")
+    if not isinstance(desktop_case_ids, list) or len(desktop_case_ids) != required_desktop_case_count:
+        raise BakeoffError("desktop_required_case_ids must match required_desktop_case_count")
+    if int(cfg.get("desktop_required_passes", 0)) != required_desktop_case_count:
+        raise BakeoffError("desktop_required_passes must equal required_desktop_case_count")
     if cfg.get("require_provenance") is not True:
         raise BakeoffError("require_provenance must be true for live bake-off")
     provenance_keys = cfg.get("required_provenance_keys")
@@ -116,28 +122,6 @@ def validate_result(result: dict[str, Any]) -> bool:
         raise BakeoffError("desktop and usage must be objects")
     if not isinstance(result["provenance"], dict):
         raise BakeoffError("provenance must be an object")
-    return True
-
-
-def validate_provenance(
-    result: dict[str, Any],
-    expected_provenance: dict[str, Any],
-    cfg: dict[str, Any],
-) -> bool:
-    provenance = result["provenance"]
-    for key in cfg["required_provenance_keys"]:
-        if key not in expected_provenance:
-            raise BakeoffError(f"expected provenance missing key: {key}")
-        if provenance.get(key) != expected_provenance.get(key):
-            raise BakeoffError(
-                f"stale/mismatched provenance for {result['runtime_id']}:{result['case_id']} key={key}"
-            )
-    if float(provenance.get("financial_cost_usd", -1)) != 0.0:
-        raise BakeoffError("financial_cost_usd must be 0")
-    if float(result["usage"].get("cost_usd", -1)) != 0.0:
-        raise BakeoffError("result usage cost_usd must be 0")
-    if provenance.get("execution_host") != "YASSIN":
-        raise BakeoffError("live bake-off execution_host must be YASSIN")
     return True
 
 
@@ -427,6 +411,11 @@ def validate_live_provenance(
     by_runtime: dict[str, list[str]] = defaultdict(list)
     for result in live_results:
         by_runtime[str(result["runtime_id"])].append(str(result["case_id"]))
+    expected_runtimes = set(cfg["runtimes"])
+    if set(by_runtime) != expected_runtimes:
+        raise BakeoffError(
+            f"live result runtimes {sorted(by_runtime)} do not match expected {sorted(expected_runtimes)}"
+        )
     for runtime_id, case_ids in by_runtime.items():
         if len(case_ids) != len(set(case_ids)):
             raise BakeoffError(f"{runtime_id}: duplicate live case results")
@@ -440,17 +429,19 @@ def evaluate(
     results: list[dict[str, Any]],
     mechanics: dict[str, dict[str, Any]],
     cfg: dict[str, Any],
-    expected_provenance: dict[str, Any] | None = None,
+    manifest: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     validate_config(cfg)
-    if cfg.get("require_provenance") and expected_provenance is None:
-        raise BakeoffError("expected provenance manifest is required")
+    has_live = any(result.get("mode") == "LIVE_DECISION" for result in results)
+    if has_live:
+        if manifest is None:
+            raise BakeoffError("LIVE_DECISION evaluation requires a YASSIN provenance manifest")
+        validate_live_provenance(results, manifest, cfg)
+
     case_map = {case["case_id"]: case for case in cases}
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for result in results:
         validate_result(result)
-        if expected_provenance is not None:
-            validate_provenance(result, expected_provenance, cfg)
         case = case_map.get(result["case_id"])
         if case is None:
             raise BakeoffError(f"unknown case_id in result: {result['case_id']}")
@@ -464,7 +455,10 @@ def evaluate(
     if manifest is not None and manifest.get("stage") != "full":
         decision = {
             "state": "NO_WINNER",
-            "reason": f"Stage {manifest.get('stage')} is a preflight stage; only a full YASSIN run may select a winner.",
+            "reason": (
+                f"Stage {manifest.get('stage')} is a preflight stage; "
+                "only a full YASSIN run may select a winner."
+            ),
             "winner": None,
         }
     return {
