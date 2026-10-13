@@ -160,7 +160,6 @@ class AgentBakeoffTests(unittest.TestCase):
         score = score_case(case, result)
         self.assertLess(score["routing_accuracy"], 1.0)
 
-
     def test_validate_config_rejects_invalid_shapes(self):
         mutations = []
 
