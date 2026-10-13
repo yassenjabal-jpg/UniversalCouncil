@@ -156,7 +156,9 @@ class CancellationToken:
 
 
 def action_plan_hash(actions: list[dict[str, Any]]) -> str:
-    encoded = json.dumps(actions, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str).encode("utf-8")
+    encoded = json.dumps(actions, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str).encode(
+        "utf-8"
+    )
     return hashlib.sha256(encoded).hexdigest()
 
 
