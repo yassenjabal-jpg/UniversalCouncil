@@ -131,7 +131,9 @@ def validate_registry(cfg: dict[str, Any]) -> bool:
             if evidence_state == "CURRENT_VERIFIED" and not isinstance(current, dict):
                 raise ToolAuthorityError(f"{operation}: CURRENT_VERIFIED requires current_verified_capability metadata")
             if evidence_state != "CURRENT_VERIFIED" and current is not None:
-                raise ToolAuthorityError(f"{operation}: non-current evidence cannot populate current_verified_capability")
+                raise ToolAuthorityError(
+                    f"{operation}: non-current evidence cannot populate current_verified_capability"
+                )
 
     missing_operations = MINIMUM_OPERATIONS - operations
     if missing_operations:
@@ -158,19 +160,13 @@ def capability_dimensions(
     as_of: datetime | None = None,
 ) -> dict[str, Any]:
     classification = str(record.get("classification", "UNAVAILABLE"))
-    availability = (
-        "UNAVAILABLE"
-        if classification in {"UNAVAILABLE", "ADMIN_BLOCKED"}
-        else "AVAILABLE"
-    )
+    availability = "UNAVAILABLE" if classification in {"UNAVAILABLE", "ADMIN_BLOCKED"} else "AVAILABLE"
     currentness = capability_currentness(record, as_of=as_of)
     return {
         "availability": availability,
         "authority": classification,
         "historical_capability": bool(
-            record.get("historical_capability")
-            or record.get("evidence_receipt")
-            or record.get("source_or_pin")
+            record.get("historical_capability") or record.get("evidence_receipt") or record.get("source_or_pin")
         ),
         "current_verified_capability": bool(currentness.get("current")),
         "currentness_reason": currentness.get("reason"),
