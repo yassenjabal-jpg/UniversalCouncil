@@ -8,6 +8,7 @@ import re
 import subprocess
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from enum import StrEnum
 from typing import Any
 
 from company.runtime.tool_authority import validate_registry
@@ -15,6 +16,13 @@ from company.runtime.tool_authority import validate_registry
 
 class EvidenceSyncError(ValueError):
     pass
+
+
+class EvidenceState(StrEnum):
+    HISTORICAL = "HISTORICAL"
+    CURRENT_VERIFIED = "CURRENT_VERIFIED"
+    STALE = "STALE"
+    REVOKED = "REVOKED"
 
 
 RECEIPT_REQUIRED = {
@@ -29,6 +37,17 @@ RECEIPT_REQUIRED = {
     "verified_scope",
     "unverified_scope",
     "artifacts",
+}
+
+V11_RECEIPT_REQUIRED = {
+    "source_repository",
+    "component",
+    "component_version",
+    "host",
+    "session_id",
+    "expires_at",
+    "verifier",
+    "verifier_version",
 }
 
 FORBIDDEN_AUTHORITY_FIELDS = {
@@ -88,6 +107,15 @@ def validate_sync_config(cfg: dict[str, Any]) -> bool:
         bindings = set(source["authority_bindings"])
         if not bindings.issubset(allowed):
             raise EvidenceSyncError(f"{source['id']}: authority binding not allowlisted")
+        repository_identity = source.get("repository_identity")
+        if repository_identity is not None and (not isinstance(repository_identity, str) or not repository_identity):
+            raise EvidenceSyncError(f"{source['id']}: repository_identity must be a non-empty string")
+        component = source.get("component")
+        if component is not None and (not isinstance(component, str) or not component):
+            raise EvidenceSyncError(f"{source['id']}: component must be a non-empty string")
+        expected_host = source.get("expected_host")
+        if expected_host is not None and (not isinstance(expected_host, str) or not expected_host):
+            raise EvidenceSyncError(f"{source['id']}: expected_host must be a non-empty string")
         max_age = source.get("max_receipt_age_days", 30)
         if not isinstance(max_age, int) or max_age < 1:
             raise EvidenceSyncError(f"{source['id']}: max_receipt_age_days must be a positive integer")
@@ -169,14 +197,107 @@ def _verify_source_commit(source_root: Path, commit: str) -> None:
         raise EvidenceSyncError("source_commit does not exist in the approved source repository")
 
 
+def _parse_time(value: str, field: str) -> datetime:
+    try:
+        parsed = datetime.fromisoformat(value)
+    except ValueError as exc:
+        raise EvidenceSyncError(f"{field} must be ISO-8601") from exc
+    if parsed.tzinfo is None:
+        raise EvidenceSyncError(f"{field} must include a timezone")
+    return parsed.astimezone(timezone.utc)
+
+
+def receipt_evidence_state(
+    receipt: dict[str, Any],
+    source: dict[str, Any],
+    *,
+    as_of: datetime | None = None,
+) -> EvidenceState:
+    now = as_of or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        raise EvidenceSyncError("evidence as_of must be timezone-aware")
+    now = now.astimezone(timezone.utc)
+
+    if receipt.get("receipt_id") in set(source.get("revoked_receipt_ids", [])):
+        return EvidenceState.REVOKED
+
+    observed = _parse_time(str(receipt.get("observed_at", "")), "observed_at")
+    max_age_days = int(source.get("max_receipt_age_days", 30))
+    default_expiry = observed + timedelta(days=max_age_days)
+    expires_raw = receipt.get("expires_at")
+    expires = _parse_time(str(expires_raw), "expires_at") if expires_raw else default_expiry
+    if expires <= observed or now > expires or now - observed > timedelta(days=max_age_days):
+        return EvidenceState.STALE
+
+    if receipt.get("schema_version") != "1.1":
+        return EvidenceState.HISTORICAL
+    if V11_RECEIPT_REQUIRED - set(receipt):
+        return EvidenceState.HISTORICAL
+    if any(receipt.get(field) in (None, "") for field in V11_RECEIPT_REQUIRED):
+        return EvidenceState.HISTORICAL
+    return EvidenceState.CURRENT_VERIFIED
+
+
+def build_imported_receipt(
+    receipt: dict[str, Any],
+    source: dict[str, Any],
+    *,
+    ingested_at: str | None = None,
+) -> dict[str, Any]:
+    ingested = _parse_time(
+        ingested_at or datetime.now(timezone.utc).isoformat(),
+        "ingested_at",
+    )
+    state = receipt_evidence_state(receipt, source, as_of=ingested)
+    imported = copy.deepcopy(receipt)
+    imported["ingested_at"] = ingested.isoformat()
+    imported["evidence_state"] = state.value
+    imported["evidence_metadata"] = {
+        "source_repository": receipt.get("source_repository") or source.get("repository_identity"),
+        "source_commit": receipt.get("source_commit"),
+        "component": receipt.get("component") or source.get("component"),
+        "component_version": receipt.get("component_version"),
+        "host": receipt.get("host"),
+        "session_id": receipt.get("session_id"),
+        "observed_at": receipt.get("observed_at"),
+        "ingested_at": imported["ingested_at"],
+        "expires_at": receipt.get("expires_at"),
+        "verifier": receipt.get("verifier"),
+        "verifier_version": receipt.get("verifier_version"),
+        "verified_scope": list(receipt.get("verified_scope", [])),
+        "unverified_scope": list(receipt.get("unverified_scope", [])),
+    }
+    return imported
+
+
 def validate_receipt(receipt: dict[str, Any], source: dict[str, Any], source_root: Path) -> bool:
     missing = RECEIPT_REQUIRED - set(receipt)
     if missing:
         raise EvidenceSyncError(f"receipt missing fields: {sorted(missing)}")
     if FORBIDDEN_AUTHORITY_FIELDS & set(receipt):
         raise EvidenceSyncError("receipt may not contain authority-changing fields")
-    if receipt["schema_version"] != "1.0":
-        raise EvidenceSyncError("receipt schema_version must be 1.0")
+    if receipt["schema_version"] not in {"1.0", "1.1"}:
+        raise EvidenceSyncError("receipt schema_version must be 1.0 or 1.1")
+    if receipt["schema_version"] == "1.1":
+        missing_v11 = V11_RECEIPT_REQUIRED - set(receipt)
+        if missing_v11:
+            raise EvidenceSyncError(f"v1.1 receipt missing fields: {sorted(missing_v11)}")
+        for field in V11_RECEIPT_REQUIRED:
+            if receipt.get(field) in (None, ""):
+                raise EvidenceSyncError(f"v1.1 receipt {field} must be non-empty")
+        if receipt["source_repository"] != source.get("repository_identity"):
+            raise EvidenceSyncError("receipt source_repository mismatch")
+        if receipt["component"] != source.get("component"):
+            raise EvidenceSyncError("receipt component mismatch")
+        expected_host = source.get("expected_host")
+        if expected_host and receipt["host"] != expected_host:
+            raise EvidenceSyncError("receipt host mismatch")
+        expires_at = _parse_time(str(receipt["expires_at"]), "expires_at")
+        observed_for_expiry = _parse_time(str(receipt["observed_at"]), "observed_at")
+        if expires_at <= observed_for_expiry:
+            raise EvidenceSyncError("receipt expires_at must be later than observed_at")
+    elif source.get("allow_legacy_historical", True) is not True:
+        raise EvidenceSyncError("legacy evidence receipts are disabled for this source")
     if receipt["source_project"] != source["project_id"]:
         raise EvidenceSyncError("receipt source_project mismatch")
     if receipt["capability_id"] not in source["allowed_capability_ids"]:
@@ -192,8 +313,11 @@ def validate_receipt(receipt: dict[str, Any], source: dict[str, Any], source_roo
     max_age_days = int(source.get("max_receipt_age_days", 30))
     if now - observed_at > timedelta(days=max_age_days):
         raise EvidenceSyncError("receipt evidence is stale")
-    if receipt["receipt_id"] in set(source.get("revoked_receipt_ids", [])):
+    evidence_state = receipt_evidence_state(receipt, source, as_of=now)
+    if evidence_state == EvidenceState.REVOKED:
         raise EvidenceSyncError("receipt has been revoked")
+    if evidence_state == EvidenceState.STALE:
+        raise EvidenceSyncError("receipt evidence is stale or expired")
     _verify_source_commit(source_root, str(receipt["source_commit"]))
     if not isinstance(receipt["verified_scope"], list) or not receipt["verified_scope"]:
         raise EvidenceSyncError("verified_scope must be a non-empty list")
@@ -265,6 +389,13 @@ def apply_receipt_to_registry(
         record["last_verified_at"] = receipt["observed_at"][:10]
         record["source_or_pin"] = receipt["source_commit"]
         record["evidence_receipt"] = imported_receipt_path
+        state = receipt.get("evidence_state") or receipt_evidence_state(receipt, source).value
+        metadata = copy.deepcopy(receipt.get("evidence_metadata") or build_imported_receipt(receipt, source)["evidence_metadata"])
+        record["evidence_state"] = state
+        record["historical_capability"] = metadata
+        record["current_verified_capability"] = (
+            metadata if state == EvidenceState.CURRENT_VERIFIED.value else None
+        )
         operation_scopes = binding.get("operation_verified_scope", {})
         if operation_scopes:
             allowed_for_operation = set(operation_scopes.get(operation, []))
@@ -307,12 +438,16 @@ def sync_repository(
         for capability_id, (_, receipt) in chosen.items():
             relative = Path(cfg["import_dir"]) / source["id"] / f"{capability_id}.json"
             destination = repo_root / relative
+            imported_receipt = build_imported_receipt(receipt, source)
             if apply:
                 destination.parent.mkdir(parents=True, exist_ok=True)
-                destination.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                destination.write_text(
+                    json.dumps(imported_receipt, indent=2, ensure_ascii=False) + "\n",
+                    encoding="utf-8",
+                )
             working_registry = apply_receipt_to_registry(
                 working_registry,
-                receipt,
+                imported_receipt,
                 source,
                 relative.as_posix(),
             )
