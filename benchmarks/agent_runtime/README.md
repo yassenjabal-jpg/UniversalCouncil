@@ -95,11 +95,15 @@ The two desktop-required cases are:
 - `c02_gui_primary_hybrid`
 - `c04_after_effects_runtime_status`
 
-Desktop evidence is attached with:
+Desktop evidence is collected into one YASSIN receipt set:
 
-`tools/record_agent_bakeoff_desktop.py`
+`benchmarks/agent_runtime/desktop_receipts.json`
 
-Each runtime must pass both cases on YASSIN with:
+and applied atomically with:
+
+`python tools/apply_agent_bakeoff_desktop_receipts.py`
+
+The set must contain exactly 6 receipts: 3 runtimes × 2 desktop cases. Each runtime must pass both cases on YASSIN with:
 - before evidence;
 - semantic action receipt;
 - after evidence;
