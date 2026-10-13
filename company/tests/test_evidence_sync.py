@@ -31,7 +31,6 @@ class EvidenceSyncTests(unittest.TestCase):
         receipt_dir.mkdir(parents=True)
         artifact = project / "proof.txt"
         artifact.write_text("verified desktop capability\n", encoding="utf-8")
-        digest = hashlib.sha256(artifact.read_bytes()).hexdigest()
         subprocess.run(["git", "init"], cwd=project, check=True, capture_output=True)
         subprocess.run(["git", "config", "user.name", "Evidence Test"], cwd=project, check=True)
         subprocess.run(["git", "config", "user.email", "evidence@example.test"], cwd=project, check=True)
@@ -44,6 +43,13 @@ class EvidenceSyncTests(unittest.TestCase):
             capture_output=True,
             text=True,
         ).stdout.strip()
+        committed_bytes = subprocess.run(
+            ["git", "show", f"{source_commit}:proof.txt"],
+            cwd=project,
+            check=True,
+            capture_output=True,
+        ).stdout
+        digest = hashlib.sha256(committed_bytes).hexdigest()
         receipt = {
             "schema_version": "1.0",
             "receipt_id": "test-desktop",
