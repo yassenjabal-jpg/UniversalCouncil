@@ -108,12 +108,13 @@ def validate_registry(cfg: dict[str, Any]) -> bool:
             datetime.fromisoformat(str(record["last_verified_at"]))
         except ValueError as exc:
             raise ToolAuthorityError(f"{operation}: invalid last_verified_at") from exc
-        allowed_targets = record.get("allowed_targets")
-        if allowed_targets is not None:
-            if not isinstance(allowed_targets, list) or not allowed_targets:
-                raise ToolAuthorityError(f"{operation}: allowed_targets must be a non-empty list")
-            if not all(isinstance(item, str) and item.strip() for item in allowed_targets):
-                raise ToolAuthorityError(f"{operation}: allowed_targets must contain non-empty strings")
+        for constraint_name in ("allowed_targets", "allowed_principals", "allowed_action_scopes"):
+            values = record.get(constraint_name)
+            if values is not None:
+                if not isinstance(values, list) or not values:
+                    raise ToolAuthorityError(f"{operation}: {constraint_name} must be a non-empty list")
+                if not all(isinstance(item, str) and item.strip() for item in values):
+                    raise ToolAuthorityError(f"{operation}: {constraint_name} must contain non-empty strings")
         max_age = record.get("max_evidence_age_days")
         if max_age is not None and (not isinstance(max_age, int) or max_age < 1):
             raise ToolAuthorityError(f"{operation}: max_evidence_age_days must be a positive integer")
