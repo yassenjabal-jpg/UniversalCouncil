@@ -150,7 +150,6 @@ async def maf_call(endpoint: str, model: str, prompt: str, timeout: int) -> tupl
     from agent_framework import Agent
     from agent_framework.openai import OpenAIChatCompletionClient
 
-    del timeout
     client = OpenAIChatCompletionClient(model=model, base_url=f"{endpoint}/v1/", api_key="ollama")
     agent = Agent(
         client=client,
@@ -158,7 +157,7 @@ async def maf_call(endpoint: str, model: str, prompt: str, timeout: int) -> tupl
         instructions="Follow the user's requested output format exactly.",
         default_options={"temperature": 0.0, "seed": 20261013},
     )
-    response = await agent.run(prompt)
+    response = await asyncio.wait_for(agent.run(prompt), timeout=timeout)
     usage = response.usage_details or {}
     return (
         response.text or "",
@@ -419,6 +418,7 @@ async def run_candidate_case(
     source: str,
     timeout: int,
     provenance: dict[str, Any],
+    role_concurrency: int,
 ):
     started = time.perf_counter()
     all_cases = load_json(ROOT / "benchmarks" / "agent_runtime" / "cases.json")
@@ -432,15 +432,18 @@ async def run_candidate_case(
     if len(participants) < 2:
         participants = ["Evidence & Verification", "Red Team / Falsification", "Execution & Feasibility"]
 
+    semaphore = asyncio.Semaphore(max(1, role_concurrency))
+
     async def one_role(role: str):
-        text, role_usage = await call_with_retry(
-            call_fn,
-            endpoint,
-            model,
-            role_prompt(role, case, source, DECISION_OPTIONS[case["case_id"]]),
-            timeout,
-        )
-        return role, text, role_usage
+        async with semaphore:
+            text, role_usage = await call_with_retry(
+                call_fn,
+                endpoint,
+                model,
+                role_prompt(role, case, source, DECISION_OPTIONS[case["case_id"]]),
+                timeout,
+            )
+            return role, text, role_usage
 
     role_results = await asyncio.gather(*(one_role(role) for role in participants))
     role_outputs: dict[str, str] = {}
@@ -690,6 +693,7 @@ async def main_async(args: argparse.Namespace) -> int:
                         source,
                         args.timeout,
                         provenance,
+                        args.role_concurrency,
                     )
             except Exception as exc:
                 result = {
@@ -758,6 +762,7 @@ def main() -> int:
     parser.add_argument("--stage", choices=["canary", "representative", "full"], default="canary")
     parser.add_argument("--runtime", choices=["all", "baseline", "openai_agents", "microsoft_agent_framework"], default="all")
     parser.add_argument("--timeout", type=int, default=150)
+    parser.add_argument("--role-concurrency", type=int, default=2)
     parser.add_argument("--out")
     parser.add_argument("--manifest")
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
