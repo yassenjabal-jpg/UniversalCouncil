@@ -524,7 +524,9 @@ class HybridExecutionTests(unittest.TestCase):
     def test_executor_unknown_when_required_verification_fails(self):
         adapter = MockAdapter({"state": ResultState.SUCCEEDED.value})
         verifier = MockVerifier(False)
-        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, verifier=verifier, authority_registry=EXECUTION_TEST_REGISTRY)
+        executor = HybridExecutor(
+            BASE_CFG, gui_adapter=adapter, verifier=verifier, authority_registry=EXECUTION_TEST_REGISTRY
+        )
         state = SharedExecutionState("t4")
         result = executor.execute(
             {
@@ -544,7 +546,9 @@ class HybridExecutionTests(unittest.TestCase):
     def test_executor_verified_state_change_succeeds(self):
         adapter = MockAdapter({"state": ResultState.SUCCEEDED.value})
         verifier = MockVerifier(True)
-        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, verifier=verifier, authority_registry=EXECUTION_TEST_REGISTRY)
+        executor = HybridExecutor(
+            BASE_CFG, gui_adapter=adapter, verifier=verifier, authority_registry=EXECUTION_TEST_REGISTRY
+        )
         state = SharedExecutionState("t5")
         result = executor.execute(
             {
