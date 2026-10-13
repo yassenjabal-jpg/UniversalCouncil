@@ -743,7 +743,7 @@ class HybridExecutor:
             try:
                 state.acquire_controller(requester)
                 state_acquired = True
-                self.controller_lease.acquire(controller_resource, requester)
+                self.controller_lease.acquire(controller_resource, controller_holder)
             except (ExecutionControlError, HybridExecutionError) as exc:
                 if state_acquired and state.controller_lease == requester:
                     state.release_controller(requester)
@@ -783,7 +783,7 @@ class HybridExecutor:
         finally:
             if controls_desktop and state.controller_lease == requester:
                 state.release_controller(requester)
-                self.controller_lease.release(controller_resource, requester)
+                self.controller_lease.release(controller_resource, controller_holder)
 
 
 def eligible_for_routine_graduation(history: list[dict[str, Any]], cfg: dict[str, Any]) -> bool:
