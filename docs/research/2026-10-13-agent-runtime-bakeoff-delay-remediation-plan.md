@@ -182,7 +182,7 @@ Actions:
 4. Store Ollama models on E: only.
 5. Run Ollama locally only on `127.0.0.1`.
 6. Verify the GUI bridge with one harmless application open/observe/close workflow and record before/after evidence.
-7. Keep DESKTOP-RQUULE9 as a secondary non-authoritative compute/recovery node, not as a silent replacement for YASSIN desktop evidence.
+7. Do not use DESKTOP-RQUULE9 or any other machine as a compute/recovery substitute. If YASSIN is unavailable, the live bake-off stops.
 
 Acceptance:
 - 10 consecutive health probes without timeout;
@@ -231,43 +231,39 @@ Acceptance:
 - model-facing packet contains no expected decision token;
 - grader retains traceability back to original repository evidence.
 
-### Gate 4 — redesign CI to stop wasting long runs
+### Gate 4 — YASSIN-local staged execution only
 
-Split CI into two workflows.
+The live bake-off must not run on GitHub-hosted runners, DESKTOP-RQUULE9, or another computer.
 
-#### Fast preflight — automatic on push
+Use the single entrypoint:
 
-Runs:
-- config validation;
-- unit tests;
-- Ruff;
-- provider adapter constructor tests;
-- one tiny local fake/provider smoke;
-- provenance schema checks.
+`tools/run_yassin_bakeoff.ps1`
 
-Must complete before live execution is permitted.
-
-#### Heavy live bake-off — manual workflow_dispatch only
+Stages:
+- `Preflight`: masked packets, unit tests, repository validation, Ollama-local check, and 10 consecutive YASSIN health probes;
+- `Canary`: one case across all three runtimes;
+- `Representative`: four cases only after a matching Canary receipt;
+- `Full`: all 16 cases only after a matching Representative receipt;
+- `Evaluate`: scoring only after the full manifest and desktop evidence are valid.
 
 Rules:
-- do not start automatically for every code push;
-- add `concurrency` with `cancel-in-progress: true`;
-- run a 1-case canary for all runtimes first;
-- then a 4-case representative set;
-- only then run all 16 cases;
-- aggregation uses `if: always()`;
-- partial artifacts are always retained;
-- incomplete runs produce `INCOMPLETE_RUN`, never overwrite the latest valid complete run.
+- no automatic live run on Git push;
+- no external compute fallback;
+- results are written atomically after every case;
+- completed cases resume only when the experiment provenance matches;
+- incomplete stages never overwrite a valid completed-stage receipt.
 
 Acceptance:
-- no full 16-case workflow can start when canary fails;
-- aggregate always emits a diagnostic manifest even if one runtime fails.
+- Canary cannot run without YASSIN Preflight;
+- Representative cannot run without a matching Canary receipt;
+- Full cannot run without a matching Representative receipt;
+- final scoring refuses non-Full manifests and stale provenance.
 
 ### Gate 5 — timeout and performance hardening
 
 Actions:
 1. Use YASSIN GPU as primary zero-cost live runner once healthy.
-2. Keep GitHub-hosted CPU execution as fallback/cross-check, not the primary long-run path.
+2. Do not use GitHub-hosted CPU execution or any other machine as fallback/cross-check for live decision runs.
 3. Reduce model-facing source packet size after answer masking.
 4. Apply explicit per-stage budgets instead of one generic 180-second timeout.
 5. Retry only transient local-provider timeouts; do not retry schema/API defects.
@@ -347,9 +343,9 @@ Council v0.4 remains provisional until this gate passes.
 
 P0:
 - restore/update YASSIN transport;
-- add provenance/stale-result rejection;
-- repair aggregate-on-failure behavior;
-- validate the MAF adapter with a one-case canary.
+- keep live execution YASSIN-only with no compute fallback;
+- validate provenance/stale-result rejection;
+- validate the MAF adapter with a one-case YASSIN canary.
 
 P1:
 - faithful baseline adapter;
