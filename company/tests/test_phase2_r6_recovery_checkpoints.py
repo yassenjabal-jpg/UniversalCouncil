@@ -5,8 +5,6 @@ import tempfile
 import unittest
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-
 from company.runtime.execution_controls import ExecutionJournal
 from company.runtime.hybrid_execution import HybridExecutor, ResultState, SharedExecutionState
 from company.runtime.execution_recovery import (
@@ -21,7 +19,7 @@ from company.runtime.execution_recovery import (
     decide_recovery,
 )
 
-
+ROOT = Path(__file__).resolve().parents[2]
 BASE_CFG = json.loads((ROOT / "company/config/hybrid_execution.json").read_text(encoding="utf-8"))
 BASE_REGISTRY = json.loads((ROOT / "company/config/tool_authority.json").read_text(encoding="utf-8"))
 
