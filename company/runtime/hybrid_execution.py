@@ -610,10 +610,14 @@ class HybridExecutor:
         )
         controller_resource = f"desktop:{planned.payload.get('authority_target', 'YASSIN')}"
         if controls_desktop:
+            state_acquired = False
             try:
-                self.controller_lease.acquire(controller_resource, requester)
                 state.acquire_controller(requester)
+                state_acquired = True
+                self.controller_lease.acquire(controller_resource, requester)
             except (ExecutionControlError, HybridExecutionError) as exc:
+                if state_acquired and state.controller_lease == requester:
+                    state.release_controller(requester)
                 state.record_result(planned, ResultState.BLOCKED)
                 return {
                     "state": ResultState.BLOCKED.value,
@@ -703,10 +707,14 @@ class HybridExecutor:
             f"desktop:{controlling.payload.get('authority_target', 'YASSIN')}" if controlling is not None else ""
         )
         if controls_desktop:
+            state_acquired = False
             try:
-                self.controller_lease.acquire(controller_resource, requester)
                 state.acquire_controller(requester)
+                state_acquired = True
+                self.controller_lease.acquire(controller_resource, requester)
             except (ExecutionControlError, HybridExecutionError) as exc:
+                if state_acquired and state.controller_lease == requester:
+                    state.release_controller(requester)
                 return {
                     "state": ResultState.BLOCKED.value,
                     "completed": 0,
