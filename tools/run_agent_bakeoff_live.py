@@ -206,10 +206,8 @@ DECISION OPTIONS:
 SOURCE ARTIFACT:
 {source}
 
-Return concise plain text containing:
-- preferred decision option and why;
-- strongest blocker or condition;
-- one material dissent/challenge if applicable.
+Return ONLY JSON:
+{"preferred_decision":"one exact decision option","blocker":"brief condition or empty string","dissent":"brief material challenge or empty string","rationale":"brief evidence-grounded reason"}
 Do not invent facts outside the source.
 """
 
