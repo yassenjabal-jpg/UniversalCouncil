@@ -46,6 +46,12 @@
       "enforcement": "CONNECTOR_POLICY",
       "allowed_targets": [
         "yassenjabal-jpg/UniversalCouncil"
+      ],
+      "allowed_principals": [
+        "technical_operator"
+      ],
+      "allowed_action_scopes": [
+        "universal_council_repository"
       ]
     },
     {
@@ -70,6 +76,12 @@
       "enforcement": "CONNECTOR_POLICY",
       "allowed_targets": [
         "yassenjabal-jpg/UniversalCouncil"
+      ],
+      "allowed_principals": [
+        "technical_operator"
+      ],
+      "allowed_action_scopes": [
+        "universal_council_repository"
       ]
     },
     {
@@ -97,6 +109,13 @@
       "enforcement": "GATEWAY_ENFORCED",
       "allowed_targets": [
         "yassenjabal-jpg/UniversalCouncil"
+      ],
+      "allowed_principals": [
+        "technical_operator",
+        "memory_fabric"
+      ],
+      "allowed_action_scopes": [
+        "memory_fabric"
       ]
     },
     {
@@ -189,6 +208,12 @@
       "enforcement": "POLICY_ENFORCED_ONLY",
       "allowed_targets": [
         "YASSIN"
+      ],
+      "allowed_principals": [
+        "technical_operator"
+      ],
+      "allowed_action_scopes": [
+        "yassin_host"
       ]
     },
     {
@@ -268,6 +293,12 @@
       ],
       "allowed_targets": [
         "YASSIN"
+      ],
+      "allowed_principals": [
+        "technical_operator"
+      ],
+      "allowed_action_scopes": [
+        "yassin_desktop"
       ]
     },
     {
