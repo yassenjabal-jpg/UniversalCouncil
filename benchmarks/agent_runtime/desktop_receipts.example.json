@@ -1,0 +1,182 @@
+[
+  {
+    "runtime_id": "baseline",
+    "case_id": "c02_gui_primary_hybrid",
+    "execution_host": "YASSIN",
+    "manifest_id": "REPLACE_WITH_FULL_MANIFEST_ID",
+    "cost_usd": 0,
+    "execution_path": "GUI_SEMANTIC",
+    "fallback_reason": null,
+    "desktop": {
+      "task_completed": true,
+      "verification_passed": true,
+      "selector_recovered": true,
+      "correct_execution_path": true,
+      "no_unintended_action": true
+    },
+    "evidence": [
+      {
+        "kind": "before",
+        "ref": "REPLACE_WITH_BEFORE_EVIDENCE_REF"
+      },
+      {
+        "kind": "semantic_action",
+        "ref": "REPLACE_WITH_GUI_BRIDGE_ACTION_RECEIPT"
+      },
+      {
+        "kind": "after",
+        "ref": "REPLACE_WITH_AFTER_EVIDENCE_REF"
+      }
+    ]
+  },
+  {
+    "runtime_id": "baseline",
+    "case_id": "c04_after_effects_runtime_status",
+    "execution_host": "YASSIN",
+    "manifest_id": "REPLACE_WITH_FULL_MANIFEST_ID",
+    "cost_usd": 0,
+    "execution_path": "GUI_SEMANTIC",
+    "fallback_reason": null,
+    "desktop": {
+      "task_completed": true,
+      "verification_passed": true,
+      "selector_recovered": true,
+      "correct_execution_path": true,
+      "no_unintended_action": true
+    },
+    "evidence": [
+      {
+        "kind": "before",
+        "ref": "REPLACE_WITH_BEFORE_EVIDENCE_REF"
+      },
+      {
+        "kind": "semantic_action",
+        "ref": "REPLACE_WITH_GUI_BRIDGE_ACTION_RECEIPT"
+      },
+      {
+        "kind": "after",
+        "ref": "REPLACE_WITH_AFTER_EVIDENCE_REF"
+      }
+    ]
+  },
+  {
+    "runtime_id": "openai_agents",
+    "case_id": "c02_gui_primary_hybrid",
+    "execution_host": "YASSIN",
+    "manifest_id": "REPLACE_WITH_FULL_MANIFEST_ID",
+    "cost_usd": 0,
+    "execution_path": "GUI_SEMANTIC",
+    "fallback_reason": null,
+    "desktop": {
+      "task_completed": true,
+      "verification_passed": true,
+      "selector_recovered": true,
+      "correct_execution_path": true,
+      "no_unintended_action": true
+    },
+    "evidence": [
+      {
+        "kind": "before",
+        "ref": "REPLACE_WITH_BEFORE_EVIDENCE_REF"
+      },
+      {
+        "kind": "semantic_action",
+        "ref": "REPLACE_WITH_GUI_BRIDGE_ACTION_RECEIPT"
+      },
+      {
+        "kind": "after",
+        "ref": "REPLACE_WITH_AFTER_EVIDENCE_REF"
+      }
+    ]
+  },
+  {
+    "runtime_id": "openai_agents",
+    "case_id": "c04_after_effects_runtime_status",
+    "execution_host": "YASSIN",
+    "manifest_id": "REPLACE_WITH_FULL_MANIFEST_ID",
+    "cost_usd": 0,
+    "execution_path": "GUI_SEMANTIC",
+    "fallback_reason": null,
+    "desktop": {
+      "task_completed": true,
+      "verification_passed": true,
+      "selector_recovered": true,
+      "correct_execution_path": true,
+      "no_unintended_action": true
+    },
+    "evidence": [
+      {
+        "kind": "before",
+        "ref": "REPLACE_WITH_BEFORE_EVIDENCE_REF"
+      },
+      {
+        "kind": "semantic_action",
+        "ref": "REPLACE_WITH_GUI_BRIDGE_ACTION_RECEIPT"
+      },
+      {
+        "kind": "after",
+        "ref": "REPLACE_WITH_AFTER_EVIDENCE_REF"
+      }
+    ]
+  },
+  {
+    "runtime_id": "microsoft_agent_framework",
+    "case_id": "c02_gui_primary_hybrid",
+    "execution_host": "YASSIN",
+    "manifest_id": "REPLACE_WITH_FULL_MANIFEST_ID",
+    "cost_usd": 0,
+    "execution_path": "GUI_SEMANTIC",
+    "fallback_reason": null,
+    "desktop": {
+      "task_completed": true,
+      "verification_passed": true,
+      "selector_recovered": true,
+      "correct_execution_path": true,
+      "no_unintended_action": true
+    },
+    "evidence": [
+      {
+        "kind": "before",
+        "ref": "REPLACE_WITH_BEFORE_EVIDENCE_REF"
+      },
+      {
+        "kind": "semantic_action",
+        "ref": "REPLACE_WITH_GUI_BRIDGE_ACTION_RECEIPT"
+      },
+      {
+        "kind": "after",
+        "ref": "REPLACE_WITH_AFTER_EVIDENCE_REF"
+      }
+    ]
+  },
+  {
+    "runtime_id": "microsoft_agent_framework",
+    "case_id": "c04_after_effects_runtime_status",
+    "execution_host": "YASSIN",
+    "manifest_id": "REPLACE_WITH_FULL_MANIFEST_ID",
+    "cost_usd": 0,
+    "execution_path": "GUI_SEMANTIC",
+    "fallback_reason": null,
+    "desktop": {
+      "task_completed": true,
+      "verification_passed": true,
+      "selector_recovered": true,
+      "correct_execution_path": true,
+      "no_unintended_action": true
+    },
+    "evidence": [
+      {
+        "kind": "before",
+        "ref": "REPLACE_WITH_BEFORE_EVIDENCE_REF"
+      },
+      {
+        "kind": "semantic_action",
+        "ref": "REPLACE_WITH_GUI_BRIDGE_ACTION_RECEIPT"
+      },
+      {
+        "kind": "after",
+        "ref": "REPLACE_WITH_AFTER_EVIDENCE_REF"
+      }
+    ]
+  }
+]
