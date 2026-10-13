@@ -5,7 +5,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[2]
+
 from company.runtime.execution_controls import ExecutionJournal
+from company.runtime.hybrid_execution import HybridExecutor, ResultState, SharedExecutionState
 from company.runtime.execution_recovery import (
     CancellationToken,
     CheckpointError,
@@ -17,6 +20,20 @@ from company.runtime.execution_recovery import (
     action_plan_hash,
     decide_recovery,
 )
+
+
+BASE_CFG = json.loads((ROOT / "company/config/hybrid_execution.json").read_text(encoding="utf-8"))
+BASE_REGISTRY = json.loads((ROOT / "company/config/tool_authority.json").read_text(encoding="utf-8"))
+
+
+class SequenceAdapter:
+    def __init__(self, results):
+        self.results = list(results)
+        self.calls = []
+
+    def dispatch(self, action):
+        self.calls.append(dict(action))
+        return dict(self.results.pop(0))
 
 
 class Phase2R6RecoveryCheckpointTests(unittest.TestCase):
@@ -125,6 +142,172 @@ class Phase2R6RecoveryCheckpointTests(unittest.TestCase):
             journal.record_result(task_id="task", action_id="a1", state="SUCCEEDED")
             self.assertEqual(journal.last_result_state("task", "a1"), "SUCCEEDED")
             self.assertEqual(journal.completed_action_ids("task"), {"a1"})
+
+    def test_unknown_execution_is_not_replayed_without_reconciliation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            journal = ExecutionJournal(Path(tmp) / "journal.jsonl")
+            adapter = SequenceAdapter(
+                [
+                    {"state": ResultState.UNKNOWN.value, "reason": "provider uncertain"},
+                    {"state": ResultState.SUCCEEDED.value},
+                ]
+            )
+            executor = HybridExecutor(
+                BASE_CFG,
+                native_adapter=adapter,
+                authority_registry=BASE_REGISTRY,
+                journal=journal,
+            )
+            action = {
+                "id": "uncertain",
+                "native_available": True,
+                "authority_operation": "github.read",
+            }
+            first = executor.execute(
+                action,
+                SharedExecutionState("task-unknown"),
+                requester="technical_operator",
+                task_approved=True,
+            )
+            self.assertEqual(first["state"], ResultState.UNKNOWN.value)
+            second = executor.execute(
+                action,
+                SharedExecutionState("task-unknown"),
+                requester="technical_operator",
+                task_approved=True,
+            )
+            self.assertEqual(second["state"], ResultState.UNKNOWN.value)
+            self.assertEqual(len(adapter.calls), 1)
+
+    def test_bounded_retry_requires_both_action_and_provider_safety(self):
+        adapter = SequenceAdapter(
+            [
+                {"state": ResultState.FAILED.value, "safe_to_retry": True},
+                {"state": ResultState.SUCCEEDED.value},
+            ]
+        )
+        executor = HybridExecutor(
+            BASE_CFG,
+            native_adapter=adapter,
+            authority_registry=BASE_REGISTRY,
+        )
+        action = {
+            "id": "safe-retry",
+            "native_available": True,
+            "authority_operation": "github.read",
+            "retry_safe": True,
+            "max_retries": 5,
+        }
+        result = executor.execute_with_recovery(
+            action,
+            SharedExecutionState("retry-task"),
+            requester="technical_operator",
+            task_approved=True,
+        )
+        self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
+        self.assertEqual(result["attempts"], 2)
+        self.assertEqual(len(adapter.calls), 2)
+
+        unsafe_adapter = SequenceAdapter(
+            [
+                {"state": ResultState.FAILED.value, "safe_to_retry": False},
+                {"state": ResultState.SUCCEEDED.value},
+            ]
+        )
+        unsafe_executor = HybridExecutor(
+            BASE_CFG,
+            native_adapter=unsafe_adapter,
+            authority_registry=BASE_REGISTRY,
+        )
+        unsafe = unsafe_executor.execute_with_recovery(
+            action,
+            SharedExecutionState("unsafe-retry-task"),
+            requester="technical_operator",
+            task_approved=True,
+        )
+        self.assertEqual(unsafe["state"], ResultState.FAILED.value)
+        self.assertEqual(len(unsafe_adapter.calls), 1)
+
+    def test_checkpoint_resume_continues_after_last_verified_action(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            journal = ExecutionJournal(root / "journal.jsonl")
+            store = CheckpointStore(root / "checkpoint.json")
+            actions = [
+                {"id": "a", "native_available": True, "authority_operation": "github.read"},
+                {"id": "b", "native_available": True, "authority_operation": "github.read"},
+            ]
+            plan_hash = action_plan_hash(actions)
+
+            first_adapter = SequenceAdapter(
+                [
+                    {"state": ResultState.SUCCEEDED.value},
+                    {"state": ResultState.FAILED.value},
+                ]
+            )
+            first_executor = HybridExecutor(
+                BASE_CFG,
+                native_adapter=first_adapter,
+                authority_registry=BASE_REGISTRY,
+                journal=journal,
+            )
+            first_state = SharedExecutionState("resume-task")
+            first = first_executor.execute_batch(
+                actions,
+                first_state,
+                requester="technical_operator",
+                task_approved=True,
+                checkpoint_store=store,
+                plan_hash=plan_hash,
+            )
+            self.assertEqual(first["state"], ResultState.FAILED.value)
+            checkpoint = store.load(task_id="resume-task", plan_hash=plan_hash)
+            self.assertEqual(checkpoint["next_action_index"], 1)
+            self.assertEqual(checkpoint["completed_action_ids"], ["a"])
+
+            resumed_state = SharedExecutionState.from_dict(checkpoint["state"])
+            second_adapter = SequenceAdapter([{"state": ResultState.SUCCEEDED.value}])
+            second_executor = HybridExecutor(
+                BASE_CFG,
+                native_adapter=second_adapter,
+                authority_registry=BASE_REGISTRY,
+                journal=journal,
+            )
+            second = second_executor.execute_batch(
+                actions,
+                resumed_state,
+                requester="technical_operator",
+                task_approved=True,
+                checkpoint_store=store,
+                plan_hash=plan_hash,
+                resume_from=checkpoint["next_action_index"],
+            )
+            self.assertEqual(second["state"], ResultState.SUCCEEDED.value)
+            self.assertEqual(second["completed"], 2)
+            self.assertEqual(len(second_adapter.calls), 1)
+            final_checkpoint = store.load(task_id="resume-task", plan_hash=plan_hash)
+            self.assertTrue(final_checkpoint["completed"])
+            self.assertEqual(final_checkpoint["completed_action_ids"], ["a", "b"])
+
+    def test_cancelled_batch_stops_before_dispatch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            token = CancellationToken(Path(tmp) / "cancel.json")
+            token.cancel("operator stop")
+            adapter = SequenceAdapter([{"state": ResultState.SUCCEEDED.value}])
+            executor = HybridExecutor(
+                BASE_CFG,
+                native_adapter=adapter,
+                authority_registry=BASE_REGISTRY,
+                cancellation_token=token,
+            )
+            result = executor.execute_batch(
+                [{"id": "a", "native_available": True, "authority_operation": "github.read"}],
+                SharedExecutionState("cancel-task"),
+                requester="technical_operator",
+                task_approved=True,
+            )
+            self.assertEqual(result["state"], ResultState.CANCELLED.value)
+            self.assertEqual(adapter.calls, [])
 
 
 if __name__ == "__main__":
