@@ -55,6 +55,7 @@
     "config_sha256",
     "cases_sha256",
     "runner_sha256",
+    "packet_manifest_sha256",
     "requirements_sha256",
     "model",
     "model_digest",
