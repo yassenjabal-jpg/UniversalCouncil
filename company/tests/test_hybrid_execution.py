@@ -695,7 +695,13 @@ class HybridExecutionTests(unittest.TestCase):
         self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
         self.assertEqual(state.controller_lease, "technical_operator")
         state.release_controller("technical_operator")
-        executor.controller_lease.release("desktop:YASSIN", "technical_operator:retain")
+        token = executor.controller_lease.acquire(
+            "desktop:YASSIN",
+            "technical_operator",
+            host="YASSIN",
+            session_id="retain",
+        )
+        executor.controller_lease.release(token)
 
     def test_routine_graduation_requires_verified_clean_repeats(self):
         clean = [
