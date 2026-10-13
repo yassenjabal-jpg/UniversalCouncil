@@ -187,8 +187,16 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
             item for item in registry["capabilities"]
             if item["operation"] == "desktop_computer_use.control"
         )
-        observe["verified_scope"] = ["status", "list_windows", "inspect_ui"]
-        control["verified_scope"] = ["focus"]
+        for record, verified_scope in (
+            (observe, ["status", "list_windows", "inspect_ui"]),
+            (control, ["focus"]),
+        ):
+            metadata = {"expires_at": "2026-10-20T00:00:00+00:00", "test_fixture": True}
+            record["evidence_state"] = "CURRENT_VERIFIED"
+            record["historical_capability"] = dict(metadata)
+            record["current_verified_capability"] = dict(metadata)
+            record["verified_scope"] = verified_scope
+            record["last_verified_at"] = "2026-10-13"
 
         status = plan_action(
             {"id": "status", "gui_request": {"action": "status"}},
