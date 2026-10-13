@@ -210,6 +210,138 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             self.assertEqual(result["state"], ResultState.UNKNOWN.value)
             self.assertEqual(adapter.calls, [])
 
+    def test_gui_reversible_actions_are_t1_and_state_change_cannot_be_downgraded(self):
+        planned = plan_action(
+            {"id": "focus", "gui_request": {"action": "focus"}},
+            BASE_CFG,
+        )
+        self.assertEqual(planned.risk, RiskTier.T1)
+        self.assertEqual(planned.payload["effect"], "EXECUTE")
+        self.assertFalse(planned.payload["local_state_change"])
+
+        with self.assertRaises(HybridExecutionError):
+            plan_action(
+                {
+                    "id": "downgrade-state",
+                    "local_state_change": False,
+                    "gui_request": {"action": "set_value"},
+                },
+                BASE_CFG,
+            )
+
+        with self.assertRaises(HybridExecutionError):
+            plan_action({"id": "dc-missing-effect", "dc_capable": True}, BASE_CFG)
+
+    def test_authority_missing_target_and_stale_evidence_fail_closed(self):
+        no_target = plan_action(
+            {
+                "id": "no-target",
+                "native_available": True,
+                "authority_operation": "github.write",
+                "effect": "WRITE",
+            },
+            BASE_CFG,
+        )
+        with self.assertRaises(HybridExecutionError):
+            enforce_tool_authority(no_target, BASE_REGISTRY)
+
+        stale_registry = copy.deepcopy(BASE_REGISTRY)
+        read = next(item for item in stale_registry["capabilities"] if item["operation"] == "github.read")
+        read["last_verified_at"] = "2000-01-01"
+        read_action = plan_action(
+            {
+                "id": "stale-read",
+                "native_available": True,
+                "authority_operation": "github.read",
+            },
+            BASE_CFG,
+        )
+        with self.assertRaises(HybridExecutionError):
+            enforce_tool_authority(read_action, stale_registry)
+
+    def test_executor_requires_requester_and_preserves_unknown_provider_state(self):
+        adapter = MockAdapter({"state": ResultState.UNKNOWN.value, "reason": "provider-uncertain"})
+        executor = HybridExecutor(
+            BASE_CFG,
+            native_adapter=adapter,
+            authority_registry=BASE_REGISTRY,
+        )
+        no_requester = executor.execute(
+            {
+                "id": "no-requester",
+                "native_available": True,
+                "authority_operation": "github.read",
+            },
+            SharedExecutionState("requester"),
+            requester="",
+            task_approved=True,
+        )
+        self.assertEqual(no_requester["state"], ResultState.BLOCKED.value)
+        self.assertEqual(adapter.calls, [])
+
+        unknown = executor.execute(
+            {
+                "id": "provider-unknown",
+                "native_available": True,
+                "authority_operation": "github.read",
+            },
+            SharedExecutionState("unknown"),
+            requester="technical_operator",
+            task_approved=True,
+        )
+        self.assertEqual(unknown["state"], ResultState.UNKNOWN.value)
+
+    def test_journal_records_completed_dispatch_and_clears_pending(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            journal = ExecutionJournal(Path(tmp) / "journal.jsonl")
+            adapter = MockAdapter({"state": ResultState.SUCCEEDED.value})
+            executor = HybridExecutor(
+                BASE_CFG,
+                native_adapter=adapter,
+                authority_registry=BASE_REGISTRY,
+                journal=journal,
+            )
+            result = executor.execute(
+                {
+                    "id": "journal-success",
+                    "native_available": True,
+                    "authority_operation": "github.read",
+                },
+                SharedExecutionState("journal-success-task"),
+                requester="technical_operator",
+                task_approved=True,
+            )
+            self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
+            self.assertEqual(journal.pending_action_ids(), set())
+
+    def test_batch_host_lease_conflict_fails_before_dispatch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "controller.lock"
+            blocker = HostControllerLease(path)
+            blocker.acquire("desktop:YASSIN", "other")
+            adapter = MockAdapter(
+                {
+                    "state": ResultState.SUCCEEDED.value,
+                    "verification": {"verified": True, "independent": True},
+                }
+            )
+            executor = HybridExecutor(
+                BASE_CFG,
+                gui_adapter=adapter,
+                authority_registry=BASE_REGISTRY,
+                controller_lease=HostControllerLease(path),
+            )
+            result = executor.execute_batch(
+                [{"id": "batch-conflict", "gui_request": {"action": "click"}}],
+                SharedExecutionState("batch-conflict"),
+                requester="media",
+                task_approved=True,
+            )
+            self.assertEqual(result["state"], ResultState.BLOCKED.value)
+            self.assertEqual(result["results"], [])
+            self.assertEqual(adapter.calls, [])
+            blocker.release("desktop:YASSIN", "other")
+
     def test_f15_stale_capability_evidence_is_not_current(self):
         record = copy.deepcopy(
             next(item for item in BASE_REGISTRY["capabilities"] if item["operation"] == "github.read")
