@@ -10,7 +10,14 @@ from pathlib import Path
 from typing import Any, Protocol
 
 from company.runtime.execution_controls import ExecutionControlError, ExecutionJournal, HostControllerLease
-from company.runtime.execution_recovery import CancellationToken, CheckpointStore, action_plan_hash
+from company.runtime.execution_recovery import (
+    CancellationToken,
+    CheckpointStore,
+    ExecutionWatchdog,
+    RecoveryPolicy,
+    action_plan_hash,
+    decide_recovery,
+)
 from company.runtime.tool_authority import capability_currentness, get_capability
 
 
@@ -482,6 +489,13 @@ class CouncilVideoStudioGuiAdapter:
             raise HybridExecutionError("CouncilVideoStudio root is unavailable")
         self.root = Path(root).resolve()
         self.timeout_seconds = int(gui_cfg.get("action_timeout_seconds", 30))
+        recovery_cfg = cfg.get("recovery", {})
+        self.recovery_policy = RecoveryPolicy(
+            max_retries=int(recovery_cfg.get("max_retries", 0)),
+            poll_interval_seconds=float(recovery_cfg.get("poll_interval_seconds", 0.25)),
+            no_progress_seconds=float(recovery_cfg.get("no_progress_seconds", 5)),
+            stalled_seconds=float(recovery_cfg.get("stalled_seconds", 15)),
+        )
         self.script = self.root / gui_cfg["verified_action_relative"]
         if not self.script.is_file():
             raise HybridExecutionError("verified_action.py is unavailable")
@@ -507,11 +521,30 @@ class CouncilVideoStudioGuiAdapter:
                 timeout=self.timeout_seconds,
             )
         except subprocess.TimeoutExpired as exc:
+            watchdog = ExecutionWatchdog(self.recovery_policy, started_at=0.0)
+            watchdog.observe({"stdout": "", "stderr": ""}, busy=False, now=0.0)
+            observation = watchdog.observe(
+                {
+                    "stdout": str(exc.stdout or "").strip(),
+                    "stderr": str(exc.stderr or "").strip(),
+                },
+                busy=False,
+                now=float(self.timeout_seconds),
+            )
+            decision = decide_recovery(
+                observation.state,
+                attempts=0,
+                policy=self.recovery_policy,
+            )
             return {
                 "state": ResultState.UNKNOWN.value,
                 "plane": "GUI",
-                "reason": "gui_action_timeout",
+                "reason": "gui_no_progress_timeout",
                 "timeout_seconds": self.timeout_seconds,
+                "liveness": observation.state.value,
+                "unchanged_seconds": observation.unchanged_seconds,
+                "recovery_decision": decision.value,
+                "recovery_sequence": ["NO_PROGRESS", "DIAGNOSE", decision.value],
                 "stdout": str(exc.stdout or "").strip(),
                 "stderr": str(exc.stderr or "").strip(),
             }
