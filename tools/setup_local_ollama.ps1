@@ -5,6 +5,10 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+if ($env:COMPUTERNAME.ToUpperInvariant() -ne "YASSIN") {
+    throw "This setup is restricted to YASSIN only. Detected: $env:COMPUTERNAME"
+}
+
 function Assert-LocalOllama {
     param([string]$Url = "http://127.0.0.1:11434")
     if ($Url -notmatch '^https?://(127\.0\.0\.1|localhost)(:\d+)?$') {
