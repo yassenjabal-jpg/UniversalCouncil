@@ -583,6 +583,27 @@ async def warm_model(endpoint: str, model: str, timeout: int) -> None:
     )
 
 
+async def adapter_preflight(endpoint: str, model: str, timeout: int) -> None:
+    prompt = 'Return ONLY {"status":"ADAPTER_READY"}.'
+    adapters = {
+        "baseline": baseline_call,
+        "openai_agents": openai_agents_call,
+        "microsoft_agent_framework": maf_call,
+    }
+    failures: list[str] = []
+    for runtime_id, call_fn in adapters.items():
+        try:
+            text, _ = await call_with_retry(call_fn, endpoint, model, prompt, min(timeout, 90), retries=0)
+            payload = extract_json(text)
+            if payload.get("status") != "ADAPTER_READY":
+                raise ValueError(f"unexpected adapter response: {payload}")
+            print(f"ADAPTER_READY {runtime_id}", flush=True)
+        except Exception as exc:
+            failures.append(f"{runtime_id}:{type(exc).__name__}:{exc}")
+    if failures:
+        raise RuntimeError("adapter preflight failed: " + " | ".join(failures))
+
+
 async def main_async(args: argparse.Namespace) -> int:
     require_yassin_environment()
     endpoint = ensure_local_endpoint(args.endpoint)
@@ -597,6 +618,7 @@ async def main_async(args: argparse.Namespace) -> int:
         raise ValueError("stage case order does not match cases.json")
 
     await warm_model(endpoint, args.model, min(args.timeout, 120))
+    await adapter_preflight(endpoint, args.model, args.timeout)
 
     manifest = build_manifest(
         ROOT,
