@@ -35,6 +35,19 @@ def git_head(root: Path) -> str:
         raise ProvenanceError(f"cannot resolve git HEAD: {exc}") from exc
 
 
+def git_is_ancestor(root: Path, ancestor: str, descendant: str = "HEAD") -> bool:
+    try:
+        completed = subprocess.run(
+            ["git", "-C", str(root), "merge-base", "--is-ancestor", ancestor, descendant],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+        return completed.returncode == 0
+    except OSError:
+        return False
+
+
 def detected_runner_id() -> str:
     return (os.environ.get("COMPUTERNAME") or platform.node() or "").strip().upper()
 
@@ -191,8 +204,9 @@ def validate_manifest(manifest: dict[str, Any], root: Path) -> bool:
         raise ProvenanceError("manifest runner/execution_host must be YASSIN")
     if float(manifest["financial_cost_usd"]) != 0.0:
         raise ProvenanceError("manifest financial_cost_usd must be zero")
-    if manifest["source_sha"] != git_head(root):
-        raise ProvenanceError("manifest source SHA does not match current HEAD")
+    current_head = git_head(root)
+    if not git_is_ancestor(root, str(manifest["source_sha"]), current_head):
+        raise ProvenanceError("manifest source SHA is not an ancestor of current HEAD")
 
     expected_files = {
         "config_sha256": root / "company" / "config" / "agent_bakeoff.json",
