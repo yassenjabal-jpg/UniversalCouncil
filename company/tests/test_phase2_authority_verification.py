@@ -188,7 +188,13 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             self.assertEqual(second_adapter.calls, [])
 
             state1.release_controller("technical_operator")
-            first.controller_lease.release("desktop:YASSIN", "technical_operator:lease-1")
+            token = first.controller_lease.acquire(
+                "desktop:YASSIN",
+                "technical_operator",
+                host="YASSIN",
+                session_id="lease-1",
+            )
+            first.controller_lease.release(token)
 
     def test_f06_gui_timeout_becomes_unknown(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -346,7 +352,12 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "controller.lock"
             blocker = HostControllerLease(path)
-            blocker.acquire("desktop:YASSIN", "other")
+            blocker_token = blocker.acquire(
+                "desktop:YASSIN",
+                "other",
+                host="YASSIN",
+                session_id="other-task",
+            )
             adapter = MockAdapter(
                 {
                     "state": ResultState.SUCCEEDED.value,
@@ -368,7 +379,7 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             self.assertEqual(result["state"], ResultState.BLOCKED.value)
             self.assertEqual(result["results"], [])
             self.assertEqual(adapter.calls, [])
-            blocker.release("desktop:YASSIN", "other")
+            blocker.release(blocker_token)
 
     def test_f15_stale_capability_evidence_is_not_current(self):
         record = copy.deepcopy(
