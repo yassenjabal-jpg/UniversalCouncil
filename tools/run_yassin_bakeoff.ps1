@@ -53,7 +53,7 @@ try {
 & $python "tools\\build_agent_bakeoff_packets.py"
 if ($LASTEXITCODE -ne 0) { throw "Masked packet generation failed." }
 
-& $python -m unittest company.tests.test_agent_bakeoff company.tests.test_agent_bakeoff_live company.tests.test_agent_bakeoff_desktop_gate company.tests.test_agent_bakeoff_remediation
+& $python -m unittest company.tests.test_agent_bakeoff company.tests.test_agent_bakeoff_live company.tests.test_agent_bakeoff_desktop_gate company.tests.test_agent_bakeoff_remediation company.tests.test_agent_bakeoff_desktop_receipts
 if ($LASTEXITCODE -ne 0) { throw "Bake-off unit tests failed." }
 
 & $python "tools\\validate_config.py"
