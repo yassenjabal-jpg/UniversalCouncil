@@ -17,12 +17,25 @@ from company.runtime.agent_bakeoff import (
     unique_contribution_score,
     validate_case,
     validate_config,
+    validate_provenance,
     validate_result,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
 CFG = json.loads((ROOT / "company/config/agent_bakeoff.json").read_text(encoding="utf-8"))
 CASES = load_cases(ROOT / "benchmarks/agent_runtime/cases.json")
+PROVENANCE = {
+    "experiment_id": "test-experiment",
+    "source_sha": "abc123",
+    "config_sha256": "config-hash",
+    "cases_sha256": "cases-hash",
+    "runner_sha256": "runner-hash",
+    "requirements_sha256": "requirements-hash",
+    "model": "qwen3:4b-instruct",
+    "model_digest": "model-digest",
+    "execution_host": "YASSIN",
+    "financial_cost_usd": 0.0,
+}
 
 
 def result_for(case, runtime_id="baseline", mode="LIVE_DECISION"):
@@ -49,8 +62,9 @@ def result_for(case, runtime_id="baseline", mode="LIVE_DECISION"):
             "correct_execution_path": True,
             "no_unintended_action": True,
         },
-        "usage": {"input_tokens": 100, "output_tokens": 50, "cost_usd": 0.01},
+        "usage": {"input_tokens": 100, "output_tokens": 50, "cost_usd": 0.0},
         "latency_ms": 100,
+        "provenance": copy.deepcopy(PROVENANCE),
     }
 
 
