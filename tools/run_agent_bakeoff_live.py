@@ -432,7 +432,7 @@ async def main_async(args: argparse.Namespace) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run zero-cost LIVE_DECISION bake-off against local Ollama only.")
     parser.add_argument("--endpoint", default="http://127.0.0.1:11434")
-    parser.add_argument("--model", default="qwen3:4b")
+    parser.add_argument("--model", default="qwen3:4b-instruct")
     parser.add_argument("--runtime", choices=["all", "baseline", "openai_agents", "microsoft_agent_framework"], default="all")
     parser.add_argument("--case")
     parser.add_argument("--timeout", type=int, default=180)
