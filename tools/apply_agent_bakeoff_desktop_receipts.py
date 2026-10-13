@@ -2,10 +2,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+
+from company.runtime.agent_bakeoff_provenance import validate_manifest  # noqa: E402
+
 REQUIRED_CASES = {"c02_gui_primary_hybrid", "c04_after_effects_runtime_status"}
 REQUIRED_RUNTIMES = {"baseline", "openai_agents", "microsoft_agent_framework"}
 DESKTOP_KEYS = (
@@ -55,9 +59,25 @@ def validate_receipts(receipts: list[dict[str, Any]], manifest: dict[str, Any]) 
             raise ValueError(f"{runtime_id}/{case_id}: desktop object is required")
         if not all(desktop.get(name) is True for name in DESKTOP_KEYS):
             raise ValueError(f"{runtime_id}/{case_id}: desktop gate fields are not all true")
+        execution_path = str(receipt.get("execution_path", "")).strip()
+        if execution_path not in {"GUI_SEMANTIC", "GUI_PHYSICAL_FALLBACK"}:
+            raise ValueError(f"{runtime_id}/{case_id}: invalid or missing execution_path")
+        if execution_path == "GUI_PHYSICAL_FALLBACK" and not str(receipt.get("fallback_reason", "")).strip():
+            raise ValueError(f"{runtime_id}/{case_id}: physical fallback requires a reason")
+
         evidence = receipt.get("evidence")
         if not isinstance(evidence, list) or not evidence:
             raise ValueError(f"{runtime_id}/{case_id}: evidence list is required")
+        evidence_kinds = {
+            str(item.get("kind", "")).strip()
+            for item in evidence
+            if isinstance(item, dict) and str(item.get("ref", "")).strip()
+        }
+        required_kinds = {"before", "semantic_action", "after"}
+        if not required_kinds.issubset(evidence_kinds):
+            raise ValueError(
+                f"{runtime_id}/{case_id}: evidence must include before, semantic_action and after refs"
+            )
 
     if actual != expected:
         missing = sorted(expected - actual)
@@ -78,7 +98,11 @@ def apply(results: list[dict[str, Any]], receipts: list[dict[str, Any]], manifes
             raise ValueError(f"{key[0]}/{key[1]}: result manifest mismatch before desktop merge")
         receipt = receipt_map[key]
         result["desktop"] = dict(receipt["desktop"])
-        result["desktop_evidence"] = list(receipt["evidence"])
+        result["desktop_evidence"] = {
+            "execution_path": receipt["execution_path"],
+            "fallback_reason": receipt.get("fallback_reason"),
+            "evidence": list(receipt["evidence"]),
+        }
         found.add((str(key[0]), str(key[1])))
 
     expected = {(runtime_id, case_id) for runtime_id in REQUIRED_RUNTIMES for case_id in REQUIRED_CASES}
@@ -94,6 +118,10 @@ def main() -> int:
     parser.add_argument("--receipts", default="benchmarks/agent_runtime/desktop_receipts.json")
     args = parser.parse_args()
 
+    if (os.environ.get("COMPUTERNAME") or "").strip().upper() != "YASSIN":
+        print(json.dumps({"status": "BLOCKED", "reason": "desktop receipt merge is YASSIN-only"}, indent=2))
+        return 3
+
     results_path = ROOT / args.results
     manifest_path = ROOT / args.manifest
     receipts_path = ROOT / args.receipts
@@ -104,6 +132,9 @@ def main() -> int:
 
     results = load_json(results_path)
     manifest = load_json(manifest_path)
+    validate_manifest(manifest, ROOT)
+    if manifest.get("stage") != "full":
+        raise ValueError("desktop receipt merge requires the full-stage manifest")
     receipts = load_json(receipts_path)
     if not isinstance(results, list) or not isinstance(receipts, list):
         raise ValueError("results and desktop receipts must be lists")
