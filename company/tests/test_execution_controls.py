@@ -211,7 +211,9 @@ class ExecutionControlsTests(unittest.TestCase):
             )
             self.assertEqual(journal.pending_action_ids(), {"a1"})
             journal.reconcile(task_id="task", action_id="a1", state="UNKNOWN")
-            self.assertEqual(journal.pending_action_ids(), set())
+            self.assertEqual(journal.pending_action_ids(task_id="task"), {"a1"})
+            journal.reconcile(task_id="task", action_id="a1", state="FAILED")
+            self.assertEqual(journal.pending_action_ids(task_id="task"), set())
             with self.assertRaises(ExecutionControlError):
                 journal.reconcile(task_id="task", action_id="a1", state="FAILED")
 
