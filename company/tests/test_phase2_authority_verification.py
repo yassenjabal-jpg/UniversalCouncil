@@ -143,7 +143,7 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             result1 = first.execute(
                 {"id": "lease-a", "gui_request": {"action": "set_value"}},
                 state1,
-                requester="operator-a",
+                requester="technical_operator",
                 task_approved=True,
                 retain_controller=True,
             )
@@ -153,14 +153,14 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             result2 = second.execute(
                 {"id": "lease-b", "gui_request": {"action": "set_value"}},
                 state2,
-                requester="operator-b",
+                requester="technical_operator",
                 task_approved=True,
             )
             self.assertEqual(result2["state"], ResultState.BLOCKED.value)
             self.assertEqual(second_adapter.calls, [])
 
             state1.release_controller("operator-a")
-            first.controller_lease.release("desktop:YASSIN", "operator-a")
+            first.controller_lease.release("desktop:YASSIN", "technical_operator:lease-1")
 
     def test_f06_gui_timeout_becomes_unknown(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -334,7 +334,7 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             result = executor.execute_batch(
                 [{"id": "batch-conflict", "gui_request": {"action": "click"}}],
                 SharedExecutionState("batch-conflict"),
-                requester="media",
+                requester="technical_operator",
                 task_approved=True,
             )
             self.assertEqual(result["state"], ResultState.BLOCKED.value)
