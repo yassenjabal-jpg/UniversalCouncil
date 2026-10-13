@@ -192,6 +192,7 @@ for required_path in (
     "tools/run_yassin_bakeoff.ps1",
     "tools/yassin_bakeoff_health.ps1",
     "tools/apply_agent_bakeoff_desktop_receipts.py",
+    "benchmarks/agent_runtime/desktop_receipts.example.json",
 ):
     assert (ROOT / required_path).is_file(), f"missing YASSIN bake-off component: {required_path}"
 assert 12 <= len(agent_bakeoff_cases) <= 20, "agent runtime bake-off must keep 12-20 historical cases"
