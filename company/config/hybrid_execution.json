@@ -65,7 +65,18 @@
     "verified_repeats_required": 3,
     "max_unknown_results": 0,
     "max_accidental_actions": 0,
-    "preferred_target": "verified_gui_routine_or_app_native_macro"
+    "preferred_target": "verified_gui_routine_or_app_native_macro",
+    "fingerprint_fields": [
+      "app_id",
+      "app_version",
+      "task_class",
+      "action_schema",
+      "risk",
+      "verifier_id",
+      "environment_id",
+      "authority_policy_id"
+    ],
+    "require_distinct_run_ids": true
   },
   "primary_plane": "GUI",
   "secondary_plane": "DC",
@@ -102,5 +113,6 @@
         "reusable_routine"
       ]
     }
-  }
+  },
+  "default_task_class": "host_support"
 }
