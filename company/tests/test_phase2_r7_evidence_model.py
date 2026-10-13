@@ -70,7 +70,7 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
             "receipt_id": "legacy",
             "source_project": "SourceProject",
             "source_commit": commit,
-            "observed_at": "2026-10-14T00:00:00+00:00",
+            "observed_at": "2026-10-13T18:00:00+00:00",
             "capability_id": "desktop_computer_use",
             "status": "RUNTIME_VERIFIED",
             "evidence_level": "HOST_INVOKED",
@@ -100,7 +100,7 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
             state = receipt_evidence_state(
                 legacy,
                 source,
-                as_of=datetime(2026, 10, 14, 1, tzinfo=timezone.utc),
+                as_of=datetime(2026, 10, 13, 19, tzinfo=timezone.utc),
             )
             self.assertEqual(state, EvidenceState.HISTORICAL)
 
@@ -111,20 +111,20 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
             state = receipt_evidence_state(
                 current,
                 source,
-                as_of=datetime(2026, 10, 14, 1, tzinfo=timezone.utc),
+                as_of=datetime(2026, 10, 13, 19, tzinfo=timezone.utc),
             )
             self.assertEqual(state, EvidenceState.CURRENT_VERIFIED)
             imported = build_imported_receipt(
                 current,
                 source,
-                ingested_at="2026-10-14T01:05:00+00:00",
+                ingested_at="2026-10-13T19:05:00+00:00",
             )
             self.assertEqual(imported["evidence_state"], EvidenceState.CURRENT_VERIFIED.value)
             metadata = imported["evidence_metadata"]
             self.assertEqual(metadata["source_repository"], "local:SourceProject")
             self.assertEqual(metadata["host"], "YASSIN")
             self.assertEqual(metadata["session_id"], "phase2-r7-test")
-            self.assertEqual(metadata["ingested_at"], "2026-10-14T01:05:00+00:00")
+            self.assertEqual(metadata["ingested_at"], "2026-10-13T19:05:00+00:00")
             self.assertEqual(metadata["verifier_version"], "1.1")
 
     def test_v11_binding_mismatch_and_expiry_fail_closed(self):
@@ -145,12 +145,12 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
                         validate_receipt(variant, source, project)
 
             expired = copy.deepcopy(current)
-            expired["expires_at"] = "2026-10-13T00:00:00+00:00"
+            expired["expires_at"] = "2026-10-13T17:00:00+00:00"
             self.assertEqual(
                 receipt_evidence_state(
                     expired,
                     source,
-                    as_of=datetime(2026, 10, 14, 1, tzinfo=timezone.utc),
+                    as_of=datetime(2026, 10, 13, 19, tzinfo=timezone.utc),
                 ),
                 EvidenceState.STALE,
             )
@@ -164,7 +164,7 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
                 receipt_evidence_state(
                     current,
                     revoked_source,
-                    as_of=datetime(2026, 10, 14, 1, tzinfo=timezone.utc),
+                    as_of=datetime(2026, 10, 13, 19, tzinfo=timezone.utc),
                 ),
                 EvidenceState.REVOKED,
             )
