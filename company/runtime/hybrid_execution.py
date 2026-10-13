@@ -689,13 +689,33 @@ class HybridExecutor:
             raise HybridExecutionError(f"batch exceeds max deterministic steps: {maximum}")
 
         planned = [plan_action(action, self.cfg) for action in actions]
-        controls_desktop = any(
-            item.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}
-            and item.authority_operation == "desktop_computer_use.control"
-            for item in planned
+        controlling = next(
+            (
+                item
+                for item in planned
+                if item.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}
+                and item.authority_operation == "desktop_computer_use.control"
+            ),
+            None,
+        )
+        controls_desktop = controlling is not None
+        controller_resource = (
+            f"desktop:{controlling.payload.get('authority_target', 'YASSIN')}"
+            if controlling is not None
+            else ""
         )
         if controls_desktop:
-            state.acquire_controller(requester)
+            try:
+                self.controller_lease.acquire(controller_resource, requester)
+                state.acquire_controller(requester)
+            except (ExecutionControlError, HybridExecutionError) as exc:
+                return {
+                    "state": ResultState.BLOCKED.value,
+                    "completed": 0,
+                    "stopped_at": 0,
+                    "results": [],
+                    "reason": str(exc),
+                }
 
         results: list[dict[str, Any]] = []
         try:
@@ -725,6 +745,7 @@ class HybridExecutor:
         finally:
             if controls_desktop and state.controller_lease == requester:
                 state.release_controller(requester)
+                self.controller_lease.release(controller_resource, requester)
 
 
 def eligible_for_routine_graduation(history: list[dict[str, Any]], cfg: dict[str, Any]) -> bool:
