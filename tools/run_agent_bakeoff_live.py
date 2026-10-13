@@ -160,7 +160,6 @@ async def maf_call(endpoint: str, model: str, prompt: str, timeout: int) -> tupl
         model=model,
         base_url=f"{endpoint}/v1/",
         api_key="ollama",
-        timeout=float(timeout),
     )
     agent = Agent(
         client=client,
@@ -473,7 +472,11 @@ async def main_async(args: argparse.Namespace) -> int:
     if args.append and out.exists():
         existing = load_json(out)
     out.write_text(json.dumps(existing + results, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    failures = [result for result in results if result["status"] != "COMPLETED"]
     print(f"WROTE {len(results)} live results to {out}")
+    if failures:
+        print(f"LIVE_BAKEOFF_FAILED: {len(failures)} result(s) were not completed")
+        return 4
     return 0
 
 
