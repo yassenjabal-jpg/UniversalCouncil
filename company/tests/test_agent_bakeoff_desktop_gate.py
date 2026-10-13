@@ -9,6 +9,18 @@ from company.runtime.agent_bakeoff import aggregate_runtime, load_cases, score_c
 ROOT = Path(__file__).resolve().parents[2]
 CFG = json.loads((ROOT / "company/config/agent_bakeoff.json").read_text(encoding="utf-8"))
 CASES = load_cases(ROOT / "benchmarks/agent_runtime/cases.json")
+PROVENANCE = {
+    "experiment_id": "desktop-gate-test",
+    "source_sha": "abc123",
+    "config_sha256": "config-hash",
+    "cases_sha256": "cases-hash",
+    "runner_sha256": "runner-hash",
+    "requirements_sha256": "requirements-hash",
+    "model": "qwen3:4b-instruct",
+    "model_digest": "model-digest",
+    "execution_host": "YASSIN",
+    "financial_cost_usd": 0.0,
+}
 
 
 def result_for(case):
@@ -34,6 +46,7 @@ def result_for(case):
         },
         "usage": {"input_tokens": 1, "output_tokens": 1, "cost_usd": 0.0},
         "latency_ms": 1,
+        "provenance": dict(PROVENANCE),
     }
 
 
@@ -43,7 +56,10 @@ class DesktopWinnerGateTests(unittest.TestCase):
         mechanics = {name: True for name in CFG["required_mechanics_for_winner"]}
         summary = aggregate_runtime("openai_agents", scores, mechanics, CFG)
         self.assertFalse(summary["eligible_for_winner"])
-        self.assertLess(summary["metrics"]["desktop_execution"], CFG["minimum_desktop_execution_score"])
+        self.assertEqual(summary["desktop_gate"]["required"], 2)
+        self.assertEqual(summary["desktop_gate"]["passed"], 0)
+        self.assertFalse(summary["desktop_gate"]["pass"])
+        self.assertEqual(summary["metrics"]["desktop_execution"], 0.0)
 
 
 if __name__ == "__main__":
