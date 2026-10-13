@@ -11,6 +11,7 @@ from company.runtime.evidence_sync import (
     _load_json,
     _parse_observed_at,
     apply_receipt_to_registry,
+    build_imported_receipt,
     discover_receipts,
     latest_by_capability,
     resolve_source_root,
@@ -51,11 +52,19 @@ class EvidenceSyncTests(unittest.TestCase):
         ).stdout
         digest = hashlib.sha256(committed_bytes).hexdigest()
         receipt = {
-            "schema_version": "1.0",
+            "schema_version": "1.1",
             "receipt_id": "test-desktop",
             "source_project": "TestProject",
+            "source_repository": "local:TestProject",
             "source_commit": source_commit,
+            "component": "test_desktop_bridge",
+            "component_version": source_commit,
+            "host": "YASSIN",
+            "session_id": "evidence-test-session",
             "observed_at": "2026-10-12T12:00:00+03:00",
+            "expires_at": "2026-10-18T12:00:00+03:00",
+            "verifier": "UniversalCouncil.test",
+            "verifier_version": "1.0",
             "capability_id": "desktop_computer_use",
             "status": "RUNTIME_VERIFIED",
             "evidence_level": "HOST_INVOKED",
@@ -67,6 +76,10 @@ class EvidenceSyncTests(unittest.TestCase):
         source = {
             "id": "test-project",
             "project_id": "TestProject",
+            "repository_identity": "local:TestProject",
+            "component": "test_desktop_bridge",
+            "expected_host": "YASSIN",
+            "allow_legacy_historical": True,
             "enabled": True,
             "root_env": "TEST_PROJECT_ROOT",
             "receipt_glob": ".council/capability-receipts/*.json",
@@ -336,13 +349,29 @@ class EvidenceSyncTests(unittest.TestCase):
 
             scope_missing = copy.deepcopy(receipt)
             scope_missing["verified_scope"] = ["screenshot"]
-            with self.assertRaises(EvidenceSyncError):
-                apply_receipt_to_registry(
-                    BASE_REGISTRY,
-                    scope_missing,
-                    source,
-                    "company/evidence/imported/test.json",
-                )
+            imported_scope_missing = build_imported_receipt(
+                scope_missing,
+                source,
+                ingested_at="2026-10-13T00:00:00+00:00",
+            )
+            partially_updated = apply_receipt_to_registry(
+                BASE_REGISTRY,
+                imported_scope_missing,
+                source,
+                "company/evidence/imported/test.json",
+            )
+            observe = next(
+                item for item in partially_updated["capabilities"]
+                if item["operation"] == "desktop_computer_use.observe"
+            )
+            control = next(
+                item for item in partially_updated["capabilities"]
+                if item["operation"] == "desktop_computer_use.control"
+            )
+            self.assertEqual(observe["evidence_state"], "CURRENT_VERIFIED")
+            self.assertEqual(observe["verified_scope"], ["screenshot"])
+            self.assertEqual(control["evidence_state"], "HISTORICAL")
+            self.assertEqual(control["verified_scope"], [])
 
             broken_source = copy.deepcopy(source)
             broken_source["authority_bindings"]["desktop_computer_use"]["operations"] = ["missing.operation"]
