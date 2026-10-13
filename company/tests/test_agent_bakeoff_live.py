@@ -5,6 +5,9 @@ import json
 import unittest
 from pathlib import Path
 
+from company.runtime.agent_bakeoff_baseline import route_v03
+from tools.build_agent_bakeoff_packets import build_packet, redact_known_labels, strip_sensitive_sections
+
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "tools" / "run_agent_bakeoff_live.py"
 
@@ -38,57 +41,70 @@ class LiveBakeoffRunnerTests(unittest.TestCase):
             self.assertIn(case["expected_decision"], options)
 
     def test_stage_contract_is_canary_then_representative_then_full(self):
-        self.assertEqual(live.STAGES["canary"], ["c14_specialized_tool_policy"])
-        self.assertEqual(len(live.STAGES["representative"]), 4)
-        self.assertIsNone(live.STAGES["full"])
+        cfg = json.loads((ROOT / "company" / "config" / "agent_bakeoff.json").read_text(encoding="utf-8"))
+        all_case_ids = [
+            case["case_id"]
+            for case in json.loads((ROOT / "benchmarks" / "agent_runtime" / "cases.json").read_text(encoding="utf-8"))
+        ]
+        self.assertEqual(live.stage_case_ids(cfg, "canary", all_case_ids), ["c14_specialized_tool_policy"])
+        self.assertEqual(len(live.stage_case_ids(cfg, "representative", all_case_ids)), 4)
+        self.assertEqual(live.stage_case_ids(cfg, "full", all_case_ids), all_case_ids)
 
-    def test_historical_answer_is_masked(self):
-        sample = """# Context
+    def test_answer_masking_removes_sensitive_sections_and_labels(self):
+        source = """# Context
 Useful evidence.
 ## Final verdict
 ADOPT_V0_4_NOW
 ## Evidence
-Status: ACCEPTED
 The explicit token is PROVISIONAL_RESTRUCTURE_CANDIDATE.
 """
-        masked = live.mask_historical_answer(sample, "PROVISIONAL_RESTRUCTURE_CANDIDATE")
+        stripped = strip_sensitive_sections(source)
+        case = {
+            "expected_decision": "PROVISIONAL_RESTRUCTURE_CANDIDATE",
+            "expected_blockers": [],
+            "required_dissent_tags": [],
+        }
+        masked = redact_known_labels(stripped, case)
         self.assertNotIn("ADOPT_V0_4_NOW", masked)
         self.assertNotIn("PROVISIONAL_RESTRUCTURE_CANDIDATE", masked)
-        self.assertNotIn("Status: ACCEPTED", masked)
         self.assertIn("Useful evidence.", masked)
         self.assertIn("## Evidence", masked)
 
-    def test_case_packets_do_not_contain_expected_decision_token(self):
+    def test_built_packets_do_not_contain_expected_decision_token(self):
         cases = json.loads((ROOT / "benchmarks" / "agent_runtime" / "cases.json").read_text(encoding="utf-8"))
         for case in cases:
-            packet, packet_sha, source_sha = live.case_source(case)
-            self.assertNotIn(case["expected_decision"], packet)
-            self.assertEqual(len(packet_sha), 64)
-            self.assertEqual(len(source_sha), 64)
+            packet = build_packet(case, max_chars=8000)
+            self.assertNotIn(case["expected_decision"].casefold(), packet["model_context"].casefold())
+            self.assertEqual(len(packet["packet_sha256"]), 64)
+            self.assertEqual(len(packet["source_sha256"]), 64)
 
     def test_role_registry_covers_all_expected_roles(self):
         cases = json.loads((ROOT / "benchmarks" / "agent_runtime" / "cases.json").read_text(encoding="utf-8"))
         expected_roles = {role for case in cases for role in case["required_roles"]}
         self.assertTrue(expected_roles.issubset(set(live.ROLE_DESCRIPTIONS)))
 
-    def test_baseline_is_single_structured_v03_prompt(self):
+    def test_baseline_uses_v03_router_and_single_structured_prompt(self):
         case = json.loads((ROOT / "benchmarks" / "agent_runtime" / "cases.json").read_text(encoding="utf-8"))[0]
-        packet, _, _ = live.case_source(case)
-        prompt = live.baseline_v03_prompt(
+        packet = build_packet(case, max_chars=8000)
+        participants = route_v03(ROOT, case["prompt"], packet["model_context"])
+        prompt = live.baseline_prompt(
             case,
-            packet,
+            packet["model_context"],
+            participants,
             live.DECISION_OPTIONS[case["case_id"]],
             [],
             [],
         )
-        self.assertIn("CURRENT Universal Council v0.3 baseline", prompt)
-        self.assertIn("one structured model run", prompt)
-        self.assertIn("not independent agents", prompt)
+        self.assertIn("Universal Council v0.3", prompt)
+        self.assertIn("one structured model call", prompt)
+        self.assertIn("NOT independent agents", prompt)
 
-    def test_local_runner_hardcodes_zero_cost_and_yassin_only(self):
+    def test_local_runner_hardcodes_zero_cost_yassin_only_and_bounded_concurrency(self):
         source = SCRIPT.read_text(encoding="utf-8")
         self.assertIn('"cost_usd": 0.0', source)
-        self.assertIn("require_yassin_runner()", source)
+        self.assertIn("require_yassin_environment()", source)
+        self.assertIn("asyncio.Semaphore", source)
+        self.assertIn("--role-concurrency", source)
         self.assertNotIn("api.openai.com", source)
         self.assertNotIn("ollama.com/v1", source)
 
