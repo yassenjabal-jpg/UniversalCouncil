@@ -807,11 +807,31 @@ class HybridExecutor:
         if len(actions) > maximum:
             raise HybridExecutionError(f"batch exceeds max deterministic steps: {maximum}")
 
+        if resume_from < 0 or resume_from > len(actions):
+            raise HybridExecutionError("resume_from is outside the batch action range")
+        actual_plan_hash = action_plan_hash(actions)
+        if plan_hash is not None and plan_hash != actual_plan_hash:
+            raise HybridExecutionError("batch plan hash mismatch")
+        effective_plan_hash = plan_hash or actual_plan_hash
+
+        completed_ids = self.journal.completed_action_ids(state.task_id) if self.journal is not None else set()
+        expected_resumed = {str(action["id"]) for action in actions[:resume_from]}
+        if resume_from and not expected_resumed.issubset(completed_ids):
+            raise HybridExecutionError("resume checkpoint is not backed by successful journal results")
+        if resume_from == len(actions):
+            return {
+                "state": ResultState.SUCCEEDED.value,
+                "completed": len(actions),
+                "stopped_at": None,
+                "results": [],
+                "resumed_from": resume_from,
+            }
+
         planned = [plan_action(action, self.cfg) for action in actions]
         controlling = next(
             (
                 item
-                for item in planned
+                for item in planned[resume_from:]
                 if item.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}
                 and item.authority_operation == "desktop_computer_use.control"
             ),
@@ -845,8 +865,19 @@ class HybridExecutor:
 
         results: list[dict[str, Any]] = []
         try:
-            for index, action in enumerate(actions):
-                result = self.execute(
+            for index in range(resume_from, len(actions)):
+                action = actions[index]
+                if self.cancellation_token is not None and self.cancellation_token.is_cancelled():
+                    state.record_result(planned[index], ResultState.CANCELLED)
+                    return {
+                        "state": ResultState.CANCELLED.value,
+                        "completed": index,
+                        "stopped_at": index,
+                        "results": results,
+                        "reason": self.cancellation_token.reason() or "execution cancelled",
+                    }
+
+                result = self.execute_with_recovery(
                     action,
                     state,
                     requester=requester,
@@ -862,11 +893,29 @@ class HybridExecutor:
                         "stopped_at": index,
                         "results": results,
                     }
+
+                completed_ids.add(str(action["id"]))
+                if checkpoint_store is not None:
+                    ordered_completed = [
+                        str(candidate["id"])
+                        for candidate in actions[: index + 1]
+                        if str(candidate["id"]) in completed_ids
+                    ]
+                    checkpoint_store.save(
+                        task_id=state.task_id,
+                        plan_hash=effective_plan_hash,
+                        next_action_index=index + 1,
+                        completed_action_ids=ordered_completed,
+                        state=state.as_dict(),
+                        completed=index + 1 == len(actions),
+                    )
+
             return {
                 "state": ResultState.SUCCEEDED.value,
-                "completed": len(results),
+                "completed": len(actions),
                 "stopped_at": None,
                 "results": results,
+                "resumed_from": resume_from,
             }
         finally:
             if controls_desktop and state.controller_lease == requester:
