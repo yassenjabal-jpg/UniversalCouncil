@@ -26,14 +26,11 @@ def sha256_file(path: Path) -> str:
 
 def git_head(root: Path) -> str:
     try:
-        return (
-            subprocess.check_output(
-                ["git", "-C", str(root), "rev-parse", "HEAD"],
-                text=True,
-                stderr=subprocess.DEVNULL,
-            )
-            .strip()
-        )
+        return subprocess.check_output(
+            ["git", "-C", str(root), "rev-parse", "HEAD"],
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
     except (OSError, subprocess.CalledProcessError) as exc:
         raise ProvenanceError(f"cannot resolve git HEAD: {exc}") from exc
 
@@ -76,6 +73,30 @@ def ollama_model_digest(endpoint: str, model: str, timeout: int = 10) -> str:
     raise ProvenanceError(f"model digest not found for {model}")
 
 
+def manifest_id(manifest: dict[str, Any]) -> str:
+    stable = {
+        key: manifest[key]
+        for key in (
+            "schema_version",
+            "runner_id",
+            "source_sha",
+            "config_sha256",
+            "cases_sha256",
+            "packets_sha256",
+            "runner_sha256",
+            "evaluator_sha256",
+            "requirements_sha256",
+            "model",
+            "model_digest",
+            "stage",
+            "selected_case_ids",
+            "framework_versions",
+            "financial_cost_usd",
+        )
+    }
+    return sha256_bytes(json.dumps(stable, sort_keys=True, separators=(",", ":")).encode("utf-8"))
+
+
 def build_manifest(
     root: Path,
     *,
@@ -85,96 +106,110 @@ def build_manifest(
     selected_case_ids: list[str],
 ) -> dict[str, Any]:
     runner_id = require_yassin_runner()
-    config = root / "company" / "config" / "agent_bakeoff.json"
-    cases = root / "benchmarks" / "agent_runtime" / "cases.json"
-    live_runner = root / "tools" / "run_agent_bakeoff_live.py"
-    evaluator = root / "company" / "runtime" / "agent_bakeoff.py"
-    return {
-        "schema_version": "1.0",
+    files = {
+        "config_sha256": root / "company" / "config" / "agent_bakeoff.json",
+        "cases_sha256": root / "benchmarks" / "agent_runtime" / "cases.json",
+        "packets_sha256": root / "benchmarks" / "agent_runtime" / "case_packets.json",
+        "runner_sha256": root / "tools" / "run_agent_bakeoff_live.py",
+        "evaluator_sha256": root / "company" / "runtime" / "agent_bakeoff.py",
+        "requirements_sha256": root / "benchmarks" / "agent_runtime" / "requirements.txt",
+    }
+    missing = [str(path.relative_to(root)) for path in files.values() if not path.is_file()]
+    if missing:
+        raise ProvenanceError(f"cannot build manifest; missing files: {missing}")
+
+    payload: dict[str, Any] = {
+        "schema_version": "1.1",
         "runner_id": runner_id,
         "execution_host": runner_id,
-        "source_head": git_head(root),
-        "config_sha256": sha256_file(config),
-        "cases_sha256": sha256_file(cases),
-        "live_runner_sha256": sha256_file(live_runner),
-        "evaluator_sha256": sha256_file(evaluator),
+        "source_sha": git_head(root),
+        **{key: sha256_file(path) for key, path in files.items()},
         "model": model,
         "model_digest": ollama_model_digest(endpoint, model),
-        "endpoint": endpoint,
+        "endpoint": endpoint.rstrip("/"),
         "stage": stage,
         "selected_case_ids": list(selected_case_ids),
         "framework_versions": package_versions(),
-        "cost_usd": 0.0,
+        "financial_cost_usd": 0.0,
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
     }
+    identity = manifest_id(payload)
+    payload["manifest_id"] = identity
+    payload["experiment_id"] = identity
+    return payload
 
 
-def manifest_id(manifest: dict[str, Any]) -> str:
-    stable = {
-        key: manifest[key]
-        for key in (
-            "schema_version",
-            "runner_id",
-            "source_head",
-            "config_sha256",
-            "cases_sha256",
-            "live_runner_sha256",
-            "evaluator_sha256",
-            "model",
-            "model_digest",
-            "stage",
-            "selected_case_ids",
-            "framework_versions",
-            "cost_usd",
-        )
-    }
-    return sha256_bytes(json.dumps(stable, sort_keys=True, separators=(",", ":")).encode("utf-8"))
+def result_provenance(manifest: dict[str, Any]) -> dict[str, Any]:
+    keys = (
+        "experiment_id",
+        "source_sha",
+        "config_sha256",
+        "cases_sha256",
+        "packets_sha256",
+        "runner_sha256",
+        "evaluator_sha256",
+        "requirements_sha256",
+        "model",
+        "model_digest",
+        "execution_host",
+        "financial_cost_usd",
+    )
+    return {key: manifest[key] for key in keys}
 
 
 def validate_manifest(manifest: dict[str, Any], root: Path) -> bool:
     required = {
         "schema_version",
         "runner_id",
-        "source_head",
+        "execution_host",
+        "source_sha",
         "config_sha256",
         "cases_sha256",
-        "live_runner_sha256",
+        "packets_sha256",
+        "runner_sha256",
         "evaluator_sha256",
+        "requirements_sha256",
         "model",
         "model_digest",
         "endpoint",
         "stage",
         "selected_case_ids",
         "framework_versions",
-        "cost_usd",
+        "financial_cost_usd",
         "created_at_utc",
         "manifest_id",
+        "experiment_id",
     }
     missing = required - set(manifest)
     if missing:
         raise ProvenanceError(f"manifest missing fields: {sorted(missing)}")
-    if manifest["schema_version"] != "1.0":
+    if manifest["schema_version"] != "1.1":
         raise ProvenanceError("unsupported manifest schema")
-    if str(manifest["runner_id"]).upper() != "YASSIN":
-        raise ProvenanceError("manifest runner must be YASSIN")
-    if float(manifest["cost_usd"]) != 0.0:
-        raise ProvenanceError("manifest cost_usd must be zero")
-    if manifest["config_sha256"] != sha256_file(root / "company" / "config" / "agent_bakeoff.json"):
-        raise ProvenanceError("manifest config hash does not match current config")
-    if manifest["cases_sha256"] != sha256_file(root / "benchmarks" / "agent_runtime" / "cases.json"):
-        raise ProvenanceError("manifest cases hash does not match current cases")
-    if manifest["live_runner_sha256"] != sha256_file(root / "tools" / "run_agent_bakeoff_live.py"):
-        raise ProvenanceError("manifest live runner hash does not match current runner")
-    if manifest["evaluator_sha256"] != sha256_file(root / "company" / "runtime" / "agent_bakeoff.py"):
-        raise ProvenanceError("manifest evaluator hash does not match current evaluator")
-    expected_id = manifest_id({k: v for k, v in manifest.items() if k != "manifest_id"})
-    if manifest["manifest_id"] != expected_id:
-        raise ProvenanceError("manifest_id mismatch")
+    if str(manifest["runner_id"]).upper() != "YASSIN" or str(manifest["execution_host"]).upper() != "YASSIN":
+        raise ProvenanceError("manifest runner/execution_host must be YASSIN")
+    if float(manifest["financial_cost_usd"]) != 0.0:
+        raise ProvenanceError("manifest financial_cost_usd must be zero")
+    if manifest["source_sha"] != git_head(root):
+        raise ProvenanceError("manifest source SHA does not match current HEAD")
+
+    expected_files = {
+        "config_sha256": root / "company" / "config" / "agent_bakeoff.json",
+        "cases_sha256": root / "benchmarks" / "agent_runtime" / "cases.json",
+        "packets_sha256": root / "benchmarks" / "agent_runtime" / "case_packets.json",
+        "runner_sha256": root / "tools" / "run_agent_bakeoff_live.py",
+        "evaluator_sha256": root / "company" / "runtime" / "agent_bakeoff.py",
+        "requirements_sha256": root / "benchmarks" / "agent_runtime" / "requirements.txt",
+    }
+    for key, path in expected_files.items():
+        if manifest[key] != sha256_file(path):
+            raise ProvenanceError(f"manifest {key} does not match current file")
+
+    expected_id = manifest_id(manifest)
+    if manifest["manifest_id"] != expected_id or manifest["experiment_id"] != expected_id:
+        raise ProvenanceError("manifest identity mismatch")
     return True
 
 
 def write_manifest(path: Path, manifest: dict[str, Any]) -> None:
-    payload = dict(manifest)
-    payload["manifest_id"] = manifest_id(payload)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
