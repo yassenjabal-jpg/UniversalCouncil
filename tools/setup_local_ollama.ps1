@@ -70,11 +70,6 @@ if (-not $ready) {
     throw "Local Ollama server did not become ready."
 }
 
-& $ollamaPath pull $Model
-if ($LASTEXITCODE -ne 0) {
-    throw "Failed to pull local model $Model"
-}
-
 $tags = Invoke-RestMethod -Uri "http://127.0.0.1:11434/api/tags" -TimeoutSec 10
 $found = $false
 foreach ($item in $tags.models) {
@@ -83,8 +78,22 @@ foreach ($item in $tags.models) {
         break
     }
 }
+
 if (-not $found) {
-    throw "Model $Model was not found after pull."
+    & $ollamaPath pull $Model
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to pull local model $Model"
+    }
+    $tags = Invoke-RestMethod -Uri "http://127.0.0.1:11434/api/tags" -TimeoutSec 10
+    foreach ($item in $tags.models) {
+        if ($item.name -eq $Model -or $item.model -eq $Model) {
+            $found = $true
+            break
+        }
+    }
+}
+if (-not $found) {
+    throw "Model $Model was not found after local setup."
 }
 
 $body = @{
