@@ -75,6 +75,10 @@ class EvidenceSyncTests(unittest.TestCase):
                     ],
                     "allowed_evidence_levels": ["HOST_INVOKED"],
                     "allowed_verified_scope": ["screenshot", "physical_click"],
+                    "operation_verified_scope": {
+                        "desktop_computer_use.observe": ["screenshot"],
+                        "desktop_computer_use.control": ["physical_click"],
+                    },
                 }
             },
         }
@@ -123,6 +127,8 @@ class EvidenceSyncTests(unittest.TestCase):
                     self.assertEqual(old[field], new[field])
                 self.assertEqual(new["source_or_pin"], source_commit)
                 self.assertEqual(new["evidence_receipt"], imported.relative_to(repo).as_posix())
+                expected_scope = ["screenshot"] if operation.endswith("observe") else ["physical_click"]
+                self.assertEqual(new["verified_scope"], expected_scope)
 
     def test_receipt_cannot_claim_authority_fields(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -147,6 +153,26 @@ class EvidenceSyncTests(unittest.TestCase):
             receipt["artifacts"][0]["sha256"] = "0" * 64
             with self.assertRaises(EvidenceSyncError):
                 validate_receipt(receipt, source, project)
+
+    def test_future_revoked_and_foreign_commit_receipts_are_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            project, source, receipt = self.make_source(root)
+
+            future = copy.deepcopy(receipt)
+            future["observed_at"] = "2099-01-01T00:00:00+00:00"
+            with self.assertRaises(EvidenceSyncError):
+                validate_receipt(future, source, project)
+
+            revoked_source = copy.deepcopy(source)
+            revoked_source["revoked_receipt_ids"] = [receipt["receipt_id"]]
+            with self.assertRaises(EvidenceSyncError):
+                validate_receipt(receipt, revoked_source, project)
+
+            foreign = copy.deepcopy(receipt)
+            foreign["source_commit"] = "b" * 40
+            with self.assertRaises(EvidenceSyncError):
+                validate_receipt(foreign, source, project)
 
     def test_unavailable_source_is_nonfatal_and_does_not_change_registry(self):
         with tempfile.TemporaryDirectory() as tmp:
