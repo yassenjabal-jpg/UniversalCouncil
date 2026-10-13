@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any, Protocol
 
 from company.runtime.execution_controls import ExecutionControlError, ExecutionJournal, HostControllerLease
+from company.runtime.execution_recovery import CancellationToken, CheckpointStore, action_plan_hash
 from company.runtime.tool_authority import capability_currentness, get_capability
 
 
@@ -39,6 +40,7 @@ class ResultState(StrEnum):
     FAILED = "FAILED"
     UNKNOWN = "UNKNOWN"
     BLOCKED = "BLOCKED"
+    CANCELLED = "CANCELLED"
 
 
 GUI_OBSERVE_ACTIONS = {
@@ -236,6 +238,19 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise HybridExecutionError("result projection bounds are too small")
     if cfg.get("automation_graduation", {}).get("verified_repeats_required", 0) < 2:
         raise HybridExecutionError("automation graduation requires repeated verification")
+    recovery = cfg.get("recovery", {})
+    if int(recovery.get("max_retries", -1)) < 0:
+        raise HybridExecutionError("recovery max_retries must be >= 0")
+    no_progress = float(recovery.get("no_progress_seconds", 0))
+    stalled = float(recovery.get("stalled_seconds", 0))
+    if no_progress <= 0 or stalled <= no_progress:
+        raise HybridExecutionError("recovery stalled_seconds must exceed positive no_progress_seconds")
+    if float(recovery.get("poll_interval_seconds", 0)) <= 0:
+        raise HybridExecutionError("recovery poll_interval_seconds must be > 0")
+    if recovery.get("unknown_requires_reconciliation") is not True:
+        raise HybridExecutionError("UNKNOWN outcomes must require reconciliation")
+    if recovery.get("replay_completed_action_default") is not False:
+        raise HybridExecutionError("completed action replay must remain opt-in")
     return True
 
 
@@ -541,6 +556,7 @@ class HybridExecutor:
         authority_registry: dict[str, Any] | None = None,
         controller_lease: HostControllerLease | None = None,
         journal: ExecutionJournal | None = None,
+        cancellation_token: CancellationToken | None = None,
     ):
         validate_config(cfg)
         self.cfg = cfg
@@ -552,6 +568,7 @@ class HybridExecutor:
         self.authority_registry = authority_registry
         self.controller_lease = controller_lease or HostControllerLease()
         self.journal = journal
+        self.cancellation_token = cancellation_token
 
     def _adapter_for(self, path: ExecutionPath) -> Adapter:
         if path == ExecutionPath.DC:
@@ -624,13 +641,33 @@ class HybridExecutor:
             state.record_result(planned, ResultState.BLOCKED)
             return {"state": ResultState.BLOCKED.value, "planned": planned}
 
-        if self.journal is not None and planned.action_id in self.journal.pending_action_ids():
-            state.record_result(planned, ResultState.UNKNOWN)
+        if self.cancellation_token is not None and self.cancellation_token.is_cancelled():
+            state.record_result(planned, ResultState.CANCELLED)
             return {
-                "state": ResultState.UNKNOWN.value,
+                "state": ResultState.CANCELLED.value,
                 "planned": planned,
-                "reason": "pending prior intent requires reconciliation",
+                "reason": self.cancellation_token.reason() or "execution cancelled",
             }
+
+        if self.journal is not None:
+            if planned.action_id in self.journal.pending_action_ids(task_id=state.task_id):
+                state.record_result(planned, ResultState.UNKNOWN)
+                return {
+                    "state": ResultState.UNKNOWN.value,
+                    "planned": planned,
+                    "reason": "pending prior intent requires reconciliation",
+                }
+            previous = self.journal.last_result_state(state.task_id, planned.action_id)
+            if (
+                previous == ResultState.SUCCEEDED.value
+                and planned.payload.get("allow_replay") is not True
+            ):
+                state.record_result(planned, ResultState.BLOCKED)
+                return {
+                    "state": ResultState.BLOCKED.value,
+                    "planned": planned,
+                    "reason": "completed action replay is blocked; use a new action id or explicit allow_replay",
+                }
 
         controls_desktop = (
             planned.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}
@@ -715,6 +752,43 @@ class HybridExecutor:
                 if lease_token is not None:
                     self.controller_lease.release(lease_token)
 
+    def execute_with_recovery(
+        self,
+        action: dict[str, Any],
+        state: SharedExecutionState,
+        *,
+        requester: str,
+        task_approved: bool,
+        owner_confirmed: bool = False,
+        retain_controller: bool = False,
+    ) -> dict[str, Any]:
+        configured_max = int(self.cfg.get("recovery", {}).get("max_retries", 0))
+        requested_max = int(action.get("max_retries", 0) or 0)
+        retry_limit = min(max(0, requested_max), configured_max)
+        attempts = 0
+
+        while True:
+            result = self.execute(
+                action,
+                state,
+                requester=requester,
+                task_approved=task_approved,
+                owner_confirmed=owner_confirmed,
+                retain_controller=retain_controller,
+            )
+            result["attempts"] = attempts + 1
+            if result["state"] != ResultState.FAILED.value:
+                return result
+            provider = result.get("result")
+            safe_to_retry = isinstance(provider, dict) and provider.get("safe_to_retry") is True
+            if (
+                attempts >= retry_limit
+                or action.get("retry_safe") is not True
+                or not safe_to_retry
+            ):
+                return result
+            attempts += 1
+
     def execute_batch(
         self,
         actions: list[dict[str, Any]],
@@ -723,6 +797,9 @@ class HybridExecutor:
         requester: str,
         task_approved: bool,
         owner_confirmed: bool = False,
+        checkpoint_store: CheckpointStore | None = None,
+        plan_hash: str | None = None,
+        resume_from: int = 0,
     ) -> dict[str, Any]:
         if not isinstance(actions, list) or not actions:
             raise HybridExecutionError("batch requires at least one action")
