@@ -30,9 +30,21 @@ ALL_CASE_IDS = [case["case_id"] for case in CASES]
 
 def manifest(stage: str = "full", case_ids: list[str] | None = None) -> dict:
     return {
+        "schema_version": "1.1",
         "runner_id": "YASSIN",
-        "cost_usd": 0.0,
+        "execution_host": "YASSIN",
+        "financial_cost_usd": 0.0,
         "manifest_id": "test-manifest",
+        "experiment_id": "test-manifest",
+        "source_sha": "source-sha",
+        "config_sha256": "config-sha",
+        "cases_sha256": "cases-sha",
+        "packets_sha256": "packets-sha",
+        "runner_sha256": "runner-sha",
+        "evaluator_sha256": "evaluator-sha",
+        "requirements_sha256": "requirements-sha",
+        "model": "qwen3:4b-instruct",
+        "model_digest": "model-digest",
         "selected_case_ids": list(case_ids or ALL_CASE_IDS),
         "stage": stage,
     }
@@ -65,9 +77,16 @@ def result_for(case, runtime_id="openai_agents", mode="LIVE_DECISION", manifest_
         "usage": {"input_tokens": 100, "output_tokens": 50, "cost_usd": 0.0},
         "latency_ms": 100,
         "provenance": {
+            **{
+                key: (
+                    manifest_id
+                    if key == "experiment_id"
+                    else manifest()[key]
+                )
+                for key in CFG["required_provenance_keys"]
+            },
             "manifest_id": manifest_id,
             "runner_id": "YASSIN",
-            "source_head": "abc123",
             "case_packet_sha256": "packet",
             "source_artifact_sha256": "source",
             "source_artifact": case["source_artifact"],
