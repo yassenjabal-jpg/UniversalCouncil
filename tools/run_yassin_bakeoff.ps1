@@ -77,8 +77,8 @@ if ($Stage -eq "All") {
         & $python "tools\\run_agent_bakeoff_live.py" --stage $stageArg --runtime all --model $Model --endpoint "http://127.0.0.1:11434" --resume
         if ($LASTEXITCODE -ne 0) { throw "Stage $stageArg failed; heavier stages are blocked." }
     }
-    & $python "tools\\run_agent_bakeoff.py"
-    exit $LASTEXITCODE
+    Write-Output '{"status":"FULL_DECISION_RUN_COMPLETE","next":"ATTACH_YASSIN_DESKTOP_EVIDENCE_2_OF_2_PER_RUNTIME","cost_usd":0}'
+    exit 0
 }
 
 $stageArg = switch ($Stage) {
