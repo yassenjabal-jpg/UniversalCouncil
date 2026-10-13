@@ -383,7 +383,33 @@ class AgentBakeoffTests(unittest.TestCase):
         result = result_for(CASES[0])
         result["case_id"] = "unknown_case"
         with self.assertRaises(BakeoffError):
+            evaluate(CASES, [result], {}, CFG, expected_provenance=PROVENANCE)
+
+    def test_evaluate_requires_provenance_manifest(self):
+        result = result_for(CASES[0], "openai_agents")
+        with self.assertRaises(BakeoffError):
             evaluate(CASES, [result], {}, CFG)
+
+    def test_provenance_mismatch_cost_and_host_fail_closed(self):
+        result = result_for(CASES[0], "openai_agents")
+        self.assertTrue(validate_provenance(result, PROVENANCE, CFG))
+
+        stale = copy.deepcopy(result)
+        stale["provenance"]["source_sha"] = "stale"
+        with self.assertRaises(BakeoffError):
+            validate_provenance(stale, PROVENANCE, CFG)
+
+        paid = copy.deepcopy(result)
+        paid["usage"]["cost_usd"] = 0.01
+        with self.assertRaises(BakeoffError):
+            validate_provenance(paid, PROVENANCE, CFG)
+
+        wrong_host = copy.deepcopy(result)
+        wrong_host["provenance"]["execution_host"] = "NOT_YASSIN"
+        wrong_expected = copy.deepcopy(PROVENANCE)
+        wrong_expected["execution_host"] = "NOT_YASSIN"
+        with self.assertRaises(BakeoffError):
+            validate_provenance(wrong_host, wrong_expected, CFG)
 
 
 if __name__ == "__main__":
