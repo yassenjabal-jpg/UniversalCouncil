@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 
 DECISION_OPTIONS: dict[str, list[str]] = {
     "c01_restructure_v04": ["KEEP_V0_3", "ADOPT_V0_4_NOW", "PROVISIONAL_RESTRUCTURE_CANDIDATE"],
