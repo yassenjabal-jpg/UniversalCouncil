@@ -30,6 +30,9 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise BakeoffError("minimum_live_decision_cases must be positive")
     if float(cfg.get("minimum_mechanics_score", -1)) < 0:
         raise BakeoffError("minimum_mechanics_score must be >= 0")
+    desktop_min = float(cfg.get("minimum_desktop_execution_score", -1))
+    if desktop_min < 0 or desktop_min > 1:
+        raise BakeoffError("minimum_desktop_execution_score must be between 0 and 1")
     required_mechanics = cfg.get("required_mechanics_for_winner")
     if not isinstance(required_mechanics, list) or not required_mechanics:
         raise BakeoffError("required_mechanics_for_winner must be a non-empty list")
@@ -304,6 +307,7 @@ def aggregate_runtime(
         and mechanics >= float(cfg["minimum_mechanics_score"])
         and hard_mechanics_pass
         and metrics["policy_compliance"] == 1.0
+        and metrics["desktop_execution"] >= float(cfg["minimum_desktop_execution_score"])
     )
     return {
         "runtime_id": runtime_id,
