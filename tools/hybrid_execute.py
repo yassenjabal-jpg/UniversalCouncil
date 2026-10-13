@@ -60,7 +60,9 @@ def main() -> int:
     parser.add_argument("--resume", action="store_true", help="resume a batch from its durable checkpoint")
     parser.add_argument("--cancel", action="store_true", help="persist a cancellation request for this task")
     parser.add_argument("--cancel-reason", default="operator requested cancellation")
-    parser.add_argument("--clear-cancel", action="store_true", help="clear a prior cancellation request before execution")
+    parser.add_argument(
+        "--clear-cancel", action="store_true", help="clear a prior cancellation request before execution"
+    )
     args = parser.parse_args()
 
     payload = json.loads(args.action.read_text(encoding="utf-8"))
