@@ -68,7 +68,7 @@ TRANSIENT_ERROR_NAMES = {
 
 
 def load_json(path: Path) -> Any:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
 def atomic_write_json(path: Path, payload: Any) -> None:
