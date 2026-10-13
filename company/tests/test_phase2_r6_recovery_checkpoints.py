@@ -4,6 +4,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from company.runtime.execution_controls import ExecutionJournal
 from company.runtime.hybrid_execution import HybridExecutor, ResultState, SharedExecutionState
@@ -306,6 +307,124 @@ class Phase2R6RecoveryCheckpointTests(unittest.TestCase):
             )
             self.assertEqual(result["state"], ResultState.CANCELLED.value)
             self.assertEqual(adapter.calls, [])
+
+    def test_recovery_policy_rejects_invalid_bounds(self):
+        for kwargs in (
+            {"max_retries": -1},
+            {"poll_interval_seconds": 0},
+            {"no_progress_seconds": 0},
+            {"no_progress_seconds": 5, "stalled_seconds": 5},
+        ):
+            with self.subTest(kwargs=kwargs):
+                with self.assertRaises(ValueError):
+                    RecoveryPolicy(**kwargs)
+
+    def test_cancellation_rejects_empty_reason_and_corrupt_payloads(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "cancel.json"
+            token = CancellationToken(path)
+            with self.assertRaises(ValueError):
+                token.cancel("   ")
+
+            path.write_text("{", encoding="utf-8")
+            with self.assertRaises(CheckpointError):
+                token.is_cancelled()
+
+            path.write_text("[]", encoding="utf-8")
+            with self.assertRaises(CheckpointError):
+                token.is_cancelled()
+
+            path.unlink()
+            self.assertIsNone(token.reason())
+
+    def test_cancellation_atomic_write_failure_is_propagated_without_temp_leak(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "cancel.json"
+            token = CancellationToken(path)
+            with patch("company.runtime.execution_recovery.os.replace", side_effect=OSError("denied")):
+                with self.assertRaises(OSError):
+                    token.cancel("stop")
+            self.assertFalse(path.exists())
+
+    def test_checkpoint_save_and_load_validation_failures(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "checkpoint.json"
+            store = CheckpointStore(path)
+            valid = {
+                "task_id": "task",
+                "plan_hash": "hash",
+                "next_action_index": 0,
+                "completed_action_ids": [],
+                "state": {},
+                "completed": False,
+            }
+            for mutation in (
+                {"task_id": ""},
+                {"plan_hash": ""},
+                {"next_action_index": -1},
+                {"completed_action_ids": ["a", "a"]},
+            ):
+                payload = {**valid, **mutation}
+                with self.subTest(mutation=mutation):
+                    with self.assertRaises(CheckpointError):
+                        store.save(**payload)
+
+            with self.assertRaises(CheckpointError):
+                store.load(task_id="task", plan_hash="hash")
+
+            path.write_text("{", encoding="utf-8")
+            with self.assertRaises(CheckpointError):
+                store.load(task_id="task", plan_hash="hash")
+
+            for payload in (
+                {"schema_version": "0", "task_id": "task", "plan_hash": "hash"},
+                {
+                    "schema_version": "1.0",
+                    "task_id": "task",
+                    "plan_hash": "hash",
+                    "next_action_index": 0,
+                    "completed_action_ids": "bad",
+                    "state": {},
+                },
+                {
+                    "schema_version": "1.0",
+                    "task_id": "task",
+                    "plan_hash": "hash",
+                    "next_action_index": -1,
+                    "completed_action_ids": [],
+                    "state": {},
+                },
+                {
+                    "schema_version": "1.0",
+                    "task_id": "task",
+                    "plan_hash": "hash",
+                    "next_action_index": 0,
+                    "completed_action_ids": [],
+                    "state": [],
+                },
+            ):
+                path.write_text(json.dumps(payload), encoding="utf-8")
+                with self.subTest(payload=payload):
+                    with self.assertRaises(CheckpointError):
+                        store.load(task_id="task", plan_hash="hash")
+
+            path.write_text("{}", encoding="utf-8")
+            store.clear()
+            self.assertFalse(path.exists())
+
+    def test_checkpoint_atomic_write_failure_is_wrapped(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            store = CheckpointStore(Path(tmp) / "checkpoint.json")
+            with patch("company.runtime.execution_recovery.os.replace", side_effect=OSError("denied")):
+                with self.assertRaises(CheckpointError):
+                    store.save(
+                        task_id="task",
+                        plan_hash="hash",
+                        next_action_index=0,
+                        completed_action_ids=[],
+                        state={},
+                        completed=False,
+                    )
 
 
 if __name__ == "__main__":
