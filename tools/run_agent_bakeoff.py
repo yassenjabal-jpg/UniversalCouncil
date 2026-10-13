@@ -67,7 +67,8 @@ def main() -> int:
         manifest = load_json(manifest_path)
         if not isinstance(manifest, dict):
             raise BakeoffError("experiment manifest must contain an object")
-        report = evaluate(cases, results, mechanics, cfg, expected_provenance=manifest)
+        validate_manifest(manifest, ROOT)
+        report = evaluate(cases, results, mechanics, cfg, manifest=manifest)
         out = ROOT / args.out
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
