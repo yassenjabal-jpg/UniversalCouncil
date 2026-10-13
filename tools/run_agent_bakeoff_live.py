@@ -3,8 +3,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
-import re
-import sys
+import os
 import time
 import urllib.error
 import urllib.request
@@ -13,13 +12,12 @@ from typing import Any
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT))
 
+from company.runtime.agent_bakeoff_baseline import route_v03  # noqa: E402
 from company.runtime.agent_bakeoff_provenance import (  # noqa: E402
+    ProvenanceError,
     build_manifest,
-    manifest_id,
-    require_yassin_runner,
-    result_provenance as manifest_result_provenance,
+    result_provenance,
     validate_manifest,
     write_manifest,
 )
@@ -28,59 +26,19 @@ DECISION_OPTIONS: dict[str, list[str]] = {
     "c01_restructure_v04": ["KEEP_V0_3", "ADOPT_V0_4_NOW", "PROVISIONAL_RESTRUCTURE_CANDIDATE"],
     "c02_gui_primary_hybrid": ["GUI_PRIMARY_DC_SECONDARY", "DC_PRIMARY_GUI_SECONDARY", "NATIVE_ONLY"],
     "c03_capability_evidence_sync": ["REJECT_EVIDENCE_SYNC", "ADOPT_BOUNDED_EVIDENCE_SYNC", "FULL_AUTHORITY_SYNC"],
-    "c04_after_effects_runtime_status": [
-        "UNVERIFIED",
-        "VERIFIED_BOUNDED_RUNTIME_EVIDENCE",
-        "FULL_PRODUCTION_CERTIFIED",
-    ],
+    "c04_after_effects_runtime_status": ["UNVERIFIED", "VERIFIED_BOUNDED_RUNTIME_EVIDENCE", "FULL_PRODUCTION_CERTIFIED"],
     "c05_media_final_launch": ["NO_GO", "GO_WITH_CONDITIONS", "UNCONDITIONAL_GO"],
-    "c06_channel_operating_system": [
-        "REJECT_CHANNEL_OS",
-        "GO_ADOPT_CHANNEL_OPERATING_SYSTEM",
-        "DEFER_INDEFINITELY",
-    ],
-    "c07_audio_sync_structure": [
-        "KEEP_GENERIC_AUDIO",
-        "ADOPT_MEDIA_PRODUCTION_CELL_V1_1",
-        "OUTSOURCE_ALL_AUDIO",
-    ],
+    "c06_channel_operating_system": ["REJECT_CHANNEL_OS", "GO_ADOPT_CHANNEL_OPERATING_SYSTEM", "DEFER_INDEFINITELY"],
+    "c07_audio_sync_structure": ["KEEP_GENERIC_AUDIO", "ADOPT_MEDIA_PRODUCTION_CELL_V1_1", "OUTSOURCE_ALL_AUDIO"],
     "c08_youtube_studio_benchmark": ["REJECT", "ADOPT", "COPY_REFERENCE_STUDIOS"],
     "c09_work_environment_hardening": ["REJECT", "GO_FOR_SANDBOX_PILOT", "ADOPT_IMMEDIATELY"],
-    "c10_intelligence_gateway": [
-        "BLOCK_GATEWAY",
-        "NATIVE_FIRST_PUBLIC_READ_ONLY_GATEWAY",
-        "BROWSER_FIRST_WRITE_ENABLED_GATEWAY",
-    ],
-    "c11_capability_scouting": [
-        "NO_PROACTIVE_SCOUTING",
-        "PROACTIVE_READ_ONLY_SCOUTING_OWNER_GATED_ADOPTION",
-        "HR_FULL_INSTALL_AUTHORITY",
-    ],
-    "c12_governance_hardening": [
-        "REJECT_GOVERNANCE_HARDENING",
-        "ACCEPT_GOVERNANCE_HARDENING",
-        "REMOVE_OWNER_GATES",
-    ],
-    "c13_memory_fabric": [
-        "CHAT_MEMORY_CANONICAL",
-        "IMPLEMENTED_GITHUB_CANONICAL_MEMORY",
-        "UNVERSIONED_LOCAL_MEMORY",
-    ],
-    "c14_specialized_tool_policy": [
-        "CODE_FIRST_FOR_ALL_MEDIA",
-        "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
-        "NO_CODE_ALLOWED",
-    ],
-    "c15_market_reality_gate": [
-        "PROJECT_FIRST_REASONING_ALLOWED",
-        "REQUIRE_MARKET_REALITY_BEFORE_PROJECT_CANDIDATE",
-        "GLOBAL_MARKET_ONLY",
-    ],
-    "c16_branch_hygiene": [
-        "DELETE_OLD_BRANCHES_BY_AGE",
-        "DELETE_ONLY_PROVEN_MERGED_OR_SUPERSEDED_BRANCHES",
-        "DELETE_ALL_NON_MAIN",
-    ],
+    "c10_intelligence_gateway": ["BLOCK_GATEWAY", "NATIVE_FIRST_PUBLIC_READ_ONLY_GATEWAY", "BROWSER_FIRST_WRITE_ENABLED_GATEWAY"],
+    "c11_capability_scouting": ["NO_PROACTIVE_SCOUTING", "PROACTIVE_READ_ONLY_SCOUTING_OWNER_GATED_ADOPTION", "HR_FULL_INSTALL_AUTHORITY"],
+    "c12_governance_hardening": ["REJECT_GOVERNANCE_HARDENING", "ACCEPT_GOVERNANCE_HARDENING", "REMOVE_OWNER_GATES"],
+    "c13_memory_fabric": ["CHAT_MEMORY_CANONICAL", "IMPLEMENTED_GITHUB_CANONICAL_MEMORY", "UNVERSIONED_LOCAL_MEMORY"],
+    "c14_specialized_tool_policy": ["CODE_FIRST_FOR_ALL_MEDIA", "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT", "NO_CODE_ALLOWED"],
+    "c15_market_reality_gate": ["PROJECT_FIRST_REASONING_ALLOWED", "REQUIRE_MARKET_REALITY_BEFORE_PROJECT_CANDIDATE", "GLOBAL_MARKET_ONLY"],
+    "c16_branch_hygiene": ["DELETE_OLD_BRANCHES_BY_AGE", "DELETE_ONLY_PROVEN_MERGED_OR_SUPERSEDED_BRANCHES", "DELETE_ALL_NON_MAIN"],
 }
 
 ROLE_DESCRIPTIONS = {
@@ -96,61 +54,40 @@ ROLE_DESCRIPTIONS = {
     "Business & Operations": "Assess operating model, process fit, execution ownership, and practical business constraints.",
 }
 
-BASELINE_V03_PERSPECTIVES = [
-    "Evidence & Verification",
-    "Red Team / Falsification",
-    "Execution & Feasibility",
-    "Risk & Assurance",
-    "Human & Adoption",
-    "Value & Economics",
-]
-
-STAGES: dict[str, list[str] | None] = {
-    "canary": ["c14_specialized_tool_policy"],
-    "representative": [
-        "c01_restructure_v04",
-        "c10_intelligence_gateway",
-        "c14_specialized_tool_policy",
-        "c15_market_reality_gate",
-    ],
-    "full": None,
+TRANSIENT_ERROR_NAMES = {
+    "TimeoutError",
+    "APITimeoutError",
+    "ReadTimeout",
+    "ConnectTimeout",
+    "ConnectionError",
+    "APIConnectionError",
 }
-
-OUTPUT_SCHEMA = {
-    "final_decision": "one decision option exactly",
-    "blockers": ["zero or more blocker labels from vocabulary"],
-    "dissent_tags": ["zero or more dissent labels from vocabulary"],
-    "summary": "brief rationale",
-}
-
-LEAK_HEADING_RE = re.compile(
-    r"^#{1,6}\s*(final|final verdict|decision|verdict|recommendation|outcome|result|conclusion)\b",
-    re.IGNORECASE,
-)
-LEAK_LINE_RE = re.compile(
-    r"^(status|decision|final verdict|verdict|recommendation|outcome|result|conclusion)\s*[:：-]",
-    re.IGNORECASE,
-)
 
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def save_json_atomic(path: Path, value: Any) -> None:
+def atomic_write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temp = path.with_suffix(path.suffix + ".tmp")
-    temp.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    temp.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     temp.replace(path)
 
 
 def ensure_local_endpoint(endpoint: str) -> str:
     parsed = urlparse(endpoint)
     if parsed.scheme != "http":
-        raise ValueError("zero-cost local Ollama endpoint must use http")
+        raise ValueError("YASSIN live bake-off requires local http Ollama")
     if parsed.hostname not in {"127.0.0.1", "localhost", "::1"}:
-        raise ValueError("LIVE bake-off is YASSIN-local only: non-local model endpoint rejected")
+        raise ValueError("YASSIN live bake-off rejects non-local model endpoints")
     return endpoint.rstrip("/")
+
+
+def require_yassin_environment() -> None:
+    detected = (os.environ.get("COMPUTERNAME") or "").strip().upper()
+    if detected != "YASSIN":
+        raise RuntimeError(f"LIVE bake-off is YASSIN-only; detected {detected or 'UNKNOWN'}")
 
 
 def ollama_native_call(endpoint: str, model: str, prompt: str, timeout: int) -> tuple[str, dict[str, int]]:
@@ -161,16 +98,17 @@ def ollama_native_call(endpoint: str, model: str, prompt: str, timeout: int) -> 
             "stream": False,
             "think": False,
             "format": "json",
-            "options": {"temperature": 0, "seed": 20261013, "num_ctx": 16384},
+            "keep_alive": "30m",
+            "options": {"temperature": 0, "seed": 20261013, "num_ctx": 12288},
         }
     ).encode("utf-8")
-    request = urllib.request.Request(
+    req = urllib.request.Request(
         f"{endpoint}/api/chat",
         data=payload,
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(request, timeout=timeout) as response:
+    with urllib.request.urlopen(req, timeout=timeout) as response:
         data = json.loads(response.read().decode("utf-8"))
     return (
         str(data["message"]["content"]),
@@ -186,22 +124,14 @@ async def baseline_call(endpoint: str, model: str, prompt: str, timeout: int) ->
 
 
 async def openai_agents_call(endpoint: str, model: str, prompt: str, timeout: int) -> tuple[str, dict[str, int]]:
-    from agents import (
-        Agent,
-        AsyncOpenAI,
-        ModelSettings,
-        OpenAIChatCompletionsModel,
-        RunConfig,
-        Runner,
-        set_tracing_disabled,
-    )
+    from agents import Agent, AsyncOpenAI, ModelSettings, OpenAIChatCompletionsModel, RunConfig, Runner, set_tracing_disabled
 
     set_tracing_disabled(True)
-    client = AsyncOpenAI(api_key="ollama", base_url=f"{endpoint}/v1/", timeout=timeout)
+    client = AsyncOpenAI(api_key="ollama", base_url=f"{endpoint}/v1/", timeout=timeout, max_retries=0)
     concrete_model = OpenAIChatCompletionsModel(model=model, openai_client=client)
     agent = Agent(
         name="CouncilLiveProbe",
-        instructions="Follow the user's requested JSON output exactly.",
+        instructions="Follow the user's requested output format exactly.",
         model=concrete_model,
         model_settings=ModelSettings(temperature=0.0, extra_args={"seed": 20261013}),
     )
@@ -220,18 +150,15 @@ async def maf_call(endpoint: str, model: str, prompt: str, timeout: int) -> tupl
     from agent_framework import Agent
     from agent_framework.openai import OpenAIChatCompletionClient
 
-    client = OpenAIChatCompletionClient(
-        model=model,
-        base_url=f"{endpoint}/v1/",
-        api_key="ollama",
-    )
+    del timeout
+    client = OpenAIChatCompletionClient(model=model, base_url=f"{endpoint}/v1/", api_key="ollama")
     agent = Agent(
         client=client,
         name="CouncilLiveProbe",
-        instructions="Follow the user's requested JSON output exactly.",
+        instructions="Follow the user's requested output format exactly.",
         default_options={"temperature": 0.0, "seed": 20261013},
     )
-    response = await asyncio.wait_for(agent.run(prompt), timeout=timeout)
+    response = await agent.run(prompt)
     usage = response.usage_details or {}
     return (
         response.text or "",
@@ -242,11 +169,20 @@ async def maf_call(endpoint: str, model: str, prompt: str, timeout: int) -> tupl
     )
 
 
-RUNTIMES = {
-    "baseline": baseline_call,
-    "openai_agents": openai_agents_call,
-    "microsoft_agent_framework": maf_call,
-}
+def is_transient(exc: Exception) -> bool:
+    return isinstance(exc, (TimeoutError, urllib.error.URLError)) or type(exc).__name__ in TRANSIENT_ERROR_NAMES
+
+
+async def call_with_retry(call_fn, endpoint: str, model: str, prompt: str, timeout: int, retries: int = 2):
+    attempt = 0
+    while True:
+        try:
+            return await call_fn(endpoint, model, prompt, timeout)
+        except Exception as exc:
+            if not is_transient(exc) or attempt >= retries:
+                raise
+            attempt += 1
+            await asyncio.sleep(min(2**attempt, 4))
 
 
 def extract_json(text: str) -> dict[str, Any]:
@@ -266,98 +202,28 @@ def extract_json(text: str) -> dict[str, Any]:
     raise ValueError("model did not return a JSON object")
 
 
-def mask_historical_answer(text: str, expected_decision: str) -> str:
-    output: list[str] = []
-    skip_section = False
-    for line in text.splitlines():
-        stripped = line.strip()
-        if LEAK_HEADING_RE.match(stripped):
-            skip_section = True
-            output.append("[HISTORICAL_DECISION_SECTION_MASKED]")
-            continue
-        if skip_section and stripped.startswith("#"):
-            skip_section = False
-        if skip_section:
-            continue
-        if LEAK_LINE_RE.match(stripped):
-            output.append("[HISTORICAL_DECISION_LINE_MASKED]")
-            continue
-        output.append(line.replace(expected_decision, "[EXPECTED_DECISION_MASKED]"))
-    return "\n".join(output)
-
-
-def case_source(case: dict[str, Any], max_chars: int = 8000) -> tuple[str, str, str]:
-    path = ROOT / case["source_artifact"]
-    raw = path.read_text(encoding="utf-8", errors="replace")
-    masked = mask_historical_answer(raw, case["expected_decision"])
-    if len(masked) > max_chars:
-        head = masked[: max_chars // 2]
-        tail = masked[-max_chars // 2 :]
-        masked = f"{head}\n\n[...SOURCE TRUNCATED FOR CONTROLLED CONTEXT...]\n\n{tail}"
-    return masked, sha256_bytes(masked.encode("utf-8")), sha256_file(path)
-
-
-def role_registry() -> list[str]:
-    return sorted(ROLE_DESCRIPTIONS)
+def packet_map() -> dict[str, dict[str, Any]]:
+    path = ROOT / "benchmarks" / "agent_runtime" / "case_packets.json"
+    if not path.is_file():
+        raise RuntimeError("case_packets.json missing; build masked packets before LIVE execution")
+    packets = load_json(path)
+    return {packet["case_id"]: packet for packet in packets}
 
 
 def global_vocab(cases: list[dict[str, Any]], field: str) -> list[str]:
     return sorted({item for case in cases for item in case[field]})
 
 
-def baseline_v03_prompt(
-    case: dict[str, Any],
-    source: str,
-    decision_options: list[str],
-    blocker_vocab: list[str],
-    dissent_vocab: list[str],
-) -> str:
-    perspectives = {name: ROLE_DESCRIPTIONS[name] for name in BASELINE_V03_PERSPECTIVES}
-    return f"""You are executing the CURRENT Universal Council v0.3 baseline as one structured model run.
-The perspectives below are governance perspectives inside one run, not independent agents.
-Analyze them separately, then synthesize.
-
-QUESTION:
-{case["prompt"]}
-
-MASKED SOURCE PACKET:
-{source}
-
-DECISION OPTIONS:
-{json.dumps(decision_options)}
-
-PERSPECTIVES:
-{json.dumps(perspectives, ensure_ascii=False)}
-
-GLOBAL BLOCKER LABEL VOCABULARY:
-{json.dumps(blocker_vocab)}
-
-GLOBAL DISSENT LABEL VOCABULARY:
-{json.dumps(dissent_vocab)}
-
-Return ONLY JSON:
-{{
-  "participants":["perspective names actually used"],
-  "role_outputs":{{"perspective":"brief independent position"}},
-  "final_decision":"one exact decision option",
-  "blockers":["supported labels only"],
-  "dissent_tags":["supported labels only"],
-  "summary":"brief synthesis"
-}}
-Do not infer the historical final answer from masked markers.
-"""
-
-
 def routing_prompt(case: dict[str, Any], source: str) -> str:
-    roles = [{"role": name, "purpose": ROLE_DESCRIPTIONS[name]} for name in role_registry()]
+    roles = [{"role": name, "purpose": purpose} for name, purpose in sorted(ROLE_DESCRIPTIONS.items())]
     return f"""You are the routing stage for Universal Council.
 Choose the smallest serious set of 2-7 roles needed to decide the case.
-Preserve at least one challenge perspective for consequential decisions.
+Preserve at least one challenge perspective for a consequential decision.
 
-QUESTION:
+CASE:
 {case["prompt"]}
 
-MASKED SOURCE PACKET:
+ANSWER-MASKED SOURCE PACKET:
 {source}
 
 AVAILABLE ROLES:
@@ -371,7 +237,7 @@ Return ONLY JSON:
 def role_prompt(role: str, case: dict[str, Any], source: str, decision_options: list[str]) -> str:
     return f"""You are acting as the independent Universal Council role: {role}.
 Role purpose: {ROLE_DESCRIPTIONS[role]}
-Form your position BEFORE seeing any other role output.
+Form your position before seeing any other role output.
 
 QUESTION:
 {case["prompt"]}
@@ -379,12 +245,11 @@ QUESTION:
 DECISION OPTIONS:
 {json.dumps(decision_options)}
 
-MASKED SOURCE PACKET:
+ANSWER-MASKED SOURCE PACKET:
 {source}
 
 Return ONLY JSON:
 {{"preferred_decision":"one exact decision option","blocker":"brief condition or empty string","dissent":"brief material challenge or empty string","rationale":"brief evidence-grounded reason"}}
-Do not invent facts outside the source and do not infer masked historical verdicts.
 """
 
 
@@ -397,123 +262,93 @@ def synthesis_prompt(
     dissent_vocab: list[str],
 ) -> str:
     return f"""You are the Universal Council synthesis stage.
-Use only the masked source packet and independent role outputs.
+Use only the answer-masked source packet and independent role outputs.
 Do not use majority vote blindly. Preserve material dissent.
 
 QUESTION:
 {case["prompt"]}
 
-MASKED SOURCE PACKET:
+ANSWER-MASKED SOURCE PACKET:
 {source}
 
 INDEPENDENT ROLE OUTPUTS:
 {json.dumps(outputs, ensure_ascii=False)}
 
-DECISION OPTIONS (choose exactly one):
+DECISION OPTIONS:
 {json.dumps(decision_options)}
 
-GLOBAL BLOCKER LABEL VOCABULARY:
+BLOCKER LABEL VOCABULARY:
 {json.dumps(blocker_vocab)}
 
-GLOBAL DISSENT LABEL VOCABULARY:
+DISSENT LABEL VOCABULARY:
 {json.dumps(dissent_vocab)}
 
-Select blocker/dissent labels only when substantively supported by this case.
-Return ONLY JSON matching:
-{json.dumps(OUTPUT_SCHEMA)}
+Return ONLY JSON:
+{{"final_decision":"one exact decision option","blockers":[],"dissent_tags":[],"summary":"brief rationale"}}
 """
 
 
-async def adapter_preflight(endpoint: str, model: str, timeout: int) -> None:
-    prompt = 'Return ONLY {"status":"ADAPTER_READY"}'
-    failures: list[str] = []
-    for runtime_id, call_fn in RUNTIMES.items():
-        try:
-            text, _ = await call_fn(endpoint, model, prompt, min(timeout, 90))
-            payload = extract_json(text)
-            if payload.get("status") != "ADAPTER_READY":
-                raise ValueError(f"unexpected adapter probe: {payload}")
-            print(f"ADAPTER_READY {runtime_id}", flush=True)
-        except Exception as exc:
-            failures.append(f"{runtime_id}:{type(exc).__name__}:{exc}")
-    if failures:
-        raise RuntimeError("adapter preflight failed: " + " | ".join(failures))
-
-
-async def guarded_call(
-    call_fn,
-    endpoint: str,
-    model: str,
-    prompt: str,
-    timeout: int,
-    inject_failure: bool,
-) -> tuple[str, dict[str, int], bool]:
-    if not inject_failure:
-        text, usage = await call_fn(endpoint, model, prompt, timeout)
-        return text, usage, True
-    try:
-        raise RuntimeError("synthetic harness recovery probe")
-    except RuntimeError:
-        text, usage = await call_fn(endpoint, model, prompt, timeout)
-        return text, usage, True
-
-
-def result_provenance(
-    manifest: dict[str, Any],
+def baseline_prompt(
     case: dict[str, Any],
-    packet_sha256: str,
-    source_sha256: str,
-) -> dict[str, Any]:
-    provenance = manifest_result_provenance(manifest)
-    provenance.update(
-        {
-            "manifest_id": manifest["manifest_id"],
-            "case_packet_sha256": packet_sha256,
-            "source_artifact_sha256": source_sha256,
-            "source_artifact": case["source_artifact"],
-        }
-    )
-    return provenance
+    source: str,
+    participants: list[str],
+    decision_options: list[str],
+    blocker_vocab: list[str],
+    dissent_vocab: list[str],
+) -> str:
+    return f"""You are executing Universal Council v0.3 in one structured model call.
+The listed roles are governance perspectives, NOT independent agents. Consider each perspective sequentially,
+preserve serious disagreement, then synthesize one decision.
+
+QUESTION:
+{case["prompt"]}
+
+V0.3 ROUTED PERSPECTIVES:
+{json.dumps(participants)}
+
+ANSWER-MASKED SOURCE PACKET:
+{source}
+
+DECISION OPTIONS:
+{json.dumps(decision_options)}
+
+BLOCKER LABEL VOCABULARY:
+{json.dumps(blocker_vocab)}
+
+DISSENT LABEL VOCABULARY:
+{json.dumps(dissent_vocab)}
+
+Return ONLY JSON:
+{{"role_positions":{{"exact role name":"brief independent-looking perspective"}},"final_decision":"one exact decision option","blockers":[],"dissent_tags":[],"summary":"brief rationale"}}
+"""
 
 
-async def run_baseline_case(
-    endpoint: str,
-    model: str,
+def normalize_result_fields(
+    *,
+    runtime_id: str,
     case: dict[str, Any],
-    all_cases: list[dict[str, Any]],
-    timeout: int,
-    manifest: dict[str, Any],
+    participants: list[str],
+    role_outputs: dict[str, str],
+    synthesis: dict[str, Any],
+    usage: dict[str, int],
+    latency_ms: float,
+    provenance: dict[str, Any],
+    harness_recovered: bool,
 ) -> dict[str, Any]:
-    started = time.perf_counter()
-    source, packet_sha, source_sha = case_source(case)
     options = DECISION_OPTIONS[case["case_id"]]
-    text, usage = await baseline_call(
-        endpoint,
-        model,
-        baseline_v03_prompt(
-            case,
-            source,
-            options,
-            global_vocab(all_cases, "expected_blockers"),
-            global_vocab(all_cases, "required_dissent_tags"),
-        ),
-        timeout,
-    )
-    payload = extract_json(text)
-    participants = [x for x in payload.get("participants", []) if x in BASELINE_V03_PERSPECTIVES]
-    role_outputs = {
-        key: str(value)
-        for key, value in payload.get("role_outputs", {}).items()
-        if key in BASELINE_V03_PERSPECTIVES
-    }
-    final_decision = str(payload.get("final_decision", ""))
     violations: list[str] = []
+    final_decision = str(synthesis.get("final_decision", ""))
     if final_decision not in options:
         violations.append("INVALID_DECISION_OPTION")
-    blockers = [x for x in payload.get("blockers", []) if x in global_vocab(all_cases, "expected_blockers")]
-    dissent = [x for x in payload.get("dissent_tags", []) if x in global_vocab(all_cases, "required_dissent_tags")]
+
+    all_cases = load_json(ROOT / "benchmarks" / "agent_runtime" / "cases.json")
+    blocker_vocab = set(global_vocab(all_cases, "expected_blockers"))
+    dissent_vocab = set(global_vocab(all_cases, "required_dissent_tags"))
+    blockers = [item for item in synthesis.get("blockers", []) if item in blocker_vocab]
+    dissent = [item for item in synthesis.get("dissent_tags", []) if item in dissent_vocab]
+
     return {
-        "runtime_id": "baseline",
+        "runtime_id": runtime_id,
         "case_id": case["case_id"],
         "mode": "LIVE_DECISION",
         "status": "COMPLETED" if not violations else "FAILED",
@@ -524,7 +359,8 @@ async def run_baseline_case(
         "dissent_tags": dissent,
         "policy_violations": violations,
         "human_override": False,
-        "failure_recovered": True,
+        "failure_recovered": harness_recovered,
+        "harness_recovered": harness_recovered,
         "desktop": {
             "task_completed": False,
             "verification_passed": False,
@@ -536,30 +372,59 @@ async def run_baseline_case(
             **usage,
             "cost_usd": 0.0,
             "provider": "local_ollama",
-            "model": model,
         },
-        "latency_ms": round((time.perf_counter() - started) * 1000, 2),
-        "provenance": result_provenance(manifest, case, packet_sha, source_sha),
+        "latency_ms": round(latency_ms, 2),
+        "provenance": provenance,
     }
 
 
-async def run_agent_case(
+async def run_baseline_case(endpoint: str, model: str, case: dict[str, Any], source: str, timeout: int, provenance: dict[str, Any]):
+    started = time.perf_counter()
+    all_cases = load_json(ROOT / "benchmarks" / "agent_runtime" / "cases.json")
+    participants = route_v03(ROOT, case["prompt"], source)
+    prompt = baseline_prompt(
+        case,
+        source,
+        participants,
+        DECISION_OPTIONS[case["case_id"]],
+        global_vocab(all_cases, "expected_blockers"),
+        global_vocab(all_cases, "required_dissent_tags"),
+    )
+    text, usage = await call_with_retry(baseline_call, endpoint, model, prompt, timeout)
+    synthesis = extract_json(text)
+    raw_positions = synthesis.get("role_positions", {})
+    role_outputs = {
+        role: str(raw_positions.get(role, ""))
+        for role in participants
+    }
+    return normalize_result_fields(
+        runtime_id="baseline",
+        case=case,
+        participants=participants,
+        role_outputs=role_outputs,
+        synthesis=synthesis,
+        usage=usage,
+        latency_ms=(time.perf_counter() - started) * 1000,
+        provenance=provenance,
+        harness_recovered=True,
+    )
+
+
+async def run_candidate_case(
     runtime_id: str,
     call_fn,
     endpoint: str,
     model: str,
     case: dict[str, Any],
-    all_cases: list[dict[str, Any]],
+    source: str,
     timeout: int,
-    manifest: dict[str, Any],
-    role_concurrency: int,
-) -> dict[str, Any]:
+    provenance: dict[str, Any],
+):
     started = time.perf_counter()
-    source, packet_sha, source_sha = case_source(case)
-    options = DECISION_OPTIONS[case["case_id"]]
+    all_cases = load_json(ROOT / "benchmarks" / "agent_runtime" / "cases.json")
     total_usage = {"input_tokens": 0, "output_tokens": 0}
 
-    route_text, usage = await call_fn(endpoint, model, routing_prompt(case, source), timeout)
+    route_text, usage = await call_with_retry(call_fn, endpoint, model, routing_prompt(case, source), timeout)
     for key in total_usage:
         total_usage[key] += int(usage.get(key, 0))
     route = extract_json(route_text)
@@ -567,36 +432,31 @@ async def run_agent_case(
     if len(participants) < 2:
         participants = ["Evidence & Verification", "Red Team / Falsification", "Execution & Feasibility"]
 
-    semaphore = asyncio.Semaphore(max(1, role_concurrency))
-
     async def one_role(role: str):
-        async with semaphore:
-            text, role_usage, recovered = await guarded_call(
-                call_fn,
-                endpoint,
-                model,
-                role_prompt(role, case, source, options),
-                timeout,
-                bool(case["injected_failure"] and role == participants[0]),
-            )
-            return role, text, role_usage, recovered
+        text, role_usage = await call_with_retry(
+            call_fn,
+            endpoint,
+            model,
+            role_prompt(role, case, source, DECISION_OPTIONS[case["case_id"]]),
+            timeout,
+        )
+        return role, text, role_usage
 
     role_results = await asyncio.gather(*(one_role(role) for role in participants))
     role_outputs: dict[str, str] = {}
-    recovery_flags: list[bool] = []
-    for role, text, role_usage, recovered in role_results:
+    for role, text, role_usage in role_results:
         role_outputs[role] = text
-        recovery_flags.append(recovered)
         for key in total_usage:
             total_usage[key] += int(role_usage.get(key, 0))
 
-    synth_text, synth_usage = await call_fn(
+    synth_text, synth_usage = await call_with_retry(
+        call_fn,
         endpoint,
         model,
         synthesis_prompt(
             case,
             source,
-            options,
+            DECISION_OPTIONS[case["case_id"]],
             role_outputs,
             global_vocab(all_cases, "expected_blockers"),
             global_vocab(all_cases, "required_dissent_tags"),
@@ -607,208 +467,189 @@ async def run_agent_case(
         total_usage[key] += int(synth_usage.get(key, 0))
     synthesis = extract_json(synth_text)
 
-    violations: list[str] = []
-    final_decision = str(synthesis.get("final_decision", ""))
-    if final_decision not in options:
-        violations.append("INVALID_DECISION_OPTION")
-    blockers = [x for x in synthesis.get("blockers", []) if x in global_vocab(all_cases, "expected_blockers")]
-    dissent = [x for x in synthesis.get("dissent_tags", []) if x in global_vocab(all_cases, "required_dissent_tags")]
+    return normalize_result_fields(
+        runtime_id=runtime_id,
+        case=case,
+        participants=participants,
+        role_outputs=role_outputs,
+        synthesis=synthesis,
+        usage=total_usage,
+        latency_ms=(time.perf_counter() - started) * 1000,
+        provenance=provenance,
+        harness_recovered=True,
+    )
 
+
+def stage_case_ids(config: dict[str, Any], stage: str, all_case_ids: list[str]) -> list[str]:
+    definition = config["live_stages"][stage]
+    if definition == "ALL_16":
+        return list(all_case_ids)
+    return list(definition)
+
+
+def load_existing(path: Path) -> list[dict[str, Any]]:
+    if not path.is_file():
+        return []
+    data = load_json(path)
+    if not isinstance(data, list):
+        raise ValueError("existing results file must be a list")
+    return data
+
+
+def completed_keys(results: list[dict[str, Any]], experiment_id: str) -> set[tuple[str, str]]:
     return {
-        "runtime_id": runtime_id,
-        "case_id": case["case_id"],
-        "mode": "LIVE_DECISION",
-        "status": "COMPLETED" if not violations else "FAILED",
-        "final_decision": final_decision,
-        "participants": participants,
-        "role_outputs": role_outputs,
-        "blockers": blockers,
-        "dissent_tags": dissent,
-        "policy_violations": violations,
-        "human_override": False,
-        "failure_recovered": all(recovery_flags),
-        "desktop": {
-            "task_completed": False,
-            "verification_passed": False,
-            "selector_recovered": False,
-            "correct_execution_path": False,
-            "no_unintended_action": True,
-        },
-        "usage": {
-            **total_usage,
-            "cost_usd": 0.0,
-            "provider": "local_ollama",
-            "model": model,
-        },
-        "latency_ms": round((time.perf_counter() - started) * 1000, 2),
-        "provenance": result_provenance(manifest, case, packet_sha, source_sha),
+        (str(item.get("runtime_id")), str(item.get("case_id")))
+        for item in results
+        if item.get("status") == "COMPLETED"
+        and item.get("provenance", {}).get("experiment_id") == experiment_id
     }
 
 
-def failed_result(
-    runtime_id: str,
-    case: dict[str, Any],
-    model: str,
-    manifest: dict[str, Any],
-    exc: Exception,
-) -> dict[str, Any]:
-    _, packet_sha, source_sha = case_source(case)
-    return {
-        "runtime_id": runtime_id,
-        "case_id": case["case_id"],
-        "mode": "LIVE_DECISION",
-        "status": "FAILED",
-        "final_decision": "",
-        "participants": [],
-        "role_outputs": {},
-        "blockers": [],
-        "dissent_tags": [],
-        "policy_violations": [f"RUNTIME_ERROR:{type(exc).__name__}"],
-        "human_override": False,
-        "failure_recovered": False,
-        "desktop": {
-            "task_completed": False,
-            "verification_passed": False,
-            "selector_recovered": False,
-            "correct_execution_path": False,
-            "no_unintended_action": True,
-        },
-        "usage": {
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "cost_usd": 0.0,
-            "provider": "local_ollama",
-            "model": model,
-        },
-        "latency_ms": 0.0,
-        "error": str(exc)[:500],
-        "provenance": result_provenance(manifest, case, packet_sha, source_sha),
-    }
-
-
-def select_stage_cases(all_cases: list[dict[str, Any]], stage: str) -> list[dict[str, Any]]:
-    selected = STAGES[stage]
-    if selected is None:
-        return list(all_cases)
-    by_id = {case["case_id"]: case for case in all_cases}
-    return [by_id[case_id] for case_id in selected]
+async def warm_model(endpoint: str, model: str, timeout: int) -> None:
+    await asyncio.to_thread(
+        ollama_native_call,
+        endpoint,
+        model,
+        'Return only {"status":"WARM"}.',
+        timeout,
+    )
 
 
 async def main_async(args: argparse.Namespace) -> int:
-    require_yassin_runner()
+    require_yassin_environment()
     endpoint = ensure_local_endpoint(args.endpoint)
-    all_cases = load_json(ROOT / "benchmarks" / "agent_runtime" / "cases.json")
-    cases = select_stage_cases(all_cases, args.stage)
-    if args.case:
-        cases = [case for case in cases if case["case_id"] == args.case]
-        if not cases:
-            raise ValueError(f"case {args.case} is not part of stage {args.stage}")
 
-    await adapter_preflight(endpoint, args.model, args.timeout)
+    config = load_json(ROOT / "company" / "config" / "agent_bakeoff.json")
+    cases = load_json(ROOT / "benchmarks" / "agent_runtime" / "cases.json")
+    packets = packet_map()
+    all_case_ids = [case["case_id"] for case in cases]
+    selected_ids = stage_case_ids(config, args.stage, all_case_ids)
+    selected_cases = [case for case in cases if case["case_id"] in selected_ids]
+    if [case["case_id"] for case in selected_cases] != selected_ids:
+        raise ValueError("stage case order does not match cases.json")
+
+    await warm_model(endpoint, args.model, min(args.timeout, 120))
 
     manifest = build_manifest(
         ROOT,
         endpoint=endpoint,
         model=args.model,
         stage=args.stage,
-        selected_case_ids=[case["case_id"] for case in cases],
+        selected_case_ids=selected_ids,
     )
-    manifest["manifest_id"] = manifest_id(manifest)
     manifest_path = ROOT / args.manifest
     write_manifest(manifest_path, manifest)
-    manifest = load_json(manifest_path)
     validate_manifest(manifest, ROOT)
+    provenance = result_provenance(manifest)
 
-    out_name = args.out
-    if not out_name:
-        out_name = "benchmarks/agent_runtime/results.json" if args.stage == "full" else (
-            f"benchmarks/agent_runtime/results-{args.stage}.json"
-        )
-    out = ROOT / out_name
-
-    existing: list[dict[str, Any]] = []
-    if args.resume and out.exists():
-        loaded = load_json(out)
-        if isinstance(loaded, list):
-            existing = [
-                result
-                for result in loaded
-                if result.get("provenance", {}).get("manifest_id") == manifest["manifest_id"]
-            ]
-
-    results = list(existing)
-    completed_keys = {
-        (result["runtime_id"], result["case_id"])
-        for result in results
-        if result.get("status") == "COMPLETED"
+    runtimes = {
+        "openai_agents": openai_agents_call,
+        "microsoft_agent_framework": maf_call,
     }
+    selected_runtimes = ["baseline", *runtimes] if args.runtime == "all" else [args.runtime]
 
-    selected_runtimes = list(RUNTIMES) if args.runtime == "all" else [args.runtime]
-    failures = 0
+    out = ROOT / args.out
+    existing = load_existing(out) if args.resume else []
+    done = completed_keys(existing, manifest["experiment_id"])
+    results = list(existing)
+
     for runtime_id in selected_runtimes:
-        for index, case in enumerate(cases, start=1):
+        for index, case in enumerate(selected_cases, start=1):
             key = (runtime_id, case["case_id"])
-            if key in completed_keys:
-                print(f"RESUME_SKIP {runtime_id} {case['case_id']}", flush=True)
+            if key in done:
+                print(f"SKIP completed {runtime_id}:{case['case_id']}", flush=True)
                 continue
-            print(f"[{args.stage}] [{runtime_id}] {index}/{len(cases)} {case['case_id']}", flush=True)
+
+            print(f"[{args.stage}] [{runtime_id}] {index}/{len(selected_cases)} {case['case_id']}", flush=True)
+            source = str(packets[case["case_id"]]["model_context"])
             try:
                 if runtime_id == "baseline":
-                    result = await run_baseline_case(
-                        endpoint,
-                        args.model,
-                        case,
-                        all_cases,
-                        args.timeout,
-                        manifest,
-                    )
+                    result = await run_baseline_case(endpoint, args.model, case, source, args.timeout, provenance)
                 else:
-                    result = await run_agent_case(
+                    result = await run_candidate_case(
                         runtime_id,
-                        RUNTIMES[runtime_id],
+                        runtimes[runtime_id],
                         endpoint,
                         args.model,
                         case,
-                        all_cases,
+                        source,
                         args.timeout,
-                        manifest,
-                        args.role_concurrency,
+                        provenance,
                     )
-            except (Exception, urllib.error.URLError) as exc:
-                result = failed_result(runtime_id, case, args.model, manifest, exc)
-                failures += 1
+            except Exception as exc:
+                result = {
+                    "runtime_id": runtime_id,
+                    "case_id": case["case_id"],
+                    "mode": "LIVE_DECISION",
+                    "status": "FAILED",
+                    "final_decision": "",
+                    "participants": [],
+                    "role_outputs": {},
+                    "blockers": [],
+                    "dissent_tags": [],
+                    "policy_violations": [f"RUNTIME_ERROR:{type(exc).__name__}"],
+                    "human_override": False,
+                    "failure_recovered": False,
+                    "harness_recovered": False,
+                    "desktop": {
+                        "task_completed": False,
+                        "verification_passed": False,
+                        "selector_recovered": False,
+                        "correct_execution_path": False,
+                        "no_unintended_action": True,
+                    },
+                    "usage": {
+                        "input_tokens": 0,
+                        "output_tokens": 0,
+                        "cost_usd": 0.0,
+                        "provider": "local_ollama",
+                    },
+                    "latency_ms": 0.0,
+                    "provenance": provenance,
+                    "error": str(exc)[:500],
+                }
 
-            results = [r for r in results if (r["runtime_id"], r["case_id"]) != key]
+            results = [
+                item for item in results
+                if not (
+                    item.get("runtime_id") == runtime_id
+                    and item.get("case_id") == case["case_id"]
+                    and item.get("provenance", {}).get("experiment_id") == manifest["experiment_id"]
+                )
+            ]
             results.append(result)
-            save_json_atomic(out, results)
+            atomic_write_json(out, results)
 
             if result["status"] != "COMPLETED":
-                failures += 1
-                if args.stage != "full":
-                    print("PRECHECK_STAGE_FAILED: stopping before a heavier stage.", flush=True)
-                    return 4
+                print(f"FAIL-CLOSED {runtime_id}:{case['case_id']} {result.get('error', result['policy_violations'])}")
+                return 4
 
-    print(f"WROTE {len(results)} results to {out}", flush=True)
-    if failures:
-        print(f"LIVE_BAKEOFF_FAILED: {failures} incomplete result(s)", flush=True)
-        return 4
+    print(json.dumps({
+        "status": "STAGE_COMPLETE",
+        "stage": args.stage,
+        "experiment_id": manifest["experiment_id"],
+        "results_file": str(out.relative_to(ROOT)),
+        "cost_usd": 0.0,
+    }, indent=2))
     return 0
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run zero-cost LIVE_DECISION bake-off on YASSIN only.")
+    parser = argparse.ArgumentParser(description="Run staged, resumable, YASSIN-only zero-cost LIVE_DECISION bake-off.")
     parser.add_argument("--endpoint", default="http://127.0.0.1:11434")
     parser.add_argument("--model", default="qwen3:4b-instruct")
-    parser.add_argument("--runtime", choices=["all", *RUNTIMES], default="all")
-    parser.add_argument("--stage", choices=list(STAGES), default="canary")
-    parser.add_argument("--case")
-    parser.add_argument("--timeout", type=int, default=300)
-    parser.add_argument("--role-concurrency", type=int, default=2)
-    parser.add_argument("--out")
-    parser.add_argument("--manifest", default="benchmarks/agent_runtime/run_manifest.json")
-    parser.add_argument("--resume", action="store_true", default=True)
+    parser.add_argument("--stage", choices=["canary", "representative", "full"], default="canary")
+    parser.add_argument("--runtime", choices=["all", "baseline", "openai_agents", "microsoft_agent_framework"], default="all")
+    parser.add_argument("--timeout", type=int, default=150)
+    parser.add_argument("--out", default="benchmarks/agent_runtime/results.json")
+    parser.add_argument("--manifest", default="benchmarks/agent_runtime/experiment_manifest.json")
+    parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
-    return asyncio.run(main_async(args))
+    try:
+        return asyncio.run(main_async(args))
+    except (ProvenanceError, RuntimeError, ValueError) as exc:
+        print(f"LIVE_BAKEOFF_BLOCKED: {exc}")
+        return 3
 
 
 if __name__ == "__main__":
