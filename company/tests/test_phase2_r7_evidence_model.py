@@ -179,14 +179,8 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
 
     def test_gui_execution_cannot_exceed_verified_evidence_scope(self):
         registry = copy.deepcopy(BASE_REGISTRY)
-        observe = next(
-            item for item in registry["capabilities"]
-            if item["operation"] == "desktop_computer_use.observe"
-        )
-        control = next(
-            item for item in registry["capabilities"]
-            if item["operation"] == "desktop_computer_use.control"
-        )
+        observe = next(item for item in registry["capabilities"] if item["operation"] == "desktop_computer_use.observe")
+        control = next(item for item in registry["capabilities"] if item["operation"] == "desktop_computer_use.control")
         for record, verified_scope in (
             (observe, ["status", "list_windows", "inspect_ui"]),
             (control, ["focus"]),
