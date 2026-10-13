@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from company.runtime.agent_bakeoff import BakeoffError, evaluate, load_cases, load_json, validate_config  # noqa: E402
+from company.runtime.agent_bakeoff_provenance import ProvenanceError, validate_manifest  # noqa: E402
 
 
 def _load_results(path: Path) -> list[dict]:
@@ -72,7 +73,7 @@ def main() -> int:
         out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         print(json.dumps(report, indent=2, ensure_ascii=False))
         return 0
-    except BakeoffError as exc:
+    except (BakeoffError, ProvenanceError) as exc:
         print(f"AGENT_BAKEOFF_ERROR: {exc}", file=sys.stderr)
         return 2
 
