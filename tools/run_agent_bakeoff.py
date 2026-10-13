@@ -24,6 +24,7 @@ def main() -> int:
     parser.add_argument("--cases", default="benchmarks/agent_runtime/cases.json")
     parser.add_argument("--results", default="benchmarks/agent_runtime/results.json")
     parser.add_argument("--mechanics", default="benchmarks/agent_runtime/mechanics.json")
+    parser.add_argument("--manifest", default="benchmarks/agent_runtime/experiment_manifest.json")
     parser.add_argument("--out", default="benchmarks/agent_runtime/report.json")
     parser.add_argument("--validate-only", action="store_true")
     args = parser.parse_args()
@@ -38,7 +39,12 @@ def main() -> int:
 
         results_path = ROOT / args.results
         mechanics_path = ROOT / args.mechanics
-        missing_inputs = [str(path.relative_to(ROOT)) for path in (results_path, mechanics_path) if not path.exists()]
+        manifest_path = ROOT / args.manifest
+        missing_inputs = [
+            str(path.relative_to(ROOT))
+            for path in (results_path, mechanics_path, manifest_path)
+            if not path.exists()
+        ]
         if missing_inputs:
             print(
                 json.dumps(
@@ -57,7 +63,10 @@ def main() -> int:
         mechanics = load_json(mechanics_path)
         if not isinstance(mechanics, dict):
             raise BakeoffError("mechanics file must contain an object keyed by runtime_id")
-        report = evaluate(cases, results, mechanics, cfg)
+        manifest = load_json(manifest_path)
+        if not isinstance(manifest, dict):
+            raise BakeoffError("experiment manifest must contain an object")
+        report = evaluate(cases, results, mechanics, cfg, expected_provenance=manifest)
         out = ROOT / args.out
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
