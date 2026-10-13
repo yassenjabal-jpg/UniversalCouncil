@@ -1,15 +1,32 @@
 from __future__ import annotations
 
+import json
 import tempfile
 import unittest
 from pathlib import Path
 
+from company.runtime.hybrid_execution import HybridExecutor, ResultState, SharedExecutionState
 from company.runtime.execution_trace import (
     TraceError,
     TraceEventType,
     TraceRecorder,
     evaluate_trace,
 )
+
+
+ROOT = Path(__file__).resolve().parents[2]
+BASE_CFG = json.loads((ROOT / "company/config/hybrid_execution.json").read_text(encoding="utf-8"))
+BASE_REGISTRY = json.loads((ROOT / "company/config/tool_authority.json").read_text(encoding="utf-8"))
+
+
+class MockAdapter:
+    def __init__(self, result):
+        self.result = result
+        self.calls = []
+
+    def dispatch(self, action):
+        self.calls.append(dict(action))
+        return dict(self.result)
 
 
 class Phase2R8TraceEvaluationTests(unittest.TestCase):
@@ -91,6 +108,43 @@ class Phase2R8TraceEvaluationTests(unittest.TestCase):
         self.assertAlmostEqual(report["blocker_precision"], 0.5)
         self.assertAlmostEqual(report["blocker_recall"], 0.5)
         self.assertAlmostEqual(report["blocker_f1"], 0.5)
+
+    def test_hybrid_executor_emits_explainable_material_trace(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            recorder = TraceRecorder(
+                Path(tmp) / "trace.jsonl",
+                trace_id="trace-hybrid",
+                task_id="trace-task",
+            )
+            adapter = MockAdapter({"state": ResultState.SUCCEEDED.value})
+            executor = HybridExecutor(
+                BASE_CFG,
+                native_adapter=adapter,
+                authority_registry=BASE_REGISTRY,
+                trace=recorder,
+            )
+            result = executor.execute(
+                {
+                    "id": "read",
+                    "native_available": True,
+                    "authority_operation": "github.read",
+                },
+                SharedExecutionState("trace-task"),
+                requester="technical_operator",
+                task_approved=True,
+            )
+            self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
+            events = recorder.events()
+            names = [event["event"] for event in events]
+            for expected in ("Route", "Evidence", "Approval", "Tool", "Execution", "Verification"):
+                self.assertIn(expected, names)
+            route = next(event for event in events if event["event"] == "Route")
+            self.assertTrue(route["data"]["reason"])
+            self.assertTrue(route["data"]["route_version"])
+            self.assertEqual(route["data"]["authority"], "github.read")
+            report = evaluate_trace(events)
+            self.assertEqual(report["false_success_count"], 0)
+            self.assertEqual(report["verified_success_count"], 1)
 
 
 if __name__ == "__main__":
