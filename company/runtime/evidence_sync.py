@@ -380,31 +380,49 @@ def apply_receipt_to_registry(
 ) -> dict[str, Any]:
     updated = copy.deepcopy(registry)
     binding = source["authority_bindings"][receipt["capability_id"]]
+    state = receipt.get("evidence_state") or receipt_evidence_state(receipt, source).value
+    metadata = copy.deepcopy(
+        receipt.get("evidence_metadata")
+        or build_imported_receipt(receipt, source)["evidence_metadata"]
+    )
+    operation_scopes = binding.get("operation_verified_scope", {})
+
     for operation in binding["operations"]:
         record = next((item for item in updated["capabilities"] if item.get("operation") == operation), None)
         if record is None:
             raise EvidenceSyncError(f"authority operation not found: {operation}")
         before = {field: copy.deepcopy(record[field]) for field in IMMUTABLE_AUTHORITY_FIELDS}
-        record["evidence_level"] = receipt["evidence_level"]
-        record["last_verified_at"] = receipt["observed_at"][:10]
-        record["source_or_pin"] = receipt["source_commit"]
-        record["evidence_receipt"] = imported_receipt_path
-        state = receipt.get("evidence_state") or receipt_evidence_state(receipt, source).value
-        metadata = copy.deepcopy(receipt.get("evidence_metadata") or build_imported_receipt(receipt, source)["evidence_metadata"])
-        record["evidence_state"] = state
-        record["historical_capability"] = metadata
-        record["current_verified_capability"] = (
-            metadata if state == EvidenceState.CURRENT_VERIFIED.value else None
-        )
-        operation_scopes = binding.get("operation_verified_scope", {})
+
         if operation_scopes:
             allowed_for_operation = set(operation_scopes.get(operation, []))
             scoped = [item for item in receipt["verified_scope"] if item in allowed_for_operation]
-            if not scoped:
-                raise EvidenceSyncError(f"{operation}: receipt has no verified scope for this operation")
-            record["verified_scope"] = scoped
         else:
-            record["verified_scope"] = list(receipt["verified_scope"])
+            scoped = list(receipt["verified_scope"])
+
+        previous_historical = copy.deepcopy(record.get("historical_capability"))
+        if previous_historical is None and record.get("source_or_pin"):
+            previous_historical = {
+                "source_commit": record.get("source_or_pin"),
+                "observed_at": record.get("last_verified_at"),
+                "verified_scope": list(record.get("verified_scope", [])),
+                "evidence_receipt": record.get("evidence_receipt"),
+            }
+
+        record["evidence_receipt"] = imported_receipt_path
+        record["verified_scope"] = scoped
+
+        if state == EvidenceState.CURRENT_VERIFIED.value and scoped:
+            record["evidence_level"] = receipt["evidence_level"]
+            record["last_verified_at"] = receipt["observed_at"][:10]
+            record["source_or_pin"] = receipt["source_commit"]
+            record["evidence_state"] = EvidenceState.CURRENT_VERIFIED.value
+            record["historical_capability"] = metadata
+            record["current_verified_capability"] = metadata
+        else:
+            record["evidence_state"] = EvidenceState.HISTORICAL.value
+            record["historical_capability"] = previous_historical or metadata
+            record["current_verified_capability"] = None
+
         after = {field: record[field] for field in IMMUTABLE_AUTHORITY_FIELDS}
         if before != after:
             raise EvidenceSyncError(f"receipt attempted authority escalation for {operation}")
@@ -509,12 +527,6 @@ def validate_imported_evidence(
             raise EvidenceSyncError(f"{record['operation']}: imported capability mismatch")
         if receipt["status"] != "RUNTIME_VERIFIED":
             raise EvidenceSyncError(f"{record['operation']}: imported receipt is not runtime verified")
-        if record["source_or_pin"] != receipt["source_commit"]:
-            raise EvidenceSyncError(f"{record['operation']}: source pin differs from imported receipt")
-        if record["evidence_level"] != receipt["evidence_level"]:
-            raise EvidenceSyncError(f"{record['operation']}: evidence level differs from imported receipt")
-        if record["last_verified_at"] != receipt["observed_at"][:10]:
-            raise EvidenceSyncError(f"{record['operation']}: verification date differs from imported receipt")
         operation_scopes = source["authority_bindings"][capability_id].get("operation_verified_scope", {})
         expected_scope = (
             [item for item in receipt["verified_scope"] if item in set(operation_scopes.get(record["operation"], []))]
@@ -523,4 +535,25 @@ def validate_imported_evidence(
         )
         if record.get("verified_scope") != expected_scope:
             raise EvidenceSyncError(f"{record['operation']}: verified scope differs from operation binding")
+
+        expected_current = (
+            receipt.get("evidence_state") == EvidenceState.CURRENT_VERIFIED.value
+            and bool(expected_scope)
+        )
+        if expected_current:
+            if record.get("evidence_state") != EvidenceState.CURRENT_VERIFIED.value:
+                raise EvidenceSyncError(f"{record['operation']}: current evidence state was not imported")
+            if record["source_or_pin"] != receipt["source_commit"]:
+                raise EvidenceSyncError(f"{record['operation']}: source pin differs from imported receipt")
+            if record["evidence_level"] != receipt["evidence_level"]:
+                raise EvidenceSyncError(f"{record['operation']}: evidence level differs from imported receipt")
+            if record["last_verified_at"] != receipt["observed_at"][:10]:
+                raise EvidenceSyncError(f"{record['operation']}: verification date differs from imported receipt")
+            if record.get("current_verified_capability") != receipt.get("evidence_metadata"):
+                raise EvidenceSyncError(f"{record['operation']}: current capability metadata differs from receipt")
+        else:
+            if record.get("evidence_state") != EvidenceState.HISTORICAL.value:
+                raise EvidenceSyncError(f"{record['operation']}: unverified operation must remain historical")
+            if record.get("current_verified_capability") is not None:
+                raise EvidenceSyncError(f"{record['operation']}: historical evidence cannot populate current capability")
     return True
