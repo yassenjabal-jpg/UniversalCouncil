@@ -211,7 +211,9 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             ):
                 result = adapter.dispatch({"gui_request": {"action": "screenshot"}})
             self.assertEqual(result["state"], ResultState.UNKNOWN.value)
-            self.assertEqual(result["reason"], "gui_action_timeout")
+            self.assertEqual(result["reason"], "gui_no_progress_timeout")
+            self.assertIn(result["liveness"], {"NO_PROGRESS", "STALLED"})
+            self.assertEqual(result["recovery_sequence"][0:2], ["NO_PROGRESS", "DIAGNOSE"])
 
     def test_f06_pending_journal_intent_requires_reconciliation(self):
         with tempfile.TemporaryDirectory() as tmp:
