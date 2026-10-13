@@ -639,12 +639,13 @@ class HybridExecutor:
             and planned.authority_operation == "desktop_computer_use.control"
         )
         controller_resource = f"desktop:{planned.payload.get('authority_target', 'YASSIN')}"
+        controller_holder = f"{requester}:{state.task_id}"
         if controls_desktop:
             state_acquired = False
             try:
                 state.acquire_controller(requester)
                 state_acquired = True
-                self.controller_lease.acquire(controller_resource, requester)
+                self.controller_lease.acquire(controller_resource, controller_holder)
             except (ExecutionControlError, HybridExecutionError) as exc:
                 if state_acquired and state.controller_lease == requester:
                     state.release_controller(requester)
@@ -705,7 +706,7 @@ class HybridExecutor:
         finally:
             if controls_desktop and not retain_controller and state.controller_lease == requester:
                 state.release_controller(requester)
-                self.controller_lease.release(controller_resource, requester)
+                self.controller_lease.release(controller_resource, controller_holder)
 
     def execute_batch(
         self,
@@ -736,6 +737,7 @@ class HybridExecutor:
         controller_resource = (
             f"desktop:{controlling.payload.get('authority_target', 'YASSIN')}" if controlling is not None else ""
         )
+        controller_holder = f"{requester}:{state.task_id}"
         if controls_desktop:
             state_acquired = False
             try:
