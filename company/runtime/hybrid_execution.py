@@ -9,7 +9,8 @@ from enum import StrEnum
 from pathlib import Path
 from typing import Any, Protocol
 
-from company.runtime.tool_authority import get_capability
+from company.runtime.execution_controls import ExecutionControlError, ExecutionJournal, HostControllerLease
+from company.runtime.tool_authority import capability_currentness, get_capability
 
 
 class HybridExecutionError(ValueError):
@@ -61,6 +62,8 @@ GUI_CONTROL_ACTIONS = {
     "hover",
     "record",
 }
+GUI_STATE_CHANGE_ACTIONS = {"invoke", "set_value", "click", "send_keys", "drag", "record"}
+GUI_REVERSIBLE_ACTIONS = {"focus", "scroll_into_view", "wait_for", "hover"}
 
 
 class Adapter(Protocol):
@@ -292,35 +295,80 @@ def choose_path(action: dict[str, Any]) -> ExecutionPath:
     raise HybridExecutionError("no approved execution path is available")
 
 
+def _normalize_action_for_path(
+    action: dict[str, Any],
+    path: ExecutionPath,
+    cfg: dict[str, Any],
+) -> dict[str, Any]:
+    normalized = dict(action)
+    if path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}:
+        request = normalized.get("gui_request") or {}
+        gui_action = str(request.get("action", ""))
+        if gui_action in GUI_OBSERVE_ACTIONS:
+            trusted_effect = "READ"
+            trusted_state_change = False
+        elif gui_action in GUI_STATE_CHANGE_ACTIONS:
+            trusted_effect = "WRITE"
+            trusted_state_change = True
+        elif gui_action in GUI_REVERSIBLE_ACTIONS:
+            trusted_effect = "EXECUTE"
+            trusted_state_change = False
+        else:
+            raise HybridExecutionError(f"unsupported GUI bridge action: {gui_action}")
+
+        supplied_effect = normalized.get("effect")
+        if supplied_effect is not None and supplied_effect != trusted_effect:
+            raise HybridExecutionError(
+                f"GUI action {gui_action} effect mismatch: expected {trusted_effect}, got {supplied_effect}"
+            )
+        if normalized.get("local_state_change") is False and trusted_state_change:
+            raise HybridExecutionError(f"GUI action {gui_action} cannot downgrade local_state_change")
+        normalized["effect"] = trusted_effect
+        normalized["local_state_change"] = trusted_state_change
+        normalized.setdefault(
+            "authority_target",
+            cfg.get("gui_interaction_plane", {}).get("authority_target", "YASSIN"),
+        )
+    elif path == ExecutionPath.DC:
+        if normalized.get("effect") not in {"READ", "WRITE", "EXECUTE"}:
+            raise HybridExecutionError("DC action requires an explicit trusted effect")
+        normalized.setdefault(
+            "authority_target",
+            cfg.get("dc_control_plane", {}).get("authority_target", "YASSIN"),
+        )
+    return normalized
+
+
 def plan_action(action: dict[str, Any], cfg: dict[str, Any]) -> PlannedAction:
     if not isinstance(action, dict) or not action.get("id"):
         raise HybridExecutionError("action requires a stable id")
     validate_config(cfg)
-    risk = classify_risk(action)
+    path = choose_path(action)
+    normalized = _normalize_action_for_path(action, path, cfg)
+    risk = classify_risk(normalized)
     if risk == RiskTier.T4:
         raise HybridExecutionError("action is blocked by governing policy")
 
-    path = choose_path(action)
     if path == ExecutionPath.DC:
-        authority = "remote_shell.read" if action.get("effect", "READ") == "READ" else "remote_shell.execute"
+        authority = "remote_shell.read" if normalized["effect"] == "READ" else "remote_shell.execute"
     elif path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}:
-        gui_request = action.get("gui_request") or {}
+        gui_request = normalized.get("gui_request") or {}
         gui_action = gui_request.get("action", "screenshot")
         authority = _gui_authority(str(gui_action))
     else:
-        authority = str(action.get("authority_operation") or "")
+        authority = str(normalized.get("authority_operation") or "")
         if not authority:
             raise HybridExecutionError(f"{path.value} requires authority_operation")
 
-    requires_verification = risk in {RiskTier.T2, RiskTier.T3} or bool(action.get("verify"))
+    requires_verification = risk in {RiskTier.T2, RiskTier.T3} or bool(normalized.get("verify"))
     return PlannedAction(
-        action_id=str(action["id"]),
+        action_id=str(normalized["id"]),
         path=path,
         risk=risk,
         authority_operation=authority,
         requires_owner_confirmation=risk == RiskTier.T3,
         requires_verification=requires_verification,
-        payload=action,
+        payload=normalized,
     )
 
 
@@ -334,6 +382,14 @@ def authorize(planned: PlannedAction, *, task_approved: bool, owner_confirmed: b
     return True
 
 
+def _authority_target(payload: dict[str, Any]) -> str | None:
+    for key in ("authority_target", "target_repo", "target", "resource"):
+        value = payload.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return None
+
+
 def enforce_tool_authority(planned: PlannedAction, registry: dict[str, Any]) -> dict[str, Any]:
     try:
         record = get_capability(registry, planned.authority_operation)
@@ -343,6 +399,22 @@ def enforce_tool_authority(planned: PlannedAction, registry: dict[str, Any]) -> 
         raise HybridExecutionError(f"authority is not executable: {planned.authority_operation}")
     if record["approval_policy"] == "BLOCKED":
         raise HybridExecutionError(f"authority is blocked: {planned.authority_operation}")
+
+    currentness = capability_currentness(record)
+    if not currentness["current"]:
+        raise HybridExecutionError(
+            f"authority evidence is not current: {planned.authority_operation} ({currentness['reason']})"
+        )
+
+    allowed_targets = record.get("allowed_targets")
+    if allowed_targets:
+        target = _authority_target(planned.payload)
+        if target is None:
+            raise HybridExecutionError(f"authority target is required: {planned.authority_operation}")
+        if target not in allowed_targets:
+            raise HybridExecutionError(
+                f"authority target is outside allowed scope: {planned.authority_operation} -> {target}"
+            )
     return record
 
 
@@ -370,6 +442,7 @@ class CouncilVideoStudioGuiAdapter:
         if not root:
             raise HybridExecutionError("CouncilVideoStudio root is unavailable")
         self.root = Path(root).resolve()
+        self.timeout_seconds = int(gui_cfg.get("action_timeout_seconds", 30))
         self.script = self.root / gui_cfg["verified_action_relative"]
         if not self.script.is_file():
             raise HybridExecutionError("verified_action.py is unavailable")
@@ -392,7 +465,17 @@ class CouncilVideoStudioGuiAdapter:
                 encoding="utf-8",
                 errors="replace",
                 check=False,
+                timeout=self.timeout_seconds,
             )
+        except subprocess.TimeoutExpired as exc:
+            return {
+                "state": ResultState.UNKNOWN.value,
+                "plane": "GUI",
+                "reason": "gui_action_timeout",
+                "timeout_seconds": self.timeout_seconds,
+                "stdout": str(exc.stdout or "").strip(),
+                "stderr": str(exc.stderr or "").strip(),
+            }
         finally:
             request_path.unlink(missing_ok=True)
 
@@ -414,11 +497,11 @@ class CouncilVideoStudioGuiAdapter:
 class PassthroughVerifier:
     def verify(self, action: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
         verification = result.get("verification")
-        if isinstance(verification, dict):
+        if isinstance(verification, dict) and verification.get("independent") is True:
             return verification
-        if result.get("state") == ResultState.SUCCEEDED.value and action.get("verify") is None:
-            return {"verified": True, "mode": "provider_result"}
-        return {"verified": False, "mode": "missing_postcondition"}
+        if isinstance(verification, dict):
+            return {"verified": False, "mode": "provider_verification_not_independent"}
+        return {"verified": False, "mode": "missing_independent_postcondition"}
 
 
 class HybridExecutor:
@@ -432,6 +515,8 @@ class HybridExecutor:
         routine_adapter: Adapter | None = None,
         verifier: Verifier | None = None,
         authority_registry: dict[str, Any] | None = None,
+        controller_lease: HostControllerLease | None = None,
+        journal: ExecutionJournal | None = None,
     ):
         validate_config(cfg)
         self.cfg = cfg
@@ -441,6 +526,8 @@ class HybridExecutor:
         self.routine_adapter = routine_adapter
         self.verifier = verifier or PassthroughVerifier()
         self.authority_registry = authority_registry
+        self.controller_lease = controller_lease or HostControllerLease()
+        self.journal = journal
 
     def _adapter_for(self, path: ExecutionPath) -> Adapter:
         if path == ExecutionPath.DC:
@@ -459,6 +546,14 @@ class HybridExecutor:
             return self.routine_adapter
         raise HybridExecutionError(f"no adapter for {path}")
 
+    def _journal_result(self, state: SharedExecutionState, planned: PlannedAction, result_state: ResultState) -> None:
+        if self.journal is not None:
+            self.journal.record_result(
+                task_id=state.task_id,
+                action_id=planned.action_id,
+                state=result_state.value,
+            )
+
     def execute(
         self,
         action: dict[str, Any],
@@ -470,48 +565,92 @@ class HybridExecutor:
         retain_controller: bool = False,
     ) -> dict[str, Any]:
         planned = plan_action(action, self.cfg)
-        authority_record = None
-        if self.authority_registry is not None:
+        if not requester:
+            state.record_result(planned, ResultState.BLOCKED)
+            return {"state": ResultState.BLOCKED.value, "planned": planned, "reason": "requester identity is required"}
+        if self.authority_registry is None:
+            state.record_result(planned, ResultState.BLOCKED)
+            return {
+                "state": ResultState.BLOCKED.value,
+                "planned": planned,
+                "reason": "tool authority registry is required",
+            }
+
+        try:
+            authority_record = enforce_tool_authority(planned, self.authority_registry)
+        except HybridExecutionError as exc:
+            state.record_result(planned, ResultState.BLOCKED)
+            return {
+                "state": ResultState.BLOCKED.value,
+                "planned": planned,
+                "reason": str(exc),
+            }
+        if authority_record["approval_policy"] in {"OWNER_EXPLICIT", "ASK_BEFORE_WRITE"} and not task_approved:
+            state.record_result(planned, ResultState.BLOCKED)
+            return {
+                "state": ResultState.BLOCKED.value,
+                "planned": planned,
+                "reason": f"approval required by tool authority: {planned.authority_operation}",
+            }
+        if not authorize(planned, task_approved=task_approved, owner_confirmed=owner_confirmed):
+            state.record_result(planned, ResultState.BLOCKED)
+            return {"state": ResultState.BLOCKED.value, "planned": planned}
+
+        if self.journal is not None and planned.action_id in self.journal.pending_action_ids():
+            state.record_result(planned, ResultState.UNKNOWN)
+            return {
+                "state": ResultState.UNKNOWN.value,
+                "planned": planned,
+                "reason": "pending prior intent requires reconciliation",
+            }
+
+        controls_desktop = (
+            planned.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}
+            and planned.authority_operation == "desktop_computer_use.control"
+        )
+        controller_resource = f"desktop:{planned.payload.get('authority_target', 'YASSIN')}"
+        if controls_desktop:
             try:
-                authority_record = enforce_tool_authority(planned, self.authority_registry)
-            except HybridExecutionError as exc:
+                self.controller_lease.acquire(controller_resource, requester)
+                state.acquire_controller(requester)
+            except (ExecutionControlError, HybridExecutionError) as exc:
                 state.record_result(planned, ResultState.BLOCKED)
                 return {
                     "state": ResultState.BLOCKED.value,
                     "planned": planned,
                     "reason": str(exc),
                 }
-            if authority_record["approval_policy"] in {"OWNER_EXPLICIT", "ASK_BEFORE_WRITE"} and not task_approved:
-                state.record_result(planned, ResultState.BLOCKED)
-                return {
-                    "state": ResultState.BLOCKED.value,
-                    "planned": planned,
-                    "reason": f"approval required by tool authority: {planned.authority_operation}",
-                }
-        if not authorize(planned, task_approved=task_approved, owner_confirmed=owner_confirmed):
-            state.record_result(planned, ResultState.BLOCKED)
-            return {"state": ResultState.BLOCKED.value, "planned": planned}
-
-        controls_desktop = (
-            planned.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}
-            and planned.authority_operation == "desktop_computer_use.control"
-        )
-        if controls_desktop:
-            state.acquire_controller(requester)
         try:
-            result = self._adapter_for(planned.path).dispatch(action)
+            if self.journal is not None:
+                self.journal.record_intent(
+                    task_id=state.task_id,
+                    action_id=planned.action_id,
+                    requester=requester,
+                    path=planned.path.value,
+                    risk=planned.risk.value,
+                    authority_operation=planned.authority_operation,
+                )
+
+            result = self._adapter_for(planned.path).dispatch(planned.payload)
             raw_state = result.get("state")
             if raw_state == ResultState.HOST_DISPATCH_REQUIRED.value:
                 state.record_result(planned, ResultState.HOST_DISPATCH_REQUIRED)
+                self._journal_result(state, planned, ResultState.HOST_DISPATCH_REQUIRED)
                 return {"state": raw_state, "planned": planned, "result": result}
+            if raw_state == ResultState.UNKNOWN.value:
+                state.record_result(planned, ResultState.UNKNOWN)
+                self._journal_result(state, planned, ResultState.UNKNOWN)
+                return {"state": ResultState.UNKNOWN.value, "planned": planned, "result": result}
             if raw_state != ResultState.SUCCEEDED.value:
                 state.record_result(planned, ResultState.FAILED)
+                self._journal_result(state, planned, ResultState.FAILED)
                 return {"state": ResultState.FAILED.value, "planned": planned, "result": result}
 
             if planned.requires_verification:
-                verification = self.verifier.verify(action, result)
+                verification = self.verifier.verify(planned.payload, result)
                 if not verification.get("verified"):
                     state.record_result(planned, ResultState.UNKNOWN)
+                    self._journal_result(state, planned, ResultState.UNKNOWN)
                     return {
                         "state": ResultState.UNKNOWN.value,
                         "planned": planned,
@@ -522,6 +661,7 @@ class HybridExecutor:
                 verification = {"verified": True, "mode": "not_required"}
 
             state.record_result(planned, ResultState.SUCCEEDED)
+            self._journal_result(state, planned, ResultState.SUCCEEDED)
             return {
                 "state": ResultState.SUCCEEDED.value,
                 "planned": planned,
@@ -531,6 +671,7 @@ class HybridExecutor:
         finally:
             if controls_desktop and not retain_controller and state.controller_lease == requester:
                 state.release_controller(requester)
+                self.controller_lease.release(controller_resource, requester)
 
     def execute_batch(
         self,
