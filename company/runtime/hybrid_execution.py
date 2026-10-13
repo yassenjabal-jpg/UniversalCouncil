@@ -485,10 +485,7 @@ def enforce_tool_authority(
             raise HybridExecutionError(f"authority scope is not allowed: {planned.authority_operation} -> {scope}")
 
     verified_scope = record.get("verified_scope")
-    if (
-        verified_scope is not None
-        and planned.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}
-    ):
+    if verified_scope is not None and planned.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}:
         request = planned.payload.get("gui_request") or {}
         gui_action = str(request.get("action", ""))
         evidence_scope = GUI_ACTION_EVIDENCE_SCOPE.get(gui_action)
@@ -785,10 +782,7 @@ class HybridExecutor:
                     "reason": "pending prior intent requires reconciliation",
                 }
             previous = self.journal.last_result_state(state.task_id, planned.action_id)
-            if (
-                previous == ResultState.SUCCEEDED.value
-                and planned.payload.get("allow_replay") is not True
-            ):
+            if previous == ResultState.SUCCEEDED.value and planned.payload.get("allow_replay") is not True:
                 state.record_result(planned, ResultState.BLOCKED)
                 return {
                     "state": ResultState.BLOCKED.value,
@@ -955,11 +949,7 @@ class HybridExecutor:
                 return result
             provider = result.get("result")
             safe_to_retry = isinstance(provider, dict) and provider.get("safe_to_retry") is True
-            if (
-                attempts >= retry_limit
-                or action.get("retry_safe") is not True
-                or not safe_to_retry
-            ):
+            if attempts >= retry_limit or action.get("retry_safe") is not True or not safe_to_retry:
                 return result
             attempts += 1
             self._trace(
