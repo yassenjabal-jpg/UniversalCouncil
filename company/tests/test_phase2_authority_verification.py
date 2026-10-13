@@ -187,7 +187,7 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             self.assertEqual(result2["state"], ResultState.BLOCKED.value)
             self.assertEqual(second_adapter.calls, [])
 
-            state1.release_controller("operator-a")
+            state1.release_controller("technical_operator")
             first.controller_lease.release("desktop:YASSIN", "technical_operator:lease-1")
 
     def test_f06_gui_timeout_becomes_unknown(self):
