@@ -5,7 +5,8 @@ import hashlib
 import json
 import os
 import re
-from datetime import datetime
+import subprocess
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -87,6 +88,32 @@ def validate_sync_config(cfg: dict[str, Any]) -> bool:
         bindings = set(source["authority_bindings"])
         if not bindings.issubset(allowed):
             raise EvidenceSyncError(f"{source['id']}: authority binding not allowlisted")
+        max_age = source.get("max_receipt_age_days", 30)
+        if not isinstance(max_age, int) or max_age < 1:
+            raise EvidenceSyncError(f"{source['id']}: max_receipt_age_days must be a positive integer")
+        revoked = source.get("revoked_receipt_ids", [])
+        if not isinstance(revoked, list) or not all(isinstance(item, str) and item for item in revoked):
+            raise EvidenceSyncError(f"{source['id']}: revoked_receipt_ids must be a string list")
+        for capability_id, binding in source["authority_bindings"].items():
+            operations = binding.get("operations")
+            if not isinstance(operations, list) or not operations:
+                raise EvidenceSyncError(f"{source['id']}/{capability_id}: operations must be a non-empty list")
+            scoped = binding.get("operation_verified_scope", {})
+            if scoped:
+                if not isinstance(scoped, dict) or not set(scoped).issubset(set(operations)):
+                    raise EvidenceSyncError(
+                        f"{source['id']}/{capability_id}: operation_verified_scope must map approved operations"
+                    )
+                allowed_verified = set(binding.get("allowed_verified_scope", []))
+                for operation, scopes in scoped.items():
+                    if not isinstance(scopes, list) or not scopes:
+                        raise EvidenceSyncError(
+                            f"{source['id']}/{capability_id}/{operation}: verified scope must be non-empty"
+                        )
+                    if not set(scopes).issubset(allowed_verified):
+                        raise EvidenceSyncError(
+                            f"{source['id']}/{capability_id}/{operation}: operation scope exceeds allowlist"
+                        )
     return True
 
 
@@ -113,6 +140,35 @@ def _parse_observed_at(value: str) -> datetime:
     return parsed
 
 
+def _git_source_bytes(source_root: Path, commit: str, relative_path: str) -> bytes:
+    try:
+        completed = subprocess.run(
+            ["git", "-C", str(source_root), "show", f"{commit}:{relative_path}"],
+            check=False,
+            capture_output=True,
+            timeout=10,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise EvidenceSyncError(f"cannot verify source commit artifact: {exc}") from exc
+    if completed.returncode != 0:
+        raise EvidenceSyncError(f"artifact is not bound to source_commit: {relative_path}")
+    return completed.stdout
+
+
+def _verify_source_commit(source_root: Path, commit: str) -> None:
+    try:
+        completed = subprocess.run(
+            ["git", "-C", str(source_root), "cat-file", "-e", f"{commit}^{{commit}}"],
+            check=False,
+            capture_output=True,
+            timeout=10,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise EvidenceSyncError(f"cannot verify source_commit: {exc}") from exc
+    if completed.returncode != 0:
+        raise EvidenceSyncError("source_commit does not exist in the approved source repository")
+
+
 def validate_receipt(receipt: dict[str, Any], source: dict[str, Any], source_root: Path) -> bool:
     missing = RECEIPT_REQUIRED - set(receipt)
     if missing:
@@ -129,7 +185,16 @@ def validate_receipt(receipt: dict[str, Any], source: dict[str, Any], source_roo
         raise EvidenceSyncError("only RUNTIME_VERIFIED receipts are importable")
     if not re.fullmatch(r"[0-9a-f]{40}", str(receipt["source_commit"])):
         raise EvidenceSyncError("source_commit must be a full lowercase git SHA")
-    _parse_observed_at(str(receipt["observed_at"]))
+    observed_at = _parse_observed_at(str(receipt["observed_at"])).astimezone(timezone.utc)
+    now = datetime.now(timezone.utc)
+    if observed_at > now + timedelta(minutes=5):
+        raise EvidenceSyncError("observed_at cannot be materially in the future")
+    max_age_days = int(source.get("max_receipt_age_days", 30))
+    if now - observed_at > timedelta(days=max_age_days):
+        raise EvidenceSyncError("receipt evidence is stale")
+    if receipt["receipt_id"] in set(source.get("revoked_receipt_ids", [])):
+        raise EvidenceSyncError("receipt has been revoked")
+    _verify_source_commit(source_root, str(receipt["source_commit"]))
     if not isinstance(receipt["verified_scope"], list) or not receipt["verified_scope"]:
         raise EvidenceSyncError("verified_scope must be a non-empty list")
     if not isinstance(receipt["unverified_scope"], list):
@@ -149,14 +214,13 @@ def validate_receipt(receipt: dict[str, Any], source: dict[str, Any], source_roo
             raise EvidenceSyncError("artifact must contain only path and sha256")
         target = (root / artifact["path"]).resolve()
         try:
-            target.relative_to(root)
+            relative = target.relative_to(root).as_posix()
         except ValueError as exc:
             raise EvidenceSyncError("artifact path escapes source root") from exc
-        if not target.is_file():
-            raise EvidenceSyncError(f"artifact missing: {artifact['path']}")
-        digest = hashlib.sha256(target.read_bytes()).hexdigest()
+        committed_bytes = _git_source_bytes(root, str(receipt["source_commit"]), relative)
+        digest = hashlib.sha256(committed_bytes).hexdigest()
         if digest != artifact["sha256"]:
-            raise EvidenceSyncError(f"artifact hash mismatch: {artifact['path']}")
+            raise EvidenceSyncError(f"artifact hash mismatch at source_commit: {artifact['path']}")
     return True
 
 
@@ -201,7 +265,15 @@ def apply_receipt_to_registry(
         record["last_verified_at"] = receipt["observed_at"][:10]
         record["source_or_pin"] = receipt["source_commit"]
         record["evidence_receipt"] = imported_receipt_path
-        record["verified_scope"] = list(receipt["verified_scope"])
+        operation_scopes = binding.get("operation_verified_scope", {})
+        if operation_scopes:
+            allowed_for_operation = set(operation_scopes.get(operation, []))
+            scoped = [item for item in receipt["verified_scope"] if item in allowed_for_operation]
+            if not scoped:
+                raise EvidenceSyncError(f"{operation}: receipt has no verified scope for this operation")
+            record["verified_scope"] = scoped
+        else:
+            record["verified_scope"] = list(receipt["verified_scope"])
         after = {field: record[field] for field in IMMUTABLE_AUTHORITY_FIELDS}
         if before != after:
             raise EvidenceSyncError(f"receipt attempted authority escalation for {operation}")
@@ -308,4 +380,16 @@ def validate_imported_evidence(
             raise EvidenceSyncError(f"{record['operation']}: evidence level differs from imported receipt")
         if record["last_verified_at"] != receipt["observed_at"][:10]:
             raise EvidenceSyncError(f"{record['operation']}: verification date differs from imported receipt")
+        operation_scopes = source["authority_bindings"][capability_id].get("operation_verified_scope", {})
+        expected_scope = (
+            [
+                item
+                for item in receipt["verified_scope"]
+                if item in set(operation_scopes.get(record["operation"], []))
+            ]
+            if operation_scopes
+            else list(receipt["verified_scope"])
+        )
+        if record.get("verified_scope") != expected_scope:
+            raise EvidenceSyncError(f"{record['operation']}: verified scope differs from operation binding")
     return True
