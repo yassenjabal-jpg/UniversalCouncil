@@ -415,7 +415,10 @@ class HybridExecutionTests(unittest.TestCase):
 
     def test_passthrough_verifier_paths(self):
         verifier = PassthroughVerifier()
-        explicit = verifier.verify({}, {"verification": {"verified": True, "mode": "explicit"}})
+        explicit = verifier.verify(
+            {},
+            {"verification": {"verified": True, "independent": True, "mode": "explicit"}},
+        )
         self.assertEqual(explicit["mode"], "explicit")
         provider = verifier.verify({}, {"state": ResultState.SUCCEEDED.value})
         self.assertFalse(provider["verified"])
@@ -519,7 +522,9 @@ class HybridExecutionTests(unittest.TestCase):
     def test_executor_native_and_routine_adapters(self):
         native = MockAdapter({"state": ResultState.SUCCEEDED.value})
         routine = MockAdapter({"state": ResultState.SUCCEEDED.value})
-        executor = HybridExecutor(BASE_CFG, native_adapter=native, routine_adapter=routine, authority_registry=BASE_REGISTRY)
+        executor = HybridExecutor(
+            BASE_CFG, native_adapter=native, routine_adapter=routine, authority_registry=BASE_REGISTRY
+        )
         state = SharedExecutionState("t6")
         n = executor.execute(
             {"id": "n", "native_available": True, "authority_operation": "github.read"},
@@ -529,7 +534,12 @@ class HybridExecutionTests(unittest.TestCase):
         )
         self.assertEqual(n["state"], ResultState.SUCCEEDED.value)
         r = executor.execute(
-            {"id": "r", "routine_available": True, "authority_operation": "remote_shell.execute", "authority_target": "YASSIN"},
+            {
+                "id": "r",
+                "routine_available": True,
+                "authority_operation": "remote_shell.execute",
+                "authority_target": "YASSIN",
+            },
             state,
             requester="tech",
             task_approved=True,
@@ -550,7 +560,12 @@ class HybridExecutionTests(unittest.TestCase):
             )
         with self.assertRaises(HybridExecutionError):
             executor.execute(
-                {"id": "r", "routine_available": True, "authority_operation": "remote_shell.execute", "authority_target": "YASSIN"},
+                {
+                    "id": "r",
+                    "routine_available": True,
+                    "authority_operation": "remote_shell.execute",
+                    "authority_target": "YASSIN",
+                },
                 state,
                 requester="tech",
                 task_approved=True,
