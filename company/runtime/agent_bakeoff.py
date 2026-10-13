@@ -33,6 +33,13 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     desktop_min = float(cfg.get("minimum_desktop_execution_score", -1))
     if desktop_min < 0 or desktop_min > 1:
         raise BakeoffError("minimum_desktop_execution_score must be between 0 and 1")
+    if int(cfg.get("required_desktop_case_count", 0)) < 1:
+        raise BakeoffError("required_desktop_case_count must be positive")
+    if cfg.get("require_provenance") is not True:
+        raise BakeoffError("require_provenance must be true for live bake-off")
+    provenance_keys = cfg.get("required_provenance_keys")
+    if not isinstance(provenance_keys, list) or not provenance_keys:
+        raise BakeoffError("required_provenance_keys must be a non-empty list")
     required_mechanics = cfg.get("required_mechanics_for_winner")
     if not isinstance(required_mechanics, list) or not required_mechanics:
         raise BakeoffError("required_mechanics_for_winner must be a non-empty list")
@@ -88,6 +95,7 @@ def validate_result(result: dict[str, Any]) -> bool:
         "desktop",
         "usage",
         "latency_ms",
+        "provenance",
     }
     missing = required - set(result)
     if missing:
@@ -106,6 +114,30 @@ def validate_result(result: dict[str, Any]) -> bool:
         raise BakeoffError("policy_violations must be a list")
     if not isinstance(result["desktop"], dict) or not isinstance(result["usage"], dict):
         raise BakeoffError("desktop and usage must be objects")
+    if not isinstance(result["provenance"], dict):
+        raise BakeoffError("provenance must be an object")
+    return True
+
+
+def validate_provenance(
+    result: dict[str, Any],
+    expected_provenance: dict[str, Any],
+    cfg: dict[str, Any],
+) -> bool:
+    provenance = result["provenance"]
+    for key in cfg["required_provenance_keys"]:
+        if key not in expected_provenance:
+            raise BakeoffError(f"expected provenance missing key: {key}")
+        if provenance.get(key) != expected_provenance.get(key):
+            raise BakeoffError(
+                f"stale/mismatched provenance for {result['runtime_id']}:{result['case_id']} key={key}"
+            )
+    if float(provenance.get("financial_cost_usd", -1)) != 0.0:
+        raise BakeoffError("financial_cost_usd must be 0")
+    if float(result["usage"].get("cost_usd", -1)) != 0.0:
+        raise BakeoffError("result usage cost_usd must be 0")
+    if provenance.get("execution_host") != "YASSIN":
+        raise BakeoffError("live bake-off execution_host must be YASSIN")
     return True
 
 
@@ -188,23 +220,19 @@ def score_case(case: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
         decision_correct = result["final_decision"] == case["expected_decision"]
 
     desktop = result["desktop"]
-    if case["desktop_required"]:
-        desktop_score = (
-            sum(
-                1.0
-                for key in (
-                    "task_completed",
-                    "verification_passed",
-                    "selector_recovered",
-                    "correct_execution_path",
-                    "no_unintended_action",
-                )
-                if desktop.get(key) is True
-            )
-            / 5.0
-        )
-    else:
-        desktop_score = 1.0
+    desktop_keys = (
+        "task_completed",
+        "verification_passed",
+        "selector_recovered",
+        "correct_execution_path",
+        "no_unintended_action",
+    )
+    desktop_required = bool(case["desktop_required"])
+    desktop_pass = None
+    desktop_score = None
+    if desktop_required:
+        desktop_pass = all(desktop.get(key) is True for key in desktop_keys)
+        desktop_score = 1.0 if desktop_pass else 0.0
 
     recovery_score = 1.0
     if case["injected_failure"]:
@@ -228,6 +256,8 @@ def score_case(case: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
         "dissent_preservation": dissent_recall,
         "policy_compliance": policy_score,
         "failure_recovery": recovery_score,
+        "desktop_required": desktop_required,
+        "desktop_pass": desktop_pass,
         "desktop_execution": desktop_score,
         "unique_contribution": contribution_score,
         "duplicate_content_ratio": duplicate_ratio,
@@ -276,6 +306,13 @@ def aggregate_runtime(
     mechanics = score_mechanics(mechanics_receipt)
     required_mechanics = cfg["required_mechanics_for_winner"]
     hard_mechanics_pass = all(mechanics_receipt.get(name) is True for name in required_mechanics)
+    desktop_scores = [score for score in case_scores if score["desktop_required"]]
+    desktop_required_count = len(desktop_scores)
+    desktop_pass_count = sum(1 for score in desktop_scores if score["desktop_pass"] is True)
+    desktop_execution = (
+        desktop_pass_count / desktop_required_count if desktop_required_count else 0.0
+    )
+
     metrics = {
         "decision_correctness": sum(decision_values) / len(decision_values) if decision_values else None,
         "blocker_f1": avg("blocker_f1"),
@@ -283,7 +320,7 @@ def aggregate_runtime(
         "dissent_preservation": avg("dissent_preservation"),
         "policy_compliance": avg("policy_compliance"),
         "failure_recovery": avg("failure_recovery"),
-        "desktop_execution": avg("desktop_execution"),
+        "desktop_execution": desktop_execution,
         "unique_contribution": avg("unique_contribution"),
         "non_duplication": 1.0 - avg("duplicate_content_ratio"),
         "completion": avg("completion"),
@@ -307,6 +344,9 @@ def aggregate_runtime(
         and mechanics >= float(cfg["minimum_mechanics_score"])
         and hard_mechanics_pass
         and metrics["policy_compliance"] == 1.0
+        and metrics["completion"] == 1.0
+        and desktop_required_count == int(cfg["required_desktop_case_count"])
+        and desktop_pass_count == desktop_required_count
         and metrics["desktop_execution"] >= float(cfg["minimum_desktop_execution_score"])
     )
     return {
@@ -316,6 +356,14 @@ def aggregate_runtime(
         "live_decision_cases": live_count,
         "total_cases": len(case_scores),
         "mechanics_score": mechanics,
+        "desktop_gate": {
+            "required": desktop_required_count,
+            "passed": desktop_pass_count,
+            "pass": (
+                desktop_required_count == int(cfg["required_desktop_case_count"])
+                and desktop_pass_count == desktop_required_count
+            ),
+        },
         "score": normalized_score,
         "metrics": metrics,
         "latency_ms_total": sum(score["latency_ms"] for score in case_scores),
@@ -350,12 +398,17 @@ def evaluate(
     results: list[dict[str, Any]],
     mechanics: dict[str, dict[str, Any]],
     cfg: dict[str, Any],
+    expected_provenance: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     validate_config(cfg)
+    if cfg.get("require_provenance") and expected_provenance is None:
+        raise BakeoffError("expected provenance manifest is required")
     case_map = {case["case_id"]: case for case in cases}
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for result in results:
         validate_result(result)
+        if expected_provenance is not None:
+            validate_provenance(result, expected_provenance, cfg)
         case = case_map.get(result["case_id"])
         if case is None:
             raise BakeoffError(f"unknown case_id in result: {result['case_id']}")
