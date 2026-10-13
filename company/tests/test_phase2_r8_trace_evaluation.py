@@ -1,0 +1,97 @@
+from __future__ import annotations
+
+import tempfile
+import unittest
+from pathlib import Path
+
+from company.runtime.execution_trace import (
+    TraceError,
+    TraceEventType,
+    TraceRecorder,
+    evaluate_trace,
+)
+
+
+class Phase2R8TraceEvaluationTests(unittest.TestCase):
+    def test_trace_accepts_only_important_event_types_and_keeps_sequence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            recorder = TraceRecorder(
+                Path(tmp) / "trace.jsonl",
+                trace_id="trace-1",
+                task_id="task-1",
+            )
+            recorder.record(TraceEventType.FRAME, {"goal": "inspect"})
+            recorder.record(
+                TraceEventType.ROUTE,
+                {
+                    "action_id": "a1",
+                    "path": "gui_semantic_uia",
+                    "reason": "interactive semantic request",
+                    "route_version": "hybrid-0.2",
+                    "authority": "desktop_computer_use.observe",
+                },
+            )
+            events = recorder.events()
+            self.assertEqual([event["seq"] for event in events], [1, 2])
+            self.assertEqual(events[1]["event"], "Route")
+
+            with self.assertRaises(TraceError):
+                recorder.record("DebugNoise", {"x": 1})
+
+    def test_route_event_requires_explainability_fields(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            recorder = TraceRecorder(Path(tmp) / "trace.jsonl", trace_id="t", task_id="task")
+            with self.assertRaises(TraceError):
+                recorder.record(
+                    TraceEventType.ROUTE,
+                    {"action_id": "a1", "path": "gui_semantic_uia"},
+                )
+
+    def test_evaluator_detects_false_success_and_verification(self):
+        events = [
+            {"seq": 1, "event": "Execution", "data": {"action_id": "a", "state": "SUCCEEDED", "latency_ms": 10}},
+            {"seq": 2, "event": "Execution", "data": {"action_id": "b", "state": "SUCCEEDED", "latency_ms": 20}},
+            {"seq": 3, "event": "Verification", "data": {"action_id": "b", "verified": True}},
+        ]
+        report = evaluate_trace(events)
+        self.assertEqual(report["false_success_count"], 1)
+        self.assertEqual(report["verified_success_count"], 1)
+        self.assertEqual(report["latency_ms"], 30)
+
+    def test_evaluator_measures_recovery_rework_cost_and_operator_burden(self):
+        events = [
+            {"seq": 1, "event": "Tool", "data": {"cost_usd": 0.25}},
+            {"seq": 2, "event": "Approval", "data": {"human_required": True, "approved": True}},
+            {"seq": 3, "event": "Recovery", "data": {"action_id": "a", "outcome": "RECOVERED", "attempt": 2}},
+            {"seq": 4, "event": "Execution", "data": {"action_id": "a", "state": "SUCCEEDED", "attempt": 2}},
+            {"seq": 5, "event": "Verification", "data": {"action_id": "a", "verified": True}},
+            {"seq": 6, "event": "Recovery", "data": {"action_id": "b", "outcome": "ESCALATED", "attempt": 2}},
+        ]
+        report = evaluate_trace(events)
+        self.assertEqual(report["recovery_attempts"], 2)
+        self.assertEqual(report["recovery_successes"], 1)
+        self.assertEqual(report["rework_count"], 1)
+        self.assertEqual(report["cost_usd"], 0.25)
+        self.assertEqual(report["operator_burden"], 2)
+
+    def test_evaluator_scores_correctness_and_blocker_quality_when_ground_truth_supplied(self):
+        events = [
+            {
+                "seq": 1,
+                "event": "Frame",
+                "data": {"actual_decision": "KEEP", "observed_blockers": ["B1", "B2"]},
+            }
+        ]
+        report = evaluate_trace(
+            events,
+            expected_decision="KEEP",
+            expected_blockers=["B1", "B3"],
+        )
+        self.assertEqual(report["correctness"], 1.0)
+        self.assertAlmostEqual(report["blocker_precision"], 0.5)
+        self.assertAlmostEqual(report["blocker_recall"], 0.5)
+        self.assertAlmostEqual(report["blocker_f1"], 0.5)
+
+
+if __name__ == "__main__":
+    unittest.main()
