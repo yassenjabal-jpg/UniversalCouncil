@@ -382,11 +382,7 @@ def validate_imported_evidence(
             raise EvidenceSyncError(f"{record['operation']}: verification date differs from imported receipt")
         operation_scopes = source["authority_bindings"][capability_id].get("operation_verified_scope", {})
         expected_scope = (
-            [
-                item
-                for item in receipt["verified_scope"]
-                if item in set(operation_scopes.get(record["operation"], []))
-            ]
+            [item for item in receipt["verified_scope"] if item in set(operation_scopes.get(record["operation"], []))]
             if operation_scopes
             else list(receipt["verified_scope"])
         )
