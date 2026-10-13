@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import time
 import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_ENDPOINT = "http://127.0.0.1:11434/api/chat"
@@ -14,6 +16,14 @@ DEFAULT_ENDPOINT = "http://127.0.0.1:11434/api/chat"
 
 class LocalProviderError(RuntimeError):
     pass
+
+
+def require_yassin_local_endpoint(endpoint: str) -> None:
+    if (os.environ.get("COMPUTERNAME") or "").strip().upper() != "YASSIN":
+        raise LocalProviderError("local provider probe is restricted to YASSIN")
+    parsed = urlparse(endpoint)
+    if parsed.scheme != "http" or parsed.hostname not in {"127.0.0.1", "localhost", "::1"}:
+        raise LocalProviderError("local provider probe rejects non-local endpoints")
 
 
 def ollama_chat(
@@ -24,6 +34,7 @@ def ollama_chat(
     timeout: int = 180,
     temperature: float = 0.0,
 ) -> dict[str, Any]:
+    require_yassin_local_endpoint(endpoint)
     payload = json.dumps(
         {
             "model": model,
