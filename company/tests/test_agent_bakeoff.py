@@ -163,7 +163,7 @@ class AgentBakeoffTests(unittest.TestCase):
                 "trace_capture": True,
             }
         }
-        report = evaluate(CASES, results, mechanics, CFG)
+        report = evaluate(CASES, results, mechanics, CFG, expected_provenance=PROVENANCE)
         self.assertEqual(report["decision"]["state"], "NO_WINNER")
 
     def test_routing_penalizes_forbidden_participant(self):
