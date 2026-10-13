@@ -32,6 +32,48 @@ BASE_CFG = json.loads((ROOT / "company/config/hybrid_execution.json").read_text(
 BASE_REGISTRY = json.loads((ROOT / "company/config/tool_authority.json").read_text(encoding="utf-8"))
 
 
+def execution_test_registry():
+    registry = copy.deepcopy(BASE_REGISTRY)
+    scopes = {
+        "desktop_computer_use.observe": [
+            "status",
+            "list_windows",
+            "inspect_ui",
+            "search_ui",
+            "read_values_properties",
+            "screenshot",
+            "before_after_verification",
+            "audit_logging",
+        ],
+        "desktop_computer_use.control": [
+            "semantic_invoke",
+            "semantic_set_value",
+            "focus",
+            "scroll_into_view",
+            "wait_for",
+            "physical_click",
+            "physical_hover",
+            "physical_drag",
+            "send_keys",
+            "window_or_element_recording",
+            "before_after_verification",
+            "audit_logging",
+        ],
+    }
+    for operation, verified_scope in scopes.items():
+        record = next(item for item in registry["capabilities"] if item["operation"] == operation)
+        metadata = {"expires_at": "2026-10-20T00:00:00+00:00", "test_fixture": True}
+        record["evidence_state"] = "CURRENT_VERIFIED"
+        record["historical_capability"] = dict(metadata)
+        record["current_verified_capability"] = dict(metadata)
+        record["verified_scope"] = verified_scope
+        record["last_verified_at"] = "2026-10-13"
+    return registry
+
+
+EXECUTION_TEST_REGISTRY = execution_test_registry()
+
+
 class MockAdapter:
     def __init__(self, result):
         self.result = result
@@ -281,7 +323,7 @@ class HybridExecutionTests(unittest.TestCase):
         executor = HybridExecutor(
             BASE_CFG,
             native_adapter=adapter,
-            authority_registry=BASE_REGISTRY,
+            authority_registry=EXECUTION_TEST_REGISTRY,
         )
         state = SharedExecutionState("blocked-task")
         result = executor.execute(
@@ -294,7 +336,7 @@ class HybridExecutionTests(unittest.TestCase):
         self.assertEqual(result["state"], ResultState.BLOCKED.value)
         self.assertEqual(adapter.calls, [])
 
-        governed = HybridExecutor(BASE_CFG, authority_registry=BASE_REGISTRY)
+        governed = HybridExecutor(BASE_CFG, authority_registry=EXECUTION_TEST_REGISTRY)
         state = SharedExecutionState("approval-task")
         no_approval = governed.execute(
             {"id": "read", "dc_capable": True, "effect": "READ"},
@@ -429,7 +471,7 @@ class HybridExecutionTests(unittest.TestCase):
         self.assertFalse(missing["verified"])
 
     def test_executor_dc_host_dispatch_and_blocked(self):
-        executor = HybridExecutor(BASE_CFG, authority_registry=BASE_REGISTRY)
+        executor = HybridExecutor(BASE_CFG, authority_registry=EXECUTION_TEST_REGISTRY)
         state = SharedExecutionState("t1")
         result = executor.execute(
             {"id": "read", "dc_capable": True, "effect": "READ"},
@@ -456,7 +498,7 @@ class HybridExecutionTests(unittest.TestCase):
                 "verification": {"verified": True, "independent": True, "mode": "test"},
             }
         )
-        executor = HybridExecutor(BASE_CFG, gui_adapter=success_adapter, authority_registry=BASE_REGISTRY)
+        executor = HybridExecutor(BASE_CFG, gui_adapter=success_adapter, authority_registry=EXECUTION_TEST_REGISTRY)
         state = SharedExecutionState("t2")
         result = executor.execute(
             {"id": "gui", "gui_request": {"action": "click"}},
@@ -468,7 +510,7 @@ class HybridExecutionTests(unittest.TestCase):
         self.assertIsNone(state.controller_lease)
 
         failed_adapter = MockAdapter({"state": ResultState.FAILED.value})
-        executor = HybridExecutor(BASE_CFG, gui_adapter=failed_adapter, authority_registry=BASE_REGISTRY)
+        executor = HybridExecutor(BASE_CFG, gui_adapter=failed_adapter, authority_registry=EXECUTION_TEST_REGISTRY)
         state = SharedExecutionState("t3")
         result = executor.execute(
             {"id": "gui2", "gui_request": {"action": "click"}},
@@ -482,7 +524,7 @@ class HybridExecutionTests(unittest.TestCase):
     def test_executor_unknown_when_required_verification_fails(self):
         adapter = MockAdapter({"state": ResultState.SUCCEEDED.value})
         verifier = MockVerifier(False)
-        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, verifier=verifier, authority_registry=BASE_REGISTRY)
+        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, verifier=verifier, authority_registry=EXECUTION_TEST_REGISTRY)
         state = SharedExecutionState("t4")
         result = executor.execute(
             {
@@ -502,7 +544,7 @@ class HybridExecutionTests(unittest.TestCase):
     def test_executor_verified_state_change_succeeds(self):
         adapter = MockAdapter({"state": ResultState.SUCCEEDED.value})
         verifier = MockVerifier(True)
-        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, verifier=verifier, authority_registry=BASE_REGISTRY)
+        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, verifier=verifier, authority_registry=EXECUTION_TEST_REGISTRY)
         state = SharedExecutionState("t5")
         result = executor.execute(
             {
@@ -523,7 +565,7 @@ class HybridExecutionTests(unittest.TestCase):
         native = MockAdapter({"state": ResultState.SUCCEEDED.value})
         routine = MockAdapter({"state": ResultState.SUCCEEDED.value})
         executor = HybridExecutor(
-            BASE_CFG, native_adapter=native, routine_adapter=routine, authority_registry=BASE_REGISTRY
+            BASE_CFG, native_adapter=native, routine_adapter=routine, authority_registry=EXECUTION_TEST_REGISTRY
         )
         state = SharedExecutionState("t6")
         n = executor.execute(
@@ -548,7 +590,7 @@ class HybridExecutionTests(unittest.TestCase):
         self.assertEqual(r["state"], ResultState.SUCCEEDED.value)
 
     def test_executor_missing_adapters_fail_closed(self):
-        executor = HybridExecutor(BASE_CFG, authority_registry=BASE_REGISTRY)
+        executor = HybridExecutor(BASE_CFG, authority_registry=EXECUTION_TEST_REGISTRY)
         state = SharedExecutionState("t7")
         with self.assertRaises(HybridExecutionError):
             executor._adapter_for("unexpected")  # type: ignore[arg-type]
@@ -582,7 +624,7 @@ class HybridExecutionTests(unittest.TestCase):
 
     def test_controller_lease_conflict_blocks_second_gui_controller(self):
         adapter = MockAdapter({"state": ResultState.SUCCEEDED.value})
-        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, authority_registry=BASE_REGISTRY)
+        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, authority_registry=EXECUTION_TEST_REGISTRY)
         state = SharedExecutionState("t8")
         state.acquire_controller("other")
         result = executor.execute(
@@ -600,7 +642,7 @@ class HybridExecutionTests(unittest.TestCase):
                 "verification": {"verified": True, "independent": True, "mode": "test"},
             }
         )
-        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, authority_registry=BASE_REGISTRY)
+        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, authority_registry=EXECUTION_TEST_REGISTRY)
         state = SharedExecutionState("batch")
         actions = [
             {"id": "a", "gui_request": {"action": "click"}},
@@ -629,7 +671,7 @@ class HybridExecutionTests(unittest.TestCase):
 
     def test_batch_without_gui_control_does_not_acquire_controller(self):
         native = MockAdapter({"state": ResultState.SUCCEEDED.value})
-        executor = HybridExecutor(BASE_CFG, native_adapter=native, authority_registry=BASE_REGISTRY)
+        executor = HybridExecutor(BASE_CFG, native_adapter=native, authority_registry=EXECUTION_TEST_REGISTRY)
         state = SharedExecutionState("batch-native")
         result = executor.execute_batch(
             [
@@ -657,7 +699,7 @@ class HybridExecutionTests(unittest.TestCase):
                 },
             ]
         )
-        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, authority_registry=BASE_REGISTRY)
+        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, authority_registry=EXECUTION_TEST_REGISTRY)
         state = SharedExecutionState("batch-stop")
         actions = [
             {"id": "a", "gui_request": {"action": "click"}},
@@ -683,7 +725,7 @@ class HybridExecutionTests(unittest.TestCase):
                 "verification": {"verified": True, "independent": True, "mode": "test"},
             }
         )
-        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, authority_registry=BASE_REGISTRY)
+        executor = HybridExecutor(BASE_CFG, gui_adapter=adapter, authority_registry=EXECUTION_TEST_REGISTRY)
         state = SharedExecutionState("retain")
         result = executor.execute(
             {"id": "a", "gui_request": {"action": "click"}},
