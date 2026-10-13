@@ -382,8 +382,7 @@ def apply_receipt_to_registry(
     binding = source["authority_bindings"][receipt["capability_id"]]
     state = receipt.get("evidence_state") or receipt_evidence_state(receipt, source).value
     metadata = copy.deepcopy(
-        receipt.get("evidence_metadata")
-        or build_imported_receipt(receipt, source)["evidence_metadata"]
+        receipt.get("evidence_metadata") or build_imported_receipt(receipt, source)["evidence_metadata"]
     )
     operation_scopes = binding.get("operation_verified_scope", {})
 
@@ -536,9 +535,8 @@ def validate_imported_evidence(
         if record.get("verified_scope") != expected_scope:
             raise EvidenceSyncError(f"{record['operation']}: verified scope differs from operation binding")
 
-        expected_current = (
-            receipt.get("evidence_state") == EvidenceState.CURRENT_VERIFIED.value
-            and bool(expected_scope)
+        expected_current = receipt.get("evidence_state") == EvidenceState.CURRENT_VERIFIED.value and bool(
+            expected_scope
         )
         if expected_current:
             if record.get("evidence_state") != EvidenceState.CURRENT_VERIFIED.value:
@@ -555,5 +553,7 @@ def validate_imported_evidence(
             if record.get("evidence_state") != EvidenceState.HISTORICAL.value:
                 raise EvidenceSyncError(f"{record['operation']}: unverified operation must remain historical")
             if record.get("current_verified_capability") is not None:
-                raise EvidenceSyncError(f"{record['operation']}: historical evidence cannot populate current capability")
+                raise EvidenceSyncError(
+                    f"{record['operation']}: historical evidence cannot populate current capability"
+                )
     return True
