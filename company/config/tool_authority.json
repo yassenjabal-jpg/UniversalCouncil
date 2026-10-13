@@ -233,23 +233,102 @@
         "unrelated private windows or data",
         "security-setting bypass"
       ],
-      "last_verified_at": "2026-10-12",
+      "last_verified_at": "2026-10-13",
       "review_trigger": "YASSIN Control Bridge, control policy, device authorization, or evidence receipt changes",
       "source_or_pin": "42544d3a7bfb0fcced63962c45a40dcafd692572",
       "enforcement": "POLICY_ENFORCED_ONLY",
       "evidence_receipt": "company/evidence/imported/council-video-studio/desktop_computer_use.json",
       "verified_scope": [
+        "status",
         "list_windows",
-        "inspect_ui",
-        "search_ui",
-        "read_values_properties",
-        "screenshot",
-        "before_after_verification",
-        "audit_logging"
+        "inspect_ui"
       ],
       "allowed_targets": [
         "YASSIN"
-      ]
+      ],
+      "evidence_state": "CURRENT_VERIFIED",
+      "historical_capability": {
+        "source_repository": "local:CouncilVideoStudio",
+        "source_commit": "42544d3a7bfb0fcced63962c45a40dcafd692572",
+        "component": "yassin_control_bridge",
+        "component_version": "0.7.1",
+        "host": "YASSIN",
+        "session_id": "phase2-r7-yassin-20261013T235038Z",
+        "observed_at": "2026-10-13T23:50:38.332446+00:00",
+        "ingested_at": "2026-10-13T23:51:02.138130+00:00",
+        "expires_at": "2026-10-19T23:50:38.332446+00:00",
+        "verifier": "UniversalCouncil.phase2_r7",
+        "verifier_version": "1.0",
+        "verified_scope": [
+          "status",
+          "list_windows",
+          "inspect_ui"
+        ],
+        "unverified_scope": [
+          "search_ui",
+          "read_values_properties",
+          "screenshot",
+          "semantic_invoke",
+          "semantic_set_value",
+          "focus",
+          "scroll_into_view",
+          "wait_for",
+          "physical_click",
+          "physical_hover",
+          "physical_drag",
+          "send_keys",
+          "window_or_element_recording",
+          "before_after_verification",
+          "audit_logging",
+          "credential_entry",
+          "password_capture",
+          "security_setting_bypass",
+          "purchases",
+          "external_publish",
+          "external_message_send"
+        ]
+      },
+      "current_verified_capability": {
+        "source_repository": "local:CouncilVideoStudio",
+        "source_commit": "42544d3a7bfb0fcced63962c45a40dcafd692572",
+        "component": "yassin_control_bridge",
+        "component_version": "0.7.1",
+        "host": "YASSIN",
+        "session_id": "phase2-r7-yassin-20261013T235038Z",
+        "observed_at": "2026-10-13T23:50:38.332446+00:00",
+        "ingested_at": "2026-10-13T23:51:02.138130+00:00",
+        "expires_at": "2026-10-19T23:50:38.332446+00:00",
+        "verifier": "UniversalCouncil.phase2_r7",
+        "verifier_version": "1.0",
+        "verified_scope": [
+          "status",
+          "list_windows",
+          "inspect_ui"
+        ],
+        "unverified_scope": [
+          "search_ui",
+          "read_values_properties",
+          "screenshot",
+          "semantic_invoke",
+          "semantic_set_value",
+          "focus",
+          "scroll_into_view",
+          "wait_for",
+          "physical_click",
+          "physical_hover",
+          "physical_drag",
+          "send_keys",
+          "window_or_element_recording",
+          "before_after_verification",
+          "audit_logging",
+          "credential_entry",
+          "password_capture",
+          "security_setting_bypass",
+          "purchases",
+          "external_publish",
+          "external_message_send"
+        ]
+      }
     },
     {
       "id": "desktop-computer-use-control",
@@ -277,20 +356,7 @@
       "source_or_pin": "42544d3a7bfb0fcced63962c45a40dcafd692572",
       "enforcement": "POLICY_ENFORCED_ONLY",
       "evidence_receipt": "company/evidence/imported/council-video-studio/desktop_computer_use.json",
-      "verified_scope": [
-        "semantic_invoke",
-        "semantic_set_value",
-        "focus",
-        "scroll_into_view",
-        "wait_for",
-        "physical_click",
-        "physical_hover",
-        "physical_drag",
-        "send_keys",
-        "window_or_element_recording",
-        "before_after_verification",
-        "audit_logging"
-      ],
+      "verified_scope": [],
       "allowed_targets": [
         "YASSIN"
       ],
@@ -299,7 +365,28 @@
       ],
       "allowed_action_scopes": [
         "yassin_desktop"
-      ]
+      ],
+      "evidence_state": "HISTORICAL",
+      "historical_capability": {
+        "source_commit": "42544d3a7bfb0fcced63962c45a40dcafd692572",
+        "observed_at": "2026-10-12",
+        "verified_scope": [
+          "semantic_invoke",
+          "semantic_set_value",
+          "focus",
+          "scroll_into_view",
+          "wait_for",
+          "physical_click",
+          "physical_hover",
+          "physical_drag",
+          "send_keys",
+          "window_or_element_recording",
+          "before_after_verification",
+          "audit_logging"
+        ],
+        "evidence_receipt": "company/evidence/imported/council-video-studio/desktop_computer_use.json"
+      },
+      "current_verified_capability": null
     },
     {
       "id": "agent-reach-public-read",
