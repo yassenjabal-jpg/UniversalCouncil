@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT))
 
 from company.runtime.agent_bakeoff import BakeoffError, evaluate, load_cases, load_json, validate_config  # noqa: E402
 from company.runtime.agent_bakeoff_provenance import ProvenanceError, validate_manifest  # noqa: E402
+from company.runtime.agent_bakeoff_provenance import ProvenanceError, validate_manifest  # noqa: E402
 
 
 def _load_results(path: Path) -> list[dict]:
