@@ -102,5 +102,14 @@
         "reusable_routine"
       ]
     }
+  },
+  "recovery": {
+    "max_retries": 2,
+    "poll_interval_seconds": 0.25,
+    "no_progress_seconds": 5,
+    "stalled_seconds": 15,
+    "termination_grace_seconds": 2,
+    "unknown_requires_reconciliation": true,
+    "replay_completed_action_default": false
   }
 }
