@@ -16,19 +16,43 @@ DECISION_OPTIONS: dict[str, list[str]] = {
     "c01_restructure_v04": ["KEEP_V0_3", "ADOPT_V0_4_NOW", "PROVISIONAL_RESTRUCTURE_CANDIDATE"],
     "c02_gui_primary_hybrid": ["GUI_PRIMARY_DC_SECONDARY", "DC_PRIMARY_GUI_SECONDARY", "NATIVE_ONLY"],
     "c03_capability_evidence_sync": ["REJECT_EVIDENCE_SYNC", "ADOPT_BOUNDED_EVIDENCE_SYNC", "FULL_AUTHORITY_SYNC"],
-    "c04_after_effects_runtime_status": ["UNVERIFIED", "VERIFIED_BOUNDED_RUNTIME_EVIDENCE", "FULL_PRODUCTION_CERTIFIED"],
+    "c04_after_effects_runtime_status": [
+        "UNVERIFIED",
+        "VERIFIED_BOUNDED_RUNTIME_EVIDENCE",
+        "FULL_PRODUCTION_CERTIFIED",
+    ],
     "c05_media_final_launch": ["NO_GO", "GO_WITH_CONDITIONS", "UNCONDITIONAL_GO"],
     "c06_channel_operating_system": ["REJECT_CHANNEL_OS", "GO_ADOPT_CHANNEL_OPERATING_SYSTEM", "DEFER_INDEFINITELY"],
     "c07_audio_sync_structure": ["KEEP_GENERIC_AUDIO", "ADOPT_MEDIA_PRODUCTION_CELL_V1_1", "OUTSOURCE_ALL_AUDIO"],
     "c08_youtube_studio_benchmark": ["REJECT", "ADOPT", "COPY_REFERENCE_STUDIOS"],
     "c09_work_environment_hardening": ["REJECT", "GO_FOR_SANDBOX_PILOT", "ADOPT_IMMEDIATELY"],
-    "c10_intelligence_gateway": ["BLOCK_GATEWAY", "NATIVE_FIRST_PUBLIC_READ_ONLY_GATEWAY", "BROWSER_FIRST_WRITE_ENABLED_GATEWAY"],
-    "c11_capability_scouting": ["NO_PROACTIVE_SCOUTING", "PROACTIVE_READ_ONLY_SCOUTING_OWNER_GATED_ADOPTION", "HR_FULL_INSTALL_AUTHORITY"],
+    "c10_intelligence_gateway": [
+        "BLOCK_GATEWAY",
+        "NATIVE_FIRST_PUBLIC_READ_ONLY_GATEWAY",
+        "BROWSER_FIRST_WRITE_ENABLED_GATEWAY",
+    ],
+    "c11_capability_scouting": [
+        "NO_PROACTIVE_SCOUTING",
+        "PROACTIVE_READ_ONLY_SCOUTING_OWNER_GATED_ADOPTION",
+        "HR_FULL_INSTALL_AUTHORITY",
+    ],
     "c12_governance_hardening": ["REJECT_GOVERNANCE_HARDENING", "ACCEPT_GOVERNANCE_HARDENING", "REMOVE_OWNER_GATES"],
     "c13_memory_fabric": ["CHAT_MEMORY_CANONICAL", "IMPLEMENTED_GITHUB_CANONICAL_MEMORY", "UNVERSIONED_LOCAL_MEMORY"],
-    "c14_specialized_tool_policy": ["CODE_FIRST_FOR_ALL_MEDIA", "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT", "NO_CODE_ALLOWED"],
-    "c15_market_reality_gate": ["PROJECT_FIRST_REASONING_ALLOWED", "REQUIRE_MARKET_REALITY_BEFORE_PROJECT_CANDIDATE", "GLOBAL_MARKET_ONLY"],
-    "c16_branch_hygiene": ["DELETE_OLD_BRANCHES_BY_AGE", "DELETE_ONLY_PROVEN_MERGED_OR_SUPERSEDED_BRANCHES", "DELETE_ALL_NON_MAIN"],
+    "c14_specialized_tool_policy": [
+        "CODE_FIRST_FOR_ALL_MEDIA",
+        "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
+        "NO_CODE_ALLOWED",
+    ],
+    "c15_market_reality_gate": [
+        "PROJECT_FIRST_REASONING_ALLOWED",
+        "REQUIRE_MARKET_REALITY_BEFORE_PROJECT_CANDIDATE",
+        "GLOBAL_MARKET_ONLY",
+    ],
+    "c16_branch_hygiene": [
+        "DELETE_OLD_BRANCHES_BY_AGE",
+        "DELETE_ONLY_PROVEN_MERGED_OR_SUPERSEDED_BRANCHES",
+        "DELETE_ALL_NON_MAIN",
+    ],
 }
 
 ROLE_DESCRIPTIONS = {
@@ -98,7 +122,15 @@ async def baseline_call(endpoint: str, model: str, prompt: str, timeout: int) ->
 
 
 async def openai_agents_call(endpoint: str, model: str, prompt: str, timeout: int) -> tuple[str, dict[str, int]]:
-    from agents import Agent, AsyncOpenAI, ModelSettings, OpenAIChatCompletionsModel, RunConfig, Runner, set_tracing_disabled
+    from agents import (
+        Agent,
+        AsyncOpenAI,
+        ModelSettings,
+        OpenAIChatCompletionsModel,
+        RunConfig,
+        Runner,
+        set_tracing_disabled,
+    )
 
     set_tracing_disabled(True)
     client = AsyncOpenAI(api_key="ollama", base_url=f"{endpoint}/v1/", timeout=timeout)
@@ -217,7 +249,7 @@ SOURCE ARTIFACT:
 {source}
 
 Return ONLY JSON:
-{"preferred_decision":"one exact decision option","blocker":"brief condition or empty string","dissent":"brief material challenge or empty string","rationale":"brief evidence-grounded reason"}
+{{"preferred_decision":"one exact decision option","blocker":"brief condition or empty string","dissent":"brief material challenge or empty string","rationale":"brief evidence-grounded reason"}}
 Do not invent facts outside the source.
 """
 
@@ -259,7 +291,9 @@ Return ONLY JSON matching:
 """
 
 
-async def guarded_call(call_fn, endpoint: str, model: str, prompt: str, timeout: int, inject_failure: bool) -> tuple[str, dict[str, int], bool]:
+async def guarded_call(
+    call_fn, endpoint: str, model: str, prompt: str, timeout: int, inject_failure: bool
+) -> tuple[str, dict[str, int], bool]:
     if not inject_failure:
         text, usage = await call_fn(endpoint, model, prompt, timeout)
         return text, usage, True
@@ -421,7 +455,13 @@ async def main_async(args: argparse.Namespace) -> int:
                         "correct_execution_path": False,
                         "no_unintended_action": True,
                     },
-                    "usage": {"input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0, "provider": "local_ollama", "model": args.model},
+                    "usage": {
+                        "input_tokens": 0,
+                        "output_tokens": 0,
+                        "cost_usd": 0.0,
+                        "provider": "local_ollama",
+                        "model": args.model,
+                    },
                     "latency_ms": 0.0,
                     "error": str(exc)[:500],
                 }
@@ -441,7 +481,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Run zero-cost LIVE_DECISION bake-off against local Ollama only.")
     parser.add_argument("--endpoint", default="http://127.0.0.1:11434")
     parser.add_argument("--model", default="qwen3:4b-instruct")
-    parser.add_argument("--runtime", choices=["all", "baseline", "openai_agents", "microsoft_agent_framework"], default="all")
+    parser.add_argument(
+        "--runtime", choices=["all", "baseline", "openai_agents", "microsoft_agent_framework"], default="all"
+    )
     parser.add_argument("--case")
     parser.add_argument("--timeout", type=int, default=180)
     parser.add_argument("--out", default="benchmarks/agent_runtime/results.json")
