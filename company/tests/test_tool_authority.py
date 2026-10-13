@@ -1,10 +1,12 @@
 import copy
 import json
+from datetime import datetime, timezone
 import unittest
 from pathlib import Path
 
 from company.runtime.tool_authority import (
     ToolAuthorityError,
+    capability_currentness,
     get_capability,
     requires_explicit_approval,
     validate_registry,
@@ -189,6 +191,58 @@ class ToolAuthorityTests(unittest.TestCase):
         record["authentication_class"] = "AUTHENTICATED"
         with self.assertRaises(ToolAuthorityError):
             validate_registry(cfg)
+
+    def test_allowed_targets_and_currentness_fields_are_validated(self):
+        cfg = copy.deepcopy(self.cfg)
+        record = next(item for item in cfg["capabilities"] if item["operation"] == "github.write")
+        record["allowed_targets"] = []
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+        cfg = copy.deepcopy(self.cfg)
+        record = next(item for item in cfg["capabilities"] if item["operation"] == "github.write")
+        record["allowed_targets"] = ["", 3]
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+        cfg = copy.deepcopy(self.cfg)
+        cfg["capabilities"][0]["max_evidence_age_days"] = 0
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+        cfg = copy.deepcopy(self.cfg)
+        cfg["capabilities"][0]["last_verified_at"] = "not-a-date"
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(cfg)
+
+    def test_capability_currentness_reports_current_stale_future_and_invalid(self):
+        record = copy.deepcopy(get_capability(self.cfg, "github.read"))
+        now = datetime(2026, 10, 14, tzinfo=timezone.utc)
+
+        current = capability_currentness(record, as_of=now)
+        self.assertTrue(current["current"])
+        self.assertEqual(current["reason"], "current")
+
+        stale = copy.deepcopy(record)
+        stale["last_verified_at"] = "2000-01-01"
+        result = capability_currentness(stale, as_of=now)
+        self.assertFalse(result["current"])
+        self.assertEqual(result["reason"], "stale_capability_evidence")
+
+        future = copy.deepcopy(record)
+        future["last_verified_at"] = "2099-01-01"
+        result = capability_currentness(future, as_of=now)
+        self.assertFalse(result["current"])
+        self.assertEqual(result["reason"], "future_verification_timestamp")
+
+        invalid = copy.deepcopy(record)
+        invalid["last_verified_at"] = "bad"
+        result = capability_currentness(invalid, as_of=now)
+        self.assertFalse(result["current"])
+        self.assertEqual(result["reason"], "invalid_last_verified_at")
+
+        with self.assertRaises(ToolAuthorityError):
+            capability_currentness(record, as_of=datetime(2026, 10, 14))
 
     def test_unknown_operation_lookup_is_rejected(self):
         with self.assertRaises(ToolAuthorityError):
