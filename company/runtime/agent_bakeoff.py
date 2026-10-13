@@ -241,8 +241,6 @@ def score_case(case: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
         "policy_compliance": policy_score,
         "failure_recovery": recovery_score,
         "desktop_required": desktop_required,
-        "desktop_pass": desktop_pass,
-        "desktop_required": desktop_required,
         "desktop_execution": desktop_score,
         "desktop_pass": desktop_pass,
         "unique_contribution": contribution_score,
@@ -386,7 +384,7 @@ def validate_live_provenance(
 ) -> bool:
     if str(manifest.get("runner_id", "")).upper() != str(cfg.get("required_runner_id", "")).upper():
         raise BakeoffError("live manifest runner does not match required_runner_id")
-    if float(manifest.get("cost_usd", -1)) > float(cfg.get("maximum_cost_usd", 0)):
+    if float(manifest.get("financial_cost_usd", -1)) > float(cfg.get("maximum_cost_usd", 0)):
         raise BakeoffError("live manifest exceeds maximum_cost_usd")
     manifest_id = manifest.get("manifest_id")
     if not manifest_id:
