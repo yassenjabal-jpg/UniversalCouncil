@@ -19,8 +19,8 @@ from company.runtime.agent_bakeoff_provenance import (  # noqa: E402
     build_manifest,
     manifest_id,
     require_yassin_runner,
-    sha256_bytes,
-    sha256_file,
+    result_provenance as manifest_result_provenance,
+    validate_manifest,
     write_manifest,
 )
 
@@ -464,14 +464,16 @@ def result_provenance(
     packet_sha256: str,
     source_sha256: str,
 ) -> dict[str, Any]:
-    return {
-        "manifest_id": manifest["manifest_id"],
-        "runner_id": manifest["runner_id"],
-        "source_head": manifest["source_head"],
-        "case_packet_sha256": packet_sha256,
-        "source_artifact_sha256": source_sha256,
-        "source_artifact": case["source_artifact"],
-    }
+    provenance = manifest_result_provenance(manifest)
+    provenance.update(
+        {
+            "manifest_id": manifest["manifest_id"],
+            "case_packet_sha256": packet_sha256,
+            "source_artifact_sha256": source_sha256,
+            "source_artifact": case["source_artifact"],
+        }
+    )
+    return provenance
 
 
 async def run_baseline_case(
@@ -715,6 +717,7 @@ async def main_async(args: argparse.Namespace) -> int:
     manifest_path = ROOT / args.manifest
     write_manifest(manifest_path, manifest)
     manifest = load_json(manifest_path)
+    validate_manifest(manifest, ROOT)
 
     out_name = args.out
     if not out_name:
