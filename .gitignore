@@ -5,6 +5,7 @@ __pycache__/
 .idea/
 .worktrees/
 .venv-hardening/
+.venv-bakeoff/
 .coverage
 build/
 .runtime/

@@ -1,0 +1,73 @@
+{
+  "baseline": {
+    "framework_import": true,
+    "isolated_roles": false,
+    "parallel_first_positions": false,
+    "fan_in": false,
+    "failure_injection": false,
+    "failure_recovery": false,
+    "checkpoint_resume": false,
+    "hitl_pause": false,
+    "usage_capture": false,
+    "trace_capture": false,
+    "notes": {
+      "observed_at": "2026-10-13",
+      "classification": "CURRENT_PROTOCOL_BASELINE",
+      "honesty_boundary": "Structured governance roles are not physically independent agent processes."
+    }
+  },
+  "openai_agents": {
+    "framework_import": true,
+    "isolated_roles": true,
+    "parallel_first_positions": true,
+    "fan_in": true,
+    "failure_injection": true,
+    "failure_recovery": true,
+    "checkpoint_resume": true,
+    "hitl_pause": true,
+    "usage_capture": true,
+    "trace_capture": true,
+    "notes": {
+      "observed_at": "2026-10-13",
+      "package": "openai-agents==0.23.1",
+      "parallel_elapsed_seconds": 0.304,
+      "state_resume_final_output": "state-resume-complete",
+      "local_trace_count": 1,
+      "local_span_count": 8,
+      "live_model_used": false,
+      "network_trace_export": false,
+      "sources": [
+        "smoke_openai_agents.py",
+        "smoke_openai_state.py"
+      ]
+    }
+  },
+  "microsoft_agent_framework": {
+    "framework_import": true,
+    "isolated_roles": true,
+    "parallel_first_positions": true,
+    "fan_in": true,
+    "failure_injection": true,
+    "failure_recovery": true,
+    "checkpoint_resume": true,
+    "hitl_pause": true,
+    "usage_capture": true,
+    "trace_capture": true,
+    "notes": {
+      "observed_at": "2026-10-13",
+      "packages": {
+        "agent-framework-core": "1.19.0",
+        "agent-framework-orchestrations": "1.3.1"
+      },
+      "parallel_elapsed_seconds": 0.256,
+      "local_span_count": 27,
+      "live_model_used": false,
+      "network_trace_export": false,
+      "sources": [
+        "smoke_maf.py",
+        "smoke_maf_state.py"
+      ],
+      "functional_step_api_warning": "Checkpoint smoke uses the framework's experimental functional @step API; checkpoint support itself is also available in executor workflows."
+    }
+  }
+}

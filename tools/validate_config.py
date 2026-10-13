@@ -5,6 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from company.runtime.agent_bakeoff import load_cases, validate_config as validate_agent_bakeoff  # noqa: E402
 from company.runtime.channel_operating_system import (  # noqa: E402
     validate_config as validate_channel_operating_system,
 )
@@ -36,6 +37,8 @@ channel_operating_system = json.loads(
     (ROOT / "company" / "config" / "channel_operating_system.json").read_text(encoding="utf-8")
 )
 media_venture = json.loads((ROOT / "company" / "config" / "media_venture.json").read_text(encoding="utf-8"))
+agent_bakeoff = json.loads((ROOT / "company" / "config" / "agent_bakeoff.json").read_text(encoding="utf-8"))
+agent_bakeoff_cases = load_cases(ROOT / "benchmarks" / "agent_runtime" / "cases.json")
 
 core = {r["id"] for r in roles["core_roles"]}
 specialists = {r["id"] for r in roles["specialist_roles"]}
@@ -169,6 +172,10 @@ validate_hybrid_execution(hybrid_execution)
 validate_memory_fabric(memory_fabric)
 validate_channel_operating_system(channel_operating_system)
 validate_media_team(media_venture)
+validate_agent_bakeoff(agent_bakeoff)
+assert 12 <= len(agent_bakeoff_cases) <= 20, "agent runtime bake-off must keep 12-20 historical cases"
+for case in agent_bakeoff_cases:
+    assert (ROOT / case["source_artifact"]).is_file(), f"missing bake-off source artifact: {case['source_artifact']}"
 memory_events = load_memory_events(ROOT / memory_fabric["memory_root"], memory_fabric)
 memory_reduction = reduce_memory_events(memory_events)
 assert not memory_reduction.conflicts, "canonical memory must not contain unresolved conflicts"
@@ -182,5 +189,6 @@ assert (
 print(
     f"OK v{expected_version}: {len(core)} core roles, "
     f"{len(specialists)} specialists, {len(routes['routes'])} routing rules, "
-    f"{len(modes['modes'])} modes, pulse enabled, HR capability scouting + intelligence gateway + tool authority registry enforced"
+    f"{len(modes['modes'])} modes, {len(agent_bakeoff_cases)} agent bake-off cases, "
+    "pulse enabled, HR capability scouting + intelligence gateway + tool authority registry enforced"
 )
