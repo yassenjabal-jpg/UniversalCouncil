@@ -258,7 +258,9 @@ def score_case(case: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
         "failure_recovery": recovery_score,
         "desktop_required": desktop_required,
         "desktop_pass": desktop_pass,
+        "desktop_required": desktop_required,
         "desktop_execution": desktop_score,
+        "desktop_pass": desktop_pass,
         "unique_contribution": contribution_score,
         "duplicate_content_ratio": duplicate_ratio,
         "human_override": bool(result["human_override"]),
@@ -295,9 +297,9 @@ def aggregate_runtime(
     if not case_scores:
         raise BakeoffError(f"no case scores for runtime {runtime_id}")
 
-    def avg(field: str) -> float:
-        values = [float(score[field]) for score in case_scores]
-        return sum(values) / len(values)
+    def avg(field: str) -> float | None:
+        values = [float(score[field]) for score in case_scores if score.get(field) is not None]
+        return sum(values) / len(values) if values else None
 
     live_scores = [score for score in case_scores if score["mode"] == "LIVE_DECISION"]
     decision_values = [1.0 if score["decision_correct"] else 0.0 for score in live_scores]
@@ -393,6 +395,46 @@ def select_winner(summaries: list[dict[str, Any]]) -> dict[str, Any]:
     return {"state": "WINNER_SELECTED", "winner": ranked[0]["runtime_id"], "reason": "All hard gates passed."}
 
 
+def validate_live_provenance(
+    results: list[dict[str, Any]],
+    manifest: dict[str, Any],
+    cfg: dict[str, Any],
+) -> bool:
+    if str(manifest.get("runner_id", "")).upper() != str(cfg.get("required_runner_id", "")).upper():
+        raise BakeoffError("live manifest runner does not match required_runner_id")
+    if float(manifest.get("cost_usd", -1)) > float(cfg.get("maximum_cost_usd", 0)):
+        raise BakeoffError("live manifest exceeds maximum_cost_usd")
+    manifest_id = manifest.get("manifest_id")
+    if not manifest_id:
+        raise BakeoffError("live manifest_id is required")
+
+    expected_cases = set(manifest.get("selected_case_ids", []))
+    if not expected_cases:
+        raise BakeoffError("live manifest selected_case_ids is empty")
+
+    live_results = [result for result in results if result.get("mode") == "LIVE_DECISION"]
+    for result in live_results:
+        provenance = result.get("provenance")
+        if not isinstance(provenance, dict):
+            raise BakeoffError(f"{result.get('runtime_id')}/{result.get('case_id')}: live provenance is required")
+        if provenance.get("manifest_id") != manifest_id:
+            raise BakeoffError(f"{result.get('runtime_id')}/{result.get('case_id')}: stale or foreign manifest_id")
+        if provenance.get("runner_id") != cfg.get("required_runner_id"):
+            raise BakeoffError(f"{result.get('runtime_id')}/{result.get('case_id')}: result was not produced on YASSIN")
+        if float(result.get("usage", {}).get("cost_usd", -1)) > float(cfg.get("maximum_cost_usd", 0)):
+            raise BakeoffError(f"{result.get('runtime_id')}/{result.get('case_id')}: non-zero cost result rejected")
+
+    by_runtime: dict[str, list[str]] = defaultdict(list)
+    for result in live_results:
+        by_runtime[str(result["runtime_id"])].append(str(result["case_id"]))
+    for runtime_id, case_ids in by_runtime.items():
+        if len(case_ids) != len(set(case_ids)):
+            raise BakeoffError(f"{runtime_id}: duplicate live case results")
+        if set(case_ids) != expected_cases:
+            raise BakeoffError(f"{runtime_id}: live result set does not match manifest selected_case_ids")
+    return True
+
+
 def evaluate(
     cases: list[dict[str, Any]],
     results: list[dict[str, Any]],
@@ -418,9 +460,17 @@ def evaluate(
         aggregate_runtime(runtime_id, scores, mechanics.get(runtime_id), cfg)
         for runtime_id, scores in sorted(grouped.items())
     ]
+    decision = select_winner(summaries)
+    if manifest is not None and manifest.get("stage") != "full":
+        decision = {
+            "state": "NO_WINNER",
+            "reason": f"Stage {manifest.get('stage')} is a preflight stage; only a full YASSIN run may select a winner.",
+            "winner": None,
+        }
     return {
         "schema_version": "1.0",
         "case_count": len(cases),
+        "manifest_id": manifest.get("manifest_id") if manifest else None,
         "runtime_summaries": summaries,
-        "decision": select_winner(summaries),
+        "decision": decision,
     }
