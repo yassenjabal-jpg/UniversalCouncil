@@ -273,10 +273,10 @@ class ExecutionJournal:
             }
         )
 
-    def pending_action_ids(self) -> set[str]:
+    def _events(self) -> list[dict[str, Any]]:
         if not self.path.exists():
-            return set()
-        pending: set[str] = set()
+            return []
+        events: list[dict[str, Any]] = []
         for line in self.path.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
@@ -284,13 +284,48 @@ class ExecutionJournal:
                 event = json.loads(line)
             except json.JSONDecodeError as exc:
                 raise ExecutionControlError("execution journal contains invalid JSON") from exc
-            if event.get("type") == "intent" and event.get("action_id"):
-                pending.add(str(event["action_id"]))
-            elif event.get("type") == "result" and event.get("action_id"):
-                pending.discard(str(event["action_id"]))
+            if not isinstance(event, dict):
+                raise ExecutionControlError("execution journal event must be an object")
+            events.append(event)
+        return events
+
+    def pending_action_ids(self, *, task_id: str | None = None) -> set[str]:
+        pending: set[str] = set()
+        for event in self._events():
+            if task_id is not None and event.get("task_id") != task_id:
+                continue
+            action_id = event.get("action_id")
+            if not action_id:
+                continue
+            action_id = str(action_id)
+            if event.get("type") == "intent":
+                pending.add(action_id)
+            elif event.get("type") == "result" and event.get("state") != "UNKNOWN":
+                pending.discard(action_id)
         return pending
 
+    def last_result_state(self, task_id: str, action_id: str) -> str | None:
+        latest: str | None = None
+        for event in self._events():
+            if (
+                event.get("type") == "result"
+                and event.get("task_id") == task_id
+                and str(event.get("action_id")) == action_id
+            ):
+                latest = str(event.get("state"))
+        return latest
+
+    def completed_action_ids(self, task_id: str) -> set[str]:
+        completed: set[str] = set()
+        for event in self._events():
+            if event.get("task_id") != task_id or not event.get("action_id"):
+                continue
+            action_id = str(event["action_id"])
+            if event.get("type") == "result" and event.get("state") == "SUCCEEDED":
+                completed.add(action_id)
+        return completed
+
     def reconcile(self, *, task_id: str, action_id: str, state: str) -> None:
-        if action_id not in self.pending_action_ids():
+        if action_id not in self.pending_action_ids(task_id=task_id):
             raise ExecutionControlError("action is not pending reconciliation")
         self.record_result(task_id=task_id, action_id=action_id, state=state)
