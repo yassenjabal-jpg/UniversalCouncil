@@ -438,9 +438,7 @@ def enforce_tool_authority(
         if not isinstance(scope, str) or not scope.strip():
             raise HybridExecutionError(f"authority scope is required: {planned.authority_operation}")
         if scope not in allowed_action_scopes:
-            raise HybridExecutionError(
-                f"authority scope is not allowed: {planned.authority_operation} -> {scope}"
-            )
+            raise HybridExecutionError(f"authority scope is not allowed: {planned.authority_operation} -> {scope}")
     return record
 
 
