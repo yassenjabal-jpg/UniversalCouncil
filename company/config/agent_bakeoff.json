@@ -39,12 +39,12 @@
     "routing_accuracy": 0.09,
     "dissent_preservation": 0.09,
     "policy_compliance": 0.12,
-    "failure_recovery": 0.08,
     "desktop_execution": 0.1,
     "unique_contribution": 0.06,
     "non_duplication": 0.05,
     "completion": 0.04,
-    "mechanics": 0.04
+    "mechanics": 0.04,
+    "runtime_native_recovery": 0.08
   },
   "minimum_desktop_execution_score": 1,
   "required_desktop_case_count": 2,
