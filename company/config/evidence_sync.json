@@ -68,7 +68,11 @@
         }
       },
       "max_receipt_age_days": 7,
-      "revoked_receipt_ids": []
+      "revoked_receipt_ids": [],
+      "repository_identity": "local:CouncilVideoStudio",
+      "component": "yassin_control_bridge",
+      "expected_host": "YASSIN",
+      "allow_legacy_historical": true
     }
   ]
 }
