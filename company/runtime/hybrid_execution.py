@@ -309,13 +309,15 @@ def _task_class(action: dict[str, Any], cfg: dict[str, Any]) -> str:
     return str(cfg.get("default_task_class", "host_support"))
 
 
-def choose_path(action: dict[str, Any], cfg: dict[str, Any]) -> ExecutionPath:
+def choose_path(action: dict[str, Any], cfg: dict[str, Any] | None = None) -> ExecutionPath:
     """Select the first available path from the configured task-class profile.
 
     Safety invariants remain code-enforced: interactive work cannot bypass an
     available GUI, and DC fallback requires explicit opt-in when GUI is absent.
     """
 
+    if cfg is None:
+        cfg = load_config(Path(__file__).resolve().parents[1] / "config" / "hybrid_execution.json")
     validate_config(cfg)
     profile_name = _task_class(action, cfg)
     profile = cfg["routing_profiles"][profile_name]
