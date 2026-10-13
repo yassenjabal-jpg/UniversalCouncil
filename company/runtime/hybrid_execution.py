@@ -636,14 +636,20 @@ class HybridExecutor:
             planned.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}
             and planned.authority_operation == "desktop_computer_use.control"
         )
-        controller_resource = f"desktop:{planned.payload.get('authority_target', 'YASSIN')}"
-        controller_holder = f"{requester}:{state.task_id}"
+        controller_host = str(planned.payload.get("authority_target", "YASSIN"))
+        controller_resource = f"desktop:{controller_host}"
+        lease_token = None
         if controls_desktop:
             state_acquired = False
             try:
                 state.acquire_controller(requester)
                 state_acquired = True
-                self.controller_lease.acquire(controller_resource, controller_holder)
+                lease_token = self.controller_lease.acquire(
+                    controller_resource,
+                    requester,
+                    host=controller_host,
+                    session_id=state.task_id,
+                )
             except (ExecutionControlError, HybridExecutionError) as exc:
                 if state_acquired and state.controller_lease == requester:
                     state.release_controller(requester)
@@ -664,6 +670,8 @@ class HybridExecutor:
                     authority_operation=planned.authority_operation,
                 )
 
+            if controls_desktop and lease_token is not None:
+                self.controller_lease.assert_current(lease_token)
             result = self._adapter_for(planned.path).dispatch(planned.payload)
             raw_state = result.get("state")
             if raw_state == ResultState.HOST_DISPATCH_REQUIRED.value:
@@ -704,7 +712,8 @@ class HybridExecutor:
         finally:
             if controls_desktop and not retain_controller and state.controller_lease == requester:
                 state.release_controller(requester)
-                self.controller_lease.release(controller_resource, controller_holder)
+                if lease_token is not None:
+                    self.controller_lease.release(lease_token)
 
     def execute_batch(
         self,
@@ -732,16 +741,20 @@ class HybridExecutor:
             None,
         )
         controls_desktop = controlling is not None
-        controller_resource = (
-            f"desktop:{controlling.payload.get('authority_target', 'YASSIN')}" if controlling is not None else ""
-        )
-        controller_holder = f"{requester}:{state.task_id}"
+        controller_host = str(controlling.payload.get("authority_target", "YASSIN")) if controlling is not None else ""
+        controller_resource = f"desktop:{controller_host}" if controller_host else ""
+        batch_lease_token = None
         if controls_desktop:
             state_acquired = False
             try:
                 state.acquire_controller(requester)
                 state_acquired = True
-                self.controller_lease.acquire(controller_resource, controller_holder)
+                batch_lease_token = self.controller_lease.acquire(
+                    controller_resource,
+                    requester,
+                    host=controller_host,
+                    session_id=state.task_id,
+                )
             except (ExecutionControlError, HybridExecutionError) as exc:
                 if state_acquired and state.controller_lease == requester:
                     state.release_controller(requester)
@@ -781,7 +794,8 @@ class HybridExecutor:
         finally:
             if controls_desktop and state.controller_lease == requester:
                 state.release_controller(requester)
-                self.controller_lease.release(controller_resource, controller_holder)
+                if batch_lease_token is not None:
+                    self.controller_lease.release(batch_lease_token)
 
 
 def eligible_for_routine_graduation(history: list[dict[str, Any]], cfg: dict[str, Any]) -> bool:
