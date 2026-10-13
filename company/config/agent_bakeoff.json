@@ -40,10 +40,11 @@
     "dissent_preservation": 0.09,
     "policy_compliance": 0.12,
     "failure_recovery": 0.08,
-    "desktop_execution": 0.10,
+    "desktop_execution": 0.1,
     "unique_contribution": 0.06,
     "non_duplication": 0.05,
     "completion": 0.04,
     "mechanics": 0.04
-  }
+  },
+  "minimum_desktop_execution_score": 1
 }
