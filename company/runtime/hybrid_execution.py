@@ -4,6 +4,7 @@ import json
 import os
 import subprocess
 import tempfile
+import time
 from dataclasses import dataclass, field
 from enum import StrEnum
 from pathlib import Path
@@ -18,6 +19,7 @@ from company.runtime.execution_recovery import (
     action_plan_hash,
     decide_recovery,
 )
+from company.runtime.execution_trace import TraceEventType, TraceRecorder
 from company.runtime.tool_authority import capability_currentness, get_capability
 
 
@@ -590,6 +592,7 @@ class HybridExecutor:
         controller_lease: HostControllerLease | None = None,
         journal: ExecutionJournal | None = None,
         cancellation_token: CancellationToken | None = None,
+        trace: TraceRecorder | None = None,
     ):
         validate_config(cfg)
         self.cfg = cfg
@@ -602,6 +605,22 @@ class HybridExecutor:
         self.controller_lease = controller_lease or HostControllerLease()
         self.journal = journal
         self.cancellation_token = cancellation_token
+        self.trace = trace
+
+    def _trace(self, event: TraceEventType, data: dict[str, Any]) -> None:
+        if self.trace is not None:
+            self.trace.record(event, data)
+
+    @staticmethod
+    def _route_reason(planned: PlannedAction) -> str:
+        reasons = {
+            ExecutionPath.GUI_UIA: "semantic GUI request selected by hybrid routing",
+            ExecutionPath.GUI_VISUAL: "visual GUI fallback explicitly requested",
+            ExecutionPath.DC: "host-support or explicitly approved DC fallback",
+            ExecutionPath.NATIVE: "structured native/API operation available",
+            ExecutionPath.ROUTINE: "approved reusable routine selected",
+        }
+        return reasons[planned.path]
 
     def _adapter_for(self, path: ExecutionPath) -> Adapter:
         if path == ExecutionPath.DC:
@@ -637,8 +656,19 @@ class HybridExecutor:
         task_approved: bool,
         owner_confirmed: bool = False,
         retain_controller: bool = False,
+        attempt: int = 1,
     ) -> dict[str, Any]:
         planned = plan_action(action, self.cfg)
+        self._trace(
+            TraceEventType.ROUTE,
+            {
+                "action_id": planned.action_id,
+                "path": planned.path.value,
+                "reason": self._route_reason(planned),
+                "route_version": f"hybrid-{self.cfg.get('version', 'unknown')}",
+                "authority": planned.authority_operation,
+            },
+        )
         if not requester:
             state.record_result(planned, ResultState.BLOCKED)
             return {"state": ResultState.BLOCKED.value, "planned": planned, "reason": "requester identity is required"}
@@ -656,6 +686,16 @@ class HybridExecutor:
                 self.authority_registry,
                 principal=requester,
             )
+            self._trace(
+                TraceEventType.EVIDENCE,
+                {
+                    "action_id": planned.action_id,
+                    "authority": planned.authority_operation,
+                    "evidence_level": authority_record.get("evidence_level"),
+                    "last_verified_at": authority_record.get("last_verified_at"),
+                    "evidence_state": authority_record.get("evidence_state", "LEGACY_CURRENTNESS"),
+                },
+            )
         except HybridExecutionError as exc:
             state.record_result(planned, ResultState.BLOCKED)
             return {
@@ -663,7 +703,17 @@ class HybridExecutor:
                 "planned": planned,
                 "reason": str(exc),
             }
-        if authority_record["approval_policy"] in {"OWNER_EXPLICIT", "ASK_BEFORE_WRITE"} and not task_approved:
+        approval_required = authority_record["approval_policy"] in {"OWNER_EXPLICIT", "ASK_BEFORE_WRITE"}
+        self._trace(
+            TraceEventType.APPROVAL,
+            {
+                "action_id": planned.action_id,
+                "human_required": approval_required,
+                "approved": bool(task_approved) if approval_required else True,
+                "policy": authority_record["approval_policy"],
+            },
+        )
+        if approval_required and not task_approved:
             state.record_result(planned, ResultState.BLOCKED)
             return {
                 "state": ResultState.BLOCKED.value,
@@ -675,6 +725,15 @@ class HybridExecutor:
             return {"state": ResultState.BLOCKED.value, "planned": planned}
 
         if self.cancellation_token is not None and self.cancellation_token.is_cancelled():
+            self._trace(
+                TraceEventType.RECOVERY,
+                {
+                    "action_id": planned.action_id,
+                    "outcome": "CANCELLED",
+                    "attempt": attempt,
+                    "reason": self.cancellation_token.reason() or "execution cancelled",
+                },
+            )
             state.record_result(planned, ResultState.CANCELLED)
             return {
                 "state": ResultState.CANCELLED.value,
@@ -742,13 +801,43 @@ class HybridExecutor:
 
             if controls_desktop and lease_token is not None:
                 self.controller_lease.assert_current(lease_token)
+            self._trace(
+                TraceEventType.TOOL,
+                {
+                    "action_id": planned.action_id,
+                    "authority": planned.authority_operation,
+                    "path": planned.path.value,
+                    "fencing_token": lease_token.fencing_token if lease_token is not None else None,
+                    "cost_usd": float(planned.payload.get("cost_usd", 0.0) or 0.0),
+                },
+            )
+            dispatch_started = time.perf_counter()
             result = self._adapter_for(planned.path).dispatch(planned.payload)
+            latency_ms = (time.perf_counter() - dispatch_started) * 1000
             raw_state = result.get("state")
+            self._trace(
+                TraceEventType.EXECUTION,
+                {
+                    "action_id": planned.action_id,
+                    "state": raw_state,
+                    "attempt": attempt,
+                    "latency_ms": round(latency_ms, 3),
+                },
+            )
             if raw_state == ResultState.HOST_DISPATCH_REQUIRED.value:
                 state.record_result(planned, ResultState.HOST_DISPATCH_REQUIRED)
                 self._journal_result(state, planned, ResultState.HOST_DISPATCH_REQUIRED)
                 return {"state": raw_state, "planned": planned, "result": result}
             if raw_state == ResultState.UNKNOWN.value:
+                self._trace(
+                    TraceEventType.RECOVERY,
+                    {
+                        "action_id": planned.action_id,
+                        "outcome": "RECONCILE_REQUIRED",
+                        "attempt": attempt,
+                        "reason": result.get("reason", "unknown execution outcome"),
+                    },
+                )
                 state.record_result(planned, ResultState.UNKNOWN)
                 self._journal_result(state, planned, ResultState.UNKNOWN)
                 return {"state": ResultState.UNKNOWN.value, "planned": planned, "result": result}
@@ -759,6 +848,14 @@ class HybridExecutor:
 
             if planned.requires_verification:
                 verification = self.verifier.verify(planned.payload, result)
+                self._trace(
+                    TraceEventType.VERIFICATION,
+                    {
+                        "action_id": planned.action_id,
+                        "verified": bool(verification.get("verified")),
+                        "mode": verification.get("mode"),
+                    },
+                )
                 if not verification.get("verified"):
                     state.record_result(planned, ResultState.UNKNOWN)
                     self._journal_result(state, planned, ResultState.UNKNOWN)
@@ -770,6 +867,14 @@ class HybridExecutor:
                     }
             else:
                 verification = {"verified": True, "mode": "not_required"}
+                self._trace(
+                    TraceEventType.VERIFICATION,
+                    {
+                        "action_id": planned.action_id,
+                        "verified": True,
+                        "mode": "not_required",
+                    },
+                )
 
             state.record_result(planned, ResultState.SUCCEEDED)
             self._journal_result(state, planned, ResultState.SUCCEEDED)
@@ -808,6 +913,7 @@ class HybridExecutor:
                 task_approved=task_approved,
                 owner_confirmed=owner_confirmed,
                 retain_controller=retain_controller,
+                attempt=attempts + 1,
             )
             result["attempts"] = attempts + 1
             if result["state"] != ResultState.FAILED.value:
@@ -821,6 +927,15 @@ class HybridExecutor:
             ):
                 return result
             attempts += 1
+            self._trace(
+                TraceEventType.RECOVERY,
+                {
+                    "action_id": str(action.get("id")),
+                    "outcome": "RETRYING",
+                    "attempt": attempts + 1,
+                    "reason": "bounded retry explicitly safe in action and provider result",
+                },
+            )
 
     def execute_batch(
         self,
