@@ -119,6 +119,34 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
         with self.assertRaises(HybridExecutionError):
             enforce_tool_authority(planned, registry)
 
+    def test_f04_principal_and_action_scope_are_enforced(self):
+        planned = plan_action(
+            {
+                "id": "f04-structured",
+                "native_available": True,
+                "authority_operation": "github.write",
+                "effect": "WRITE",
+                "target_repo": "yassenjabal-jpg/UniversalCouncil",
+                "authority_scope": "universal_council_repository",
+            },
+            BASE_CFG,
+        )
+        with self.assertRaises(HybridExecutionError):
+            enforce_tool_authority(planned, BASE_REGISTRY, principal="media_specialist")
+
+        wrong_scope = copy.deepcopy(planned.payload)
+        wrong_scope["authority_scope"] = "unrelated_repository"
+        wrong_planned = plan_action(wrong_scope, BASE_CFG)
+        with self.assertRaises(HybridExecutionError):
+            enforce_tool_authority(wrong_planned, BASE_REGISTRY, principal="technical_operator")
+
+        record = enforce_tool_authority(
+            planned,
+            BASE_REGISTRY,
+            principal="technical_operator",
+        )
+        self.assertEqual(record["operation"], "github.write")
+
     def test_f05_host_shared_controller_lease_blocks_second_executor(self):
         with tempfile.TemporaryDirectory() as tmp:
             lease_path = Path(tmp) / "controller.lock"
