@@ -43,7 +43,10 @@
       "last_verified_at": "2026-10-11",
       "review_trigger": "connector permission or installation changes",
       "source_or_pin": "permission_mode=ask_before_writes",
-      "enforcement": "CONNECTOR_POLICY"
+      "enforcement": "CONNECTOR_POLICY",
+      "allowed_targets": [
+        "yassenjabal-jpg/UniversalCouncil"
+      ]
     },
     {
       "id": "github-merge",
@@ -64,7 +67,10 @@
       "last_verified_at": "2026-10-11",
       "review_trigger": "merge-policy or connector permission changes",
       "source_or_pin": "permission_mode=ask_before_writes",
-      "enforcement": "CONNECTOR_POLICY"
+      "enforcement": "CONNECTOR_POLICY",
+      "allowed_targets": [
+        "yassenjabal-jpg/UniversalCouncil"
+      ]
     },
     {
       "id": "memory-github-sync",
@@ -88,7 +94,10 @@
       "last_verified_at": "2026-10-12",
       "review_trigger": "memory autosync implementation, owner directive, GitHub connector permission, or memory path policy changes",
       "source_or_pin": "owner directive 2026-10-12: persistent memory with automatic GitHub synchronization",
-      "enforcement": "GATEWAY_ENFORCED"
+      "enforcement": "GATEWAY_ENFORCED",
+      "allowed_targets": [
+        "yassenjabal-jpg/UniversalCouncil"
+      ]
     },
     {
       "id": "linear-read",
@@ -151,7 +160,10 @@
       "last_verified_at": "2026-10-11",
       "review_trigger": "device or remote-tool authorization changes",
       "source_or_pin": "YASSIN host session",
-      "enforcement": "POLICY_ENFORCED_ONLY"
+      "enforcement": "POLICY_ENFORCED_ONLY",
+      "allowed_targets": [
+        "YASSIN"
+      ]
     },
     {
       "id": "remote-shell-execute",
@@ -174,7 +186,10 @@
       "last_verified_at": "2026-10-11",
       "review_trigger": "device or remote-tool authorization changes",
       "source_or_pin": "YASSIN host session",
-      "enforcement": "POLICY_ENFORCED_ONLY"
+      "enforcement": "POLICY_ENFORCED_ONLY",
+      "allowed_targets": [
+        "YASSIN"
+      ]
     },
     {
       "id": "desktop-computer-use-observe",
@@ -216,6 +231,9 @@
         "window_or_element_recording",
         "before_after_verification",
         "audit_logging"
+      ],
+      "allowed_targets": [
+        "YASSIN"
       ]
     },
     {
@@ -262,6 +280,9 @@
         "window_or_element_recording",
         "before_after_verification",
         "audit_logging"
+      ],
+      "allowed_targets": [
+        "YASSIN"
       ]
     },
     {
