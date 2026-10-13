@@ -1,5 +1,5 @@
 param(
-    [string]$Model = "qwen3:4b",
+    [string]$Model = "qwen3:4b-instruct",
     [string]$ModelsDir = "E:\OllamaModels"
 )
 
