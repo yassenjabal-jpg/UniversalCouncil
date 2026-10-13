@@ -250,6 +250,7 @@ class AgentBakeoffTests(unittest.TestCase):
             "policy_violations": "bad",
             "desktop": [],
             "usage": [],
+            "provenance": [],
         }
         for field, value in field_values.items():
             bad = copy.deepcopy(base)
@@ -314,7 +315,7 @@ class AgentBakeoffTests(unittest.TestCase):
 
         self.assertEqual(score["blocker_f1"], 1.0)
         self.assertEqual(score["dissent_preservation"], 1.0)
-        self.assertEqual(score["desktop_execution"], 1.0)
+        self.assertIsNone(score["desktop_execution"])
         self.assertEqual(score["completion"], 0.0)
         self.assertEqual(score["policy_compliance"], 0.0)
         self.assertEqual(score["unique_contribution"], 0.0)
