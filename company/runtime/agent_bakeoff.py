@@ -401,6 +401,11 @@ def validate_live_provenance(
             raise BakeoffError(f"{result.get('runtime_id')}/{result.get('case_id')}: live provenance is required")
         if provenance.get("manifest_id") != manifest_id:
             raise BakeoffError(f"{result.get('runtime_id')}/{result.get('case_id')}: stale or foreign manifest_id")
+        for key in cfg["required_provenance_keys"]:
+            if provenance.get(key) != manifest.get(key):
+                raise BakeoffError(
+                    f"{result.get('runtime_id')}/{result.get('case_id')}: provenance mismatch for {key}"
+                )
         if provenance.get("runner_id") != cfg.get("required_runner_id"):
             raise BakeoffError(f"{result.get('runtime_id')}/{result.get('case_id')}: result was not produced on YASSIN")
         if float(result.get("usage", {}).get("cost_usd", -1)) > float(cfg.get("maximum_cost_usd", 0)):
