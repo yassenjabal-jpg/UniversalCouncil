@@ -1,0 +1,202 @@
+name: Agent Runtime Live Bake-off
+
+on:
+  push:
+    branches:
+      - experiment/agent-runtime-bakeoff-20261013
+    paths:
+      - ".github/workflows/agent-runtime-live-bakeoff.yml"
+      - "tools/run_agent_bakeoff_live.py"
+      - "tools/run_agent_bakeoff.py"
+      - "company/runtime/agent_bakeoff.py"
+      - "company/config/agent_bakeoff.json"
+      - "company/tests/test_agent_bakeoff_live.py"
+      - "company/tests/test_agent_bakeoff_desktop_gate.py"
+      - "benchmarks/agent_runtime/cases.json"
+      - "benchmarks/agent_runtime/requirements.txt"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  live:
+    name: Live decision / ${{ matrix.runtime }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      matrix:
+        runtime:
+          - baseline
+          - openai_agents
+          - microsoft_agent_framework
+
+    steps:
+      - name: Checkout experiment branch
+        uses: actions/checkout@v4
+        with:
+          ref: experiment/agent-runtime-bakeoff-20261013
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r benchmarks/agent_runtime/requirements.txt
+
+      - name: Install local Ollama
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          nohup ollama serve > /tmp/ollama.log 2>&1 &
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:11434/api/tags >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/ollama.log
+          exit 1
+
+      - name: Pull zero-cost local model
+        run: ollama pull qwen3:4b-instruct
+
+      - name: Verify model is local
+        run: |
+          curl -fsS http://127.0.0.1:11434/api/tags
+          if env | grep -E '^(OPENAI_API_KEY|AZURE_OPENAI_API_KEY|OLLAMA_API_KEY)='; then
+            echo "External model credential detected; refusing live bake-off."
+            exit 1
+          fi
+
+      - name: Run LIVE_DECISION cases
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: |
+          python tools/run_agent_bakeoff_live.py             --runtime "${{ matrix.runtime }}"             --model qwen3:4b-instruct             --endpoint http://127.0.0.1:11434             --out "benchmarks/agent_runtime/results-${{ matrix.runtime }}.json"
+
+      - name: Upload runtime results
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-${{ matrix.runtime }}
+          path: benchmarks/agent_runtime/results-${{ matrix.runtime }}.json
+          retention-days: 1
+
+  aggregate:
+    name: Aggregate and evaluate
+    needs: live
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout experiment branch
+        uses: actions/checkout@v4
+        with:
+          ref: experiment/agent-runtime-bakeoff-20261013
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Download live results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: live-*
+          path: .runtime/live-results
+          merge-multiple: true
+
+      - name: Combine results
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          parts = sorted(Path(".runtime/live-results").glob("results-*.json"))
+          if len(parts) != 3:
+              raise SystemExit(f"Expected 3 runtime result files, found {len(parts)}")
+          combined = []
+          for path in parts:
+              data = json.loads(path.read_text(encoding="utf-8"))
+              combined.extend(data)
+          if len(combined) != 48:
+              raise SystemExit(f"Expected 48 live results, found {len(combined)}")
+          out = Path("benchmarks/agent_runtime/results.json")
+          out.write_text(json.dumps(combined, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          print(f"Wrote {len(combined)} results")
+          PY
+
+      - name: Evaluate bake-off
+        run: python tools/run_agent_bakeoff.py
+
+      - name: Write Phase 2 decision-quality report
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("benchmarks/agent_runtime/report.json").read_text(encoding="utf-8"))
+          lines = [
+              "# Universal Council Agent Runtime Bake-off — Phase 2 Decision Quality",
+              "",
+              "Date: 2026-10-13",
+              "Provider: local Ollama on standard public GitHub-hosted runners",
+              "Model: qwen3:4b-instruct",
+              "Financial cost: USD 0",
+              "",
+              "## Runtime results",
+              "",
+              "| Runtime | Score | Correctness | Blocker F1 | Routing | Dissent | Desktop | Eligible |",
+              "| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
+          ]
+          for item in report["runtime_summaries"]:
+              m = item["metrics"]
+              lines.append(
+                  f'| {item["runtime_id"]} | {item["score"]:.4f} | '
+                  f'{(m["decision_correctness"] or 0):.4f} | {m["blocker_f1"]:.4f} | '
+                  f'{m["routing_accuracy"]:.4f} | {m["dissent_preservation"]:.4f} | '
+                  f'{m["desktop_execution"]:.4f} | {item["eligible_for_winner"]} |'
+              )
+          lines.extend([
+              "",
+              "## Decision",
+              "",
+              f'State: {report["decision"]["state"]}',
+              f'Winner: {report["decision"]["winner"]}',
+              f'Reason: {report["decision"]["reason"]}',
+              "",
+              "The decision-quality run is not allowed to select a final runtime until the YASSIN desktop execution gate reaches 1.0.",
+          ])
+          Path("docs/research/2026-10-13-agent-runtime-bakeoff-phase2-decision-quality.md").write_text(
+              "\n".join(lines) + "\n", encoding="utf-8"
+          )
+          PY
+
+      - name: Run bake-off tests
+        run: |
+          python -m unittest             company.tests.test_agent_bakeoff             company.tests.test_agent_bakeoff_live             company.tests.test_agent_bakeoff_desktop_gate
+
+      - name: Upload combined evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-runtime-live-bakeoff
+          path: |
+            benchmarks/agent_runtime/results.json
+            benchmarks/agent_runtime/report.json
+            docs/research/2026-10-13-agent-runtime-bakeoff-phase2-decision-quality.md
+          retention-days: 1
+
+      - name: Commit measured results to experiment branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             benchmarks/agent_runtime/results.json             benchmarks/agent_runtime/report.json             docs/research/2026-10-13-agent-runtime-bakeoff-phase2-decision-quality.md
+          if git diff --cached --quiet; then
+            echo "No measured result changes to commit."
+            exit 0
+          fi
+          git commit -m "evidence(council): record zero-cost live bakeoff results [skip ci]"
+          git push origin HEAD:experiment/agent-runtime-bakeoff-20261013
