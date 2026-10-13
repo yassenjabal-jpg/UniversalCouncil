@@ -328,7 +328,6 @@ class EvidenceSyncTests(unittest.TestCase):
                 newer["observed_at"],
             )
 
-
             scope_missing = copy.deepcopy(receipt)
             scope_missing["verified_scope"] = ["screenshot"]
             with self.assertRaises(EvidenceSyncError):
