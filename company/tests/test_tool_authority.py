@@ -205,6 +205,19 @@ class ToolAuthorityTests(unittest.TestCase):
         with self.assertRaises(ToolAuthorityError):
             validate_registry(cfg)
 
+        for constraint in ("allowed_principals", "allowed_action_scopes"):
+            cfg = copy.deepcopy(self.cfg)
+            record = next(item for item in cfg["capabilities"] if item["operation"] == "github.write")
+            record[constraint] = []
+            with self.assertRaises(ToolAuthorityError):
+                validate_registry(cfg)
+
+            cfg = copy.deepcopy(self.cfg)
+            record = next(item for item in cfg["capabilities"] if item["operation"] == "github.write")
+            record[constraint] = ["", 3]
+            with self.assertRaises(ToolAuthorityError):
+                validate_registry(cfg)
+
         cfg = copy.deepcopy(self.cfg)
         cfg["capabilities"][0]["max_evidence_age_days"] = 0
         with self.assertRaises(ToolAuthorityError):
