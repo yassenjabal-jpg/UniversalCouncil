@@ -30,7 +30,7 @@ class GuiPostStateVerifier:
 
         request = spec.get("request")
         expect = spec.get("expect")
-        if not isinstance(request, dict) or not isinstance(expect, dict):
+        if not isinstance(request, dict) or not isinstance(expect, dict) or not expect:
             return {"verified": False, "mode": "invalid_verify_spec"}
 
         probe = self.gui_adapter.dispatch({"gui_request": request})
