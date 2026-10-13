@@ -9,3 +9,12 @@ __pycache__/
 .coverage
 build/
 .runtime/
+benchmarks/agent_runtime/case_packets.json
+benchmarks/agent_runtime/experiment_manifest.json
+benchmarks/agent_runtime/results.json
+benchmarks/agent_runtime/report.json
+benchmarks/agent_runtime/desktop_receipts.json
+benchmarks/agent_runtime/yassin_health_receipt.json
+benchmarks/agent_runtime/stages/
+benchmarks/agent_runtime/stage_receipts/
+benchmarks/agent_runtime/desktop_evidence/
