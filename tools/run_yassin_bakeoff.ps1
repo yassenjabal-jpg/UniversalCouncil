@@ -38,7 +38,7 @@ if ($LASTEXITCODE -ne 0) { throw "Bake-off unit tests failed." }
 & $python "tools\validate_config.py"
 if ($LASTEXITCODE -ne 0) { throw "Repository validation failed." }
 
-& "$Repo\tools\test_yassin_bakeoff_health.ps1" -Repo $Repo -ConsecutivePasses 10
+& "$Repo\tools\yassin_bakeoff_health.ps1" -Repo $Repo -Model $Model -RequireModel -ConsecutivePasses 10
 if ($LASTEXITCODE -ne 0) { throw "YASSIN health gate failed." }
 
 if ($Stage -eq "Preflight") {
