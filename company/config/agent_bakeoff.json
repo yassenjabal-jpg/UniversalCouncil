@@ -54,8 +54,9 @@
     "source_sha",
     "config_sha256",
     "cases_sha256",
+    "packets_sha256",
     "runner_sha256",
-    "packet_manifest_sha256",
+    "evaluator_sha256",
     "requirements_sha256",
     "model",
     "model_digest",
@@ -80,5 +81,13 @@
       "c15_market_reality_gate"
     ],
     "full": "ALL_16"
+  },
+  "live_execution_policy": {
+    "execution_host": "YASSIN_ONLY",
+    "external_compute": false,
+    "external_paid_api": false,
+    "local_model_endpoint": "127.0.0.1",
+    "staged_run_required": true,
+    "resume_required": true
   }
 }
