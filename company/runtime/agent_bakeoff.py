@@ -18,7 +18,7 @@ RESULT_STATES = {"COMPLETED", "FAILED", "BLOCKED", "UNKNOWN"}
 
 def load_json(path: Path) -> Any:
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return json.loads(path.read_text(encoding="utf-8-sig"))
     except (OSError, json.JSONDecodeError) as exc:
         raise BakeoffError(f"cannot load JSON {path}: {exc}") from exc
 
