@@ -329,6 +329,7 @@ def _normalize_action_for_path(
             "authority_target",
             cfg.get("gui_interaction_plane", {}).get("authority_target", "YASSIN"),
         )
+        normalized.setdefault("authority_scope", "yassin_desktop")
     elif path == ExecutionPath.DC:
         if normalized.get("effect") not in {"READ", "WRITE", "EXECUTE"}:
             raise HybridExecutionError("DC action requires an explicit trusted effect")
@@ -336,6 +337,7 @@ def _normalize_action_for_path(
             "authority_target",
             cfg.get("dc_control_plane", {}).get("authority_target", "YASSIN"),
         )
+        normalized.setdefault("authority_scope", "yassin_host")
     return normalized
 
 
@@ -390,7 +392,12 @@ def _authority_target(payload: dict[str, Any]) -> str | None:
     return None
 
 
-def enforce_tool_authority(planned: PlannedAction, registry: dict[str, Any]) -> dict[str, Any]:
+def enforce_tool_authority(
+    planned: PlannedAction,
+    registry: dict[str, Any],
+    *,
+    principal: str | None = None,
+) -> dict[str, Any]:
     try:
         record = get_capability(registry, planned.authority_operation)
     except ValueError as exc:
@@ -414,6 +421,25 @@ def enforce_tool_authority(planned: PlannedAction, registry: dict[str, Any]) -> 
         if target not in allowed_targets:
             raise HybridExecutionError(
                 f"authority target is outside allowed scope: {planned.authority_operation} -> {target}"
+            )
+
+    allowed_principals = record.get("allowed_principals")
+    if allowed_principals:
+        if not principal:
+            raise HybridExecutionError(f"authority principal is required: {planned.authority_operation}")
+        if principal not in allowed_principals:
+            raise HybridExecutionError(
+                f"authority principal is not allowed: {planned.authority_operation} -> {principal}"
+            )
+
+    allowed_action_scopes = record.get("allowed_action_scopes")
+    if allowed_action_scopes:
+        scope = planned.payload.get("authority_scope")
+        if not isinstance(scope, str) or not scope.strip():
+            raise HybridExecutionError(f"authority scope is required: {planned.authority_operation}")
+        if scope not in allowed_action_scopes:
+            raise HybridExecutionError(
+                f"authority scope is not allowed: {planned.authority_operation} -> {scope}"
             )
     return record
 
@@ -577,7 +603,11 @@ class HybridExecutor:
             }
 
         try:
-            authority_record = enforce_tool_authority(planned, self.authority_registry)
+            authority_record = enforce_tool_authority(
+                planned,
+                self.authority_registry,
+                principal=requester,
+            )
         except HybridExecutionError as exc:
             state.record_result(planned, ResultState.BLOCKED)
             return {
