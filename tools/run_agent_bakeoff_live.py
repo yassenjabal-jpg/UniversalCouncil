@@ -505,6 +505,74 @@ def completed_keys(results: list[dict[str, Any]], experiment_id: str) -> set[tup
     }
 
 
+def stage_paths(stage: str) -> tuple[Path, Path, Path]:
+    if stage == "full":
+        return (
+            ROOT / "benchmarks" / "agent_runtime" / "results.json",
+            ROOT / "benchmarks" / "agent_runtime" / "experiment_manifest.json",
+            ROOT / "benchmarks" / "agent_runtime" / "stage_receipts" / "full.json",
+        )
+    return (
+        ROOT / "benchmarks" / "agent_runtime" / "stages" / f"{stage}-results.json",
+        ROOT / "benchmarks" / "agent_runtime" / "stages" / f"{stage}-manifest.json",
+        ROOT / "benchmarks" / "agent_runtime" / "stage_receipts" / f"{stage}.json",
+    )
+
+
+def prior_stage(stage: str) -> str | None:
+    return {"canary": None, "representative": "canary", "full": "representative"}[stage]
+
+
+def validate_prior_stage(current_manifest: dict[str, Any]) -> None:
+    prior = prior_stage(str(current_manifest["stage"]))
+    if prior is None:
+        return
+    _, _, receipt_path = stage_paths(prior)
+    if not receipt_path.is_file():
+        raise RuntimeError(f"{prior} stage receipt is required before {current_manifest['stage']}")
+    receipt = load_json(receipt_path)
+    if receipt.get("status") != "STAGE_COMPLETE":
+        raise RuntimeError(f"{prior} stage is not complete")
+
+    keys = (
+        "source_sha",
+        "config_sha256",
+        "cases_sha256",
+        "packets_sha256",
+        "runner_sha256",
+        "evaluator_sha256",
+        "requirements_sha256",
+        "model",
+        "model_digest",
+        "execution_host",
+        "financial_cost_usd",
+    )
+    for key in keys:
+        if receipt.get(key) != current_manifest.get(key):
+            raise RuntimeError(f"{prior} stage receipt does not match current experiment: {key}")
+
+
+def write_stage_receipt(path: Path, manifest: dict[str, Any], results_file: Path) -> None:
+    receipt = {
+        "status": "STAGE_COMPLETE",
+        "stage": manifest["stage"],
+        "experiment_id": manifest["experiment_id"],
+        "results_file": str(results_file.relative_to(ROOT)),
+        "source_sha": manifest["source_sha"],
+        "config_sha256": manifest["config_sha256"],
+        "cases_sha256": manifest["cases_sha256"],
+        "packets_sha256": manifest["packets_sha256"],
+        "runner_sha256": manifest["runner_sha256"],
+        "evaluator_sha256": manifest["evaluator_sha256"],
+        "requirements_sha256": manifest["requirements_sha256"],
+        "model": manifest["model"],
+        "model_digest": manifest["model_digest"],
+        "execution_host": manifest["execution_host"],
+        "financial_cost_usd": manifest["financial_cost_usd"],
+    }
+    atomic_write_json(path, receipt)
+
+
 async def warm_model(endpoint: str, model: str, timeout: int) -> None:
     await asyncio.to_thread(
         ollama_native_call,
@@ -537,9 +605,13 @@ async def main_async(args: argparse.Namespace) -> int:
         stage=args.stage,
         selected_case_ids=selected_ids,
     )
-    manifest_path = ROOT / args.manifest
+    default_out, default_manifest, receipt_path = stage_paths(args.stage)
+    manifest_path = ROOT / args.manifest if args.manifest else default_manifest
+    out = ROOT / args.out if args.out else default_out
+
     write_manifest(manifest_path, manifest)
     validate_manifest(manifest, ROOT)
+    validate_prior_stage(manifest)
     provenance = result_provenance(manifest)
 
     runtimes = {
@@ -548,7 +620,6 @@ async def main_async(args: argparse.Namespace) -> int:
     }
     selected_runtimes = ["baseline", *runtimes] if args.runtime == "all" else [args.runtime]
 
-    out = ROOT / args.out
     existing = load_existing(out) if args.resume else []
     done = completed_keys(existing, manifest["experiment_id"])
     results = list(existing)
@@ -624,11 +695,13 @@ async def main_async(args: argparse.Namespace) -> int:
                 print(f"FAIL-CLOSED {runtime_id}:{case['case_id']} {result.get('error', result['policy_violations'])}")
                 return 4
 
+    write_stage_receipt(receipt_path, manifest, out)
     print(json.dumps({
         "status": "STAGE_COMPLETE",
         "stage": args.stage,
         "experiment_id": manifest["experiment_id"],
         "results_file": str(out.relative_to(ROOT)),
+        "receipt_file": str(receipt_path.relative_to(ROOT)),
         "cost_usd": 0.0,
     }, indent=2))
     return 0
@@ -641,8 +714,8 @@ def main() -> int:
     parser.add_argument("--stage", choices=["canary", "representative", "full"], default="canary")
     parser.add_argument("--runtime", choices=["all", "baseline", "openai_agents", "microsoft_agent_framework"], default="all")
     parser.add_argument("--timeout", type=int, default=150)
-    parser.add_argument("--out", default="benchmarks/agent_runtime/results.json")
-    parser.add_argument("--manifest", default="benchmarks/agent_runtime/experiment_manifest.json")
+    parser.add_argument("--out")
+    parser.add_argument("--manifest")
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
     try:
