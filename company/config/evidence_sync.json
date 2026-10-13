@@ -39,9 +39,36 @@
             "window_or_element_recording",
             "before_after_verification",
             "audit_logging"
-          ]
+          ],
+          "operation_verified_scope": {
+            "desktop_computer_use.observe": [
+              "list_windows",
+              "inspect_ui",
+              "search_ui",
+              "read_values_properties",
+              "screenshot",
+              "before_after_verification",
+              "audit_logging"
+            ],
+            "desktop_computer_use.control": [
+              "semantic_invoke",
+              "semantic_set_value",
+              "focus",
+              "scroll_into_view",
+              "wait_for",
+              "physical_click",
+              "physical_hover",
+              "physical_drag",
+              "send_keys",
+              "window_or_element_recording",
+              "before_after_verification",
+              "audit_logging"
+            ]
+          }
         }
-      }
+      },
+      "max_receipt_age_days": 7,
+      "revoked_receipt_ids": []
     }
   ]
 }
