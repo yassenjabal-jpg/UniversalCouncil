@@ -361,11 +361,13 @@ class EvidenceSyncTests(unittest.TestCase):
                 "company/evidence/imported/test.json",
             )
             observe = next(
-                item for item in partially_updated["capabilities"]
+                item
+                for item in partially_updated["capabilities"]
                 if item["operation"] == "desktop_computer_use.observe"
             )
             control = next(
-                item for item in partially_updated["capabilities"]
+                item
+                for item in partially_updated["capabilities"]
                 if item["operation"] == "desktop_computer_use.control"
             )
             self.assertEqual(observe["evidence_state"], "CURRENT_VERIFIED")
