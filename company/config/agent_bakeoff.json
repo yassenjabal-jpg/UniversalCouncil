@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "minimum_live_decision_cases": 12,
+  "minimum_live_decision_cases": 16,
   "minimum_mechanics_score": 0.8,
-  "winner_policy": "NO_LIVE_DECISION_NO_WINNER",
+  "winner_policy": "ALL_16_PROVENANCE_DESKTOP_2_OF_2",
   "required_mechanics_for_winner": [
     "framework_import",
     "isolated_roles",
@@ -46,5 +46,19 @@
     "completion": 0.04,
     "mechanics": 0.04
   },
-  "minimum_desktop_execution_score": 1
+  "minimum_desktop_execution_score": 1,
+  "required_desktop_case_count": 2,
+  "require_provenance": true,
+  "required_provenance_keys": [
+    "experiment_id",
+    "source_sha",
+    "config_sha256",
+    "cases_sha256",
+    "runner_sha256",
+    "requirements_sha256",
+    "model",
+    "model_digest",
+    "execution_host",
+    "financial_cost_usd"
+  ]
 }
