@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import subprocess
@@ -199,17 +200,31 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise HybridExecutionError("execution_order must preserve the GUI-primary hybrid ladder")
 
     profiles = cfg.get("routing_profiles", {})
-    interactive = profiles.get("interactive_app", {})
-    if interactive.get("order") != [
-        ExecutionPath.GUI_UIA.value,
-        ExecutionPath.GUI_VISUAL.value,
-        ExecutionPath.DC.value,
-    ]:
-        raise HybridExecutionError("interactive_app routing must be GUI-first with DC fallback")
+    required_profiles = {"interactive_app", "host_support", "external_service"}
+    if not isinstance(profiles, dict) or not required_profiles.issubset(profiles):
+        raise HybridExecutionError("routing_profiles must define interactive_app, host_support, and external_service")
+    valid_paths = {path.value for path in ExecutionPath}
+    for profile_name in required_profiles:
+        order = profiles[profile_name].get("order")
+        if not isinstance(order, list) or not order:
+            raise HybridExecutionError(f"{profile_name} routing order must be a non-empty list")
+        if len(order) != len(set(order)) or not set(order).issubset(valid_paths):
+            raise HybridExecutionError(f"{profile_name} routing order contains invalid or duplicate paths")
+
+    interactive = profiles["interactive_app"]
+    interactive_order = interactive["order"]
+    if ExecutionPath.GUI_UIA.value not in interactive_order or ExecutionPath.GUI_VISUAL.value not in interactive_order:
+        raise HybridExecutionError("interactive_app routing must preserve semantic and visual GUI paths")
+    if interactive_order.index(ExecutionPath.GUI_UIA.value) > interactive_order.index(ExecutionPath.GUI_VISUAL.value):
+        raise HybridExecutionError("interactive_app routing must keep semantic GUI before visual fallback")
     if interactive.get("dc_fallback_requires_explicit_opt_in") is not True:
         raise HybridExecutionError("interactive DC fallback must require explicit opt-in")
     if interactive.get("dc_must_not_bypass_gui_when_gui_available") is not True:
         raise HybridExecutionError("DC must not bypass an available GUI path")
+
+    default_task_class = cfg.get("default_task_class")
+    if default_task_class not in required_profiles:
+        raise HybridExecutionError("default_task_class must reference a known routing profile")
 
     gui_cfg = cfg.get("gui_interaction_plane", {})
     if gui_cfg.get("role") != "PRIMARY_INTERACTION_PLANE":
@@ -234,8 +249,16 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise HybridExecutionError("raw output must remain opt-in")
     if int(projection.get("max_items", 0)) < 1 or int(projection.get("max_text_chars", 0)) < 64:
         raise HybridExecutionError("result projection bounds are too small")
-    if cfg.get("automation_graduation", {}).get("verified_repeats_required", 0) < 2:
+    graduation = cfg.get("automation_graduation", {})
+    if graduation.get("verified_repeats_required", 0) < 2:
         raise HybridExecutionError("automation graduation requires repeated verification")
+    fingerprint_fields = graduation.get("fingerprint_fields")
+    if not isinstance(fingerprint_fields, list) or not fingerprint_fields:
+        raise HybridExecutionError("automation graduation requires fingerprint_fields")
+    if len(fingerprint_fields) != len(set(fingerprint_fields)):
+        raise HybridExecutionError("automation graduation fingerprint_fields must be unique")
+    if graduation.get("require_distinct_run_ids") is not True:
+        raise HybridExecutionError("automation graduation requires distinct run ids")
     return True
 
 
@@ -259,40 +282,67 @@ def _gui_authority(action_name: str) -> str:
     raise HybridExecutionError(f"unsupported GUI bridge action: {action_name}")
 
 
-def choose_path(action: dict[str, Any]) -> ExecutionPath:
-    """Route interactive application work through GUI before any DC fallback.
+def _path_available(path: ExecutionPath, action: dict[str, Any]) -> bool:
+    request = action.get("gui_request")
+    has_gui = isinstance(request, dict) and bool(request.get("action"))
+    if path == ExecutionPath.GUI_UIA:
+        return has_gui and not action.get("visual_only")
+    if path == ExecutionPath.GUI_VISUAL:
+        return has_gui and bool(action.get("visual_only"))
+    if path == ExecutionPath.DC:
+        return bool(action.get("dc_capable"))
+    if path == ExecutionPath.NATIVE:
+        return bool(action.get("native_available"))
+    if path == ExecutionPath.ROUTINE:
+        return bool(action.get("routine_available"))
+    return False
 
-    Hybrid v0.2 treats Desktop Commander as a support plane. A GUI request is
-    authoritative for interactive work even when DC/native/routine paths also
-    exist. Interactive applications may fall back to DC only when the action
-    explicitly opts in to that recovery path.
+
+def _task_class(action: dict[str, Any], cfg: dict[str, Any]) -> str:
+    explicit = action.get("task_class")
+    if explicit:
+        if explicit not in cfg["routing_profiles"]:
+            raise HybridExecutionError(f"unknown task_class routing profile: {explicit}")
+        return str(explicit)
+    if action.get("interactive_app") or isinstance(action.get("gui_request"), dict):
+        return "interactive_app"
+    return str(cfg.get("default_task_class", "host_support"))
+
+
+def choose_path(action: dict[str, Any], cfg: dict[str, Any]) -> ExecutionPath:
+    """Select the first available path from the configured task-class profile.
+
+    Safety invariants remain code-enforced: interactive work cannot bypass an
+    available GUI, and DC fallback requires explicit opt-in when GUI is absent.
     """
 
-    gui_request = action.get("gui_request")
-    has_gui_request = isinstance(gui_request, dict) and bool(gui_request.get("action"))
+    validate_config(cfg)
+    profile_name = _task_class(action, cfg)
+    profile = cfg["routing_profiles"][profile_name]
+    request = action.get("gui_request")
+    has_gui_request = isinstance(request, dict) and bool(request.get("action"))
 
-    if action.get("visual_only"):
-        if has_gui_request:
-            return ExecutionPath.GUI_VISUAL
+    if action.get("visual_only") and not has_gui_request:
         raise HybridExecutionError("visual GUI path requires gui_request")
 
-    if has_gui_request:
-        return ExecutionPath.GUI_UIA
-
-    if action.get("interactive_app"):
-        if action.get("dc_capable") and action.get("allow_dc_fallback") is True:
+    if profile_name == "interactive_app":
+        if has_gui_request:
+            if action.get("visual_only"):
+                return ExecutionPath.GUI_VISUAL
+            return ExecutionPath.GUI_UIA
+        if action.get("dc_capable"):
+            if action.get("allow_dc_fallback") is not True:
+                raise HybridExecutionError(
+                    "interactive application work requires GUI; DC fallback must be explicitly approved"
+                )
             return ExecutionPath.DC
-        raise HybridExecutionError("interactive application work requires GUI; DC fallback must be explicitly approved")
+        raise HybridExecutionError("interactive application work requires an approved GUI or explicit DC fallback")
 
-    if action.get("task_class") == "external_service" and action.get("native_available"):
-        return ExecutionPath.NATIVE
-    if action.get("dc_capable"):
-        return ExecutionPath.DC
-    if action.get("native_available"):
-        return ExecutionPath.NATIVE
-    if action.get("routine_available"):
-        return ExecutionPath.ROUTINE
-    raise HybridExecutionError("no approved execution path is available")
+    for raw_path in profile["order"]:
+        path = ExecutionPath(raw_path)
+        if _path_available(path, action):
+            return path
+    raise HybridExecutionError(f"no approved execution path is available for task_class={profile_name}")
 
 
 def _normalize_action_for_path(
@@ -345,7 +395,7 @@ def plan_action(action: dict[str, Any], cfg: dict[str, Any]) -> PlannedAction:
     if not isinstance(action, dict) or not action.get("id"):
         raise HybridExecutionError("action requires a stable id")
     validate_config(cfg)
-    path = choose_path(action)
+    path = choose_path(action, cfg)
     normalized = _normalize_action_for_path(action, path, cfg)
     risk = classify_risk(normalized)
     if risk == RiskTier.T4:
@@ -784,8 +834,33 @@ class HybridExecutor:
                 self.controller_lease.release(controller_resource, controller_holder)
 
 
+def build_routine_fingerprint(item: dict[str, Any], cfg: dict[str, Any]) -> str:
+    fields = cfg["automation_graduation"]["fingerprint_fields"]
+    missing = [field for field in fields if item.get(field) in (None, "")]
+    if missing:
+        raise HybridExecutionError(f"routine graduation fingerprint missing fields: {missing}")
+    payload = {field: item[field] for field in fields}
+    encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
 def eligible_for_routine_graduation(history: list[dict[str, Any]], cfg: dict[str, Any]) -> bool:
-    threshold = int(cfg["automation_graduation"]["verified_repeats_required"])
+    validate_config(cfg)
+    if not isinstance(history, list) or not history:
+        return False
+
+    graduation = cfg["automation_graduation"]
+    threshold = int(graduation["verified_repeats_required"])
+
+    fingerprints: list[str] = []
+    for item in history:
+        try:
+            fingerprints.append(build_routine_fingerprint(item, cfg))
+        except HybridExecutionError:
+            return False
+    if len(set(fingerprints)) != 1:
+        return False
+
     successful = [
         item
         for item in history
@@ -793,10 +868,19 @@ def eligible_for_routine_graduation(history: list[dict[str, Any]], cfg: dict[str
         and item.get("verified") is True
         and item.get("accidental_action") is not True
     ]
+    if len(successful) < threshold:
+        return False
+
+    if graduation.get("require_distinct_run_ids") is True:
+        run_ids = [item.get("run_id") for item in successful]
+        if any(run_id in (None, "") for run_id in run_ids):
+            return False
+        if len(set(run_ids)) < threshold:
+            return False
+
     unknowns = sum(item.get("state") == ResultState.UNKNOWN.value for item in history)
     accidental = sum(item.get("accidental_action") is True for item in history)
     return (
-        len(successful) >= threshold
-        and unknowns <= int(cfg["automation_graduation"]["max_unknown_results"])
-        and accidental <= int(cfg["automation_graduation"]["max_accidental_actions"])
+        unknowns <= int(graduation["max_unknown_results"])
+        and accidental <= int(graduation["max_accidental_actions"])
     )
