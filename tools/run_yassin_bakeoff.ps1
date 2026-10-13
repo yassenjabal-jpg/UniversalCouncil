@@ -22,7 +22,8 @@ $allowedGenerated = @(
     "benchmarks/agent_runtime/yassin_health_receipt.json",
     "benchmarks/agent_runtime/stages/",
     "benchmarks/agent_runtime/stage_receipts/",
-    "benchmarks/agent_runtime/desktop_evidence/"
+    "benchmarks/agent_runtime/desktop_evidence/",
+    "benchmarks/agent_runtime/desktop_receipts.json"
 )
 $unexpected = @()
 foreach ($line in (git status --porcelain --untracked-files=all)) {
@@ -77,8 +78,15 @@ if ($Stage -eq "All") {
         & $python "tools\\run_agent_bakeoff_live.py" --stage $stageArg --runtime all --model $Model --endpoint "http://127.0.0.1:11434" --resume
         if ($LASTEXITCODE -ne 0) { throw "Stage $stageArg failed; heavier stages are blocked." }
     }
-    Write-Output '{"status":"FULL_DECISION_RUN_COMPLETE","next":"ATTACH_YASSIN_DESKTOP_EVIDENCE_2_OF_2_PER_RUNTIME","cost_usd":0}'
-    exit 0
+    $desktopReceipts = Join-Path $Repo "benchmarks\agent_runtime\desktop_receipts.json"
+    if (-not (Test-Path $desktopReceipts)) {
+        Write-Output '{"status":"FULL_DECISION_RUN_COMPLETE","next":"ATTACH_YASSIN_DESKTOP_EVIDENCE_2_OF_2_PER_RUNTIME","required_receipts":6,"cost_usd":0}'
+        exit 5
+    }
+    & $python "tools\apply_agent_bakeoff_desktop_receipts.py"
+    if ($LASTEXITCODE -ne 0) { throw "Desktop receipt validation failed." }
+    & $python "tools\run_agent_bakeoff.py"
+    exit $LASTEXITCODE
 }
 
 $stageArg = switch ($Stage) {
