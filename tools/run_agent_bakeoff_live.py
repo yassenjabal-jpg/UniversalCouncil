@@ -523,6 +523,27 @@ def prior_stage(stage: str) -> str | None:
     return {"canary": None, "representative": "canary", "full": "representative"}[stage]
 
 
+def validate_health_receipt(current_manifest: dict[str, Any]) -> None:
+    path = ROOT / "benchmarks" / "agent_runtime" / "yassin_health_receipt.json"
+    if not path.is_file():
+        raise RuntimeError("YASSIN health receipt is required before LIVE execution")
+    receipt = load_json(path)
+    if receipt.get("status") != "YASSIN_HEALTH_OK":
+        raise RuntimeError("YASSIN health receipt is not healthy")
+    if str(receipt.get("host", "")).upper() != "YASSIN":
+        raise RuntimeError("YASSIN health receipt host mismatch")
+    if int(receipt.get("completed_passes", 0)) < 10:
+        raise RuntimeError("YASSIN health gate requires 10 consecutive passes")
+    probes = receipt.get("probes") or []
+    if not probes:
+        raise RuntimeError("YASSIN health receipt has no probes")
+    checks = probes[-1].get("checks") or {}
+    if checks.get("head") != current_manifest.get("source_sha"):
+        raise RuntimeError("YASSIN health receipt HEAD does not match current experiment")
+    if checks.get("model_digest") != current_manifest.get("model_digest"):
+        raise RuntimeError("YASSIN health receipt model digest does not match current experiment")
+
+
 def validate_prior_stage(current_manifest: dict[str, Any]) -> None:
     prior = prior_stage(str(current_manifest["stage"]))
     if prior is None:
@@ -633,6 +654,7 @@ async def main_async(args: argparse.Namespace) -> int:
 
     write_manifest(manifest_path, manifest)
     validate_manifest(manifest, ROOT)
+    validate_health_receipt(manifest)
     validate_prior_stage(manifest)
     provenance = result_provenance(manifest)
 
