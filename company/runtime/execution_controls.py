@@ -70,9 +70,7 @@ class HostControllerLease:
                     except OSError as exc:
                         raise ExecutionControlError(f"cannot clear stale controller lease: {exc}") from exc
                     continue
-                raise ExecutionControlError(
-                    f"desktop controller already leased by {current.get('holder', 'unknown')}"
-                )
+                raise ExecutionControlError(f"desktop controller already leased by {current.get('holder', 'unknown')}")
             else:
                 with os.fdopen(fd, "w", encoding="utf-8") as handle:
                     json.dump(payload, handle, ensure_ascii=False, sort_keys=True)
