@@ -64,7 +64,9 @@ Keep this too.
 
     def test_result_provenance_uses_canonical_keys(self):
         manifest = {
+            "manifest_id": "manifest-x",
             "experiment_id": "x",
+            "runner_id": "YASSIN",
             "source_sha": "s",
             "config_sha256": "c",
             "cases_sha256": "cases",
