@@ -4,6 +4,7 @@ import argparse
 import asyncio
 import json
 import os
+import sys
 import time
 import urllib.error
 import urllib.request
@@ -12,6 +13,8 @@ from typing import Any
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
+
+sys.path.insert(0, str(ROOT))
 
 from company.runtime.agent_bakeoff_baseline import route_v03  # noqa: E402
 from company.runtime.agent_bakeoff_provenance import (  # noqa: E402
