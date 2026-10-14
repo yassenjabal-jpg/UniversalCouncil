@@ -167,6 +167,49 @@ def validate_production_config(cfg: dict[str, Any]) -> bool:
         },
         "Studio gate placement drifted",
     )
+    require(
+        cfg.get("preproduction_craft_review")
+        == {
+            "embedded_in": "Preproduction Lock",
+            "final_authority": "Editorial Director / Showrunner",
+            "mode": "MANDATORY_PARALLEL_CRAFT_REVIEW",
+            "mandatory_participants": [
+                "Independent Fact Checker",
+                "Script & Voice Director",
+                "Visual Art Director / Frame Curator",
+                "Motion & Picture Editor",
+                "Music Supervisor & Sound Designer",
+                "Audience Growth & Packaging Strategist",
+                "Thumbnail & Packaging Designer",
+                "Media Producer / Production Coordinator",
+            ],
+            "unanimous_approval_required": False,
+            "rule": "SPECIALISTS_PRODUCE_STAGE_AUTHORITY_DECIDES",
+        },
+        "Studio preproduction craft review drifted",
+    )
+    require(
+        cfg.get("production_readiness")
+        == {
+            "embedded_in": "Preproduction Lock",
+            "required_checks": [
+                "script_locked",
+                "independent_fact_check_passed",
+                "claim_sources_complete",
+                "visual_rights_plan",
+                "visual_direction_locked",
+                "sound_intent_locked",
+                "packaging_intent_locked",
+                "specialist_craft_outputs_complete",
+                "asset_manifest_ready",
+                "asset_plan",
+                "tool_connection",
+                "budget",
+            ],
+            "fail_action": "HOLD_AFFECTED_WORK",
+        },
+        "Studio production-readiness contract drifted",
+    )
     craft = system.get("craft_contributor_contract", {})
     require(craft.get("mode") == "MANDATORY_PARALLEL_WITHIN_STAGES", "mandatory craft contributor mode required")
     require(craft.get("creates_additional_gates") is False, "craft contributors cannot create extra gates")
