@@ -217,5 +217,144 @@
     }
   },
   "generation_attempts_by_asset": {},
-  "thumbnail_generation_jobs": null
+  "thumbnail_generation_jobs": null,
+  "localized_variant_requested": false,
+  "craft_outputs": {
+    "claim_ledger": {
+      "status": "NOT_PRODUCED",
+      "stage": "research_script",
+      "function_id": "independent_fact_checker",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "narration_performance_map": {
+      "status": "NOT_PRODUCED",
+      "stage": "research_script",
+      "function_id": "script_voice_director",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "hook_retention_notes": {
+      "status": "NOT_PRODUCED",
+      "stage": "research_script",
+      "function_id": "audience_growth_strategist",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "motion_feasibility_map": {
+      "status": "NOT_PRODUCED",
+      "stage": "visual_direction",
+      "function_id": "motion_picture_editor",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "sonic_visual_intent": {
+      "status": "NOT_PRODUCED",
+      "stage": "visual_direction",
+      "function_id": "music_sound_supervisor",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "packaging_hook_continuity": {
+      "status": "NOT_PRODUCED",
+      "stage": "visual_direction",
+      "function_id": "thumbnail_packaging_designer",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "visual_asset_clearance": {
+      "status": "NOT_PRODUCED",
+      "stage": "asset_pack",
+      "function_id": "visual_art_director",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "music_sfx_asset_plan": {
+      "status": "NOT_PRODUCED",
+      "stage": "asset_pack",
+      "function_id": "music_sound_supervisor",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "dialogue_mix_input_spec": {
+      "status": "NOT_PRODUCED",
+      "stage": "asset_pack",
+      "function_id": "dialogue_mix_engineer",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "thumbnail_packaging_spec": {
+      "status": "NOT_PRODUCED",
+      "stage": "asset_pack",
+      "function_id": "thumbnail_packaging_designer",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "narration_continuity_notes": {
+      "status": "NOT_PRODUCED",
+      "stage": "edit_motion",
+      "function_id": "script_voice_director",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "spotting_sheet": {
+      "status": "NOT_PRODUCED",
+      "stage": "edit_motion",
+      "function_id": "music_sound_supervisor",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "rough_mix_receipt": {
+      "status": "NOT_PRODUCED",
+      "stage": "edit_motion",
+      "function_id": "dialogue_mix_engineer",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "visual_conform_notes": {
+      "status": "NOT_PRODUCED",
+      "stage": "edit_motion",
+      "function_id": "visual_art_director",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "final_mix_receipt": {
+      "status": "NOT_PRODUCED",
+      "stage": "final_qc",
+      "function_id": "dialogue_mix_engineer",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "final_fact_spotcheck": {
+      "status": "NOT_PRODUCED",
+      "stage": "final_qc",
+      "function_id": "independent_fact_checker",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "localization_conform_package": {
+      "status": "NOT_PRODUCED",
+      "stage": "final_qc",
+      "function_id": "localization_producer",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    }
+  }
 }
