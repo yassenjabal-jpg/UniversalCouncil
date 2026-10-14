@@ -421,9 +421,7 @@ class Phase3FailClosedCoverageTests(unittest.TestCase):
             lambda c: c.update(status="BAD"),
             lambda c: c.update(council_owns=[]),
             lambda c: c.update(execution_orchestrator_owns=[]),
-            lambda c: c.update(
-                execution_orchestrator_owns=c["execution_orchestrator_owns"] + ["what"]
-            ),
+            lambda c: c.update(execution_orchestrator_owns=c["execution_orchestrator_owns"] + ["what"]),
             lambda c: c.update(execution_orchestrator_is_voting_member=True),
         ]
         for mutate in mutations:
@@ -640,9 +638,7 @@ class Phase3FailClosedCoverageTests(unittest.TestCase):
             lambda c: c.update(status="BAD"),
             lambda c: c.update(task_classes={}),
             lambda c: c["task_classes"]["host_work"].update(order=[]),
-            lambda c: c["task_classes"]["host_work"].update(
-                order=["dc_control_plane", "dc_control_plane"]
-            ),
+            lambda c: c["task_classes"]["host_work"].update(order=["dc_control_plane", "dc_control_plane"]),
             lambda c: c.update(route_version=""),
             lambda c: c.update(fallback_restrictions=[]),
         ]
