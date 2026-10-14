@@ -105,8 +105,13 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertIn("final_visual_decision_within_locked_system", art["owns"])
         self.assertEqual(
             cfg["media_toolchain"]["image_generation_primary_tool"],
-            "UNQUALIFIED_PENDING_TOOL_QUALIFICATION",
+            "RUNWAY_NANO_BANANA_2_LITE_QUALIFIED",
         )
+        self.assertEqual(
+            cfg["media_toolchain"]["image_generation_backup_tool"],
+            "RUNWAY_NANO_BANANA_PRO_QUALIFIED",
+        )
+        self.assertTrue(cfg["media_toolchain"]["image_generation_qualification_artifact"])
 
     def test_audio_roles_are_distinct_and_active(self):
         cfg = self.load_config()
