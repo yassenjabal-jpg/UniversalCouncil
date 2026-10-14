@@ -169,8 +169,11 @@ class Phase2R8TraceEvaluationTests(unittest.TestCase):
             self.assertEqual(result["state"], ResultState.SUCCEEDED.value)
             events = recorder.events()
             names = [event["event"] for event in events]
-            for expected in ("Route", "Evidence", "Approval", "Tool", "Execution", "Verification"):
+            for expected in ("Frame", "Route", "Role", "Evidence", "Tool", "Approval", "Execution", "Verification"):
                 self.assertIn(expected, names)
+            canonical = ["Frame", "Route", "Role", "Evidence", "Tool", "Approval", "Execution", "Verification"]
+            positions = [names.index(name) for name in canonical]
+            self.assertEqual(positions, sorted(positions))
             route = next(event for event in events if event["event"] == "Route")
             self.assertTrue(route["data"]["reason"])
             self.assertTrue(route["data"]["route_version"])
