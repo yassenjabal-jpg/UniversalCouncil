@@ -1,0 +1,136 @@
+{
+  "version": "0.1-shadow",
+  "status": "CANDIDATE_SHADOW_ONLY",
+  "profile_growth_policy": "PROVE_VALUE_BEFORE_ADDING_ANOTHER",
+  "profiles": {
+    "after_effects": {
+      "application": {
+        "id": "after_effects",
+        "name": "Adobe After Effects",
+        "host": "YASSIN",
+        "last_observed_status": "MISSING",
+        "last_observed_date": "2026-10-14",
+        "evidence": [
+          "CouncilVideoStudio/scripts/check_environment.ps1",
+          "CouncilVideoStudio/bridge/runner.py"
+        ]
+      },
+      "version": {
+        "last_observed_version": null,
+        "policy": "DETECT_BEFORE_CONTROL",
+        "environment_variable_override": "AFTERFX_PATH"
+      },
+      "task_classes": [
+        "structured_application",
+        "visual_interaction"
+      ],
+      "apis_scripts": {
+        "preferred_bridge": "CouncilVideoStudio/bridge/runner.py",
+        "dispatcher": "CouncilVideoStudio/bridge/after_effects/dispatch.jsx",
+        "detector": "CouncilVideoStudio/bridge/tool_paths.py::find_afterfx",
+        "supported_actions": [
+          "create_comp",
+          "add_image",
+          "add_text",
+          "add_solid",
+          "add_null",
+          "add_camera",
+          "set_3d",
+          "set_parent",
+          "set_blend_mode",
+          "set_keyframes",
+          "save_project",
+          "queue_render"
+        ]
+      },
+      "semantic_selectors": {
+        "validated": [],
+        "policy": "ADD_ONLY_AFTER_RUNTIME_VERIFICATION"
+      },
+      "visual_anchors": {
+        "validated": [],
+        "policy": "ADD_ONLY_AFTER_RUNTIME_VERIFICATION"
+      },
+      "known_dialogs": [],
+      "async_states": [
+        "APPLICATION_NOT_DETECTED",
+        "DISPATCH_STARTED",
+        "WAITING_FOR_RECEIPT",
+        "PASS",
+        "ERROR",
+        "TIMEOUT"
+      ],
+      "failure_modes": [
+        {
+          "id": "application_not_detected",
+          "evidence": "runner raises when find_afterfx returns None",
+          "classification": "BLOCK_BEFORE_CONTROL"
+        },
+        {
+          "id": "invalid_receipt",
+          "evidence": "runner rejects receipt status other than PASS/ERROR",
+          "classification": "UNKNOWN_OR_FAILED"
+        },
+        {
+          "id": "nonzero_without_receipt",
+          "evidence": "runner rejects nonzero process exit without receipt",
+          "classification": "FAILED"
+        },
+        {
+          "id": "no_receipt_timeout",
+          "evidence": "runner waits 30 seconds for receipt",
+          "classification": "NO_PROGRESS"
+        }
+      ],
+      "recovery": {
+        "application_not_detected": "detect_or_install",
+        "invalid_receipt": "diagnose_receipt_contract",
+        "nonzero_without_receipt": "diagnose_process_failure",
+        "no_receipt_timeout": "diagnose_no_progress_then_recover_or_escalate"
+      },
+      "verification": {
+        "receipt_relative_path": ".runtime/after_effects_receipt.txt",
+        "receipt_status_success": "PASS",
+        "receipt_status_error": "ERROR",
+        "timeout_seconds": 30
+      },
+      "unsafe_actions": [
+        "unsupported_action",
+        "unbounded_physical_input",
+        "control_before_detection",
+        "assume_version_without_observation"
+      ],
+      "reusable_routines": [
+        {
+          "id": "detect_afterfx",
+          "purpose": "detect application path before control",
+          "state_change": false
+        },
+        {
+          "id": "manifest_dry_run",
+          "purpose": "validate manifest before application dispatch",
+          "state_change": false
+        },
+        {
+          "id": "script_dispatch",
+          "purpose": "execute only supported manifest actions after detection",
+          "state_change": true
+        }
+      ],
+      "checkpoint_format": {
+        "kind": "project_and_receipt",
+        "fields": [
+          "output_project",
+          "receipt_path",
+          "manifest_hash",
+          "application_version"
+        ]
+      },
+      "value_hypothesis": [
+        "blocks impossible control when application is not detected",
+        "prefers structured script bridge over blind GUI for supported actions",
+        "provides explicit receipt verification and timeout behavior"
+      ]
+    }
+  }
+}
