@@ -258,8 +258,8 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("visual system lock authority drifted")
     if visual_lock.get("red_team_blocker") is not True:
         raise ChannelOperatingSystemError("Red Team must retain visual-lock blocker authority")
-    if visual_lock.get("status") != "LOCKED_FOR_P1" or visual_lock.get("p0_passed") is not True:
-        raise ChannelOperatingSystemError("P0 visual-system lock must be passed before P1")
+    if visual_lock.get("status") != "LOCKED_AFTER_P1_COHERENCE_PASS" or visual_lock.get("p0_passed") is not True:
+        raise ChannelOperatingSystemError("visual-system lock state must reflect P1 coherence pass")
     for required_artifact in {"production_kit", "reference_set_brief", "council_review"}:
         if not visual_lock.get(required_artifact):
             raise ChannelOperatingSystemError(f"P0 visual-system lock artifact missing: {required_artifact}")
@@ -319,15 +319,23 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("full-length production must fail closed before P2 PASS")
     if production_system.get("per_frame_council_review_after_lock") != "FORBIDDEN_UNLESS_EXCEPTION":
         raise ChannelOperatingSystemError("Council per-frame review boundary drifted")
-    if production_system.get("active_pilot_stage") != "P1_COHERENCE_30_45":
-        raise ChannelOperatingSystemError("active pilot stage must advance to P1 after P0 PASS")
+    if production_system.get("active_pilot_stage") != "P2_PREPARATION_BLOCKED_CAPABILITY_GAP":
+        raise ChannelOperatingSystemError("active pilot stage must reflect P2 capability-gap preparation")
+    if production_system.get("p1_status") != "PASS_INTERNAL_COHERENCE":
+        raise ChannelOperatingSystemError("P1 internal coherence status drifted")
+    if not production_system.get("p1_review") or not production_system.get("p1_internal_render"):
+        raise ChannelOperatingSystemError("P1 evidence artifacts are missing")
     if [stage.get("status") for stage in ladder] != [
         "PASS",
-        "READY",
-        "BLOCKED_UNTIL_P1_PASS",
+        "PASS_INTERNAL_COHERENCE",
+        "BLOCKED_CAPABILITY_GAP",
         "BLOCKED_UNTIL_P2_PASS",
     ]:
-        raise ChannelOperatingSystemError("pilot ladder state drifted after P0 PASS")
+        raise ChannelOperatingSystemError("pilot ladder state drifted after P1 coherence pass")
+    if not ladder[2].get("blocking_capabilities"):
+        raise ChannelOperatingSystemError("P2 capability blockers must be explicit")
+    if len(production_system.get("current_capability_gaps", [])) < 3:
+        raise ChannelOperatingSystemError("current P2 capability gaps are incomplete")
 
     if cfg.get("publication_authority") != "GATED":
         raise ChannelOperatingSystemError("publishing must remain gated")
