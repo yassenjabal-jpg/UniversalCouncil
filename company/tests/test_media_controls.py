@@ -46,8 +46,9 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["pilot"].update(blocks_episode_production=True),
             lambda c: c["pilot"].update(required_before_scale=False),
             lambda c: c["pilot"].update(video_count=2),
-            lambda c: c["media_toolchain"].update(video_editing="AE_PRIMARY"),
-            lambda c: c["media_toolchain"].update(after_effects_motion_assembly="VERIFIED_NOW"),
+            lambda c: c["media_toolchain"].update(video_editing="DESCRIPT_PRIMARY"),
+            lambda c: c["media_toolchain"].update(after_effects_motion_assembly="BACKUP_ONLY"),
+            lambda c: c["media_toolchain"].update(descript_editing="PRIMARY_DELIVERY"),
         ]
         for key in self.load_config()["visual_generation_brief_capability"]:
             if key in {
