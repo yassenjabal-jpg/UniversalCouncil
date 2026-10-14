@@ -128,21 +128,34 @@ def validate_production_config(cfg: dict[str, Any]) -> bool:
     routes = system.get("editing_routes", {})
     require(
         set(routes).intersection({"primary", "backup", "tertiary"}) == {"primary", "backup"},
-        "only primary and backup routes allowed",
+        "only the current delivery route and rough utility are allowed",
     )
-    for name, tool, transport in [
-        ("primary", "Descript", "native_api_or_connector"),
-        ("backup", "Adobe After Effects 2026", "native_project_automation"),
-    ]:
-        route = routes.get(name, {})
-        require(route.get("tool") == tool and route.get("transport") == transport, f"{name} route drift")
-        require(bool(route.get("evidence")), f"{name} route evidence missing")
+    primary = routes.get("primary", {})
+    require(
+        primary.get("tool") == "Adobe After Effects 2026"
+        and primary.get("transport") == "native_project_automation"
+        and primary.get("role") == "EDIT_MOTION_AND_DELIVERY"
+        and primary.get("requires_current_probe") is True,
+        "current delivery route drift",
+    )
+    require(bool(primary.get("evidence")), "primary route evidence missing")
+    backup = routes.get("backup", {})
+    require(
+        backup.get("tool") == "Descript"
+        and backup.get("transport") == "native_api_or_connector"
+        and backup.get("role") == "ROUGH_TRANSCRIPT_UTILITY_ONLY"
+        and backup.get("eligible_for_final_delivery") is False,
+        "rough utility route drift",
+    )
+    require(bool(backup.get("evidence")), "rough utility evidence missing")
     for key, value in {
         "max_routes": 2,
         "gui_retry_loops": False,
         "max_backup_activations": 1,
-        "backup_requires_current_probe": True,
+        "backup_requires_current_probe": False,
         "max_primary_diagnosis_minutes": 10,
+        "backup_trigger": "ROUGH_PREP_ONLY",
+        "fallback_failure_action": "CAPABILITY_GAP_STOP_NO_DELIVERY_FALLBACK",
     }.items():
         require(type(routes.get(key)) is type(value) and routes.get(key) == value, f"route limit drift: {key}")
     budget = system.get("review_budget", {})
@@ -299,8 +312,8 @@ def validate_gate(
                         f"missing measured pilot metric: {name}",
                     )
                 require(
-                    run.get("tool") in {"Descript", "Adobe After Effects 2026"},
-                    "pilot must prove one configured editor",
+                    run.get("tool") == cfg["production_system"]["editing_routes"]["primary"]["tool"],
+                    "pilot final delivery must use the current qualified delivery route",
                 )
             budget = cfg["production_system"]["review_budget"]
             counters = run.get("metrics", {})
@@ -335,27 +348,27 @@ def validate_gate(
 def select_edit_route(
     cfg: dict[str, Any],
     *,
+    purpose: str = "delivery",
     primary_failed: bool = False,
     current_probe: dict[str, Any] | None = None,
     backup_activations: int = 0,
 ) -> dict[str, Any]:
     validate_production_config(cfg)
     routes = cfg["production_system"]["editing_routes"]
-    # A persisted failed delivery test must not silently route the next run back
-    # through the same blocked primary. The configured backup still needs a fresh probe.
-    primary_failed = primary_failed or routes["primary"].get("delivery_status", "").startswith("FAILED_")
-    if primary_failed:
-        require(
-            backup_activations == 0 and isinstance(current_probe, dict),
-            "backup needs current successful probe and may activate once",
-        )
-        require(
-            current_probe.get("tool") == routes["backup"]["tool"]
-            and current_probe.get("status") == "PASS"
-            and current_probe.get("current_session") is True
-            and bool(current_probe.get("artifact")),
-            "current successful backup probe required",
-        )
-        require(current_probe.get("sha256") == artifact_hash(current_probe["artifact"]), "backup probe evidence stale")
+
+    if purpose == "rough_prep":
+        require(backup_activations <= routes["max_backup_activations"], "rough utility activation budget exceeded")
         return dict(routes["backup"])
+
+    require(purpose in {"delivery", "edit_motion"}, "unknown edit-route purpose")
+    require(primary_failed is False, "primary delivery failure is a capability gap; do not retry known-failed delivery tools")
+    require(isinstance(current_probe, dict), "current successful primary probe required")
+    require(
+        current_probe.get("tool") == routes["primary"]["tool"]
+        and current_probe.get("status") == "PASS"
+        and current_probe.get("current_session") is True
+        and bool(current_probe.get("artifact")),
+        "current successful primary probe required",
+    )
+    require(current_probe.get("sha256") == artifact_hash(current_probe["artifact"]), "primary probe evidence stale")
     return dict(routes["primary"])
