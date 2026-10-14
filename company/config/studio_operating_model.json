@@ -308,5 +308,38 @@
       ],
       "source": "https://www.actionvfx.com/blog/a-new-vfx-workflow-by-corridor-crew"
     }
-  ]
+  ],
+  "shared_studio_services": {
+    "evidence_research_support": {
+      "roles": [
+        "Evidence & Research Lead"
+      ],
+      "purpose": "source discovery, evidence packs and research synthesis under editorial/fact-check authority"
+    },
+    "risk_rights_assurance": {
+      "roles": [
+        "Risk & Assurance",
+        "Red Team"
+      ],
+      "purpose": "copyright, rights, policy, sensitive framing and material objection"
+    },
+    "technical_operations": {
+      "roles": [
+        "Technical Operator"
+      ],
+      "purpose": "tool routing, project setup, automation, render/export and artifact integrity without creative rewrite"
+    },
+    "finance_cost_control": {
+      "roles": [
+        "Finance Controller"
+      ],
+      "purpose": "credits, cost, time and budget visibility"
+    },
+    "owner_authority": {
+      "roles": [
+        "Owner"
+      ],
+      "purpose": "voice identity, brand veto, high-impact decisions and explicit publication authority"
+    }
+  }
 }
