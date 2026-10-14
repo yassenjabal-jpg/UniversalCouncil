@@ -287,7 +287,6 @@ class EvidenceSyncTests(unittest.TestCase):
             with self.assertRaises(EvidenceSyncError):
                 _parse_observed_at("2026-10-12T12:00:00")
 
-
     def test_evidence_state_and_v11_contract_fail_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
