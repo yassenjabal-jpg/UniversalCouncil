@@ -1,0 +1,70 @@
+{
+  "version": "0.1-shadow",
+  "status": "CANDIDATE_SHADOW_ONLY",
+  "states": [
+    "OBSERVE",
+    "PLAN",
+    "ACT",
+    "VERIFY",
+    "DIAGNOSE",
+    "RECOVER",
+    "CHECKPOINT",
+    "COMPLETE",
+    "ESCALATE"
+  ],
+  "success_path": [
+    "OBSERVE",
+    "PLAN",
+    "ACT",
+    "VERIFY",
+    "CHECKPOINT",
+    "COMPLETE"
+  ],
+  "failure_path": [
+    "DIAGNOSE",
+    "RECOVER",
+    "VERIFY"
+  ],
+  "verification_required": true,
+  "checkpoint_required": true,
+  "max_recovery_attempts": 2,
+  "transitions": {
+    "START": [
+      "OBSERVE"
+    ],
+    "OBSERVE": [
+      "PLAN"
+    ],
+    "PLAN": [
+      "ACT"
+    ],
+    "ACT": [
+      "VERIFY",
+      "DIAGNOSE"
+    ],
+    "VERIFY": [
+      "CHECKPOINT",
+      "DIAGNOSE"
+    ],
+    "DIAGNOSE": [
+      "RECOVER",
+      "ESCALATE"
+    ],
+    "RECOVER": [
+      "VERIFY",
+      "ESCALATE"
+    ],
+    "CHECKPOINT": [
+      "COMPLETE"
+    ],
+    "COMPLETE": [],
+    "ESCALATE": []
+  },
+  "non_success_execution_states": [
+    "FAILED",
+    "UNKNOWN",
+    "NO_PROGRESS",
+    "STALLED",
+    "CANCELLED"
+  ]
+}
