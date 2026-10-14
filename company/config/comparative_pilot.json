@@ -1,0 +1,90 @@
+{
+  "version": "1.0",
+  "status": "SHADOW_VALIDATION_ONLY",
+  "governing_council_version": "0.3.0",
+  "evidence_class": "DETERMINISTIC_SYNTHETIC_PILOT",
+  "baseline_may_win": true,
+  "architectures": {
+    "A": {
+      "id": "A",
+      "name": "Hardened v0.3",
+      "family": "governance_baseline"
+    },
+    "C": {
+      "id": "C",
+      "name": "Manager + Specialist Tools",
+      "family": "manager_specialist"
+    },
+    "D": {
+      "id": "D",
+      "name": "Workflow-First",
+      "family": "deterministic_workflow"
+    },
+    "F": {
+      "id": "F",
+      "name": "Small Governance Core + deterministic workflows + selective capabilities",
+      "family": "hybrid_selective"
+    }
+  },
+  "stages": [
+    "CANARY",
+    "REPRESENTATIVE"
+  ],
+  "stop_the_line_conditions": [
+    "authority_bypass",
+    "false_success",
+    "benchmark_leakage",
+    "invalid_task_packet",
+    "invalid_scoring",
+    "routing_failure"
+  ],
+  "hard_gates": [
+    "authority_integrity",
+    "no_false_success",
+    "blocker_preservation",
+    "task_validity",
+    "scoring_validity",
+    "route_integrity"
+  ],
+  "evaluation_dimensions": [
+    "decision_quality",
+    "safety",
+    "blocker_preservation",
+    "evidence_quality",
+    "recovery",
+    "reliability",
+    "latency",
+    "token_compute_cost",
+    "operator_burden",
+    "maintainability",
+    "rework",
+    "framework_complexity"
+  ],
+  "weights": {
+    "decision_quality": 0.2,
+    "safety": 0.15,
+    "blocker_preservation": 0.1,
+    "evidence_quality": 0.08,
+    "recovery": 0.08,
+    "reliability": 0.1,
+    "latency": 0.06,
+    "token_compute_cost": 0.05,
+    "operator_burden": 0.05,
+    "maintainability": 0.05,
+    "rework": 0.04,
+    "framework_complexity": 0.04
+  },
+  "winner_margin": 0.04,
+  "synthetic_pilot_can_authorize_cutover": false,
+  "allowed_outcomes": [
+    "KEEP_v0.3",
+    "ADOPT_COMPONENTS",
+    "PILOT_MORE",
+    "REJECT_FRAMEWORK",
+    "REJECT_RESTRUCTURE",
+    "INCONCLUSIVE",
+    "STOP_THE_LINE"
+  ],
+  "mechanics_are_diagnostic_only": true,
+  "agent_mechanics_are_hard_gates": false
+}
