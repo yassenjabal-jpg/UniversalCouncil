@@ -112,19 +112,16 @@ def route_decision(
 
     rules = cfg["activation_rules"]
     evidence_rule = rules["evidence"]
-    if (
-        _at_least(
-            uncertainty,
-            evidence_rule["uncertainty_at_least"],
-            levels["uncertainty"],
-            "uncertainty",
-        )
-        or _at_least(
-            freshness,
-            evidence_rule["freshness_at_least"],
-            levels["freshness"],
-            "freshness",
-        )
+    if _at_least(
+        uncertainty,
+        evidence_rule["uncertainty_at_least"],
+        levels["uncertainty"],
+        "uncertainty",
+    ) or _at_least(
+        freshness,
+        evidence_rule["freshness_at_least"],
+        levels["freshness"],
+        "freshness",
     ):
         if "evidence" not in core:
             core.append("evidence")
@@ -144,19 +141,16 @@ def route_decision(
             reasons.setdefault("evidence", []).append("freshness_requirement")
 
     red_rule = rules["redteam"]
-    if (
-        _at_least(
-            materiality,
-            red_rule["materiality_at_least"],
-            levels["materiality"],
-            "materiality",
-        )
-        and _at_least(
-            uncertainty,
-            red_rule["uncertainty_at_least"],
-            levels["uncertainty"],
-            "uncertainty",
-        )
+    if _at_least(
+        materiality,
+        red_rule["materiality_at_least"],
+        levels["materiality"],
+        "materiality",
+    ) and _at_least(
+        uncertainty,
+        red_rule["uncertainty_at_least"],
+        levels["uncertainty"],
+        "uncertainty",
     ):
         if "redteam" not in core:
             core.append("redteam")
