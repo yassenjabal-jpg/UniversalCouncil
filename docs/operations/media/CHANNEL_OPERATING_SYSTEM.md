@@ -429,3 +429,32 @@ Red Team / Anti-Slop approves or rejects the artifact.
 Technical Operator executes the approved artifact and records the receipt.
 
 The executor is not an additional creative decision-maker.
+
+
+---
+
+## Visual Production Lock and Pilot Ladder — 2026-10-14
+
+The channel must not scale directly from a thumbnail experiment to an 8+ minute episode.
+
+Governing production sequence:
+
+`P0 Reference Frame Lock → P1 30–45s Coherence Pilot → P2 60–90s Production Pilot → P3 8+ min Episode`
+
+P0 requires:
+- 4–6 coherent reference frames from one topic;
+- locked Visual Production Kit;
+- primary visual-generation route qualified with the same-frame/same-brief protocol.
+
+After P0 lock:
+- Visual Art Director owns final visual decisions inside the locked system;
+- Technical Operator executes without creative rewrite;
+- Red Team can block drift/AI slop/evidence confusion;
+- full Council reviews at gates, not every ordinary frame.
+
+Full-length production is **BLOCKED** until P2 passes.
+
+Governing artifacts:
+- `docs/operations/media/VISUAL_PRODUCTION_SYSTEM.md`
+- `docs/operations/media/TOOL_QUALIFICATION_PROTOCOL.md`
+- `docs/templates/media/VISUAL_PRODUCTION_KIT.md`
