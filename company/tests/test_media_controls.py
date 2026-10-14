@@ -5,10 +5,12 @@ from pathlib import Path
 from company.runtime.media_controls import (
     REQUIRED_MEDIA_FUNCTIONS,
     REQUIRED_PILOT_METRICS,
+    STUDIO_DEPARTMENTS,
     MediaControlError,
     validate_media_pilot_record,
     validate_media_scale_request,
     validate_media_team,
+    validate_studio_model,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -38,6 +40,9 @@ class MediaCapabilityTests(unittest.TestCase):
             cfg["craft_contributor_contract_pointer"],
             "company/config/channel_operating_system.json#production_system.craft_contributor_contract",
         )
+        self.assertEqual(cfg["operating_identity"]["name_ar"], "الاستوديو")
+        self.assertEqual(cfg["operating_identity"]["name_en"], "The Studio")
+        self.assertEqual(cfg["studio_departments"], STUDIO_DEPARTMENTS)
         self.assertFalse(cfg["pilot"]["blocks_episode_production"])
         self.assertEqual(cfg["system_pilot"]["count"], 1)
 
@@ -57,6 +62,8 @@ class MediaCapabilityTests(unittest.TestCase):
                 default_status="ON_DEMAND"
             ),
             lambda c: c.update(craft_contributor_contract_pointer="wrong"),
+            lambda c: c["operating_identity"].update(name_en="Council"),
+            lambda c: c.update(studio_departments={}),
             lambda c: c.update(function_independence_rules=[]),
             lambda c: c.update(production_workflow_config="other.json"),
             lambda c: c.update(visual_production_system={"pilot_ladder": ["P0"]}),
@@ -86,6 +93,37 @@ class MediaCapabilityTests(unittest.TestCase):
             mutate(cfg)
             with self.assertRaises(MediaControlError):
                 validate_media_team(cfg)
+
+    def test_studio_operating_model_has_five_departments_episode_pod_and_three_gates(self):
+        model = json.loads((ROOT / "company/config/studio_operating_model.json").read_text(encoding="utf-8"))
+        self.assertTrue(validate_studio_model(model))
+        self.assertEqual(model["identity"]["name_ar"], "الاستوديو")
+        self.assertEqual([stage["id"] for stage in model["production_flow"]], [
+            "research_script",
+            "visual_direction",
+            "asset_pack",
+            "edit_motion",
+            "final_qc",
+        ])
+        self.assertEqual([gate["technical_id"] for gate in model["gates"]], [
+            "Preproduction Lock",
+            "Rough Cut Review",
+            "Final QC",
+        ])
+
+        mutations = [
+            lambda m: m["identity"].update(name_en="Council"),
+            lambda m: m["departments"].pop("post_production"),
+            lambda m: m["episode_pod"].update(required_core=[]),
+            lambda m: m["production_flow"].append({"id": "extra_stage"}),
+            lambda m: m["gates"].append({"technical_id": "Fourth Gate", "placement": "after_export"}),
+            lambda m: m.update(doctrine=[]),
+        ]
+        for mutate in mutations:
+            candidate = json.loads(json.dumps(model))
+            mutate(candidate)
+            with self.assertRaises(MediaControlError):
+                validate_studio_model(candidate)
 
     def test_benchmark_metrics_are_required_before_scale(self):
         for metric in {
