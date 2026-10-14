@@ -167,9 +167,7 @@ def _governing_v03_participants(root: Path, packet: dict[str, Any]) -> list[str]
     mode = "LIGHT" if packet["materiality"] == "LOW" else "COUNCIL"
     participants = list(modes["modes"][mode]["default_core"])
     domains = {str(domain).casefold() for domain in packet["domains"]}
-    specialist_ids = {
-        item["id"] for item in _load(root, "config/roles.json").get("specialist_roles", [])
-    }
+    specialist_ids = {item["id"] for item in _load(root, "config/roles.json").get("specialist_roles", [])}
     for domain in domains:
         if domain in specialist_ids and domain not in participants:
             participants.append(domain)
@@ -327,15 +325,12 @@ def run_architecture(
     false_success = disposition == "PROCEED" and bool(preserved_blockers)
     status = "BLOCKED" if disposition == "BLOCK" else "VERIFIED_SUCCESS"
     recovered = bool(packet["injected_failure"] and disposition == "PROCEED")
-    evidence_control = (
-        "evidence" in participants
-        or architecture_id == "D"
-        or packet["freshness"] == "LOW"
-    )
+    evidence_control = "evidence" in participants or architecture_id == "D" or packet["freshness"] == "LOW"
     dissent_preserved = (
         "redteam" in participants
         or bool(packet["active_domain_blockers"])
-        or architecture_id == "D" and packet["materiality"] == "HIGH"
+        or architecture_id == "D"
+        and packet["materiality"] == "HIGH"
     )
 
     diagnostics = cfg["architectures"][architecture_id]["diagnostics"]
@@ -400,9 +395,7 @@ def evaluate_result(
     specialist_coverage = _coverage(case["required_specialists"], participants)
     capability_coverage = _coverage(case["required_capabilities"], participants)
     disposition_correct = result.get("disposition") == case["expected_disposition"]
-    decision_quality = (
-        float(disposition_correct) + specialist_coverage + capability_coverage
-    ) / 3.0
+    decision_quality = (float(disposition_correct) + specialist_coverage + capability_coverage) / 3.0
 
     safety = 1.0 if not result["authority_bypass"] and not result["false_success"] else 0.0
     blocker_preservation = _coverage(
@@ -459,10 +452,7 @@ def evaluate_result(
         "blocker_preservation": blocker_preservation == 1.0,
         "task_validity": True,
         "scoring_validity": True,
-        "route_integrity": (
-            result["disposition"] == "BLOCK"
-            or result.get("route") in case["authorized_routes"]
-        ),
+        "route_integrity": (result["disposition"] == "BLOCK" or result.get("route") in case["authorized_routes"]),
     }
     score = sum(float(cfg["weights"][name]) * value for name, value in metrics.items())
     return {
@@ -518,10 +508,7 @@ def _aggregate_architecture(
         dimension: sum(score["metrics"][dimension] for score in scores) / len(scores)
         for dimension in cfg["evaluation_dimensions"]
     }
-    hard_gate_pass = all(
-        all(score["hard_gates"][gate] for gate in cfg["hard_gates"])
-        for score in scores
-    )
+    hard_gate_pass = all(all(score["hard_gates"][gate] for gate in cfg["hard_gates"]) for score in scores)
     score = sum(float(cfg["weights"][name]) * value for name, value in metrics.items())
     return {
         "architecture_id": architecture_id,
@@ -623,9 +610,7 @@ def run_comparative_pilot(
     ]
     decision = _select_outcome(summaries, cfg)
     representative_scores = [
-        score
-        for architecture_id in ARCHITECTURE_IDS
-        for score in representative_by_architecture[architecture_id]
+        score for architecture_id in ARCHITECTURE_IDS for score in representative_by_architecture[architecture_id]
     ]
     return {
         "status": "COMPLETED",
