@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261015-025700-lean13",
+  "created_at": "2026-10-15T02:57:00+03:00",
+  "scope": "project/media",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "media.production_cell.current",
+  "summary": "Media Production Cell v1.3 uses a small always-active Producer/Showrunner core, stage-routed craft capabilities, an explicit Cinematography / Shot Design function, and recoverable cross-application handoffs where UNKNOWN is never success.",
+  "details": {
+    "version": "1.3",
+    "operating_model": "SMALL_CORE_ROUTED_CRAFT_CAPABILITIES",
+    "core_functions": [
+      "Media Producer / Production Coordinator",
+      "Editorial Director / Showrunner"
+    ],
+    "mandatory_clearance": [
+      "Independent Fact Checker"
+    ],
+    "added_function": "Cinematography / Shot Design",
+    "anti_bureaucracy_rules": [
+      "do not call every function for every stage",
+      "artifact delta or blocker by default",
+      "parallelize independent craft work when safe",
+      "one synthesis per gate"
+    ],
+    "recovery_invariants": [
+      "UNKNOWN != SUCCESS",
+      "checkpoint before application handoff",
+      "independent postcondition after state change",
+      "same-route retry bounded to one",
+      "authorized fallback only"
+    ],
+    "governing_config": "company/config/media_venture.json",
+    "governing_doc": "docs/operations/media/MEDIA_PRODUCTION_CELL.md",
+    "recovery_doc": "docs/operations/media/STUDIO_EXECUTION_RECOVERY.md",
+    "research_rationale": "docs/research/2026-10-15-agentic-video-studio-comparison.md"
+  },
+  "supersedes": [
+    "MEM-20261013-015655-c15cc7"
+  ],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "studio",
+    "lean-routing",
+    "cinematography",
+    "shot-design",
+    "recovery"
+  ],
+  "source": {
+    "type": "repository",
+    "ref": "feat/studio-v13-cinematography-recovery-20261015",
+    "commit": "c7346e5e3a9b4eb570f19bfce0449442720b4ed3"
+  }
+}
