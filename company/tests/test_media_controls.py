@@ -93,9 +93,14 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertFalse(system["per_frame_full_council_review_after_lock"])
         self.assertEqual(system["full_episode_requires"], "P2_PASS")
         self.assertEqual(system["p0_status"], "PASS")
-        self.assertEqual(system["active_stage"], "P1_COHERENCE_30_45")
+        self.assertEqual(system["active_stage"], "P2_PREPARATION_BLOCKED_CAPABILITY_GAP")
         self.assertTrue(system["production_kit"])
         self.assertTrue(system["p0_review"])
+        self.assertEqual(system["p1_status"], "PASS_INTERNAL_COHERENCE")
+        self.assertTrue(system["p1_review"])
+        self.assertTrue(system["p1_internal_render"])
+        self.assertEqual(system["p2_status"], "BLOCKED_CAPABILITY_GAP")
+        self.assertGreaterEqual(len(system["p2_blockers"]), 3)
         self.assertEqual(
             system["pilot_ladder"],
             [
@@ -132,7 +137,12 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertFalse(cfg["live_publish_authority"])
         self.assertEqual(cfg["media_toolchain"]["platform_publishing"], "CAPABILITY_GAP")
         self.assertEqual(cfg["media_toolchain"]["video_editing"], "PARTIAL_RUNTIME_VERIFIED")
-        self.assertEqual(cfg["media_toolchain"]["after_effects_motion_assembly"], "RUNTIME_VERIFIED")
+        self.assertEqual(
+            cfg["media_toolchain"]["after_effects_motion_assembly"],
+            "STALE_EVIDENCE_CURRENT_EXECUTABLE_NOT_FOUND",
+        )
+        self.assertEqual(cfg["media_toolchain"]["motion_authoring"], "CAPABILITY_GAP")
+        self.assertEqual(cfg["media_toolchain"]["descript_rough_edit"], "RUNTIME_VERIFIED_INTERNAL_ONLY")
         self.assertEqual(cfg["media_toolchain"]["dialogue_cleanup"], "CONNECTED_DESCRIPT_AVAILABLE")
         self.assertEqual(
             cfg["media_toolchain"]["picture_edit_finishing"],
@@ -258,6 +268,9 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["visual_production_system"].__setitem__("per_frame_full_council_review_after_lock", True),
             lambda c: c["visual_production_system"].__setitem__("full_episode_requires", "NONE"),
             lambda c: c["visual_production_system"].__setitem__("p0_status", "FAIL"),
+            lambda c: c["visual_production_system"].__setitem__("p1_status", "FAIL"),
+            lambda c: c["visual_production_system"].__setitem__("p2_status", "READY"),
+            lambda c: c["visual_production_system"].__setitem__("p2_blockers", []),
             lambda c: c["visual_production_system"].__setitem__("active_stage", "P0_REFERENCE_FRAME_LOCK"),
         ]
         for mutate in mutations:
