@@ -1,0 +1,42 @@
+{
+  "version": "0.1-shadow",
+  "status": "CANDIDATE_SHADOW_ONLY",
+  "council_owns": [
+    "what",
+    "why",
+    "constraints",
+    "authority",
+    "blocking_conditions",
+    "verification_target"
+  ],
+  "execution_orchestrator_owns": [
+    "how",
+    "where",
+    "tool",
+    "route",
+    "recovery",
+    "verification_method"
+  ],
+  "execution_orchestrator_is_voting_member": false,
+  "council_forbidden_execution_fields": [
+    "how",
+    "where",
+    "tool",
+    "route",
+    "recovery",
+    "verification_method"
+  ],
+  "orchestrator_forbidden_decision_fields": [
+    "what",
+    "why",
+    "constraints",
+    "authority",
+    "blocking_conditions",
+    "verification_target"
+  ],
+  "unresolved_blocker_states": [
+    "OPEN",
+    "UNRESOLVED",
+    "BLOCKING"
+  ]
+}
