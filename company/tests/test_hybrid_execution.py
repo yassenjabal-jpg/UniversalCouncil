@@ -121,6 +121,16 @@ class HybridExecutionTests(unittest.TestCase):
             lambda c: c["routing_profiles"]["interactive_app"].__setitem__(
                 "dc_must_not_bypass_gui_when_gui_available", False
             ),
+            lambda c: c["routing_profiles"]["interactive_app"].__setitem__(
+                "order",
+                [
+                    ExecutionPath.DC.value,
+                    ExecutionPath.GUI_UIA.value,
+                    ExecutionPath.GUI_VISUAL.value,
+                ],
+            ),
+            lambda c: c["gui_interaction_plane"].__setitem__("role", "SECONDARY"),
+            lambda c: c["dc_control_plane"].__setitem__("role", "PRIMARY"),
             lambda c: c["gui_interaction_plane"].__setitem__("semantic_first", False),
             lambda c: c["gui_interaction_plane"].__setitem__("raw_coordinates_enabled", True),
             lambda c: c["shared_state"].__setitem__("single_physical_controller", False),
@@ -130,6 +140,12 @@ class HybridExecutionTests(unittest.TestCase):
             lambda c: c["result_projection"].__setitem__("max_items", 0),
             lambda c: c["result_projection"].__setitem__("max_text_chars", 10),
             lambda c: c["automation_graduation"].__setitem__("verified_repeats_required", 1),
+            lambda c: c["recovery"].__setitem__("max_retries", -1),
+            lambda c: c["recovery"].__setitem__("no_progress_seconds", 0),
+            lambda c: c["recovery"].__setitem__("stalled_seconds", 1),
+            lambda c: c["recovery"].__setitem__("poll_interval_seconds", 0),
+            lambda c: c["recovery"].__setitem__("unknown_requires_reconciliation", False),
+            lambda c: c["recovery"].__setitem__("replay_completed_action_default", True),
         ):
             cfg = copy.deepcopy(BASE_CFG)
             mutator(cfg)
@@ -353,6 +369,43 @@ class HybridExecutionTests(unittest.TestCase):
             task_approved=True,
         )
         self.assertEqual(approved["state"], ResultState.HOST_DISPATCH_REQUIRED.value)
+
+    def test_policy_blocked_action_reaches_risk_gate(self):
+        with self.assertRaises(HybridExecutionError):
+            plan_action(
+                {
+                    "id": "blocked-native",
+                    "native_available": True,
+                    "authority_operation": "github.read",
+                    "policy_blocked": True,
+                },
+                BASE_CFG,
+            )
+
+    def test_authority_requires_principal_and_structured_scope_when_configured(self):
+        planned = plan_action(
+            {
+                "id": "write",
+                "native_available": True,
+                "authority_operation": "github.write",
+                "effect": "WRITE",
+                "target_repo": "yassenjabal-jpg/UniversalCouncil",
+                "authority_scope": "universal_council_repository",
+            },
+            BASE_CFG,
+        )
+        with self.assertRaises(HybridExecutionError):
+            enforce_tool_authority(planned, BASE_REGISTRY, principal=None)
+
+        missing_scope_payload = dict(planned.payload)
+        missing_scope_payload.pop("authority_scope")
+        missing_scope = plan_action(missing_scope_payload, BASE_CFG)
+        with self.assertRaises(HybridExecutionError):
+            enforce_tool_authority(
+                missing_scope,
+                BASE_REGISTRY,
+                principal="technical_operator",
+            )
 
     def test_shared_state_persists_and_restores(self):
         with tempfile.TemporaryDirectory() as tmp:
