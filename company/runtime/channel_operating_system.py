@@ -260,9 +260,15 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("Red Team must retain visual-lock blocker authority")
     if visual_lock.get("status") != "LOCKED_AFTER_P1_COHERENCE_PASS" or visual_lock.get("p0_passed") is not True:
         raise ChannelOperatingSystemError("visual-system lock state must reflect P1 coherence pass")
-    for required_artifact in {"production_kit", "reference_set_brief", "council_review"}:
+    for required_artifact in {
+        "production_kit",
+        "reference_set_brief",
+        "council_review",
+        "reference_temporal_grammar",
+        "production_kit_candidate",
+    }:
         if not visual_lock.get(required_artifact):
-            raise ChannelOperatingSystemError(f"P0 visual-system lock artifact missing: {required_artifact}")
+            raise ChannelOperatingSystemError(f"visual-system lock artifact missing: {required_artifact}")
 
     authority_model = production_system.get("authority_model", {})
     if authority_model.get("council_after_lock") != "SYSTEM_AND_GATE_REVIEW_ONLY":
@@ -319,8 +325,8 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("full-length production must fail closed before P2 PASS")
     if production_system.get("per_frame_council_review_after_lock") != "FORBIDDEN_UNLESS_EXCEPTION":
         raise ChannelOperatingSystemError("Council per-frame review boundary drifted")
-    if production_system.get("active_pilot_stage") != "P2_PREPARATION_BLOCKED_CAPABILITY_GAP":
-        raise ChannelOperatingSystemError("active pilot stage must reflect P2 capability-gap preparation")
+    if production_system.get("active_pilot_stage") != "P1_REFERENCE_FIDELITY_RETRY_PHASE_4":
+        raise ChannelOperatingSystemError("active pilot stage must reflect DAY24 reference-fidelity retry phase 4")
     if production_system.get("p1_status") != "PASS_INTERNAL_COHERENCE":
         raise ChannelOperatingSystemError("P1 internal coherence status drifted")
     if not production_system.get("p1_review") or not production_system.get("p1_internal_render"):
@@ -328,14 +334,38 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     if [stage.get("status") for stage in ladder] != [
         "PASS",
         "PASS_INTERNAL_COHERENCE",
-        "BLOCKED_CAPABILITY_GAP",
+        "BLOCKED_REFERENCE_FIDELITY_RETRY",
         "BLOCKED_UNTIL_P2_PASS",
     ]:
-        raise ChannelOperatingSystemError("pilot ladder state drifted after P1 coherence pass")
+        raise ChannelOperatingSystemError("pilot ladder state drifted during reference-fidelity retry")
     if not ladder[2].get("blocking_capabilities"):
         raise ChannelOperatingSystemError("P2 capability blockers must be explicit")
-    if len(production_system.get("current_capability_gaps", [])) < 3:
-        raise ChannelOperatingSystemError("current P2 capability gaps are incomplete")
+    if len(production_system.get("current_capability_gaps", [])) < 2:
+        raise ChannelOperatingSystemError("current retry capability gaps are incomplete")
+
+    motion = production_system.get("motion_tool_qualification", {})
+    if motion.get("status") != "PASS_PRIMARY":
+        raise ChannelOperatingSystemError("primary motion route must remain qualified")
+    if motion.get("primary_route") != "Adobe After Effects 2026 on YASSIN":
+        raise ChannelOperatingSystemError("primary motion route drifted")
+    if float(motion.get("score", 0)) < 80:
+        raise ChannelOperatingSystemError("primary motion route score fell below qualification gate")
+    if motion.get("clean_export_verified") is not True or motion.get("watermark_free") is not True:
+        raise ChannelOperatingSystemError("primary motion route export qualification drifted")
+    if not motion.get("qualification_artifact"):
+        raise ChannelOperatingSystemError("motion qualification artifact is missing")
+
+    retry = production_system.get("retry_pipeline", {})
+    if retry.get("phase_1_temporal_identity") != "PASS_REFERENCE_GRAMMAR_LOCK":
+        raise ChannelOperatingSystemError("retry phase 1 temporal identity is not locked")
+    if retry.get("phase_2_motion_tool") != "PASS_PRIMARY":
+        raise ChannelOperatingSystemError("retry phase 2 motion tool is not qualified")
+    if retry.get("phase_3_visual_script") != "PASS_CANDIDATE":
+        raise ChannelOperatingSystemError("retry phase 3 visual script state drifted")
+    if retry.get("phase_4_shot_bible") != "ACTIVE":
+        raise ChannelOperatingSystemError("retry phase 4 shot-bible state drifted")
+    if not retry.get("visual_event_script") or not retry.get("reference_fidelity_review"):
+        raise ChannelOperatingSystemError("retry governance artifacts are missing")
 
     if cfg.get("publication_authority") != "GATED":
         raise ChannelOperatingSystemError("publishing must remain gated")
