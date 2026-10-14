@@ -1,0 +1,50 @@
+{
+  "version": "0.1-shadow",
+  "status": "CANDIDATE_SHADOW_ONLY",
+  "route_version": "task-aware-0.1",
+  "task_classes": {
+    "visual_interaction": {
+      "order": [
+        "semantic_uia",
+        "visual_grounding",
+        "bounded_physical_input"
+      ]
+    },
+    "structured_application": {
+      "order": [
+        "native_api",
+        "script_or_com",
+        "semantic_uia",
+        "visual_grounding"
+      ]
+    },
+    "host_work": {
+      "order": [
+        "dc_control_plane",
+        "native_host_tooling"
+      ]
+    },
+    "external_service": {
+      "order": [
+        "authorized_connector_api",
+        "gui_semantic_uia",
+        "gui_visual"
+      ]
+    },
+    "recovery": {
+      "order": [
+        "approved_alternate_path"
+      ]
+    }
+  },
+  "fallback_restrictions": [
+    "no_authority_expansion",
+    "alternate_route_must_be_authorized",
+    "physical_input_must_be_explicitly_bounded"
+  ],
+  "recovery_requires": [
+    "Inspect",
+    "Diagnose",
+    "Approved alternate path"
+  ]
+}

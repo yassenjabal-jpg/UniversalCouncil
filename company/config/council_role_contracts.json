@@ -1,0 +1,1599 @@
+{
+  "version": "0.1-shadow",
+  "status": "CANDIDATE_SHADOW_ONLY",
+  "governing_council_version": "0.3.0",
+  "required_contract_fields": [
+    "mission",
+    "inputs",
+    "outputs",
+    "activation",
+    "blocker_scope",
+    "authority",
+    "tools",
+    "escalation",
+    "conflicts",
+    "contribution_criteria",
+    "merge_remove_trigger"
+  ],
+  "roles": {
+    "chair": {
+      "mission": "Frame the decision, select the smallest useful process, coordinate decision rights, preserve dissent, and record the governing outcome without performing synthesis.",
+      "inputs": [
+        "decision_question",
+        "materiality",
+        "mode",
+        "candidate_positions",
+        "domain_blockers",
+        "dissent"
+      ],
+      "outputs": [
+        "decision_frame",
+        "activation_plan",
+        "decision_rights",
+        "decision_record",
+        "dissent_record",
+        "review_trigger"
+      ],
+      "activation": {
+        "model": "coordination_capability",
+        "required_when": [
+          "all_material_decisions"
+        ]
+      },
+      "blocker_scope": {
+        "type": "function_bounded",
+        "domain": "process_integrity",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "coordinate_and_record",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "none_by_role_contract"
+      ],
+      "escalation": [
+        "Owner when decision authority exceeds Council"
+      ],
+      "conflicts": [
+        "must_not_absorb_synthesis"
+      ],
+      "contribution_criteria": [
+        "clear_framing",
+        "correct_activation",
+        "decision_rights_clarity",
+        "dissent_preservation"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "evidence": {
+      "mission": "Assess evidence quality, freshness, source diversity, contradictions, and pivotal uncertainty.",
+      "inputs": [
+        "claims",
+        "sources",
+        "decision_options",
+        "uncertainties"
+      ],
+      "outputs": [
+        "evidence_matrix",
+        "freshness_findings",
+        "contradictions",
+        "pivotal_unknowns"
+      ],
+      "activation": {
+        "model": "callable_capability",
+        "required_when": [
+          "freshness_matters",
+          "contested_evidence",
+          "material_uncertainty"
+        ]
+      },
+      "blocker_scope": {
+        "type": "function_bounded",
+        "domain": "evidence_integrity",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "advise_within_contract",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_research_tools"
+      ],
+      "escalation": [
+        "chair",
+        "relevant domain specialist when outside functional scope"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_evidence_or_analysis",
+        "decision_relevant_objection",
+        "material_option_or_test_added"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "redteam": {
+      "mission": "Try to falsify the leading option through counterexamples, premortem failure modes, and invalidation evidence.",
+      "inputs": [
+        "leading_options",
+        "evidence_matrix",
+        "assumptions"
+      ],
+      "outputs": [
+        "falsification_tests",
+        "counterexamples",
+        "failure_modes",
+        "invalidation_findings"
+      ],
+      "activation": {
+        "model": "callable_capability",
+        "required_when": [
+          "material_decision",
+          "high_uncertainty",
+          "hard_to_reverse"
+        ]
+      },
+      "blocker_scope": {
+        "type": "function_bounded",
+        "domain": "falsification",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "advise_within_contract",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "none_by_role_contract"
+      ],
+      "escalation": [
+        "chair",
+        "relevant domain specialist when outside functional scope"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_evidence_or_analysis",
+        "decision_relevant_objection",
+        "material_option_or_test_added"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "execution": {
+      "mission": "Evaluate feasibility, dependencies, reversibility, operational burden, and cheapest assumption tests without executing.",
+      "inputs": [
+        "candidate_options",
+        "constraints",
+        "dependencies",
+        "execution_environment"
+      ],
+      "outputs": [
+        "feasibility_findings",
+        "dependency_map",
+        "reversibility_assessment",
+        "assumption_tests"
+      ],
+      "activation": {
+        "model": "callable_capability",
+        "required_when": [
+          "execution_feasibility_matters"
+        ]
+      },
+      "blocker_scope": {
+        "type": "function_bounded",
+        "domain": "feasibility",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "advise_within_contract",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "none_by_role_contract"
+      ],
+      "escalation": [
+        "chair",
+        "relevant domain specialist when outside functional scope"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_evidence_or_analysis",
+        "decision_relevant_objection",
+        "material_option_or_test_added"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "risk": {
+      "mission": "Assess downside, second-order consequences, severity, likelihood, detectability, and irreversibility.",
+      "inputs": [
+        "candidate_options",
+        "failure_modes",
+        "constraints",
+        "evidence"
+      ],
+      "outputs": [
+        "risk_register",
+        "material_risk_blockers",
+        "mitigations",
+        "residual_risk"
+      ],
+      "activation": {
+        "model": "callable_capability",
+        "required_when": [
+          "material_downside",
+          "irreversible_change",
+          "safety_or_security_impact"
+        ]
+      },
+      "blocker_scope": {
+        "type": "function_bounded",
+        "domain": "risk",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "advise_within_contract",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "none_by_role_contract"
+      ],
+      "escalation": [
+        "chair",
+        "relevant domain specialist when outside functional scope"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_evidence_or_analysis",
+        "decision_relevant_objection",
+        "material_option_or_test_added"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "human": {
+      "mission": "Represent user and operator burden, observed behavior, cognitive load, accessibility, and human-error exposure.",
+      "inputs": [
+        "workflow",
+        "user_context",
+        "operator_context",
+        "candidate_options"
+      ],
+      "outputs": [
+        "human_impact",
+        "workflow_burden",
+        "accessibility_findings",
+        "human_error_findings"
+      ],
+      "activation": {
+        "model": "callable_capability",
+        "required_when": [
+          "user_or_operator_impact"
+        ]
+      },
+      "blocker_scope": {
+        "type": "function_bounded",
+        "domain": "human_impact",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "advise_within_contract",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "none_by_role_contract"
+      ],
+      "escalation": [
+        "chair",
+        "relevant domain specialist when outside functional scope"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_evidence_or_analysis",
+        "decision_relevant_objection",
+        "material_option_or_test_added"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "value": {
+      "mission": "Evaluate cost, time, effort, opportunity cost, utility, and willingness-to-pay evidence.",
+      "inputs": [
+        "candidate_options",
+        "costs",
+        "benefits",
+        "commitment_evidence"
+      ],
+      "outputs": [
+        "value_assessment",
+        "opportunity_cost",
+        "economic_tradeoffs",
+        "commitment_quality"
+      ],
+      "activation": {
+        "model": "callable_capability",
+        "required_when": [
+          "material_cost_or_value_tradeoff",
+          "commercial_decision"
+        ]
+      },
+      "blocker_scope": {
+        "type": "function_bounded",
+        "domain": "value",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "advise_within_contract",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "none_by_role_contract"
+      ],
+      "escalation": [
+        "chair",
+        "relevant domain specialist when outside functional scope"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_evidence_or_analysis",
+        "decision_relevant_objection",
+        "material_option_or_test_added"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "synthesis": {
+      "mission": "Protocol stage that constructs alternatives and trade-offs while preserving minority positions and protected blockers.",
+      "inputs": [
+        "positions",
+        "evidence_matrix",
+        "dissent",
+        "domain_blockers",
+        "alternatives"
+      ],
+      "outputs": [
+        "candidate_options",
+        "tradeoff_map",
+        "minority_preservation",
+        "candidate_recommendation"
+      ],
+      "activation": {
+        "model": "protocol_stage",
+        "required_when": [
+          "council_or_arena_synthesis"
+        ]
+      },
+      "blocker_scope": {
+        "type": "none",
+        "domain": "none",
+        "requires_evidence": false
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "protocol_synthesis",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "none_by_role_contract"
+      ],
+      "escalation": [
+        "chair",
+        "relevant domain specialist when outside functional scope"
+      ],
+      "conflicts": [
+        "must_not_erase_dissent",
+        "must_not_override_domain_blockers"
+      ],
+      "contribution_criteria": [
+        "option_diversity",
+        "tradeoff_clarity",
+        "minority_preservation",
+        "no_false_consensus"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "health": {
+      "mission": "Provide on-demand Health & Medicine judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "health",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "software": {
+      "mission": "Provide on-demand Software & Systems judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "software",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "security": {
+      "mission": "Provide on-demand Cybersecurity & Privacy judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "security",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "finance": {
+      "mission": "Provide on-demand Finance & Accounting judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "finance",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "business": {
+      "mission": "Provide on-demand Business & Operations judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "business",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "product": {
+      "mission": "Provide on-demand Product & Purchasing judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "product",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "science": {
+      "mission": "Provide on-demand Science & Research Methods judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "science",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "legal": {
+      "mission": "Provide on-demand Legal & Regulatory judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "legal",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "education": {
+      "mission": "Provide on-demand Education & Learning judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "education",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "media": {
+      "mission": "Provide on-demand Media & Content judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "media",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "design": {
+      "mission": "Provide on-demand Design & UX judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "design",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "travel": {
+      "mission": "Provide on-demand Travel & Local Planning judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "travel",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "data": {
+      "mission": "Provide on-demand Data & Statistics judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "data",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "career": {
+      "mission": "Provide on-demand Career & Work judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": []
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "career",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "customer_skeptic": {
+      "mission": "Provide on-demand Customer Skeptic judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": [
+          "material_commercial_decision"
+        ]
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "customer_skeptic",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [
+        "value",
+        "business"
+      ],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    },
+    "moat_auditor": {
+      "mission": "Provide on-demand Commoditization & Moat judgment only within its domain and issue evidence-backed blockers only inside that scope.",
+      "inputs": [
+        "decision_packet",
+        "relevant_evidence",
+        "domain_questions"
+      ],
+      "outputs": [
+        "domain_findings",
+        "domain_blockers",
+        "pivotal_unknowns",
+        "evidence_needed"
+      ],
+      "activation": {
+        "model": "on_demand_specialist",
+        "required_when": [
+          "material_commercial_decision"
+        ]
+      },
+      "blocker_scope": {
+        "type": "domain_bounded",
+        "domain": "moat_auditor",
+        "requires_evidence": true
+      },
+      "authority": {
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "decision_function": "domain_advice_and_bounded_blocker",
+        "may_override_dissent": false,
+        "may_override_domain_blockers": false
+      },
+      "tools": [
+        "approved_read_only_tools_when_needed"
+      ],
+      "escalation": [
+        "chair",
+        "Owner when blocker conflicts exceed Council authority"
+      ],
+      "conflicts": [
+        "business",
+        "value"
+      ],
+      "contribution_criteria": [
+        "unique_domain_evidence",
+        "material_domain_objection",
+        "missed_blocker_prevention",
+        "decision_relevant_specialist_input"
+      ],
+      "merge_remove_trigger": {
+        "automatic": false,
+        "minimum_observation_count": 3,
+        "signals": [
+          "duplicate_reasoning",
+          "low_unique_contribution",
+          "persistent_false_blocker",
+          "persistent_missed_blocker",
+          "avoidable_latency_or_cost"
+        ],
+        "allowed_outcomes": [
+          "KEEP",
+          "NARROW",
+          "MERGE",
+          "ON_DEMAND",
+          "IMPROVEMENT_TRIAL",
+          "REMOVE"
+        ]
+      }
+    }
+  }
+}
