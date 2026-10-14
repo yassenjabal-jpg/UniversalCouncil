@@ -182,8 +182,12 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["visual_generation_brief_system"].__setitem__("required_fields", []),
             lambda c: c["visual_generation_brief_system"].__setitem__("execution_rules", []),
             lambda c: c["visual_generation_brief_system"].__setitem__("approval_state_required", "AUTO"),
-            lambda c: c["visual_generation_brief_system"].__setitem__("thumbnail_hypothesis_languages_required", ["same"]),
-            lambda c: c["visual_generation_brief_system"].__setitem__("minimum_zero_architecture_hypotheses_per_three", 0),
+            lambda c: c["visual_generation_brief_system"].__setitem__(
+                "thumbnail_hypothesis_languages_required", ["same"]
+            ),
+            lambda c: c["visual_generation_brief_system"].__setitem__(
+                "minimum_zero_architecture_hypotheses_per_three", 0
+            ),
             lambda c: c.__setitem__("publication_authority", "AUTO"),
             lambda c: c["benchmark_profile"].__setitem__("adopt_disciplines_not_headcount", False),
             lambda c: c["benchmark_profile"].__setitem__("reference_models", []),
