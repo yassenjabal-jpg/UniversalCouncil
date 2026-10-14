@@ -1,5 +1,5 @@
 {
-  "version": "1.4",
+  "version": "1.5",
   "policy": "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
   "principles": [
     "Use specialized creative tools for creative craft.",
@@ -158,7 +158,10 @@
     "thumbnail_generation_multiple_concepts_or_assets": "BLOCK",
     "thumbnail_generation_multi_panel_output": "BLOCK",
     "full_length_episode_before_p2_visual_pilot": "BLOCK",
-    "visual_system_lock_without_tool_qualification": "BLOCK"
+    "visual_system_lock_without_tool_qualification": "BLOCK",
+    "p2_without_verified_motion_authoring": "BLOCK",
+    "p2_without_clean_1080p_finishing_route": "BLOCK",
+    "p2_without_delivery_audio_finishing_route": "BLOCK"
   },
   "escalation_rule": "If a required craft stage is blocked, HR/Capability Director must scout or request a specialized tool. The Technical Operator may not fill the gap by authoring a custom craft replacement without an explicit Council exception approved by Owner.",
   "exception_rule": {
@@ -190,5 +193,11 @@
     "backup_tool": "runway:nano-banana-pro",
     "backup_score": 89.2,
     "qualification_artifact": "docs/operations/media/visual_generation_briefs/2026-10-14/VISUAL_TOOL_QUALIFICATION_DAY24.md"
+  },
+  "current_motion_state": {
+    "after_effects": "STALE_EVIDENCE_CURRENT_EXECUTABLE_NOT_FOUND",
+    "descript": "INTERNAL_ROUGH_ONLY",
+    "p1_result": "PASS_INTERNAL_COHERENCE",
+    "p2_state": "BLOCKED_CAPABILITY_GAP"
   }
 }
