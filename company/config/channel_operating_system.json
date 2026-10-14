@@ -638,7 +638,7 @@
   },
   "production_system": {
     "version": "2.0",
-    "status": "ACTIVE_MANDATORY_CRAFT_CONTRIBUTORS_AWAITING_SYSTEM_PILOT",
+    "status": "ACTIVE_STUDIO_OPERATING_MODEL_AWAITING_TOOL_QUALIFICATION",
     "governing_doc": "docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md",
     "stage_authorities": {
       "research_script": "Editorial Director / Showrunner",
@@ -653,7 +653,7 @@
       "Final QC": "Independent QC Reviewer"
     },
     "gate_placement": {
-      "Preproduction Lock": "after_visual_direction",
+      "Preproduction Lock": "after_asset_pack",
       "Rough Cut Review": "during_edit_motion",
       "Final QC": "after_export"
     },
@@ -880,6 +880,29 @@
           "stage": "final_qc"
         }
       }
+    },
+    "studio_identity": {
+      "name_ar": "الاستوديو",
+      "name_en": "The Studio",
+      "legacy_operating_name": "Council",
+      "scope": "MEDIA_PRODUCTION_ONLY",
+      "historical_evidence_keeps_legacy_name": true,
+      "repository_name_unchanged": true
+    },
+    "studio_operating_model": {
+      "config": "company/config/studio_operating_model.json",
+      "doc": "docs/operations/media/STUDIO_OPERATING_MODEL.md",
+      "version": "1.0",
+      "departments": [
+        "studio_management",
+        "editorial_research",
+        "visual_design",
+        "post_production",
+        "qc_delivery"
+      ],
+      "episode_pod": true,
+      "technical_stage_ids_unchanged": true,
+      "technical_gate_ids_unchanged": true
     }
   },
   "anti_slop_checks": {
