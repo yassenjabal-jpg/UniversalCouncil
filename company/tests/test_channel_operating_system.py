@@ -197,21 +197,11 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["production_system"]["visual_system_lock"].__setitem__("required", False),
             lambda c: c["production_system"]["visual_system_lock"].__setitem__("reference_frame_count_min", 3),
             lambda c: c["production_system"]["visual_system_lock"].__setitem__("reference_frame_count_max", 7),
-            lambda c: c["production_system"]["visual_system_lock"].__setitem__(
-                "production_kit_required", False
-            ),
-            lambda c: c["production_system"]["visual_system_lock"].__setitem__(
-                "lock_authority", "Council"
-            ),
-            lambda c: c["production_system"]["visual_system_lock"].__setitem__(
-                "red_team_blocker", False
-            ),
-            lambda c: c["production_system"]["authority_model"].__setitem__(
-                "council_after_lock", "PER_FRAME"
-            ),
-            lambda c: c["production_system"]["authority_model"].__setitem__(
-                "visual_art_director", "ADVISORY"
-            ),
+            lambda c: c["production_system"]["visual_system_lock"].__setitem__("production_kit_required", False),
+            lambda c: c["production_system"]["visual_system_lock"].__setitem__("lock_authority", "Council"),
+            lambda c: c["production_system"]["visual_system_lock"].__setitem__("red_team_blocker", False),
+            lambda c: c["production_system"]["authority_model"].__setitem__("council_after_lock", "PER_FRAME"),
+            lambda c: c["production_system"]["authority_model"].__setitem__("visual_art_director", "ADVISORY"),
             lambda c: c["production_system"]["authority_model"].__setitem__(
                 "technical_operator", "CREATIVE_REWRITE_ALLOWED"
             ),
@@ -224,49 +214,25 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["production_system"]["tool_qualification"].__setitem__(
                 "comparison_contract", "DIFFERENT_PROMPTS"
             ),
-            lambda c: c["production_system"]["tool_qualification"].__setitem__(
-                "minimum_viable_candidates", 1
-            ),
-            lambda c: c["production_system"]["tool_qualification"]["score_weights"].__setitem__(
-                "cost", 6
-            ),
+            lambda c: c["production_system"]["tool_qualification"].__setitem__("minimum_viable_candidates", 1),
+            lambda c: c["production_system"]["tool_qualification"]["score_weights"].__setitem__("cost", 6),
             lambda c: (
-                c["production_system"]["tool_qualification"]["score_weights"].__setitem__(
-                    "prompt_fidelity", 10
-                ),
-                c["production_system"]["tool_qualification"]["score_weights"].__setitem__(
-                    "style_consistency", 10
-                ),
-                c["production_system"]["tool_qualification"]["score_weights"].__setitem__(
-                    "cost", 35
-                ),
+                c["production_system"]["tool_qualification"]["score_weights"].__setitem__("prompt_fidelity", 10),
+                c["production_system"]["tool_qualification"]["score_weights"].__setitem__("style_consistency", 10),
+                c["production_system"]["tool_qualification"]["score_weights"].__setitem__("cost", 35),
             ),
             lambda c: c["production_system"]["tool_qualification"].__setitem__(
                 "remaining_credits_must_not_select_primary_tool", False
             ),
-            lambda c: c["production_system"].__setitem__(
-                "pilot_ladder", c["production_system"]["pilot_ladder"][:-1]
-            ),
-            lambda c: c["production_system"]["pilot_ladder"][1].__setitem__(
-                "duration_seconds_min", 20
-            ),
-            lambda c: c["production_system"]["pilot_ladder"][2].__setitem__(
-                "duration_seconds_max", 120
-            ),
-            lambda c: c["production_system"]["pilot_ladder"][3].__setitem__(
-                "duration_seconds_min", 300
-            ),
-            lambda c: c["production_system"].__setitem__(
-                "full_length_episode_before_p2_pass", "ALLOW"
-            ),
-            lambda c: c["production_system"].__setitem__(
-                "per_frame_council_review_after_lock", "ALLOWED"
-            ),
+            lambda c: c["production_system"].__setitem__("pilot_ladder", c["production_system"]["pilot_ladder"][:-1]),
+            lambda c: c["production_system"]["pilot_ladder"][1].__setitem__("duration_seconds_min", 20),
+            lambda c: c["production_system"]["pilot_ladder"][2].__setitem__("duration_seconds_max", 120),
+            lambda c: c["production_system"]["pilot_ladder"][3].__setitem__("duration_seconds_min", 300),
+            lambda c: c["production_system"].__setitem__("full_length_episode_before_p2_pass", "ALLOW"),
+            lambda c: c["production_system"].__setitem__("per_frame_council_review_after_lock", "ALLOWED"),
             lambda c: c["visual_identity"].__setitem__("generated_thumbnail_assets_per_episode", 2),
             lambda c: c["visual_identity"].__setitem__("single_thumbnail_lock", False),
-            lambda c: c["visual_identity"].__setitem__(
-                "multi_panel_thumbnail_output_forbidden", False
-            ),
+            lambda c: c["visual_identity"].__setitem__("multi_panel_thumbnail_output_forbidden", False),
             lambda c: c["visual_generation_brief_system"].__setitem__(
                 "only_selected_brief_may_enter_generation_context", False
             ),
