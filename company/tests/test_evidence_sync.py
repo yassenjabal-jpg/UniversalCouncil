@@ -4,7 +4,7 @@ import json
 import subprocess
 import tempfile
 import unittest
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from company.runtime.evidence_sync import (
