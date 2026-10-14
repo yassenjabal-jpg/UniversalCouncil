@@ -316,3 +316,27 @@ Keep a function separate only when pilot evidence shows one of:
 - measurable quality/rework benefit
 
 The goal is professional discipline without professional-studio bureaucracy.
+
+
+---
+
+## Production authority after visual lock
+
+The production cell is not a design committee for every frame.
+
+Before Visual System Lock, Council functions may challenge the system broadly.
+
+After lock:
+- **Visual Art Director / Frame Curator** has final frame-level visual authority within the approved kit.
+- **Motion & Picture Editor** owns timing/motion execution inside the locked grammar.
+- **Technical Operator** owns tool routing/execution only and may not creatively rewrite the visual contract.
+- **Red Team / Anti-Slop** may block material drift but does not substitute its own art direction.
+- **Council** returns at defined gates or material exceptions, not normal shot-by-shot production.
+
+Pilot ladder:
+1. P0 — reference-frame + production-kit lock;
+2. P1 — 30–45 second coherence pilot;
+3. P2 — 60–90 second repeatability pilot;
+4. P3 — 8+ minute full episode.
+
+P3 is forbidden before P2 PASS.
