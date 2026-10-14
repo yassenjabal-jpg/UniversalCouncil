@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from company.runtime.evidence_sync import (
+    EvidenceState,
     EvidenceSyncError,
     _load_json,
     _parse_observed_at,
