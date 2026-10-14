@@ -21,11 +21,23 @@ class MediaCapabilityTests(unittest.TestCase):
     def base_metrics(self):
         return sorted(REQUIRED_PILOT_METRICS)
 
-    def test_lean_team_has_five_authorities_and_on_demand_specialists(self):
+    def test_lean_team_has_five_authorities_and_mandatory_craft_specialists(self):
         cfg = self.load_config()
         self.assertTrue(validate_media_team(cfg))
         self.assertEqual({f["id"] for f in cfg["production_functions"]}, REQUIRED_MEDIA_FUNCTIONS)
         self.assertEqual(sum(f["default_status"] == "STAGE_AUTHORITY" for f in cfg["production_functions"]), 5)
+        self.assertEqual(
+            sum(f["default_status"] == "MANDATORY_CRAFT_CONTRIBUTOR" for f in cfg["production_functions"]),
+            6,
+        )
+        self.assertEqual(
+            sum(f["default_status"] == "CONDITIONAL_CRAFT_CONTRIBUTOR" for f in cfg["production_functions"]),
+            1,
+        )
+        self.assertEqual(
+            cfg["craft_contributor_contract_pointer"],
+            "company/config/channel_operating_system.json#production_system.craft_contributor_contract",
+        )
         self.assertFalse(cfg["pilot"]["blocks_episode_production"])
         self.assertEqual(cfg["system_pilot"]["count"], 1)
 
@@ -38,6 +50,13 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: next(f for f in c["production_functions"] if f["id"] == "independent_fact_checker").update(
                 default_status="STAGE_AUTHORITY"
             ),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "script_voice_director").update(
+                default_status="ON_DEMAND"
+            ),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "localization_producer").update(
+                default_status="ON_DEMAND"
+            ),
+            lambda c: c.update(craft_contributor_contract_pointer="wrong"),
             lambda c: c.update(function_independence_rules=[]),
             lambda c: c.update(production_workflow_config="other.json"),
             lambda c: c.update(visual_production_system={"pilot_ladder": ["P0"]}),
