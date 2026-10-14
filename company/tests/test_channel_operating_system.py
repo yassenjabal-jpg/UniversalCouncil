@@ -168,7 +168,7 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertTrue(lock["production_kit_required"])
         self.assertEqual(lock["lock_authority"], "Visual Art Director / Frame Curator")
         self.assertTrue(lock["p0_passed"])
-        self.assertEqual(lock["status"], "LOCKED_FOR_P1")
+        self.assertEqual(lock["status"], "LOCKED_AFTER_P1_COHERENCE_PASS")
         self.assertTrue(lock["production_kit"])
         self.assertTrue(lock["reference_set_brief"])
         self.assertTrue(lock["council_review"])
@@ -201,11 +201,16 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertEqual(ladder["P2_PRODUCTION_60_90"]["duration_seconds_max"], 90)
         self.assertEqual(ladder["P3_FULL_EPISODE_8_PLUS_MINUTES"]["duration_seconds_min"], 480)
         self.assertEqual(system["full_length_episode_before_p2_pass"], "BLOCK")
-        self.assertEqual(system["active_pilot_stage"], "P1_COHERENCE_30_45")
+        self.assertEqual(system["active_pilot_stage"], "P2_PREPARATION_BLOCKED_CAPABILITY_GAP")
+        self.assertEqual(system["p1_status"], "PASS_INTERNAL_COHERENCE")
+        self.assertTrue(system["p1_review"])
+        self.assertTrue(system["p1_internal_render"])
         self.assertEqual(
             [stage["status"] for stage in system["pilot_ladder"]],
-            ["PASS", "READY", "BLOCKED_UNTIL_P1_PASS", "BLOCKED_UNTIL_P2_PASS"],
+            ["PASS", "PASS_INTERNAL_COHERENCE", "BLOCKED_CAPABILITY_GAP", "BLOCKED_UNTIL_P2_PASS"],
         )
+        self.assertGreaterEqual(len(system["pilot_ladder"][2]["blocking_capabilities"]), 3)
+        self.assertGreaterEqual(len(system["current_capability_gaps"]), 3)
 
     def test_production_system_fail_closed_paths(self):
         mutations = [
@@ -219,6 +224,10 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["production_system"]["visual_system_lock"].__setitem__("red_team_blocker", False),
             lambda c: c["production_system"]["visual_system_lock"].__setitem__("p0_passed", False),
             lambda c: c["production_system"]["visual_system_lock"].__setitem__("status", "UNLOCKED"),
+            lambda c: c["production_system"].__setitem__("p1_status", "FAIL"),
+            lambda c: c["production_system"].__setitem__("active_pilot_stage", "P2_PRODUCTION_60_90"),
+            lambda c: c["production_system"]["pilot_ladder"][2].__setitem__("blocking_capabilities", []),
+            lambda c: c["production_system"].__setitem__("current_capability_gaps", []),
             lambda c: c["production_system"]["authority_model"].__setitem__("council_after_lock", "PER_FRAME"),
             lambda c: c["production_system"]["authority_model"].__setitem__("visual_art_director", "ADVISORY"),
             lambda c: c["production_system"]["authority_model"].__setitem__(
