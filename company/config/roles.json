@@ -155,7 +155,10 @@
         "palette_typography_grid",
         "episode_visual_motifs",
         "asset_style_approval",
-        "visual_continuity"
+        "visual_continuity",
+        "generation_brief_art_direction",
+        "visual_metaphor_specification",
+        "generation_constraints"
       ]
     },
     {
@@ -241,7 +244,10 @@
         "visual_hierarchy",
         "brand_consistency",
         "test_ready_variants",
-        "mobile_legibility"
+        "mobile_legibility",
+        "generation_brief_packaging_input",
+        "variant_differentiation_constraints",
+        "mobile_prompt_constraints"
       ]
     },
     {
@@ -257,6 +263,21 @@
         "language_version_qc",
         "timing_reconform_request"
       ]
+    }
+  ],
+  "venture_scoped_capabilities": [
+    {
+      "id": "visual_generation_brief_compiler",
+      "name": "Visual Prompt / Generation Brief Compiler",
+      "status": "REQUIRED_FOR_GENERATED_VISUALS",
+      "permanent_role": false,
+      "composed_by": [
+        "Visual Art Director / Frame Curator",
+        "Thumbnail & Packaging Designer",
+        "Synthesis & Alternatives Designer"
+      ],
+      "independent_approval": "Red Team / Anti-Slop",
+      "execution_boundary": "Technical Operator executes approved artifact without creative rewrite"
     }
   ]
 }
