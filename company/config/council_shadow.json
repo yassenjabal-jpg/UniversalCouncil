@@ -1,0 +1,46 @@
+{
+  "version": "0.1-shadow",
+  "status": "CANDIDATE_SHADOW_ONLY",
+  "governing_council_version": "0.3.0",
+  "may_replace_governing_council": false,
+  "may_execute_tools": false,
+  "may_mutate_authority": false,
+  "decision_orchestrator": {
+    "id": "decision_orchestrator",
+    "coordinates": [
+      "chair"
+    ],
+    "protocol_stages": [
+      "synthesis"
+    ],
+    "must_preserve": [
+      "dissent",
+      "domain_blockers",
+      "minority_positions"
+    ],
+    "cannot_override_domain_blockers": true,
+    "cannot_erase_dissent": true
+  },
+  "callable_core_capabilities": [
+    "chair",
+    "evidence",
+    "redteam",
+    "execution",
+    "risk",
+    "human",
+    "value"
+  ],
+  "protocol_stages": [
+    "synthesis"
+  ],
+  "commercial_mandatory_specialists": [
+    "customer_skeptic",
+    "moat_auditor"
+  ],
+  "runtime_model": "structured_capabilities_not_claimed_as_independent_agents",
+  "output_contract": {
+    "shadow_only": true,
+    "execution_authority": false,
+    "governing_decision": false
+  }
+}
