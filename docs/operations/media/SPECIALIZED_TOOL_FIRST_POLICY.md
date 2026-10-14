@@ -156,3 +156,34 @@ Hard rules:
 
 Template:
 `docs/templates/media/VISUAL_GENERATION_BRIEF.md`
+
+
+---
+
+## Visual tool qualification before production lock
+
+“Tool available” is not the same as “tool qualified.”
+
+Before the Visual Production Kit can be locked, at least two viable visual-generation routes must be compared when access permits using:
+
+> **SAME FRAME + SAME BRIEF + SAME RUBRIC**
+
+Weighted evaluation:
+- prompt fidelity — 30;
+- composition control — 20;
+- style/reference consistency — 20;
+- artifact quality — 10;
+- editability — 10;
+- speed — 5;
+- cost — 5.
+
+The primary image tool is selected by **quality and fidelity**, not by remaining credits, free balance, convenience, or novelty.
+
+Until real qualification evidence exists:
+- primary generator = UNQUALIFIED;
+- backup generator = UNQUALIFIED;
+- Visual System Lock = BLOCKED;
+- 8+ minute production = BLOCKED.
+
+See:
+`docs/operations/media/TOOL_QUALIFICATION_PROTOCOL.md`
