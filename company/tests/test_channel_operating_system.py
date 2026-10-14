@@ -167,6 +167,11 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertLessEqual(lock["reference_frame_count_max"], 6)
         self.assertTrue(lock["production_kit_required"])
         self.assertEqual(lock["lock_authority"], "Visual Art Director / Frame Curator")
+        self.assertTrue(lock["p0_passed"])
+        self.assertEqual(lock["status"], "LOCKED_FOR_P1")
+        self.assertTrue(lock["production_kit"])
+        self.assertTrue(lock["reference_set_brief"])
+        self.assertTrue(lock["council_review"])
 
         authority = system["authority_model"]
         self.assertEqual(authority["council_after_lock"], "SYSTEM_AND_GATE_REVIEW_ONLY")
@@ -196,6 +201,11 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertEqual(ladder["P2_PRODUCTION_60_90"]["duration_seconds_max"], 90)
         self.assertEqual(ladder["P3_FULL_EPISODE_8_PLUS_MINUTES"]["duration_seconds_min"], 480)
         self.assertEqual(system["full_length_episode_before_p2_pass"], "BLOCK")
+        self.assertEqual(system["active_pilot_stage"], "P1_COHERENCE_30_45")
+        self.assertEqual(
+            [stage["status"] for stage in system["pilot_ladder"]],
+            ["PASS", "READY", "BLOCKED_UNTIL_P1_PASS", "BLOCKED_UNTIL_P2_PASS"],
+        )
 
     def test_production_system_fail_closed_paths(self):
         mutations = [
@@ -207,6 +217,8 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["production_system"]["visual_system_lock"].__setitem__("production_kit_required", False),
             lambda c: c["production_system"]["visual_system_lock"].__setitem__("lock_authority", "Council"),
             lambda c: c["production_system"]["visual_system_lock"].__setitem__("red_team_blocker", False),
+            lambda c: c["production_system"]["visual_system_lock"].__setitem__("p0_passed", False),
+            lambda c: c["production_system"]["visual_system_lock"].__setitem__("status", "UNLOCKED"),
             lambda c: c["production_system"]["authority_model"].__setitem__("council_after_lock", "PER_FRAME"),
             lambda c: c["production_system"]["authority_model"].__setitem__("visual_art_director", "ADVISORY"),
             lambda c: c["production_system"]["authority_model"].__setitem__(
