@@ -8,22 +8,46 @@
     "A": {
       "id": "A",
       "name": "Hardened v0.3",
-      "family": "governance_baseline"
+      "family": "governance_baseline",
+      "diagnostics": {
+        "base_latency_units": 1,
+        "operator_steps": 1,
+        "maintainability_units": 1,
+        "framework_units": 1
+      }
     },
     "C": {
       "id": "C",
       "name": "Manager + Specialist Tools",
-      "family": "manager_specialist"
+      "family": "manager_specialist",
+      "diagnostics": {
+        "base_latency_units": 2,
+        "operator_steps": 2,
+        "maintainability_units": 3,
+        "framework_units": 3
+      }
     },
     "D": {
       "id": "D",
       "name": "Workflow-First",
-      "family": "deterministic_workflow"
+      "family": "deterministic_workflow",
+      "diagnostics": {
+        "base_latency_units": 0.5,
+        "operator_steps": 1,
+        "maintainability_units": 1,
+        "framework_units": 1
+      }
     },
     "F": {
       "id": "F",
       "name": "Small Governance Core + deterministic workflows + selective capabilities",
-      "family": "hybrid_selective"
+      "family": "hybrid_selective",
+      "diagnostics": {
+        "base_latency_units": 1.2,
+        "operator_steps": 1,
+        "maintainability_units": 2,
+        "framework_units": 2
+      }
     }
   },
   "stages": [
