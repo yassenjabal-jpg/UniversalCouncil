@@ -231,6 +231,15 @@ class EvidenceSyncTests(unittest.TestCase):
             )
             bad_configs.append({"version": "1.0", "sources": [overbound]})
 
+            for field in ("repository_identity", "component", "expected_host"):
+                bad_metadata = copy.deepcopy(source)
+                bad_metadata[field] = ""
+                bad_configs.append({"version": "1.0", "sources": [bad_metadata]})
+
+            empty_operations = copy.deepcopy(source)
+            empty_operations["authority_bindings"]["desktop_computer_use"]["operations"] = []
+            bad_configs.append({"version": "1.0", "sources": [empty_operations]})
+
             bad_age = copy.deepcopy(source)
             bad_age["max_receipt_age_days"] = 0
             bad_configs.append({"version": "1.0", "sources": [bad_age]})
@@ -274,6 +283,63 @@ class EvidenceSyncTests(unittest.TestCase):
                 _parse_observed_at("not-a-date")
             with self.assertRaises(EvidenceSyncError):
                 _parse_observed_at("2026-10-12T12:00:00")
+
+
+    def test_evidence_state_and_v11_contract_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            project, source, receipt = self.make_source(root)
+
+            with self.assertRaises(EvidenceSyncError):
+                receipt_evidence_state(
+                    receipt,
+                    source,
+                    as_of=datetime(2026, 10, 13, 12, 0, 0),
+                )
+
+            legacy = copy.deepcopy(receipt)
+            legacy["schema_version"] = "1.0"
+            for field in (
+                "source_repository",
+                "component",
+                "component_version",
+                "host",
+                "session_id",
+                "expires_at",
+                "verifier",
+                "verifier_version",
+            ):
+                legacy.pop(field, None)
+            self.assertEqual(
+                receipt_evidence_state(
+                    legacy,
+                    source,
+                    as_of=datetime(2026, 10, 13, 12, tzinfo=timezone.utc),
+                ),
+                EvidenceState.HISTORICAL,
+            )
+
+            disabled_legacy = copy.deepcopy(source)
+            disabled_legacy["allow_legacy_historical"] = False
+            with self.assertRaises(EvidenceSyncError):
+                validate_receipt(legacy, disabled_legacy, project)
+
+            missing_v11 = copy.deepcopy(receipt)
+            missing_v11.pop("host")
+            with self.assertRaises(EvidenceSyncError):
+                validate_receipt(missing_v11, source, project)
+
+            future = copy.deepcopy(receipt)
+            future["observed_at"] = "2099-01-01T00:00:00+00:00"
+            future["expires_at"] = "2099-01-02T00:00:00+00:00"
+            with self.assertRaises(EvidenceSyncError):
+                validate_receipt(future, source, project)
+
+            stale = copy.deepcopy(receipt)
+            stale["observed_at"] = "2000-01-01T00:00:00+00:00"
+            stale["expires_at"] = "2000-01-02T00:00:00+00:00"
+            with self.assertRaises(EvidenceSyncError):
+                validate_receipt(stale, source, project)
 
     def test_receipt_field_and_artifact_failures(self):
         with tempfile.TemporaryDirectory() as tmp:
