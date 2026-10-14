@@ -245,6 +245,13 @@ class Phase3FailClosedCoverageTests(unittest.TestCase):
                 ROLES,
             )
 
+        roles_without_moat = copy.deepcopy(ROLES)
+        roles_without_moat["specialist_roles"] = [
+            role for role in roles_without_moat["specialist_roles"] if role["id"] != "moat_auditor"
+        ]
+        with self.assertRaises(IntelligentRoutingError):
+            validate_routing_candidate(COUNCIL_ROUTER, roles_without_moat)
+
         freshness = route_decision(
             {**base, "freshness": "HIGH"},
             COUNCIL_ROUTER,
