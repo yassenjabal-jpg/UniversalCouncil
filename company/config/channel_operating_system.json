@@ -496,12 +496,19 @@
   "preproduction_craft_review": {
     "embedded_in": "Preproduction Lock",
     "final_authority": "Editorial Director / Showrunner",
-    "advisers_on_demand": [
+    "mode": "MANDATORY_PARALLEL_CRAFT_REVIEW",
+    "mandatory_participants": [
+      "Independent Fact Checker",
+      "Script & Voice Director",
       "Visual Art Director / Frame Curator",
       "Motion & Picture Editor",
-      "Independent Fact Checker"
+      "Music Supervisor & Sound Designer",
+      "Audience Growth & Packaging Strategist",
+      "Thumbnail & Packaging Designer",
+      "Media Producer / Production Coordinator"
     ],
-    "unanimous_approval_required": false
+    "unanimous_approval_required": false,
+    "rule": "SPECIALISTS_PRODUCE_STAGE_AUTHORITY_DECIDES"
   },
   "script_development": {
     "required_passes": [
@@ -521,6 +528,10 @@
       "claim_sources_complete",
       "visual_rights_plan",
       "visual_direction_locked",
+      "sound_intent_locked",
+      "packaging_intent_locked",
+      "specialist_craft_outputs_complete",
+      "asset_manifest_ready",
       "asset_plan",
       "tool_connection",
       "budget"
