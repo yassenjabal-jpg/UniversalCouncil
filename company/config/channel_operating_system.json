@@ -638,7 +638,7 @@
   },
   "production_system": {
     "version": "2.0",
-    "status": "ACTIVE_WORKFLOW_TECHNICAL_PILOT_ONLY",
+    "status": "ACTIVE_WORKFLOW_PILOT_ART_DIRECTION_REJECTED",
     "governing_doc": "docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md",
     "stage_authorities": {
       "research_script": "Editorial Director / Showrunner",
@@ -666,7 +666,7 @@
       "once_per_system": true,
       "duration_seconds_min": 30,
       "duration_seconds_max": 45,
-      "status": "TECHNICAL_RUN_COMPLETE_FINAL_GATE_NOT_APPROVED",
+      "status": "OWNER_ART_DIRECTION_REJECTED_TECHNICAL_EVIDENCE_ONLY",
       "gate_names": [
         "Preproduction Lock",
         "Rough Cut Review",
@@ -674,7 +674,8 @@
       ],
       "blocks_full_episode_until_pass": true,
       "old_pilot_evidence_accepted": false,
-      "result_artifact": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md"
+      "result_artifact": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
+      "art_review": "docs/operations/media/evidence/2026-10-15-lean-pilot/ART_DIRECTION_REVIEW.md"
     },
     "editing_routes": {
       "primary": {
@@ -756,7 +757,19 @@
       "external_jobs_status": "NOT_OBSERVED_NO_CANCELLATION_CLAIM"
     },
     "publication_authorized": false,
-    "evidence_contract": "CONTENT_HASHED_ARTIFACTS_NAMED_REVIEWERS_NO_CONFIG_PASS"
+    "evidence_contract": "CONTENT_HASHED_ARTIFACTS_NAMED_REVIEWERS_NO_CONFIG_PASS",
+    "art_direction": {
+      "governing_doc": "docs/operations/media/DESIGN.md",
+      "kit": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.1.md",
+      "reference_grammar": "docs/operations/media/reference/REFERENCE_TEMPORAL_GRAMMAR_1000061003_v1.0.md",
+      "implementation_language": "Kinetic Editorial Surrealism / Mixed Media",
+      "reference_fidelity_required": true,
+      "technical_success_is_artistic_acceptance": false,
+      "simplification_may_change_identity": false,
+      "owner_rejected_exports": {
+        "9eaa0fcbdecda1eae94ecb5071cda38cdf072ba44634ad1c4311bf5f842e049f": "docs/operations/media/evidence/2026-10-15-lean-pilot/ART_DIRECTION_REVIEW.md"
+      }
+    }
   },
   "anti_slop_checks": {
     "required": true,

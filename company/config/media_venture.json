@@ -348,7 +348,9 @@
       "native_ae_backup": "MEASURED_TECHNICAL_OUTPUT",
       "export_sha256": "9eaa0fcbdecda1eae94ecb5071cda38cdf072ba44634ad1c4311bf5f842e049f",
       "gui_actions": 0,
-      "final_gate_approved": false
+      "final_gate_approved": false,
+      "art_direction_status": "OWNER_REJECTED",
+      "art_review": "docs/operations/media/evidence/2026-10-15-lean-pilot/ART_DIRECTION_REVIEW.md"
     }
   },
   "specialized_tool_policy": "company/config/media_specialized_tool_policy.json",
@@ -384,7 +386,7 @@
     "once_per_system": true,
     "duration_seconds_min": 30,
     "duration_seconds_max": 45,
-    "status": "TECHNICAL_RUN_COMPLETE_FINAL_GATE_NOT_APPROVED",
+    "status": "OWNER_ART_DIRECTION_REJECTED_TECHNICAL_EVIDENCE_ONLY",
     "gate_names": [
       "Preproduction Lock",
       "Rough Cut Review",
@@ -392,6 +394,7 @@
     ],
     "blocks_full_episode_until_pass": true,
     "old_pilot_evidence_accepted": false,
-    "result_artifact": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md"
+    "result_artifact": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
+    "art_review": "docs/operations/media/evidence/2026-10-15-lean-pilot/ART_DIRECTION_REVIEW.md"
   }
 }

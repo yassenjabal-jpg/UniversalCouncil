@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-15T00:31:17+03:00",
-  "event_count": 70,
-  "active_count": 54,
+  "generated_at": "2026-10-15T00:41:57+03:00",
+  "event_count": 71,
+  "active_count": 55,
   "superseded_count": 16,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-15T00:31:17+03:00",
+  "latest_event_at": "2026-10-15T00:41:56+03:00",
   "scopes": {
     "council": [
       {
@@ -173,6 +173,15 @@
         "summary": "One real DAY24 technical pilot confirms native AE project creation about8seconds and render48-50seconds for41.77s without GUI actions. Current Descript native/plan route failed RTL, watermark-free1080p and audio QC. Full production remains unqualified.",
         "created_at": "2026-10-15T00:31:17+03:00",
         "confidence": "verified"
+      },
+      {
+        "event_id": "MEM-20261015-010000-artrej",
+        "subject": "media.pilot.art_direction.disposition",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "decision",
+        "summary": "Owner rejects delivered native DAY24 pilot as unrelated to channel art direction. Kinetic Editorial Surrealism mixed-media grammar remains mandatory; technical latency/export success cannot approve art or justify a diagram-only substitute.",
+        "created_at": "2026-10-15T00:41:56+03:00",
+        "confidence": "owner_confirmed"
       },
       {
         "event_id": "MEM-20261015-001500-lnv203",

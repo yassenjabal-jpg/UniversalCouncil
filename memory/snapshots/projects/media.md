@@ -18,6 +18,23 @@
   - `public_publish_authorized`: false
 - **Tags:** media, pilot, native-automation, measured-latency, pr30-only
 
+## media.pilot.art_direction.disposition
+- **Event:** `MEM-20261015-010000-artrej`
+- **Level:** `L4_OWNER_DIRECTIVE`
+- **Kind:** `decision`
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-15T00:41:56+03:00`
+- **Summary:** Owner rejects delivered native DAY24 pilot as unrelated to channel art direction. Kinetic Editorial Surrealism mixed-media grammar remains mandatory; technical latency/export success cannot approve art or justify a diagram-only substitute.
+- **Details:**
+  - `governing_art_direction`: docs/operations/media/DESIGN.md
+  - `new_render_produced`: false
+  - `no_main_merge`: true
+  - `no_per_frame_council_review`: true
+  - `rejected_export_sha256`: 9eaa0fcbdecda1eae94ecb5071cda38cdf072ba44634ad1c4311bf5f842e049f
+  - `review`: docs/operations/media/evidence/2026-10-15-lean-pilot/ART_DIRECTION_REVIEW.md
+  - `three_gates_only`: true
+- **Tags:** media, art-direction, owner-rejection, reference-fidelity, pr30-only
+
 ## media.pilot.measurement
 - **Event:** `MEM-20261015-001500-lnv203`
 - **Level:** `L4_OWNER_DIRECTIVE`

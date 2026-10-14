@@ -49,8 +49,16 @@ GATE_INPUTS = {
     GATES[2]: ["script", "direction", "asset_plan", "assets", "rough_cut", "export"],
 }
 GATE_CHECKS = {
-    GATES[0]: ["facts_checked", "rights_plan", "visual_direction", "voice_plan", "budget"],
-    GATES[1]: ["narration_complete", "story_pacing", "visual_coherence", "rights_clear", "no_filler", "sync"],
+    GATES[0]: ["facts_checked", "rights_plan", "visual_direction", "reference_fidelity", "voice_plan", "budget"],
+    GATES[1]: [
+        "narration_complete",
+        "story_pacing",
+        "visual_coherence",
+        "reference_fidelity",
+        "rights_clear",
+        "no_filler",
+        "sync",
+    ],
     GATES[2]: [
         "facts_checked",
         "rights_clear",
@@ -60,6 +68,7 @@ GATE_CHECKS = {
         "sync",
         "audio_intelligibility",
         "visual_coherence",
+        "reference_fidelity",
         "clean_export",
     ],
 }
@@ -78,6 +87,20 @@ def validate_production_config(cfg: dict[str, Any]) -> bool:
     require(system.get("stage_authorities") == AUTHORITIES, "one final authority per stage required")
     require(system.get("gate_authorities") == GATE_AUTHORITIES, "gate authority drift")
     require(system.get("target_duration_seconds_min") == 480, "8+ minute target required")
+    art = system.get("art_direction", {})
+    for key, expected in {
+        "governing_doc": "docs/operations/media/DESIGN.md",
+        "kit": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.1.md",
+        "reference_grammar": "docs/operations/media/reference/REFERENCE_TEMPORAL_GRAMMAR_1000061003_v1.0.md",
+        "implementation_language": "Kinetic Editorial Surrealism / Mixed Media",
+        "reference_fidelity_required": True,
+        "technical_success_is_artistic_acceptance": False,
+        "simplification_may_change_identity": False,
+    }.items():
+        require(
+            type(art.get(key)) is type(expected) and art.get(key) == expected, f"art direction contract drift: {key}"
+        )
+    require(isinstance(art.get("owner_rejected_exports"), dict), "Owner artistic dispositions must be retained")
     for key in ["per_frame_review", "per_prototype_review", "committee_approval", "publication_authorized"]:
         require(system.get(key) is False, f"{key} must remain disabled")
     require(system.get("legacy", {}).get("resume_allowed") is False, "cancelled workflow cannot resume")
@@ -214,6 +237,12 @@ def validate_gate(
                 observation.get("evidence_sha256") == artifact_hash(observation["evidence_ref"]),
                 f"{current} check evidence stale: {check}",
             )
+            if check == "reference_fidelity":
+                require(
+                    observation.get("authority") == AUTHORITIES["visual_direction"]
+                    and bool(observation.get("reviewer_id")),
+                    "reference fidelity requires evidenced Art Director disposition, not technical/coherence approval",
+                )
         if current == GATES[0]:
             require(
                 bool(run.get("writer_id"))
@@ -222,6 +251,11 @@ def validate_gate(
                 "facts require independent reviewer",
             )
         if current == GATES[2]:
+            require(
+                artifact_hash(run["artifacts"]["export"])
+                not in cfg["production_system"]["art_direction"]["owner_rejected_exports"],
+                "Owner-rejected art direction cannot pass Final QC on technical measurements",
+            )
             require(
                 bool(run.get("editor_id"))
                 and bool(run.get("mix_author_id"))

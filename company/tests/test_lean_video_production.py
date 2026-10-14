@@ -79,7 +79,13 @@ class LeanProductionTests(unittest.TestCase):
                 unresolved_defects=[],
                 input_hashes={name: artifact_hash(run["artifacts"][name]) for name in GATE_INPUTS[gate]},
                 checks={
-                    name: dict(passed=True, evidence_ref=str(evidence), evidence_sha256=evidence_hash)
+                    name: dict(
+                        passed=True,
+                        evidence_ref=str(evidence),
+                        evidence_sha256=evidence_hash,
+                        authority="Visual Art Director / Frame Curator",
+                        reviewer_id="synthetic-art-director",
+                    )
                     for name in GATE_CHECKS[gate]
                 },
             )
@@ -97,6 +103,43 @@ class LeanProductionTests(unittest.TestCase):
             measurement_evidence_sha256=evidence_hash,
         )
         return run
+
+    def test_technical_compliance_does_not_replace_reference_fidelity(self):
+        for gate in GATES:
+            for field, value in [("passed", False), ("authority", "Technical Operator"), ("reviewer_id", "")]:
+                run = copy.deepcopy(self.pilot)
+                run["gates"][gate]["checks"]["reference_fidelity"][field] = value
+                self.rejects(run)
+            run = copy.deepcopy(self.pilot)
+            run["gates"][gate]["checks"].pop("reference_fidelity")
+            self.rejects(run)
+
+    def test_owner_artistic_rejection_blocks_technically_valid_export(self):
+        cfg = copy.deepcopy(self.cfg)
+        cfg["production_system"]["art_direction"]["owner_rejected_exports"][
+            artifact_hash(self.pilot["artifacts"]["export"])
+        ] = "Owner rejection evidence"
+        with self.assertRaisesRegex(ProductionWorkflowError, "Owner-rejected art direction"):
+            validate_gate(cfg, self.pilot, GATES[2])
+
+    def test_art_direction_contract_cannot_be_downgraded_for_speed(self):
+        for field in [
+            "governing_doc",
+            "kit",
+            "reference_grammar",
+            "implementation_language",
+            "reference_fidelity_required",
+            "technical_success_is_artistic_acceptance",
+            "simplification_may_change_identity",
+        ]:
+            cfg = copy.deepcopy(self.cfg)
+            cfg["production_system"]["art_direction"][field] = "incorrect"
+            with self.assertRaises(ProductionWorkflowError):
+                validate_production_config(cfg)
+        cfg = copy.deepcopy(self.cfg)
+        cfg["production_system"]["art_direction"]["owner_rejected_exports"] = []
+        with self.assertRaises(ProductionWorkflowError):
+            validate_production_config(cfg)
 
     def test_governing_configs_cannot_restore_mirrored_legacy_workflows(self):
         self.cfg = json.loads((ROOT / "company/config/channel_operating_system.json").read_text(encoding="utf-8"))

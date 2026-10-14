@@ -61,6 +61,13 @@
           "passed": false,
           "evidence_ref": null,
           "evidence_sha256": null
+        },
+        "reference_fidelity": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null,
+          "authority": "Visual Art Director / Frame Curator",
+          "reviewer_id": null
         }
       },
       "unresolved_defects": [
@@ -111,6 +118,13 @@
           "passed": false,
           "evidence_ref": null,
           "evidence_sha256": null
+        },
+        "reference_fidelity": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null,
+          "authority": "Visual Art Director / Frame Curator",
+          "reviewer_id": null
         }
       },
       "unresolved_defects": [
@@ -176,6 +190,13 @@
           "passed": false,
           "evidence_ref": null,
           "evidence_sha256": null
+        },
+        "reference_fidelity": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null,
+          "authority": "Visual Art Director / Frame Curator",
+          "reviewer_id": null
         }
       },
       "unresolved_defects": [
