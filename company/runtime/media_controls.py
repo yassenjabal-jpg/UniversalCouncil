@@ -157,8 +157,8 @@ def validate_media_team(config):
         raise MediaControlError("P0 visual-system lock must pass before active production")
     if production_system.get("p1_status") != "PASS_INTERNAL_COHERENCE":
         raise MediaControlError("P1 internal coherence must pass before P2 preparation")
-    if production_system.get("active_stage") != "P1_REFERENCE_FIDELITY_RETRY_PHASE_4":
-        raise MediaControlError("media venture must remain in DAY24 reference-fidelity retry phase 4")
+    if production_system.get("active_stage") != "P1_REFERENCE_FIDELITY_RETRY_PHASE_5":
+        raise MediaControlError("media venture must remain in DAY24 critical motion prototype phase")
     if production_system.get("p2_status") != "BLOCKED_REFERENCE_FIDELITY_RETRY":
         raise MediaControlError("P2 must remain blocked until the P1 reference-fidelity retry passes")
     if not production_system.get("production_kit") or not production_system.get("p0_review"):
@@ -173,6 +173,10 @@ def validate_media_team(config):
         raise MediaControlError("primary motion route qualification is missing")
     if not production_system.get("motion_qualification_artifact") or not production_system.get("visual_event_script"):
         raise MediaControlError("retry motion/script artifacts are missing")
+    if not production_system.get("shot_bible"):
+        raise MediaControlError("locked shot bible is required before critical motion prototypes")
+    if production_system.get("critical_motion_prototypes_status") != "ACTIVE":
+        raise MediaControlError("critical motion prototype phase must remain active")
 
     toolchain = config.get("media_toolchain", {})
     if toolchain.get("image_generation_primary_tool") != "RUNWAY_NANO_BANANA_2_LITE_QUALIFIED":
