@@ -262,10 +262,7 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     authority_model = production_system.get("authority_model", {})
     if authority_model.get("council_after_lock") != "SYSTEM_AND_GATE_REVIEW_ONLY":
         raise ChannelOperatingSystemError("Council must review gates, not micromanage locked production")
-    if (
-        authority_model.get("visual_art_director")
-        != "FINAL_VISUAL_DECISION_WITHIN_LOCKED_SYSTEM"
-    ):
+    if authority_model.get("visual_art_director") != "FINAL_VISUAL_DECISION_WITHIN_LOCKED_SYSTEM":
         raise ChannelOperatingSystemError("Visual Art Director final visual authority drifted")
     if authority_model.get("technical_operator") != "EXECUTION_ONLY_NO_CREATIVE_REWRITE":
         raise ChannelOperatingSystemError("Technical Operator execution boundary drifted")
