@@ -11,7 +11,7 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
 
     def test_specialized_tool_first_is_governing_policy(self):
         cfg = self.load_policy()
-        self.assertEqual(cfg["version"], "1.3")
+        self.assertEqual(cfg["version"], "1.4")
         self.assertEqual(cfg["policy"], "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT")
         self.assertIn("python_as_primary_video_editor", cfg["prohibitions"])
         self.assertIn("python_as_primary_audio_mastering_tool", cfg["prohibitions"])
@@ -45,6 +45,12 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
             50,
         )
         self.assertTrue(qualification["remaining_credits_must_not_select_primary_tool"])
+        self.assertEqual(qualification["primary_tool_state"], "QUALIFIED_PRIMARY")
+        self.assertEqual(qualification["backup_tool_state"], "QUALIFIED_BACKUP")
+        self.assertEqual(qualification["primary_tool"], "runway:nano-banana-2-lite")
+        self.assertEqual(qualification["backup_tool"], "runway:nano-banana-pro")
+        self.assertGreater(qualification["primary_score"], qualification["backup_score"])
+        self.assertTrue(qualification["qualification_artifact"])
         self.assertEqual(cfg["gates"]["visual_system_lock_without_tool_qualification"], "BLOCK")
         self.assertEqual(cfg["gates"]["full_length_episode_before_p2_visual_pilot"], "BLOCK")
 
