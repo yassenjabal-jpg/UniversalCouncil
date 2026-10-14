@@ -38,7 +38,7 @@
     {
       "id": "independent_fact_checker",
       "name": "Independent Fact Checker",
-      "default_status": "ON_DEMAND",
+      "default_status": "MANDATORY_CRAFT_CONTRIBUTOR",
       "owns": [
         "material_claim_verification",
         "numbers_dates_names",
@@ -50,7 +50,7 @@
     {
       "id": "script_voice_director",
       "name": "Script & Voice Director",
-      "default_status": "ON_DEMAND",
+      "default_status": "MANDATORY_CRAFT_CONTRIBUTOR",
       "owns": [
         "scene_aware_script",
         "voice_intent",
@@ -107,7 +107,7 @@
     {
       "id": "music_sound_supervisor",
       "name": "Music Supervisor & Sound Designer",
-      "default_status": "ON_DEMAND",
+      "default_status": "MANDATORY_CRAFT_CONTRIBUTOR",
       "owns": [
         "preproduction_craft_review",
         "sonic_concept",
@@ -125,7 +125,7 @@
     {
       "id": "dialogue_mix_engineer",
       "name": "Dialogue & Mix Engineer",
-      "default_status": "ON_DEMAND",
+      "default_status": "MANDATORY_CRAFT_CONTRIBUTOR",
       "owns": [
         "dialogue_cleanup",
         "dialogue_edit",
@@ -142,7 +142,7 @@
     {
       "id": "audience_growth_strategist",
       "name": "Audience Growth & Packaging Strategist",
-      "default_status": "ON_DEMAND",
+      "default_status": "MANDATORY_CRAFT_CONTRIBUTOR",
       "owns": [
         "trend_radar",
         "topic_mining",
@@ -159,7 +159,7 @@
     {
       "id": "thumbnail_packaging_designer",
       "name": "Thumbnail & Packaging Designer",
-      "default_status": "ON_DEMAND",
+      "default_status": "MANDATORY_CRAFT_CONTRIBUTOR",
       "owns": [
         "thumbnail_concepts",
         "image_selection_retouching",
@@ -176,7 +176,7 @@
     {
       "id": "localization_producer",
       "name": "Localization Producer",
-      "default_status": "ON_DEMAND",
+      "default_status": "CONDITIONAL_CRAFT_CONTRIBUTOR",
       "owns": [
         "translation_adaptation",
         "dub_script",
@@ -219,7 +219,12 @@
     "stage_owner_has_final_authority",
     "asset_pack_approved_by_art_director_inside_preproduction_lock",
     "material_prompt_deviation_returns_to_stage_authority",
-    "final_qc_reviewer_independent_of_editor"
+    "final_qc_reviewer_independent_of_editor",
+    "mandatory_craft_contributors_produce_artifacts_not_gates",
+    "specialist_outputs_run_in_parallel_before_stage_authority_lock",
+    "missing_required_craft_output_blocks_stage_lock",
+    "specialist_output_does_not_transfer_final_stage_authority",
+    "localization_required_makes_localization_output_mandatory"
   ],
   "existing_function_dependencies": [
     "Owner",
@@ -396,5 +401,6 @@
     "old_pilot_evidence_accepted": false,
     "result_artifact": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
     "art_review": "docs/operations/media/evidence/2026-10-15-lean-pilot/ART_DIRECTION_REVIEW.md"
-  }
+  },
+  "craft_contributor_contract_pointer": "company/config/channel_operating_system.json#production_system.craft_contributor_contract"
 }
