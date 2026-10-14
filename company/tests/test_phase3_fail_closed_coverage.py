@@ -104,7 +104,6 @@ class Phase3FailClosedCoverageTests(unittest.TestCase):
                 with self.assertRaises(ApplicationProfileError):
                     validate_application_profiles(broken)
 
-        profile = PROFILES["profiles"]["after_effects"]
         mutations = [
             lambda p: p.pop("recovery"),
             lambda p: p["application"].update(id="wrong"),
