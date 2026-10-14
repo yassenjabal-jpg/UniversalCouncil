@@ -402,5 +402,34 @@
     "result_artifact": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
     "art_review": "docs/operations/media/evidence/2026-10-15-lean-pilot/ART_DIRECTION_REVIEW.md"
   },
-  "craft_contributor_contract_pointer": "company/config/channel_operating_system.json#production_system.craft_contributor_contract"
+  "craft_contributor_contract_pointer": "company/config/channel_operating_system.json#production_system.craft_contributor_contract",
+  "studio_tooling_audit": {
+    "status": "PROPOSED_AWAITING_INSTALL_AND_QUALIFICATION",
+    "artifact": "docs/operations/media/STUDIO_WORKFLOW_TOOLING_AUDIT_2026-10-15.md",
+    "adoption_rule": "INSTALL_THEN_BOUNDED_QUALIFICATION_THEN_ASSIGN",
+    "tier_1_install_now": [
+      "Adobe Premiere Pro 2026",
+      "Adobe Photoshop 2026",
+      "Adobe Illustrator 2026",
+      "Adobe Audition 2026",
+      "Adobe Media Encoder 2026",
+      "Zotero",
+      "PureRef"
+    ],
+    "tier_2_qc_localization": [
+      "Subtitle Edit",
+      "MediaInfo",
+      "Youlean Loudness Meter 2"
+    ],
+    "deferred_optional": [
+      "iZotope RX 12",
+      "DaVinci Resolve 21",
+      "Pro Tools",
+      "dedicated SFX asset manager"
+    ],
+    "current_detected_desktop_apps": [
+      "Adobe After Effects 2026",
+      "Adobe Creative Cloud"
+    ]
+  }
 }
