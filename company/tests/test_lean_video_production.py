@@ -10,6 +10,7 @@ from company.runtime.lean_video_production import (
     GATE_INPUTS,
     GATE_CHECKS,
     GATE_AUTHORITIES,
+    CRAFT_OUTPUTS_BY_STAGE,
     ProductionWorkflowError,
     artifact_hash,
     validate_production_config,
@@ -50,7 +51,9 @@ class LeanProductionTests(unittest.TestCase):
             editor_id="editor",
             mix_author_id="mixer",
             tool="Adobe After Effects 2026",
+            localized_variant_requested=False,
             artifacts={},
+            craft_outputs={},
             gates={},
             metrics={name: 1 for name in self.cfg["production_system"]["metrics"]},
         )
@@ -61,6 +64,18 @@ class LeanProductionTests(unittest.TestCase):
             path = Path(self.tmp.name) / (identity + name)
             path.write_bytes(("SYNTHETIC POLICY TEST ONLY " + identity + name).encode())
             run["artifacts"][name] = str(path)
+        for stage, outputs in CRAFT_OUTPUTS_BY_STAGE.items():
+            for output_id, function_id in outputs.items():
+                path = Path(self.tmp.name) / (identity + "-craft-" + output_id)
+                path.write_text("SYNTHETIC CRAFT OUTPUT " + output_id, encoding="utf-8")
+                run["craft_outputs"][output_id] = {
+                    "status": "COMPLETE",
+                    "stage": stage,
+                    "function_id": function_id,
+                    "author_id": ("fact-checker" if function_id == "independent_fact_checker" else function_id + "-author"),
+                    "artifact": str(path),
+                    "sha256": artifact_hash(str(path)),
+                }
         evidence = Path(self.tmp.name) / (identity + "-observations.log")
         evidence.write_text("SYNTHETIC reviewer and delivery observations; not real QC proof")
         evidence_hash = artifact_hash(str(evidence))
@@ -273,6 +288,7 @@ class LeanProductionTests(unittest.TestCase):
                 "version",
                 "stage_authorities",
                 "gate_authorities",
+                "craft_contributor_contract",
                 "target_duration_seconds_min",
                 "per_frame_review",
                 "per_prototype_review",
@@ -402,6 +418,65 @@ class LeanProductionTests(unittest.TestCase):
             run = copy.deepcopy(self.pilot)
             run["gates"][GATES[2]]["reviewer_id"] = reviewer
             self.rejects(run)
+
+    def test_required_specialist_craft_outputs_fail_closed(self):
+        stage_gate = {
+            "research_script": GATES[0],
+            "visual_direction": GATES[0],
+            "asset_pack": GATES[0],
+            "edit_motion": GATES[1],
+            "final_qc": GATES[2],
+        }
+        for stage, outputs in CRAFT_OUTPUTS_BY_STAGE.items():
+            for output_id in outputs:
+                run = copy.deepcopy(self.pilot)
+                run["craft_outputs"].pop(output_id)
+                with self.subTest(output_id=output_id):
+                    self.rejects(run, stage_gate[stage])
+
+    def test_craft_outputs_require_real_content_identity_and_hash(self):
+        output_id = "spotting_sheet"
+        for field, value in [
+            ("status", "PENDING"),
+            ("stage", "visual_direction"),
+            ("function_id", "motion_picture_editor"),
+            ("author_id", ""),
+            ("artifact", "missing-craft-file"),
+            ("sha256", "stale"),
+        ]:
+            run = copy.deepcopy(self.pilot)
+            run["craft_outputs"][output_id][field] = value
+            with self.subTest(field=field):
+                self.rejects(run, GATES[1])
+        run = copy.deepcopy(self.pilot)
+        Path(run["craft_outputs"][output_id]["artifact"]).write_bytes(b"")
+        self.rejects(run, GATES[1])
+
+    def test_fact_checker_craft_must_be_independent(self):
+        run = copy.deepcopy(self.pilot)
+        run["craft_outputs"]["claim_ledger"]["author_id"] = run["writer_id"]
+        self.rejects(run, GATES[0])
+        run = copy.deepcopy(self.pilot)
+        run["craft_outputs"]["final_fact_spotcheck"]["author_id"] = run["writer_id"]
+        self.rejects(run, GATES[2])
+
+    def test_localized_variant_requires_localization_conform_only_at_final_qc(self):
+        run = copy.deepcopy(self.pilot)
+        run["localized_variant_requested"] = True
+        self.assertTrue(validate_gate(self.cfg, run, GATES[0]))
+        self.assertTrue(validate_gate(self.cfg, run, GATES[1]))
+        self.rejects(run, GATES[2])
+        path = Path(self.tmp.name) / "localized-conform"
+        path.write_text("SYNTHETIC LOCALIZATION CONFORM", encoding="utf-8")
+        run["craft_outputs"]["localization_conform_package"] = {
+            "status": "COMPLETE",
+            "stage": "final_qc",
+            "function_id": "localization_producer",
+            "author_id": "localization-author",
+            "artifact": str(path),
+            "sha256": artifact_hash(str(path)),
+        }
+        self.assertTrue(validate_gate(self.cfg, run, GATES[2]))
 
     def test_delivery_and_metrics_require_measured_finite_values(self):
         invalid = {
