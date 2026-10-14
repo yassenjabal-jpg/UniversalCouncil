@@ -325,8 +325,8 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("full-length production must fail closed before P2 PASS")
     if production_system.get("per_frame_council_review_after_lock") != "FORBIDDEN_UNLESS_EXCEPTION":
         raise ChannelOperatingSystemError("Council per-frame review boundary drifted")
-    if production_system.get("active_pilot_stage") != "P1_REFERENCE_FIDELITY_RETRY_PHASE_4":
-        raise ChannelOperatingSystemError("active pilot stage must reflect DAY24 reference-fidelity retry phase 4")
+    if production_system.get("active_pilot_stage") != "P1_REFERENCE_FIDELITY_RETRY_PHASE_5":
+        raise ChannelOperatingSystemError("active pilot stage must reflect DAY24 critical motion prototype phase")
     if production_system.get("p1_status") != "PASS_INTERNAL_COHERENCE":
         raise ChannelOperatingSystemError("P1 internal coherence status drifted")
     if not production_system.get("p1_review") or not production_system.get("p1_internal_render"):
@@ -362,9 +362,15 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("retry phase 2 motion tool is not qualified")
     if retry.get("phase_3_visual_script") != "PASS_CANDIDATE":
         raise ChannelOperatingSystemError("retry phase 3 visual script state drifted")
-    if retry.get("phase_4_shot_bible") != "ACTIVE":
+    if retry.get("phase_4_shot_bible") != "PASS":
         raise ChannelOperatingSystemError("retry phase 4 shot-bible state drifted")
-    if not retry.get("visual_event_script") or not retry.get("reference_fidelity_review"):
+    if retry.get("phase_5_critical_motion_prototypes") != "ACTIVE":
+        raise ChannelOperatingSystemError("retry phase 5 critical-motion state drifted")
+    if (
+        not retry.get("visual_event_script")
+        or not retry.get("reference_fidelity_review")
+        or not retry.get("shot_bible")
+    ):
         raise ChannelOperatingSystemError("retry governance artifacts are missing")
 
     if cfg.get("publication_authority") != "GATED":
