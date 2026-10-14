@@ -1,5 +1,5 @@
 {
-  "version": "1.3",
+  "version": "1.4",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
   "visual_system": "Modern Editorial Surrealism",
   "primary_language": "Arabic",
@@ -108,6 +108,7 @@
     "independent_fact_check",
     "script_lock",
     "visual_treatment",
+    "visual_generation_brief_compile_and_anti_slop_approval",
     "audio_spotting_and_sonic_concept",
     "reference_frame_assignment",
     "storyboard_transition_audio_map",
@@ -157,7 +158,10 @@
       "typography",
       "visual hierarchy",
       "brand consistency",
-      "test-ready variants"
+      "test-ready variants",
+      "thumbnail generation brief packaging input",
+      "mobile-scale prompt constraints",
+      "variant differentiation constraints"
     ],
     "Evidence & Research Lead": [
       "source pack",
@@ -200,7 +204,10 @@
       "reference frame board",
       "palette/type/grid",
       "episode-specific motifs",
-      "visual continuity"
+      "visual continuity",
+      "visual generation brief art direction",
+      "visual metaphor specification",
+      "allowed/forbidden visual element specification"
     ],
     "Motion & Picture Editor": [
       "preproduction craft review",
@@ -262,7 +269,9 @@
       "project structure",
       "automation/routines",
       "artifact integrity",
-      "audio stem/export integrity"
+      "audio stem/export integrity",
+      "execute approved visual generation briefs only",
+      "generation prompt/version receipt"
     ],
     "Finance Controller": [
       "credits/cost/time logging",
@@ -275,7 +284,10 @@
       "generic-template detection",
       "story/visual differentiation challenge",
       "generic sound-design detection",
-      "visual story case challenge"
+      "visual story case challenge",
+      "visual generation brief anti-slop approval",
+      "prompt drift challenge",
+      "reference-fidelity challenge"
     ],
     "Owner": [
       "human narration",
@@ -393,7 +405,10 @@
       "transition map has narrative motivation",
       "thumbnail hero object is episode-specific",
       "episode uses a unique visual metaphor rather than a repeated scene template",
-      "architecture/classical art appears only when narratively justified"
+      "architecture/classical art appears only when narratively justified",
+      "generated visual has an approved versioned Visual Generation Brief",
+      "generation tool executed the approved brief without material creative rewrite",
+      "at least one of each three thumbnail hypotheses is zero-architecture unless the topic itself requires architecture"
     ],
     "fail_action": "RETURN_TO_EDITORIAL_OR_VISUAL_TREATMENT"
   },
@@ -405,6 +420,7 @@
     "G4 Pre-production Craft Review",
     "G5 Script + Independent Fact Check Lock",
     "G6 Visual + Sonic Treatment Lock",
+    "G6A Visual Generation Brief + Anti-Slop Approval",
     "G7 Animatic + Spotting Gate",
     "G8 Production Readiness Gate",
     "G9 Picture Lock Gate",
@@ -595,6 +611,7 @@
       "script_locked",
       "independent_fact_check_passed",
       "key_visuals_approved",
+      "visual_generation_briefs_approved",
       "claim_sources_complete",
       "visual_rights_clear",
       "storyboard_sufficient",
@@ -619,7 +636,8 @@
       "test_plan",
       "mobile_legibility_check"
     ],
-    "thumbnail_designer_independent_craft_function": true
+    "thumbnail_designer_independent_craft_function": true,
+    "generated_visual_rule": "thumbnail hypotheses may be textual/conceptual, but no generated thumbnail asset may be executed before an approved Visual Generation Brief"
   },
   "visual_identity": {
     "version": "2.0-candidate",
@@ -649,5 +667,70 @@
     "hero_objects_per_key_frame": 1,
     "negative_space_percent": "35-60",
     "synthetic_documentary_evidence_forbidden": true
+  },
+  "visual_generation_brief_system": {
+    "version": "1.0",
+    "status": "REQUIRED_FOR_ANY_GENERATED_VISUAL",
+    "capability_model": "venture_scoped_composed_capability_not_headcount",
+    "compiler_name": "Visual Prompt / Generation Brief Compiler",
+    "composed_by": [
+      "Visual Art Director / Frame Curator",
+      "Thumbnail & Packaging Designer",
+      "Synthesis & Alternatives Designer"
+    ],
+    "approval_required_from": [
+      "Red Team / Anti-Slop"
+    ],
+    "executor": "Technical Operator",
+    "artifact_template": "docs/templates/media/VISUAL_GENERATION_BRIEF.md",
+    "required_before": [
+      "still_image_generation",
+      "generated_thumbnail_asset",
+      "ai_video_visual_generation",
+      "generated_reference_frame"
+    ],
+    "required_fields": [
+      "episode_topic",
+      "viewer_question",
+      "click_promise",
+      "visual_metaphor_one_sentence",
+      "metaphor_rationale",
+      "hero_object",
+      "image_language",
+      "layout_family",
+      "composition_and_negative_space",
+      "camera_crop_and_perspective",
+      "background",
+      "brand_anchor_colors",
+      "episode_accent_color",
+      "lighting",
+      "texture_material",
+      "typography_direction",
+      "allowed_elements",
+      "forbidden_elements",
+      "difference_from_previous_thumbnail",
+      "reference_fidelity_notes",
+      "mobile_legibility_requirements",
+      "anti_ai_slop_constraints",
+      "documentary_evidence_boundary",
+      "final_generation_instruction",
+      "negative_constraints",
+      "anti_slop_approval_status",
+      "prompt_version"
+    ],
+    "approval_state_required": "APPROVED_BY_ANTI_SLOP",
+    "execution_rules": [
+      "NO_PROMPT_NO_GENERATION",
+      "NO_ANTI_SLOP_APPROVAL_NO_EXECUTION",
+      "TOOL_MUST_NOT_CREATIVELY_REWRITE_APPROVED_BRIEF",
+      "MATERIAL_DEVIATION_RETURNS_TO_COUNCIL",
+      "EXECUTION_MUST_RECORD_PROMPT_VERSION_AND_TOOL"
+    ],
+    "thumbnail_hypothesis_languages_required": [
+      "Object Macro",
+      "Editorial Cutout",
+      "Conceptual Surrealism"
+    ],
+    "minimum_zero_architecture_hypotheses_per_three": 1
   }
 }
