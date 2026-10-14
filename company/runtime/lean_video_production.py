@@ -130,8 +130,14 @@ def validate_production_config(cfg: dict[str, Any]) -> bool:
     craft = system.get("craft_contributor_contract", {})
     require(craft.get("mode") == "MANDATORY_PARALLEL_WITHIN_STAGES", "mandatory craft contributor mode required")
     require(craft.get("creates_additional_gates") is False, "craft contributors cannot create extra gates")
-    require(craft.get("missing_required_output_action") == "BLOCK_STAGE_LOCK", "missing craft output must block stage lock")
-    require(craft.get("stage_authority_retains_final_decision") is True, "stage authority must retain final decision")
+    require(
+        craft.get("missing_required_output_action") == "BLOCK_STAGE_LOCK",
+        "missing craft output must block stage lock",
+    )
+    require(
+        craft.get("stage_authority_retains_final_decision") is True,
+        "stage authority must retain final decision",
+    )
     require(
         craft.get("contributor_outputs_are_production_artifacts_not_votes") is True,
         "specialist contributions must be production artifacts, not committee votes",
@@ -145,7 +151,10 @@ def validate_production_config(cfg: dict[str, Any]) -> bool:
             for item in declared
             if item.get("required") is True
         }
-        require(actual == expected_outputs, f"mandatory craft outputs drifted: {stage}")
+        require(
+            actual == expected_outputs,
+            f"mandatory craft outputs drifted: {stage}",
+        )
     localization = craft.get("conditional", {}).get("localization_producer", {})
     require(
         localization
