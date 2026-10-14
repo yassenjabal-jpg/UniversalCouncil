@@ -85,6 +85,29 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertTrue(capability["multi_panel_thumbnail_output_forbidden"])
         self.assertTrue(capability["generation_context_must_contain_only_selected_brief"])
 
+    def test_locked_visual_production_authority_and_pilot_ladder(self):
+        cfg = self.load_config()
+        system = cfg["visual_production_system"]
+        self.assertTrue(system["art_director_final_visual_authority_within_lock"])
+        self.assertTrue(system["council_gate_review_only_after_lock"])
+        self.assertFalse(system["per_frame_full_council_review_after_lock"])
+        self.assertEqual(system["full_episode_requires"], "P2_PASS")
+        self.assertEqual(
+            system["pilot_ladder"],
+            [
+                "P0_REFERENCE_FRAME_LOCK",
+                "P1_COHERENCE_30_45",
+                "P2_PRODUCTION_60_90",
+                "P3_FULL_EPISODE_8_PLUS_MINUTES",
+            ],
+        )
+        art = next(f for f in cfg["production_functions"] if f["id"] == "visual_art_director")
+        self.assertIn("final_visual_decision_within_locked_system", art["owns"])
+        self.assertEqual(
+            cfg["media_toolchain"]["image_generation_primary_tool"],
+            "UNQUALIFIED_PENDING_TOOL_QUALIFICATION",
+        )
+
     def test_audio_roles_are_distinct_and_active(self):
         cfg = self.load_config()
         by_id = {x["id"]: x for x in cfg["production_functions"]}
@@ -220,6 +243,13 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["visual_generation_brief_capability"].__setitem__(
                 "multi_panel_thumbnail_output_forbidden", False
             ),
+            lambda c: c["visual_production_system"].__setitem__(
+                "art_director_final_visual_authority_within_lock", False
+            ),
+            lambda c: c["visual_production_system"].__setitem__(
+                "per_frame_full_council_review_after_lock", True
+            ),
+            lambda c: c["visual_production_system"].__setitem__("full_episode_requires", "NONE"),
         ]
         for mutate in mutations:
             cfg = self.load_config()
