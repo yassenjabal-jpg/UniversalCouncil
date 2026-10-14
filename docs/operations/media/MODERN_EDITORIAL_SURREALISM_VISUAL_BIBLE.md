@@ -538,3 +538,22 @@ For the episode thumbnail stage:
 - triptych/diptych/contact-sheet/collage/multi-panel output: **FORBIDDEN**.
 
 Architecture remains topic-dependent only; the selected thumbnail must be zero-architecture unless architecture materially serves that specific episode concept.
+
+
+---
+
+## 20. Production-system lock
+
+This Bible defines the visual language, but the channel is not production-ready merely because the language is documented.
+
+Before an 8+ minute episode:
+
+1. create 4–6 coherent reference frames from one topic;
+2. lock the Visual Production Kit;
+3. qualify the primary image-generation route;
+4. pass a 30–45 second continuous coherence pilot;
+5. pass a 60–90 second repeatable production pilot.
+
+After the Visual Production Kit is locked, ordinary frame decisions belong to the **Visual Art Director / Frame Curator**. The full Council reviews at gates and material exceptions rather than reopening design decisions for every shot.
+
+A healthy production system should make later frames easier and faster to produce than the first frames. If every frame requires a fresh Council debate, the visual system is not locked.
