@@ -1,5 +1,5 @@
 {
-  "version": "1.4",
+  "version": "1.5",
   "enabled": true,
   "team_model": "venture_scoped_smallest_effective_team_functions_not_headcount",
   "production_functions": [
@@ -74,7 +74,10 @@
         "palette_typography_grid",
         "episode_visual_motifs",
         "asset_style_approval",
-        "visual_continuity"
+        "visual_continuity",
+        "generation_brief_art_direction",
+        "visual_metaphor_specification",
+        "generation_constraints"
       ]
     },
     {
@@ -160,7 +163,10 @@
         "visual_hierarchy",
         "brand_consistency",
         "test_ready_variants",
-        "mobile_legibility"
+        "mobile_legibility",
+        "generation_brief_packaging_input",
+        "variant_differentiation_constraints",
+        "mobile_prompt_constraints"
       ]
     },
     {
@@ -187,7 +193,11 @@
     "growth_strategist_does_not_replace_thumbnail_design_review",
     "producer_controls_schedule_resources_not_editorial_truth",
     "motion_editor_participates_before_script_lock",
-    "same_human_or_tool_may_cover_multiple_functions_in_pilot_but_required_cross_function_reviews_remain"
+    "same_human_or_tool_may_cover_multiple_functions_in_pilot_but_required_cross_function_reviews_remain",
+    "generated_visual_execution_requires_approved_generation_brief",
+    "red_team_anti_slop_must_approve_generation_brief_before_execution",
+    "technical_operator_cannot_creatively_rewrite_approved_visual_brief",
+    "material_prompt_deviation_returns_to_council"
   ],
   "existing_function_dependencies": [
     "Owner",
@@ -197,7 +207,8 @@
     "Assurance Reviewer",
     "Technical Operator",
     "HR & Capability Director",
-    "Domain Specialists"
+    "Domain Specialists",
+    "Synthesis & Alternatives Designer"
   ],
   "pilot": {
     "required_before_scale": true,
@@ -233,7 +244,9 @@
     "visual_story_case_rework",
     "thumbnail_variants_produced",
     "production_readiness_failures",
-    "edit_rework_after_script_lock"
+    "edit_rework_after_script_lock",
+    "generation_brief_rework_rounds",
+    "prompt_drift_defects"
   ],
   "post_publish_split_review_after_videos": 10,
   "full_scale_without_pilot_forbidden": true,
@@ -285,5 +298,22 @@
     }
   },
   "specialized_tool_policy": "company/config/media_specialized_tool_policy.json",
-  "benchmark_artifact": "docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md"
+  "benchmark_artifact": "docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md",
+  "visual_generation_brief_capability": {
+    "id": "visual_generation_brief_compiler",
+    "name": "Visual Prompt / Generation Brief Compiler",
+    "permanent_role": false,
+    "composed_by": [
+      "Visual Art Director / Frame Curator",
+      "Thumbnail & Packaging Designer",
+      "Synthesis & Alternatives Designer"
+    ],
+    "anti_slop_approver": "Red Team",
+    "executor": "Technical Operator",
+    "artifact_template": "docs/templates/media/VISUAL_GENERATION_BRIEF.md",
+    "no_prompt_no_generation": true,
+    "no_anti_slop_approval_no_execution": true,
+    "tool_creative_rewrite_forbidden": true,
+    "material_deviation_returns_to_council": true
+  }
 }
