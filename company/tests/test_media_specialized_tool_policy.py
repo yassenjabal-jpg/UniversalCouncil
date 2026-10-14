@@ -11,7 +11,7 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
 
     def test_specialized_tool_first_is_governing_policy(self):
         cfg = self.load_policy()
-        self.assertEqual(cfg["version"], "1.4")
+        self.assertEqual(cfg["version"], "1.5")
         self.assertEqual(cfg["policy"], "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT")
         self.assertIn("python_as_primary_video_editor", cfg["prohibitions"])
         self.assertIn("python_as_primary_audio_mastering_tool", cfg["prohibitions"])
@@ -53,6 +53,11 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
         self.assertTrue(qualification["qualification_artifact"])
         self.assertEqual(cfg["gates"]["visual_system_lock_without_tool_qualification"], "BLOCK")
         self.assertEqual(cfg["gates"]["full_length_episode_before_p2_visual_pilot"], "BLOCK")
+        self.assertEqual(cfg["gates"]["p2_without_verified_motion_authoring"], "BLOCK")
+        self.assertEqual(cfg["gates"]["p2_without_clean_1080p_finishing_route"], "BLOCK")
+        self.assertEqual(cfg["gates"]["p2_without_delivery_audio_finishing_route"], "BLOCK")
+        self.assertEqual(cfg["current_motion_state"]["p1_result"], "PASS_INTERNAL_COHERENCE")
+        self.assertEqual(cfg["current_motion_state"]["p2_state"], "BLOCKED_CAPABILITY_GAP")
 
     def test_public_master_fails_closed_without_professional_finishing(self):
         cfg = self.load_policy()
