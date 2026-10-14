@@ -22,7 +22,7 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertTrue(validate_config(copy.deepcopy(CONFIG)))
 
     def test_rebuilt_visual_identity_contract(self):
-        self.assertEqual(CONFIG["version"], "1.5")
+        self.assertEqual(CONFIG["version"], "1.6")
         self.assertEqual(CONFIG["visual_system"], "Modern Editorial Surrealism")
         identity = CONFIG["visual_identity"]
         self.assertEqual(identity["version"], "2.1-candidate")
@@ -61,7 +61,11 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertIn("NO_ANTI_SLOP_APPROVAL_NO_EXECUTION", brief["execution_rules"])
         self.assertIn("TOOL_MUST_NOT_CREATIVELY_REWRITE_APPROVED_BRIEF", brief["execution_rules"])
         self.assertIn("MATERIAL_DEVIATION_RETURNS_TO_COUNCIL", brief["execution_rules"])
-        self.assertGreaterEqual(brief["minimum_zero_architecture_hypotheses_per_three"], 1)
+        self.assertEqual(brief["official_thumbnail_concepts_per_episode"], 1)
+        self.assertEqual(brief["generated_thumbnail_assets_per_episode"], 1)
+        self.assertEqual(brief["generation_jobs_per_episode_thumbnail_stage"], 1)
+        self.assertTrue(brief["context_isolation_required"])
+        self.assertTrue(brief["multi_panel_output_forbidden"])
         self.assertIn("visual_generation_briefs_approved", CONFIG["production_readiness"]["required_checks"])
         self.assertIn("G6A Visual Generation Brief + Anti-Slop Approval", CONFIG["quality_gates"])
 
@@ -151,6 +155,41 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertGreaterEqual(len(packaging["stage_a_before_script"]), 4)
         self.assertGreaterEqual(len(packaging["stage_b_after_rough_cut"]), 4)
 
+    def test_locked_production_system_and_pilot_ladder(self):
+        system = CONFIG["production_system"]
+        self.assertEqual(
+            system["governing_principle"],
+            "COUNCIL_DESIGNS_SYSTEM_ART_DIRECTOR_LOCKS_OPERATORS_PRODUCE_COUNCIL_REVIEWS_GATES",
+        )
+        lock = system["visual_system_lock"]
+        self.assertTrue(lock["required"])
+        self.assertGreaterEqual(lock["reference_frame_count_min"], 4)
+        self.assertLessEqual(lock["reference_frame_count_max"], 6)
+        self.assertTrue(lock["production_kit_required"])
+        self.assertEqual(lock["lock_authority"], "Visual Art Director / Frame Curator")
+
+        authority = system["authority_model"]
+        self.assertEqual(authority["council_after_lock"], "SYSTEM_AND_GATE_REVIEW_ONLY")
+        self.assertEqual(
+            authority["visual_art_director"],
+            "FINAL_VISUAL_DECISION_WITHIN_LOCKED_SYSTEM",
+        )
+        self.assertFalse(authority["per_frame_full_council_review_after_lock"])
+
+        qualification = system["tool_qualification"]
+        self.assertTrue(qualification["required_before_visual_system_lock"])
+        self.assertEqual(qualification["comparison_contract"], "SAME_FRAME_SAME_BRIEF")
+        self.assertTrue(qualification["remaining_credits_must_not_select_primary_tool"])
+        self.assertEqual(sum(qualification["score_weights"].values()), 100)
+
+        ladder = {stage["id"]: stage for stage in system["pilot_ladder"]}
+        self.assertEqual(ladder["P1_COHERENCE_30_45"]["duration_seconds_min"], 30)
+        self.assertEqual(ladder["P1_COHERENCE_30_45"]["duration_seconds_max"], 45)
+        self.assertEqual(ladder["P2_PRODUCTION_60_90"]["duration_seconds_min"], 60)
+        self.assertEqual(ladder["P2_PRODUCTION_60_90"]["duration_seconds_max"], 90)
+        self.assertEqual(ladder["P3_FULL_EPISODE_8_PLUS_MINUTES"]["duration_seconds_min"], 480)
+        self.assertEqual(system["full_length_episode_before_p2_pass"], "BLOCK")
+
     def test_audio_contract(self):
         audio = CONFIG["audio_system"]
         self.assertTrue(audio["spotting_required_before_reference_frame_lock"])
@@ -185,18 +224,10 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["visual_generation_brief_system"].__setitem__("required_fields", []),
             lambda c: c["visual_generation_brief_system"].__setitem__("execution_rules", []),
             lambda c: c["visual_generation_brief_system"].__setitem__("approval_state_required", "AUTO"),
-            lambda c: c["visual_generation_brief_system"].__setitem__(
-                "allowed_thumbnail_image_languages", ["same"]
-            ),
-            lambda c: c["visual_generation_brief_system"].__setitem__(
-                "official_thumbnail_concepts_per_episode", 2
-            ),
-            lambda c: c["visual_generation_brief_system"].__setitem__(
-                "generated_thumbnail_assets_per_episode", 2
-            ),
-            lambda c: c["visual_generation_brief_system"].__setitem__(
-                "generation_jobs_per_episode_thumbnail_stage", 2
-            ),
+            lambda c: c["visual_generation_brief_system"].__setitem__("allowed_thumbnail_image_languages", ["same"]),
+            lambda c: c["visual_generation_brief_system"].__setitem__("official_thumbnail_concepts_per_episode", 2),
+            lambda c: c["visual_generation_brief_system"].__setitem__("generated_thumbnail_assets_per_episode", 2),
+            lambda c: c["visual_generation_brief_system"].__setitem__("generation_jobs_per_episode_thumbnail_stage", 2),
             lambda c: c["visual_generation_brief_system"].__setitem__("single_asset_only", False),
             lambda c: c["visual_generation_brief_system"].__setitem__("multi_panel_output_forbidden", False),
             lambda c: c["visual_generation_brief_system"].__setitem__("context_isolation_required", False),
@@ -219,6 +250,13 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["production_readiness"].__setitem__("required_checks", []),
             lambda c: c["packaging_system"].__setitem__("generated_visual_rule", "generate freely"),
             lambda c: c["packaging_system"].__setitem__("thumbnail_designer_independent_craft_function", False),
+            lambda c: c["production_system"].__setitem__("full_length_episode_before_p2_pass", "ALLOW"),
+            lambda c: c["production_system"]["authority_model"].__setitem__(
+                "per_frame_full_council_review_after_lock", True
+            ),
+            lambda c: c["production_system"]["tool_qualification"].__setitem__(
+                "remaining_credits_must_not_select_primary_tool", False
+            ),
             lambda c: c["script_schema"].__setitem__("required_columns", ["narration"]),
             lambda c: c["frame_bible"].__setitem__(
                 "canonical_frame_types", c["frame_bible"]["canonical_frame_types"][:-1]
