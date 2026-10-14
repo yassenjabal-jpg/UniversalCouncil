@@ -93,7 +93,7 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertFalse(system["per_frame_full_council_review_after_lock"])
         self.assertEqual(system["full_episode_requires"], "P2_PASS")
         self.assertEqual(system["p0_status"], "PASS")
-        self.assertEqual(system["active_stage"], "P1_REFERENCE_FIDELITY_RETRY_PHASE_4")
+        self.assertEqual(system["active_stage"], "P1_REFERENCE_FIDELITY_RETRY_PHASE_5")
         self.assertTrue(system["production_kit"])
         self.assertTrue(system["p0_review"])
         self.assertEqual(system["p1_status"], "PASS_INTERNAL_COHERENCE")
@@ -105,6 +105,8 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertEqual(system["motion_qualification_status"], "PASS_PRIMARY")
         self.assertTrue(system["motion_qualification_artifact"])
         self.assertTrue(system["visual_event_script"])
+        self.assertTrue(system["shot_bible"])
+        self.assertEqual(system["critical_motion_prototypes_status"], "ACTIVE")
         self.assertEqual(
             system["pilot_ladder"],
             [
@@ -283,6 +285,7 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["visual_production_system"].__setitem__("p2_blockers", []),
             lambda c: c["visual_production_system"].__setitem__("active_stage", "P0_REFERENCE_FRAME_LOCK"),
             lambda c: c["visual_production_system"].__setitem__("motion_qualification_status", "FAIL"),
+            lambda c: c["visual_production_system"].__setitem__("critical_motion_prototypes_status", "BLOCKED"),
             lambda c: c["visual_production_system"].__setitem__("reference_temporal_grammar", ""),
             lambda c: c["media_toolchain"].__setitem__("after_effects_motion_assembly", "STALE"),
         ]
