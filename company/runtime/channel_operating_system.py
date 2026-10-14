@@ -283,6 +283,18 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("quality and fidelity must dominate tool selection")
     if qualification.get("remaining_credits_must_not_select_primary_tool") is not True:
         raise ChannelOperatingSystemError("remaining credits must not select the primary visual tool")
+    if qualification.get("qualification_passed") is not True:
+        raise ChannelOperatingSystemError("visual tool qualification must pass before visual-system lock")
+    if qualification.get("primary_generator_status") != "QUALIFIED_PRIMARY":
+        raise ChannelOperatingSystemError("primary visual generator qualification drifted")
+    if qualification.get("backup_generator_status") != "QUALIFIED_BACKUP":
+        raise ChannelOperatingSystemError("backup visual generator qualification drifted")
+    if not qualification.get("primary_generator") or not qualification.get("backup_generator"):
+        raise ChannelOperatingSystemError("qualified visual generator routes are missing")
+    if float(qualification.get("primary_score", 0)) <= float(qualification.get("backup_score", 0)):
+        raise ChannelOperatingSystemError("primary visual generator must retain the winning qualification score")
+    if not qualification.get("qualification_artifact"):
+        raise ChannelOperatingSystemError("visual tool qualification artifact is missing")
 
     ladder = production_system.get("pilot_ladder", [])
     if [stage.get("id") for stage in ladder] != [
