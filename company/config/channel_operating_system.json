@@ -638,7 +638,7 @@
   },
   "production_system": {
     "version": "2.0",
-    "status": "ACTIVE_WORKFLOW_ROUTING_CORRECTED_AWAITING_ART_DIRECTION_PILOT",
+    "status": "ACTIVE_MANDATORY_CRAFT_CONTRIBUTORS_AWAITING_SYSTEM_PILOT",
     "governing_doc": "docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md",
     "stage_authorities": {
       "research_script": "Editorial Director / Showrunner",
@@ -772,6 +772,112 @@
       "simplification_may_change_identity": false,
       "owner_rejected_exports": {
         "9eaa0fcbdecda1eae94ecb5071cda38cdf072ba44634ad1c4311bf5f842e049f": "docs/operations/media/evidence/2026-10-15-lean-pilot/ART_DIRECTION_REVIEW.md"
+      }
+    },
+    "craft_contributor_contract": {
+      "mode": "MANDATORY_PARALLEL_WITHIN_STAGES",
+      "creates_additional_gates": false,
+      "missing_required_output_action": "BLOCK_STAGE_LOCK",
+      "stage_authority_retains_final_decision": true,
+      "contributor_outputs_are_production_artifacts_not_votes": true,
+      "stages": {
+        "research_script": [
+          {
+            "function_id": "independent_fact_checker",
+            "output_id": "claim_ledger",
+            "required": true
+          },
+          {
+            "function_id": "script_voice_director",
+            "output_id": "narration_performance_map",
+            "required": true
+          },
+          {
+            "function_id": "audience_growth_strategist",
+            "output_id": "hook_retention_notes",
+            "required": true
+          }
+        ],
+        "visual_direction": [
+          {
+            "function_id": "motion_picture_editor",
+            "output_id": "motion_feasibility_map",
+            "required": true
+          },
+          {
+            "function_id": "music_sound_supervisor",
+            "output_id": "sonic_visual_intent",
+            "required": true
+          },
+          {
+            "function_id": "thumbnail_packaging_designer",
+            "output_id": "packaging_hook_continuity",
+            "required": true
+          }
+        ],
+        "asset_pack": [
+          {
+            "function_id": "visual_art_director",
+            "output_id": "visual_asset_clearance",
+            "required": true
+          },
+          {
+            "function_id": "music_sound_supervisor",
+            "output_id": "music_sfx_asset_plan",
+            "required": true
+          },
+          {
+            "function_id": "dialogue_mix_engineer",
+            "output_id": "dialogue_mix_input_spec",
+            "required": true
+          },
+          {
+            "function_id": "thumbnail_packaging_designer",
+            "output_id": "thumbnail_packaging_spec",
+            "required": true
+          }
+        ],
+        "edit_motion": [
+          {
+            "function_id": "script_voice_director",
+            "output_id": "narration_continuity_notes",
+            "required": true
+          },
+          {
+            "function_id": "music_sound_supervisor",
+            "output_id": "spotting_sheet",
+            "required": true
+          },
+          {
+            "function_id": "dialogue_mix_engineer",
+            "output_id": "rough_mix_receipt",
+            "required": true
+          },
+          {
+            "function_id": "visual_art_director",
+            "output_id": "visual_conform_notes",
+            "required": true
+          }
+        ],
+        "final_qc": [
+          {
+            "function_id": "dialogue_mix_engineer",
+            "output_id": "final_mix_receipt",
+            "required": true
+          },
+          {
+            "function_id": "independent_fact_checker",
+            "output_id": "final_fact_spotcheck",
+            "required": true
+          }
+        ]
+      },
+      "conditional": {
+        "localization_producer": {
+          "trigger": "localized_variant_requested",
+          "output_id": "localization_conform_package",
+          "required_when_triggered": true
+        }
       }
     }
   },
