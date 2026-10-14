@@ -1,0 +1,34 @@
+{
+  "version": "0.1-shadow",
+  "status": "CANDIDATE_SHADOW_ONLY",
+  "use_as_voting_weights": false,
+  "metrics": [
+    "unique_evidence",
+    "unique_objection",
+    "option_added",
+    "test_changed",
+    "decision_changed",
+    "duplicate_reasoning",
+    "false_blocker",
+    "missed_blocker",
+    "latency_ms",
+    "cost_units",
+    "human_override"
+  ],
+  "recommendations": [
+    "KEEP",
+    "NARROW",
+    "MERGE",
+    "ON_DEMAND",
+    "IMPROVEMENT_TRIAL",
+    "REMOVE"
+  ],
+  "minimum_observations": 3,
+  "remove_minimum_observations": 6,
+  "thresholds": {
+    "duplication_ratio_for_narrow": 0.6,
+    "blocker_error_rate_for_trial": 0.5,
+    "low_contribution_ratio": 0.25
+  },
+  "removal_requires_owner_review": true
+}
