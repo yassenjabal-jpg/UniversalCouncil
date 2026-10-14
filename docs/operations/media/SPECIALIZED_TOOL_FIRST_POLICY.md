@@ -136,3 +136,23 @@ The Council may say:
 - PUBLIC_MASTER_VERIFIED
 
 It may not say “done” for a creative stage just because code/config exists.
+
+
+## Visual generation execution contract
+
+Creative image/video generation remains specialized-tool-first, but **tool availability does not grant creative authority**.
+
+Before any generated visual is executed:
+1. the Council must compile a versioned Visual Generation Brief;
+2. Red Team / Anti-Slop must approve it;
+3. Technical Operator may then execute it in the approved specialized tool;
+4. the executor records prompt version, tool/model and output receipt.
+
+Hard rules:
+- **NO PROMPT, NO GENERATION**
+- **NO ANTI-SLOP APPROVAL, NO EXECUTION**
+- executor/tool creative rewrite is forbidden
+- material deviation returns to Council
+
+Template:
+`docs/templates/media/VISUAL_GENERATION_BRIEF.md`
