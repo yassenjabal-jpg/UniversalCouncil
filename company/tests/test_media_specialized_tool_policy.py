@@ -11,7 +11,7 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
 
     def test_specialized_tool_first_is_governing_policy(self):
         cfg = self.load_policy()
-        self.assertEqual(cfg["version"], "1.2")
+        self.assertEqual(cfg["version"], "1.3")
         self.assertEqual(cfg["policy"], "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT")
         self.assertIn("python_as_primary_video_editor", cfg["prohibitions"])
         self.assertIn("python_as_primary_audio_mastering_tool", cfg["prohibitions"])
@@ -32,6 +32,21 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
         self.assertTrue(video["anti_slop_approval_required"])
         self.assertEqual(cfg["gates"]["visual_generation_without_approved_brief"], "BLOCK")
         self.assertEqual(cfg["gates"]["visual_generation_without_anti_slop_approval"], "BLOCK")
+
+    def test_visual_tool_qualification_prefers_quality_over_credits(self):
+        cfg = self.load_policy()
+        qualification = cfg["tool_qualification"]
+        self.assertTrue(qualification["required_before_primary_visual_generator_lock"])
+        self.assertEqual(qualification["comparison_contract"], "SAME_FRAME_SAME_BRIEF")
+        self.assertGreaterEqual(qualification["minimum_viable_candidates"], 2)
+        self.assertEqual(sum(qualification["weights"].values()), 100)
+        self.assertGreaterEqual(
+            qualification["weights"]["prompt_fidelity"] + qualification["weights"]["style_consistency"],
+            50,
+        )
+        self.assertTrue(qualification["remaining_credits_must_not_select_primary_tool"])
+        self.assertEqual(cfg["gates"]["visual_system_lock_without_tool_qualification"], "BLOCK")
+        self.assertEqual(cfg["gates"]["full_length_episode_before_p2_visual_pilot"], "BLOCK")
 
     def test_public_master_fails_closed_without_professional_finishing(self):
         cfg = self.load_policy()
