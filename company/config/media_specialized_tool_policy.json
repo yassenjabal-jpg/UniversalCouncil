@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "policy": "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
   "principles": [
     "Use specialized creative tools for creative craft.",
@@ -8,7 +8,9 @@
     "If no suitable specialized tool is available, declare CAPABILITY_GAP and stop or escalate.",
     "Generated visual craft requires a versioned Council-authored Visual Generation Brief before tool execution.",
     "Anti-Slop approval is mandatory before generated visual execution.",
-    "Generation tools and Technical Operator may not materially reinterpret or creatively rewrite an approved brief."
+    "Generation tools and Technical Operator may not materially reinterpret or creatively rewrite an approved brief.",
+    "For episode thumbnail generation, execute exactly one selected Council concept as one job, one prompt version and one independent asset.",
+    "Triptych, diptych, contact-sheet, collage and multi-panel thumbnail outputs are rejected."
   ],
   "prohibitions": [
     "python_as_primary_video_editor",
@@ -49,7 +51,12 @@
       "code_role": "prompt/version registry only",
       "generation_brief_required": true,
       "anti_slop_approval_required": true,
-      "creative_prompt_rewrite_by_executor_forbidden": true
+      "creative_prompt_rewrite_by_executor_forbidden": true,
+      "official_thumbnail_concepts_per_episode": 1,
+      "generated_thumbnail_assets_per_episode": 1,
+      "generation_jobs_per_episode_thumbnail_stage": 1,
+      "context_isolation_required": true,
+      "multi_panel_thumbnail_output_forbidden": true
     },
     "ai_video_generation": {
       "preferred": [
@@ -145,7 +152,9 @@
     "public_final_master": "BLOCK_UNTIL_PRO_AUDIO_AND_NLE_FINISHING_RUNTIME_VERIFIED",
     "automatic_publish": "BLOCK",
     "visual_generation_without_approved_brief": "BLOCK",
-    "visual_generation_without_anti_slop_approval": "BLOCK"
+    "visual_generation_without_anti_slop_approval": "BLOCK",
+    "thumbnail_generation_multiple_concepts_or_assets": "BLOCK",
+    "thumbnail_generation_multi_panel_output": "BLOCK"
   },
   "escalation_rule": "If a required craft stage is blocked, HR/Capability Director must scout or request a specialized tool. The Technical Operator may not fill the gap by authoring a custom craft replacement without an explicit Council exception approved by Owner.",
   "exception_rule": {

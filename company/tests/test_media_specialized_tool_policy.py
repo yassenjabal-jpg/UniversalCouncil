@@ -11,7 +11,7 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
 
     def test_specialized_tool_first_is_governing_policy(self):
         cfg = self.load_policy()
-        self.assertEqual(cfg["version"], "1.1")
+        self.assertEqual(cfg["version"], "1.2")
         self.assertEqual(cfg["policy"], "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT")
         self.assertIn("python_as_primary_video_editor", cfg["prohibitions"])
         self.assertIn("python_as_primary_audio_mastering_tool", cfg["prohibitions"])
@@ -20,6 +20,13 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
         self.assertTrue(still["generation_brief_required"])
         self.assertTrue(still["anti_slop_approval_required"])
         self.assertTrue(still["creative_prompt_rewrite_by_executor_forbidden"])
+        self.assertEqual(still["official_thumbnail_concepts_per_episode"], 1)
+        self.assertEqual(still["generated_thumbnail_assets_per_episode"], 1)
+        self.assertEqual(still["generation_jobs_per_episode_thumbnail_stage"], 1)
+        self.assertTrue(still["context_isolation_required"])
+        self.assertTrue(still["multi_panel_thumbnail_output_forbidden"])
+        self.assertEqual(cfg["gates"]["thumbnail_generation_multiple_concepts_or_assets"], "BLOCK")
+        self.assertEqual(cfg["gates"]["thumbnail_generation_multi_panel_output"], "BLOCK")
         video = cfg["tool_matrix"]["ai_video_generation"]
         self.assertTrue(video["generation_brief_required"])
         self.assertTrue(video["anti_slop_approval_required"])

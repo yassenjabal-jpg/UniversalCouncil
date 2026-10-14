@@ -1,5 +1,5 @@
 {
-  "version": "1.5",
+  "version": "1.6",
   "enabled": true,
   "team_model": "venture_scoped_smallest_effective_team_functions_not_headcount",
   "production_functions": [
@@ -197,7 +197,10 @@
     "generated_visual_execution_requires_approved_generation_brief",
     "red_team_anti_slop_must_approve_generation_brief_before_execution",
     "technical_operator_cannot_creatively_rewrite_approved_visual_brief",
-    "material_prompt_deviation_returns_to_council"
+    "material_prompt_deviation_returns_to_council",
+    "thumbnail_generation_is_one_job_one_prompt_version_one_asset",
+    "only_one_official_thumbnail_concept_may_be_generated_per_episode",
+    "multi_panel_thumbnail_outputs_are_rejected"
   ],
   "existing_function_dependencies": [
     "Owner",
@@ -314,6 +317,11 @@
     "no_prompt_no_generation": true,
     "no_anti_slop_approval_no_execution": true,
     "tool_creative_rewrite_forbidden": true,
-    "material_deviation_returns_to_council": true
+    "material_deviation_returns_to_council": true,
+    "one_official_thumbnail_concept_per_episode": true,
+    "one_generation_job_per_episode_thumbnail_stage": true,
+    "one_generated_thumbnail_asset_per_episode": true,
+    "multi_panel_thumbnail_output_forbidden": true,
+    "generation_context_must_contain_only_selected_brief": true
   }
 }

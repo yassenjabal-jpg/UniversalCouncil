@@ -14,6 +14,11 @@
 - Date:
 - Target tool/model:
 - Previous related thumbnail/frame:
+- Official thumbnail concept count: 1
+- Authorized generation jobs for this thumbnail stage: 1
+- Authorized generated thumbnail assets: 1
+- Execution isolation: ONE_JOB_ONE_PROMPT_VERSION_ONE_ASSET
+- Multi-panel output permitted: NO
 
 ## 2. Editorial intent
 - Episode topic:
@@ -117,6 +122,12 @@ List explicitly. Examples:
 
 ## 14. Final generation instruction
 Write the complete final instruction to the generation tool here. It must be executable as-is and must not depend on hidden context.
+
+For thumbnail assets, the instruction must explicitly say:
+- create **one single independent 16:9 thumbnail image only**;
+- do not create a triptych, diptych, contact sheet, collage, storyboard, multi-panel image, or variants;
+- do not include context, concepts, or prompts from other episodes;
+- execute only this prompt version.
 
 ## 15. Negative constraints
 Write the explicit negative/rejection constraints here.

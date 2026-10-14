@@ -354,13 +354,17 @@ Examples of a major structural device:
 - gold object
 - identical headline placement
 
-### Packaging workflow
+### Packaging workflow — Single-Thumbnail Lock
 For each episode:
-1. write five title hypotheses
-2. create three visually distinct thumbnail hypotheses
-3. test at phone size
-4. reject the most generic option even if it is beautiful
-5. keep only the option with the strongest click promise and clearest metaphor
+1. write title hypotheses as needed;
+2. the Council may challenge or discuss alternatives internally, but it must issue **exactly one official thumbnail concept**;
+3. test that single concept at phone size before generation;
+4. compile **one versioned Visual Generation Brief** for that selected concept only;
+5. execute **one generation job → one prompt version → one independent 16:9 thumbnail asset**;
+6. reject any triptych, diptych, contact sheet, collage, storyboard, multi-panel result, or extra variant;
+7. if the one generated asset fails, return it to the Council for revision rather than automatically generating alternate thumbnails.
+
+> **The Council explores broadly but commits narrowly: one episode, one selected thumbnail.**
 
 ---
 
@@ -516,9 +520,21 @@ Every brief must explicitly contain:
 - prompt version;
 - Anti-Slop approval status.
 
-For each set of three thumbnail hypotheses, use materially different image languages:
-1. Object Macro;
-2. Editorial Cutout;
-3. Conceptual Surrealism.
+For thumbnail work, the Council may choose whichever single image language best serves the episode:
+- Object Macro;
+- Editorial Cutout;
+- Conceptual Surrealism.
 
-At least one of each three hypotheses must contain **no architecture at all**, unless architecture is inseparable from the episode subject.
+Only **one** of these may become the official thumbnail concept for an episode. Only that selected concept may receive a generation brief and enter the generation context.
+
+Hard execution boundary:
+> **ONE JOB = ONE PROMPT VERSION = ONE ASSET.**
+
+For the episode thumbnail stage:
+- official thumbnail concepts: **1**;
+- approved thumbnail briefs: **1**;
+- generation jobs: **1**;
+- generated thumbnail assets: **1**;
+- triptych/diptych/contact-sheet/collage/multi-panel output: **FORBIDDEN**.
+
+Architecture remains topic-dependent only; the selected thumbnail must be zero-architecture unless architecture materially serves that specific episode concept.

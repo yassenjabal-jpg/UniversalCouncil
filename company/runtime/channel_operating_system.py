@@ -104,15 +104,15 @@ REQUIRED_SCRIPT_PASSES = [
 
 
 def validate_config(cfg: dict[str, Any]) -> bool:
-    if cfg.get("version") != "1.4":
-        raise ChannelOperatingSystemError("channel operating system must be version 1.4")
+    if cfg.get("version") != "1.5":
+        raise ChannelOperatingSystemError("channel operating system must be version 1.5")
     if cfg.get("channel_model") != "broad_format_first_multilingual_visual_documentary":
         raise ChannelOperatingSystemError("channel model drifted")
     if cfg.get("visual_system") != "Modern Editorial Surrealism":
         raise ChannelOperatingSystemError("visual system drifted")
 
     visual_identity = cfg.get("visual_identity", {})
-    if visual_identity.get("version") != "2.0-candidate":
+    if visual_identity.get("version") != "2.1-candidate":
         raise ChannelOperatingSystemError("visual identity version drifted")
     if visual_identity.get("bible") != "docs/operations/media/MODERN_EDITORIAL_SURREALISM_VISUAL_BIBLE.md":
         raise ChannelOperatingSystemError("visual identity bible drifted")
@@ -138,15 +138,21 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("architecture must remain topic-dependent")
     if visual_identity.get("classical_art_is_optional_not_mandatory") is not True:
         raise ChannelOperatingSystemError("classical art must remain optional")
-    if int(visual_identity.get("thumbnail_hypotheses_per_episode", 0)) < 3:
-        raise ChannelOperatingSystemError("thumbnail hypothesis count is too low")
+    if int(visual_identity.get("thumbnail_hypotheses_per_episode", 0)) != 1:
+        raise ChannelOperatingSystemError("single-thumbnail lock requires exactly one official thumbnail concept")
+    if int(visual_identity.get("generated_thumbnail_assets_per_episode", 0)) != 1:
+        raise ChannelOperatingSystemError("exactly one generated thumbnail asset is allowed per episode")
+    if visual_identity.get("single_thumbnail_lock") is not True:
+        raise ChannelOperatingSystemError("single-thumbnail lock cannot be disabled")
+    if visual_identity.get("multi_panel_thumbnail_output_forbidden") is not True:
+        raise ChannelOperatingSystemError("multi-panel thumbnail output must remain forbidden")
     if int(visual_identity.get("hero_objects_per_key_frame", 0)) != 1:
         raise ChannelOperatingSystemError("key frames must keep one dominant hero object")
     if visual_identity.get("synthetic_documentary_evidence_forbidden") is not True:
         raise ChannelOperatingSystemError("synthetic imagery cannot substitute for documentary evidence")
 
     visual_brief = cfg.get("visual_generation_brief_system", {})
-    if visual_brief.get("version") != "1.0":
+    if visual_brief.get("version") != "1.1":
         raise ChannelOperatingSystemError("visual generation brief system version drifted")
     if visual_brief.get("status") != "REQUIRED_FOR_ANY_GENERATED_VISUAL":
         raise ChannelOperatingSystemError("visual generation brief system must be required")
@@ -202,19 +208,34 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         "TOOL_MUST_NOT_CREATIVELY_REWRITE_APPROVED_BRIEF",
         "MATERIAL_DEVIATION_RETURNS_TO_COUNCIL",
         "EXECUTION_MUST_RECORD_PROMPT_VERSION_AND_TOOL",
+        "ONE_JOB_ONE_PROMPT_VERSION_ONE_ASSET",
+        "ONE_FINAL_THUMBNAIL_PER_EPISODE",
+        "MULTI_PANEL_THUMBNAIL_OUTPUT_FORBIDDEN",
     }
     if not required_execution_rules.issubset(set(visual_brief.get("execution_rules", []))):
         raise ChannelOperatingSystemError("visual generation brief execution rules are incomplete")
     if visual_brief.get("approval_state_required") != "APPROVED_BY_ANTI_SLOP":
         raise ChannelOperatingSystemError("visual generation brief approval state drifted")
-    if set(visual_brief.get("thumbnail_hypothesis_languages_required", [])) != {
+    if set(visual_brief.get("allowed_thumbnail_image_languages", [])) != {
         "Object Macro",
         "Editorial Cutout",
         "Conceptual Surrealism",
     }:
-        raise ChannelOperatingSystemError("thumbnail hypothesis image-language contract drifted")
-    if int(visual_brief.get("minimum_zero_architecture_hypotheses_per_three", 0)) < 1:
-        raise ChannelOperatingSystemError("zero-architecture thumbnail hypothesis requirement missing")
+        raise ChannelOperatingSystemError("allowed thumbnail image-language contract drifted")
+    if int(visual_brief.get("official_thumbnail_concepts_per_episode", 0)) != 1:
+        raise ChannelOperatingSystemError("exactly one official thumbnail concept is allowed")
+    if int(visual_brief.get("generated_thumbnail_assets_per_episode", 0)) != 1:
+        raise ChannelOperatingSystemError("exactly one generated thumbnail asset is allowed")
+    if int(visual_brief.get("generation_jobs_per_episode_thumbnail_stage", 0)) != 1:
+        raise ChannelOperatingSystemError("thumbnail stage must use exactly one generation job")
+    for flag in {
+        "single_asset_only",
+        "multi_panel_output_forbidden",
+        "context_isolation_required",
+        "only_selected_brief_may_enter_generation_context",
+    }:
+        if visual_brief.get(flag) is not True:
+            raise ChannelOperatingSystemError(f"single-thumbnail execution boundary missing: {flag}")
     if cfg.get("publication_authority") != "GATED":
         raise ChannelOperatingSystemError("publishing must remain gated")
 
@@ -360,10 +381,11 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("early packaging stage is incomplete")
     if len(packaging.get("stage_b_after_rough_cut", [])) < 4:
         raise ChannelOperatingSystemError("final packaging stage is incomplete")
-    if "no generated thumbnail asset may be executed before an approved Visual Generation Brief" not in packaging.get(
-        "generated_visual_rule", ""
-    ):
+    generated_visual_rule = packaging.get("generated_visual_rule", "")
+    if "no generated thumbnail asset may be executed before an approved Visual Generation Brief" not in generated_visual_rule:
         raise ChannelOperatingSystemError("packaging generation-brief rule drifted")
+    if "one brief, one generation job, and one independent asset only" not in generated_visual_rule:
+        raise ChannelOperatingSystemError("single-thumbnail packaging lock drifted")
 
     frame_types = cfg.get("frame_bible", {}).get("canonical_frame_types", [])
     if len(frame_types) != 12:

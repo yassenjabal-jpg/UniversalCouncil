@@ -79,6 +79,11 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertTrue(capability["no_anti_slop_approval_no_execution"])
         self.assertTrue(capability["tool_creative_rewrite_forbidden"])
         self.assertTrue(capability["material_deviation_returns_to_council"])
+        self.assertTrue(capability["one_official_thumbnail_concept_per_episode"])
+        self.assertTrue(capability["one_generation_job_per_episode_thumbnail_stage"])
+        self.assertTrue(capability["one_generated_thumbnail_asset_per_episode"])
+        self.assertTrue(capability["multi_panel_thumbnail_output_forbidden"])
+        self.assertTrue(capability["generation_context_must_contain_only_selected_brief"])
 
     def test_audio_roles_are_distinct_and_active(self):
         cfg = self.load_config()
@@ -203,6 +208,18 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["visual_generation_brief_capability"].__setitem__("composed_by", ["Prompt Engineer"]),
             lambda c: c["visual_generation_brief_capability"].__setitem__("anti_slop_approver", "Technical Operator"),
             lambda c: c["visual_generation_brief_capability"].__setitem__("no_prompt_no_generation", False),
+            lambda c: c["visual_generation_brief_capability"].__setitem__(
+                "one_official_thumbnail_concept_per_episode", False
+            ),
+            lambda c: c["visual_generation_brief_capability"].__setitem__(
+                "one_generation_job_per_episode_thumbnail_stage", False
+            ),
+            lambda c: c["visual_generation_brief_capability"].__setitem__(
+                "one_generated_thumbnail_asset_per_episode", False
+            ),
+            lambda c: c["visual_generation_brief_capability"].__setitem__(
+                "multi_panel_thumbnail_output_forbidden", False
+            ),
         ]
         for mutate in mutations:
             cfg = self.load_config()

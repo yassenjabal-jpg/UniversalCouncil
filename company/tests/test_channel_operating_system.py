@@ -22,10 +22,10 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertTrue(validate_config(copy.deepcopy(CONFIG)))
 
     def test_rebuilt_visual_identity_contract(self):
-        self.assertEqual(CONFIG["version"], "1.4")
+        self.assertEqual(CONFIG["version"], "1.5")
         self.assertEqual(CONFIG["visual_system"], "Modern Editorial Surrealism")
         identity = CONFIG["visual_identity"]
-        self.assertEqual(identity["version"], "2.0-candidate")
+        self.assertEqual(identity["version"], "2.1-candidate")
         self.assertEqual(
             identity["bible"],
             "docs/operations/media/MODERN_EDITORIAL_SURREALISM_VISUAL_BIBLE.md",
@@ -34,7 +34,10 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertTrue(identity["episode_accent_required"])
         self.assertTrue(identity["architecture_is_topic_dependent_only"])
         self.assertTrue(identity["classical_art_is_optional_not_mandatory"])
-        self.assertGreaterEqual(identity["thumbnail_hypotheses_per_episode"], 3)
+        self.assertEqual(identity["thumbnail_hypotheses_per_episode"], 1)
+        self.assertEqual(identity["generated_thumbnail_assets_per_episode"], 1)
+        self.assertTrue(identity["single_thumbnail_lock"])
+        self.assertTrue(identity["multi_panel_thumbnail_output_forbidden"])
         self.assertEqual(identity["hero_objects_per_key_frame"], 1)
         self.assertTrue(identity["synthetic_documentary_evidence_forbidden"])
         self.assertEqual(CONFIG["frame_bible"]["composition_rules"]["negative_space_percent"], "35-60")
@@ -171,7 +174,7 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["visual_identity"].__setitem__("episode_accent_required", False),
             lambda c: c["visual_identity"].__setitem__("architecture_is_topic_dependent_only", False),
             lambda c: c["visual_identity"].__setitem__("classical_art_is_optional_not_mandatory", False),
-            lambda c: c["visual_identity"].__setitem__("thumbnail_hypotheses_per_episode", 1),
+            lambda c: c["visual_identity"].__setitem__("thumbnail_hypotheses_per_episode", 2),
             lambda c: c["visual_identity"].__setitem__("hero_objects_per_key_frame", 2),
             lambda c: c["visual_identity"].__setitem__("synthetic_documentary_evidence_forbidden", False),
             lambda c: c.pop("visual_generation_brief_system"),
@@ -183,11 +186,20 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["visual_generation_brief_system"].__setitem__("execution_rules", []),
             lambda c: c["visual_generation_brief_system"].__setitem__("approval_state_required", "AUTO"),
             lambda c: c["visual_generation_brief_system"].__setitem__(
-                "thumbnail_hypothesis_languages_required", ["same"]
+                "allowed_thumbnail_image_languages", ["same"]
             ),
             lambda c: c["visual_generation_brief_system"].__setitem__(
-                "minimum_zero_architecture_hypotheses_per_three", 0
+                "official_thumbnail_concepts_per_episode", 2
             ),
+            lambda c: c["visual_generation_brief_system"].__setitem__(
+                "generated_thumbnail_assets_per_episode", 2
+            ),
+            lambda c: c["visual_generation_brief_system"].__setitem__(
+                "generation_jobs_per_episode_thumbnail_stage", 2
+            ),
+            lambda c: c["visual_generation_brief_system"].__setitem__("single_asset_only", False),
+            lambda c: c["visual_generation_brief_system"].__setitem__("multi_panel_output_forbidden", False),
+            lambda c: c["visual_generation_brief_system"].__setitem__("context_isolation_required", False),
             lambda c: c.__setitem__("publication_authority", "AUTO"),
             lambda c: c["benchmark_profile"].__setitem__("adopt_disciplines_not_headcount", False),
             lambda c: c["benchmark_profile"].__setitem__("reference_models", []),

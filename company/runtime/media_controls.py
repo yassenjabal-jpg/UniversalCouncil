@@ -55,8 +55,8 @@ PUBLISHED_PERFORMANCE_METRICS = {
 
 
 def validate_media_team(config):
-    if config.get("version") != "1.5":
-        raise MediaControlError("media venture must be version 1.5")
+    if config.get("version") != "1.6":
+        raise MediaControlError("media venture must be version 1.6")
 
     functions = {f["id"]: f for f in config.get("production_functions", [])}
     missing = REQUIRED_MEDIA_FUNCTIONS - set(functions)
@@ -111,6 +111,11 @@ def validate_media_team(config):
         "no_anti_slop_approval_no_execution",
         "tool_creative_rewrite_forbidden",
         "material_deviation_returns_to_council",
+        "one_official_thumbnail_concept_per_episode",
+        "one_generation_job_per_episode_thumbnail_stage",
+        "one_generated_thumbnail_asset_per_episode",
+        "multi_panel_thumbnail_output_forbidden",
+        "generation_context_must_contain_only_selected_brief",
     }:
         if visual_brief.get(flag) is not True:
             raise MediaControlError(f"visual generation brief boundary missing: {flag}")
@@ -120,6 +125,9 @@ def validate_media_team(config):
         "red_team_anti_slop_must_approve_generation_brief_before_execution",
         "technical_operator_cannot_creatively_rewrite_approved_visual_brief",
         "material_prompt_deviation_returns_to_council",
+        "thumbnail_generation_is_one_job_one_prompt_version_one_asset",
+        "only_one_official_thumbnail_concept_may_be_generated_per_episode",
+        "multi_panel_thumbnail_outputs_are_rejected",
     }
     if not required_prompt_rules.issubset(independence):
         raise MediaControlError("visual prompt execution boundaries are incomplete")

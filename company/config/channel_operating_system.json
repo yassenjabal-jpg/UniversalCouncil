@@ -1,5 +1,5 @@
 {
-  "version": "1.4",
+  "version": "1.5",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
   "visual_system": "Modern Editorial Surrealism",
   "primary_language": "Arabic",
@@ -408,7 +408,9 @@
       "architecture/classical art appears only when narratively justified",
       "generated visual has an approved versioned Visual Generation Brief",
       "generation tool executed the approved brief without material creative rewrite",
-      "at least one of each three thumbnail hypotheses is zero-architecture unless the topic itself requires architecture"
+      "exactly one official thumbnail concept is selected for generation per episode",
+      "thumbnail generation is one job + one prompt version + one independent asset",
+      "triptych/diptych/contact-sheet/collage/multi-panel thumbnail output is forbidden"
     ],
     "fail_action": "RETURN_TO_EDITORIAL_OR_VISUAL_TREATMENT"
   },
@@ -626,21 +628,21 @@
   "packaging_system": {
     "stage_a_before_script": [
       "five_title_hypotheses",
-      "three_thumbnail_hypotheses",
+      "single_thumbnail_concept_selection",
       "click_promise",
       "answer_promise"
     ],
     "stage_b_after_rough_cut": [
       "final_title_variants",
-      "final_thumbnail_variants",
-      "test_plan",
+      "single_final_thumbnail",
+      "single_thumbnail_test_plan",
       "mobile_legibility_check"
     ],
     "thumbnail_designer_independent_craft_function": true,
-    "generated_visual_rule": "thumbnail hypotheses may be textual/conceptual, but no generated thumbnail asset may be executed before an approved Visual Generation Brief"
+    "generated_visual_rule": "thumbnail concept exploration may occur inside Council deliberation, but exactly one official thumbnail concept may be selected; no generated thumbnail asset may be executed before an approved Visual Generation Brief; one episode thumbnail stage authorizes one brief, one generation job, and one independent asset only"
   },
   "visual_identity": {
-    "version": "2.0-candidate",
+    "version": "2.1-candidate",
     "bible": "docs/operations/media/MODERN_EDITORIAL_SURREALISM_VISUAL_BIBLE.md",
     "primary_reference": "user-provided 1000061003.mp4",
     "reference_authority": "PRIMARY_VISUAL_REFERENCE",
@@ -663,13 +665,16 @@
     "architecture_is_topic_dependent_only": true,
     "classical_art_is_optional_not_mandatory": true,
     "anti_template_rule": "no more than two major structural devices may carry over from the immediately previous thumbnail",
-    "thumbnail_hypotheses_per_episode": 3,
+    "thumbnail_hypotheses_per_episode": 1,
     "hero_objects_per_key_frame": 1,
     "negative_space_percent": "35-60",
-    "synthetic_documentary_evidence_forbidden": true
+    "synthetic_documentary_evidence_forbidden": true,
+    "generated_thumbnail_assets_per_episode": 1,
+    "single_thumbnail_lock": true,
+    "multi_panel_thumbnail_output_forbidden": true
   },
   "visual_generation_brief_system": {
-    "version": "1.0",
+    "version": "1.1",
     "status": "REQUIRED_FOR_ANY_GENERATED_VISUAL",
     "capability_model": "venture_scoped_composed_capability_not_headcount",
     "compiler_name": "Visual Prompt / Generation Brief Compiler",
@@ -724,13 +729,22 @@
       "NO_ANTI_SLOP_APPROVAL_NO_EXECUTION",
       "TOOL_MUST_NOT_CREATIVELY_REWRITE_APPROVED_BRIEF",
       "MATERIAL_DEVIATION_RETURNS_TO_COUNCIL",
-      "EXECUTION_MUST_RECORD_PROMPT_VERSION_AND_TOOL"
+      "EXECUTION_MUST_RECORD_PROMPT_VERSION_AND_TOOL",
+      "ONE_JOB_ONE_PROMPT_VERSION_ONE_ASSET",
+      "ONE_FINAL_THUMBNAIL_PER_EPISODE",
+      "MULTI_PANEL_THUMBNAIL_OUTPUT_FORBIDDEN"
     ],
-    "thumbnail_hypothesis_languages_required": [
+    "allowed_thumbnail_image_languages": [
       "Object Macro",
       "Editorial Cutout",
       "Conceptual Surrealism"
     ],
-    "minimum_zero_architecture_hypotheses_per_three": 1
+    "official_thumbnail_concepts_per_episode": 1,
+    "generated_thumbnail_assets_per_episode": 1,
+    "generation_jobs_per_episode_thumbnail_stage": 1,
+    "single_asset_only": true,
+    "multi_panel_output_forbidden": true,
+    "context_isolation_required": true,
+    "only_selected_brief_may_enter_generation_context": true
   }
 }
