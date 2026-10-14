@@ -249,7 +249,9 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["production_system"]["motion_tool_qualification"].__setitem__("watermark_free", False),
             lambda c: c["production_system"]["retry_pipeline"].__setitem__("phase_2_motion_tool", "FAIL"),
             lambda c: c["production_system"]["retry_pipeline"].__setitem__("phase_4_shot_bible", "BLOCKED"),
-            lambda c: c["production_system"]["retry_pipeline"].__setitem__("phase_5_critical_motion_prototypes", "BLOCKED"),
+            lambda c: c["production_system"]["retry_pipeline"].__setitem__(
+                "phase_5_critical_motion_prototypes", "BLOCKED"
+            ),
             lambda c: c["production_system"]["authority_model"].__setitem__("council_after_lock", "PER_FRAME"),
             lambda c: c["production_system"]["authority_model"].__setitem__("visual_art_director", "ADVISORY"),
             lambda c: c["production_system"]["authority_model"].__setitem__(
