@@ -134,6 +134,20 @@ def validate_studio_model(model):
     if departments["qc_delivery"].get("lead") != "independent_qc_reviewer":
         raise MediaControlError("QC & Delivery lead drifted")
 
+    shared = model.get("shared_studio_services", {})
+    if set(shared) != {
+        "evidence_research_support",
+        "risk_rights_assurance",
+        "technical_operations",
+        "finance_cost_control",
+        "owner_authority",
+    }:
+        raise MediaControlError("Studio shared services drifted")
+    if shared["technical_operations"].get("roles") != ["Technical Operator"]:
+        raise MediaControlError("Studio technical operations ownership drifted")
+    if shared["owner_authority"].get("roles") != ["Owner"]:
+        raise MediaControlError("Studio Owner authority drifted")
+
     pod = model.get("episode_pod", {})
     if pod.get("created_per_episode") is not True or set(pod.get("required_core", [])) != STUDIO_CORE_POD:
         raise MediaControlError("Episode Pod core drifted")
