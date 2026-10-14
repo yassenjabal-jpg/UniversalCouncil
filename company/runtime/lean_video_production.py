@@ -147,9 +147,7 @@ def validate_production_config(cfg: dict[str, Any]) -> bool:
     for stage, expected_outputs in CRAFT_OUTPUTS_BY_STAGE.items():
         declared = craft_stages.get(stage, [])
         actual = {
-            item.get("output_id"): item.get("function_id")
-            for item in declared
-            if item.get("required") is True
+            item.get("output_id"): item.get("function_id") for item in declared if item.get("required") is True
         }
         require(
             actual == expected_outputs,
