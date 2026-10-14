@@ -1,11 +1,13 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "policy": "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
   "principles": [
-    "Use specialized creative tools for creative craft.",
-    "Use code for orchestration, validation, metadata, automation, reproducibility and QC.",
-    "Never substitute a homemade script for a missing professional craft tool merely because scripting is easier.",
-    "If no suitable specialized tool is available, declare CAPABILITY_GAP and stop or escalate."
+    "Specialized creative tools author picture, motion and audio; code orchestrates and checks evidence.",
+    "Native connectors first for this media workflow; no long GUI automation loops.",
+    "One current delivery editor plus one rough/transcript utility; no tool tournaments or known-failed delivery retries.",
+    "Visual Art Director approves one asset-pack direction in Preproduction Lock.",
+    "Rights, factual integrity, Arabic narration/readability and clean export are preserved in the three gates.",
+    "Connection evidence is not delivery proof; only exact exported-artifact QC establishes delivery quality."
   ],
   "prohibitions": [
     "python_as_primary_video_editor",
@@ -43,7 +45,15 @@
         "Runway image models"
       ],
       "status": "AVAILABLE",
-      "code_role": "prompt/version registry only"
+      "code_role": "prompt/version registry only",
+      "generation_brief_required": true,
+      "creative_prompt_rewrite_by_executor_forbidden": true,
+      "official_thumbnail_concepts_per_episode": 1,
+      "generated_thumbnail_assets_per_episode": 1,
+      "generation_jobs_per_episode_thumbnail_stage": 1,
+      "context_isolation_required": true,
+      "multi_panel_thumbnail_output_forbidden": true,
+      "approval_scope": "ASSET_PACK_PREPRODUCTION_LOCK"
     },
     "ai_video_generation": {
       "preferred": [
@@ -52,46 +62,62 @@
       ],
       "status": "PARTIAL_CAPABILITY",
       "notes": "Runway connected but current workspace exposes no video models; do not pretend video generation is available there.",
-      "code_role": "job orchestration only"
+      "code_role": "job orchestration only",
+      "generation_brief_required": true,
+      "approval_scope": "ASSET_PACK_PREPRODUCTION_LOCK"
     },
     "motion_graphics_compositing": {
       "preferred": [
-        "Adobe After Effects 2026"
+        "Adobe After Effects 2026 native automation"
       ],
-      "status": "RUNTIME_VERIFIED",
-      "code_role": "JSX/automation is allowed to drive After Effects, but After Effects remains the renderer/editor."
+      "backup": [],
+      "status": "CURRENT_PILOT_ROUTE_REVERIFY_EACH_RUN",
+      "code_role": "orchestration and QC only",
+      "rough_utility": [
+        "Descript rough/transcript utility"
+      ]
     },
     "dialogue_cleanup_text_edit": {
       "preferred": [
-        "Descript Studio Sound / Descript editor"
+        "Descript"
       ],
-      "status": "CONNECTED_AND_AVAILABLE",
-      "code_role": "file movement/metadata only"
+      "backup": [
+        "Adobe After Effects 2026 native automation"
+      ],
+      "status": "ROUGH_UTILITY_AVAILABLE",
+      "code_role": "orchestration and QC only"
     },
     "picture_edit_finishing": {
       "preferred": [
-        "Adobe Premiere Pro",
-        "DaVinci Resolve",
-        "Descript for rough/text edit"
+        "Adobe After Effects 2026 native automation"
       ],
-      "status": "PUBLIC_FINISHING_CAPABILITY_GAP",
-      "notes": "Premiere Pro and DaVinci Resolve are not runtime-verified on YASSIN. Descript may support rough/text edit but does not by itself close the high-end finishing gate."
+      "backup": [],
+      "status": "CURRENT_PILOT_ROUTE_REVERIFY_EACH_RUN",
+      "code_role": "orchestration and QC only",
+      "rough_utility": [
+        "Descript rough/transcript utility"
+      ]
     },
     "audio_edit_mix_master": {
       "preferred": [
-        "Adobe Audition",
-        "DaVinci Fairlight",
-        "equivalent professional DAW/NLE audio page"
+        "Adobe After Effects 2026 native automation"
       ],
-      "status": "PUBLIC_FINISHING_CAPABILITY_GAP",
-      "notes": "No Audition or Resolve/Fairlight runtime verification on YASSIN."
+      "backup": [],
+      "status": "CURRENT_PILOT_ROUTE_REVERIFY_EACH_RUN",
+      "code_role": "orchestration and QC only",
+      "rough_utility": [
+        "Descript rough/transcript utility"
+      ]
     },
     "captions_transcript": {
       "preferred": [
-        "Descript",
-        "NLE caption tools"
+        "Descript"
       ],
-      "status": "AVAILABLE"
+      "backup": [
+        "Adobe After Effects 2026 native automation"
+      ],
+      "status": "ROUGH_UTILITY_AVAILABLE",
+      "code_role": "orchestration and QC only"
     },
     "multilingual_audio": {
       "preferred": [
@@ -102,10 +128,14 @@
     },
     "render_export": {
       "preferred": [
-        "NLE/Media Encoder/Resolve deliver page"
+        "Adobe After Effects 2026 native automation"
       ],
-      "status": "CAPABILITY_GAP_FOR_PUBLIC_MASTER",
-      "code_role": "checksum/QC/archive only"
+      "backup": [],
+      "status": "CURRENT_PILOT_ROUTE_REVERIFY_EACH_RUN",
+      "code_role": "orchestration and QC only",
+      "rough_utility": [
+        "Descript rough/transcript utility"
+      ]
     }
   },
   "current_verified_environment": {
@@ -127,15 +157,8 @@
       "authenticated": true,
       "image_models_available": true,
       "video_models_available": false
-    }
-  },
-  "gates": {
-    "pilot_research_and_preproduction": "ALLOW",
-    "pilot_reference_frames": "ALLOW",
-    "pilot_motion_design": "ALLOW_WITH_AFTER_EFFECTS",
-    "pilot_voice_cleanup": "ALLOW_WITH_DESCRIPT",
-    "public_final_master": "BLOCK_UNTIL_PRO_AUDIO_AND_NLE_FINISHING_RUNTIME_VERIFIED",
-    "automatic_publish": "BLOCK"
+    },
+    "historical_environment_note": "Descript connector authentication is live but its measured Final Delivery failed; Adobe After Effects is the current delivery route and must pass a fresh current-session probe before use. Other desktop/plugin booleans remain historical observations unless separately probed."
   },
   "escalation_rule": "If a required craft stage is blocked, HR/Capability Director must scout or request a specialized tool. The Technical Operator may not fill the gap by authoring a custom craft replacement without an explicit Council exception approved by Owner.",
   "exception_rule": {
@@ -143,5 +166,46 @@
     "must_show_reason_specialized_tool_not_viable": true,
     "must_be_time_bounded": true,
     "must_not_become_default": true
+  },
+  "governing_workflow": "company/config/channel_operating_system.json",
+  "editing_routes": {
+    "primary": {
+      "tool": "Adobe After Effects 2026",
+      "transport": "native_project_automation",
+      "role": "EDIT_MOTION_AND_DELIVERY",
+      "connection_status": "REVERIFY_ON_EACH_RUN",
+      "delivery_status": "MEASURED_41_SECOND_TECHNICAL_PILOT_NOT_FULL_PRODUCTION_QUALIFIED",
+      "evidence": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
+      "last_native_probe_observed": "2026-10-15T00:21:04+03:00",
+      "requires_current_probe": true
+    },
+    "backup": {
+      "tool": "Descript",
+      "transport": "native_api_or_connector",
+      "role": "ROUGH_TRANSCRIPT_UTILITY_ONLY",
+      "connection_status": "LIVE_VERIFIED",
+      "delivery_status": "ROUGH_PREP_ONLY_FINAL_DELIVERY_DISQUALIFIED_RTL_720P_WATERMARK",
+      "evidence": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
+      "eligible_for_final_delivery": false
+    },
+    "max_routes": 2,
+    "gui_retry_loops": false,
+    "max_primary_diagnosis_minutes": 10,
+    "max_backup_activations": 1,
+    "backup_requires_current_probe": false,
+    "backup_trigger": "ROUGH_PREP_ONLY",
+    "fallback_failure_action": "CAPABILITY_GAP_STOP_NO_DELIVERY_FALLBACK"
+  },
+  "quality_gates": [
+    "Preproduction Lock",
+    "Rough Cut Review",
+    "Final QC"
+  ],
+  "execution_constraints": {
+    "automatic_publish": "BLOCK",
+    "generation_without_preproduction_lock": "BLOCK",
+    "thumbnail_multiple_concepts_or_assets": "BLOCK",
+    "gui_retry_loops": "FORBIDDEN",
+    "public_final_master": "REQUIRES_EXACT_EXPORT_FINAL_QC_NOT_SEPARATE_NLE_DAW_BRANDS"
   }
 }

@@ -1,4 +1,6 @@
-# Channel Operating System v1.2 — Studio-Benchmarked
+> **SUPERSEDED — historical evidence only.** The DAY24 ladder, retry/prototype queues and long AE GUI method are cancelled. [Lean Workflow v2.0](LEAN_VIDEO_PRODUCTION_WORKFLOW.md) governs current production. Historical results below are preserved; do not resume these instructions or use their PASS as new-system proof.
+
+# Channel Operating System v1.4 — Studio-Benchmarked
 
 Normative operating method for the broad, format-first, multilingual visual-documentary channel.
 
@@ -162,6 +164,34 @@ Art Director defines:
 - diagram language
 - hero objects
 
+### 12A. Visual Generation Brief Compile + Anti-Slop Approval
+
+Before any generated visual is executed, the Council produces a versioned **Visual Generation Brief**.
+
+Compiler:
+- Visual Art Director / Frame Curator
+- Thumbnail & Packaging Designer
+- Synthesis & Alternatives Designer
+
+Independent approval:
+- Red Team / Anti-Slop
+
+Executor:
+- Technical Operator
+
+Required template:
+`docs/templates/media/VISUAL_GENERATION_BRIEF.md`
+
+Hard rules:
+- **NO PROMPT, NO GENERATION**
+- **NO ANTI-SLOP APPROVAL, NO EXECUTION**
+- Technical Operator may not creatively rewrite the approved brief
+- generation tools may not materially reinterpret the approved brief
+- material deviation returns to Council
+- prompt version + tool/model + execution receipt are recorded
+
+Packaging hypotheses may be conceptual/textual before this gate, but no generated thumbnail asset may be produced before approval.
+
 ### 13. Audio Spotting + Sonic Concept
 Sound is designed with picture.
 
@@ -268,6 +298,7 @@ G3 Packaging Hypothesis
 G4 Pre-production Craft Review
 G5 Script + Independent Fact Check Lock
 G6 Visual + Sonic Treatment
+G6A Visual Generation Brief + Anti-Slop Approval
 G7 Animatic + Spotting
 G8 Production Readiness
 G9 Picture Lock
@@ -387,3 +418,45 @@ Brand/publication:
 Owner.
 
 [executed on device: YASSIN (4ca4bced-f8ec-41f7-b8af-9fb86e0ede61)]
+
+
+## Visual Generation Brief authority
+
+The Visual Prompt / Generation Brief Compiler is a **composed capability**, not a new permanent seat.
+
+Art Director owns visual intent.  
+Thumbnail Designer owns packaging readability and differentiation.  
+Synthesis converts approved positions into one executable artifact without erasing dissent or constraints.  
+Red Team / Anti-Slop approves or rejects the artifact.  
+Technical Operator executes the approved artifact and records the receipt.
+
+The executor is not an additional creative decision-maker.
+
+
+---
+
+## Visual Production Lock and Pilot Ladder — 2026-10-14
+
+The channel must not scale directly from a thumbnail experiment to an 8+ minute episode.
+
+Governing production sequence:
+
+`P0 Reference Frame Lock → P1 30–45s Coherence Pilot → P2 60–90s Production Pilot → P3 8+ min Episode`
+
+P0 requires:
+- 4–6 coherent reference frames from one topic;
+- locked Visual Production Kit;
+- primary visual-generation route qualified with the same-frame/same-brief protocol.
+
+After P0 lock:
+- Visual Art Director owns final visual decisions inside the locked system;
+- Technical Operator executes without creative rewrite;
+- Red Team can block drift/AI slop/evidence confusion;
+- full Council reviews at gates, not every ordinary frame.
+
+Full-length production is **BLOCKED** until P2 passes.
+
+Governing artifacts:
+- `docs/operations/media/VISUAL_PRODUCTION_SYSTEM.md`
+- `docs/operations/media/TOOL_QUALIFICATION_PROTOCOL.md`
+- `docs/templates/media/VISUAL_PRODUCTION_KIT.md`

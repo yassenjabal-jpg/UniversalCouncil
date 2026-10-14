@@ -2,72 +2,118 @@
 
 > Generated from append-only memory events. Do not edit manually.
 
-## media.pilot.measurement
-- **Event:** `MEM-20261012-192851-3f76af`
+## media.lean_pilot.native_latency
+- **Event:** `MEM-20261015-003000-pltest`
 - **Level:** `L3_CANONICAL`
-- **Kind:** `requirement`
+- **Kind:** `evidence`
 - **Confidence:** `verified`
-- **Updated:** `2026-10-12T19:28:51+03:00`
-- **Summary:** No full-scale media operation before a three-video pilot; measure production cost/effort and quality, and if published also measure CTR and audience-retention outcomes before scaling.
+- **Updated:** `2026-10-15T00:31:17+03:00`
+- **Summary:** One real DAY24 technical pilot confirms native AE project creation about8seconds and render48-50seconds for41.77s without GUI actions. Current Descript native/plan route failed RTL, watermark-free1080p and audio QC. Full production remains unqualified.
 - **Details:**
-  - `operational_metrics`: ["production_time_per_video", "owner_human_minutes_per_video", "tool_cost_per_video", "cost_per_published_minute", "revision_count", "factual_policy_defects", "packaging_quality"]
-  - `pilot_videos`: 3
-  - `pre_scale_required`: true
-  - `published_metrics`: ["ctr", "first_30_second_retention", "average_percentage_viewed", "watch_time", "subscribers_per_video", "returning_viewers"]
-  - `source_file`: company/config/media_venture.json
-- **Tags:** media, pilot, metrics
+  - `evidence_document`: docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md
+  - `final_gate_approved`: false
+  - `governing_config`: company/config/channel_operating_system.json
+  - `no_main_merge`: true
+  - `observed_scope`: NATIVE_CONTROL_LATENCY_AND_SAMPLED_TECHNICAL_DELIVERY
+  - `public_publish_authorized`: false
+- **Tags:** media, pilot, native-automation, measured-latency, pr30-only
+
+## media.pilot.art_direction.disposition
+- **Event:** `MEM-20261015-010000-artrej`
+- **Level:** `L4_OWNER_DIRECTIVE`
+- **Kind:** `decision`
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-15T00:41:56+03:00`
+- **Summary:** Owner rejects delivered native DAY24 pilot as unrelated to channel art direction. Kinetic Editorial Surrealism mixed-media grammar remains mandatory; technical latency/export success cannot approve art or justify a diagram-only substitute.
+- **Details:**
+  - `governing_art_direction`: docs/operations/media/DESIGN.md
+  - `new_render_produced`: false
+  - `no_main_merge`: true
+  - `no_per_frame_council_review`: true
+  - `rejected_export_sha256`: 9eaa0fcbdecda1eae94ecb5071cda38cdf072ba44634ad1c4311bf5f842e049f
+  - `review`: docs/operations/media/evidence/2026-10-15-lean-pilot/ART_DIRECTION_REVIEW.md
+  - `three_gates_only`: true
+- **Tags:** media, art-direction, owner-rejection, reference-fidelity, pr30-only
+
+## media.pilot.measurement
+- **Event:** `MEM-20261015-001500-lnv203`
+- **Level:** `L4_OWNER_DIRECTIVE`
+- **Kind:** `architecture`
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-15T00:03:08+03:00`
+- **Summary:** Exactly one 30-45 second production-system pilot uses the three existing gates. Three-video commercial observations never block first 8+ minute episode production.
+- **Details:**
+  - `governing_config`: company/config/channel_operating_system.json
+  - `governing_doc`: docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md
+  - `legacy_status`: SUPERSEDED_CANCELLED
+  - `no_main_merge`: true
+  - `pilot_status`: NOT_RUN
+  - `priority`: Current workflow overrides older media pilot/tool/production-cell procedure; historical evidence is retained.
+  - `public_publish_authorized`: false
+  - `scope_override`: Native media craft routing replaces GUI-first for this workflow only.
+  - `timing_targets_unmeasured`: true
+- **Supersedes:** `MEM-20261012-192851-3f76af`
+- **Tags:** media, lean-workflow, cancellation, three-gates, pr30-only
 
 ## media.production.workflow
-- **Event:** `MEM-20261012-192851-eae0a7`
-- **Level:** `L3_CANONICAL`
+- **Event:** `MEM-20261015-001500-lnv200`
+- **Level:** `L4_OWNER_DIRECTIVE`
 - **Kind:** `architecture`
-- **Confidence:** `verified`
-- **Updated:** `2026-10-12T19:28:51+03:00`
-- **Summary:** The media venture uses an end-to-end production workflow from market/research and scripting through storyboard/assets, Adobe/AI production, finishing, packaging, QC and performance learning.
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-15T00:03:08+03:00`
+- **Summary:** Owner replaces DAY24 P0/P1/P2 and slow AE GUI production with five stage authorities, three gates, one short system pilot, Descript native primary and AE native backup; only PR #30 branch may change.
 - **Details:**
-  - `authority_boundary`: publishing remains separately gated
-  - `source_files`: ["company/config/media_venture.json", "company/docs/MEDIA_VENTURE_CAPABILITY_ACCEPTANCE.md"]
-  - `workflow`: ["market and topic research", "idea and hook selection", "fact research", "script", "storyboard", "asset generation/collection", "motion assembly and editing", "audio/captions", "title/thumbnail packaging", "QC/export", "distribution when authorized", "analytics and iteration"]
-- **Tags:** media, workflow, production
+  - `governing_config`: company/config/channel_operating_system.json
+  - `governing_doc`: docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md
+  - `legacy_status`: SUPERSEDED_CANCELLED
+  - `no_main_merge`: true
+  - `pilot_status`: NOT_RUN
+  - `priority`: Current workflow overrides older media pilot/tool/production-cell procedure; historical evidence is retained.
+  - `public_publish_authorized`: false
+  - `scope_override`: Native media craft routing replaces GUI-first for this workflow only.
+  - `timing_targets_unmeasured`: true
+- **Supersedes:** `MEM-20261012-192851-eae0a7`
+- **Tags:** media, lean-workflow, cancellation, three-gates, pr30-only
 
 ## media.production_cell.current
-- **Event:** `MEM-20261013-015655-c15cc7`
-- **Level:** `L3_CANONICAL`
+- **Event:** `MEM-20261015-001500-lnv201`
+- **Level:** `L4_OWNER_DIRECTIVE`
 - **Kind:** `architecture`
-- **Confidence:** `verified`
-- **Updated:** `2026-10-13T01:56:55+03:00`
-- **Summary:** Media Production Cell v1.2 is studio-benchmarked: Producer-led execution, independent fact checking, separate growth and thumbnail craft, editor/art/sound participation in pre-production, and specialist craft functions with independent review boundaries.
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-15T00:03:08+03:00`
+- **Summary:** Five final stage authorities govern the lean media cell; specialist advice is on demand, with independent fact check and final QC inside exactly three gates.
 - **Details:**
-  - `benchmark_artifact`: docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md
-  - `governing_config`: company/config/media_venture.json
-  - `governing_doc`: docs/operations/media/MEDIA_PRODUCTION_CELL.md
-  - `independence_rules`: ["Researcher/writer cannot self-clear material facts", "Growth strategy does not replace thumbnail design review", "Producer controls schedule/resources but not editorial truth", "Motion Editor participates before Script Lock", "Motion Editor cannot self-approve Picture Lock", "Music/Sound cannot self-approve final technical mix"]
-  - `merge_commit`: b42b80f89e8053c8506f03300e0dc3fb058ca11f
-  - `new_pilot_metrics`: ["schedule_variance", "milestone_slips", "script_revision_rounds", "fact_check_defects_caught_prelock", "visual_story_case_rework", "thumbnail_variants_produced", "production_readiness_failures", "edit_rework_after_script_lock"]
-  - `on_demand_functions`: ["Localization Producer"]
-  - `required_pilot_functions`: ["Media Producer / Production Coordinator", "Editorial Director / Showrunner", "Independent Fact Checker", "Script & Voice Director", "Visual Art Director / Frame Curator", "Motion & Picture Editor", "Music Supervisor & Sound Designer", "Dialogue & Mix Engineer", "Audience Growth & Packaging Strategist", "Thumbnail & Packaging Designer"]
-  - `version`: 1.2
-- **Supersedes:** `MEM-20261012-211252-9ffb75`
-- **Tags:** media, production-cell, studio-benchmark, producer, fact-check, thumbnail, preproduction
+  - `governing_config`: company/config/channel_operating_system.json
+  - `governing_doc`: docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md
+  - `legacy_status`: SUPERSEDED_CANCELLED
+  - `no_main_merge`: true
+  - `pilot_status`: NOT_RUN
+  - `priority`: Current workflow overrides older media pilot/tool/production-cell procedure; historical evidence is retained.
+  - `public_publish_authorized`: false
+  - `scope_override`: Native media craft routing replaces GUI-first for this workflow only.
+  - `timing_targets_unmeasured`: true
+- **Supersedes:** `MEM-20261013-015655-c15cc7`
+- **Tags:** media, lean-workflow, cancellation, three-gates, pr30-only
 
 ## media.specialized_tool_policy.current
-- **Event:** `MEM-20261012-212638-4d1282`
-- **Level:** `L3_CANONICAL`
-- **Kind:** `policy`
-- **Confidence:** `verified`
-- **Updated:** `2026-10-12T21:26:38+03:00`
-- **Summary:** Media production now follows SPECIALIZED TOOL FIRST / CODE LAST FOR CRAFT. Code may orchestrate, validate, automate and QC, but may not substitute for missing professional editing, motion, sound-design, mixing/mastering or finishing tools. Missing craft capability is a CAPABILITY_GAP.
+- **Event:** `MEM-20261015-001500-lnv202`
+- **Level:** `L4_OWNER_DIRECTIVE`
+- **Kind:** `architecture`
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-15T00:03:08+03:00`
+- **Summary:** Descript native primary and one AE native backup replace slow GUI loops; connection is verified only, delivery awaits the single system pilot and exact-export Final QC. Specialized craft tools remain required.
 - **Details:**
-  - `code_allowed_for`: ["orchestration", "manifests", "versioning", "automation", "QC", "provenance", "metrics"]
-  - `code_not_default_substitute_for`: ["picture editing", "motion design", "sound design", "dialogue mastering", "final mix/master", "professional export/finishing"]
-  - `current_desktop_gaps`: {"audition_2026": "NOT_RUNTIME_VERIFIED", "davinci_resolve_fairlight": "NOT_RUNTIME_VERIFIED", "media_encoder_2026": "NOT_RUNTIME_VERIFIED", "premiere_pro_2026": "NOT_RUNTIME_VERIFIED"}
-  - `current_verified_tools`: {"after_effects_2026": "RUNTIME_VERIFIED", "canva": "INSTALLED", "descript": "CONNECTED_AND_AVAILABLE", "figma": "INSTALLED", "openart": "INSTALLED", "runway": "AUTHENTICATED_IMAGE_ONLY_NO_VIDEO_MODELS"}
-  - `governing_config`: company/config/media_specialized_tool_policy.json
-  - `governing_doc`: docs/operations/media/SPECIALIZED_TOOL_FIRST_POLICY.md
-  - `hard_gate`: Public final master is blocked until professional NLE + professional audio finishing are runtime-verified.
-  - `merge_commit`: a0365b82fe47cd709847c7a4eff7a45f89465fe3
-  - `policy`: SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT
-- **Tags:** media, specialized-tools, code-last, capability-gap, quality
+  - `governing_config`: company/config/channel_operating_system.json
+  - `governing_doc`: docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md
+  - `legacy_status`: SUPERSEDED_CANCELLED
+  - `no_main_merge`: true
+  - `pilot_status`: NOT_RUN
+  - `priority`: Current workflow overrides older media pilot/tool/production-cell procedure; historical evidence is retained.
+  - `public_publish_authorized`: false
+  - `scope_override`: Native media craft routing replaces GUI-first for this workflow only.
+  - `timing_targets_unmeasured`: true
+- **Supersedes:** `MEM-20261012-212638-4d1282`
+- **Tags:** media, lean-workflow, cancellation, three-gates, pr30-only
 
 ## media.venture.capability
 - **Event:** `MEM-20261012-182200-c3d4e5`

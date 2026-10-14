@@ -5,209 +5,134 @@ from pathlib import Path
 
 from company.runtime.channel_operating_system import (
     ChannelOperatingSystemError,
+    EXACT_CONTRACTS,
     REQUIRED_AUDIO_STEMS,
     REQUIRED_PRODUCTION_ROLES,
-    REQUIRED_SCRIPT_PASSES,
     REQUIRED_WORKFLOW,
+    REQUIRED_GATES,
     validate_config,
+    value_at,
 )
-
+from company.runtime.lean_video_production import ProductionWorkflowError
 
 ROOT = Path(__file__).resolve().parents[2]
-CONFIG = json.loads((ROOT / "company" / "config" / "channel_operating_system.json").read_text(encoding="utf-8"))
+CONFIG = json.loads((ROOT / "company/config/channel_operating_system.json").read_text(encoding="utf-8"))
+
+
+def replace_at(cfg, path, replacement):
+    parts = path.split(".")
+    parent = cfg
+    for part in parts[:-1]:
+        parent = parent[part]
+    parent[parts[-1]] = replacement
 
 
 class ChannelOperatingSystemTests(unittest.TestCase):
     def test_current_config_is_valid(self):
         self.assertTrue(validate_config(copy.deepcopy(CONFIG)))
-
-    def test_topic_weights_total_100(self):
-        self.assertEqual(sum(CONFIG["topic_scoring"]["fields"].values()), 100)
-
-    def test_workflow_is_exact_and_ordered(self):
         self.assertEqual(CONFIG["workflow"], REQUIRED_WORKFLOW)
-        workflow = CONFIG["workflow"]
-        self.assertLess(workflow.index("visual_story_case"), workflow.index("script_development"))
-        self.assertLess(workflow.index("preproduction_craft_review"), workflow.index("script_lock"))
-        self.assertLess(workflow.index("independent_fact_check"), workflow.index("script_lock"))
-        self.assertLess(
-            workflow.index("audio_spotting_and_sonic_concept"), workflow.index("reference_frame_assignment")
-        )
-        self.assertLess(workflow.index("animatic"), workflow.index("production_readiness_review"))
-        self.assertLess(workflow.index("production_readiness_review"), workflow.index("production"))
-        self.assertLess(workflow.index("editorial_rough_cut"), workflow.index("packaging_finalization_and_test_plan"))
-        self.assertLess(workflow.index("picture_lock"), workflow.index("music_sound_design"))
-        self.assertLess(workflow.index("mix_master"), workflow.index("audiovisual_sync_qc"))
+        self.assertEqual(CONFIG["quality_gates"], REQUIRED_GATES)
 
-    def test_benchmark_roles_are_distinct_and_required(self):
-        roles = set(CONFIG["roles"])
-        self.assertTrue(REQUIRED_PRODUCTION_ROLES.issubset(roles))
-        for role in {
-            "Media Producer / Production Coordinator",
-            "Independent Fact Checker",
-            "Thumbnail & Packaging Designer",
-            "Audience Growth & Packaging Strategist",
-            "Motion & Picture Editor",
-        }:
-            self.assertIn(role, roles)
-        self.assertNotEqual(
-            CONFIG["roles"]["Audience Growth & Packaging Strategist"],
-            CONFIG["roles"]["Thumbnail & Packaging Designer"],
-        )
+    def test_every_exact_contract_rejects_missing_changed_and_wrong_type(self):
+        for path, expected in EXACT_CONTRACTS.items():
+            changed = (
+                not expected
+                if isinstance(expected, bool)
+                else (
+                    expected + 1
+                    if isinstance(expected, int)
+                    else (expected + ["DRIFT"] if isinstance(expected, list) else expected + "_DRIFT")
+                )
+            )
+            for replacement in [None, changed, {"wrong_type": expected}]:
+                with self.subTest(path=path, replacement=replacement):
+                    cfg = copy.deepcopy(CONFIG)
+                    replace_at(cfg, path, replacement)
+                    with self.assertRaises(ChannelOperatingSystemError):
+                        validate_config(cfg)
 
-    def test_professional_preproduction_contract(self):
-        benchmark = CONFIG["benchmark_profile"]
-        self.assertTrue(benchmark["adopt_disciplines_not_headcount"])
-        self.assertGreaterEqual(len(benchmark["reference_models"]), 5)
+    def test_required_substantive_sets_reject_each_missing_member(self):
+        required_sets = {
+            "roles": REQUIRED_PRODUCTION_ROLES,
+            "audio_system.mandatory_stems": REQUIRED_AUDIO_STEMS,
+            "script_schema.required_columns": {"timecode", "narration", "visual_beat_id", "evidence_ids"},
+            "visual_generation_brief_system.required_fields": {
+                "prompt_version",
+                "final_generation_instruction",
+                "documentary_evidence_boundary",
+                "negative_constraints",
+            },
+            "visual_generation_brief_system.execution_rules": {
+                "NO_PROMPT_NO_GENERATION",
+                "PREPRODUCTION_LOCK_REQUIRED",
+                "TOOL_MUST_NOT_CREATIVELY_REWRITE_APPROVED_BRIEF",
+                "MATERIAL_DEVIATION_RETURNS_TO_STAGE_AUTHORITY",
+            },
+            "visual_identity.core_principles": {
+                "editorial_clarity",
+                "one_hero_object",
+                "strong_negative_space",
+                "episode_specific_visual_metaphor",
+                "meaning_driven_motion",
+            },
+        }
+        for path, required in required_sets.items():
+            for member in required:
+                with self.subTest(path=path, member=member):
+                    cfg = copy.deepcopy(CONFIG)
+                    replace_at(cfg, path, [item for item in value_at(cfg, path) if item != member])
+                    with self.assertRaises(ChannelOperatingSystemError):
+                        validate_config(cfg)
 
-        visual = CONFIG["visual_story_case"]
-        self.assertTrue(visual["required"])
-        self.assertTrue(visual["must_precede_script_lock"])
-        self.assertIn("why_video_not_article", visual["required_fields"])
-        self.assertIn("key_visual", visual["required_fields"])
-        self.assertIn("editor_feasibility_note", visual["required_fields"])
+    def test_craft_guidance_minimum_lengths(self):
+        for path, minimum in {
+            "anti_slop_checks.checks": 8,
+            "transition_system.canonical": 8,
+            "trend_radar.sources": 6,
+            "research_system.expert_consultation_required_when": 3,
+        }.items():
+            with self.subTest(path=path):
+                cfg = copy.deepcopy(CONFIG)
+                replace_at(cfg, path, value_at(cfg, path)[: minimum - 1])
+                with self.assertRaises(ChannelOperatingSystemError):
+                    validate_config(cfg)
 
-        preprod = CONFIG["preproduction_craft_review"]
-        self.assertTrue(preprod["required"])
-        self.assertIn("Motion & Picture Editor", preprod["participants"])
-        self.assertIn("Music Supervisor & Sound Designer", preprod["participants"])
-        self.assertIn("Media Producer / Production Coordinator", preprod["participants"])
+    def test_topic_weights_and_threshold(self):
+        for path, replacement in [("topic_scoring.fields", {"only": 99}), ("topic_scoring.gates.minimum_total", 69)]:
+            with self.subTest(path=path):
+                cfg = copy.deepcopy(CONFIG)
+                replace_at(cfg, path, replacement)
+                with self.assertRaises(ChannelOperatingSystemError):
+                    validate_config(cfg)
+        cfg = copy.deepcopy(CONFIG)
+        cfg["topic_scoring"]["gates"]["minimum_total"] = 70
+        self.assertTrue(validate_config(cfg))
 
-    def test_script_development_is_multi_pass_and_fact_checked(self):
-        scripts = CONFIG["script_development"]
-        self.assertTrue(scripts["single_pass_forbidden"])
-        self.assertEqual(scripts["required_passes"], REQUIRED_SCRIPT_PASSES)
-        self.assertTrue(scripts["fact_check_before_lock"])
-        self.assertTrue(scripts["visual_draft_requires_editor_review"])
+    def test_lean_failure_is_converted_with_cause(self):
+        cfg = copy.deepcopy(CONFIG)
+        cfg["quality_gates"].append("P2 Pilot")
+        with self.assertRaises(ChannelOperatingSystemError) as caught:
+            validate_config(cfg)
+        self.assertIsInstance(caught.exception.__cause__, ProductionWorkflowError)
 
-    def test_evidence_and_visual_rights_are_separate(self):
-        research = CONFIG["research_system"]
-        self.assertTrue(research["claim_source_sheet_required"])
-        self.assertTrue(research["visual_source_rights_sheet_required"])
-        self.assertTrue(research["separate_claim_and_visual_ledgers"])
+    def test_cancelled_ladder_and_committee_cannot_return(self):
+        for field, replacement in [
+            ("pilot_ladder", ["P0", "P1", "P2"]),
+            ("per_frame_review", True),
+            ("per_prototype_review", True),
+            ("committee_approval", True),
+            ("publication_authorized", True),
+        ]:
+            with self.subTest(field=field):
+                cfg = copy.deepcopy(CONFIG)
+                cfg["production_system"][field] = replacement
+                with self.assertRaises(ChannelOperatingSystemError):
+                    validate_config(cfg)
 
-    def test_production_readiness_fails_closed(self):
-        gate = CONFIG["production_readiness"]
-        self.assertTrue(gate["required"])
-        self.assertEqual(gate["fail_action"], "HOLD_PRODUCTION")
-        for check in {
-            "script_locked",
-            "independent_fact_check_passed",
-            "visual_rights_clear",
-            "audio_spotting_complete",
-            "specialized_tools_available",
-            "schedule_acceptable",
-            "budget_acceptable",
-        }:
-            self.assertIn(check, gate["required_checks"])
-
-    def test_packaging_has_early_and_final_stages(self):
-        packaging = CONFIG["packaging_system"]
-        self.assertTrue(packaging["thumbnail_designer_independent_craft_function"])
-        self.assertGreaterEqual(len(packaging["stage_a_before_script"]), 4)
-        self.assertGreaterEqual(len(packaging["stage_b_after_rough_cut"]), 4)
-
-    def test_audio_contract(self):
-        audio = CONFIG["audio_system"]
-        self.assertTrue(audio["spotting_required_before_reference_frame_lock"])
-        self.assertTrue(audio["picture_lock_required_before_final_sound_design"])
-        self.assertTrue(audio["post_picture_lock_timing_change_requires_audio_reconform"])
-        self.assertEqual(set(audio["mandatory_stems"]), REQUIRED_AUDIO_STEMS)
-        targets = audio["mix_targets_internal_not_platform_requirements"]
-        self.assertEqual(targets["program_integrated_lufs_target"], "-14 LUFS ±1")
-        self.assertEqual(targets["true_peak_ceiling"], "-1 dBTP")
-
-    def test_fail_closed_on_governance_drift(self):
-        mutations = [
-            lambda c: c.__setitem__("version", "2"),
-            lambda c: c.__setitem__("channel_model", "single_niche"),
-            lambda c: c.__setitem__("visual_system", "other"),
-            lambda c: c.__setitem__("publication_authority", "AUTO"),
-            lambda c: c["benchmark_profile"].__setitem__("adopt_disciplines_not_headcount", False),
-            lambda c: c["benchmark_profile"].__setitem__("reference_models", []),
-            lambda c: c["portfolio_balance"].__setitem__("initial_window_videos", 5),
-            lambda c: c["trend_radar"].__setitem__("sources", []),
-            lambda c: c.__setitem__("workflow", c["workflow"][:-1]),
-            lambda c: c["research_system"].__setitem__("claim_source_sheet_required", False),
-            lambda c: c["research_system"].__setitem__("separate_claim_and_visual_ledgers", False),
-            lambda c: c["visual_story_case"].__setitem__("required", False),
-            lambda c: c["visual_story_case"].__setitem__("required_fields", []),
-            lambda c: c["preproduction_craft_review"].__setitem__("required", False),
-            lambda c: c["preproduction_craft_review"].__setitem__("participants", []),
-            lambda c: c["script_development"].__setitem__("single_pass_forbidden", False),
-            lambda c: c["script_development"].__setitem__("required_passes", ["one"]),
-            lambda c: c["script_development"].__setitem__("fact_check_before_lock", False),
-            lambda c: c["production_readiness"].__setitem__("required", False),
-            lambda c: c["production_readiness"].__setitem__("required_checks", []),
-            lambda c: c["packaging_system"].__setitem__("thumbnail_designer_independent_craft_function", False),
-            lambda c: c["script_schema"].__setitem__("required_columns", ["narration"]),
-            lambda c: c["frame_bible"].__setitem__(
-                "canonical_frame_types", c["frame_bible"]["canonical_frame_types"][:-1]
-            ),
-            lambda c: c["transition_system"].__setitem__("canonical", ["cut"]),
-            lambda c: c["audio_system"].__setitem__("principle", "sound added after picture"),
-            lambda c: c["audio_system"].__setitem__("mandatory_stems", ["FULL master"]),
-            lambda c: c["audio_system"]["mix_targets_internal_not_platform_requirements"].__setitem__(
-                "true_peak_ceiling", "0 dBTP"
-            ),
-            lambda c: c["anti_slop_gate"].__setitem__("required", False),
-            lambda c: c.__setitem__("quality_gates", []),
-            lambda c: c["roles"].pop("Independent Fact Checker"),
-            lambda c: c["roles"].pop("Thumbnail & Packaging Designer"),
-            lambda c: c["roles"].pop("Media Producer / Production Coordinator"),
-        ]
-        for mutate in mutations:
-            cfg = copy.deepcopy(CONFIG)
-            mutate(cfg)
-            with self.assertRaises(ChannelOperatingSystemError):
-                validate_config(cfg)
-
-    def test_validator_failure_paths_are_explicitly_covered(self):
-        mutations = [
-            lambda c: c["benchmark_profile"].__setitem__("name", "wrong"),
-            lambda c: c["portfolio_balance"].__setitem__("max_same_family_in_window", 3),
-            lambda c: c["portfolio_balance"].__setitem__("minimum_distinct_families_in_initial_window", 3),
-            lambda c: c["portfolio_balance"].__setitem__("relax_only_after_first_party_audience_evidence", False),
-            lambda c: c["trend_radar"].__setitem__("evergreen_reframe_required", False),
-            lambda c: c["topic_scoring"]["fields"].__setitem__("cross_platform_velocity", 14),
-            lambda c: c["topic_scoring"]["gates"].__setitem__("minimum_total", 50),
-            lambda c: c["topic_scoring"]["gates"].__setitem__("require_one_sentence_question", False),
-            lambda c: c["topic_scoring"]["gates"].__setitem__(
-                "reject_if_only_trending_without_durable_question", False
-            ),
-            lambda c: c["research_system"].__setitem__("visual_source_rights_sheet_required", False),
-            lambda c: c["research_system"].__setitem__("expert_consultation_required_when", []),
-            lambda c: c["visual_story_case"].__setitem__("must_precede_script_lock", False),
-            lambda c: c["visual_story_case"].__setitem__("fail_action", "IGNORE"),
-            lambda c: c["preproduction_craft_review"].__setitem__("must_precede_script_lock", False),
-            lambda c: c["script_development"].__setitem__("visual_draft_requires_editor_review", False),
-            lambda c: c["production_readiness"].__setitem__("fail_action", "CONTINUE"),
-            lambda c: c["packaging_system"].__setitem__("stage_a_before_script", []),
-            lambda c: c["packaging_system"].__setitem__("stage_b_after_rough_cut", []),
-            lambda c: c["frame_bible"].__setitem__(
-                "canonical_frame_types", c["frame_bible"]["canonical_frame_types"][:-1]
-            ),
-            lambda c: c["frame_bible"]["composition_rules"].__setitem__("editable_language_layers", False),
-            lambda c: c["transition_system"].__setitem__("canonical", ["cut"]),
-            lambda c: c["transition_system"].__setitem__("forbidden_default", []),
-            lambda c: c["audio_system"].__setitem__("spotting_required_before_reference_frame_lock", False),
-            lambda c: c["audio_system"].__setitem__("picture_lock_required_before_final_sound_design", False),
-            lambda c: c["audio_system"].__setitem__("post_picture_lock_timing_change_requires_audio_reconform", False),
-            lambda c: c["audio_system"].__setitem__("music_states", ["M0"]),
-            lambda c: c["audio_system"].__setitem__("cue_sheet_required_fields", ["cue_id"]),
-            lambda c: c["audio_system"].__setitem__("av_beat_map_required_fields", ["beat_id"]),
-            lambda c: c["audio_system"]["mix_targets_internal_not_platform_requirements"].__setitem__(
-                "program_integrated_lufs_target", "-8 LUFS"
-            ),
-            lambda c: c["audio_system"].__setitem__("anti_patterns", []),
-            lambda c: c["anti_slop_gate"].__setitem__("checks", ["one"]),
-            lambda c: c["anti_slop_gate"].__setitem__("fail_action", "IGNORE"),
-        ]
-        for mutate in mutations:
-            cfg = copy.deepcopy(CONFIG)
-            mutate(cfg)
-            with self.assertRaises(ChannelOperatingSystemError):
-                validate_config(cfg)
+    def test_value_at_missing_or_non_mapping_parent(self):
+        self.assertIsNone(value_at({}, "missing.path"))
+        self.assertIsNone(value_at({"a": []}, "a.b"))
+        self.assertEqual(value_at({"a": {"b": 0}}, "a.b"), 0)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,360 @@
+{
+  "system_version": "2.0",
+  "episode_id": "REPLACE_WITH_EPISODE_ID",
+  "kind": "system_pilot",
+  "writer_id": null,
+  "editor_id": null,
+  "mix_author_id": null,
+  "tool": null,
+  "artifacts": {
+    "script": null,
+    "direction": null,
+    "asset_plan": null,
+    "assets": null,
+    "rough_cut": null,
+    "export": null
+  },
+  "metrics": {
+    "active_minutes": null,
+    "wall_minutes": null,
+    "service_queue_minutes": null,
+    "render_minutes": null,
+    "cost": null,
+    "generation_jobs": null,
+    "revision_rounds": null,
+    "qc_defects": null
+  },
+  "gates": {
+    "Preproduction Lock": {
+      "episode_id": "REPLACE_WITH_EPISODE_ID",
+      "system_version": "2.0",
+      "status": "NOT_REVIEWED",
+      "authority": "Editorial Director / Showrunner",
+      "reviewer_id": null,
+      "input_hashes": {
+        "script": null,
+        "direction": null,
+        "asset_plan": null
+      },
+      "checks": {
+        "facts_checked": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "rights_plan": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "visual_direction": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "voice_plan": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "budget": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "reference_fidelity": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null,
+          "authority": "Visual Art Director / Frame Curator",
+          "reviewer_id": null
+        }
+      },
+      "unresolved_defects": [
+        "review not performed"
+      ],
+      "fact_checker_id": null
+    },
+    "Rough Cut Review": {
+      "episode_id": "REPLACE_WITH_EPISODE_ID",
+      "system_version": "2.0",
+      "status": "NOT_REVIEWED",
+      "authority": "Editorial Director / Showrunner",
+      "reviewer_id": null,
+      "input_hashes": {
+        "script": null,
+        "direction": null,
+        "asset_plan": null,
+        "assets": null,
+        "rough_cut": null
+      },
+      "checks": {
+        "narration_complete": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "story_pacing": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "visual_coherence": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "rights_clear": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "no_filler": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "sync": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "reference_fidelity": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null,
+          "authority": "Visual Art Director / Frame Curator",
+          "reviewer_id": null
+        }
+      },
+      "unresolved_defects": [
+        "review not performed"
+      ]
+    },
+    "Final QC": {
+      "episode_id": "REPLACE_WITH_EPISODE_ID",
+      "system_version": "2.0",
+      "status": "NOT_REVIEWED",
+      "authority": "Independent QC Reviewer",
+      "reviewer_id": null,
+      "input_hashes": {
+        "script": null,
+        "direction": null,
+        "asset_plan": null,
+        "assets": null,
+        "rough_cut": null,
+        "export": null
+      },
+      "checks": {
+        "facts_checked": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "rights_clear": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "arabic_readability": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "narration_complete": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "voice_accepted": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "sync": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "audio_intelligibility": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "visual_coherence": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "clean_export": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null
+        },
+        "reference_fidelity": {
+          "passed": false,
+          "evidence_ref": null,
+          "evidence_sha256": null,
+          "authority": "Visual Art Director / Frame Curator",
+          "reviewer_id": null
+        }
+      },
+      "unresolved_defects": [
+        "review not performed"
+      ],
+      "delivery": {
+        "export_sha256": null,
+        "width": null,
+        "height": null,
+        "fps": null,
+        "duration_seconds": null,
+        "integrated_lufs": null,
+        "true_peak_dbtp": null,
+        "watermark_free": null,
+        "measurement_evidence_ref": null,
+        "measurement_evidence_sha256": null
+      }
+    }
+  },
+  "generation_attempts_by_asset": {},
+  "thumbnail_generation_jobs": null,
+  "localized_variant_requested": false,
+  "craft_outputs": {
+    "claim_ledger": {
+      "status": "NOT_PRODUCED",
+      "stage": "research_script",
+      "function_id": "independent_fact_checker",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "narration_performance_map": {
+      "status": "NOT_PRODUCED",
+      "stage": "research_script",
+      "function_id": "script_voice_director",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "hook_retention_notes": {
+      "status": "NOT_PRODUCED",
+      "stage": "research_script",
+      "function_id": "audience_growth_strategist",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "motion_feasibility_map": {
+      "status": "NOT_PRODUCED",
+      "stage": "visual_direction",
+      "function_id": "motion_picture_editor",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "sonic_visual_intent": {
+      "status": "NOT_PRODUCED",
+      "stage": "visual_direction",
+      "function_id": "music_sound_supervisor",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "packaging_hook_continuity": {
+      "status": "NOT_PRODUCED",
+      "stage": "visual_direction",
+      "function_id": "thumbnail_packaging_designer",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "visual_asset_clearance": {
+      "status": "NOT_PRODUCED",
+      "stage": "asset_pack",
+      "function_id": "visual_art_director",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "music_sfx_asset_plan": {
+      "status": "NOT_PRODUCED",
+      "stage": "asset_pack",
+      "function_id": "music_sound_supervisor",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "dialogue_mix_input_spec": {
+      "status": "NOT_PRODUCED",
+      "stage": "asset_pack",
+      "function_id": "dialogue_mix_engineer",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "thumbnail_packaging_spec": {
+      "status": "NOT_PRODUCED",
+      "stage": "asset_pack",
+      "function_id": "thumbnail_packaging_designer",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "narration_continuity_notes": {
+      "status": "NOT_PRODUCED",
+      "stage": "edit_motion",
+      "function_id": "script_voice_director",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "spotting_sheet": {
+      "status": "NOT_PRODUCED",
+      "stage": "edit_motion",
+      "function_id": "music_sound_supervisor",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "rough_mix_receipt": {
+      "status": "NOT_PRODUCED",
+      "stage": "edit_motion",
+      "function_id": "dialogue_mix_engineer",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "visual_conform_notes": {
+      "status": "NOT_PRODUCED",
+      "stage": "edit_motion",
+      "function_id": "visual_art_director",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "final_mix_receipt": {
+      "status": "NOT_PRODUCED",
+      "stage": "final_qc",
+      "function_id": "dialogue_mix_engineer",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "final_fact_spotcheck": {
+      "status": "NOT_PRODUCED",
+      "stage": "final_qc",
+      "function_id": "independent_fact_checker",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    },
+    "localization_conform_package": {
+      "status": "NOT_PRODUCED",
+      "stage": "final_qc",
+      "function_id": "localization_producer",
+      "author_id": null,
+      "artifact": null,
+      "sha256": null
+    }
+  }
+}

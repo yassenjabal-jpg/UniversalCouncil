@@ -1,0 +1,345 @@
+{
+  "version": "1.0",
+  "identity": {
+    "name_ar": "الاستوديو",
+    "name_en": "The Studio",
+    "legacy_operating_name": "Council",
+    "scope": "MEDIA_PRODUCTION_ONLY",
+    "repository_name_unchanged": true,
+    "historical_evidence_keeps_legacy_name": true
+  },
+  "doctrine": [
+    "STORY_AND_EVIDENCE_BEFORE_POLISH",
+    "WRITE_FOR_PICTURE_NOT_TEXT_ALONE",
+    "SPECIALISTS_PRODUCE_STAGE_AUTHORITY_DECIDES",
+    "PACKAGING_AND_RETENTION_BEGIN_BEFORE_EDIT",
+    "SOUND_DESIGN_BEGINS_BEFORE_PICTURE_LOCK",
+    "ONE_CENTRAL_EDIT_TIMELINE",
+    "AUTOMATE_REPETITION_NOT_CREATIVE_JUDGMENT",
+    "INDEPENDENT_QC_BEFORE_DELIVERY"
+  ],
+  "departments": {
+    "studio_management": {
+      "lead": "media_producer",
+      "mission": "schedule, dependencies, traffic, resource visibility, handoffs, review calendar",
+      "members": [
+        "media_producer"
+      ]
+    },
+    "editorial_research": {
+      "lead": "editorial_director",
+      "mission": "idea, promise, evidence, script, narration intent, retention logic",
+      "members": [
+        "editorial_director",
+        "independent_fact_checker",
+        "script_voice_director",
+        "audience_growth_strategist"
+      ]
+    },
+    "visual_design": {
+      "lead": "visual_art_director",
+      "mission": "visual thesis, reference system, mixed-media design, packaging craft",
+      "members": [
+        "visual_art_director",
+        "thumbnail_packaging_designer"
+      ],
+      "shared_members": [
+        "motion_picture_editor"
+      ]
+    },
+    "post_production": {
+      "lead": "motion_picture_editor",
+      "mission": "picture edit, motion, sound spotting, mix, subtitles and conform",
+      "members": [
+        "motion_picture_editor",
+        "music_sound_supervisor",
+        "dialogue_mix_engineer"
+      ],
+      "conditional_members": [
+        "localization_producer"
+      ]
+    },
+    "qc_delivery": {
+      "lead": "independent_qc_reviewer",
+      "mission": "independent exact-master review and delivery evidence",
+      "members": [
+        "independent_qc_reviewer"
+      ],
+      "cross_checks": [
+        "independent_fact_checker"
+      ]
+    }
+  },
+  "episode_pod": {
+    "created_per_episode": true,
+    "required_core": [
+      "media_producer",
+      "editorial_director",
+      "independent_fact_checker",
+      "script_voice_director",
+      "visual_art_director",
+      "motion_picture_editor",
+      "music_sound_supervisor",
+      "dialogue_mix_engineer",
+      "audience_growth_strategist",
+      "thumbnail_packaging_designer",
+      "independent_qc_reviewer"
+    ],
+    "conditional": [
+      "localization_producer"
+    ],
+    "rule": "DEPARTMENTS_PROVIDE_SPECIALISTS_POD_EXECUTES_ONE_EPISODE"
+  },
+  "production_flow": [
+    {
+      "id": "research_script",
+      "studio_name": "Development Room",
+      "lead": "editorial_director",
+      "goal": "lock the audience promise, evidence spine, story thesis and AV script before expensive production",
+      "mandatory_outputs": [
+        "topic_brief",
+        "claim_ledger",
+        "two_column_av_script",
+        "narration_performance_map",
+        "hook_retention_notes"
+      ],
+      "parallel_work": [
+        "fact_check",
+        "voice_direction",
+        "hook_retention_analysis"
+      ]
+    },
+    {
+      "id": "visual_direction",
+      "studio_name": "Preproduction Blueprint",
+      "lead": "visual_art_director",
+      "goal": "convert the story into visual, sonic, motion and packaging systems before asset production",
+      "mandatory_outputs": [
+        "visual_treatment",
+        "reference_board",
+        "motion_feasibility_map",
+        "sonic_visual_intent",
+        "packaging_hook_continuity"
+      ],
+      "parallel_work": [
+        "art_direction",
+        "motion_feasibility",
+        "sound_spotting_concept",
+        "packaging_hypothesis"
+      ]
+    },
+    {
+      "id": "asset_pack",
+      "studio_name": "Production Pack",
+      "lead": "media_producer",
+      "goal": "deliver a complete rights-aware asset and production package to post",
+      "mandatory_outputs": [
+        "asset_manifest",
+        "visual_asset_clearance",
+        "music_sfx_asset_plan",
+        "dialogue_mix_input_spec",
+        "thumbnail_packaging_spec"
+      ],
+      "parallel_work": [
+        "archive_and_evidence_assets",
+        "graphics_and_design_assets",
+        "audio_assets",
+        "packaging_assets"
+      ]
+    },
+    {
+      "id": "edit_motion",
+      "studio_name": "Post Production",
+      "lead": "motion_picture_editor",
+      "goal": "assemble story first, then motion, sound and finishing around one central timeline",
+      "mandatory_outputs": [
+        "rough_cut",
+        "narration_continuity_notes",
+        "spotting_sheet",
+        "rough_mix_receipt",
+        "visual_conform_notes"
+      ],
+      "edit_order": [
+        "radio_or_story_cut",
+        "picture_assembly",
+        "motion_and_compositing",
+        "sound_design_and_rough_mix",
+        "one_consolidated_rough_review",
+        "targeted_conform"
+      ]
+    },
+    {
+      "id": "final_qc",
+      "studio_name": "Master QC & Delivery",
+      "lead": "independent_qc_reviewer",
+      "goal": "verify the exact master independently of the people who edited or mixed it",
+      "mandatory_outputs": [
+        "final_mix_receipt",
+        "final_fact_spotcheck",
+        "technical_measurements",
+        "full_playback_defect_log",
+        "exact_master_hash"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "technical_id": "Preproduction Lock",
+      "studio_name": "Greenlight / Preproduction Lock",
+      "placement": "after_asset_pack",
+      "purpose": "no expensive post work begins without story, evidence, visual, sound, packaging and asset readiness"
+    },
+    {
+      "technical_id": "Rough Cut Review",
+      "studio_name": "Rough Cut Room",
+      "placement": "during_edit_motion",
+      "purpose": "one continuous-cut review with one consolidated note set"
+    },
+    {
+      "technical_id": "Final QC",
+      "studio_name": "Master QC",
+      "placement": "after_export",
+      "purpose": "independent exact-master verification"
+    }
+  ],
+  "handoff_rules": {
+    "one_episode_id_everywhere": true,
+    "one_canonical_project_naming_scheme": true,
+    "each_handoff_has_owner_artifacts_and_hashes": true,
+    "notes_are_timecoded_when_media_exists": true,
+    "no_chat_only_approval": true,
+    "missing_required_handoff": "BLOCK_STAGE_LOCK"
+  },
+  "packaging_loop": {
+    "development": "hook_retention_notes",
+    "preproduction": "packaging_hook_continuity",
+    "asset_pack": "thumbnail_packaging_spec",
+    "rough_cut": "final_title_thumbnail_alignment",
+    "post_publish": "ctr_and_retention_learning"
+  },
+  "sound_loop": {
+    "preproduction": "sonic_visual_intent",
+    "asset_pack": "music_sfx_asset_plan",
+    "post": "spotting_sheet_and_rough_mix",
+    "final": "final_mix_receipt"
+  },
+  "automation_policy": {
+    "principle": "AUTOMATE_BORING_WORK_NOT_TASTE",
+    "automate": [
+      "naming",
+      "ingest_manifest",
+      "project_setup",
+      "versioning",
+      "render_queue",
+      "transcodes",
+      "checksums",
+      "technical_qc"
+    ],
+    "human_or_stage_authority_decides": [
+      "story",
+      "visual_metaphor",
+      "edit_rhythm",
+      "sound_emotion",
+      "thumbnail_hierarchy",
+      "final_taste"
+    ]
+  },
+  "reference_inspirations": [
+    {
+      "studio": "Kurzgesagt",
+      "borrowed": [
+        "research_before_script_lock",
+        "expert_or_source_check",
+        "distinct illustration_stage",
+        "voice_timing_drives_animation",
+        "custom_music_and_sfx"
+      ],
+      "source": "https://kurzgesagt.org/what-we-do?visit=videos"
+    },
+    {
+      "studio": "Johnny Harris team",
+      "borrowed": [
+        "two_column_av_script",
+        "write_and_visually_direct_together",
+        "progressive_post_cuts",
+        "maps_as_authored_visual_language"
+      ],
+      "sources": [
+        "https://bulletpointpodcast.com/howiwrite/johnny-harris-reveals-how-he-writes-you-tube-videos/",
+        "https://aescripts.com/learn/post/how-johnny-harris-makes-maps"
+      ]
+    },
+    {
+      "studio": "Linus Media Group",
+      "borrowed": [
+        "production_tracking",
+        "consistent_project_naming",
+        "clear_writer_to_visual_to_editor_handoffs",
+        "layered_qc"
+      ],
+      "source": "https://linustechtips.com/topic/813025-how-our-videos-are-made/"
+    },
+    {
+      "studio": "Beast Industries / MrBeast",
+      "borrowed": [
+        "separate_creative_production_post_functions",
+        "retention_as_editing_constraint",
+        "creative_strategy_reviews_hooks_stakes_pacing_thumbnails"
+      ],
+      "sources": [
+        "https://www.mrbeastjobs.com/",
+        "https://www.mrbeastjobs.com/editors",
+        "https://www.mrbeastjobs.com/creatives"
+      ]
+    },
+    {
+      "studio": "Vox Explainer Studio",
+      "borrowed": [
+        "research_reporting_insight_personality_as_one_story_system",
+        "explainer_identity_not_template_only"
+      ],
+      "source": "https://www.voxmedia.com/2022/10/19/23411609/vox-creatives-explainer-studio-celebrates-fifth-anniversary-expands-to-shorter-social-first-formats"
+    },
+    {
+      "studio": "Corridor Digital / Corridor Crew",
+      "borrowed": [
+        "build_pipeline_around_creative_people",
+        "automate_repetitive_vfx_work_not_creative_judgment"
+      ],
+      "source": "https://www.actionvfx.com/blog/a-new-vfx-workflow-by-corridor-crew"
+    }
+  ],
+  "shared_studio_services": {
+    "evidence_research_support": {
+      "roles": [
+        "Evidence & Research Lead"
+      ],
+      "purpose": "source discovery, evidence packs and research synthesis under editorial/fact-check authority"
+    },
+    "risk_rights_assurance": {
+      "roles": [
+        "Risk & Assurance",
+        "Red Team"
+      ],
+      "purpose": "copyright, rights, policy, sensitive framing and material objection"
+    },
+    "technical_operations": {
+      "roles": [
+        "Technical Operator"
+      ],
+      "purpose": "tool routing, project setup, automation, render/export and artifact integrity without creative rewrite"
+    },
+    "finance_cost_control": {
+      "roles": [
+        "Finance Controller"
+      ],
+      "purpose": "credits, cost, time and budget visibility"
+    },
+    "owner_authority": {
+      "roles": [
+        "Owner"
+      ],
+      "purpose": "voice identity, brand veto, high-impact decisions and explicit publication authority"
+    }
+  }
+}

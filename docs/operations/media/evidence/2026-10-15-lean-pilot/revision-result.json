@@ -1,0 +1,21 @@
+{
+  "job_id": "project-agent-edit-83cb8c1f-2043-406c-a9fc-707fc652ca47-42c22376-a921-41c9-8b51-99d2a27ff027",
+  "job_type": "agent",
+  "job_state": "stopped",
+  "created_at": "2026-10-14T21:18:38.022Z",
+  "stopped_at": "2026-10-14T21:19:59.768Z",
+  "drive_id": "aab7389b-1192-4677-9d27-5fc9b4877356",
+  "project_id": "83cb8c1f-2043-406c-a9fc-707fc652ca47",
+  "project_url": "https://web.descript.com/83cb8c1f-2043-406c-a9fc-707fc652ca47",
+  "result": {
+    "status": "success",
+    "agent_response": "The pass is done on the lean pilot only. Arabic RTL is not fixed, and there are no audio fades.\n\n**What I changed**\n- **Arabic text layers (5):** font set to \"Noto Sans Arabic\", text align set to right, box behavior set to auto-width. The five strings are exactly as you specified.\n- **Opening scene:** removed the incoming fade from the first scene.\n- **Narration track:** renamed it \"Narration_TEMP_AR (TEMPORARY test voice - NOT Owner voice)\". I applied a compressor of -24 dB threshold, 2:1 ratio, 0.15 s attack and 0.4 s release.\n- **Music track:** renamed it \"Music: Ambiment — Kevin MacLeod (incompetech.com), CC BY 3.0\".\n- **Left alone:** the historical composition, 1920x1080, 30fps, narration duration (41.74 s), assets, voices, export and publish.\n\n**Unresolved**\n- **Arabic RTL (CAPABILITY_GAP):** there is no native direction or bidi property on text layers. I tried one pass with Unicode right-to-left isolates around each string and left-to-right isolates around the numerals. The render still showed the words in left-to-right order, for example \"ساعة؟ 24 اليوم أن قرر من\". I reverted the layers to the clean originals, which stay editable. I did not manually reverse any letters.\n- **Font:** the render looked unchanged after I set Noto Sans Arabic, so I can't confirm that font is the one drawing. The layer accepted the setting.\n- **Wrapping and right-alignment:** I didn't check these. The text is still sitting left of its panel, so right-aligned placement is unconfirmed.\n- **Fades:** the editor has no audio fade property, so the 0.5 s music fade-in, 1.0 s fade-out and short SFX fades are not applied. The music bed is at 0.04 gain and the SFX are at 0.25, so narration stays dominant.\n- **Loudness:** there is no LUFS or true-peak normalization or measurement here. The compressor only evens out levels. I measured nothing, so I'm not claiming -14 LUFS or ≤-1 dBTP.\n- **Project notes:** there is no project-notes feature. The temporary-voice and music-attribution notes live only in the track names above.",
+    "project_changed": true,
+    "media_seconds_used": 0,
+    "ai_credits_used": 15.456,
+    "resolved_model": "auto",
+    "conversation_id": "827035fc-a59f-4b43-949b-f3c8d613119c"
+  },
+  "ai_credits_used": 15.456,
+  "drive_name": "Yassen jeBal's Drive"
+}

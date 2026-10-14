@@ -5,10 +5,12 @@ from pathlib import Path
 from company.runtime.media_controls import (
     REQUIRED_MEDIA_FUNCTIONS,
     REQUIRED_PILOT_METRICS,
+    STUDIO_DEPARTMENTS,
     MediaControlError,
     validate_media_pilot_record,
     validate_media_scale_request,
     validate_media_team,
+    validate_studio_model,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -21,71 +23,119 @@ class MediaCapabilityTests(unittest.TestCase):
     def base_metrics(self):
         return sorted(REQUIRED_PILOT_METRICS)
 
-    def test_required_media_functions_exist(self):
+    def test_lean_team_has_five_authorities_and_mandatory_craft_specialists(self):
         cfg = self.load_config()
         self.assertTrue(validate_media_team(cfg))
-        ids = {x["id"] for x in cfg["production_functions"]}
-        self.assertEqual(ids, REQUIRED_MEDIA_FUNCTIONS)
-
-    def test_studio_benchmark_functions_are_active(self):
-        cfg = self.load_config()
-        by_id = {x["id"]: x for x in cfg["production_functions"]}
-        for function_id in {
-            "media_producer",
-            "independent_fact_checker",
-            "audience_growth_strategist",
-            "thumbnail_packaging_designer",
-            "motion_picture_editor",
-        }:
-            self.assertEqual(by_id[function_id]["default_status"], "ACTIVE_FOR_MEDIA_PILOT")
-        self.assertEqual(by_id["localization_producer"]["default_status"], "ON_DEMAND")
-
-    def test_growth_and_thumbnail_craft_are_separate(self):
-        cfg = self.load_config()
-        by_id = {x["id"]: x for x in cfg["production_functions"]}
-        self.assertNotEqual(
-            set(by_id["audience_growth_strategist"]["owns"]),
-            set(by_id["thumbnail_packaging_designer"]["owns"]),
-        )
-        self.assertIn("title_strategy", by_id["audience_growth_strategist"]["owns"])
-        self.assertIn("typography", by_id["thumbnail_packaging_designer"]["owns"])
-
-    def test_fact_check_and_producer_boundaries_are_explicit(self):
-        cfg = self.load_config()
-        rules = set(cfg["function_independence_rules"])
-        for rule in {
-            "research_or_writer_cannot_self_clear_material_fact_check",
-            "producer_controls_schedule_resources_not_editorial_truth",
-            "motion_editor_participates_before_script_lock",
-            "growth_strategist_does_not_replace_thumbnail_design_review",
-        }:
-            self.assertIn(rule, rules)
-
-    def test_audio_roles_are_distinct_and_active(self):
-        cfg = self.load_config()
-        by_id = {x["id"]: x for x in cfg["production_functions"]}
-        self.assertEqual(by_id["music_sound_supervisor"]["default_status"], "ACTIVE_FOR_MEDIA_PILOT")
-        self.assertEqual(by_id["dialogue_mix_engineer"]["default_status"], "ACTIVE_FOR_MEDIA_PILOT")
-        self.assertNotEqual(
-            set(by_id["music_sound_supervisor"]["owns"]),
-            set(by_id["dialogue_mix_engineer"]["owns"]),
-        )
-
-    def test_media_toolchain_is_bounded_and_honest(self):
-        cfg = self.load_config()
-        self.assertFalse(cfg["live_publish_authority"])
-        self.assertEqual(cfg["media_toolchain"]["platform_publishing"], "CAPABILITY_GAP")
-        self.assertEqual(cfg["media_toolchain"]["video_editing"], "PARTIAL_RUNTIME_VERIFIED")
-        self.assertEqual(cfg["media_toolchain"]["after_effects_motion_assembly"], "RUNTIME_VERIFIED")
-        self.assertEqual(cfg["media_toolchain"]["dialogue_cleanup"], "CONNECTED_DESCRIPT_AVAILABLE")
+        self.assertEqual({f["id"] for f in cfg["production_functions"]}, REQUIRED_MEDIA_FUNCTIONS)
+        self.assertEqual(sum(f["default_status"] == "STAGE_AUTHORITY" for f in cfg["production_functions"]), 5)
         self.assertEqual(
-            cfg["media_toolchain"]["picture_edit_finishing"],
-            "PUBLIC_FINISHING_CAPABILITY_GAP",
+            sum(f["default_status"] == "MANDATORY_CRAFT_CONTRIBUTOR" for f in cfg["production_functions"]),
+            6,
         )
         self.assertEqual(
-            cfg["media_toolchain"]["mix_mastering"],
-            "PUBLIC_FINISHING_CAPABILITY_GAP",
+            sum(f["default_status"] == "CONDITIONAL_CRAFT_CONTRIBUTOR" for f in cfg["production_functions"]),
+            1,
         )
+        self.assertEqual(
+            cfg["craft_contributor_contract_pointer"],
+            "company/config/channel_operating_system.json#production_system.craft_contributor_contract",
+        )
+        self.assertEqual(cfg["operating_identity"]["name_ar"], "الاستوديو")
+        self.assertEqual(cfg["operating_identity"]["name_en"], "The Studio")
+        self.assertEqual(cfg["studio_departments"], STUDIO_DEPARTMENTS)
+        self.assertFalse(cfg["pilot"]["blocks_episode_production"])
+        self.assertEqual(cfg["system_pilot"]["count"], 1)
+
+    def test_team_contract_rejects_bureaucracy_false_proof_and_missing_authority(self):
+        mutations = [
+            lambda c: c.update(version="old"),
+            lambda c: c["production_functions"].pop(),
+            lambda c: c["production_functions"].append(dict(c["production_functions"][0])),
+            lambda c: c["production_functions"][0].update(default_status="ON_DEMAND"),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "independent_fact_checker").update(
+                default_status="STAGE_AUTHORITY"
+            ),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "script_voice_director").update(
+                default_status="ON_DEMAND"
+            ),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "localization_producer").update(
+                default_status="ON_DEMAND"
+            ),
+            lambda c: c.update(craft_contributor_contract_pointer="wrong"),
+            lambda c: c["operating_identity"].update(name_en="Council"),
+            lambda c: c.update(studio_departments={}),
+            lambda c: c.update(function_independence_rules=[]),
+            lambda c: c.update(production_workflow_config="other.json"),
+            lambda c: c.update(visual_production_system={"pilot_ladder": ["P0"]}),
+            lambda c: c["system_pilot"].update(count=2),
+            lambda c: c.update(live_publish_authority=True),
+            lambda c: c["pilot"].update(blocks_episode_production=True),
+            lambda c: c["pilot"].update(required_before_scale=False),
+            lambda c: c["pilot"].update(video_count=2),
+            lambda c: c["media_toolchain"].update(video_editing="DESCRIPT_PRIMARY"),
+            lambda c: c["media_toolchain"].update(after_effects_motion_assembly="BACKUP_ONLY"),
+            lambda c: c["media_toolchain"].update(descript_editing="PRIMARY_DELIVERY"),
+        ]
+        for key in self.load_config()["visual_generation_brief_capability"]:
+            if key in {
+                "permanent_role",
+                "final_approver",
+                "approval_scope",
+                "preproduction_lock_required",
+                "no_prompt_no_generation",
+                "tool_creative_rewrite_forbidden",
+                "one_generated_thumbnail_asset_per_episode",
+                "multi_panel_thumbnail_output_forbidden",
+            }:
+                mutations.append(lambda c, key=key: c["visual_generation_brief_capability"].pop(key))
+        for mutate in mutations:
+            cfg = self.load_config()
+            mutate(cfg)
+            with self.assertRaises(MediaControlError):
+                validate_media_team(cfg)
+
+    def test_studio_operating_model_has_five_departments_episode_pod_and_three_gates(self):
+        model = json.loads((ROOT / "company/config/studio_operating_model.json").read_text(encoding="utf-8"))
+        self.assertTrue(validate_studio_model(model))
+        self.assertEqual(model["identity"]["name_ar"], "الاستوديو")
+        self.assertIn("technical_operations", model["shared_studio_services"])
+        self.assertEqual(
+            model["shared_studio_services"]["technical_operations"]["roles"],
+            ["Technical Operator"],
+        )
+        self.assertEqual(
+            [stage["id"] for stage in model["production_flow"]],
+            [
+                "research_script",
+                "visual_direction",
+                "asset_pack",
+                "edit_motion",
+                "final_qc",
+            ],
+        )
+        self.assertEqual(
+            [gate["technical_id"] for gate in model["gates"]],
+            [
+                "Preproduction Lock",
+                "Rough Cut Review",
+                "Final QC",
+            ],
+        )
+
+        mutations = [
+            lambda m: m["identity"].update(name_en="Council"),
+            lambda m: m["departments"].pop("post_production"),
+            lambda m: m.update(shared_studio_services={}),
+            lambda m: m["episode_pod"].update(required_core=[]),
+            lambda m: m["production_flow"].append({"id": "extra_stage"}),
+            lambda m: m["gates"].append({"technical_id": "Fourth Gate", "placement": "after_export"}),
+            lambda m: m.update(doctrine=[]),
+        ]
+        for mutate in mutations:
+            candidate = json.loads(json.dumps(model))
+            mutate(candidate)
+            with self.assertRaises(MediaControlError):
+                validate_studio_model(candidate)
 
     def test_benchmark_metrics_are_required_before_scale(self):
         for metric in {
@@ -97,6 +147,8 @@ class MediaCapabilityTests(unittest.TestCase):
             "thumbnail_variants_produced",
             "production_readiness_failures",
             "edit_rework_after_script_lock",
+            "generation_brief_rework_rounds",
+            "prompt_drift_defects",
         }:
             self.assertIn(metric, REQUIRED_PILOT_METRICS)
 
@@ -151,38 +203,6 @@ class MediaCapabilityTests(unittest.TestCase):
             "scale_decision": "SCALE_CANDIDATE",
         }
         self.assertTrue(validate_media_scale_request(record))
-
-    def test_media_team_validator_failure_paths_are_covered(self):
-        mutations = [
-            lambda c: c.__setitem__("version", "broken"),
-            lambda c: c.__setitem__(
-                "production_functions",
-                [f for f in c["production_functions"] if f["id"] != "media_producer"],
-            ),
-            lambda c: next(f for f in c["production_functions"] if f["id"] == "media_producer").__setitem__(
-                "default_status", "ON_DEMAND"
-            ),
-            lambda c: next(f for f in c["production_functions"] if f["id"] == "localization_producer").__setitem__(
-                "default_status", "DISABLED"
-            ),
-            lambda c: c.__setitem__(
-                "function_independence_rules",
-                [
-                    rule
-                    for rule in c["function_independence_rules"]
-                    if rule != "research_or_writer_cannot_self_clear_material_fact_check"
-                ],
-            ),
-            lambda c: c.pop("benchmark_artifact"),
-            lambda c: c["media_toolchain"].pop("dialogue_cleanup"),
-            lambda c: c["pilot"].__setitem__("required_before_scale", False),
-            lambda c: c["pilot"].__setitem__("video_count", 2),
-        ]
-        for mutate in mutations:
-            cfg = self.load_config()
-            mutate(cfg)
-            with self.assertRaises(MediaControlError):
-                validate_media_team(cfg)
 
     def test_pilot_record_invalid_statuses_and_missing_fields_fail_closed(self):
         base = {

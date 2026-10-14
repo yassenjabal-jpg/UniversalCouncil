@@ -1,3 +1,7 @@
+> **SUPERSEDED FOR CHANNEL VISUAL IDENTITY — 2026-10-14**  
+> The governing candidate visual identity has been rebuilt from the user-provided reference video and is now documented in `docs/operations/media/MODERN_EDITORIAL_SURREALISM_VISUAL_BIBLE.md`.  
+> Keep this file for historical context only; do not use it as the primary art-direction source for new channel work.
+
 # Editorial Renaissance Motion — Visual Bible v1
 
 ## Purpose

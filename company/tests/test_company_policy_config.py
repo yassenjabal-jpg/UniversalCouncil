@@ -52,6 +52,12 @@ class CompanyPolicyConfig(unittest.TestCase):
                 "localization_producer",
             },
         )
+        capabilities = {x["id"]: x for x in roles["venture_scoped_capabilities"]}
+        prompt_compiler = capabilities["visual_generation_brief_compiler"]
+        self.assertFalse(prompt_compiler["permanent_role"])
+        self.assertEqual(prompt_compiler["status"], "REQUIRED_FOR_GENERATED_VISUALS")
+        self.assertIn("Synthesis & Alternatives Designer", prompt_compiler["composed_by"])
+        self.assertEqual(prompt_compiler["independent_approval"], "Red Team / Anti-Slop")
 
     def test_zero_revenue_mode_and_distribution_gate_are_default(self):
         defaults = json.loads((ROOT / "company/config/defaults.json").read_text(encoding="utf-8"))

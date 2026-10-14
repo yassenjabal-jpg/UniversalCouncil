@@ -1,3 +1,5 @@
+> **SUPERSEDED — historical evidence only.** The DAY24 ladder, retry/prototype queues and long AE GUI method are cancelled. [Lean Workflow v2.0](LEAN_VIDEO_PRODUCTION_WORKFLOW.md) governs current production. Historical results below are preserved; do not resume these instructions or use their PASS as new-system proof.
+
 # Specialized Tool First — Media Craft Policy
 
 ## Why this exists
@@ -136,3 +138,54 @@ The Council may say:
 - PUBLIC_MASTER_VERIFIED
 
 It may not say “done” for a creative stage just because code/config exists.
+
+
+## Visual generation execution contract
+
+Creative image/video generation remains specialized-tool-first, but **tool availability does not grant creative authority**.
+
+Before any generated visual is executed:
+1. the Council must compile a versioned Visual Generation Brief;
+2. Red Team / Anti-Slop must approve it;
+3. Technical Operator may then execute it in the approved specialized tool;
+4. the executor records prompt version, tool/model and output receipt.
+
+Hard rules:
+- **NO PROMPT, NO GENERATION**
+- **NO ANTI-SLOP APPROVAL, NO EXECUTION**
+- executor/tool creative rewrite is forbidden
+- material deviation returns to Council
+
+Template:
+`docs/templates/media/VISUAL_GENERATION_BRIEF.md`
+
+
+---
+
+## Visual tool qualification before production lock
+
+“Tool available” is not the same as “tool qualified.”
+
+Before the Visual Production Kit can be locked, at least two viable visual-generation routes must be compared when access permits using:
+
+> **SAME FRAME + SAME BRIEF + SAME RUBRIC**
+
+Weighted evaluation:
+- prompt fidelity — 30;
+- composition control — 20;
+- style/reference consistency — 20;
+- artifact quality — 10;
+- editability — 10;
+- speed — 5;
+- cost — 5.
+
+The primary image tool is selected by **quality and fidelity**, not by remaining credits, free balance, convenience, or novelty.
+
+Until real qualification evidence exists:
+- primary generator = UNQUALIFIED;
+- backup generator = UNQUALIFIED;
+- Visual System Lock = BLOCKED;
+- 8+ minute production = BLOCKED.
+
+See:
+`docs/operations/media/TOOL_QUALIFICATION_PROTOCOL.md`

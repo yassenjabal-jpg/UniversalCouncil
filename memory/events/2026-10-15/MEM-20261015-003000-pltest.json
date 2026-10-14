@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261015-003000-pltest",
+  "created_at": "2026-10-15T00:31:17+03:00",
+  "scope": "project/media",
+  "level": "L3_CANONICAL",
+  "kind": "evidence",
+  "subject": "media.lean_pilot.native_latency",
+  "summary": "One real DAY24 technical pilot confirms native AE project creation about8seconds and render48-50seconds for41.77s without GUI actions. Current Descript native/plan route failed RTL, watermark-free1080p and audio QC. Full production remains unqualified.",
+  "details": {
+    "evidence_document": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
+    "governing_config": "company/config/channel_operating_system.json",
+    "observed_scope": "NATIVE_CONTROL_LATENCY_AND_SAMPLED_TECHNICAL_DELIVERY",
+    "final_gate_approved": false,
+    "public_publish_authorized": false,
+    "no_main_merge": true
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "pilot",
+    "native-automation",
+    "measured-latency",
+    "pr30-only"
+  ],
+  "source": {
+    "type": "tool",
+    "ref": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
+    "commit": "77875ce245e05aeb7da24beeafbab86d647f7e0e"
+  }
+}
