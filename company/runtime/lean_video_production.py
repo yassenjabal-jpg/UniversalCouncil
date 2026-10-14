@@ -127,6 +127,46 @@ def validate_production_config(cfg: dict[str, Any]) -> bool:
     require(system.get("version") == "2.0", "lean production system must be 2.0")
     require(system.get("stage_authorities") == AUTHORITIES, "one final authority per stage required")
     require(system.get("gate_authorities") == GATE_AUTHORITIES, "gate authority drift")
+    require(
+        system.get("studio_identity")
+        == {
+            "name_ar": "الاستوديو",
+            "name_en": "The Studio",
+            "legacy_operating_name": "Council",
+            "scope": "MEDIA_PRODUCTION_ONLY",
+            "historical_evidence_keeps_legacy_name": True,
+            "repository_name_unchanged": True,
+        },
+        "active media identity must remain The Studio",
+    )
+    require(
+        system.get("studio_operating_model")
+        == {
+            "config": "company/config/studio_operating_model.json",
+            "doc": "docs/operations/media/STUDIO_OPERATING_MODEL.md",
+            "version": "1.0",
+            "departments": [
+                "studio_management",
+                "editorial_research",
+                "visual_design",
+                "post_production",
+                "qc_delivery",
+            ],
+            "episode_pod": True,
+            "technical_stage_ids_unchanged": True,
+            "technical_gate_ids_unchanged": True,
+        },
+        "Studio operating-model pointer or department contract drifted",
+    )
+    require(
+        system.get("gate_placement")
+        == {
+            "Preproduction Lock": "after_asset_pack",
+            "Rough Cut Review": "during_edit_motion",
+            "Final QC": "after_export",
+        },
+        "Studio gate placement drifted",
+    )
     craft = system.get("craft_contributor_contract", {})
     require(craft.get("mode") == "MANDATORY_PARALLEL_WITHIN_STAGES", "mandatory craft contributor mode required")
     require(craft.get("creates_additional_gates") is False, "craft contributors cannot create extra gates")
