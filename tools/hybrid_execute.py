@@ -18,6 +18,7 @@ from company.runtime.hybrid_execution import (  # noqa: E402
     plan_action,
     save_state,
 )
+from company.runtime.execution_controls import ExecutionControlError, ExecutionJournal  # noqa: E402
 from company.runtime.hybrid_projection import project_execution_result  # noqa: E402
 from company.runtime.hybrid_verification import GuiPostStateVerifier  # noqa: E402
 
@@ -44,6 +45,7 @@ def main() -> int:
     parser.add_argument("--owner-confirmed", action="store_true")
     parser.add_argument("--requester", default="technical_operator")
     parser.add_argument("--state", type=Path)
+    parser.add_argument("--reconcile-outcome", choices=["SUCCEEDED", "FAILED", "UNKNOWN"])
     args = parser.parse_args()
 
     payload = json.loads(args.action.read_text(encoding="utf-8"))
@@ -71,8 +73,34 @@ def main() -> int:
     task_id = payload.get("task_id") if is_batch else payload.get("task_id")
     if not task_id:
         task_id = action_list[0]["id"]
-    if args.state and args.state.exists():
-        state = load_state(args.state)
+    state_path = args.state or (ROOT / ".runtime" / "hybrid" / f"{task_id}.json")
+    journal_path = state_path.with_suffix(state_path.suffix + ".journal.jsonl")
+    journal = ExecutionJournal(journal_path)
+
+    if args.reconcile_outcome:
+        if is_batch:
+            raise HybridExecutionError("reconciliation requires a single action payload")
+        journal.reconcile(
+            task_id=str(task_id),
+            action_id=str(action_list[0]["id"]),
+            state=args.reconcile_outcome,
+        )
+        print(
+            json.dumps(
+                {
+                    "mode": "RECONCILE",
+                    "task_id": str(task_id),
+                    "action_id": str(action_list[0]["id"]),
+                    "state": args.reconcile_outcome,
+                    "journal": str(journal_path),
+                },
+                indent=2,
+            )
+        )
+        return 0
+
+    if state_path.exists():
+        state = load_state(state_path)
     else:
         state = SharedExecutionState(task_id=str(task_id))
 
@@ -85,6 +113,7 @@ def main() -> int:
         gui_adapter=gui_adapter,
         verifier=verifier,
         authority_registry=authority_registry,
+        journal=journal,
     )
     projection = cfg["result_projection"]
     projection_args = {
@@ -116,8 +145,7 @@ def main() -> int:
         )
         output_result = project_execution_result(result, **projection_args)
 
-    if args.state:
-        save_state(state, args.state)
+    save_state(state, state_path)
 
     output = {
         "mode": "EXECUTE",
@@ -125,6 +153,8 @@ def main() -> int:
         "planned": [planned_payload(item) for item in planned],
         "result": output_result,
         "shared_state_delta": state.delta(0),
+        "state_path": str(state_path),
+        "journal_path": str(journal_path),
     }
     print(json.dumps(output, indent=2, ensure_ascii=False, default=str))
     return 0
@@ -133,6 +163,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
-    except (HybridExecutionError, json.JSONDecodeError, OSError) as exc:
+    except (HybridExecutionError, ExecutionControlError, json.JSONDecodeError, OSError) as exc:
         print(f"hybrid execution error: {exc}", file=sys.stderr)
         raise SystemExit(2)

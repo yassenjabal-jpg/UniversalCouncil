@@ -21,7 +21,8 @@
       "logs",
       "artifact_checks",
       "recovery"
-    ]
+    ],
+    "authority_target": "YASSIN"
   },
   "gui_interaction_plane": {
     "authority_observe": "desktop_computer_use.observe",
@@ -35,7 +36,9 @@
     "semantic_first": true,
     "visual_fallback": true,
     "pre_action_observation_required": true,
-    "post_action_verification_required_for_state_change": true
+    "post_action_verification_required_for_state_change": true,
+    "authority_target": "YASSIN",
+    "action_timeout_seconds": 30
   },
   "shared_state": {
     "single_physical_controller": true,

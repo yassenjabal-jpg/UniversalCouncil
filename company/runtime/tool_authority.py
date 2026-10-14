@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from typing import Any
 
 
@@ -39,6 +40,15 @@ AUTHORITY_ENUMS = {
     "effect": {"READ", "WRITE", "EXECUTE"},
     "approval_policy": {"READ_ALLOWED", "ASK_BEFORE_WRITE", "OWNER_EXPLICIT", "BLOCKED"},
     "enforcement": {"CONNECTOR_POLICY", "POLICY_ENFORCED_ONLY", "GATEWAY_ENFORCED"},
+}
+
+EVIDENCE_MAX_AGE_DAYS = {
+    "ADVERTISED": 7,
+    "METADATA_OBSERVED": 14,
+    "BYTES_VERIFIED": 30,
+    "SCRIPT_TESTED": 14,
+    "HOST_INVOKED": 7,
+    "BOUNDARY_ENFORCED": 30,
 }
 
 MINIMUM_OPERATIONS = {
@@ -94,6 +104,20 @@ def validate_registry(cfg: dict[str, Any]) -> bool:
                 raise ToolAuthorityError(f"{operation}: write/execute requires prohibited scope")
         if record["enforcement"] == "POLICY_ENFORCED_ONLY" and record["evidence_level"] == "BOUNDARY_ENFORCED":
             raise ToolAuthorityError(f"{operation}: policy-only enforcement cannot claim boundary evidence")
+        try:
+            datetime.fromisoformat(str(record["last_verified_at"]))
+        except ValueError as exc:
+            raise ToolAuthorityError(f"{operation}: invalid last_verified_at") from exc
+        for constraint_name in ("allowed_targets", "allowed_principals", "allowed_action_scopes"):
+            values = record.get(constraint_name)
+            if values is not None:
+                if not isinstance(values, list) or not values:
+                    raise ToolAuthorityError(f"{operation}: {constraint_name} must be a non-empty list")
+                if not all(isinstance(item, str) and item.strip() for item in values):
+                    raise ToolAuthorityError(f"{operation}: {constraint_name} must contain non-empty strings")
+        max_age = record.get("max_evidence_age_days")
+        if max_age is not None and (not isinstance(max_age, int) or max_age < 1):
+            raise ToolAuthorityError(f"{operation}: max_evidence_age_days must be a positive integer")
 
     missing_operations = MINIMUM_OPERATIONS - operations
     if missing_operations:
@@ -112,6 +136,46 @@ def validate_registry(cfg: dict[str, Any]) -> bool:
         raise ToolAuthorityError("Agent Reach public read must remain PUBLIC_ONLY / READ")
 
     return True
+
+
+def capability_currentness(
+    record: dict[str, Any],
+    *,
+    as_of: datetime | None = None,
+) -> dict[str, Any]:
+    as_of = as_of or datetime.now(timezone.utc)
+    if as_of.tzinfo is None:
+        raise ToolAuthorityError("as_of must be timezone-aware")
+    try:
+        verified = datetime.fromisoformat(str(record["last_verified_at"]))
+    except ValueError:
+        return {"current": False, "reason": "invalid_last_verified_at", "age_days": None}
+    if verified.tzinfo is None:
+        verified = verified.replace(tzinfo=timezone.utc)
+    else:
+        verified = verified.astimezone(timezone.utc)
+    age_days = (as_of.astimezone(timezone.utc) - verified).total_seconds() / 86400.0
+    if age_days < -1:
+        return {"current": False, "reason": "future_verification_timestamp", "age_days": age_days}
+    maximum = int(
+        record.get(
+            "max_evidence_age_days",
+            EVIDENCE_MAX_AGE_DAYS.get(str(record.get("evidence_level")), 14),
+        )
+    )
+    if age_days > maximum:
+        return {
+            "current": False,
+            "reason": "stale_capability_evidence",
+            "age_days": age_days,
+            "max_age_days": maximum,
+        }
+    return {
+        "current": True,
+        "reason": "current",
+        "age_days": age_days,
+        "max_age_days": maximum,
+    }
 
 
 def get_capability(cfg: dict[str, Any], operation: str) -> dict[str, Any]:

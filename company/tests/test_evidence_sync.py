@@ -1,6 +1,7 @@
 import copy
 import hashlib
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -30,12 +31,30 @@ class EvidenceSyncTests(unittest.TestCase):
         receipt_dir.mkdir(parents=True)
         artifact = project / "proof.txt"
         artifact.write_text("verified desktop capability\n", encoding="utf-8")
-        digest = hashlib.sha256(artifact.read_bytes()).hexdigest()
+        subprocess.run(["git", "init"], cwd=project, check=True, capture_output=True)
+        subprocess.run(["git", "config", "user.name", "Evidence Test"], cwd=project, check=True)
+        subprocess.run(["git", "config", "user.email", "evidence@example.test"], cwd=project, check=True)
+        subprocess.run(["git", "add", "proof.txt"], cwd=project, check=True)
+        subprocess.run(["git", "commit", "-m", "proof"], cwd=project, check=True, capture_output=True)
+        source_commit = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=project,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+        committed_bytes = subprocess.run(
+            ["git", "show", f"{source_commit}:proof.txt"],
+            cwd=project,
+            check=True,
+            capture_output=True,
+        ).stdout
+        digest = hashlib.sha256(committed_bytes).hexdigest()
         receipt = {
             "schema_version": "1.0",
             "receipt_id": "test-desktop",
             "source_project": "TestProject",
-            "source_commit": "a" * 40,
+            "source_commit": source_commit,
             "observed_at": "2026-10-12T12:00:00+03:00",
             "capability_id": "desktop_computer_use",
             "status": "RUNTIME_VERIFIED",
@@ -52,6 +71,8 @@ class EvidenceSyncTests(unittest.TestCase):
             "root_env": "TEST_PROJECT_ROOT",
             "receipt_glob": ".council/capability-receipts/*.json",
             "allowed_capability_ids": ["desktop_computer_use"],
+            "max_receipt_age_days": 30,
+            "revoked_receipt_ids": [],
             "authority_bindings": {
                 "desktop_computer_use": {
                     "operations": [
@@ -60,6 +81,10 @@ class EvidenceSyncTests(unittest.TestCase):
                     ],
                     "allowed_evidence_levels": ["HOST_INVOKED"],
                     "allowed_verified_scope": ["screenshot", "physical_click"],
+                    "operation_verified_scope": {
+                        "desktop_computer_use.observe": ["screenshot"],
+                        "desktop_computer_use.control": ["physical_click"],
+                    },
                 }
             },
         }
@@ -80,7 +105,8 @@ class EvidenceSyncTests(unittest.TestCase):
     def test_sync_imports_receipt_and_preserves_authority(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            project, source, _ = self.make_source(root)
+            project, source, receipt = self.make_source(root)
+            source_commit = receipt["source_commit"]
             repo = self.make_repo(root, source)
             before = copy.deepcopy(BASE_REGISTRY)
             result = sync_repository(
@@ -105,8 +131,10 @@ class EvidenceSyncTests(unittest.TestCase):
                     "enforcement",
                 ):
                     self.assertEqual(old[field], new[field])
-                self.assertEqual(new["source_or_pin"], "a" * 40)
+                self.assertEqual(new["source_or_pin"], source_commit)
                 self.assertEqual(new["evidence_receipt"], imported.relative_to(repo).as_posix())
+                expected_scope = ["screenshot"] if operation.endswith("observe") else ["physical_click"]
+                self.assertEqual(new["verified_scope"], expected_scope)
 
     def test_receipt_cannot_claim_authority_fields(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -131,6 +159,26 @@ class EvidenceSyncTests(unittest.TestCase):
             receipt["artifacts"][0]["sha256"] = "0" * 64
             with self.assertRaises(EvidenceSyncError):
                 validate_receipt(receipt, source, project)
+
+    def test_future_revoked_and_foreign_commit_receipts_are_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            project, source, receipt = self.make_source(root)
+
+            future = copy.deepcopy(receipt)
+            future["observed_at"] = "2099-01-01T00:00:00+00:00"
+            with self.assertRaises(EvidenceSyncError):
+                validate_receipt(future, source, project)
+
+            revoked_source = copy.deepcopy(source)
+            revoked_source["revoked_receipt_ids"] = [receipt["receipt_id"]]
+            with self.assertRaises(EvidenceSyncError):
+                validate_receipt(receipt, revoked_source, project)
+
+            foreign = copy.deepcopy(receipt)
+            foreign["source_commit"] = "b" * 40
+            with self.assertRaises(EvidenceSyncError):
+                validate_receipt(foreign, source, project)
 
     def test_unavailable_source_is_nonfatal_and_does_not_change_registry(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -169,6 +217,32 @@ class EvidenceSyncTests(unittest.TestCase):
                 overbound["authority_bindings"]["desktop_computer_use"]
             )
             bad_configs.append({"version": "1.0", "sources": [overbound]})
+
+            bad_age = copy.deepcopy(source)
+            bad_age["max_receipt_age_days"] = 0
+            bad_configs.append({"version": "1.0", "sources": [bad_age]})
+
+            bad_revoked = copy.deepcopy(source)
+            bad_revoked["revoked_receipt_ids"] = "receipt"
+            bad_configs.append({"version": "1.0", "sources": [bad_revoked]})
+
+            bad_scope_operation = copy.deepcopy(source)
+            bad_scope_operation["authority_bindings"]["desktop_computer_use"]["operation_verified_scope"][
+                "missing.operation"
+            ] = ["screenshot"]
+            bad_configs.append({"version": "1.0", "sources": [bad_scope_operation]})
+
+            empty_operation_scope = copy.deepcopy(source)
+            empty_operation_scope["authority_bindings"]["desktop_computer_use"]["operation_verified_scope"][
+                "desktop_computer_use.observe"
+            ] = []
+            bad_configs.append({"version": "1.0", "sources": [empty_operation_scope]})
+
+            over_operation_scope = copy.deepcopy(source)
+            over_operation_scope["authority_bindings"]["desktop_computer_use"]["operation_verified_scope"][
+                "desktop_computer_use.observe"
+            ] = ["external_publish"]
+            bad_configs.append({"version": "1.0", "sources": [over_operation_scope]})
             for cfg in bad_configs:
                 with self.subTest(cfg=cfg):
                     with self.assertRaises(EvidenceSyncError):
@@ -207,6 +281,7 @@ class EvidenceSyncTests(unittest.TestCase):
                 ("source_commit", "abc"),
                 ("observed_at", "not-a-date"),
                 ("observed_at", "2026-10-12T12:00:00"),
+                ("observed_at", "2000-01-01T00:00:00+00:00"),
                 ("verified_scope", []),
                 ("unverified_scope", "not-a-list"),
                 ("evidence_level", "BOUNDARY_ENFORCED"),
@@ -258,6 +333,16 @@ class EvidenceSyncTests(unittest.TestCase):
                 selected["desktop_computer_use"][1]["observed_at"],
                 newer["observed_at"],
             )
+
+            scope_missing = copy.deepcopy(receipt)
+            scope_missing["verified_scope"] = ["screenshot"]
+            with self.assertRaises(EvidenceSyncError):
+                apply_receipt_to_registry(
+                    BASE_REGISTRY,
+                    scope_missing,
+                    source,
+                    "company/evidence/imported/test.json",
+                )
 
             broken_source = copy.deepcopy(source)
             broken_source["authority_bindings"]["desktop_computer_use"]["operations"] = ["missing.operation"]
@@ -333,6 +418,7 @@ class EvidenceSyncTests(unittest.TestCase):
                 ("source_pin", lambda r, c: r.__setitem__("source_or_pin", "b" * 40)),
                 ("evidence_level", lambda r, c: r.__setitem__("evidence_level", "SCRIPT_TESTED")),
                 ("date", lambda r, c: r.__setitem__("last_verified_at", "2026-10-11")),
+                ("verified_scope", lambda r, c: r.__setitem__("verified_scope", ["physical_click"])),
             ]
 
             for name, mutate in mutations:
