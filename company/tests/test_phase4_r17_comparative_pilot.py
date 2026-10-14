@@ -222,11 +222,7 @@ class Phase4R17ComparativePilotTests(unittest.TestCase):
 
     def test_canary_stop_the_line_skips_representative_work(self):
         broken_cases = copy.deepcopy(CASES)
-        canary = next(
-            item
-            for item in broken_cases
-            if item["case_id"] == "canary_authority_bounded_fallback"
-        )
+        canary = next(item for item in broken_cases if item["case_id"] == "canary_authority_bounded_fallback")
         canary["available_routes"] = ["native_host_tooling"]
         canary["authorized_routes"] = ["native_host_tooling"]
         canary["expected_route"] = "native_host_tooling"
