@@ -227,8 +227,9 @@ class Phase4R17ComparativePilotTests(unittest.TestCase):
             for item in broken_cases
             if item["case_id"] == "canary_authority_bounded_fallback"
         )
-        canary["authorized_routes"] = []
-        canary["expected_route"] = None
+        canary["available_routes"] = ["native_host_tooling"]
+        canary["authorized_routes"] = ["native_host_tooling"]
+        canary["expected_route"] = "native_host_tooling"
         canary["expected_disposition"] = "PROCEED"
 
         report = run_comparative_pilot(ROOT, broken_cases, CFG)
