@@ -16,7 +16,7 @@ def validate_contribution_config(cfg: dict[str, Any]) -> bool:
     if not isinstance(metrics, list) or not metrics or len(metrics) != len(set(metrics)):
         raise ContributionLedgerError("metrics must be a unique non-empty list")
     recommendations = set(cfg.get("recommendations", []))
-    expected = {"KEEP","NARROW","MERGE","ON_DEMAND","IMPROVEMENT_TRIAL","REMOVE"}
+    expected = {"KEEP", "NARROW", "MERGE", "ON_DEMAND", "IMPROVEMENT_TRIAL", "REMOVE"}
     if recommendations != expected:
         raise ContributionLedgerError("recommendation set does not match canonical R12 outcomes")
     if int(cfg.get("minimum_observations", 0)) < 3:
@@ -58,10 +58,7 @@ def evaluate_role_contribution(
     for observation in observations:
         _validate_observation(observation, metrics)
 
-    totals = {
-        metric: sum(float(observation[metric]) for observation in observations)
-        for metric in metrics
-    }
+    totals = {metric: sum(float(observation[metric]) for observation in observations) for metric in metrics}
     n = len(observations)
     contribution_total = sum(
         totals[name]
