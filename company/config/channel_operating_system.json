@@ -805,8 +805,15 @@
       },
       "primary_selection_rule": "QUALITY_AND_FIDELITY_DOMINATE_COST",
       "remaining_credits_must_not_select_primary_tool": true,
-      "primary_generator_status": "UNQUALIFIED",
-      "backup_generator_status": "UNQUALIFIED"
+      "primary_generator_status": "QUALIFIED_PRIMARY",
+      "backup_generator_status": "QUALIFIED_BACKUP",
+      "primary_generator": "runway:nano-banana-2-lite",
+      "primary_score": 94.1,
+      "backup_generator": "runway:nano-banana-pro",
+      "backup_score": 89.2,
+      "qualification_artifact": "docs/operations/media/visual_generation_briefs/2026-10-14/VISUAL_TOOL_QUALIFICATION_DAY24.md",
+      "qualification_benchmark_prompt_version": "DAY24-CS-v1.1-SINGLE",
+      "qualification_passed": true
     },
     "pilot_ladder": [
       {
