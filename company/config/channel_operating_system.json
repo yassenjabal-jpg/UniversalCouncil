@@ -1,5 +1,5 @@
 {
-  "version": "1.2",
+  "version": "1.3",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
   "visual_system": "Editorial Renaissance Motion",
   "primary_language": "Arabic",
@@ -110,6 +110,7 @@
     "visual_treatment",
     "audio_spotting_and_sonic_concept",
     "reference_frame_assignment",
+    "shot_design_and_camera_plan",
     "storyboard_transition_audio_map",
     "asset_registry",
     "animatic",
@@ -283,6 +284,19 @@
       "L4 decisions",
       "public publish approval",
       "brand taste veto"
+    ],
+    "Cinematography / Shot Design": [
+      "shot purpose",
+      "framing and shot size",
+      "camera movement intent",
+      "depth/layering",
+      "subject staging",
+      "screen direction and eyeline",
+      "shot-to-shot continuity",
+      "camera transition motivation",
+      "visual rhythm support",
+      "camera plan for animatic",
+      "shot feasibility with available tools"
     ]
   },
   "script_schema": {
@@ -303,7 +317,9 @@
       "music_state",
       "sfx",
       "evidence_ids",
-      "translation_note"
+      "translation_note",
+      "shot_design_id",
+      "camera_intent"
     ],
     "allowed_emotion_tags": [
       "فضول هادئ",
@@ -402,7 +418,7 @@
     "G4 Pre-production Craft Review",
     "G5 Script + Independent Fact Check Lock",
     "G6 Visual + Sonic Treatment Lock",
-    "G7 Animatic + Spotting Gate",
+    "G7 Shot Design + Animatic + Spotting Gate",
     "G8 Production Readiness Gate",
     "G9 Picture Lock Gate",
     "G10 Audio-Visual Sync Gate",
@@ -567,6 +583,7 @@
       "Editorial Director / Showrunner",
       "Media Producer / Production Coordinator",
       "Evidence & Research Lead",
+      "Cinematography / Shot Design",
       "Motion & Picture Editor",
       "Visual Art Director / Frame Curator",
       "Music Supervisor & Sound Designer",
@@ -599,7 +616,9 @@
       "asset_registry_ready",
       "specialized_tools_available",
       "schedule_acceptable",
-      "budget_acceptable"
+      "budget_acceptable",
+      "shot_design_approved",
+      "camera_continuity_checked"
     ],
     "fail_action": "HOLD_PRODUCTION"
   },
@@ -617,5 +636,72 @@
       "mobile_legibility_check"
     ],
     "thumbnail_designer_independent_craft_function": true
+  },
+  "shot_design_system": {
+    "required": true,
+    "must_precede_animatic": true,
+    "accountable_function": "Cinematography / Shot Design",
+    "consultation_required": [
+      "Editorial Director / Showrunner",
+      "Visual Art Director / Frame Curator",
+      "Motion & Picture Editor",
+      "Music Supervisor & Sound Designer"
+    ],
+    "required_fields": [
+      "shot_id",
+      "story_beat_id",
+      "shot_purpose",
+      "framing",
+      "shot_size",
+      "camera_motion",
+      "depth_layers",
+      "subject_staging",
+      "screen_direction",
+      "continuity_link",
+      "transition_motivation",
+      "sound_sync_note",
+      "asset_requirements"
+    ],
+    "rules": [
+      "every_camera_move_requires_narrative_or_attention_purpose",
+      "shot_scale_changes_must_support_story_or_emotion",
+      "screen_direction_and_subject_position_must_be_checked_across_cuts",
+      "depth_and_parallax_are_used_only_when_they_improve_readability_or_emphasis",
+      "transition_motion_must_be_motivated_by_adjacent_shots",
+      "no_generation_or_motion_shot_exists_only_to_fill_visual_space"
+    ],
+    "fail_action": "RETURN_TO_VISUAL_TREATMENT_OR_STORYBOARD"
+  },
+  "studio_routing_model": {
+    "mode": "SMALL_CORE_ROUTED_CAPABILITIES",
+    "core_functions": [
+      "Media Producer / Production Coordinator",
+      "Editorial Director / Showrunner"
+    ],
+    "stage_routed_craft_functions": [
+      "Script & Voice Director",
+      "Visual Art Director / Frame Curator",
+      "Cinematography / Shot Design",
+      "Motion & Picture Editor",
+      "Music Supervisor & Sound Designer",
+      "Dialogue & Mix Engineer",
+      "Audience Growth & Packaging Strategist",
+      "Thumbnail & Packaging Designer",
+      "Localization Producer"
+    ],
+    "mandatory_independent_clearances": [
+      "Independent Fact Checker",
+      "Picture Lock approval separate from Motion & Picture Editor",
+      "technical audio QC separate from Music Supervisor & Sound Designer",
+      "Owner Publish Gate"
+    ],
+    "rules": [
+      "do_not_call_every_function_for_every_stage",
+      "default_to_artifact_delta_or_blocker_not_long_report",
+      "parallelize_independent_craft_work_when_safe",
+      "one_synthesis_per_gate",
+      "shared_production_state_prevents_context_repetition",
+      "owner_interruption_is_exception_not_default"
+    ]
   }
 }
