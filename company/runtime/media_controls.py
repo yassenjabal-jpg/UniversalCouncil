@@ -25,6 +25,17 @@ STAGE_AUTHORITY_FUNCTIONS = {
     "independent_qc_reviewer",
 }
 
+MANDATORY_CRAFT_FUNCTIONS = {
+    "independent_fact_checker",
+    "script_voice_director",
+    "music_sound_supervisor",
+    "dialogue_mix_engineer",
+    "audience_growth_strategist",
+    "thumbnail_packaging_designer",
+}
+
+CONDITIONAL_CRAFT_FUNCTIONS = {"localization_producer"}
+
 REQUIRED_PILOT_METRICS = {
     "production_time_per_video",
     "owner_human_minutes_per_video",
@@ -72,15 +83,23 @@ def validate_media_team(config):
     for function_id in STAGE_AUTHORITY_FUNCTIONS:
         if functions[function_id].get("default_status") != "STAGE_AUTHORITY":
             raise MediaControlError("stage authority must remain active")
-    for function_id in REQUIRED_MEDIA_FUNCTIONS - STAGE_AUTHORITY_FUNCTIONS:
-        if functions[function_id].get("default_status") != "ON_DEMAND":
-            raise MediaControlError("specialist advice must stay on demand")
+    for function_id in MANDATORY_CRAFT_FUNCTIONS:
+        if functions[function_id].get("default_status") != "MANDATORY_CRAFT_CONTRIBUTOR":
+            raise MediaControlError("production specialist must remain a mandatory craft contributor")
+    for function_id in CONDITIONAL_CRAFT_FUNCTIONS:
+        if functions[function_id].get("default_status") != "CONDITIONAL_CRAFT_CONTRIBUTOR":
+            raise MediaControlError("localization specialist must remain conditional craft contributor")
     required = {
         "research_or_writer_cannot_self_clear_material_fact_check",
         "producer_controls_schedule_resources_not_editorial_truth",
         "final_qc_reviewer_independent_of_editor",
         "stage_owner_has_final_authority",
         "technical_operator_cannot_creatively_rewrite_approved_visual_brief",
+        "mandatory_craft_contributors_produce_artifacts_not_gates",
+        "specialist_outputs_run_in_parallel_before_stage_authority_lock",
+        "missing_required_craft_output_blocks_stage_lock",
+        "specialist_output_does_not_transfer_final_stage_authority",
+        "localization_required_makes_localization_output_mandatory",
     }
     if not required.issubset(set(config.get("function_independence_rules", []))):
         raise MediaControlError("independent facts/QC and final authority required")
@@ -99,6 +118,11 @@ def validate_media_team(config):
             raise MediaControlError(f"visual brief contract drift: {key}")
     if config.get("production_workflow_config") != "company/config/channel_operating_system.json":
         raise MediaControlError("single governing workflow required")
+    if (
+        config.get("craft_contributor_contract_pointer")
+        != "company/config/channel_operating_system.json#production_system.craft_contributor_contract"
+    ):
+        raise MediaControlError("mandatory craft contributor contract pointer drift")
     if config.get("visual_production_system") != {
         "governing_doc": "docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md",
         "config_pointer": "company/config/channel_operating_system.json#production_system",
