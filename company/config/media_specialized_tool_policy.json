@@ -1,5 +1,5 @@
 {
-  "version": "1.5",
+  "version": "1.6",
   "policy": "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
   "principles": [
     "Use specialized creative tools for creative craft.",
@@ -195,9 +195,12 @@
     "qualification_artifact": "docs/operations/media/visual_generation_briefs/2026-10-14/VISUAL_TOOL_QUALIFICATION_DAY24.md"
   },
   "current_motion_state": {
-    "after_effects": "STALE_EVIDENCE_CURRENT_EXECUTABLE_NOT_FOUND",
+    "after_effects": "QUALIFIED_PRIMARY_1080P_30FPS_WATERMARK_FREE",
     "descript": "INTERNAL_ROUGH_ONLY",
-    "p1_result": "PASS_INTERNAL_COHERENCE",
-    "p2_state": "BLOCKED_CAPABILITY_GAP"
+    "runway_video": "BLOCKED_BY_CURRENT_FREE_PLAN",
+    "backup_route": "UNRESOLVED",
+    "p1_result": "REFERENCE_FIDELITY_RETRY_IN_PROGRESS",
+    "p2_state": "BLOCKED_REFERENCE_FIDELITY_RETRY",
+    "qualification_artifact": "docs/operations/media/pilots/2026-10-14/P2_MOTION_TOOL_QUALIFICATION_AFTER_EFFECTS.md"
   }
 }
