@@ -1,0 +1,17 @@
+{
+  "job_id": "project-media-publish-83cb8c1f-2043-406c-a9fc-707fc652ca47-acb0eac5-4b19-4793-9db1-afbaf8ce34c9",
+  "job_type": "publish",
+  "job_state": "stopped",
+  "created_at": "2026-10-14T21:20:29.880Z",
+  "stopped_at": "2026-10-14T21:20:53.370Z",
+  "drive_id": "aab7389b-1192-4677-9d27-5fc9b4877356",
+  "project_id": "83cb8c1f-2043-406c-a9fc-707fc652ca47",
+  "project_url": "https://web.descript.com/83cb8c1f-2043-406c-a9fc-707fc652ca47/26d37",
+  "result": {
+    "status": "success",
+    "composition_id": "26d3774a-d99b-4063-8bf4-49e967e2c572",
+    "share_url": "https://share.descript.com/view/UDZyYWNZG3b",
+    "media_type": "Video"
+  },
+  "drive_name": "Yassen jeBal's Drive"
+}

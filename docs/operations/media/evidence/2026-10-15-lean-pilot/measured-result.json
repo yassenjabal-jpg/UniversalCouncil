@@ -1,0 +1,107 @@
+{
+  "system_version": "2.0",
+  "episode_id": "LEAN_DAY24_SYSTEM_PILOT_20261015",
+  "scope": "NATIVE_CONTROL_LATENCY_AND_SAMPLED_TECHNICAL_DELIVERY",
+  "status": "TECHNICAL_TARGETS_MET_NOT_PRODUCTION_QUALIFIED",
+  "final_gate_status": "NOT_APPROVED",
+  "gui_actions_by_this_operator": 0,
+  "new_generated_media_jobs": 0,
+  "normal_rough_revision_rounds": 1,
+  "backup_activations": 1,
+  "primary": {
+    "tool": "Descript",
+    "assembly_seconds": 147.883,
+    "revision_seconds": 81.746,
+    "ai_credits_used": 34.775999999999996,
+    "delivery": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720,
+          "avg_frame_rate": "30/1"
+        },
+        {
+          "codec_name": "aac",
+          "sample_rate": "44100",
+          "channels": 2,
+          "avg_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "41.766667",
+        "size": "9102020"
+      }
+    },
+    "observed_integrated_lufs": -12.6,
+    "observed_true_peak_dbtp": 0.2,
+    "outcome": "FAILED_FINAL_QC",
+    "defects": [
+      "native Arabic word order reversed",
+      "720p export despite requested1080p",
+      "visible Descript watermark",
+      "audio loudness/peak outside target"
+    ],
+    "timeline_export": "UNAVAILABLE_ON_CURRENT_PLAN"
+  },
+  "backup": {
+    "tool": "Adobe After Effects 2026 native script + aerender",
+    "native_build_seconds": 7.945,
+    "first_render_engine_seconds": 50,
+    "final_render_engine_seconds": 48,
+    "final_render_command_wall_seconds": 56.026,
+    "delivery": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080,
+          "avg_frame_rate": "30/1"
+        },
+        {
+          "codec_name": "aac",
+          "sample_rate": "48000",
+          "channels": 2,
+          "avg_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "41.766667",
+        "size": "6326717"
+      }
+    },
+    "integrated_lufs": -14.8,
+    "true_peak_dbtp": -1.4,
+    "export_sha256": "9eaa0fcbdecda1eae94ecb5071cda38cdf072ba44634ad1c4311bf5f842e049f",
+    "bytes": 6326717,
+    "watermark_observation": "NONE_IN_EIGHT_REVIEWED_SAMPLES",
+    "arabic_observation": "JOINED_READABLE_IN_REVIEWED_SAMPLES",
+    "qc_repairs": [
+      "audio gain -1.6 to -2.1dB for AAC true peak",
+      "mixed numeric Arabic header replaced with Arabic words",
+      "museum credit contrast"
+    ],
+    "repair_execution_error": "First repair text lookup used layer aliases not set by builder; corrected by matching native Source Text. No GUI used."
+  },
+  "first_agent_dispatch_to_corrected_native_export_seconds": 814.306,
+  "not_measured": [
+    "active human minutes",
+    "monetary cost",
+    "8+ minute throughput"
+  ],
+  "remaining_blockers": [
+    "full playback and audiovisual sync not independently verified",
+    "temporary test narration, not accepted Owner voice",
+    "independent final factual and rights clearance not completed",
+    "one temporary mixed audio source, no separable stems",
+    "full reference fidelity and full-length throughput unverified"
+  ],
+  "public_publish_authorized": false,
+  "main_merge_authorized": false,
+  "descript_review_access": "private",
+  "original_historical_composition_preserved": true
+}

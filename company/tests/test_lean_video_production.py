@@ -24,10 +24,26 @@ ROOT = Path(__file__).resolve().parents[2]
 class LeanProductionTests(unittest.TestCase):
     def setUp(self):
         self.cfg = json.loads((ROOT / "company/config/channel_operating_system.json").read_text(encoding="utf-8"))
+        # Generic synthetic fixtures exercise an available primary; the real
+        # persisted failed-primary case has its own regression test below.
+        self.cfg["production_system"]["editing_routes"]["primary"]["delivery_status"] = (
+            "UNVERIFIED_PENDING_SYSTEM_PILOT"
+        )
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.pilot = self.make_run("system_pilot", "synthetic-pilot")
         self.episode = self.make_run("episode", "synthetic-episode")
+
+    def test_persisted_primary_failure_cannot_silently_repeat_blocked_route(self):
+        cfg = copy.deepcopy(self.cfg)
+        cfg["production_system"]["editing_routes"]["primary"]["delivery_status"] = (
+            "FAILED_FINAL_QC_NATIVE_RTL_720P_WATERMARK"
+        )
+        with self.assertRaises(ProductionWorkflowError):
+            select_edit_route(cfg)
+        route = select_edit_route(cfg, current_probe=self.valid_probe())
+        self.assertEqual(route["tool"], "Adobe After Effects 2026")
+        self.assertEqual(route["transport"], "native_project_automation")
 
     def make_run(self, kind, identity):
         run = dict(
@@ -83,6 +99,7 @@ class LeanProductionTests(unittest.TestCase):
         return run
 
     def test_governing_configs_cannot_restore_mirrored_legacy_workflows(self):
+        self.cfg = json.loads((ROOT / "company/config/channel_operating_system.json").read_text(encoding="utf-8"))
         media = json.loads((ROOT / "company/config/media_venture.json").read_text(encoding="utf-8"))
         policy = json.loads((ROOT / "company/config/media_specialized_tool_policy.json").read_text(encoding="utf-8"))
         self.assertTrue(validate_alignment(self.cfg, media, policy))

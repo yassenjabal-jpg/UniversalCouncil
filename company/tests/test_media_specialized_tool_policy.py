@@ -57,9 +57,11 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
     def test_connectivity_does_not_claim_delivery_quality(self):
         routes = self.cfg["editing_routes"]
         self.assertEqual(routes["primary"]["connection_status"], "LIVE_VERIFIED")
-        self.assertEqual(routes["primary"]["delivery_status"], "UNVERIFIED_PENDING_SYSTEM_PILOT")
+        self.assertEqual(routes["primary"]["delivery_status"], "FAILED_FINAL_QC_NATIVE_RTL_720P_WATERMARK")
         self.assertEqual(routes["backup"]["connection_status"], "REVERIFY_ON_ACTIVATION")
-        self.assertEqual(routes["backup"]["delivery_status"], "HISTORICAL_5_SECOND_BENCHMARK_ONLY")
+        self.assertEqual(
+            routes["backup"]["delivery_status"], "MEASURED_41_SECOND_TECHNICAL_PILOT_NOT_FULL_PRODUCTION_QUALIFIED"
+        )
         for name in ["primary", "backup"]:
             self.assertTrue((ROOT / routes[name]["evidence"]).is_file())
         self.assertIn("historical", self.cfg["current_verified_environment"]["historical_environment_note"])

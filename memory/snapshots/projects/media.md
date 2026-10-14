@@ -2,6 +2,22 @@
 
 > Generated from append-only memory events. Do not edit manually.
 
+## media.lean_pilot.native_latency
+- **Event:** `MEM-20261015-003000-pltest`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `evidence`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-15T00:31:17+03:00`
+- **Summary:** One real DAY24 technical pilot confirms native AE project creation about8seconds and render48-50seconds for41.77s without GUI actions. Current Descript native/plan route failed RTL, watermark-free1080p and audio QC. Full production remains unqualified.
+- **Details:**
+  - `evidence_document`: docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md
+  - `final_gate_approved`: false
+  - `governing_config`: company/config/channel_operating_system.json
+  - `no_main_merge`: true
+  - `observed_scope`: NATIVE_CONTROL_LATENCY_AND_SAMPLED_TECHNICAL_DELIVERY
+  - `public_publish_authorized`: false
+- **Tags:** media, pilot, native-automation, measured-latency, pr30-only
+
 ## media.pilot.measurement
 - **Event:** `MEM-20261015-001500-lnv203`
 - **Level:** `L4_OWNER_DIRECTIVE`

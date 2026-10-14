@@ -1,0 +1,14 @@
+{
+  "system_version": "2.0",
+  "kind": "system_pilot",
+  "episode_id": "LEAN_DAY24_SYSTEM_PILOT_20261015",
+  "source_head": "77875ce245e05aeb7da24beeafbab86d647f7e0e",
+  "project_id": "83cb8c1f-2043-406c-a9fc-707fc652ca47",
+  "job_id": "project-agent-edit-83cb8c1f-2043-406c-a9fc-707fc652ca47-4dc10ce9-5722-4a27-acf3-4f25dfeb6cd9",
+  "created_at": "2026-10-14T21:15:32.758Z",
+  "route": "Descript native connector -> Agent Underlord",
+  "gui_actions": 0,
+  "public_publish_authorized": false,
+  "status": "RUNNING_NOT_QC_APPROVED",
+  "source_composition_preserved": "83fb6095-d41a-484b-804e-751cec171db1"
+}

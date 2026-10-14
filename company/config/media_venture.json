@@ -340,6 +340,15 @@
         "8_minute_throughput"
       ],
       "evidence_document": "docs/operations/media/evidence/2026-10-14-lean-workflow-preflight.md"
+    },
+    "lean_system_pilot_20261015": {
+      "status": "TECHNICAL_TARGETS_MET_NOT_PRODUCTION_QUALIFIED",
+      "evidence_document": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
+      "descript_primary_delivery": "FAILED_FINAL_QC",
+      "native_ae_backup": "MEASURED_TECHNICAL_OUTPUT",
+      "export_sha256": "9eaa0fcbdecda1eae94ecb5071cda38cdf072ba44634ad1c4311bf5f842e049f",
+      "gui_actions": 0,
+      "final_gate_approved": false
     }
   },
   "specialized_tool_policy": "company/config/media_specialized_tool_policy.json",
@@ -375,13 +384,14 @@
     "once_per_system": true,
     "duration_seconds_min": 30,
     "duration_seconds_max": 45,
-    "status": "NOT_RUN",
+    "status": "TECHNICAL_RUN_COMPLETE_FINAL_GATE_NOT_APPROVED",
     "gate_names": [
       "Preproduction Lock",
       "Rough Cut Review",
       "Final QC"
     ],
     "blocks_full_episode_until_pass": true,
-    "old_pilot_evidence_accepted": false
+    "old_pilot_evidence_accepted": false,
+    "result_artifact": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md"
   }
 }

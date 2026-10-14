@@ -1,7 +1,7 @@
 # Lean Video Production Workflow v2.0
 
 **Effective:** 2026-10-15, Asia/Baghdad. **Scope:** channel production on PR #30.
-**State:** active governing method; one-time system pilot NOT RUN. No new video quality or throughput PASS is claimed.
+**State:** active governing method; one-time system pilot technically executed on native AE fallback. [Measured result](evidence/2026-10-15-lean-pilot/PILOT_RESULT.md). Full Final QC and8+minute throughput remain unqualified; the current Descript connector/plan failed final delivery.
 
 This document and `company/config/channel_operating_system.json` replace the DAY24 P0/P1/P2/P3 ladder, retry phases, prototype queues and lengthy After Effects GUI automation. Repository evidence is the sole execution truth. Old material remains under a SUPERSEDED banner and in `history/DAY24_LEGACY_CONFIG_2026-10-14.json`; historical PASS is not a receipt for the new system.
 
@@ -33,7 +33,7 @@ No per-frame or per-prototype Council review, mandatory reference-board regenera
 
 **Backup: Adobe After Effects 2026 through native project automation and rendering.** Activate only after a blocking primary failure, a diagnosis of at most ten minutes, and a current successful application probe. One backup activation; no GUI loops, tool tournament, or third editing tool. Reuse the same assets, narration, timing and locked creative direction. The retained historical benchmark proves only a short AE render, not current availability or an 8-minute finishing pipeline. If the backup cannot meet required motion/audio/export quality, record CAPABILITY_GAP with the concrete evidence and stop the affected delivery; do not invent a PASS.
 
-Descript connection was verified by reading the authenticated drive. It proves access only. Arabic typography, practical motion, clean export and measured audio still need the one-time system pilot. Existing Descript DAY24 renders are historical, including their limitations. A single tool may satisfy picture and audio finishing if measured output passes Final QC; a separate NLE/DAW brand is no longer mandatory.
+The actual one-time technical run found native RTL failure,720p watermarked export and finishing limitations in the current Descript connector/plan. Native AE fallback produced41.766667s at1080p/30fps with measured compliant audio and readable sampled Arabic. These observations supersede access-only assumptions; complete editorial/voice/fact/rights qualification is still pending. Existing Descript DAY24 renders are historical, including their limitations. A single tool may satisfy picture and audio finishing if measured output passes Final QC; a separate NLE/DAW brand is no longer mandatory.
 
 Native connectors/automation are expressly authorized for this media workflow by the Owner's replacement directive. The general GUI-first policy for unrelated interactive tasks is unchanged. `select_edit_route` supplies the scoped media route; operators use that route and attach actual receipts. The policy runtime is an evidence validator, not a replacement editor or a fabricated connector implementation.
 

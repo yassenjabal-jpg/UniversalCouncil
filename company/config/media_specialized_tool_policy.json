@@ -169,15 +169,16 @@
       "tool": "Descript",
       "transport": "native_api_or_connector",
       "connection_status": "LIVE_VERIFIED",
-      "delivery_status": "UNVERIFIED_PENDING_SYSTEM_PILOT",
-      "evidence": "docs/operations/media/evidence/2026-10-14-lean-workflow-preflight.md"
+      "delivery_status": "FAILED_FINAL_QC_NATIVE_RTL_720P_WATERMARK",
+      "evidence": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md"
     },
     "backup": {
       "tool": "Adobe After Effects 2026",
       "transport": "native_project_automation",
       "connection_status": "REVERIFY_ON_ACTIVATION",
-      "delivery_status": "HISTORICAL_5_SECOND_BENCHMARK_ONLY",
-      "evidence": "docs/operations/media/pilots/2026-10-14/P2_MOTION_TOOL_QUALIFICATION_AFTER_EFFECTS.md"
+      "delivery_status": "MEASURED_41_SECOND_TECHNICAL_PILOT_NOT_FULL_PRODUCTION_QUALIFIED",
+      "evidence": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
+      "last_native_probe_observed": "2026-10-15T00:21:04+03:00"
     },
     "max_routes": 2,
     "gui_retry_loops": false,

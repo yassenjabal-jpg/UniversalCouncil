@@ -307,6 +307,9 @@ def select_edit_route(
 ) -> dict[str, Any]:
     validate_production_config(cfg)
     routes = cfg["production_system"]["editing_routes"]
+    # A persisted failed delivery test must not silently route the next run back
+    # through the same blocked primary. The configured backup still needs a fresh probe.
+    primary_failed = primary_failed or routes["primary"].get("delivery_status", "").startswith("FAILED_")
     if primary_failed:
         require(
             backup_activations == 0 and isinstance(current_probe, dict),
