@@ -357,11 +357,17 @@ def select_edit_route(
     routes = cfg["production_system"]["editing_routes"]
 
     if purpose == "rough_prep":
-        require(backup_activations <= routes["max_backup_activations"], "rough utility activation budget exceeded")
+        require(
+            backup_activations <= routes["max_backup_activations"],
+            "rough utility activation budget exceeded",
+        )
         return dict(routes["backup"])
 
     require(purpose in {"delivery", "edit_motion"}, "unknown edit-route purpose")
-    require(primary_failed is False, "primary delivery failure is a capability gap; do not retry known-failed delivery tools")
+    require(
+        primary_failed is False,
+        "primary delivery failure is a capability gap; do not retry known-failed delivery tools",
+    )
     require(isinstance(current_probe, dict), "current successful primary probe required")
     require(
         current_probe.get("tool") == routes["primary"]["tool"]
