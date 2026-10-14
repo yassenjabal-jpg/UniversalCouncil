@@ -158,7 +158,7 @@
       "image_models_available": true,
       "video_models_available": false
     },
-    "historical_environment_note": "Existing desktop/plugin booleans are historical observations, not current probes; only editing_routes.primary has a live connection receipt."
+    "historical_environment_note": "Descript connector authentication is live but its measured Final Delivery failed; Adobe After Effects is the current delivery route and must pass a fresh current-session probe before use. Other desktop/plugin booleans remain historical observations unless separately probed."
   },
   "escalation_rule": "If a required craft stage is blocked, HR/Capability Director must scout or request a specialized tool. The Technical Operator may not fill the gap by authoring a custom craft replacement without an explicit Council exception approved by Owner.",
   "exception_rule": {
