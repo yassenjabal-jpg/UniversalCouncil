@@ -638,7 +638,7 @@
   },
   "production_system": {
     "version": "2.0",
-    "status": "ACTIVE_WORKFLOW_PILOT_ART_DIRECTION_REJECTED",
+    "status": "ACTIVE_WORKFLOW_ROUTING_CORRECTED_AWAITING_ART_DIRECTION_PILOT",
     "governing_doc": "docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md",
     "stage_authorities": {
       "research_script": "Editorial Director / Showrunner",
@@ -679,27 +679,31 @@
     },
     "editing_routes": {
       "primary": {
-        "tool": "Descript",
-        "transport": "native_api_or_connector",
-        "connection_status": "LIVE_VERIFIED",
-        "delivery_status": "FAILED_FINAL_QC_NATIVE_RTL_720P_WATERMARK",
-        "evidence": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md"
-      },
-      "backup": {
         "tool": "Adobe After Effects 2026",
         "transport": "native_project_automation",
-        "connection_status": "REVERIFY_ON_ACTIVATION",
+        "role": "EDIT_MOTION_AND_DELIVERY",
+        "connection_status": "REVERIFY_ON_EACH_RUN",
         "delivery_status": "MEASURED_41_SECOND_TECHNICAL_PILOT_NOT_FULL_PRODUCTION_QUALIFIED",
         "evidence": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
-        "last_native_probe_observed": "2026-10-15T00:21:04+03:00"
+        "last_native_probe_observed": "2026-10-15T00:21:04+03:00",
+        "requires_current_probe": true
+      },
+      "backup": {
+        "tool": "Descript",
+        "transport": "native_api_or_connector",
+        "role": "ROUGH_TRANSCRIPT_UTILITY_ONLY",
+        "connection_status": "LIVE_VERIFIED",
+        "delivery_status": "ROUGH_PREP_ONLY_FINAL_DELIVERY_DISQUALIFIED_RTL_720P_WATERMARK",
+        "evidence": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
+        "eligible_for_final_delivery": false
       },
       "max_routes": 2,
       "gui_retry_loops": false,
       "max_primary_diagnosis_minutes": 10,
       "max_backup_activations": 1,
-      "backup_requires_current_probe": true,
-      "backup_trigger": "BLOCKING_PRIMARY_FAILURE",
-      "fallback_failure_action": "CAPABILITY_GAP_STOP_NO_NEW_TOOL_TOURNAMENT"
+      "backup_requires_current_probe": false,
+      "backup_trigger": "ROUGH_PREP_ONLY",
+      "fallback_failure_action": "CAPABILITY_GAP_STOP_NO_DELIVERY_FALLBACK"
     },
     "review_budget": {
       "script_drafts_max": 2,
