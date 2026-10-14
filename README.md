@@ -1,6 +1,6 @@
 # Universal Council
 
-Current channel production: [Lean Video Production Workflow v2.0](docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md). Five stage authorities, three gates and one short system pilot; the DAY24 P0/P1/P2 retry/prototype method is superseded. Governing config: `company/config/channel_operating_system.json`.
+Current channel production is operated by **الاستوديو / The Studio**: [Studio Operating Model](docs/operations/media/STUDIO_OPERATING_MODEL.md) + [Lean Video Production Workflow](docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md). It uses five production stages, three gates, mandatory specialist craft outputs and one Episode Pod per video; the DAY24 P0/P1/P2 retry/prototype method is superseded. Governing configs: `company/config/studio_operating_model.json` and `company/config/channel_operating_system.json`. The repository name and the general-purpose Universal Council framework remain unchanged for non-media governance and historical compatibility.
 
 **Universal Council v0.3** is a domain-agnostic decision and deliberation framework for software, health, research, purchases, business, finance, travel, media, personal planning and other topics.
 
