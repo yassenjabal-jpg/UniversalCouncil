@@ -133,6 +133,22 @@ Owns:
 
 ---
 
+# Shared Studio Services
+
+These roles support the five departments without becoming extra production departments or extra gates.
+
+- **Evidence & Research Lead** — source discovery and research synthesis under Editorial/Fact-Check authority.
+- **Risk & Assurance** — copyright, rights, policy and sensitive-domain risk.
+- **Red Team** — material objections at existing gates; no routine taste veto.
+- **Technical Operator** — tool routing, project setup, automation, render/export and artifact integrity; cannot creatively rewrite approved briefs.
+- **Finance Controller** — cost/credit/time visibility.
+- **Owner** — narration identity, brand veto, high-impact decisions and explicit publication authority.
+
+Research evidence for the benchmark structure is recorded in:
+`docs/research/STUDIO_BENCHMARK_RESEARCH_2026-10-15.md`.
+
+---
+
 # Episode Pod
 
 Departments remain permanent, but each video is executed by a temporary **Episode Pod**.
