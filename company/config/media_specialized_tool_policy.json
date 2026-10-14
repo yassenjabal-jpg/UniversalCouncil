@@ -4,7 +4,7 @@
   "principles": [
     "Specialized creative tools author picture, motion and audio; code orchestrates and checks evidence.",
     "Native connectors first for this media workflow; no long GUI automation loops.",
-    "One primary editor and one native-automation backup; no tool tournaments.",
+    "One current delivery editor plus one rough/transcript utility; no tool tournaments or known-failed delivery retries.",
     "Visual Art Director approves one asset-pack direction in Preproduction Lock.",
     "Rights, factual integrity, Arabic narration/readability and clean export are preserved in the three gates.",
     "Connection evidence is not delivery proof; only exact exported-artifact QC establishes delivery quality."
@@ -68,13 +68,14 @@
     },
     "motion_graphics_compositing": {
       "preferred": [
-        "Descript"
-      ],
-      "backup": [
         "Adobe After Effects 2026 native automation"
       ],
-      "status": "DELIVERY_PENDING_SYSTEM_PILOT",
-      "code_role": "orchestration and QC only"
+      "backup": [],
+      "status": "CURRENT_PILOT_ROUTE_REVERIFY_EACH_RUN",
+      "code_role": "orchestration and QC only",
+      "rough_utility": [
+        "Descript rough/transcript utility"
+      ]
     },
     "dialogue_cleanup_text_edit": {
       "preferred": [
@@ -83,28 +84,30 @@
       "backup": [
         "Adobe After Effects 2026 native automation"
       ],
-      "status": "DELIVERY_PENDING_SYSTEM_PILOT",
+      "status": "ROUGH_UTILITY_AVAILABLE",
       "code_role": "orchestration and QC only"
     },
     "picture_edit_finishing": {
       "preferred": [
-        "Descript"
-      ],
-      "backup": [
         "Adobe After Effects 2026 native automation"
       ],
-      "status": "DELIVERY_PENDING_SYSTEM_PILOT",
-      "code_role": "orchestration and QC only"
+      "backup": [],
+      "status": "CURRENT_PILOT_ROUTE_REVERIFY_EACH_RUN",
+      "code_role": "orchestration and QC only",
+      "rough_utility": [
+        "Descript rough/transcript utility"
+      ]
     },
     "audio_edit_mix_master": {
       "preferred": [
-        "Descript"
-      ],
-      "backup": [
         "Adobe After Effects 2026 native automation"
       ],
-      "status": "DELIVERY_PENDING_SYSTEM_PILOT",
-      "code_role": "orchestration and QC only"
+      "backup": [],
+      "status": "CURRENT_PILOT_ROUTE_REVERIFY_EACH_RUN",
+      "code_role": "orchestration and QC only",
+      "rough_utility": [
+        "Descript rough/transcript utility"
+      ]
     },
     "captions_transcript": {
       "preferred": [
@@ -113,7 +116,7 @@
       "backup": [
         "Adobe After Effects 2026 native automation"
       ],
-      "status": "DELIVERY_PENDING_SYSTEM_PILOT",
+      "status": "ROUGH_UTILITY_AVAILABLE",
       "code_role": "orchestration and QC only"
     },
     "multilingual_audio": {
@@ -125,13 +128,14 @@
     },
     "render_export": {
       "preferred": [
-        "Descript"
-      ],
-      "backup": [
         "Adobe After Effects 2026 native automation"
       ],
-      "status": "DELIVERY_PENDING_SYSTEM_PILOT",
-      "code_role": "orchestration and QC only"
+      "backup": [],
+      "status": "CURRENT_PILOT_ROUTE_REVERIFY_EACH_RUN",
+      "code_role": "orchestration and QC only",
+      "rough_utility": [
+        "Descript rough/transcript utility"
+      ]
     }
   },
   "current_verified_environment": {
@@ -166,27 +170,31 @@
   "governing_workflow": "company/config/channel_operating_system.json",
   "editing_routes": {
     "primary": {
-      "tool": "Descript",
-      "transport": "native_api_or_connector",
-      "connection_status": "LIVE_VERIFIED",
-      "delivery_status": "FAILED_FINAL_QC_NATIVE_RTL_720P_WATERMARK",
-      "evidence": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md"
-    },
-    "backup": {
       "tool": "Adobe After Effects 2026",
       "transport": "native_project_automation",
-      "connection_status": "REVERIFY_ON_ACTIVATION",
+      "role": "EDIT_MOTION_AND_DELIVERY",
+      "connection_status": "REVERIFY_ON_EACH_RUN",
       "delivery_status": "MEASURED_41_SECOND_TECHNICAL_PILOT_NOT_FULL_PRODUCTION_QUALIFIED",
       "evidence": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
-      "last_native_probe_observed": "2026-10-15T00:21:04+03:00"
+      "last_native_probe_observed": "2026-10-15T00:21:04+03:00",
+      "requires_current_probe": true
+    },
+    "backup": {
+      "tool": "Descript",
+      "transport": "native_api_or_connector",
+      "role": "ROUGH_TRANSCRIPT_UTILITY_ONLY",
+      "connection_status": "LIVE_VERIFIED",
+      "delivery_status": "ROUGH_PREP_ONLY_FINAL_DELIVERY_DISQUALIFIED_RTL_720P_WATERMARK",
+      "evidence": "docs/operations/media/evidence/2026-10-15-lean-pilot/PILOT_RESULT.md",
+      "eligible_for_final_delivery": false
     },
     "max_routes": 2,
     "gui_retry_loops": false,
     "max_primary_diagnosis_minutes": 10,
     "max_backup_activations": 1,
-    "backup_requires_current_probe": true,
-    "backup_trigger": "BLOCKING_PRIMARY_FAILURE",
-    "fallback_failure_action": "CAPABILITY_GAP_STOP_NO_NEW_TOOL_TOURNAMENT"
+    "backup_requires_current_probe": false,
+    "backup_trigger": "ROUGH_PREP_ONLY",
+    "fallback_failure_action": "CAPABILITY_GAP_STOP_NO_DELIVERY_FALLBACK"
   },
   "quality_gates": [
     "Preproduction Lock",
