@@ -21,6 +21,25 @@ class ChannelOperatingSystemTests(unittest.TestCase):
     def test_current_config_is_valid(self):
         self.assertTrue(validate_config(copy.deepcopy(CONFIG)))
 
+
+    def test_rebuilt_visual_identity_contract(self):
+        self.assertEqual(CONFIG["version"], "1.3")
+        self.assertEqual(CONFIG["visual_system"], "Modern Editorial Surrealism")
+        identity = CONFIG["visual_identity"]
+        self.assertEqual(identity["version"], "2.0-candidate")
+        self.assertEqual(
+            identity["bible"],
+            "docs/operations/media/MODERN_EDITORIAL_SURREALISM_VISUAL_BIBLE.md",
+        )
+        self.assertEqual(identity["primary_reference"], "user-provided 1000061003.mp4")
+        self.assertTrue(identity["episode_accent_required"])
+        self.assertTrue(identity["architecture_is_topic_dependent_only"])
+        self.assertTrue(identity["classical_art_is_optional_not_mandatory"])
+        self.assertGreaterEqual(identity["thumbnail_hypotheses_per_episode"], 3)
+        self.assertEqual(identity["hero_objects_per_key_frame"], 1)
+        self.assertTrue(identity["synthetic_documentary_evidence_forbidden"])
+        self.assertEqual(CONFIG["frame_bible"]["composition_rules"]["negative_space_percent"], "35-60")
+
     def test_topic_weights_total_100(self):
         self.assertEqual(sum(CONFIG["topic_scoring"]["fields"].values()), 100)
 
@@ -122,6 +141,17 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c.__setitem__("version", "2"),
             lambda c: c.__setitem__("channel_model", "single_niche"),
             lambda c: c.__setitem__("visual_system", "other"),
+            lambda c: c["visual_identity"].__setitem__("version", "1.0"),
+            lambda c: c["visual_identity"].__setitem__("bible", "wrong.md"),
+            lambda c: c["visual_identity"].__setitem__("primary_reference", "other.mp4"),
+            lambda c: c["visual_identity"].__setitem__("reference_authority", "SECONDARY"),
+            lambda c: c["visual_identity"].__setitem__("core_principles", []),
+            lambda c: c["visual_identity"].__setitem__("episode_accent_required", False),
+            lambda c: c["visual_identity"].__setitem__("architecture_is_topic_dependent_only", False),
+            lambda c: c["visual_identity"].__setitem__("classical_art_is_optional_not_mandatory", False),
+            lambda c: c["visual_identity"].__setitem__("thumbnail_hypotheses_per_episode", 1),
+            lambda c: c["visual_identity"].__setitem__("hero_objects_per_key_frame", 2),
+            lambda c: c["visual_identity"].__setitem__("synthetic_documentary_evidence_forbidden", False),
             lambda c: c.__setitem__("publication_authority", "AUTO"),
             lambda c: c["benchmark_profile"].__setitem__("adopt_disciplines_not_headcount", False),
             lambda c: c["benchmark_profile"].__setitem__("reference_models", []),
