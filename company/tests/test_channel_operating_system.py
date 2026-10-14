@@ -201,16 +201,30 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertEqual(ladder["P2_PRODUCTION_60_90"]["duration_seconds_max"], 90)
         self.assertEqual(ladder["P3_FULL_EPISODE_8_PLUS_MINUTES"]["duration_seconds_min"], 480)
         self.assertEqual(system["full_length_episode_before_p2_pass"], "BLOCK")
-        self.assertEqual(system["active_pilot_stage"], "P2_PREPARATION_BLOCKED_CAPABILITY_GAP")
+        self.assertEqual(system["active_pilot_stage"], "P1_REFERENCE_FIDELITY_RETRY_PHASE_4")
         self.assertEqual(system["p1_status"], "PASS_INTERNAL_COHERENCE")
         self.assertTrue(system["p1_review"])
         self.assertTrue(system["p1_internal_render"])
         self.assertEqual(
             [stage["status"] for stage in system["pilot_ladder"]],
-            ["PASS", "PASS_INTERNAL_COHERENCE", "BLOCKED_CAPABILITY_GAP", "BLOCKED_UNTIL_P2_PASS"],
+            ["PASS", "PASS_INTERNAL_COHERENCE", "BLOCKED_REFERENCE_FIDELITY_RETRY", "BLOCKED_UNTIL_P2_PASS"],
         )
-        self.assertGreaterEqual(len(system["pilot_ladder"][2]["blocking_capabilities"]), 3)
-        self.assertGreaterEqual(len(system["current_capability_gaps"]), 3)
+        self.assertGreaterEqual(len(system["pilot_ladder"][2]["blocking_capabilities"]), 2)
+        self.assertGreaterEqual(len(system["current_capability_gaps"]), 2)
+        self.assertTrue(system["visual_system_lock"]["reference_temporal_grammar"])
+        self.assertTrue(system["visual_system_lock"]["production_kit_candidate"])
+        self.assertEqual(system["motion_tool_qualification"]["status"], "PASS_PRIMARY")
+        self.assertEqual(
+            system["motion_tool_qualification"]["primary_route"],
+            "Adobe After Effects 2026 on YASSIN",
+        )
+        self.assertGreaterEqual(system["motion_tool_qualification"]["score"], 80)
+        self.assertTrue(system["motion_tool_qualification"]["clean_export_verified"])
+        self.assertTrue(system["motion_tool_qualification"]["watermark_free"])
+        self.assertEqual(system["retry_pipeline"]["phase_1_temporal_identity"], "PASS_REFERENCE_GRAMMAR_LOCK")
+        self.assertEqual(system["retry_pipeline"]["phase_2_motion_tool"], "PASS_PRIMARY")
+        self.assertEqual(system["retry_pipeline"]["phase_3_visual_script"], "PASS_CANDIDATE")
+        self.assertEqual(system["retry_pipeline"]["phase_4_shot_bible"], "ACTIVE")
 
     def test_production_system_fail_closed_paths(self):
         mutations = [
@@ -228,6 +242,11 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["production_system"].__setitem__("active_pilot_stage", "P2_PRODUCTION_60_90"),
             lambda c: c["production_system"]["pilot_ladder"][2].__setitem__("blocking_capabilities", []),
             lambda c: c["production_system"].__setitem__("current_capability_gaps", []),
+            lambda c: c["production_system"]["motion_tool_qualification"].__setitem__("status", "FAIL"),
+            lambda c: c["production_system"]["motion_tool_qualification"].__setitem__("score", 70),
+            lambda c: c["production_system"]["motion_tool_qualification"].__setitem__("watermark_free", False),
+            lambda c: c["production_system"]["retry_pipeline"].__setitem__("phase_2_motion_tool", "FAIL"),
+            lambda c: c["production_system"]["retry_pipeline"].__setitem__("phase_4_shot_bible", "BLOCKED"),
             lambda c: c["production_system"]["authority_model"].__setitem__("council_after_lock", "PER_FRAME"),
             lambda c: c["production_system"]["authority_model"].__setitem__("visual_art_director", "ADVISORY"),
             lambda c: c["production_system"]["authority_model"].__setitem__(
