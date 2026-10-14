@@ -47,7 +47,7 @@ If a localized variant is requested:
 - no fourth gate;
 - no per-frame review;
 - no per-prototype review;
-- no Council vote on routine craft;
+- no Studio-wide vote on routine craft;
 - no extra tool tournament;
 - no requirement that every specialist approve every other specialist's work.
 
