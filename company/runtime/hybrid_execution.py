@@ -691,6 +691,16 @@ class HybridExecutor:
         attempt: int = 1,
     ) -> dict[str, Any]:
         planned = plan_action(action, self.cfg)
+        if self.trace is not None and not any(
+            event.get("event") == TraceEventType.FRAME.value for event in self.trace.events()
+        ):
+            self._trace(
+                TraceEventType.FRAME,
+                {
+                    "goal": str(action.get("goal") or "hybrid execution"),
+                    "action_ids": [planned.action_id],
+                },
+            )
         self._trace(
             TraceEventType.ROUTE,
             {
@@ -699,6 +709,14 @@ class HybridExecutor:
                 "reason": self._route_reason(planned),
                 "route_version": f"hybrid-{self.cfg.get('version', 'unknown')}",
                 "authority": planned.authority_operation,
+            },
+        )
+        self._trace(
+            TraceEventType.ROLE,
+            {
+                "action_id": planned.action_id,
+                "role": requester or "UNSET",
+                "responsibility": "execution_requester",
             },
         )
         if not requester:
@@ -735,6 +753,19 @@ class HybridExecutor:
                 "planned": planned,
                 "reason": str(exc),
             }
+        self._trace(
+            TraceEventType.TOOL,
+            {
+                "action_id": planned.action_id,
+                "authority": planned.authority_operation,
+                "path": planned.path.value,
+                "target": planned.payload.get("authority_target")
+                or planned.payload.get("target_repo")
+                or planned.payload.get("target"),
+                "selected": True,
+                "cost_usd": float(planned.payload.get("cost_usd", 0.0) or 0.0),
+            },
+        )
         approval_required = authority_record["approval_policy"] in {"OWNER_EXPLICIT", "ASK_BEFORE_WRITE"}
         self._trace(
             TraceEventType.APPROVAL,
@@ -830,16 +861,6 @@ class HybridExecutor:
 
             if controls_desktop and lease_token is not None:
                 self.controller_lease.assert_current(lease_token)
-            self._trace(
-                TraceEventType.TOOL,
-                {
-                    "action_id": planned.action_id,
-                    "authority": planned.authority_operation,
-                    "path": planned.path.value,
-                    "fencing_token": lease_token.fencing_token if lease_token is not None else None,
-                    "cost_usd": float(planned.payload.get("cost_usd", 0.0) or 0.0),
-                },
-            )
             dispatch_started = time.perf_counter()
             result = self._adapter_for(planned.path).dispatch(planned.payload)
             latency_ms = (time.perf_counter() - dispatch_started) * 1000
@@ -851,6 +872,7 @@ class HybridExecutor:
                     "state": raw_state,
                     "attempt": attempt,
                     "latency_ms": round(latency_ms, 3),
+                    "fencing_token": lease_token.fencing_token if lease_token is not None else None,
                 },
             )
             if raw_state == ResultState.HOST_DISPATCH_REQUIRED.value:
