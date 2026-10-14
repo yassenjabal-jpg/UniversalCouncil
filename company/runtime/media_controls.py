@@ -14,9 +14,16 @@ REQUIRED_MEDIA_FUNCTIONS = {
     "audience_growth_strategist",
     "thumbnail_packaging_designer",
     "localization_producer",
+    "independent_qc_reviewer",
 }
 
-ACTIVE_PILOT_FUNCTIONS = REQUIRED_MEDIA_FUNCTIONS - {"localization_producer"}
+STAGE_AUTHORITY_FUNCTIONS = {
+    "media_producer",
+    "editorial_director",
+    "visual_art_director",
+    "motion_picture_editor",
+    "independent_qc_reviewer",
+}
 
 REQUIRED_PILOT_METRICS = {
     "production_time_per_video",
@@ -55,163 +62,70 @@ PUBLISHED_PERFORMANCE_METRICS = {
 
 
 def validate_media_team(config):
-    if config.get("version") != "1.8":
-        raise MediaControlError("media venture must be version 1.8")
-
+    if config.get("version") != "2.0":
+        raise MediaControlError("media venture must be version 2.0")
     functions = {f["id"]: f for f in config.get("production_functions", [])}
-    missing = REQUIRED_MEDIA_FUNCTIONS - set(functions)
-    if missing:
-        raise MediaControlError(f"missing media functions: {sorted(missing)}")
-
-    for function_id in ACTIVE_PILOT_FUNCTIONS:
-        if functions[function_id].get("default_status") != "ACTIVE_FOR_MEDIA_PILOT":
-            raise MediaControlError(f"{function_id} must be active for pilot")
-
-    if functions["localization_producer"].get("default_status") not in {
-        "ON_DEMAND",
-        "ACTIVE_FOR_MEDIA_PILOT",
-    }:
-        raise MediaControlError("localization producer must be on-demand or active")
-
-    independence = set(config.get("function_independence_rules", []))
-    required_independence = {
-        "picture_editor_cannot_self_approve_picture_lock",
-        "music_sound_supervisor_does_not_self_approve_final_mix_qc",
-        "owner_voice_approval_is_separate_from_technical_mix_approval",
+    if set(functions) != REQUIRED_MEDIA_FUNCTIONS:
+        raise MediaControlError("media functions missing or duplicated")
+    if len(functions) != len(config["production_functions"]):
+        raise MediaControlError("duplicate media function")
+    for function_id in STAGE_AUTHORITY_FUNCTIONS:
+        if functions[function_id].get("default_status") != "STAGE_AUTHORITY":
+            raise MediaControlError("stage authority must remain active")
+    for function_id in REQUIRED_MEDIA_FUNCTIONS - STAGE_AUTHORITY_FUNCTIONS:
+        if functions[function_id].get("default_status") != "ON_DEMAND":
+            raise MediaControlError("specialist advice must stay on demand")
+    required = {
         "research_or_writer_cannot_self_clear_material_fact_check",
-        "growth_strategist_does_not_replace_thumbnail_design_review",
         "producer_controls_schedule_resources_not_editorial_truth",
-        "motion_editor_participates_before_script_lock",
-    }
-    if not required_independence.issubset(independence):
-        raise MediaControlError("media function independence rules are incomplete")
-
-    if "benchmark_artifact" not in config:
-        raise MediaControlError("studio benchmark artifact is required")
-
-    visual_brief = config.get("visual_generation_brief_capability", {})
-    if visual_brief.get("id") != "visual_generation_brief_compiler":
-        raise MediaControlError("visual generation brief capability missing")
-    if visual_brief.get("permanent_role") is not False:
-        raise MediaControlError("visual generation brief compiler must remain a capability, not headcount")
-    if set(visual_brief.get("composed_by", [])) != {
-        "Visual Art Director / Frame Curator",
-        "Thumbnail & Packaging Designer",
-        "Synthesis & Alternatives Designer",
-    }:
-        raise MediaControlError("visual generation brief compiler composition drifted")
-    if visual_brief.get("anti_slop_approver") != "Red Team":
-        raise MediaControlError("visual generation brief must be approved by Red Team")
-    if visual_brief.get("executor") != "Technical Operator":
-        raise MediaControlError("visual generation brief executor must be Technical Operator")
-    if visual_brief.get("artifact_template") != "docs/templates/media/VISUAL_GENERATION_BRIEF.md":
-        raise MediaControlError("visual generation brief template drifted")
-    for flag in {
-        "no_prompt_no_generation",
-        "no_anti_slop_approval_no_execution",
-        "tool_creative_rewrite_forbidden",
-        "material_deviation_returns_to_council",
-        "one_official_thumbnail_concept_per_episode",
-        "one_generation_job_per_episode_thumbnail_stage",
-        "one_generated_thumbnail_asset_per_episode",
-        "multi_panel_thumbnail_output_forbidden",
-        "generation_context_must_contain_only_selected_brief",
-    }:
-        if visual_brief.get(flag) is not True:
-            raise MediaControlError(f"visual generation brief boundary missing: {flag}")
-
-    required_prompt_rules = {
-        "generated_visual_execution_requires_approved_generation_brief",
-        "red_team_anti_slop_must_approve_generation_brief_before_execution",
+        "final_qc_reviewer_independent_of_editor",
+        "stage_owner_has_final_authority",
         "technical_operator_cannot_creatively_rewrite_approved_visual_brief",
-        "material_prompt_deviation_returns_to_council",
-        "thumbnail_generation_is_one_job_one_prompt_version_one_asset",
-        "only_one_official_thumbnail_concept_may_be_generated_per_episode",
-        "multi_panel_thumbnail_outputs_are_rejected",
-        "visual_art_director_has_final_visual_decision_within_locked_system",
-        "council_reviews_visual_work_at_defined_gates_after_lock_not_per_frame",
-        "red_team_may_block_drift_but_does_not_replace_art_direction",
-        "full_length_episode_blocked_until_p2_visual_production_pilot_passes",
-        "primary_visual_generator_selected_by_qualification_not_remaining_credits",
     }
-    if not required_prompt_rules.issubset(independence):
-        raise MediaControlError("visual prompt execution boundaries are incomplete")
-
-    production_system = config.get("visual_production_system", {})
-    if production_system.get("art_director_final_visual_authority_within_lock") is not True:
-        raise MediaControlError("Visual Art Director final visual authority is required")
-    if production_system.get("council_gate_review_only_after_lock") is not True:
-        raise MediaControlError("Council must switch to gate-only visual review after lock")
-    if production_system.get("per_frame_full_council_review_after_lock") is not False:
-        raise MediaControlError("per-frame full Council review must remain disabled after lock")
-    if production_system.get("pilot_ladder") != [
-        "P0_REFERENCE_FRAME_LOCK",
-        "P1_COHERENCE_30_45",
-        "P2_PRODUCTION_60_90",
-        "P3_FULL_EPISODE_8_PLUS_MINUTES",
-    ]:
-        raise MediaControlError("visual production pilot ladder drifted")
-    if production_system.get("full_episode_requires") != "P2_PASS":
-        raise MediaControlError("full episode must require P2 PASS")
-    if production_system.get("p0_status") != "PASS":
-        raise MediaControlError("P0 visual-system lock must pass before active production")
-    if production_system.get("p1_status") != "PASS_INTERNAL_COHERENCE":
-        raise MediaControlError("P1 internal coherence must pass before P2 preparation")
-    if production_system.get("active_stage") != "P1_REFERENCE_FIDELITY_RETRY_PHASE_5":
-        raise MediaControlError("media venture must remain in DAY24 critical motion prototype phase")
-    if production_system.get("p2_status") != "BLOCKED_REFERENCE_FIDELITY_RETRY":
-        raise MediaControlError("P2 must remain blocked until the P1 reference-fidelity retry passes")
-    if not production_system.get("production_kit") or not production_system.get("p0_review"):
-        raise MediaControlError("P0 production artifacts are missing")
-    if not production_system.get("p1_review") or not production_system.get("p1_internal_render"):
-        raise MediaControlError("P1 review artifacts are missing")
-    if len(production_system.get("p2_blockers", [])) < 2:
-        raise MediaControlError("P2 blockers are incomplete")
-    if not production_system.get("reference_temporal_grammar"):
-        raise MediaControlError("reference temporal grammar is missing")
-    if production_system.get("motion_qualification_status") != "PASS_PRIMARY":
-        raise MediaControlError("primary motion route qualification is missing")
-    if not production_system.get("motion_qualification_artifact") or not production_system.get("visual_event_script"):
-        raise MediaControlError("retry motion/script artifacts are missing")
-    if not production_system.get("shot_bible"):
-        raise MediaControlError("locked shot bible is required before critical motion prototypes")
-    if production_system.get("critical_motion_prototypes_status") != "ACTIVE":
-        raise MediaControlError("critical motion prototype phase must remain active")
-
-    toolchain = config.get("media_toolchain", {})
-    if toolchain.get("image_generation_primary_tool") != "RUNWAY_NANO_BANANA_2_LITE_QUALIFIED":
-        raise MediaControlError("qualified primary image generator drifted")
-    if toolchain.get("image_generation_backup_tool") != "RUNWAY_NANO_BANANA_PRO_QUALIFIED":
-        raise MediaControlError("qualified backup image generator drifted")
-    if not toolchain.get("image_generation_qualification_artifact"):
-        raise MediaControlError("image generator qualification artifact is missing")
-    if toolchain.get("after_effects_motion_assembly") != "RUNTIME_VERIFIED_QUALIFIED_PRIMARY":
-        raise MediaControlError("After Effects qualified-primary state drifted")
-    if toolchain.get("motion_authoring") != "QUALIFIED_PRIMARY_AFTER_EFFECTS_2026":
-        raise MediaControlError("professional motion authoring primary route drifted")
-    if toolchain.get("picture_edit_finishing") != "QUALIFIED_1080P_AFTER_EFFECTS_PILOT":
-        raise MediaControlError("qualified 1080p picture finishing state drifted")
-    if toolchain.get("descript_rough_edit") != "RUNTIME_VERIFIED_INTERNAL_ONLY":
-        raise MediaControlError("Descript must remain classified as an internal rough-edit route")
-    for capability in {
-        "dialogue_cleanup",
-        "music_supervision",
-        "sound_design",
-        "mix_mastering",
-        "audiovisual_sync_qc",
+    if not required.issubset(set(config.get("function_independence_rules", []))):
+        raise MediaControlError("independent facts/QC and final authority required")
+    brief = config.get("visual_generation_brief_capability", {})
+    for key, expected in {
+        "permanent_role": False,
+        "final_approver": "Visual Art Director / Frame Curator",
+        "approval_scope": "ASSET_PACK_NOT_PER_FRAME",
+        "preproduction_lock_required": True,
+        "no_prompt_no_generation": True,
+        "tool_creative_rewrite_forbidden": True,
+        "one_generated_thumbnail_asset_per_episode": True,
+        "multi_panel_thumbnail_output_forbidden": True,
+    }.items():
+        if type(brief.get(key)) is not type(expected) or brief.get(key) != expected:
+            raise MediaControlError(f"visual brief contract drift: {key}")
+    if config.get("production_workflow_config") != "company/config/channel_operating_system.json":
+        raise MediaControlError("single governing workflow required")
+    if config.get("visual_production_system") != {
+        "governing_doc": "docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md",
+        "config_pointer": "company/config/channel_operating_system.json#production_system",
     }:
-        if capability not in toolchain:
-            raise MediaControlError(f"missing audio capability state: {capability}")
-
+        raise MediaControlError("legacy production mirror must not return")
+    if config.get("system_pilot", {}).get("count") != 1:
+        raise MediaControlError("exactly one system pilot required")
+    if config.get("live_publish_authority") is not False:
+        raise MediaControlError("publication remains unauthorized")
     pilot = config.get("pilot", {})
-    if pilot.get("required_before_scale") is not True:
-        raise MediaControlError("media pilot must be required before scale")
-    if int(pilot.get("video_count", 0)) < 3:
-        raise MediaControlError("pilot must include at least 3 videos")
+    if (
+        pilot.get("scope") != "BUSINESS_SCALE_OBSERVATION_ONLY_NOT_EPISODE_PRODUCTION"
+        or pilot.get("blocks_episode_production") is not False
+    ):
+        raise MediaControlError("business observation must not block episode production")
+    if pilot.get("required_before_scale") is not True or pilot.get("video_count") != 3:
+        raise MediaControlError("business-scale observation contract drift")
+    tools = config.get("media_toolchain", {})
+    if tools.get("video_editing") != "DESCRIPT_PRIMARY_DELIVERY_PENDING_SYSTEM_PILOT":
+        raise MediaControlError("single primary editor contract drift")
+    if tools.get("after_effects_motion_assembly") != "BACKUP_NATIVE_ONLY_HISTORICAL_EVIDENCE_REVERIFY_ON_USE":
+        raise MediaControlError("backup cannot imply current delivery verification")
     return True
 
 
 def validate_media_pilot_record(record, *, published=False):
+    """Business-scale observation only; never an episode-production prerequisite."""
     required = {"videos_completed", "metrics", "hr_review_status", "scale_decision"}
     missing = required - set(record)
     if missing:

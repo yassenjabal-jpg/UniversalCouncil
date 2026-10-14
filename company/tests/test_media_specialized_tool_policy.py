@@ -1,113 +1,116 @@
+import copy
 import json
 import unittest
 from pathlib import Path
+
+from company.runtime.lean_video_production import ProductionWorkflowError, validate_production_config
 
 ROOT = Path(__file__).resolve().parents[2]
 
 
 class MediaSpecializedToolPolicyTests(unittest.TestCase):
-    def load_policy(self):
-        return json.loads((ROOT / "company/config/media_specialized_tool_policy.json").read_text(encoding="utf-8"))
+    def setUp(self):
+        self.cfg = json.loads((ROOT / "company/config/media_specialized_tool_policy.json").read_text(encoding="utf-8"))
+        self.channel = json.loads((ROOT / self.cfg["governing_workflow"]).read_text(encoding="utf-8"))
 
-    def test_specialized_tool_first_is_governing_policy(self):
-        cfg = self.load_policy()
-        self.assertEqual(cfg["version"], "1.6")
-        self.assertEqual(cfg["policy"], "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT")
-        self.assertIn("python_as_primary_video_editor", cfg["prohibitions"])
-        self.assertIn("python_as_primary_audio_mastering_tool", cfg["prohibitions"])
-        self.assertIn("generated_code_as_substitute_for_unavailable_nle_or_daw", cfg["prohibitions"])
-        still = cfg["tool_matrix"]["still_image_generation"]
-        self.assertTrue(still["generation_brief_required"])
-        self.assertTrue(still["anti_slop_approval_required"])
-        self.assertTrue(still["creative_prompt_rewrite_by_executor_forbidden"])
-        self.assertEqual(still["official_thumbnail_concepts_per_episode"], 1)
-        self.assertEqual(still["generated_thumbnail_assets_per_episode"], 1)
-        self.assertEqual(still["generation_jobs_per_episode_thumbnail_stage"], 1)
-        self.assertTrue(still["context_isolation_required"])
-        self.assertTrue(still["multi_panel_thumbnail_output_forbidden"])
-        self.assertEqual(cfg["gates"]["thumbnail_generation_multiple_concepts_or_assets"], "BLOCK")
-        self.assertEqual(cfg["gates"]["thumbnail_generation_multi_panel_output"], "BLOCK")
-        video = cfg["tool_matrix"]["ai_video_generation"]
-        self.assertTrue(video["generation_brief_required"])
-        self.assertTrue(video["anti_slop_approval_required"])
-        self.assertEqual(cfg["gates"]["visual_generation_without_approved_brief"], "BLOCK")
-        self.assertEqual(cfg["gates"]["visual_generation_without_anti_slop_approval"], "BLOCK")
+    def test_exactly_three_gates_and_two_native_editors(self):
+        cfg = self.cfg
+        self.assertEqual(cfg["version"], "2.0")
+        self.assertEqual(cfg["quality_gates"], ["Preproduction Lock", "Rough Cut Review", "Final QC"])
+        self.assertEqual(cfg["quality_gates"], self.channel["quality_gates"])
+        self.assertEqual(cfg["editing_routes"], self.channel["production_system"]["editing_routes"])
+        for name in [
+            "motion_graphics_compositing",
+            "dialogue_cleanup_text_edit",
+            "picture_edit_finishing",
+            "audio_edit_mix_master",
+            "captions_transcript",
+            "render_export",
+        ]:
+            with self.subTest(stage=name):
+                tool = cfg["tool_matrix"][name]
+                self.assertEqual(tool["preferred"], ["Descript"])
+                self.assertEqual(tool["backup"], ["Adobe After Effects 2026 native automation"])
+                self.assertEqual(tool["status"], "DELIVERY_PENDING_SYSTEM_PILOT")
+        self.assertFalse(cfg["editing_routes"]["gui_retry_loops"])
+        self.assertEqual(cfg["editing_routes"]["max_routes"], 2)
 
-    def test_visual_tool_qualification_prefers_quality_over_credits(self):
-        cfg = self.load_policy()
-        qualification = cfg["tool_qualification"]
-        self.assertTrue(qualification["required_before_primary_visual_generator_lock"])
-        self.assertEqual(qualification["comparison_contract"], "SAME_FRAME_SAME_BRIEF")
-        self.assertGreaterEqual(qualification["minimum_viable_candidates"], 2)
-        self.assertEqual(sum(qualification["weights"].values()), 100)
-        self.assertGreaterEqual(
-            qualification["weights"]["prompt_fidelity"] + qualification["weights"]["style_consistency"],
-            50,
-        )
-        self.assertTrue(qualification["remaining_credits_must_not_select_primary_tool"])
-        self.assertEqual(qualification["primary_tool_state"], "QUALIFIED_PRIMARY")
-        self.assertEqual(qualification["backup_tool_state"], "QUALIFIED_BACKUP")
-        self.assertEqual(qualification["primary_tool"], "runway:nano-banana-2-lite")
-        self.assertEqual(qualification["backup_tool"], "runway:nano-banana-pro")
-        self.assertGreater(qualification["primary_score"], qualification["backup_score"])
-        self.assertTrue(qualification["qualification_artifact"])
-        self.assertEqual(cfg["gates"]["visual_system_lock_without_tool_qualification"], "BLOCK")
-        self.assertEqual(cfg["gates"]["full_length_episode_before_p2_visual_pilot"], "BLOCK")
-        self.assertEqual(cfg["gates"]["p2_without_verified_motion_authoring"], "BLOCK")
-        self.assertEqual(cfg["gates"]["p2_without_clean_1080p_finishing_route"], "BLOCK")
-        self.assertEqual(cfg["gates"]["p2_without_delivery_audio_finishing_route"], "BLOCK")
+    def test_route_and_gate_mutations_are_rejected_by_governing_runtime(self):
+        for field, replacement in [
+            ("max_routes", 3),
+            ("gui_retry_loops", True),
+            ("max_backup_activations", 2),
+            ("backup_requires_current_probe", False),
+            ("max_primary_diagnosis_minutes", 60),
+            ("tertiary", {"tool": "Another editor"}),
+        ]:
+            with self.subTest(field=field):
+                cfg = copy.deepcopy(self.channel)
+                cfg["production_system"]["editing_routes"][field] = replacement
+                with self.assertRaises(ProductionWorkflowError):
+                    validate_production_config(cfg)
+        cfg = copy.deepcopy(self.channel)
+        cfg["quality_gates"].append("Per Frame Review")
+        with self.assertRaises(ProductionWorkflowError):
+            validate_production_config(cfg)
+
+    def test_connectivity_does_not_claim_delivery_quality(self):
+        routes = self.cfg["editing_routes"]
+        self.assertEqual(routes["primary"]["connection_status"], "LIVE_VERIFIED")
+        self.assertEqual(routes["primary"]["delivery_status"], "UNVERIFIED_PENDING_SYSTEM_PILOT")
+        self.assertEqual(routes["backup"]["connection_status"], "REVERIFY_ON_ACTIVATION")
+        self.assertEqual(routes["backup"]["delivery_status"], "HISTORICAL_5_SECOND_BENCHMARK_ONLY")
+        for name in ["primary", "backup"]:
+            self.assertTrue((ROOT / routes[name]["evidence"]).is_file())
+        self.assertIn("historical", self.cfg["current_verified_environment"]["historical_environment_note"])
+        self.assertFalse(self.cfg["current_verified_environment"]["runway_current_workspace"]["video_models_available"])
+        self.assertEqual(self.cfg["tool_matrix"]["ai_video_generation"]["status"], "PARTIAL_CAPABILITY")
+
+    def test_generation_protections_are_embedded_in_preproduction(self):
+        still = self.cfg["tool_matrix"]["still_image_generation"]
+        for field in [
+            "generation_brief_required",
+            "creative_prompt_rewrite_by_executor_forbidden",
+            "context_isolation_required",
+            "multi_panel_thumbnail_output_forbidden",
+        ]:
+            self.assertIs(still[field], True)
+        for field in [
+            "official_thumbnail_concepts_per_episode",
+            "generated_thumbnail_assets_per_episode",
+            "generation_jobs_per_episode_thumbnail_stage",
+        ]:
+            self.assertEqual(still[field], 1)
+        for kind in ["still_image_generation", "ai_video_generation"]:
+            self.assertEqual(self.cfg["tool_matrix"][kind]["approval_scope"], "ASSET_PACK_PREPRODUCTION_LOCK")
+        self.assertNotIn("gates", self.cfg)
+        self.assertNotIn("current_motion_state", self.cfg)
+
+    def test_public_master_requires_actual_qc_and_publish_remains_blocked(self):
+        constraints = self.cfg["execution_constraints"]
+        self.assertEqual(constraints["automatic_publish"], "BLOCK")
+        self.assertEqual(constraints["generation_without_preproduction_lock"], "BLOCK")
+        self.assertEqual(constraints["thumbnail_multiple_concepts_or_assets"], "BLOCK")
+        self.assertEqual(constraints["gui_retry_loops"], "FORBIDDEN")
         self.assertEqual(
-            cfg["current_motion_state"]["after_effects"],
-            "QUALIFIED_PRIMARY_1080P_30FPS_WATERMARK_FREE",
-        )
-        self.assertEqual(
-            cfg["current_motion_state"]["p1_result"],
-            "REFERENCE_FIDELITY_RETRY_IN_PROGRESS",
-        )
-        self.assertEqual(
-            cfg["current_motion_state"]["p2_state"],
-            "BLOCKED_REFERENCE_FIDELITY_RETRY",
-        )
-        self.assertTrue(cfg["current_motion_state"]["qualification_artifact"])
-
-    def test_public_master_fails_closed_without_professional_finishing(self):
-        cfg = self.load_policy()
-        self.assertEqual(
-            cfg["gates"]["public_final_master"],
-            "BLOCK_UNTIL_PRO_AUDIO_AND_NLE_FINISHING_RUNTIME_VERIFIED",
-        )
-        self.assertEqual(
-            cfg["tool_matrix"]["picture_edit_finishing"]["status"],
-            "PUBLIC_FINISHING_CAPABILITY_GAP",
-        )
-        self.assertEqual(
-            cfg["tool_matrix"]["audio_edit_mix_master"]["status"],
-            "PUBLIC_FINISHING_CAPABILITY_GAP",
+            constraints["public_final_master"], "REQUIRES_EXACT_EXPORT_FINAL_QC_NOT_SEPARATE_NLE_DAW_BRANDS"
         )
 
-    def test_actual_connected_and_desktop_tools_are_recorded(self):
-        cfg = self.load_policy()
-        desktop = cfg["current_verified_environment"]["yassin_desktop"]
-        self.assertTrue(desktop["after_effects_2026"])
-        self.assertFalse(desktop["premiere_pro_2026"])
-        self.assertFalse(desktop["audition_2026"])
-        self.assertFalse(desktop["media_encoder_2026"])
-
-        plugins = cfg["current_verified_environment"]["connected_plugins"]
-        for name in {"descript", "runway", "openart", "canva", "figma"}:
-            self.assertTrue(plugins[name])
-
-        runway = cfg["current_verified_environment"]["runway_current_workspace"]
-        self.assertTrue(runway["authenticated"])
-        self.assertTrue(runway["image_models_available"])
-        self.assertFalse(runway["video_models_available"])
-
-    def test_code_role_is_orchestration_not_craft(self):
-        cfg = self.load_policy()
-        for key, tool in cfg["tool_matrix"].items():
-            role = tool.get("code_role")
-            if role:
-                self.assertNotIn("primary", role.lower(), msg=key)
+    def test_code_orchestrates_and_does_not_replace_craft(self):
+        for prohibition in [
+            "python_as_primary_video_editor",
+            "python_as_primary_audio_mastering_tool",
+            "python_as_primary_motion_design_tool",
+            "ffmpeg_as_primary_creative_editor",
+            "generated_code_as_substitute_for_unavailable_nle_or_daw",
+        ]:
+            self.assertIn(prohibition, self.cfg["prohibitions"])
+        for stage, tool in self.cfg["tool_matrix"].items():
+            if "code_role" in tool:
+                self.assertNotIn("primary", tool["code_role"].lower(), msg=stage)
+        self.assertTrue(self.cfg["exception_rule"]["owner_approval_required"])
+        self.assertTrue(self.cfg["exception_rule"]["must_be_time_bounded"])
+        self.assertTrue(self.cfg["exception_rule"]["must_not_become_default"])
 
 
 if __name__ == "__main__":

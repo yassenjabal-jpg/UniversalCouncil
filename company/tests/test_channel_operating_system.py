@@ -5,442 +5,134 @@ from pathlib import Path
 
 from company.runtime.channel_operating_system import (
     ChannelOperatingSystemError,
+    EXACT_CONTRACTS,
     REQUIRED_AUDIO_STEMS,
     REQUIRED_PRODUCTION_ROLES,
-    REQUIRED_SCRIPT_PASSES,
     REQUIRED_WORKFLOW,
+    REQUIRED_GATES,
     validate_config,
+    value_at,
 )
-
+from company.runtime.lean_video_production import ProductionWorkflowError
 
 ROOT = Path(__file__).resolve().parents[2]
-CONFIG = json.loads((ROOT / "company" / "config" / "channel_operating_system.json").read_text(encoding="utf-8"))
+CONFIG = json.loads((ROOT / "company/config/channel_operating_system.json").read_text(encoding="utf-8"))
+
+
+def replace_at(cfg, path, replacement):
+    parts = path.split(".")
+    parent = cfg
+    for part in parts[:-1]:
+        parent = parent[part]
+    parent[parts[-1]] = replacement
 
 
 class ChannelOperatingSystemTests(unittest.TestCase):
     def test_current_config_is_valid(self):
         self.assertTrue(validate_config(copy.deepcopy(CONFIG)))
-
-    def test_rebuilt_visual_identity_contract(self):
-        self.assertEqual(CONFIG["version"], "1.6")
-        self.assertEqual(CONFIG["visual_system"], "Modern Editorial Surrealism")
-        identity = CONFIG["visual_identity"]
-        self.assertEqual(identity["version"], "2.1-candidate")
-        self.assertEqual(
-            identity["bible"],
-            "docs/operations/media/MODERN_EDITORIAL_SURREALISM_VISUAL_BIBLE.md",
-        )
-        self.assertEqual(identity["primary_reference"], "user-provided 1000061003.mp4")
-        self.assertTrue(identity["episode_accent_required"])
-        self.assertTrue(identity["architecture_is_topic_dependent_only"])
-        self.assertTrue(identity["classical_art_is_optional_not_mandatory"])
-        self.assertEqual(identity["thumbnail_hypotheses_per_episode"], 1)
-        self.assertEqual(identity["generated_thumbnail_assets_per_episode"], 1)
-        self.assertTrue(identity["single_thumbnail_lock"])
-        self.assertTrue(identity["multi_panel_thumbnail_output_forbidden"])
-        self.assertEqual(identity["hero_objects_per_key_frame"], 1)
-        self.assertTrue(identity["synthetic_documentary_evidence_forbidden"])
-        self.assertEqual(CONFIG["frame_bible"]["composition_rules"]["negative_space_percent"], "35-60")
-
-    def test_visual_generation_brief_is_mandatory_and_fail_closed(self):
-        brief = CONFIG["visual_generation_brief_system"]
-        self.assertEqual(brief["status"], "REQUIRED_FOR_ANY_GENERATED_VISUAL")
-        self.assertFalse("Prompt Engineer" in brief["composed_by"])
-        self.assertEqual(
-            set(brief["composed_by"]),
-            {
-                "Visual Art Director / Frame Curator",
-                "Thumbnail & Packaging Designer",
-                "Synthesis & Alternatives Designer",
-            },
-        )
-        self.assertEqual(brief["approval_required_from"], ["Red Team / Anti-Slop"])
-        self.assertEqual(brief["executor"], "Technical Operator")
-        self.assertEqual(brief["approval_state_required"], "APPROVED_BY_ANTI_SLOP")
-        self.assertIn("NO_PROMPT_NO_GENERATION", brief["execution_rules"])
-        self.assertIn("NO_ANTI_SLOP_APPROVAL_NO_EXECUTION", brief["execution_rules"])
-        self.assertIn("TOOL_MUST_NOT_CREATIVELY_REWRITE_APPROVED_BRIEF", brief["execution_rules"])
-        self.assertIn("MATERIAL_DEVIATION_RETURNS_TO_COUNCIL", brief["execution_rules"])
-        self.assertEqual(brief["official_thumbnail_concepts_per_episode"], 1)
-        self.assertEqual(brief["generated_thumbnail_assets_per_episode"], 1)
-        self.assertEqual(brief["generation_jobs_per_episode_thumbnail_stage"], 1)
-        self.assertTrue(brief["context_isolation_required"])
-        self.assertTrue(brief["multi_panel_output_forbidden"])
-        self.assertIn("visual_generation_briefs_approved", CONFIG["production_readiness"]["required_checks"])
-        self.assertIn("G6A Visual Generation Brief + Anti-Slop Approval", CONFIG["quality_gates"])
-
-    def test_topic_weights_total_100(self):
-        self.assertEqual(sum(CONFIG["topic_scoring"]["fields"].values()), 100)
-
-    def test_workflow_is_exact_and_ordered(self):
         self.assertEqual(CONFIG["workflow"], REQUIRED_WORKFLOW)
-        workflow = CONFIG["workflow"]
-        self.assertLess(workflow.index("visual_story_case"), workflow.index("script_development"))
-        self.assertLess(workflow.index("preproduction_craft_review"), workflow.index("script_lock"))
-        self.assertLess(workflow.index("independent_fact_check"), workflow.index("script_lock"))
-        self.assertLess(
-            workflow.index("audio_spotting_and_sonic_concept"), workflow.index("reference_frame_assignment")
-        )
-        self.assertLess(workflow.index("animatic"), workflow.index("production_readiness_review"))
-        self.assertLess(workflow.index("production_readiness_review"), workflow.index("production"))
-        self.assertLess(workflow.index("editorial_rough_cut"), workflow.index("packaging_finalization_and_test_plan"))
-        self.assertLess(workflow.index("picture_lock"), workflow.index("music_sound_design"))
-        self.assertLess(workflow.index("mix_master"), workflow.index("audiovisual_sync_qc"))
+        self.assertEqual(CONFIG["quality_gates"], REQUIRED_GATES)
 
-    def test_benchmark_roles_are_distinct_and_required(self):
-        roles = set(CONFIG["roles"])
-        self.assertTrue(REQUIRED_PRODUCTION_ROLES.issubset(roles))
-        for role in {
-            "Media Producer / Production Coordinator",
-            "Independent Fact Checker",
-            "Thumbnail & Packaging Designer",
-            "Audience Growth & Packaging Strategist",
-            "Motion & Picture Editor",
-        }:
-            self.assertIn(role, roles)
-        self.assertNotEqual(
-            CONFIG["roles"]["Audience Growth & Packaging Strategist"],
-            CONFIG["roles"]["Thumbnail & Packaging Designer"],
-        )
+    def test_every_exact_contract_rejects_missing_changed_and_wrong_type(self):
+        for path, expected in EXACT_CONTRACTS.items():
+            changed = (
+                not expected
+                if isinstance(expected, bool)
+                else (
+                    expected + 1
+                    if isinstance(expected, int)
+                    else (expected + ["DRIFT"] if isinstance(expected, list) else expected + "_DRIFT")
+                )
+            )
+            for replacement in [None, changed, {"wrong_type": expected}]:
+                with self.subTest(path=path, replacement=replacement):
+                    cfg = copy.deepcopy(CONFIG)
+                    replace_at(cfg, path, replacement)
+                    with self.assertRaises(ChannelOperatingSystemError):
+                        validate_config(cfg)
 
-    def test_professional_preproduction_contract(self):
-        benchmark = CONFIG["benchmark_profile"]
-        self.assertTrue(benchmark["adopt_disciplines_not_headcount"])
-        self.assertGreaterEqual(len(benchmark["reference_models"]), 5)
+    def test_required_substantive_sets_reject_each_missing_member(self):
+        required_sets = {
+            "roles": REQUIRED_PRODUCTION_ROLES,
+            "audio_system.mandatory_stems": REQUIRED_AUDIO_STEMS,
+            "script_schema.required_columns": {"timecode", "narration", "visual_beat_id", "evidence_ids"},
+            "visual_generation_brief_system.required_fields": {
+                "prompt_version",
+                "final_generation_instruction",
+                "documentary_evidence_boundary",
+                "negative_constraints",
+            },
+            "visual_generation_brief_system.execution_rules": {
+                "NO_PROMPT_NO_GENERATION",
+                "PREPRODUCTION_LOCK_REQUIRED",
+                "TOOL_MUST_NOT_CREATIVELY_REWRITE_APPROVED_BRIEF",
+                "MATERIAL_DEVIATION_RETURNS_TO_STAGE_AUTHORITY",
+            },
+            "visual_identity.core_principles": {
+                "editorial_clarity",
+                "one_hero_object",
+                "strong_negative_space",
+                "episode_specific_visual_metaphor",
+                "meaning_driven_motion",
+            },
+        }
+        for path, required in required_sets.items():
+            for member in required:
+                with self.subTest(path=path, member=member):
+                    cfg = copy.deepcopy(CONFIG)
+                    replace_at(cfg, path, [item for item in value_at(cfg, path) if item != member])
+                    with self.assertRaises(ChannelOperatingSystemError):
+                        validate_config(cfg)
 
-        visual = CONFIG["visual_story_case"]
-        self.assertTrue(visual["required"])
-        self.assertTrue(visual["must_precede_script_lock"])
-        self.assertIn("why_video_not_article", visual["required_fields"])
-        self.assertIn("key_visual", visual["required_fields"])
-        self.assertIn("editor_feasibility_note", visual["required_fields"])
+    def test_craft_guidance_minimum_lengths(self):
+        for path, minimum in {
+            "anti_slop_checks.checks": 8,
+            "transition_system.canonical": 8,
+            "trend_radar.sources": 6,
+            "research_system.expert_consultation_required_when": 3,
+        }.items():
+            with self.subTest(path=path):
+                cfg = copy.deepcopy(CONFIG)
+                replace_at(cfg, path, value_at(cfg, path)[: minimum - 1])
+                with self.assertRaises(ChannelOperatingSystemError):
+                    validate_config(cfg)
 
-        preprod = CONFIG["preproduction_craft_review"]
-        self.assertTrue(preprod["required"])
-        self.assertIn("Motion & Picture Editor", preprod["participants"])
-        self.assertIn("Music Supervisor & Sound Designer", preprod["participants"])
-        self.assertIn("Media Producer / Production Coordinator", preprod["participants"])
+    def test_topic_weights_and_threshold(self):
+        for path, replacement in [("topic_scoring.fields", {"only": 99}), ("topic_scoring.gates.minimum_total", 69)]:
+            with self.subTest(path=path):
+                cfg = copy.deepcopy(CONFIG)
+                replace_at(cfg, path, replacement)
+                with self.assertRaises(ChannelOperatingSystemError):
+                    validate_config(cfg)
+        cfg = copy.deepcopy(CONFIG)
+        cfg["topic_scoring"]["gates"]["minimum_total"] = 70
+        self.assertTrue(validate_config(cfg))
 
-    def test_script_development_is_multi_pass_and_fact_checked(self):
-        scripts = CONFIG["script_development"]
-        self.assertTrue(scripts["single_pass_forbidden"])
-        self.assertEqual(scripts["required_passes"], REQUIRED_SCRIPT_PASSES)
-        self.assertTrue(scripts["fact_check_before_lock"])
-        self.assertTrue(scripts["visual_draft_requires_editor_review"])
+    def test_lean_failure_is_converted_with_cause(self):
+        cfg = copy.deepcopy(CONFIG)
+        cfg["quality_gates"].append("P2 Pilot")
+        with self.assertRaises(ChannelOperatingSystemError) as caught:
+            validate_config(cfg)
+        self.assertIsInstance(caught.exception.__cause__, ProductionWorkflowError)
 
-    def test_evidence_and_visual_rights_are_separate(self):
-        research = CONFIG["research_system"]
-        self.assertTrue(research["claim_source_sheet_required"])
-        self.assertTrue(research["visual_source_rights_sheet_required"])
-        self.assertTrue(research["separate_claim_and_visual_ledgers"])
+    def test_cancelled_ladder_and_committee_cannot_return(self):
+        for field, replacement in [
+            ("pilot_ladder", ["P0", "P1", "P2"]),
+            ("per_frame_review", True),
+            ("per_prototype_review", True),
+            ("committee_approval", True),
+            ("publication_authorized", True),
+        ]:
+            with self.subTest(field=field):
+                cfg = copy.deepcopy(CONFIG)
+                cfg["production_system"][field] = replacement
+                with self.assertRaises(ChannelOperatingSystemError):
+                    validate_config(cfg)
 
-    def test_production_readiness_fails_closed(self):
-        gate = CONFIG["production_readiness"]
-        self.assertTrue(gate["required"])
-        self.assertEqual(gate["fail_action"], "HOLD_PRODUCTION")
-        for check in {
-            "script_locked",
-            "independent_fact_check_passed",
-            "visual_rights_clear",
-            "audio_spotting_complete",
-            "specialized_tools_available",
-            "schedule_acceptable",
-            "budget_acceptable",
-        }:
-            self.assertIn(check, gate["required_checks"])
-
-    def test_packaging_has_early_and_final_stages(self):
-        packaging = CONFIG["packaging_system"]
-        self.assertTrue(packaging["thumbnail_designer_independent_craft_function"])
-        self.assertGreaterEqual(len(packaging["stage_a_before_script"]), 4)
-        self.assertGreaterEqual(len(packaging["stage_b_after_rough_cut"]), 4)
-
-    def test_locked_production_system_and_pilot_ladder(self):
-        system = CONFIG["production_system"]
-        self.assertEqual(
-            system["governing_principle"],
-            "COUNCIL_DESIGNS_SYSTEM_ART_DIRECTOR_LOCKS_OPERATORS_PRODUCE_COUNCIL_REVIEWS_GATES",
-        )
-        lock = system["visual_system_lock"]
-        self.assertTrue(lock["required"])
-        self.assertGreaterEqual(lock["reference_frame_count_min"], 4)
-        self.assertLessEqual(lock["reference_frame_count_max"], 6)
-        self.assertTrue(lock["production_kit_required"])
-        self.assertEqual(lock["lock_authority"], "Visual Art Director / Frame Curator")
-        self.assertTrue(lock["p0_passed"])
-        self.assertEqual(lock["status"], "LOCKED_AFTER_P1_COHERENCE_PASS")
-        self.assertTrue(lock["production_kit"])
-        self.assertTrue(lock["reference_set_brief"])
-        self.assertTrue(lock["council_review"])
-
-        authority = system["authority_model"]
-        self.assertEqual(authority["council_after_lock"], "SYSTEM_AND_GATE_REVIEW_ONLY")
-        self.assertEqual(
-            authority["visual_art_director"],
-            "FINAL_VISUAL_DECISION_WITHIN_LOCKED_SYSTEM",
-        )
-        self.assertFalse(authority["per_frame_full_council_review_after_lock"])
-
-        qualification = system["tool_qualification"]
-        self.assertTrue(qualification["required_before_visual_system_lock"])
-        self.assertEqual(qualification["comparison_contract"], "SAME_FRAME_SAME_BRIEF")
-        self.assertTrue(qualification["remaining_credits_must_not_select_primary_tool"])
-        self.assertEqual(sum(qualification["score_weights"].values()), 100)
-        self.assertTrue(qualification["qualification_passed"])
-        self.assertEqual(qualification["primary_generator_status"], "QUALIFIED_PRIMARY")
-        self.assertEqual(qualification["backup_generator_status"], "QUALIFIED_BACKUP")
-        self.assertEqual(qualification["primary_generator"], "runway:nano-banana-2-lite")
-        self.assertEqual(qualification["backup_generator"], "runway:nano-banana-pro")
-        self.assertGreater(qualification["primary_score"], qualification["backup_score"])
-        self.assertTrue(qualification["qualification_artifact"])
-
-        ladder = {stage["id"]: stage for stage in system["pilot_ladder"]}
-        self.assertEqual(ladder["P1_COHERENCE_30_45"]["duration_seconds_min"], 30)
-        self.assertEqual(ladder["P1_COHERENCE_30_45"]["duration_seconds_max"], 45)
-        self.assertEqual(ladder["P2_PRODUCTION_60_90"]["duration_seconds_min"], 60)
-        self.assertEqual(ladder["P2_PRODUCTION_60_90"]["duration_seconds_max"], 90)
-        self.assertEqual(ladder["P3_FULL_EPISODE_8_PLUS_MINUTES"]["duration_seconds_min"], 480)
-        self.assertEqual(system["full_length_episode_before_p2_pass"], "BLOCK")
-        self.assertEqual(system["active_pilot_stage"], "P1_REFERENCE_FIDELITY_RETRY_PHASE_5")
-        self.assertEqual(system["p1_status"], "PASS_INTERNAL_COHERENCE")
-        self.assertTrue(system["p1_review"])
-        self.assertTrue(system["p1_internal_render"])
-        self.assertEqual(
-            [stage["status"] for stage in system["pilot_ladder"]],
-            ["PASS", "PASS_INTERNAL_COHERENCE", "BLOCKED_REFERENCE_FIDELITY_RETRY", "BLOCKED_UNTIL_P2_PASS"],
-        )
-        self.assertGreaterEqual(len(system["pilot_ladder"][2]["blocking_capabilities"]), 2)
-        self.assertGreaterEqual(len(system["current_capability_gaps"]), 2)
-        self.assertTrue(system["visual_system_lock"]["reference_temporal_grammar"])
-        self.assertTrue(system["visual_system_lock"]["production_kit_candidate"])
-        self.assertEqual(system["motion_tool_qualification"]["status"], "PASS_PRIMARY")
-        self.assertEqual(
-            system["motion_tool_qualification"]["primary_route"],
-            "Adobe After Effects 2026 on YASSIN",
-        )
-        self.assertGreaterEqual(system["motion_tool_qualification"]["score"], 80)
-        self.assertTrue(system["motion_tool_qualification"]["clean_export_verified"])
-        self.assertTrue(system["motion_tool_qualification"]["watermark_free"])
-        self.assertEqual(system["retry_pipeline"]["phase_1_temporal_identity"], "PASS_REFERENCE_GRAMMAR_LOCK")
-        self.assertEqual(system["retry_pipeline"]["phase_2_motion_tool"], "PASS_PRIMARY")
-        self.assertEqual(system["retry_pipeline"]["phase_3_visual_script"], "PASS_CANDIDATE")
-        self.assertEqual(system["retry_pipeline"]["phase_4_shot_bible"], "PASS")
-        self.assertEqual(system["retry_pipeline"]["phase_5_critical_motion_prototypes"], "ACTIVE")
-        self.assertTrue(system["retry_pipeline"]["shot_bible"])
-
-    def test_production_system_fail_closed_paths(self):
-        mutations = [
-            lambda c: c["production_system"].__setitem__("version", "broken"),
-            lambda c: c["production_system"].__setitem__("governing_principle", "committee_per_frame"),
-            lambda c: c["production_system"]["visual_system_lock"].__setitem__("required", False),
-            lambda c: c["production_system"]["visual_system_lock"].__setitem__("reference_frame_count_min", 3),
-            lambda c: c["production_system"]["visual_system_lock"].__setitem__("reference_frame_count_max", 7),
-            lambda c: c["production_system"]["visual_system_lock"].__setitem__("production_kit_required", False),
-            lambda c: c["production_system"]["visual_system_lock"].__setitem__("lock_authority", "Council"),
-            lambda c: c["production_system"]["visual_system_lock"].__setitem__("red_team_blocker", False),
-            lambda c: c["production_system"]["visual_system_lock"].__setitem__("p0_passed", False),
-            lambda c: c["production_system"]["visual_system_lock"].__setitem__("status", "UNLOCKED"),
-            lambda c: c["production_system"].__setitem__("p1_status", "FAIL"),
-            lambda c: c["production_system"].__setitem__("active_pilot_stage", "P2_PRODUCTION_60_90"),
-            lambda c: c["production_system"]["pilot_ladder"][2].__setitem__("blocking_capabilities", []),
-            lambda c: c["production_system"].__setitem__("current_capability_gaps", []),
-            lambda c: c["production_system"]["motion_tool_qualification"].__setitem__("status", "FAIL"),
-            lambda c: c["production_system"]["motion_tool_qualification"].__setitem__("score", 70),
-            lambda c: c["production_system"]["motion_tool_qualification"].__setitem__("watermark_free", False),
-            lambda c: c["production_system"]["retry_pipeline"].__setitem__("phase_2_motion_tool", "FAIL"),
-            lambda c: c["production_system"]["retry_pipeline"].__setitem__("phase_4_shot_bible", "BLOCKED"),
-            lambda c: c["production_system"]["retry_pipeline"].__setitem__(
-                "phase_5_critical_motion_prototypes", "BLOCKED"
-            ),
-            lambda c: c["production_system"]["authority_model"].__setitem__("council_after_lock", "PER_FRAME"),
-            lambda c: c["production_system"]["authority_model"].__setitem__("visual_art_director", "ADVISORY"),
-            lambda c: c["production_system"]["authority_model"].__setitem__(
-                "technical_operator", "CREATIVE_REWRITE_ALLOWED"
-            ),
-            lambda c: c["production_system"]["authority_model"].__setitem__(
-                "per_frame_full_council_review_after_lock", True
-            ),
-            lambda c: c["production_system"]["tool_qualification"].__setitem__(
-                "required_before_visual_system_lock", False
-            ),
-            lambda c: c["production_system"]["tool_qualification"].__setitem__(
-                "comparison_contract", "DIFFERENT_PROMPTS"
-            ),
-            lambda c: c["production_system"]["tool_qualification"].__setitem__("minimum_viable_candidates", 1),
-            lambda c: c["production_system"]["tool_qualification"]["score_weights"].__setitem__("cost", 6),
-            lambda c: (
-                c["production_system"]["tool_qualification"]["score_weights"].__setitem__("prompt_fidelity", 10),
-                c["production_system"]["tool_qualification"]["score_weights"].__setitem__("style_consistency", 10),
-                c["production_system"]["tool_qualification"]["score_weights"].__setitem__("cost", 35),
-            ),
-            lambda c: c["production_system"]["tool_qualification"].__setitem__(
-                "remaining_credits_must_not_select_primary_tool", False
-            ),
-            lambda c: c["production_system"]["tool_qualification"].__setitem__("qualification_passed", False),
-            lambda c: c["production_system"]["tool_qualification"].__setitem__(
-                "primary_generator_status", "UNQUALIFIED"
-            ),
-            lambda c: c["production_system"]["tool_qualification"].__setitem__(
-                "backup_generator_status", "UNQUALIFIED"
-            ),
-            lambda c: c["production_system"].__setitem__("pilot_ladder", c["production_system"]["pilot_ladder"][:-1]),
-            lambda c: c["production_system"]["pilot_ladder"][1].__setitem__("duration_seconds_min", 20),
-            lambda c: c["production_system"]["pilot_ladder"][2].__setitem__("duration_seconds_max", 120),
-            lambda c: c["production_system"]["pilot_ladder"][3].__setitem__("duration_seconds_min", 300),
-            lambda c: c["production_system"].__setitem__("full_length_episode_before_p2_pass", "ALLOW"),
-            lambda c: c["production_system"].__setitem__("per_frame_council_review_after_lock", "ALLOWED"),
-            lambda c: c["visual_identity"].__setitem__("generated_thumbnail_assets_per_episode", 2),
-            lambda c: c["visual_identity"].__setitem__("single_thumbnail_lock", False),
-            lambda c: c["visual_identity"].__setitem__("multi_panel_thumbnail_output_forbidden", False),
-            lambda c: c["visual_generation_brief_system"].__setitem__(
-                "only_selected_brief_may_enter_generation_context", False
-            ),
-            lambda c: c["packaging_system"].__setitem__(
-                "generated_visual_rule",
-                "no generated thumbnail asset may be executed before an approved Visual Generation Brief",
-            ),
-        ]
-        for mutate in mutations:
-            cfg = copy.deepcopy(CONFIG)
-            mutate(cfg)
-            with self.assertRaises(ChannelOperatingSystemError):
-                validate_config(cfg)
-
-    def test_audio_contract(self):
-        audio = CONFIG["audio_system"]
-        self.assertTrue(audio["spotting_required_before_reference_frame_lock"])
-        self.assertTrue(audio["picture_lock_required_before_final_sound_design"])
-        self.assertTrue(audio["post_picture_lock_timing_change_requires_audio_reconform"])
-        self.assertEqual(set(audio["mandatory_stems"]), REQUIRED_AUDIO_STEMS)
-        targets = audio["mix_targets_internal_not_platform_requirements"]
-        self.assertEqual(targets["program_integrated_lufs_target"], "-14 LUFS ±1")
-        self.assertEqual(targets["true_peak_ceiling"], "-1 dBTP")
-
-    def test_fail_closed_on_governance_drift(self):
-        mutations = [
-            lambda c: c.__setitem__("version", "2"),
-            lambda c: c.__setitem__("channel_model", "single_niche"),
-            lambda c: c.__setitem__("visual_system", "other"),
-            lambda c: c["visual_identity"].__setitem__("version", "1.0"),
-            lambda c: c["visual_identity"].__setitem__("bible", "wrong.md"),
-            lambda c: c["visual_identity"].__setitem__("primary_reference", "other.mp4"),
-            lambda c: c["visual_identity"].__setitem__("reference_authority", "SECONDARY"),
-            lambda c: c["visual_identity"].__setitem__("core_principles", []),
-            lambda c: c["visual_identity"].__setitem__("episode_accent_required", False),
-            lambda c: c["visual_identity"].__setitem__("architecture_is_topic_dependent_only", False),
-            lambda c: c["visual_identity"].__setitem__("classical_art_is_optional_not_mandatory", False),
-            lambda c: c["visual_identity"].__setitem__("thumbnail_hypotheses_per_episode", 2),
-            lambda c: c["visual_identity"].__setitem__("hero_objects_per_key_frame", 2),
-            lambda c: c["visual_identity"].__setitem__("synthetic_documentary_evidence_forbidden", False),
-            lambda c: c.pop("visual_generation_brief_system"),
-            lambda c: c["visual_generation_brief_system"].__setitem__("status", "OPTIONAL"),
-            lambda c: c["visual_generation_brief_system"].__setitem__("composed_by", ["Prompt Engineer"]),
-            lambda c: c["visual_generation_brief_system"].__setitem__("approval_required_from", []),
-            lambda c: c["visual_generation_brief_system"].__setitem__("executor", "Image Tool"),
-            lambda c: c["visual_generation_brief_system"].__setitem__("required_fields", []),
-            lambda c: c["visual_generation_brief_system"].__setitem__("execution_rules", []),
-            lambda c: c["visual_generation_brief_system"].__setitem__("approval_state_required", "AUTO"),
-            lambda c: c["visual_generation_brief_system"].__setitem__("allowed_thumbnail_image_languages", ["same"]),
-            lambda c: c["visual_generation_brief_system"].__setitem__("official_thumbnail_concepts_per_episode", 2),
-            lambda c: c["visual_generation_brief_system"].__setitem__("generated_thumbnail_assets_per_episode", 2),
-            lambda c: c["visual_generation_brief_system"].__setitem__("generation_jobs_per_episode_thumbnail_stage", 2),
-            lambda c: c["visual_generation_brief_system"].__setitem__("single_asset_only", False),
-            lambda c: c["visual_generation_brief_system"].__setitem__("multi_panel_output_forbidden", False),
-            lambda c: c["visual_generation_brief_system"].__setitem__("context_isolation_required", False),
-            lambda c: c.__setitem__("publication_authority", "AUTO"),
-            lambda c: c["benchmark_profile"].__setitem__("adopt_disciplines_not_headcount", False),
-            lambda c: c["benchmark_profile"].__setitem__("reference_models", []),
-            lambda c: c["portfolio_balance"].__setitem__("initial_window_videos", 5),
-            lambda c: c["trend_radar"].__setitem__("sources", []),
-            lambda c: c.__setitem__("workflow", c["workflow"][:-1]),
-            lambda c: c["research_system"].__setitem__("claim_source_sheet_required", False),
-            lambda c: c["research_system"].__setitem__("separate_claim_and_visual_ledgers", False),
-            lambda c: c["visual_story_case"].__setitem__("required", False),
-            lambda c: c["visual_story_case"].__setitem__("required_fields", []),
-            lambda c: c["preproduction_craft_review"].__setitem__("required", False),
-            lambda c: c["preproduction_craft_review"].__setitem__("participants", []),
-            lambda c: c["script_development"].__setitem__("single_pass_forbidden", False),
-            lambda c: c["script_development"].__setitem__("required_passes", ["one"]),
-            lambda c: c["script_development"].__setitem__("fact_check_before_lock", False),
-            lambda c: c["production_readiness"].__setitem__("required", False),
-            lambda c: c["production_readiness"].__setitem__("required_checks", []),
-            lambda c: c["packaging_system"].__setitem__("generated_visual_rule", "generate freely"),
-            lambda c: c["packaging_system"].__setitem__("thumbnail_designer_independent_craft_function", False),
-            lambda c: c["production_system"].__setitem__("full_length_episode_before_p2_pass", "ALLOW"),
-            lambda c: c["production_system"]["authority_model"].__setitem__(
-                "per_frame_full_council_review_after_lock", True
-            ),
-            lambda c: c["production_system"]["tool_qualification"].__setitem__(
-                "remaining_credits_must_not_select_primary_tool", False
-            ),
-            lambda c: c["script_schema"].__setitem__("required_columns", ["narration"]),
-            lambda c: c["frame_bible"].__setitem__(
-                "canonical_frame_types", c["frame_bible"]["canonical_frame_types"][:-1]
-            ),
-            lambda c: c["transition_system"].__setitem__("canonical", ["cut"]),
-            lambda c: c["audio_system"].__setitem__("principle", "sound added after picture"),
-            lambda c: c["audio_system"].__setitem__("mandatory_stems", ["FULL master"]),
-            lambda c: c["audio_system"]["mix_targets_internal_not_platform_requirements"].__setitem__(
-                "true_peak_ceiling", "0 dBTP"
-            ),
-            lambda c: c["anti_slop_gate"].__setitem__("required", False),
-            lambda c: c.__setitem__("quality_gates", []),
-            lambda c: c["roles"].pop("Independent Fact Checker"),
-            lambda c: c["roles"].pop("Thumbnail & Packaging Designer"),
-            lambda c: c["roles"].pop("Media Producer / Production Coordinator"),
-        ]
-        for mutate in mutations:
-            cfg = copy.deepcopy(CONFIG)
-            mutate(cfg)
-            with self.assertRaises(ChannelOperatingSystemError):
-                validate_config(cfg)
-
-    def test_validator_failure_paths_are_explicitly_covered(self):
-        mutations = [
-            lambda c: c["benchmark_profile"].__setitem__("name", "wrong"),
-            lambda c: c["portfolio_balance"].__setitem__("max_same_family_in_window", 3),
-            lambda c: c["portfolio_balance"].__setitem__("minimum_distinct_families_in_initial_window", 3),
-            lambda c: c["portfolio_balance"].__setitem__("relax_only_after_first_party_audience_evidence", False),
-            lambda c: c["trend_radar"].__setitem__("evergreen_reframe_required", False),
-            lambda c: c["topic_scoring"]["fields"].__setitem__("cross_platform_velocity", 14),
-            lambda c: c["topic_scoring"]["gates"].__setitem__("minimum_total", 50),
-            lambda c: c["topic_scoring"]["gates"].__setitem__("require_one_sentence_question", False),
-            lambda c: c["topic_scoring"]["gates"].__setitem__(
-                "reject_if_only_trending_without_durable_question", False
-            ),
-            lambda c: c["research_system"].__setitem__("visual_source_rights_sheet_required", False),
-            lambda c: c["research_system"].__setitem__("expert_consultation_required_when", []),
-            lambda c: c["visual_story_case"].__setitem__("must_precede_script_lock", False),
-            lambda c: c["visual_story_case"].__setitem__("fail_action", "IGNORE"),
-            lambda c: c["preproduction_craft_review"].__setitem__("must_precede_script_lock", False),
-            lambda c: c["script_development"].__setitem__("visual_draft_requires_editor_review", False),
-            lambda c: c["production_readiness"].__setitem__("fail_action", "CONTINUE"),
-            lambda c: c["packaging_system"].__setitem__("stage_a_before_script", []),
-            lambda c: c["packaging_system"].__setitem__("stage_b_after_rough_cut", []),
-            lambda c: c["frame_bible"].__setitem__(
-                "canonical_frame_types", c["frame_bible"]["canonical_frame_types"][:-1]
-            ),
-            lambda c: c["frame_bible"]["composition_rules"].__setitem__("editable_language_layers", False),
-            lambda c: c["transition_system"].__setitem__("canonical", ["cut"]),
-            lambda c: c["transition_system"].__setitem__("forbidden_default", []),
-            lambda c: c["audio_system"].__setitem__("spotting_required_before_reference_frame_lock", False),
-            lambda c: c["audio_system"].__setitem__("picture_lock_required_before_final_sound_design", False),
-            lambda c: c["audio_system"].__setitem__("post_picture_lock_timing_change_requires_audio_reconform", False),
-            lambda c: c["audio_system"].__setitem__("music_states", ["M0"]),
-            lambda c: c["audio_system"].__setitem__("cue_sheet_required_fields", ["cue_id"]),
-            lambda c: c["audio_system"].__setitem__("av_beat_map_required_fields", ["beat_id"]),
-            lambda c: c["audio_system"]["mix_targets_internal_not_platform_requirements"].__setitem__(
-                "program_integrated_lufs_target", "-8 LUFS"
-            ),
-            lambda c: c["audio_system"].__setitem__("anti_patterns", []),
-            lambda c: c["anti_slop_gate"].__setitem__("checks", ["one"]),
-            lambda c: c["anti_slop_gate"].__setitem__("fail_action", "IGNORE"),
-        ]
-        for mutate in mutations:
-            cfg = copy.deepcopy(CONFIG)
-            mutate(cfg)
-            with self.assertRaises(ChannelOperatingSystemError):
-                validate_config(cfg)
+    def test_value_at_missing_or_non_mapping_parent(self):
+        self.assertIsNone(value_at({}, "missing.path"))
+        self.assertIsNone(value_at({"a": []}, "a.b"))
+        self.assertEqual(value_at({"a": {"b": 0}}, "a.b"), 0)
 
 
 if __name__ == "__main__":

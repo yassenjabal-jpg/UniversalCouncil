@@ -1,3 +1,5 @@
+> **Procedure precedence:** [Lean Workflow v2.0](LEAN_VIDEO_PRODUCTION_WORKFLOW.md) governs production. Any pilot ladders, per-frame/prototype reviews, additional gates or mandatory tool comparisons below are SUPERSEDED. Craft/reference guidance remains reusable; its historical approval labels do not approve a new export.
+
 # Visual Production Kit — Kinetic Editorial Surrealism v1.1
 
 **Lock date:** 2026-10-14  

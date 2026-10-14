@@ -1,3 +1,5 @@
+> **Procedure precedence:** [Lean Workflow v2.0](LEAN_VIDEO_PRODUCTION_WORKFLOW.md) governs production. Any pilot ladders, per-frame/prototype reviews, additional gates or mandatory tool comparisons below are SUPERSEDED. Craft/reference guidance remains reusable; its historical approval labels do not approve a new export.
+
 # Canonical Reference Frame Specifications v1
 
 These 12 frame families are the channel's reusable composition grammar.

@@ -14,6 +14,7 @@ from company.runtime.evidence_sync import (  # noqa: E402 - repo root is inserte
 )
 from company.runtime.hybrid_execution import validate_config as validate_hybrid_execution  # noqa: E402
 from company.runtime.media_controls import validate_media_team  # noqa: E402
+from company.runtime.lean_video_production import validate_alignment  # noqa: E402
 from company.runtime.memory_fabric import (  # noqa: E402
     load_events as load_memory_events,
     reduce_events as reduce_memory_events,
@@ -169,6 +170,11 @@ validate_hybrid_execution(hybrid_execution)
 validate_memory_fabric(memory_fabric)
 validate_channel_operating_system(channel_operating_system)
 validate_media_team(media_venture)
+validate_alignment(
+    channel_operating_system,
+    media_venture,
+    json.loads((ROOT / "company/config/media_specialized_tool_policy.json").read_text(encoding="utf-8")),
+)
 memory_events = load_memory_events(ROOT / memory_fabric["memory_root"], memory_fabric)
 memory_reduction = reduce_memory_events(memory_events)
 assert not memory_reduction.conflicts, "canonical memory must not contain unresolved conflicts"

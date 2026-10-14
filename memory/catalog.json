@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T22:57:10+00:00",
-  "event_count": 64,
+  "generated_at": "2026-10-15T00:05:58+03:00",
+  "event_count": 69,
   "active_count": 53,
-  "superseded_count": 11,
+  "superseded_count": 16,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-13T01:56:55+03:00",
+  "latest_event_at": "2026-10-15T00:03:08+03:00",
   "scopes": {
     "council": [
       {
@@ -166,40 +166,40 @@
     ],
     "project/media": [
       {
-        "event_id": "MEM-20261012-192851-3f76af",
+        "event_id": "MEM-20261015-001500-lnv203",
         "subject": "media.pilot.measurement",
-        "level": "L3_CANONICAL",
-        "kind": "requirement",
-        "summary": "No full-scale media operation before a three-video pilot; measure production cost/effort and quality, and if published also measure CTR and audience-retention outcomes before scaling.",
-        "created_at": "2026-10-12T19:28:51+03:00",
-        "confidence": "verified"
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "architecture",
+        "summary": "Exactly one 30-45 second production-system pilot uses the three existing gates. Three-video commercial observations never block first 8+ minute episode production.",
+        "created_at": "2026-10-15T00:03:08+03:00",
+        "confidence": "owner_confirmed"
       },
       {
-        "event_id": "MEM-20261012-192851-eae0a7",
+        "event_id": "MEM-20261015-001500-lnv200",
         "subject": "media.production.workflow",
-        "level": "L3_CANONICAL",
+        "level": "L4_OWNER_DIRECTIVE",
         "kind": "architecture",
-        "summary": "The media venture uses an end-to-end production workflow from market/research and scripting through storyboard/assets, Adobe/AI production, finishing, packaging, QC and performance learning.",
-        "created_at": "2026-10-12T19:28:51+03:00",
-        "confidence": "verified"
+        "summary": "Owner replaces DAY24 P0/P1/P2 and slow AE GUI production with five stage authorities, three gates, one short system pilot, Descript native primary and AE native backup; only PR #30 branch may change.",
+        "created_at": "2026-10-15T00:03:08+03:00",
+        "confidence": "owner_confirmed"
       },
       {
-        "event_id": "MEM-20261013-015655-c15cc7",
+        "event_id": "MEM-20261015-001500-lnv201",
         "subject": "media.production_cell.current",
-        "level": "L3_CANONICAL",
+        "level": "L4_OWNER_DIRECTIVE",
         "kind": "architecture",
-        "summary": "Media Production Cell v1.2 is studio-benchmarked: Producer-led execution, independent fact checking, separate growth and thumbnail craft, editor/art/sound participation in pre-production, and specialist craft functions with independent review boundaries.",
-        "created_at": "2026-10-13T01:56:55+03:00",
-        "confidence": "verified"
+        "summary": "Five final stage authorities govern the lean media cell; specialist advice is on demand, with independent fact check and final QC inside exactly three gates.",
+        "created_at": "2026-10-15T00:03:08+03:00",
+        "confidence": "owner_confirmed"
       },
       {
-        "event_id": "MEM-20261012-212638-4d1282",
+        "event_id": "MEM-20261015-001500-lnv202",
         "subject": "media.specialized_tool_policy.current",
-        "level": "L3_CANONICAL",
-        "kind": "policy",
-        "summary": "Media production now follows SPECIALIZED TOOL FIRST / CODE LAST FOR CRAFT. Code may orchestrate, validate, automate and QC, but may not substitute for missing professional editing, motion, sound-design, mixing/mastering or finishing tools. Missing craft capability is a CAPABILITY_GAP.",
-        "created_at": "2026-10-12T21:26:38+03:00",
-        "confidence": "verified"
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "architecture",
+        "summary": "Descript native primary and one AE native backup replace slow GUI loops; connection is verified only, delivery awaits the single system pilot and exact-export Final QC. Specialized craft tools remain required.",
+        "created_at": "2026-10-15T00:03:08+03:00",
+        "confidence": "owner_confirmed"
       },
       {
         "event_id": "MEM-20261012-182200-c3d4e5",
@@ -395,13 +395,13 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261013-015645-fbd625",
+        "event_id": "MEM-20261015-001500-lnv204",
         "subject": "youtube.channel_operating_system.current",
-        "level": "L3_CANONICAL",
+        "level": "L4_OWNER_DIRECTIVE",
         "kind": "architecture",
-        "summary": "Channel Operating System v1.2 Studio-Benchmarked is the current production method. It adopts professional YouTube studio disciplines from Kurzgesagt, Veritasium, Simplicissimus/fern, Cleo Abram/Huge If True and Johnny Harris while preserving a small functions-not-headcount model.",
-        "created_at": "2026-10-13T01:56:45+03:00",
-        "confidence": "verified"
+        "summary": "Channel Operating System v2.0 adopts five stages, three gates, one system pilot and bounded native editing; existing visual/reference and factual/rights safeguards remain.",
+        "created_at": "2026-10-15T00:03:08+03:00",
+        "confidence": "owner_confirmed"
       },
       {
         "event_id": "MEM-20261012-203304-1de95d",

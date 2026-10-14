@@ -1,0 +1,1515 @@
+{
+  "status": "SUPERSEDED",
+  "replacement": "docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md",
+  "source_head": "2564d2153e787601557883b0de5985db6a61daff",
+  "channel": {
+    "version": "1.6",
+    "channel_model": "broad_format_first_multilingual_visual_documentary",
+    "visual_system": "Modern Editorial Surrealism",
+    "primary_language": "Arabic",
+    "secondary_language_rollout": [
+      "English",
+      "Spanish",
+      "German",
+      "French"
+    ],
+    "publication_authority": "GATED",
+    "portfolio_balance": {
+      "initial_window_videos": 6,
+      "max_same_family_in_window": 2,
+      "minimum_distinct_families_in_initial_window": 4,
+      "relax_only_after_first_party_audience_evidence": true
+    },
+    "trend_radar": {
+      "cadence": "daily",
+      "sources": [
+        {
+          "name": "Google Trends Trending Now",
+          "type": "public_search_velocity",
+          "weight": 18
+        },
+        {
+          "name": "TikTok Creative Center",
+          "type": "short_form_trend_velocity",
+          "weight": 15
+        },
+        {
+          "name": "YouTube Ask Studio",
+          "type": "channel_native_ideas_and_audience_insights",
+          "weight": 15,
+          "availability": "after_channel_data_exists"
+        },
+        {
+          "name": "YouTube search/autocomplete/competitor outliers",
+          "type": "platform_demand",
+          "weight": 15
+        },
+        {
+          "name": "Reddit and specialist communities",
+          "type": "early_question_signal",
+          "weight": 10
+        },
+        {
+          "name": "news/science/technology/business feeds",
+          "type": "why_now_signal",
+          "weight": 8
+        },
+        {
+          "name": "Instagram/Threads/X public signals or Metricool when connected",
+          "type": "social_cross_platform_recurrence",
+          "weight": 9
+        },
+        {
+          "name": "internal comments/retention/search terms",
+          "type": "first_party_audience_signal",
+          "weight": 10,
+          "availability": "after_publish"
+        }
+      ],
+      "regions": [
+        "Arabic markets",
+        "US",
+        "UK",
+        "Germany",
+        "France",
+        "Spain"
+      ],
+      "candidate_expiry_hours": 72,
+      "evergreen_reframe_required": true
+    },
+    "topic_scoring": {
+      "scale": 100,
+      "fields": {
+        "cross_platform_velocity": 15,
+        "curiosity_gap": 15,
+        "channel_format_fit": 12,
+        "evergreen_half_life": 10,
+        "visual_explainability": 12,
+        "evidence_sourceability": 10,
+        "multilingual_portability": 8,
+        "competition_opportunity": 6,
+        "production_cost": 5,
+        "policy_brand_safety": 7
+      },
+      "gates": {
+        "minimum_total": 75,
+        "minimum_evidence_sourceability": 6,
+        "minimum_visual_explainability": 7,
+        "require_one_sentence_question": true,
+        "reject_if_only_trending_without_durable_question": true
+      }
+    },
+    "workflow": [
+      "signal_capture",
+      "topic_clustering",
+      "topic_scorecard",
+      "evidence_pack",
+      "visual_story_case",
+      "packaging_hypotheses",
+      "story_thesis",
+      "preproduction_craft_review",
+      "script_development",
+      "independent_fact_check",
+      "script_lock",
+      "visual_treatment",
+      "visual_generation_brief_compile_and_anti_slop_approval",
+      "audio_spotting_and_sonic_concept",
+      "reference_frame_assignment",
+      "storyboard_transition_audio_map",
+      "asset_registry",
+      "animatic",
+      "production_readiness_review",
+      "narration_recording_and_dialogue_edit",
+      "production",
+      "editorial_rough_cut",
+      "packaging_finalization_and_test_plan",
+      "picture_lock",
+      "music_sound_design",
+      "mix_master",
+      "audiovisual_sync_qc",
+      "multilingual_preflight",
+      "anti_slop_gate",
+      "fact_policy_qc",
+      "export_qc",
+      "publish_gate",
+      "analytics_postmortem",
+      "memory_and_routine_update"
+    ],
+    "roles": {
+      "Media Producer / Production Coordinator": [
+        "master schedule",
+        "milestones",
+        "dependencies",
+        "resource plan",
+        "review calendar",
+        "vendor coordination",
+        "production risk",
+        "budget/schedule visibility",
+        "delivery readiness"
+      ],
+      "Audience Growth & Packaging Strategist": [
+        "trend radar",
+        "topic mining",
+        "audience hypothesis",
+        "title strategy",
+        "first-30-second packaging",
+        "A/B test design",
+        "CTR/retention learning"
+      ],
+      "Thumbnail & Packaging Designer": [
+        "thumbnail visual concepts",
+        "image selection/retouching",
+        "typography",
+        "visual hierarchy",
+        "brand consistency",
+        "test-ready variants",
+        "thumbnail generation brief packaging input",
+        "mobile-scale prompt constraints",
+        "variant differentiation constraints"
+      ],
+      "Evidence & Research Lead": [
+        "source pack",
+        "claim source sheet",
+        "research synthesis",
+        "claim confidence",
+        "source freshness",
+        "expert consultation trigger"
+      ],
+      "Independent Fact Checker": [
+        "material claim verification",
+        "number/date/name verification",
+        "contradiction review",
+        "fact-check notes",
+        "script clearance"
+      ],
+      "Editorial Director / Showrunner": [
+        "final topic gate",
+        "thesis",
+        "story architecture",
+        "script lock",
+        "visual-story coherence",
+        "picture lock approval",
+        "final editorial approval"
+      ],
+      "Script & Voice Director": [
+        "five-pass script development",
+        "scene-aware script",
+        "narration intent",
+        "emotion direction",
+        "pace/pitch/emphasis",
+        "pronunciation guide",
+        "recording direction",
+        "pickup list"
+      ],
+      "Visual Art Director / Frame Curator": [
+        "visual story case",
+        "key visual",
+        "visual treatment",
+        "reference frame board",
+        "palette/type/grid",
+        "episode-specific motifs",
+        "visual continuity",
+        "visual generation brief art direction",
+        "visual metaphor specification",
+        "allowed/forbidden visual element specification"
+      ],
+      "Motion & Picture Editor": [
+        "preproduction craft review",
+        "visual story feasibility",
+        "story skeleton review",
+        "visual script review",
+        "first-30-second pacing",
+        "storyboard timing",
+        "animatic",
+        "motion design",
+        "editorial rough cut",
+        "picture edit",
+        "transition execution",
+        "picture lock conform"
+      ],
+      "Music Supervisor & Sound Designer": [
+        "preproduction craft review",
+        "sonic concept",
+        "spotting session",
+        "music brief",
+        "music cue sheet",
+        "music source/license",
+        "sound effects",
+        "sonic motifs",
+        "silence map",
+        "audio-visual sync intent"
+      ],
+      "Dialogue & Mix Engineer": [
+        "dialogue cleanup",
+        "dialogue edit",
+        "eq/de-ess/noise control",
+        "level automation",
+        "music ducking",
+        "stem management",
+        "mix/master",
+        "audio QC",
+        "dub mix parity"
+      ],
+      "Localization Producer": [
+        "translation adaptation",
+        "dub script",
+        "subtitle timing",
+        "localized metadata",
+        "localized thumbnail text",
+        "language-version QC"
+      ],
+      "Risk & Assurance": [
+        "copyright",
+        "visual source rights",
+        "music/asset licensing",
+        "AI disclosure",
+        "policy",
+        "sensitive-domain framing",
+        "claim risk"
+      ],
+      "Technical Operator": [
+        "tool routing",
+        "render/export",
+        "project structure",
+        "automation/routines",
+        "artifact integrity",
+        "audio stem/export integrity",
+        "execute approved visual generation briefs only",
+        "generation prompt/version receipt"
+      ],
+      "Finance Controller": [
+        "credits/cost/time logging",
+        "cost per minute",
+        "audio post cost",
+        "budget gate"
+      ],
+      "Red Team": [
+        "anti-slop challenge",
+        "generic-template detection",
+        "story/visual differentiation challenge",
+        "generic sound-design detection",
+        "visual story case challenge",
+        "visual generation brief anti-slop approval",
+        "prompt drift challenge",
+        "reference-fidelity challenge"
+      ],
+      "Owner": [
+        "human narration",
+        "voice identity approval",
+        "L4 decisions",
+        "public publish approval",
+        "brand taste veto"
+      ]
+    },
+    "script_schema": {
+      "required_columns": [
+        "timecode",
+        "narration",
+        "intent",
+        "emotion_tag",
+        "energy_1_5",
+        "pace",
+        "pitch_contour",
+        "emphasis_words",
+        "pause_before_ms",
+        "pause_after_ms",
+        "breath_note",
+        "pronunciation",
+        "visual_beat_id",
+        "music_state",
+        "sfx",
+        "evidence_ids",
+        "translation_note"
+      ],
+      "allowed_emotion_tags": [
+        "فضول هادئ",
+        "سؤال حقيقي",
+        "سر صغير",
+        "دهشة مضبوطة",
+        "ابتسامة خفيفة",
+        "جدية",
+        "تأمل",
+        "تأكيد",
+        "تحذير هادئ",
+        "همس خفيف",
+        "تسارع",
+        "خاتمة مفتوحة"
+      ],
+      "voice_rules": {
+        "default": "warm conversational Iraqi + MSA",
+        "avoid": [
+          "news-anchor delivery",
+          "constant hype",
+          "synthetic overacting",
+          "same cadence every sentence"
+        ],
+        "pause_logic": "semantic, not mechanical",
+        "emphasis_limit": "maximum 1–2 emphasized words per sentence unless dramatically justified"
+      }
+    },
+    "frame_bible": {
+      "canonical_frame_types": [
+        "F01 Hero Question",
+        "F02 Evidence Document",
+        "F03 Editorial Portrait",
+        "F04 Scientific Engraving",
+        "F05 Mechanism Diagram",
+        "F06 Number/Scale Reveal",
+        "F07 Map/Spatial",
+        "F08 Object Macro",
+        "F09 Historical Collage",
+        "F10 Modern Reality",
+        "F11 Breathing Reset",
+        "F12 Ending Reflection"
+      ],
+      "composition_rules": {
+        "negative_space_percent": "35-60",
+        "dominant_hero_objects": 1,
+        "max_primary_text_blocks": 1,
+        "max_micro_captions": 1,
+        "editable_language_layers": true
+      }
+    },
+    "transition_system": {
+      "rule": "transition must be motivated by shape, object, camera direction, semantic link, time shift, or cause/effect",
+      "canonical": [
+        "object wipe",
+        "mask reveal",
+        "shape match cut",
+        "color match cut",
+        "illustration-to-photo morph",
+        "photo-to-diagram extraction",
+        "zoom through object",
+        "editorial page shift",
+        "line-drawing build",
+        "parallax drift",
+        "foreground occlusion",
+        "cobalt reset frame"
+      ],
+      "forbidden_default": [
+        "random preset wipes",
+        "constant whip-pan",
+        "glitch for no narrative reason",
+        "hard cut chains with no rhythm"
+      ]
+    },
+    "anti_slop_gate": {
+      "required": true,
+      "checks": [
+        "episode has unique thesis and question",
+        "visual grammar consistent but shot substance not interchangeable",
+        "no repeated AI template sequence",
+        "no filler AI B-roll",
+        "every shot has EVIDENCE/EXPLANATION/ATMOSPHERE/TRANSITION purpose",
+        "atmosphere does not dominate runtime",
+        "primary claims source-linked",
+        "human narrator identity preserved",
+        "visual assets pass continuity palette/type/grid check",
+        "at least three episode-specific visual motifs",
+        "transition map has narrative motivation",
+        "thumbnail hero object is episode-specific",
+        "episode uses a unique visual metaphor rather than a repeated scene template",
+        "architecture/classical art appears only when narratively justified",
+        "generated visual has an approved versioned Visual Generation Brief",
+        "generation tool executed the approved brief without material creative rewrite",
+        "exactly one official thumbnail concept is selected for generation per episode",
+        "thumbnail generation is one job + one prompt version + one independent asset",
+        "triptych/diptych/contact-sheet/collage/multi-panel thumbnail output is forbidden"
+      ],
+      "fail_action": "RETURN_TO_EDITORIAL_OR_VISUAL_TREATMENT"
+    },
+    "quality_gates": [
+      "G0 Trend/Topic Gate",
+      "G1 Evidence Gate",
+      "G2 Visual Story Case Gate",
+      "G3 Packaging Hypothesis Gate",
+      "G4 Pre-production Craft Review",
+      "G5 Script + Independent Fact Check Lock",
+      "G6 Visual + Sonic Treatment Lock",
+      "G6A Visual Generation Brief + Anti-Slop Approval",
+      "G7 Animatic + Spotting Gate",
+      "G8 Production Readiness Gate",
+      "G9 Picture Lock Gate",
+      "G10 Audio-Visual Sync Gate",
+      "G11 Packaging Finalization Gate",
+      "G12 Anti-Slop Gate",
+      "G13 Fact/Policy/Continuity QC",
+      "G14 Mix/Master QC",
+      "G15 Export QC",
+      "G16 Owner Publish Gate",
+      "G17 Post-Publish Learning Gate"
+    ],
+    "analytics": {
+      "pre_publish": [
+        "topic_score",
+        "packaging_score",
+        "estimated_cost",
+        "owner_minutes"
+      ],
+      "post_publish": [
+        "impressions",
+        "ctr",
+        "first_30_second_retention",
+        "average_percentage_viewed",
+        "watch_time",
+        "returning_viewers",
+        "subscribers_per_video",
+        "comments_by_theme",
+        "language_audio_share",
+        "top_moments",
+        "spikes",
+        "dips"
+      ]
+    },
+    "audio_system": {
+      "principle": "sound is designed with picture, not added after picture",
+      "spotting_required_before_reference_frame_lock": true,
+      "picture_lock_required_before_final_sound_design": true,
+      "post_picture_lock_timing_change_requires_audio_reconform": true,
+      "sonic_concept_fields": [
+        "episode_sound_world",
+        "music_states",
+        "instrumentation_palette",
+        "sonic_motifs",
+        "silence_map",
+        "transition_sound_palette",
+        "dialogue_density_map"
+      ],
+      "music_states": [
+        "M0 silence/room",
+        "M1 curiosity",
+        "M2 motion/build",
+        "M3 explanation bed",
+        "M4 tension",
+        "M5 reveal",
+        "M6 reflection",
+        "M7 resolution"
+      ],
+      "cue_sheet_required_fields": [
+        "cue_id",
+        "in_time",
+        "out_time",
+        "duration",
+        "music_state",
+        "narrative_purpose",
+        "energy",
+        "tempo_bpm",
+        "tonal_center",
+        "instrumentation",
+        "source_or_license",
+        "stem_availability",
+        "dialogue_density",
+        "sync_hits",
+        "ducking_note",
+        "edit_points"
+      ],
+      "av_beat_map_required_fields": [
+        "beat_id",
+        "timecode",
+        "narrative_function",
+        "visual_event",
+        "voice_state",
+        "music_state",
+        "sfx_event",
+        "sync_anchor",
+        "prelap_postlap",
+        "dynamic_intent",
+        "transition_link"
+      ],
+      "mix_targets_internal_not_platform_requirements": {
+        "program_integrated_lufs_target": "-14 LUFS ±1",
+        "true_peak_ceiling": "-1 dBTP",
+        "dialogue_priority": "always intelligible; music automated around speech rather than static gain",
+        "music_under_dense_dialogue_guideline": "typically 12–18 dB perceptually below narration, adjusted by arrangement",
+        "loudness_range_guideline": "approximately 6–10 LU for documentary dynamics",
+        "intentional_sync_hit_tolerance": "±1 frame",
+        "action_sfx_sync_tolerance": "±1–2 frames unless deliberate prelap/postlap",
+        "localized_mix_match": "within ±1 LU perceived loudness of Arabic master where practical"
+      },
+      "mandatory_stems": [
+        "DX dialogue",
+        "MX music",
+        "FX sound design",
+        "AMB atmosphere",
+        "FULL master"
+      ],
+      "monitoring_checks": [
+        "studio/headphones",
+        "ordinary earbuds",
+        "phone speaker",
+        "mono compatibility",
+        "low-volume intelligibility"
+      ],
+      "anti_patterns": [
+        "wall-to-wall music with no breathing space",
+        "generic cinematic riser every reveal",
+        "swoosh on every transition",
+        "sidechain pumping audible as an effect",
+        "SFX louder than key narration without narrative reason",
+        "music chosen after final cut with no spotting",
+        "same music bed across unrelated episodes"
+      ]
+    },
+    "benchmark_profile": {
+      "name": "professional_youtube_studio_benchmark_2026_10_13",
+      "artifact": "docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md",
+      "reference_models": [
+        "Kurzgesagt",
+        "Veritasium",
+        "Simplicissimus/fern",
+        "Cleo Abram / Huge If True",
+        "Johnny Harris"
+      ],
+      "adopt_disciplines_not_headcount": true
+    },
+    "research_system": {
+      "claim_source_sheet_required": true,
+      "visual_source_rights_sheet_required": true,
+      "separate_claim_and_visual_ledgers": true,
+      "expert_consultation_required_when": [
+        "high_stakes_claim",
+        "scientific_core_claim",
+        "contested_claim",
+        "novel_or_uncertain_core_claim"
+      ]
+    },
+    "visual_story_case": {
+      "required": true,
+      "must_precede_script_lock": true,
+      "required_fields": [
+        "why_video_not_article",
+        "key_visual",
+        "key_demonstration_or_diagram",
+        "archive_or_real_world_evidence",
+        "visual_transformation_or_reveal",
+        "editor_feasibility_note"
+      ],
+      "fail_action": "RETURN_TOPIC_TO_BACKLOG_OR_REFRAME"
+    },
+    "preproduction_craft_review": {
+      "required": true,
+      "participants": [
+        "Editorial Director / Showrunner",
+        "Media Producer / Production Coordinator",
+        "Evidence & Research Lead",
+        "Motion & Picture Editor",
+        "Visual Art Director / Frame Curator",
+        "Music Supervisor & Sound Designer",
+        "Audience Growth & Packaging Strategist"
+      ],
+      "must_precede_script_lock": true
+    },
+    "script_development": {
+      "single_pass_forbidden": true,
+      "required_passes": [
+        "S0 Story Skeleton",
+        "S1 Evidence Draft",
+        "S2 Visual Draft",
+        "S3 Voice/Performance Draft",
+        "S4 Locked Script"
+      ],
+      "fact_check_before_lock": true,
+      "visual_draft_requires_editor_review": true
+    },
+    "production_readiness": {
+      "required": true,
+      "required_checks": [
+        "script_locked",
+        "independent_fact_check_passed",
+        "key_visuals_approved",
+        "visual_generation_briefs_approved",
+        "claim_sources_complete",
+        "visual_rights_clear",
+        "storyboard_sufficient",
+        "audio_spotting_complete",
+        "asset_registry_ready",
+        "specialized_tools_available",
+        "schedule_acceptable",
+        "budget_acceptable"
+      ],
+      "fail_action": "HOLD_PRODUCTION"
+    },
+    "packaging_system": {
+      "stage_a_before_script": [
+        "five_title_hypotheses",
+        "single_thumbnail_concept_selection",
+        "click_promise",
+        "answer_promise"
+      ],
+      "stage_b_after_rough_cut": [
+        "final_title_variants",
+        "single_final_thumbnail",
+        "single_thumbnail_test_plan",
+        "mobile_legibility_check"
+      ],
+      "thumbnail_designer_independent_craft_function": true,
+      "generated_visual_rule": "thumbnail concept exploration may occur inside Council deliberation, but exactly one official thumbnail concept may be selected; no generated thumbnail asset may be executed before an approved Visual Generation Brief; one episode thumbnail stage authorizes one brief, one generation job, and one independent asset only"
+    },
+    "visual_identity": {
+      "version": "2.1-candidate",
+      "bible": "docs/operations/media/MODERN_EDITORIAL_SURREALISM_VISUAL_BIBLE.md",
+      "primary_reference": "user-provided 1000061003.mp4",
+      "reference_authority": "PRIMARY_VISUAL_REFERENCE",
+      "core_principles": [
+        "editorial_clarity",
+        "one_hero_object",
+        "strong_negative_space",
+        "episode_specific_visual_metaphor",
+        "controlled_surrealism",
+        "contrast_between_old_and_new",
+        "meaning_driven_motion",
+        "topic_flexible_visual_language"
+      ],
+      "brand_anchors": [
+        "electric_cobalt_or_azure",
+        "paper_ivory",
+        "ink_charcoal"
+      ],
+      "episode_accent_required": true,
+      "architecture_is_topic_dependent_only": true,
+      "classical_art_is_optional_not_mandatory": true,
+      "anti_template_rule": "no more than two major structural devices may carry over from the immediately previous thumbnail",
+      "thumbnail_hypotheses_per_episode": 1,
+      "hero_objects_per_key_frame": 1,
+      "negative_space_percent": "35-60",
+      "synthetic_documentary_evidence_forbidden": true,
+      "generated_thumbnail_assets_per_episode": 1,
+      "single_thumbnail_lock": true,
+      "multi_panel_thumbnail_output_forbidden": true
+    },
+    "visual_generation_brief_system": {
+      "version": "1.1",
+      "status": "REQUIRED_FOR_ANY_GENERATED_VISUAL",
+      "capability_model": "venture_scoped_composed_capability_not_headcount",
+      "compiler_name": "Visual Prompt / Generation Brief Compiler",
+      "composed_by": [
+        "Visual Art Director / Frame Curator",
+        "Thumbnail & Packaging Designer",
+        "Synthesis & Alternatives Designer"
+      ],
+      "approval_required_from": [
+        "Red Team / Anti-Slop"
+      ],
+      "executor": "Technical Operator",
+      "artifact_template": "docs/templates/media/VISUAL_GENERATION_BRIEF.md",
+      "required_before": [
+        "still_image_generation",
+        "generated_thumbnail_asset",
+        "ai_video_visual_generation",
+        "generated_reference_frame"
+      ],
+      "required_fields": [
+        "episode_topic",
+        "viewer_question",
+        "click_promise",
+        "visual_metaphor_one_sentence",
+        "metaphor_rationale",
+        "hero_object",
+        "image_language",
+        "layout_family",
+        "composition_and_negative_space",
+        "camera_crop_and_perspective",
+        "background",
+        "brand_anchor_colors",
+        "episode_accent_color",
+        "lighting",
+        "texture_material",
+        "typography_direction",
+        "allowed_elements",
+        "forbidden_elements",
+        "difference_from_previous_thumbnail",
+        "reference_fidelity_notes",
+        "mobile_legibility_requirements",
+        "anti_ai_slop_constraints",
+        "documentary_evidence_boundary",
+        "final_generation_instruction",
+        "negative_constraints",
+        "anti_slop_approval_status",
+        "prompt_version"
+      ],
+      "approval_state_required": "APPROVED_BY_ANTI_SLOP",
+      "execution_rules": [
+        "NO_PROMPT_NO_GENERATION",
+        "NO_ANTI_SLOP_APPROVAL_NO_EXECUTION",
+        "TOOL_MUST_NOT_CREATIVELY_REWRITE_APPROVED_BRIEF",
+        "MATERIAL_DEVIATION_RETURNS_TO_COUNCIL",
+        "EXECUTION_MUST_RECORD_PROMPT_VERSION_AND_TOOL",
+        "ONE_JOB_ONE_PROMPT_VERSION_ONE_ASSET",
+        "ONE_FINAL_THUMBNAIL_PER_EPISODE",
+        "MULTI_PANEL_THUMBNAIL_OUTPUT_FORBIDDEN"
+      ],
+      "allowed_thumbnail_image_languages": [
+        "Object Macro",
+        "Editorial Cutout",
+        "Conceptual Surrealism"
+      ],
+      "official_thumbnail_concepts_per_episode": 1,
+      "generated_thumbnail_assets_per_episode": 1,
+      "generation_jobs_per_episode_thumbnail_stage": 1,
+      "single_asset_only": true,
+      "multi_panel_output_forbidden": true,
+      "context_isolation_required": true,
+      "only_selected_brief_may_enter_generation_context": true
+    },
+    "production_system": {
+      "version": "1.0",
+      "governing_principle": "COUNCIL_DESIGNS_SYSTEM_ART_DIRECTOR_LOCKS_OPERATORS_PRODUCE_COUNCIL_REVIEWS_GATES",
+      "visual_system_lock": {
+        "required": true,
+        "reference_frame_count_min": 4,
+        "reference_frame_count_max": 6,
+        "required_frame_families": [
+          "Hero Question",
+          "Object Macro",
+          "Evidence or Archive",
+          "Diagram or Mechanism",
+          "Editorial Cutout",
+          "Conceptual Surrealism"
+        ],
+        "production_kit_required": true,
+        "production_kit_template": "docs/templates/media/VISUAL_PRODUCTION_KIT.md",
+        "required_kit_fields": [
+          "palette",
+          "typography",
+          "grid",
+          "negative_space_rules",
+          "texture_rules",
+          "shadow_rules",
+          "image_source_treatments",
+          "frame_families",
+          "transition_grammar",
+          "motion_rules",
+          "diagram_language",
+          "anti_slop_rules"
+        ],
+        "lock_authority": "Visual Art Director / Frame Curator",
+        "red_team_blocker": true,
+        "owner_brand_veto": true,
+        "status": "LOCKED_AFTER_P1_COHERENCE_PASS",
+        "p0_passed": true,
+        "production_kit": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.0.md",
+        "reference_set_brief": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_REFERENCE_FRAME_SET_v1.0.md",
+        "council_review": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_COUNCIL_REVIEW.md",
+        "reference_temporal_grammar": "docs/operations/media/reference/REFERENCE_TEMPORAL_GRAMMAR_1000061003_v1.0.md",
+        "production_kit_candidate": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.1_CANDIDATE.md"
+      },
+      "authority_model": {
+        "council_after_lock": "SYSTEM_AND_GATE_REVIEW_ONLY",
+        "visual_art_director": "FINAL_VISUAL_DECISION_WITHIN_LOCKED_SYSTEM",
+        "technical_operator": "EXECUTION_ONLY_NO_CREATIVE_REWRITE",
+        "red_team": "BLOCK_ON_DRIFT_AI_SLOP_OR_REFERENCE_FAILURE",
+        "per_frame_full_council_review_after_lock": false
+      },
+      "tool_qualification": {
+        "required_before_visual_system_lock": true,
+        "protocol": "docs/operations/media/TOOL_QUALIFICATION_PROTOCOL.md",
+        "comparison_contract": "SAME_FRAME_SAME_BRIEF",
+        "minimum_viable_candidates": 2,
+        "score_weights": {
+          "prompt_fidelity": 30,
+          "composition_control": 20,
+          "style_consistency": 20,
+          "artifact_quality": 10,
+          "editability": 10,
+          "speed": 5,
+          "cost": 5
+        },
+        "primary_selection_rule": "QUALITY_AND_FIDELITY_DOMINATE_COST",
+        "remaining_credits_must_not_select_primary_tool": true,
+        "primary_generator_status": "QUALIFIED_PRIMARY",
+        "backup_generator_status": "QUALIFIED_BACKUP",
+        "primary_generator": "runway:nano-banana-2-lite",
+        "primary_score": 94.1,
+        "backup_generator": "runway:nano-banana-pro",
+        "backup_score": 89.2,
+        "qualification_artifact": "docs/operations/media/visual_generation_briefs/2026-10-14/VISUAL_TOOL_QUALIFICATION_DAY24.md",
+        "qualification_benchmark_prompt_version": "DAY24-CS-v1.1-SINGLE",
+        "qualification_passed": true
+      },
+      "pilot_ladder": [
+        {
+          "id": "P0_REFERENCE_FRAME_LOCK",
+          "output": "4_TO_6_COHERENT_REFERENCE_FRAMES_PLUS_LOCKED_PRODUCTION_KIT",
+          "requires_tool_qualification": true,
+          "status": "PASS"
+        },
+        {
+          "id": "P1_COHERENCE_30_45",
+          "duration_seconds_min": 30,
+          "duration_seconds_max": 45,
+          "requires": "P0_PASS",
+          "required_elements": [
+            "temporary_or_owner_narration",
+            "6_to_10_visual_beats",
+            "meaning_driven_transitions",
+            "music_or_temp_music",
+            "sound_design",
+            "at_least_one_real_evidence_visual"
+          ],
+          "status": "PASS_INTERNAL_COHERENCE",
+          "review_artifact": "docs/operations/media/pilots/2026-10-14/P1_DAY24_COUNCIL_REVIEW.md",
+          "review_url": "https://share.descript.com/view/h6bKHYCNPe2",
+          "actual_duration_seconds": 41.766667
+        },
+        {
+          "id": "P2_PRODUCTION_60_90",
+          "duration_seconds_min": 60,
+          "duration_seconds_max": 90,
+          "requires": "P1_PASS",
+          "required_elements": [
+            "locked_visual_system",
+            "locked_motion_grammar",
+            "audio_visual_sync",
+            "evidence_and_explanation_mix",
+            "repeatable_operator_workflow"
+          ],
+          "status": "BLOCKED_REFERENCE_FIDELITY_RETRY",
+          "blocking_capabilities": [
+            "p1_reference_fidelity_retry_not_passed",
+            "delivery_level_audio_finishing_not_verified"
+          ]
+        },
+        {
+          "id": "P3_FULL_EPISODE_8_PLUS_MINUTES",
+          "duration_seconds_min": 480,
+          "requires": "P2_PASS",
+          "status": "BLOCKED_UNTIL_P2_PASS"
+        }
+      ],
+      "full_length_episode_before_p2_pass": "BLOCK",
+      "council_review_gates": [
+        "visual_system_lock",
+        "p1_pilot_review",
+        "p2_pilot_review",
+        "animatic",
+        "picture_lock",
+        "final_qc"
+      ],
+      "per_frame_council_review_after_lock": "FORBIDDEN_UNLESS_EXCEPTION",
+      "exception_triggers": [
+        "brand_drift",
+        "evidence_risk",
+        "anti_slop_failure",
+        "material_new_visual_language"
+      ],
+      "active_pilot_stage": "P1_REFERENCE_FIDELITY_RETRY_PHASE_5",
+      "p1_status": "PASS_INTERNAL_COHERENCE",
+      "p1_review": "docs/operations/media/pilots/2026-10-14/P1_DAY24_COUNCIL_REVIEW.md",
+      "p1_internal_render": "https://share.descript.com/view/h6bKHYCNPe2",
+      "current_capability_gaps": [
+        "backup_motion_route_unresolved",
+        "delivery_audio_finishing_not_verified",
+        "p1_reference_fidelity_retry_not_passed"
+      ],
+      "motion_tool_qualification": {
+        "status": "PASS_PRIMARY",
+        "primary_route": "Adobe After Effects 2026 on YASSIN",
+        "score": 90,
+        "qualification_artifact": "docs/operations/media/pilots/2026-10-14/P2_MOTION_TOOL_QUALIFICATION_AFTER_EFFECTS.md",
+        "benchmark_resolution": "1920x1080",
+        "benchmark_fps": 30,
+        "benchmark_duration_seconds": 5,
+        "clean_export_verified": true,
+        "watermark_free": true,
+        "backup_route_status": "UNRESOLVED"
+      },
+      "retry_pipeline": {
+        "roadmap": "docs/operations/media/pilots/2026-10-14/P1_DAY24_RETRY_PRODUCTION_ROADMAP_v2.0.md",
+        "reference_fidelity_review": "docs/operations/media/pilots/2026-10-14/P1_DAY24_VS_REFERENCE_COMPREHENSIVE_COUNCIL_REVIEW.md",
+        "phase_1_temporal_identity": "PASS_REFERENCE_GRAMMAR_LOCK",
+        "phase_2_motion_tool": "PASS_PRIMARY",
+        "phase_3_visual_script": "PASS_CANDIDATE",
+        "phase_4_shot_bible": "PASS",
+        "visual_event_script": "docs/operations/media/pilots/2026-10-14/P1_DAY24_VISUAL_EVENT_SCRIPT_v2.0.md",
+        "phase_5_critical_motion_prototypes": "ACTIVE",
+        "shot_bible": "docs/operations/media/pilots/2026-10-14/P1_DAY24_SHOT_BIBLE_ASSET_GRAPH_v2.0.md"
+      }
+    }
+  },
+  "media": {
+    "version": "1.8",
+    "enabled": true,
+    "team_model": "venture_scoped_smallest_effective_team_functions_not_headcount",
+    "production_functions": [
+      {
+        "id": "media_producer",
+        "name": "Media Producer / Production Coordinator",
+        "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+        "owns": [
+          "master_schedule",
+          "milestones",
+          "dependencies",
+          "resource_plan",
+          "review_calendar",
+          "vendor_coordination",
+          "production_risk",
+          "delivery_readiness",
+          "schedule_budget_visibility",
+          "pilot_ladder_state",
+          "gate_review_calendar",
+          "full_length_readiness_block"
+        ]
+      },
+      {
+        "id": "editorial_director",
+        "name": "Editorial Director / Showrunner",
+        "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+        "owns": [
+          "idea_selection",
+          "hook",
+          "angle",
+          "story_structure",
+          "script_quality",
+          "editorial_pacing",
+          "final_cut_editorial_approval",
+          "picture_lock_approval"
+        ]
+      },
+      {
+        "id": "independent_fact_checker",
+        "name": "Independent Fact Checker",
+        "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+        "owns": [
+          "material_claim_verification",
+          "numbers_dates_names",
+          "contradiction_review",
+          "fact_check_notes",
+          "script_clearance"
+        ]
+      },
+      {
+        "id": "script_voice_director",
+        "name": "Script & Voice Director",
+        "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+        "owns": [
+          "five_pass_script_development",
+          "scene_aware_script",
+          "voice_intent",
+          "emotion_direction",
+          "pace_pitch_emphasis",
+          "pronunciation_guide",
+          "recording_session_direction",
+          "pickup_list",
+          "narration_continuity"
+        ]
+      },
+      {
+        "id": "visual_art_director",
+        "name": "Visual Art Director / Frame Curator",
+        "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+        "owns": [
+          "visual_story_case",
+          "key_visual",
+          "visual_treatment",
+          "reference_frames",
+          "palette_typography_grid",
+          "episode_visual_motifs",
+          "asset_style_approval",
+          "visual_continuity",
+          "generation_brief_art_direction",
+          "visual_metaphor_specification",
+          "generation_constraints",
+          "visual_production_kit_lock",
+          "final_visual_decision_within_locked_system",
+          "reference_frame_system_lock",
+          "visual_exception_decision_within_brand_bounds"
+        ]
+      },
+      {
+        "id": "motion_picture_editor",
+        "name": "Motion & Picture Editor",
+        "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+        "owns": [
+          "preproduction_craft_review",
+          "visual_story_feasibility",
+          "story_skeleton_review",
+          "visual_script_review",
+          "first_30_second_pacing",
+          "storyboard_timing",
+          "animatic",
+          "motion_design",
+          "editorial_rough_cut",
+          "picture_edit",
+          "transition_execution",
+          "picture_lock_conform",
+          "subtitle_picture_integration"
+        ]
+      },
+      {
+        "id": "music_sound_supervisor",
+        "name": "Music Supervisor & Sound Designer",
+        "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+        "owns": [
+          "preproduction_craft_review",
+          "sonic_concept",
+          "spotting_session",
+          "music_brief",
+          "cue_sheet",
+          "music_source_and_license",
+          "sound_design",
+          "sonic_motifs",
+          "transition_sfx",
+          "silence_map",
+          "audio_visual_sync_intent"
+        ]
+      },
+      {
+        "id": "dialogue_mix_engineer",
+        "name": "Dialogue & Mix Engineer",
+        "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+        "owns": [
+          "dialogue_cleanup",
+          "dialogue_edit",
+          "eq_deess_noise_control",
+          "level_automation",
+          "music_ducking",
+          "stem_management",
+          "final_mix",
+          "master_loudness",
+          "audio_qc",
+          "dub_mix_parity"
+        ]
+      },
+      {
+        "id": "audience_growth_strategist",
+        "name": "Audience Growth & Packaging Strategist",
+        "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+        "owns": [
+          "trend_radar",
+          "topic_mining",
+          "audience_hypothesis",
+          "title_strategy",
+          "first_30_seconds",
+          "ctr",
+          "retention",
+          "ab_test_design",
+          "platform_adaptation",
+          "performance_analysis"
+        ]
+      },
+      {
+        "id": "thumbnail_packaging_designer",
+        "name": "Thumbnail & Packaging Designer",
+        "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+        "owns": [
+          "thumbnail_concepts",
+          "image_selection_retouching",
+          "typography",
+          "visual_hierarchy",
+          "brand_consistency",
+          "test_ready_variants",
+          "mobile_legibility",
+          "generation_brief_packaging_input",
+          "variant_differentiation_constraints",
+          "mobile_prompt_constraints"
+        ]
+      },
+      {
+        "id": "localization_producer",
+        "name": "Localization Producer",
+        "default_status": "ON_DEMAND",
+        "owns": [
+          "translation_adaptation",
+          "dub_script",
+          "subtitle_timing",
+          "localized_metadata",
+          "localized_thumbnail_text",
+          "language_version_qc",
+          "timing_reconform_request"
+        ]
+      }
+    ],
+    "function_independence_rules": [
+      "picture_editor_cannot_self_approve_picture_lock",
+      "music_sound_supervisor_does_not_self_approve_final_mix_qc",
+      "dialogue_mix_engineer_does_not_approve_editorial_story",
+      "owner_voice_approval_is_separate_from_technical_mix_approval",
+      "research_or_writer_cannot_self_clear_material_fact_check",
+      "growth_strategist_does_not_replace_thumbnail_design_review",
+      "producer_controls_schedule_resources_not_editorial_truth",
+      "motion_editor_participates_before_script_lock",
+      "same_human_or_tool_may_cover_multiple_functions_in_pilot_but_required_cross_function_reviews_remain",
+      "generated_visual_execution_requires_approved_generation_brief",
+      "red_team_anti_slop_must_approve_generation_brief_before_execution",
+      "technical_operator_cannot_creatively_rewrite_approved_visual_brief",
+      "material_prompt_deviation_returns_to_council",
+      "thumbnail_generation_is_one_job_one_prompt_version_one_asset",
+      "only_one_official_thumbnail_concept_may_be_generated_per_episode",
+      "multi_panel_thumbnail_outputs_are_rejected",
+      "visual_art_director_has_final_visual_decision_within_locked_system",
+      "council_reviews_visual_work_at_defined_gates_after_lock_not_per_frame",
+      "red_team_may_block_drift_but_does_not_replace_art_direction",
+      "full_length_episode_blocked_until_p2_visual_production_pilot_passes",
+      "primary_visual_generator_selected_by_qualification_not_remaining_credits"
+    ],
+    "existing_function_dependencies": [
+      "Owner",
+      "Venture Operator",
+      "Evidence & Research Lead",
+      "Finance Controller",
+      "Assurance Reviewer",
+      "Technical Operator",
+      "HR & Capability Director",
+      "Domain Specialists",
+      "Synthesis & Alternatives Designer"
+    ],
+    "pilot": {
+      "required_before_scale": true,
+      "video_count": 3,
+      "publication_required_for_capability_pilot": false,
+      "hr_review_after_pilot": true,
+      "audio_role_roi_review": true
+    },
+    "performance_metrics": [
+      "production_time_per_video",
+      "owner_human_minutes_per_video",
+      "tool_cost_per_video",
+      "cost_per_published_minute",
+      "revision_count",
+      "factual_policy_defects",
+      "packaging_quality",
+      "audio_revision_count",
+      "dialogue_cleanup_minutes",
+      "music_sound_design_minutes",
+      "mix_master_minutes",
+      "av_sync_defects",
+      "audio_qc_defects",
+      "ctr",
+      "first_30_second_retention",
+      "average_percentage_viewed",
+      "watch_time",
+      "subscribers_per_video",
+      "returning_viewers",
+      "schedule_variance",
+      "milestone_slips",
+      "script_revision_rounds",
+      "fact_check_defects_caught_prelock",
+      "visual_story_case_rework",
+      "thumbnail_variants_produced",
+      "production_readiness_failures",
+      "edit_rework_after_script_lock",
+      "generation_brief_rework_rounds",
+      "prompt_drift_defects"
+    ],
+    "post_publish_split_review_after_videos": 10,
+    "full_scale_without_pilot_forbidden": true,
+    "live_publish_authority": false,
+    "media_toolchain": {
+      "research": "AVAILABLE_FOR_ASSISTED_WORK",
+      "script_drafting": "AVAILABLE_FOR_ASSISTED_WORK",
+      "image_generation": "AVAILABLE_FOR_ASSISTED_WORK",
+      "ai_video_generation": "NEEDS_RUNTIME_VERIFICATION",
+      "narration_recording": "HUMAN_OWNER_REQUIRED",
+      "dialogue_cleanup": "CONNECTED_DESCRIPT_AVAILABLE",
+      "music_supervision": "PROCESS_DEFINED_SPECIALIZED_TOOL_REQUIRED",
+      "music_sourcing_and_licensing": "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
+      "sound_design": "PROCESS_DEFINED_SPECIALIZED_TOOL_REQUIRED",
+      "mix_mastering": "PUBLIC_FINISHING_CAPABILITY_GAP",
+      "audiovisual_sync_qc": "PROCESS_DEFINED_NEEDS_RUNTIME_VERIFICATION",
+      "video_editing": "AFTER_EFFECTS_PRIMARY_DESCRIPT_ROUGH_SECONDARY",
+      "captions": "CAN_BUILD_OR_VERIFY",
+      "platform_publishing": "CAPABILITY_GAP",
+      "analytics_ingestion": "NEEDS_RUNTIME_VERIFICATION",
+      "after_effects_motion_assembly": "RUNTIME_VERIFIED_QUALIFIED_PRIMARY",
+      "picture_edit_finishing": "QUALIFIED_1080P_AFTER_EFFECTS_PILOT",
+      "render_export_public_master": "PICTURE_ROUTE_VERIFIED_AUDIO_MASTER_PENDING",
+      "descript_editing": "CONNECTED_AND_AVAILABLE",
+      "runway_video_generation": "BLOCKED_BY_CURRENT_PLAN_NO_VIDEO_MODELS",
+      "openart_visual_generation": "INSTALLED",
+      "figma_frame_design": "INSTALLED",
+      "canva_design": "INSTALLED",
+      "image_generation_primary_tool": "RUNWAY_NANO_BANANA_2_LITE_QUALIFIED",
+      "image_generation_backup_tool": "RUNWAY_NANO_BANANA_PRO_QUALIFIED",
+      "image_generation_qualification_artifact": "docs/operations/media/visual_generation_briefs/2026-10-14/VISUAL_TOOL_QUALIFICATION_DAY24.md",
+      "motion_authoring": "QUALIFIED_PRIMARY_AFTER_EFFECTS_2026",
+      "descript_rough_edit": "RUNTIME_VERIFIED_INTERNAL_ONLY",
+      "p1_internal_coherence_render": "RUNTIME_VERIFIED_720P_30FPS_WATERMARKED",
+      "audio_finishing_internal": "PARTIAL_DESCRIPT_GAIN_LIMITED"
+    },
+    "runtime_evidence": {
+      "after_effects_2026": {
+        "status": "RUNTIME_VERIFIED",
+        "observed_on": "2026-10-12",
+        "host": "YASSIN",
+        "implementation_repo": "C:\\Users\\alnaseem\\Desktop\\CouncilVideoStudio",
+        "bootstrap_commit": "41894368f0b45560cdb25c86f5cb9a231ba32f83",
+        "control_bridge_commit": "42544d3a7bfb0fcced63962c45a40dcafd692572",
+        "cli_probe": "PASS",
+        "execution_receipt": "PASS_COMPLETED",
+        "verified_scope": [
+          "after_effects_process_launch",
+          "jsx_execution",
+          "manifest_execution",
+          "motion_project_creation_and_save",
+          "explicit_execution_receipt"
+        ],
+        "evidence_document": "company/docs/evidence/MEDIA_AFTER_EFFECTS_RUNTIME_2026-10-12.md",
+        "broader_video_editing_status": "PARTIAL_RUNTIME_VERIFIED"
+      }
+    },
+    "specialized_tool_policy": "company/config/media_specialized_tool_policy.json",
+    "benchmark_artifact": "docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md",
+    "visual_generation_brief_capability": {
+      "id": "visual_generation_brief_compiler",
+      "name": "Visual Prompt / Generation Brief Compiler",
+      "permanent_role": false,
+      "composed_by": [
+        "Visual Art Director / Frame Curator",
+        "Thumbnail & Packaging Designer",
+        "Synthesis & Alternatives Designer"
+      ],
+      "anti_slop_approver": "Red Team",
+      "executor": "Technical Operator",
+      "artifact_template": "docs/templates/media/VISUAL_GENERATION_BRIEF.md",
+      "no_prompt_no_generation": true,
+      "no_anti_slop_approval_no_execution": true,
+      "tool_creative_rewrite_forbidden": true,
+      "material_deviation_returns_to_council": true,
+      "one_official_thumbnail_concept_per_episode": true,
+      "one_generation_job_per_episode_thumbnail_stage": true,
+      "one_generated_thumbnail_asset_per_episode": true,
+      "multi_panel_thumbnail_output_forbidden": true,
+      "generation_context_must_contain_only_selected_brief": true
+    },
+    "visual_production_system": {
+      "governing_doc": "docs/operations/media/VISUAL_PRODUCTION_SYSTEM.md",
+      "production_kit_template": "docs/templates/media/VISUAL_PRODUCTION_KIT.md",
+      "tool_qualification_protocol": "docs/operations/media/TOOL_QUALIFICATION_PROTOCOL.md",
+      "art_director_final_visual_authority_within_lock": true,
+      "council_gate_review_only_after_lock": true,
+      "per_frame_full_council_review_after_lock": false,
+      "pilot_ladder": [
+        "P0_REFERENCE_FRAME_LOCK",
+        "P1_COHERENCE_30_45",
+        "P2_PRODUCTION_60_90",
+        "P3_FULL_EPISODE_8_PLUS_MINUTES"
+      ],
+      "full_episode_requires": "P2_PASS",
+      "tool_qualification_status": "PASS",
+      "p0_status": "PASS",
+      "active_stage": "P1_REFERENCE_FIDELITY_RETRY_PHASE_5",
+      "production_kit": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.0.md",
+      "p0_review": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_COUNCIL_REVIEW.md",
+      "p1_status": "PASS_INTERNAL_COHERENCE",
+      "p1_review": "docs/operations/media/pilots/2026-10-14/P1_DAY24_COUNCIL_REVIEW.md",
+      "p1_internal_render": "https://share.descript.com/view/h6bKHYCNPe2",
+      "p2_status": "BLOCKED_REFERENCE_FIDELITY_RETRY",
+      "p2_blockers": [
+        "p1_reference_fidelity_retry_not_passed",
+        "delivery_level_audio_finishing_not_verified"
+      ],
+      "reference_temporal_grammar": "docs/operations/media/reference/REFERENCE_TEMPORAL_GRAMMAR_1000061003_v1.0.md",
+      "motion_qualification_status": "PASS_PRIMARY",
+      "motion_qualification_artifact": "docs/operations/media/pilots/2026-10-14/P2_MOTION_TOOL_QUALIFICATION_AFTER_EFFECTS.md",
+      "visual_event_script": "docs/operations/media/pilots/2026-10-14/P1_DAY24_VISUAL_EVENT_SCRIPT_v2.0.md",
+      "shot_bible": "docs/operations/media/pilots/2026-10-14/P1_DAY24_SHOT_BIBLE_ASSET_GRAPH_v2.0.md",
+      "critical_motion_prototypes_status": "ACTIVE"
+    }
+  },
+  "tool_policy": {
+    "version": "1.6",
+    "policy": "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
+    "principles": [
+      "Use specialized creative tools for creative craft.",
+      "Use code for orchestration, validation, metadata, automation, reproducibility and QC.",
+      "Never substitute a homemade script for a missing professional craft tool merely because scripting is easier.",
+      "If no suitable specialized tool is available, declare CAPABILITY_GAP and stop or escalate.",
+      "Generated visual craft requires a versioned Council-authored Visual Generation Brief before tool execution.",
+      "Anti-Slop approval is mandatory before generated visual execution.",
+      "Generation tools and Technical Operator may not materially reinterpret or creatively rewrite an approved brief.",
+      "For episode thumbnail generation, execute exactly one selected Council concept as one job, one prompt version and one independent asset.",
+      "Triptych, diptych, contact-sheet, collage and multi-panel thumbnail outputs are rejected.",
+      "The primary visual generator is selected by a controlled same-frame same-brief qualification test, not by remaining credits or convenience.",
+      "After the visual system is locked, the Council reviews at defined gates; the Visual Art Director owns frame-level visual decisions inside the lock."
+    ],
+    "prohibitions": [
+      "python_as_primary_video_editor",
+      "python_as_primary_audio_mastering_tool",
+      "python_as_primary_motion_design_tool",
+      "ffmpeg_as_primary_creative_editor",
+      "spreadsheet_or_json_as_visual_design_substitute",
+      "generated_code_as_substitute_for_unavailable_nle_or_daw"
+    ],
+    "tool_matrix": {
+      "research_trends": {
+        "preferred": [
+          "web research",
+          "vidIQ",
+          "Google Trends",
+          "TikTok Creative Center",
+          "YouTube Ask Studio"
+        ],
+        "code_role": "aggregation/normalization only"
+      },
+      "visual_direction_reference_frames": {
+        "preferred": [
+          "Figma",
+          "Canva",
+          "OpenAI image generation",
+          "OpenArt"
+        ],
+        "status": "AVAILABLE_OR_INSTALLED",
+        "code_role": "asset manifests and QA only"
+      },
+      "still_image_generation": {
+        "preferred": [
+          "OpenAI image generation",
+          "OpenArt",
+          "Runway image models"
+        ],
+        "status": "AVAILABLE",
+        "code_role": "prompt/version registry only",
+        "generation_brief_required": true,
+        "anti_slop_approval_required": true,
+        "creative_prompt_rewrite_by_executor_forbidden": true,
+        "official_thumbnail_concepts_per_episode": 1,
+        "generated_thumbnail_assets_per_episode": 1,
+        "generation_jobs_per_episode_thumbnail_stage": 1,
+        "context_isolation_required": true,
+        "multi_panel_thumbnail_output_forbidden": true
+      },
+      "ai_video_generation": {
+        "preferred": [
+          "Runway",
+          "OpenArt"
+        ],
+        "status": "PARTIAL_CAPABILITY",
+        "notes": "Runway connected but current workspace exposes no video models; do not pretend video generation is available there.",
+        "code_role": "job orchestration only",
+        "generation_brief_required": true,
+        "anti_slop_approval_required": true
+      },
+      "motion_graphics_compositing": {
+        "preferred": [
+          "Adobe After Effects 2026"
+        ],
+        "status": "RUNTIME_VERIFIED",
+        "code_role": "JSX/automation is allowed to drive After Effects, but After Effects remains the renderer/editor."
+      },
+      "dialogue_cleanup_text_edit": {
+        "preferred": [
+          "Descript Studio Sound / Descript editor"
+        ],
+        "status": "CONNECTED_AND_AVAILABLE",
+        "code_role": "file movement/metadata only"
+      },
+      "picture_edit_finishing": {
+        "preferred": [
+          "Adobe Premiere Pro",
+          "DaVinci Resolve",
+          "Descript for rough/text edit"
+        ],
+        "status": "PUBLIC_FINISHING_CAPABILITY_GAP",
+        "notes": "Premiere Pro and DaVinci Resolve are not runtime-verified on YASSIN. Descript may support rough/text edit but does not by itself close the high-end finishing gate."
+      },
+      "audio_edit_mix_master": {
+        "preferred": [
+          "Adobe Audition",
+          "DaVinci Fairlight",
+          "equivalent professional DAW/NLE audio page"
+        ],
+        "status": "PUBLIC_FINISHING_CAPABILITY_GAP",
+        "notes": "No Audition or Resolve/Fairlight runtime verification on YASSIN."
+      },
+      "captions_transcript": {
+        "preferred": [
+          "Descript",
+          "NLE caption tools"
+        ],
+        "status": "AVAILABLE"
+      },
+      "multilingual_audio": {
+        "preferred": [
+          "Descript localization/dub tools",
+          "YouTube multi-language audio when available"
+        ],
+        "status": "PROCESS_DEFINED"
+      },
+      "render_export": {
+        "preferred": [
+          "NLE/Media Encoder/Resolve deliver page"
+        ],
+        "status": "CAPABILITY_GAP_FOR_PUBLIC_MASTER",
+        "code_role": "checksum/QC/archive only"
+      }
+    },
+    "current_verified_environment": {
+      "yassin_desktop": {
+        "after_effects_2026": true,
+        "premiere_pro_2026": false,
+        "audition_2026": false,
+        "media_encoder_2026": false,
+        "davinci_resolve_runtime_verified": false
+      },
+      "connected_plugins": {
+        "descript": true,
+        "runway": true,
+        "openart": true,
+        "canva": true,
+        "figma": true
+      },
+      "runway_current_workspace": {
+        "authenticated": true,
+        "image_models_available": true,
+        "video_models_available": false
+      }
+    },
+    "gates": {
+      "pilot_research_and_preproduction": "ALLOW",
+      "pilot_reference_frames": "ALLOW",
+      "pilot_motion_design": "ALLOW_WITH_AFTER_EFFECTS",
+      "pilot_voice_cleanup": "ALLOW_WITH_DESCRIPT",
+      "public_final_master": "BLOCK_UNTIL_PRO_AUDIO_AND_NLE_FINISHING_RUNTIME_VERIFIED",
+      "automatic_publish": "BLOCK",
+      "visual_generation_without_approved_brief": "BLOCK",
+      "visual_generation_without_anti_slop_approval": "BLOCK",
+      "thumbnail_generation_multiple_concepts_or_assets": "BLOCK",
+      "thumbnail_generation_multi_panel_output": "BLOCK",
+      "full_length_episode_before_p2_visual_pilot": "BLOCK",
+      "visual_system_lock_without_tool_qualification": "BLOCK",
+      "p2_without_verified_motion_authoring": "BLOCK",
+      "p2_without_clean_1080p_finishing_route": "BLOCK",
+      "p2_without_delivery_audio_finishing_route": "BLOCK"
+    },
+    "escalation_rule": "If a required craft stage is blocked, HR/Capability Director must scout or request a specialized tool. The Technical Operator may not fill the gap by authoring a custom craft replacement without an explicit Council exception approved by Owner.",
+    "exception_rule": {
+      "owner_approval_required": true,
+      "must_show_reason_specialized_tool_not_viable": true,
+      "must_be_time_bounded": true,
+      "must_not_become_default": true
+    },
+    "tool_qualification": {
+      "required_before_primary_visual_generator_lock": true,
+      "protocol": "docs/operations/media/TOOL_QUALIFICATION_PROTOCOL.md",
+      "comparison_contract": "SAME_FRAME_SAME_BRIEF",
+      "minimum_viable_candidates": 2,
+      "weights": {
+        "prompt_fidelity": 30,
+        "composition_control": 20,
+        "style_consistency": 20,
+        "artifact_quality": 10,
+        "editability": 10,
+        "speed": 5,
+        "cost": 5
+      },
+      "selection_rule": "QUALITY_AND_FIDELITY_DOMINATE_COST",
+      "remaining_credits_must_not_select_primary_tool": true,
+      "primary_tool_state": "QUALIFIED_PRIMARY",
+      "backup_tool_state": "QUALIFIED_BACKUP",
+      "primary_tool": "runway:nano-banana-2-lite",
+      "primary_score": 94.1,
+      "backup_tool": "runway:nano-banana-pro",
+      "backup_score": 89.2,
+      "qualification_artifact": "docs/operations/media/visual_generation_briefs/2026-10-14/VISUAL_TOOL_QUALIFICATION_DAY24.md"
+    },
+    "current_motion_state": {
+      "after_effects": "QUALIFIED_PRIMARY_1080P_30FPS_WATERMARK_FREE",
+      "descript": "INTERNAL_ROUGH_ONLY",
+      "runway_video": "BLOCKED_BY_CURRENT_FREE_PLAN",
+      "backup_route": "UNRESOLVED",
+      "p1_result": "REFERENCE_FIDELITY_RETRY_IN_PROGRESS",
+      "p2_state": "BLOCKED_REFERENCE_FIDELITY_RETRY",
+      "qualification_artifact": "docs/operations/media/pilots/2026-10-14/P2_MOTION_TOOL_QUALIFICATION_AFTER_EFFECTS.md"
+    }
+  }
+}

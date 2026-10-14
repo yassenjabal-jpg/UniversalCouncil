@@ -1,5 +1,7 @@
 # Universal Council
 
+Current channel production: [Lean Video Production Workflow v2.0](docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md). Five stage authorities, three gates and one short system pilot; the DAY24 P0/P1/P2 retry/prototype method is superseded. Governing config: `company/config/channel_operating_system.json`.
+
 **Universal Council v0.3** is a domain-agnostic decision and deliberation framework for software, health, research, purchases, business, finance, travel, media, personal planning and other topics.
 
 ## Core principle

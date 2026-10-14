@@ -1,3 +1,5 @@
+> **SUPERSEDED — historical evidence only.** The DAY24 ladder, retry/prototype queues and long AE GUI method are cancelled. [Lean Workflow v2.0](../../LEAN_VIDEO_PRODUCTION_WORKFLOW.md) governs current production. Historical results below are preserved; do not resume these instructions or use their PASS as new-system proof.
+
 # P0 Council Review — DAY24 Reference Frame Lock
 
 **Date:** 2026-10-14  

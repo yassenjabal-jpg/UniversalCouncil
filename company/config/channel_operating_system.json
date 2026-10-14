@@ -1,5 +1,5 @@
 {
-  "version": "1.6",
+  "version": "2.0",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
   "visual_system": "Modern Editorial Surrealism",
   "primary_language": "Arabic",
@@ -96,40 +96,11 @@
     }
   },
   "workflow": [
-    "signal_capture",
-    "topic_clustering",
-    "topic_scorecard",
-    "evidence_pack",
-    "visual_story_case",
-    "packaging_hypotheses",
-    "story_thesis",
-    "preproduction_craft_review",
-    "script_development",
-    "independent_fact_check",
-    "script_lock",
-    "visual_treatment",
-    "visual_generation_brief_compile_and_anti_slop_approval",
-    "audio_spotting_and_sonic_concept",
-    "reference_frame_assignment",
-    "storyboard_transition_audio_map",
-    "asset_registry",
-    "animatic",
-    "production_readiness_review",
-    "narration_recording_and_dialogue_edit",
-    "production",
-    "editorial_rough_cut",
-    "packaging_finalization_and_test_plan",
-    "picture_lock",
-    "music_sound_design",
-    "mix_master",
-    "audiovisual_sync_qc",
-    "multilingual_preflight",
-    "anti_slop_gate",
-    "fact_policy_qc",
-    "export_qc",
-    "publish_gate",
-    "analytics_postmortem",
-    "memory_and_routine_update"
+    "research_script",
+    "visual_direction",
+    "asset_pack",
+    "edit_motion",
+    "final_qc"
   ],
   "roles": {
     "Media Producer / Production Coordinator": [
@@ -188,14 +159,10 @@
       "final editorial approval"
     ],
     "Script & Voice Director": [
-      "five-pass script development",
-      "scene-aware script",
-      "narration intent",
-      "emotion direction",
-      "pace/pitch/emphasis",
-      "pronunciation guide",
-      "recording direction",
-      "pickup list"
+      "evidence draft",
+      "locked script",
+      "narration direction",
+      "targeted pickups"
     ],
     "Visual Art Director / Frame Curator": [
       "visual story case",
@@ -280,14 +247,7 @@
       "budget gate"
     ],
     "Red Team": [
-      "anti-slop challenge",
-      "generic-template detection",
-      "story/visual differentiation challenge",
-      "generic sound-design detection",
-      "visual story case challenge",
-      "visual generation brief anti-slop approval",
-      "prompt drift challenge",
-      "reference-fidelity challenge"
+      "documented factual rights or material quality objections at existing gates; advisory on taste"
     ],
     "Owner": [
       "human narration",
@@ -295,27 +255,19 @@
       "L4 decisions",
       "public publish approval",
       "brand taste veto"
+    ],
+    "Independent QC Reviewer": [
+      "independent master QC",
+      "exact export hash approval",
+      "factual rights audio typography and delivery defects"
     ]
   },
   "script_schema": {
     "required_columns": [
       "timecode",
       "narration",
-      "intent",
-      "emotion_tag",
-      "energy_1_5",
-      "pace",
-      "pitch_contour",
-      "emphasis_words",
-      "pause_before_ms",
-      "pause_after_ms",
-      "breath_note",
-      "pronunciation",
       "visual_beat_id",
-      "music_state",
-      "sfx",
-      "evidence_ids",
-      "translation_note"
+      "evidence_ids"
     ],
     "allowed_emotion_tags": [
       "فضول هادئ",
@@ -341,7 +293,22 @@
       ],
       "pause_logic": "semantic, not mechanical",
       "emphasis_limit": "maximum 1–2 emphasized words per sentence unless dramatically justified"
-    }
+    },
+    "optional_columns": [
+      "intent",
+      "emotion_tag",
+      "energy_1_5",
+      "pace",
+      "pitch_contour",
+      "emphasis_words",
+      "pause_before_ms",
+      "pause_after_ms",
+      "breath_note",
+      "pronunciation",
+      "music_state",
+      "sfx",
+      "translation_note"
+    ]
   },
   "frame_bible": {
     "canonical_frame_types": [
@@ -389,51 +356,10 @@
       "hard cut chains with no rhythm"
     ]
   },
-  "anti_slop_gate": {
-    "required": true,
-    "checks": [
-      "episode has unique thesis and question",
-      "visual grammar consistent but shot substance not interchangeable",
-      "no repeated AI template sequence",
-      "no filler AI B-roll",
-      "every shot has EVIDENCE/EXPLANATION/ATMOSPHERE/TRANSITION purpose",
-      "atmosphere does not dominate runtime",
-      "primary claims source-linked",
-      "human narrator identity preserved",
-      "visual assets pass continuity palette/type/grid check",
-      "at least three episode-specific visual motifs",
-      "transition map has narrative motivation",
-      "thumbnail hero object is episode-specific",
-      "episode uses a unique visual metaphor rather than a repeated scene template",
-      "architecture/classical art appears only when narratively justified",
-      "generated visual has an approved versioned Visual Generation Brief",
-      "generation tool executed the approved brief without material creative rewrite",
-      "exactly one official thumbnail concept is selected for generation per episode",
-      "thumbnail generation is one job + one prompt version + one independent asset",
-      "triptych/diptych/contact-sheet/collage/multi-panel thumbnail output is forbidden"
-    ],
-    "fail_action": "RETURN_TO_EDITORIAL_OR_VISUAL_TREATMENT"
-  },
   "quality_gates": [
-    "G0 Trend/Topic Gate",
-    "G1 Evidence Gate",
-    "G2 Visual Story Case Gate",
-    "G3 Packaging Hypothesis Gate",
-    "G4 Pre-production Craft Review",
-    "G5 Script + Independent Fact Check Lock",
-    "G6 Visual + Sonic Treatment Lock",
-    "G6A Visual Generation Brief + Anti-Slop Approval",
-    "G7 Animatic + Spotting Gate",
-    "G8 Production Readiness Gate",
-    "G9 Picture Lock Gate",
-    "G10 Audio-Visual Sync Gate",
-    "G11 Packaging Finalization Gate",
-    "G12 Anti-Slop Gate",
-    "G13 Fact/Policy/Continuity QC",
-    "G14 Mix/Master QC",
-    "G15 Export QC",
-    "G16 Owner Publish Gate",
-    "G17 Post-Publish Learning Gate"
+    "Preproduction Lock",
+    "Rough Cut Review",
+    "Final QC"
   ],
   "analytics": {
     "pre_publish": [
@@ -459,7 +385,6 @@
   },
   "audio_system": {
     "principle": "sound is designed with picture, not added after picture",
-    "spotting_required_before_reference_frame_lock": true,
     "picture_lock_required_before_final_sound_design": true,
     "post_picture_lock_timing_change_requires_audio_reconform": true,
     "sonic_concept_fields": [
@@ -485,32 +410,14 @@
       "cue_id",
       "in_time",
       "out_time",
-      "duration",
-      "music_state",
-      "narrative_purpose",
-      "energy",
-      "tempo_bpm",
-      "tonal_center",
-      "instrumentation",
-      "source_or_license",
-      "stem_availability",
-      "dialogue_density",
-      "sync_hits",
-      "ducking_note",
-      "edit_points"
+      "source_or_license"
     ],
     "av_beat_map_required_fields": [
       "beat_id",
       "timecode",
-      "narrative_function",
       "visual_event",
       "voice_state",
-      "music_state",
-      "sfx_event",
-      "sync_anchor",
-      "prelap_postlap",
-      "dynamic_intent",
-      "transition_link"
+      "sync_anchor"
     ],
     "mix_targets_internal_not_platform_requirements": {
       "program_integrated_lufs_target": "-14 LUFS ±1",
@@ -526,7 +433,6 @@
       "DX dialogue",
       "MX music",
       "FX sound design",
-      "AMB atmosphere",
       "FULL master"
     ],
     "monitoring_checks": [
@@ -544,6 +450,11 @@
       "SFX louder than key narration without narrative reason",
       "music chosen after final cut with no spotting",
       "same music bed across unrelated episodes"
+    ],
+    "spotting_embedded_in": "Preproduction Lock",
+    "picture_lock_embedded_in": "Rough Cut Review",
+    "optional_stems": [
+      "AMB atmosphere"
     ]
   },
   "benchmark_profile": {
@@ -583,47 +494,38 @@
     "fail_action": "RETURN_TOPIC_TO_BACKLOG_OR_REFRAME"
   },
   "preproduction_craft_review": {
-    "required": true,
-    "participants": [
-      "Editorial Director / Showrunner",
-      "Media Producer / Production Coordinator",
-      "Evidence & Research Lead",
-      "Motion & Picture Editor",
+    "embedded_in": "Preproduction Lock",
+    "final_authority": "Editorial Director / Showrunner",
+    "advisers_on_demand": [
       "Visual Art Director / Frame Curator",
-      "Music Supervisor & Sound Designer",
-      "Audience Growth & Packaging Strategist"
+      "Motion & Picture Editor",
+      "Independent Fact Checker"
     ],
-    "must_precede_script_lock": true
+    "unanimous_approval_required": false
   },
   "script_development": {
-    "single_pass_forbidden": true,
     "required_passes": [
-      "S0 Story Skeleton",
-      "S1 Evidence Draft",
-      "S2 Visual Draft",
-      "S3 Voice/Performance Draft",
-      "S4 Locked Script"
+      "Evidence Draft",
+      "Locked Script"
     ],
+    "drafts_max": 2,
     "fact_check_before_lock": true,
-    "visual_draft_requires_editor_review": true
+    "fact_checker_independent": true,
+    "editor_feasibility_in_preproduction": true
   },
   "production_readiness": {
-    "required": true,
+    "embedded_in": "Preproduction Lock",
     "required_checks": [
       "script_locked",
       "independent_fact_check_passed",
-      "key_visuals_approved",
-      "visual_generation_briefs_approved",
       "claim_sources_complete",
-      "visual_rights_clear",
-      "storyboard_sufficient",
-      "audio_spotting_complete",
-      "asset_registry_ready",
-      "specialized_tools_available",
-      "schedule_acceptable",
-      "budget_acceptable"
+      "visual_rights_plan",
+      "visual_direction_locked",
+      "asset_plan",
+      "tool_connection",
+      "budget"
     ],
-    "fail_action": "HOLD_PRODUCTION"
+    "fail_action": "HOLD_AFFECTED_WORK"
   },
   "packaging_system": {
     "stage_a_before_script": [
@@ -639,7 +541,7 @@
       "mobile_legibility_check"
     ],
     "thumbnail_designer_independent_craft_function": true,
-    "generated_visual_rule": "thumbnail concept exploration may occur inside Council deliberation, but exactly one official thumbnail concept may be selected; no generated thumbnail asset may be executed before an approved Visual Generation Brief; one episode thumbnail stage authorizes one brief, one generation job, and one independent asset only"
+    "generated_visual_rule": "One selected approved Visual Generation Brief inside Preproduction Lock; one brief, one generation job, and one independent asset only."
   },
   "visual_identity": {
     "version": "2.1-candidate",
@@ -674,17 +576,15 @@
     "multi_panel_thumbnail_output_forbidden": true
   },
   "visual_generation_brief_system": {
-    "version": "1.1",
+    "version": "2.0",
     "status": "REQUIRED_FOR_ANY_GENERATED_VISUAL",
     "capability_model": "venture_scoped_composed_capability_not_headcount",
     "compiler_name": "Visual Prompt / Generation Brief Compiler",
     "composed_by": [
-      "Visual Art Director / Frame Curator",
-      "Thumbnail & Packaging Designer",
-      "Synthesis & Alternatives Designer"
+      "Visual Art Director / Frame Curator"
     ],
     "approval_required_from": [
-      "Red Team / Anti-Slop"
+      "Visual Art Director / Frame Curator"
     ],
     "executor": "Technical Operator",
     "artifact_template": "docs/templates/media/VISUAL_GENERATION_BRIEF.md",
@@ -696,39 +596,23 @@
     ],
     "required_fields": [
       "episode_topic",
-      "viewer_question",
-      "click_promise",
       "visual_metaphor_one_sentence",
-      "metaphor_rationale",
       "hero_object",
-      "image_language",
-      "layout_family",
       "composition_and_negative_space",
-      "camera_crop_and_perspective",
-      "background",
       "brand_anchor_colors",
       "episode_accent_color",
-      "lighting",
-      "texture_material",
       "typography_direction",
-      "allowed_elements",
-      "forbidden_elements",
-      "difference_from_previous_thumbnail",
-      "reference_fidelity_notes",
-      "mobile_legibility_requirements",
-      "anti_ai_slop_constraints",
       "documentary_evidence_boundary",
       "final_generation_instruction",
       "negative_constraints",
-      "anti_slop_approval_status",
       "prompt_version"
     ],
-    "approval_state_required": "APPROVED_BY_ANTI_SLOP",
+    "approval_state_required": "APPROVED_IN_PREPRODUCTION_LOCK",
     "execution_rules": [
       "NO_PROMPT_NO_GENERATION",
-      "NO_ANTI_SLOP_APPROVAL_NO_EXECUTION",
+      "PREPRODUCTION_LOCK_REQUIRED",
       "TOOL_MUST_NOT_CREATIVELY_REWRITE_APPROVED_BRIEF",
-      "MATERIAL_DEVIATION_RETURNS_TO_COUNCIL",
+      "MATERIAL_DEVIATION_RETURNS_TO_STAGE_AUTHORITY",
       "EXECUTION_MUST_RECORD_PROMPT_VERSION_AND_TOOL",
       "ONE_JOB_ONE_PROMPT_VERSION_ONE_ASSET",
       "ONE_FINAL_THUMBNAIL_PER_EPISODE",
@@ -745,180 +629,160 @@
     "single_asset_only": true,
     "multi_panel_output_forbidden": true,
     "context_isolation_required": true,
-    "only_selected_brief_may_enter_generation_context": true
+    "only_selected_brief_may_enter_generation_context": true,
+    "advisers_on_demand": [
+      "Thumbnail & Packaging Designer",
+      "Synthesis & Alternatives Designer"
+    ],
+    "approval_scope": "ASSET_PACK_NOT_PER_FRAME"
   },
   "production_system": {
-    "version": "1.0",
-    "governing_principle": "COUNCIL_DESIGNS_SYSTEM_ART_DIRECTOR_LOCKS_OPERATORS_PRODUCE_COUNCIL_REVIEWS_GATES",
-    "visual_system_lock": {
-      "required": true,
-      "reference_frame_count_min": 4,
-      "reference_frame_count_max": 6,
-      "required_frame_families": [
-        "Hero Question",
-        "Object Macro",
-        "Evidence or Archive",
-        "Diagram or Mechanism",
-        "Editorial Cutout",
-        "Conceptual Surrealism"
+    "version": "2.0",
+    "status": "ACTIVE_WORKFLOW_PILOT_PENDING",
+    "governing_doc": "docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md",
+    "stage_authorities": {
+      "research_script": "Editorial Director / Showrunner",
+      "visual_direction": "Visual Art Director / Frame Curator",
+      "asset_pack": "Media Producer / Production Coordinator",
+      "edit_motion": "Motion & Picture Editor",
+      "final_qc": "Independent QC Reviewer"
+    },
+    "gate_authorities": {
+      "Preproduction Lock": "Editorial Director / Showrunner",
+      "Rough Cut Review": "Editorial Director / Showrunner",
+      "Final QC": "Independent QC Reviewer"
+    },
+    "gate_placement": {
+      "Preproduction Lock": "after_visual_direction",
+      "Rough Cut Review": "during_edit_motion",
+      "Final QC": "after_export"
+    },
+    "target_duration_seconds_min": 480,
+    "per_frame_review": false,
+    "per_prototype_review": false,
+    "committee_approval": false,
+    "pilot": {
+      "count": 1,
+      "once_per_system": true,
+      "duration_seconds_min": 30,
+      "duration_seconds_max": 45,
+      "status": "NOT_RUN",
+      "gate_names": [
+        "Preproduction Lock",
+        "Rough Cut Review",
+        "Final QC"
       ],
-      "production_kit_required": true,
-      "production_kit_template": "docs/templates/media/VISUAL_PRODUCTION_KIT.md",
-      "required_kit_fields": [
-        "palette",
-        "typography",
-        "grid",
-        "negative_space_rules",
-        "texture_rules",
-        "shadow_rules",
-        "image_source_treatments",
-        "frame_families",
-        "transition_grammar",
-        "motion_rules",
-        "diagram_language",
-        "anti_slop_rules"
+      "blocks_full_episode_until_pass": true,
+      "old_pilot_evidence_accepted": false
+    },
+    "editing_routes": {
+      "primary": {
+        "tool": "Descript",
+        "transport": "native_api_or_connector",
+        "connection_status": "LIVE_VERIFIED",
+        "delivery_status": "UNVERIFIED_PENDING_SYSTEM_PILOT",
+        "evidence": "docs/operations/media/evidence/2026-10-14-lean-workflow-preflight.md"
+      },
+      "backup": {
+        "tool": "Adobe After Effects 2026",
+        "transport": "native_project_automation",
+        "connection_status": "REVERIFY_ON_ACTIVATION",
+        "delivery_status": "HISTORICAL_5_SECOND_BENCHMARK_ONLY",
+        "evidence": "docs/operations/media/pilots/2026-10-14/P2_MOTION_TOOL_QUALIFICATION_AFTER_EFFECTS.md"
+      },
+      "max_routes": 2,
+      "gui_retry_loops": false,
+      "max_primary_diagnosis_minutes": 10,
+      "max_backup_activations": 1,
+      "backup_requires_current_probe": true,
+      "backup_trigger": "BLOCKING_PRIMARY_FAILURE",
+      "fallback_failure_action": "CAPABILITY_GAP_STOP_NO_NEW_TOOL_TOURNAMENT"
+    },
+    "review_budget": {
+      "script_drafts_max": 2,
+      "rough_cut_revision_rounds_max": 1,
+      "qc_repairs": "TARGETED_DEFECTS_ONLY",
+      "asset_pack_reviews_max": 1,
+      "generation_attempts_per_missing_asset_max": 2,
+      "generation_jobs_per_episode_max": 12,
+      "tool_comparison_tournaments": false,
+      "budget_exhaustion_action": "SIMPLIFY_WITH_LICENSED_ASSETS"
+    },
+    "active_minutes_targets": {
+      "research_script": [
+        60,
+        90
       ],
-      "lock_authority": "Visual Art Director / Frame Curator",
-      "red_team_blocker": true,
-      "owner_brand_veto": true,
-      "status": "LOCKED_AFTER_P1_COHERENCE_PASS",
-      "p0_passed": true,
-      "production_kit": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.0.md",
-      "reference_set_brief": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_REFERENCE_FRAME_SET_v1.0.md",
-      "council_review": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_COUNCIL_REVIEW.md",
-      "reference_temporal_grammar": "docs/operations/media/reference/REFERENCE_TEMPORAL_GRAMMAR_1000061003_v1.0.md",
-      "production_kit_candidate": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.1_CANDIDATE.md"
+      "visual_direction": [
+        20,
+        30
+      ],
+      "asset_pack": [
+        45,
+        60
+      ],
+      "edit_motion": [
+        90,
+        150
+      ],
+      "final_qc": [
+        20,
+        30
+      ]
     },
-    "authority_model": {
-      "council_after_lock": "SYSTEM_AND_GATE_REVIEW_ONLY",
-      "visual_art_director": "FINAL_VISUAL_DECISION_WITHIN_LOCKED_SYSTEM",
-      "technical_operator": "EXECUTION_ONLY_NO_CREATIVE_REWRITE",
-      "red_team": "BLOCK_ON_DRIFT_AI_SLOP_OR_REFERENCE_FAILURE",
-      "per_frame_full_council_review_after_lock": false
+    "timing_status": "UNMEASURED_TARGETS_NOT_BENCHMARKS",
+    "metrics": [
+      "active_minutes",
+      "wall_minutes",
+      "service_queue_minutes",
+      "render_minutes",
+      "cost",
+      "generation_jobs",
+      "revision_rounds",
+      "qc_defects"
+    ],
+    "legacy": {
+      "status": "SUPERSEDED_CANCELLED",
+      "resume_allowed": false,
+      "historical_evidence": "docs/operations/media/history/DAY24_LEGACY_CONFIG_2026-10-14.json",
+      "cancelled": [
+        "P0_P1_P2_P3_LADDER",
+        "DAY24_RETRY_PHASES",
+        "CRITICAL_MOTION_PROTOTYPE_QUEUE",
+        "AFTER_EFFECTS_GUI_LOOPS"
+      ],
+      "external_jobs_status": "NOT_OBSERVED_NO_CANCELLATION_CLAIM"
     },
-    "tool_qualification": {
-      "required_before_visual_system_lock": true,
-      "protocol": "docs/operations/media/TOOL_QUALIFICATION_PROTOCOL.md",
-      "comparison_contract": "SAME_FRAME_SAME_BRIEF",
-      "minimum_viable_candidates": 2,
-      "score_weights": {
-        "prompt_fidelity": 30,
-        "composition_control": 20,
-        "style_consistency": 20,
-        "artifact_quality": 10,
-        "editability": 10,
-        "speed": 5,
-        "cost": 5
-      },
-      "primary_selection_rule": "QUALITY_AND_FIDELITY_DOMINATE_COST",
-      "remaining_credits_must_not_select_primary_tool": true,
-      "primary_generator_status": "QUALIFIED_PRIMARY",
-      "backup_generator_status": "QUALIFIED_BACKUP",
-      "primary_generator": "runway:nano-banana-2-lite",
-      "primary_score": 94.1,
-      "backup_generator": "runway:nano-banana-pro",
-      "backup_score": 89.2,
-      "qualification_artifact": "docs/operations/media/visual_generation_briefs/2026-10-14/VISUAL_TOOL_QUALIFICATION_DAY24.md",
-      "qualification_benchmark_prompt_version": "DAY24-CS-v1.1-SINGLE",
-      "qualification_passed": true
-    },
-    "pilot_ladder": [
-      {
-        "id": "P0_REFERENCE_FRAME_LOCK",
-        "output": "4_TO_6_COHERENT_REFERENCE_FRAMES_PLUS_LOCKED_PRODUCTION_KIT",
-        "requires_tool_qualification": true,
-        "status": "PASS"
-      },
-      {
-        "id": "P1_COHERENCE_30_45",
-        "duration_seconds_min": 30,
-        "duration_seconds_max": 45,
-        "requires": "P0_PASS",
-        "required_elements": [
-          "temporary_or_owner_narration",
-          "6_to_10_visual_beats",
-          "meaning_driven_transitions",
-          "music_or_temp_music",
-          "sound_design",
-          "at_least_one_real_evidence_visual"
-        ],
-        "status": "PASS_INTERNAL_COHERENCE",
-        "review_artifact": "docs/operations/media/pilots/2026-10-14/P1_DAY24_COUNCIL_REVIEW.md",
-        "review_url": "https://share.descript.com/view/h6bKHYCNPe2",
-        "actual_duration_seconds": 41.766667
-      },
-      {
-        "id": "P2_PRODUCTION_60_90",
-        "duration_seconds_min": 60,
-        "duration_seconds_max": 90,
-        "requires": "P1_PASS",
-        "required_elements": [
-          "locked_visual_system",
-          "locked_motion_grammar",
-          "audio_visual_sync",
-          "evidence_and_explanation_mix",
-          "repeatable_operator_workflow"
-        ],
-        "status": "BLOCKED_REFERENCE_FIDELITY_RETRY",
-        "blocking_capabilities": [
-          "p1_reference_fidelity_retry_not_passed",
-          "delivery_level_audio_finishing_not_verified"
-        ]
-      },
-      {
-        "id": "P3_FULL_EPISODE_8_PLUS_MINUTES",
-        "duration_seconds_min": 480,
-        "requires": "P2_PASS",
-        "status": "BLOCKED_UNTIL_P2_PASS"
-      }
+    "publication_authorized": false,
+    "evidence_contract": "CONTENT_HASHED_ARTIFACTS_NAMED_REVIEWERS_NO_CONFIG_PASS"
+  },
+  "anti_slop_checks": {
+    "required": true,
+    "checks": [
+      "episode has unique thesis and question",
+      "visual grammar consistent but shot substance not interchangeable",
+      "no repeated AI template sequence",
+      "no filler AI B-roll",
+      "every shot has EVIDENCE/EXPLANATION/ATMOSPHERE/TRANSITION purpose",
+      "atmosphere does not dominate runtime",
+      "primary claims source-linked",
+      "human narrator identity preserved",
+      "visual assets pass continuity palette/type/grid check",
+      "at least three episode-specific visual motifs",
+      "transition map has narrative motivation",
+      "thumbnail hero object is episode-specific",
+      "episode uses a unique visual metaphor rather than a repeated scene template",
+      "architecture/classical art appears only when narratively justified",
+      "generated visual has an approved versioned Visual Generation Brief",
+      "generation tool executed the approved brief without material creative rewrite",
+      "exactly one official thumbnail concept is selected for generation per episode",
+      "thumbnail generation is one job + one prompt version + one independent asset",
+      "triptych/diptych/contact-sheet/collage/multi-panel thumbnail output is forbidden"
     ],
-    "full_length_episode_before_p2_pass": "BLOCK",
-    "council_review_gates": [
-      "visual_system_lock",
-      "p1_pilot_review",
-      "p2_pilot_review",
-      "animatic",
-      "picture_lock",
-      "final_qc"
-    ],
-    "per_frame_council_review_after_lock": "FORBIDDEN_UNLESS_EXCEPTION",
-    "exception_triggers": [
-      "brand_drift",
-      "evidence_risk",
-      "anti_slop_failure",
-      "material_new_visual_language"
-    ],
-    "active_pilot_stage": "P1_REFERENCE_FIDELITY_RETRY_PHASE_5",
-    "p1_status": "PASS_INTERNAL_COHERENCE",
-    "p1_review": "docs/operations/media/pilots/2026-10-14/P1_DAY24_COUNCIL_REVIEW.md",
-    "p1_internal_render": "https://share.descript.com/view/h6bKHYCNPe2",
-    "current_capability_gaps": [
-      "backup_motion_route_unresolved",
-      "delivery_audio_finishing_not_verified",
-      "p1_reference_fidelity_retry_not_passed"
-    ],
-    "motion_tool_qualification": {
-      "status": "PASS_PRIMARY",
-      "primary_route": "Adobe After Effects 2026 on YASSIN",
-      "score": 90,
-      "qualification_artifact": "docs/operations/media/pilots/2026-10-14/P2_MOTION_TOOL_QUALIFICATION_AFTER_EFFECTS.md",
-      "benchmark_resolution": "1920x1080",
-      "benchmark_fps": 30,
-      "benchmark_duration_seconds": 5,
-      "clean_export_verified": true,
-      "watermark_free": true,
-      "backup_route_status": "UNRESOLVED"
-    },
-    "retry_pipeline": {
-      "roadmap": "docs/operations/media/pilots/2026-10-14/P1_DAY24_RETRY_PRODUCTION_ROADMAP_v2.0.md",
-      "reference_fidelity_review": "docs/operations/media/pilots/2026-10-14/P1_DAY24_VS_REFERENCE_COMPREHENSIVE_COUNCIL_REVIEW.md",
-      "phase_1_temporal_identity": "PASS_REFERENCE_GRAMMAR_LOCK",
-      "phase_2_motion_tool": "PASS_PRIMARY",
-      "phase_3_visual_script": "PASS_CANDIDATE",
-      "phase_4_shot_bible": "PASS",
-      "visual_event_script": "docs/operations/media/pilots/2026-10-14/P1_DAY24_VISUAL_EVENT_SCRIPT_v2.0.md",
-      "phase_5_critical_motion_prototypes": "ACTIVE",
-      "shot_bible": "docs/operations/media/pilots/2026-10-14/P1_DAY24_SHOT_BIBLE_ASSET_GRAPH_v2.0.md"
-    }
+    "fail_action": "RETURN_TO_EDITORIAL_OR_VISUAL_TREATMENT",
+    "embedded_in": [
+      "Preproduction Lock",
+      "Final QC"
+    ]
   }
 }

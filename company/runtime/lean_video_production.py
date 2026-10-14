@@ -1,0 +1,324 @@
+"""Lean production policy and content-bound gate receipts, not a video renderer.
+
+External tools perform craft. Reviewers attach their observations to actual files;
+this module rejects stale approvals, missing files and unsupported delivery claims.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import math
+from pathlib import Path
+from typing import Any
+
+
+class ProductionWorkflowError(ValueError):
+    pass
+
+
+STAGES = ["research_script", "visual_direction", "asset_pack", "edit_motion", "final_qc"]
+AUTHORITIES = dict(
+    zip(
+        STAGES,
+        [
+            "Editorial Director / Showrunner",
+            "Visual Art Director / Frame Curator",
+            "Media Producer / Production Coordinator",
+            "Motion & Picture Editor",
+            "Independent QC Reviewer",
+        ],
+    )
+)
+GATES = ["Preproduction Lock", "Rough Cut Review", "Final QC"]
+METRICS = [
+    "active_minutes",
+    "wall_minutes",
+    "service_queue_minutes",
+    "render_minutes",
+    "cost",
+    "generation_jobs",
+    "revision_rounds",
+    "qc_defects",
+]
+GATE_AUTHORITIES = dict(
+    zip(GATES, [AUTHORITIES["research_script"], AUTHORITIES["research_script"], AUTHORITIES["final_qc"]])
+)
+GATE_INPUTS = {
+    GATES[0]: ["script", "direction", "asset_plan"],
+    GATES[1]: ["script", "direction", "asset_plan", "assets", "rough_cut"],
+    GATES[2]: ["script", "direction", "asset_plan", "assets", "rough_cut", "export"],
+}
+GATE_CHECKS = {
+    GATES[0]: ["facts_checked", "rights_plan", "visual_direction", "voice_plan", "budget"],
+    GATES[1]: ["narration_complete", "story_pacing", "visual_coherence", "rights_clear", "no_filler", "sync"],
+    GATES[2]: [
+        "facts_checked",
+        "rights_clear",
+        "arabic_readability",
+        "narration_complete",
+        "voice_accepted",
+        "sync",
+        "audio_intelligibility",
+        "visual_coherence",
+        "clean_export",
+    ],
+}
+
+
+def require(condition: bool, message: str) -> None:
+    if not condition:
+        raise ProductionWorkflowError(message)
+
+
+def validate_production_config(cfg: dict[str, Any]) -> bool:
+    system = cfg.get("production_system", {})
+    require(cfg.get("workflow") == STAGES, "exactly five ordered production stages required")
+    require(cfg.get("quality_gates") == GATES, "exactly three ordered gates required; no extra gates")
+    require(system.get("version") == "2.0", "lean production system must be 2.0")
+    require(system.get("stage_authorities") == AUTHORITIES, "one final authority per stage required")
+    require(system.get("gate_authorities") == GATE_AUTHORITIES, "gate authority drift")
+    require(system.get("target_duration_seconds_min") == 480, "8+ minute target required")
+    for key in ["per_frame_review", "per_prototype_review", "committee_approval", "publication_authorized"]:
+        require(system.get(key) is False, f"{key} must remain disabled")
+    require(system.get("legacy", {}).get("resume_allowed") is False, "cancelled workflow cannot resume")
+    require(system.get("legacy", {}).get("status") == "SUPERSEDED_CANCELLED", "legacy status missing")
+    require(bool(system.get("legacy", {}).get("historical_evidence")), "historical evidence must be retained")
+    require(
+        not {"pilot_ladder", "retry_pipeline", "active_pilot_stage"}.intersection(system),
+        "legacy pipeline reintroduced",
+    )
+    pilot = system.get("pilot", {})
+    for key, value in {
+        "count": 1,
+        "once_per_system": True,
+        "duration_seconds_min": 30,
+        "duration_seconds_max": 45,
+        "gate_names": GATES,
+        "blocks_full_episode_until_pass": True,
+        "old_pilot_evidence_accepted": False,
+    }.items():
+        require(
+            type(pilot.get(key)) is type(value) and pilot.get(key) == value,
+            f"single system pilot contract drift: {key}",
+        )
+    require(system.get("metrics") == METRICS, "measured system pilot metrics required")
+    routes = system.get("editing_routes", {})
+    require(
+        set(routes).intersection({"primary", "backup", "tertiary"}) == {"primary", "backup"},
+        "only primary and backup routes allowed",
+    )
+    for name, tool, transport in [
+        ("primary", "Descript", "native_api_or_connector"),
+        ("backup", "Adobe After Effects 2026", "native_project_automation"),
+    ]:
+        route = routes.get(name, {})
+        require(route.get("tool") == tool and route.get("transport") == transport, f"{name} route drift")
+        require(bool(route.get("evidence")), f"{name} route evidence missing")
+    for key, value in {
+        "max_routes": 2,
+        "gui_retry_loops": False,
+        "max_backup_activations": 1,
+        "backup_requires_current_probe": True,
+        "max_primary_diagnosis_minutes": 10,
+    }.items():
+        require(type(routes.get(key)) is type(value) and routes.get(key) == value, f"route limit drift: {key}")
+    budget = system.get("review_budget", {})
+    for key, value in {
+        "script_drafts_max": 2,
+        "rough_cut_revision_rounds_max": 1,
+        "asset_pack_reviews_max": 1,
+        "generation_attempts_per_missing_asset_max": 2,
+        "generation_jobs_per_episode_max": 12,
+        "tool_comparison_tournaments": False,
+    }.items():
+        require(
+            type(budget.get(key)) is type(value) and budget.get(key) == value, f"review/generation budget drift: {key}"
+        )
+    return True
+
+
+def validate_alignment(channel: dict[str, Any], media: dict[str, Any], policy: dict[str, Any]) -> bool:
+    """Prevent other governing configs from restoring an obsolete gate/tool mirror."""
+    validate_production_config(channel)
+    require(policy.get("version") == "2.0", "specialized tool policy must be 2.0")
+    require(policy.get("quality_gates") == GATES, "specialized policy cannot add gates")
+    require(
+        policy.get("editing_routes") == channel["production_system"]["editing_routes"], "editing route mirrors drifted"
+    )
+    require(
+        policy.get("governing_workflow") == "company/config/channel_operating_system.json",
+        "single governing workflow required",
+    )
+    require(media.get("system_pilot") == channel["production_system"]["pilot"], "system pilot mirrors drifted")
+    require("gates" not in policy and "current_motion_state" not in policy, "superseded tool pipeline reintroduced")
+    require(
+        policy.get("execution_constraints", {}).get("automatic_publish") == "BLOCK", "automatic publication forbidden"
+    )
+    require(policy.get("execution_constraints", {}).get("gui_retry_loops") == "FORBIDDEN", "long GUI loops forbidden")
+    return True
+
+
+def artifact_hash(path: str) -> str:
+    artifact = Path(path)
+    require(artifact.is_file() and artifact.stat().st_size > 0, f"missing or empty artifact: {artifact}")
+    with artifact.open("rb") as stream:
+        return hashlib.file_digest(stream, "sha256").hexdigest()
+
+
+def validate_gate(
+    cfg: dict[str, Any], run: dict[str, Any], gate: str, *, system_pilot: dict[str, Any] | None = None
+) -> bool:
+    """Validate current gate and prerequisites against files, not historical PASS labels.
+
+    For a full episode, supply the one-time accepted pilot record. The pilot itself
+    uses these same three gates; it does not recursively require another pilot.
+    """
+    validate_production_config(cfg)
+    require(gate in GATES, "unknown gate")
+    require(run.get("system_version") == "2.0" and bool(run.get("episode_id")), "current run identity required")
+    require(run.get("kind") in {"system_pilot", "episode"}, "invalid production kind")
+    if run["kind"] == "episode":
+        require(
+            isinstance(system_pilot, dict) and system_pilot.get("kind") == "system_pilot",
+            "one accepted system pilot required",
+        )
+        validate_gate(cfg, system_pilot, GATES[2])
+    for current in GATES[: GATES.index(gate) + 1]:
+        receipt = run.get("gates", {}).get(current, {})
+        require(receipt.get("status") == "PASS", f"{current} is not approved")
+        require(
+            receipt.get("authority") == GATE_AUTHORITIES[current] and bool(receipt.get("reviewer_id")),
+            f"{current} needs final authority and named reviewer",
+        )
+        require(
+            receipt.get("episode_id") == run["episode_id"] and receipt.get("system_version") == "2.0",
+            "receipt identity is stale",
+        )
+        for name in GATE_INPUTS[current]:
+            path = run.get("artifacts", {}).get(name)
+            require(isinstance(path, str) and bool(path), f"{current} artifact missing: {name}")
+            require(
+                receipt.get("input_hashes", {}).get(name) == artifact_hash(path), f"{current} stale approval: {name}"
+            )
+        require(
+            not receipt.get("unresolved_defects", ["missing defect disposition"]),
+            f"{current} has unresolved or unreported defects",
+        )
+        for check in GATE_CHECKS[current]:
+            observation = receipt.get("checks", {}).get(check, {})
+            require(
+                observation.get("passed") is True and bool(observation.get("evidence_ref")),
+                f"{current} lacks evidenced check: {check}",
+            )
+            require(
+                observation.get("evidence_sha256") == artifact_hash(observation["evidence_ref"]),
+                f"{current} check evidence stale: {check}",
+            )
+        if current == GATES[0]:
+            require(
+                bool(run.get("writer_id"))
+                and bool(receipt.get("fact_checker_id"))
+                and receipt["fact_checker_id"] != run["writer_id"],
+                "facts require independent reviewer",
+            )
+        if current == GATES[2]:
+            require(
+                bool(run.get("editor_id"))
+                and bool(run.get("mix_author_id"))
+                and receipt["reviewer_id"] not in {run["editor_id"], run["mix_author_id"]},
+                "Final QC must be independent of edit and mix authors",
+            )
+            delivery = receipt.get("delivery", {})
+            require(
+                delivery.get("export_sha256") == artifact_hash(run["artifacts"]["export"]),
+                "QC delivery is not bound to exact export",
+            )
+            for field in ["width", "height", "fps", "duration_seconds", "integrated_lufs", "true_peak_dbtp"]:
+                value = delivery.get(field)
+                require(
+                    type(value) in {int, float} and math.isfinite(value), f"invalid measured delivery field: {field}"
+                )
+            require(
+                delivery["width"] >= 1920 and delivery["height"] >= 1080 and delivery["fps"] >= 24,
+                "insufficient delivery resolution or fps",
+            )
+            require(delivery.get("watermark_free") is True, "watermark-free export required")
+            require(
+                -15 <= delivery["integrated_lufs"] <= -13 and delivery["true_peak_dbtp"] <= -1,
+                "audio outside internal loudness/peak targets",
+            )
+            duration = delivery["duration_seconds"]
+            require(
+                (30 <= duration <= 45) if run["kind"] == "system_pilot" else duration >= 480,
+                "invalid pilot or episode duration",
+            )
+            require(bool(delivery.get("measurement_evidence_ref")), "actual delivery measurement receipt required")
+            require(
+                delivery.get("measurement_evidence_sha256") == artifact_hash(delivery["measurement_evidence_ref"]),
+                "delivery measurement evidence stale",
+            )
+            if run["kind"] == "system_pilot":
+                metrics = run.get("metrics", {})
+                for name in cfg["production_system"]["metrics"]:
+                    require(
+                        type(metrics.get(name)) in {int, float} and math.isfinite(metrics[name]) and metrics[name] >= 0,
+                        f"missing measured pilot metric: {name}",
+                    )
+                require(
+                    run.get("tool") in {"Descript", "Adobe After Effects 2026"},
+                    "pilot must prove one configured editor",
+                )
+            budget = cfg["production_system"]["review_budget"]
+            counters = run.get("metrics", {})
+            for name, ceiling in [
+                ("generation_jobs", budget["generation_jobs_per_episode_max"]),
+                ("revision_rounds", budget["rough_cut_revision_rounds_max"]),
+            ]:
+                require(
+                    type(counters.get(name)) is int and 0 <= counters[name] <= ceiling,
+                    f"runtime budget exceeded or unreported: {name}",
+                )
+            attempts = run.get("generation_attempts_by_asset", {})
+            require(
+                isinstance(attempts, dict)
+                and all(
+                    type(count) is int and 0 <= count <= budget["generation_attempts_per_missing_asset_max"]
+                    for count in attempts.values()
+                ),
+                "per-asset generation budget exceeded",
+            )
+            require(
+                sum(attempts.values()) == counters["generation_jobs"],
+                "generation attempts must reconcile with actual job count",
+            )
+            require(
+                type(run.get("thumbnail_generation_jobs")) is int and 0 <= run["thumbnail_generation_jobs"] <= 1,
+                "single thumbnail generation boundary exceeded",
+            )
+    return True
+
+
+def select_edit_route(
+    cfg: dict[str, Any],
+    *,
+    primary_failed: bool = False,
+    current_probe: dict[str, Any] | None = None,
+    backup_activations: int = 0,
+) -> dict[str, Any]:
+    validate_production_config(cfg)
+    routes = cfg["production_system"]["editing_routes"]
+    if primary_failed:
+        require(
+            backup_activations == 0 and isinstance(current_probe, dict),
+            "backup needs current successful probe and may activate once",
+        )
+        require(
+            current_probe.get("tool") == routes["backup"]["tool"]
+            and current_probe.get("status") == "PASS"
+            and current_probe.get("current_session") is True
+            and bool(current_probe.get("artifact")),
+            "current successful backup probe required",
+        )
+        require(current_probe.get("sha256") == artifact_hash(current_probe["artifact"]), "backup probe evidence stale")
+        return dict(routes["backup"])
+    return dict(routes["primary"])

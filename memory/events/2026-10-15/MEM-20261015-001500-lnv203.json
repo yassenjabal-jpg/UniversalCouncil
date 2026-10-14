@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261015-001500-lnv203",
+  "created_at": "2026-10-15T00:03:08+03:00",
+  "scope": "project/media",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "architecture",
+  "subject": "media.pilot.measurement",
+  "summary": "Exactly one 30-45 second production-system pilot uses the three existing gates. Three-video commercial observations never block first 8+ minute episode production.",
+  "details": {
+    "governing_doc": "docs/operations/media/LEAN_VIDEO_PRODUCTION_WORKFLOW.md",
+    "governing_config": "company/config/channel_operating_system.json",
+    "legacy_status": "SUPERSEDED_CANCELLED",
+    "pilot_status": "NOT_RUN",
+    "no_main_merge": true,
+    "public_publish_authorized": false,
+    "timing_targets_unmeasured": true,
+    "scope_override": "Native media craft routing replaces GUI-first for this workflow only.",
+    "priority": "Current workflow overrides older media pilot/tool/production-cell procedure; historical evidence is retained."
+  },
+  "supersedes": [
+    "MEM-20261012-192851-3f76af"
+  ],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "lean-workflow",
+    "cancellation",
+    "three-gates",
+    "pr30-only"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "https://github.com/yassenjabal-jpg/UniversalCouncil/pull/30"
+  }
+}
