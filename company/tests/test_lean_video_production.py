@@ -24,26 +24,22 @@ ROOT = Path(__file__).resolve().parents[2]
 class LeanProductionTests(unittest.TestCase):
     def setUp(self):
         self.cfg = json.loads((ROOT / "company/config/channel_operating_system.json").read_text(encoding="utf-8"))
-        # Generic synthetic fixtures exercise an available primary; the real
-        # persisted failed-primary case has its own regression test below.
-        self.cfg["production_system"]["editing_routes"]["primary"]["delivery_status"] = (
-            "UNVERIFIED_PENDING_SYSTEM_PILOT"
-        )
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.pilot = self.make_run("system_pilot", "synthetic-pilot")
         self.episode = self.make_run("episode", "synthetic-episode")
 
-    def test_persisted_primary_failure_cannot_silently_repeat_blocked_route(self):
-        cfg = copy.deepcopy(self.cfg)
-        cfg["production_system"]["editing_routes"]["primary"]["delivery_status"] = (
-            "FAILED_FINAL_QC_NATIVE_RTL_720P_WATERMARK"
-        )
+    def test_delivery_route_is_ae_and_descript_is_rough_only(self):
         with self.assertRaises(ProductionWorkflowError):
-            select_edit_route(cfg)
-        route = select_edit_route(cfg, current_probe=self.valid_probe())
+            select_edit_route(self.cfg)
+        route = select_edit_route(self.cfg, current_probe=self.valid_probe())
         self.assertEqual(route["tool"], "Adobe After Effects 2026")
         self.assertEqual(route["transport"], "native_project_automation")
+        rough = select_edit_route(self.cfg, purpose="rough_prep")
+        self.assertEqual(rough["tool"], "Descript")
+        self.assertFalse(rough["eligible_for_final_delivery"])
+        with self.assertRaises(ProductionWorkflowError):
+            select_edit_route(self.cfg, primary_failed=True, current_probe=self.valid_probe())
 
     def make_run(self, kind, identity):
         run = dict(
@@ -53,7 +49,7 @@ class LeanProductionTests(unittest.TestCase):
             writer_id="writer",
             editor_id="editor",
             mix_author_id="mixer",
-            tool="Descript",
+            tool="Adobe After Effects 2026",
             artifacts={},
             gates={},
             metrics={name: 1 for name in self.cfg["production_system"]["metrics"]},
@@ -218,7 +214,7 @@ class LeanProductionTests(unittest.TestCase):
         evidence.write_bytes(b"")
         self.rejects(self.pilot)
 
-    def test_current_backup_probe_rejects_stale_failed_or_historical_claims(self):
+    def test_current_primary_probe_rejects_stale_failed_or_historical_claims(self):
         for field, value in [
             ("tool", "other"),
             ("status", "FAIL"),
@@ -229,11 +225,11 @@ class LeanProductionTests(unittest.TestCase):
             probe = self.valid_probe()
             probe[field] = value
             with self.assertRaises(ProductionWorkflowError):
-                select_edit_route(self.cfg, primary_failed=True, current_probe=probe)
+                select_edit_route(self.cfg, current_probe=probe)
         probe = self.valid_probe()
         Path(probe["artifact"]).write_bytes(b"")
         with self.assertRaises(ProductionWorkflowError):
-            select_edit_route(self.cfg, primary_failed=True, current_probe=probe)
+            select_edit_route(self.cfg, current_probe=probe)
 
     def test_metrics_and_exact_config_types_cannot_bypass_limits(self):
         for metrics in [None, [], ["cost"]]:
@@ -261,11 +257,13 @@ class LeanProductionTests(unittest.TestCase):
         for gate in GATES:
             self.assertTrue(validate_gate(self.cfg, self.pilot, gate))
             self.assertTrue(validate_gate(self.cfg, self.episode, gate, system_pilot=self.pilot))
-        self.assertEqual(select_edit_route(self.cfg)["tool"], "Descript")
         self.assertEqual(
-            select_edit_route(self.cfg, primary_failed=True, current_probe=self.valid_probe())["tool"],
+            select_edit_route(self.cfg, current_probe=self.valid_probe())["tool"],
             "Adobe After Effects 2026",
         )
+        self.assertEqual(select_edit_route(self.cfg, purpose="rough_prep")["tool"], "Descript")
+        with self.assertRaises(ProductionWorkflowError):
+            select_edit_route(self.cfg, primary_failed=True, current_probe=self.valid_probe())
 
     def test_config_contract_negative_paths(self):
         paths = [("workflow",), ("quality_gates",)]
