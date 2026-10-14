@@ -1,3 +1,9 @@
+from company.runtime.media_execution_recovery import (
+    MediaExecutionRecoveryError,
+    validate_execution_recovery_policy,
+)
+
+
 class MediaControlError(ValueError):
     pass
 
@@ -8,6 +14,7 @@ REQUIRED_MEDIA_FUNCTIONS = {
     "independent_fact_checker",
     "script_voice_director",
     "visual_art_director",
+    "cinematography_shot_designer",
     "motion_picture_editor",
     "music_sound_supervisor",
     "dialogue_mix_engineer",
@@ -16,7 +23,25 @@ REQUIRED_MEDIA_FUNCTIONS = {
     "localization_producer",
 }
 
-ACTIVE_PILOT_FUNCTIONS = REQUIRED_MEDIA_FUNCTIONS - {"localization_producer"}
+CORE_FUNCTIONS = {
+    "media_producer",
+    "editorial_director",
+}
+
+MANDATORY_CLEARANCE_FUNCTIONS = {
+    "independent_fact_checker",
+}
+
+ROUTED_CRAFT_FUNCTIONS = {
+    "script_voice_director",
+    "visual_art_director",
+    "cinematography_shot_designer",
+    "motion_picture_editor",
+    "music_sound_supervisor",
+    "dialogue_mix_engineer",
+    "audience_growth_strategist",
+    "thumbnail_packaging_designer",
+}
 
 REQUIRED_PILOT_METRICS = {
     "production_time_per_video",
@@ -40,6 +65,13 @@ REQUIRED_PILOT_METRICS = {
     "thumbnail_variants_produced",
     "production_readiness_failures",
     "edit_rework_after_script_lock",
+    "shot_design_rework",
+    "camera_continuity_defects",
+    "studio_coordination_overhead_minutes",
+    "routed_function_invocations",
+    "unnecessary_function_invocations",
+    "handoff_recovery_count",
+    "unknown_execution_events",
 }
 
 PUBLISHED_PERFORMANCE_METRICS = {
@@ -53,23 +85,47 @@ PUBLISHED_PERFORMANCE_METRICS = {
 
 
 def validate_media_team(config):
-    if config.get("version") != "1.4":
-        raise MediaControlError("media venture must be version 1.4")
+    if config.get("version") != "1.5":
+        raise MediaControlError("media venture must be version 1.5")
 
     functions = {f["id"]: f for f in config.get("production_functions", [])}
     missing = REQUIRED_MEDIA_FUNCTIONS - set(functions)
     if missing:
         raise MediaControlError(f"missing media functions: {sorted(missing)}")
 
-    for function_id in ACTIVE_PILOT_FUNCTIONS:
-        if functions[function_id].get("default_status") != "ACTIVE_FOR_MEDIA_PILOT":
-            raise MediaControlError(f"{function_id} must be active for pilot")
+    for function_id in CORE_FUNCTIONS:
+        if functions[function_id].get("default_status") != "CORE_ALWAYS_ACTIVE":
+            raise MediaControlError(f"{function_id} must remain core-active")
 
-    if functions["localization_producer"].get("default_status") not in {
-        "ON_DEMAND",
-        "ACTIVE_FOR_MEDIA_PILOT",
-    }:
-        raise MediaControlError("localization producer must be on-demand or active")
+    for function_id in MANDATORY_CLEARANCE_FUNCTIONS:
+        if functions[function_id].get("default_status") != "MANDATORY_CLEARANCE":
+            raise MediaControlError(f"{function_id} must remain mandatory clearance")
+
+    for function_id in ROUTED_CRAFT_FUNCTIONS:
+        if functions[function_id].get("default_status") != "ROUTED_CRAFT_CAPABILITY":
+            raise MediaControlError(f"{function_id} must be stage-routed craft capability")
+
+    if functions["localization_producer"].get("default_status") != "ON_DEMAND":
+        raise MediaControlError("localization producer must remain on-demand")
+
+    model = config.get("operating_model", {})
+    if model.get("mode") != "SMALL_CORE_ROUTED_CRAFT_CAPABILITIES":
+        raise MediaControlError("studio operating model must use a small core with routed craft capabilities")
+    if set(model.get("core_functions", [])) != CORE_FUNCTIONS:
+        raise MediaControlError("studio core function set drifted")
+    if set(model.get("mandatory_clearance_functions", [])) != MANDATORY_CLEARANCE_FUNCTIONS:
+        raise MediaControlError("mandatory clearance function set drifted")
+    if set(model.get("routed_craft_functions", [])) != ROUTED_CRAFT_FUNCTIONS:
+        raise MediaControlError("routed craft function set drifted")
+    if model.get("parallelize_when_safe") is not True or model.get("single_synthesis_per_gate") is not True:
+        raise MediaControlError("studio efficiency controls are incomplete")
+    forbidden = set(model.get("forbidden_defaults", []))
+    if {
+        "every_function_reviews_every_stage",
+        "mandatory_long_form_reports",
+        "one_independent_agent_process_per_function",
+    } - forbidden:
+        raise MediaControlError("anti-bureaucracy defaults are incomplete")
 
     independence = set(config.get("function_independence_rules", []))
     required_independence = {
@@ -80,6 +136,9 @@ def validate_media_team(config):
         "growth_strategist_does_not_replace_thumbnail_design_review",
         "producer_controls_schedule_resources_not_editorial_truth",
         "motion_editor_participates_before_script_lock",
+        "cinematography_defines_shot_language_but_does_not_self_approve_picture_lock",
+        "routed_craft_function_is_invoked_by_stage_not_kept_permanently_active",
+        "unknown_execution_state_cannot_be_promoted_to_success",
     }
     if not required_independence.issubset(independence):
         raise MediaControlError("media function independence rules are incomplete")
@@ -94,9 +153,15 @@ def validate_media_team(config):
         "sound_design",
         "mix_mastering",
         "audiovisual_sync_qc",
+        "cinematography_shot_design",
     }:
         if capability not in toolchain:
-            raise MediaControlError(f"missing audio capability state: {capability}")
+            raise MediaControlError(f"missing media capability state: {capability}")
+
+    try:
+        validate_execution_recovery_policy(config.get("execution_recovery", {}))
+    except MediaExecutionRecoveryError as exc:
+        raise MediaControlError(str(exc)) from exc
 
     pilot = config.get("pilot", {})
     if pilot.get("required_before_scale") is not True:
