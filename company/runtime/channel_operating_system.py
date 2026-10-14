@@ -258,6 +258,11 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("visual system lock authority drifted")
     if visual_lock.get("red_team_blocker") is not True:
         raise ChannelOperatingSystemError("Red Team must retain visual-lock blocker authority")
+    if visual_lock.get("status") != "LOCKED_FOR_P1" or visual_lock.get("p0_passed") is not True:
+        raise ChannelOperatingSystemError("P0 visual-system lock must be passed before P1")
+    for required_artifact in {"production_kit", "reference_set_brief", "council_review"}:
+        if not visual_lock.get(required_artifact):
+            raise ChannelOperatingSystemError(f"P0 visual-system lock artifact missing: {required_artifact}")
 
     authority_model = production_system.get("authority_model", {})
     if authority_model.get("council_after_lock") != "SYSTEM_AND_GATE_REVIEW_ONLY":
@@ -314,6 +319,15 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("full-length production must fail closed before P2 PASS")
     if production_system.get("per_frame_council_review_after_lock") != "FORBIDDEN_UNLESS_EXCEPTION":
         raise ChannelOperatingSystemError("Council per-frame review boundary drifted")
+    if production_system.get("active_pilot_stage") != "P1_COHERENCE_30_45":
+        raise ChannelOperatingSystemError("active pilot stage must advance to P1 after P0 PASS")
+    if [stage.get("status") for stage in ladder] != [
+        "PASS",
+        "READY",
+        "BLOCKED_UNTIL_P1_PASS",
+        "BLOCKED_UNTIL_P2_PASS",
+    ]:
+        raise ChannelOperatingSystemError("pilot ladder state drifted after P0 PASS")
 
     if cfg.get("publication_authority") != "GATED":
         raise ChannelOperatingSystemError("publishing must remain gated")
