@@ -73,6 +73,47 @@ GATE_CHECKS = {
     ],
 }
 
+CRAFT_OUTPUTS_BY_STAGE = {
+    "research_script": {
+        "claim_ledger": "independent_fact_checker",
+        "narration_performance_map": "script_voice_director",
+        "hook_retention_notes": "audience_growth_strategist",
+    },
+    "visual_direction": {
+        "motion_feasibility_map": "motion_picture_editor",
+        "sonic_visual_intent": "music_sound_supervisor",
+        "packaging_hook_continuity": "thumbnail_packaging_designer",
+    },
+    "asset_pack": {
+        "visual_asset_clearance": "visual_art_director",
+        "music_sfx_asset_plan": "music_sound_supervisor",
+        "dialogue_mix_input_spec": "dialogue_mix_engineer",
+        "thumbnail_packaging_spec": "thumbnail_packaging_designer",
+    },
+    "edit_motion": {
+        "narration_continuity_notes": "script_voice_director",
+        "spotting_sheet": "music_sound_supervisor",
+        "rough_mix_receipt": "dialogue_mix_engineer",
+        "visual_conform_notes": "visual_art_director",
+    },
+    "final_qc": {
+        "final_mix_receipt": "dialogue_mix_engineer",
+        "final_fact_spotcheck": "independent_fact_checker",
+    },
+}
+GATE_CRAFT_STAGES = {
+    GATES[0]: ["research_script", "visual_direction", "asset_pack"],
+    GATES[1]: ["research_script", "visual_direction", "asset_pack", "edit_motion"],
+    GATES[2]: STAGES,
+}
+CONDITIONAL_CRAFT_OUTPUTS = {
+    "localization_conform_package": {
+        "function_id": "localization_producer",
+        "stage": "final_qc",
+        "trigger": "localized_variant_requested",
+    }
+}
+
 
 def require(condition: bool, message: str) -> None:
     if not condition:
@@ -86,6 +127,36 @@ def validate_production_config(cfg: dict[str, Any]) -> bool:
     require(system.get("version") == "2.0", "lean production system must be 2.0")
     require(system.get("stage_authorities") == AUTHORITIES, "one final authority per stage required")
     require(system.get("gate_authorities") == GATE_AUTHORITIES, "gate authority drift")
+    craft = system.get("craft_contributor_contract", {})
+    require(craft.get("mode") == "MANDATORY_PARALLEL_WITHIN_STAGES", "mandatory craft contributor mode required")
+    require(craft.get("creates_additional_gates") is False, "craft contributors cannot create extra gates")
+    require(craft.get("missing_required_output_action") == "BLOCK_STAGE_LOCK", "missing craft output must block stage lock")
+    require(craft.get("stage_authority_retains_final_decision") is True, "stage authority must retain final decision")
+    require(
+        craft.get("contributor_outputs_are_production_artifacts_not_votes") is True,
+        "specialist contributions must be production artifacts, not committee votes",
+    )
+    craft_stages = craft.get("stages", {})
+    require(set(craft_stages) == set(STAGES), "craft contributor stages drifted")
+    for stage, expected_outputs in CRAFT_OUTPUTS_BY_STAGE.items():
+        declared = craft_stages.get(stage, [])
+        actual = {
+            item.get("output_id"): item.get("function_id")
+            for item in declared
+            if item.get("required") is True
+        }
+        require(actual == expected_outputs, f"mandatory craft outputs drifted: {stage}")
+    localization = craft.get("conditional", {}).get("localization_producer", {})
+    require(
+        localization
+        == {
+            "trigger": "localized_variant_requested",
+            "stage": "final_qc",
+            "output_id": "localization_conform_package",
+            "required_when_triggered": True,
+        },
+        "conditional localization craft contract drifted",
+    )
     require(system.get("target_duration_seconds_min") == 480, "8+ minute target required")
     art = system.get("art_direction", {})
     for key, expected in {
@@ -201,6 +272,34 @@ def artifact_hash(path: str) -> str:
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
+def validate_craft_outputs(run: dict[str, Any], gate: str) -> bool:
+    outputs = run.get("craft_outputs", {})
+    require(isinstance(outputs, dict), "craft outputs must be reported")
+    for stage in GATE_CRAFT_STAGES[gate]:
+        for output_id, function_id in CRAFT_OUTPUTS_BY_STAGE[stage].items():
+            receipt = outputs.get(output_id, {})
+            require(receipt.get("status") == "COMPLETE", f"missing mandatory craft output: {output_id}")
+            require(receipt.get("stage") == stage, f"craft output stage drift: {output_id}")
+            require(receipt.get("function_id") == function_id, f"craft contributor mismatch: {output_id}")
+            require(bool(receipt.get("author_id")), f"craft output author missing: {output_id}")
+            artifact = receipt.get("artifact")
+            require(isinstance(artifact, str) and bool(artifact), f"craft output artifact missing: {output_id}")
+            require(receipt.get("sha256") == artifact_hash(artifact), f"craft output stale: {output_id}")
+            if function_id == "independent_fact_checker":
+                require(receipt["author_id"] != run.get("writer_id"), "fact checker craft output must be independent")
+    if run.get("localized_variant_requested") is True and "final_qc" in GATE_CRAFT_STAGES[gate]:
+        spec = CONDITIONAL_CRAFT_OUTPUTS["localization_conform_package"]
+        receipt = outputs.get("localization_conform_package", {})
+        require(receipt.get("status") == "COMPLETE", "localized variant requires localization conform package")
+        require(receipt.get("stage") == spec["stage"], "localization craft stage drift")
+        require(receipt.get("function_id") == spec["function_id"], "localization contributor mismatch")
+        require(bool(receipt.get("author_id")), "localization craft author missing")
+        artifact = receipt.get("artifact")
+        require(isinstance(artifact, str) and bool(artifact), "localization craft artifact missing")
+        require(receipt.get("sha256") == artifact_hash(artifact), "localization craft output stale")
+    return True
+
+
 def validate_gate(
     cfg: dict[str, Any], run: dict[str, Any], gate: str, *, system_pilot: dict[str, Any] | None = None
 ) -> bool:
@@ -213,6 +312,7 @@ def validate_gate(
     require(gate in GATES, "unknown gate")
     require(run.get("system_version") == "2.0" and bool(run.get("episode_id")), "current run identity required")
     require(run.get("kind") in {"system_pilot", "episode"}, "invalid production kind")
+    require(run.get("localized_variant_requested") in {False, True}, "localized variant flag required")
     if run["kind"] == "episode":
         require(
             isinstance(system_pilot, dict) and system_pilot.get("kind") == "system_pilot",
@@ -236,6 +336,7 @@ def validate_gate(
             require(
                 receipt.get("input_hashes", {}).get(name) == artifact_hash(path), f"{current} stale approval: {name}"
             )
+        validate_craft_outputs(run, current)
         require(
             not receipt.get("unresolved_defects", ["missing defect disposition"]),
             f"{current} has unresolved or unreported defects",
