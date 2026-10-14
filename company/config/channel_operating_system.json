@@ -876,7 +876,8 @@
         "localization_producer": {
           "trigger": "localized_variant_requested",
           "output_id": "localization_conform_package",
-          "required_when_triggered": true
+          "required_when_triggered": true,
+          "stage": "final_qc"
         }
       }
     }
