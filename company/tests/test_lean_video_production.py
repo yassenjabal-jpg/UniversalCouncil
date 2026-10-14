@@ -72,7 +72,9 @@ class LeanProductionTests(unittest.TestCase):
                     "status": "COMPLETE",
                     "stage": stage,
                     "function_id": function_id,
-                    "author_id": ("fact-checker" if function_id == "independent_fact_checker" else function_id + "-author"),
+                    "author_id": (
+                        "fact-checker" if function_id == "independent_fact_checker" else function_id + "-author"
+                    ),
                     "artifact": str(path),
                     "sha256": artifact_hash(str(path)),
                 }
