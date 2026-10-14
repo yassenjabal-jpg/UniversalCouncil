@@ -1,12 +1,12 @@
-# UniversalCouncil — Studio Workflow & Tooling Audit
+# The Studio — Workflow & Tooling Audit
 
 **Date:** 2026-10-15  
-**Scope:** all current media-production Council roles  
+**Scope:** all current Studio production roles  
 **Goal:** give each role a real production tool, while avoiding tool sprawl and preserving the five-stage / three-gate workflow.
 
 ## Executive decision
 
-The Council should operate as a compact professional post-production studio, not as twelve people each using a separate app.
+The Studio should operate as a compact professional production studio, not as twelve specialists each using a separate app.
 
 ### Proposed core studio stack
 
@@ -49,7 +49,7 @@ Therefore the Council target is:
 
 ---
 
-# Role-by-role Council review
+# Role-by-role Studio review
 
 ## 1. Media Producer / Production Coordinator
 
@@ -271,7 +271,7 @@ Topic, competitor, title, thumbnail and retention decisions are evidence-backed.
 - the strategist hands the Showrunner a compact hook/retention brief, not a generic trend report.
 
 ### Install
-No desktop install required for Council use.
+No desktop install required for Studio use.
 Optional vidIQ browser/mobile app is user convenience only.
 
 ---
@@ -394,4 +394,4 @@ For each new program:
 4. assign the role/tool only after PASS;
 5. retain exactly one primary tool for each craft function where possible.
 
-This prevents the Council from repeating the earlier mistake of choosing tools by availability instead of measured fitness.
+This prevents the Studio from repeating the earlier mistake of choosing tools by availability instead of measured fitness.
