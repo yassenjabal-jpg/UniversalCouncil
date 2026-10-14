@@ -781,7 +781,7 @@
       "lock_authority": "Visual Art Director / Frame Curator",
       "red_team_blocker": true,
       "owner_brand_veto": true,
-      "status": "LOCKED_FOR_P1",
+      "status": "LOCKED_AFTER_P1_COHERENCE_PASS",
       "p0_passed": true,
       "production_kit": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.0.md",
       "reference_set_brief": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_REFERENCE_FRAME_SET_v1.0.md",
@@ -840,7 +840,10 @@
           "sound_design",
           "at_least_one_real_evidence_visual"
         ],
-        "status": "READY"
+        "status": "PASS_INTERNAL_COHERENCE",
+        "review_artifact": "docs/operations/media/pilots/2026-10-14/P1_DAY24_COUNCIL_REVIEW.md",
+        "review_url": "https://share.descript.com/view/h6bKHYCNPe2",
+        "actual_duration_seconds": 41.766667
       },
       {
         "id": "P2_PRODUCTION_60_90",
@@ -854,7 +857,12 @@
           "evidence_and_explanation_mix",
           "repeatable_operator_workflow"
         ],
-        "status": "BLOCKED_UNTIL_P1_PASS"
+        "status": "BLOCKED_CAPABILITY_GAP",
+        "blocking_capabilities": [
+          "professional_motion_authoring",
+          "clean_1080p_or_better_finishing_without_watermark",
+          "delivery_level_audio_finishing"
+        ]
       },
       {
         "id": "P3_FULL_EPISODE_8_PLUS_MINUTES",
@@ -879,6 +887,15 @@
       "anti_slop_failure",
       "material_new_visual_language"
     ],
-    "active_pilot_stage": "P1_COHERENCE_30_45"
+    "active_pilot_stage": "P2_PREPARATION_BLOCKED_CAPABILITY_GAP",
+    "p1_status": "PASS_INTERNAL_COHERENCE",
+    "p1_review": "docs/operations/media/pilots/2026-10-14/P1_DAY24_COUNCIL_REVIEW.md",
+    "p1_internal_render": "https://share.descript.com/view/h6bKHYCNPe2",
+    "current_capability_gaps": [
+      "after_effects_runtime_evidence_stale_current_executable_not_found_on_YASSIN",
+      "professional_motion_authoring_not_currently_verified",
+      "public_picture_finishing_not_verified",
+      "delivery_audio_finishing_not_verified"
+    ]
   }
 }
