@@ -780,7 +780,12 @@
       ],
       "lock_authority": "Visual Art Director / Frame Curator",
       "red_team_blocker": true,
-      "owner_brand_veto": true
+      "owner_brand_veto": true,
+      "status": "LOCKED_FOR_P1",
+      "p0_passed": true,
+      "production_kit": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.0.md",
+      "reference_set_brief": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_REFERENCE_FRAME_SET_v1.0.md",
+      "council_review": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_COUNCIL_REVIEW.md"
     },
     "authority_model": {
       "council_after_lock": "SYSTEM_AND_GATE_REVIEW_ONLY",
@@ -819,7 +824,8 @@
       {
         "id": "P0_REFERENCE_FRAME_LOCK",
         "output": "4_TO_6_COHERENT_REFERENCE_FRAMES_PLUS_LOCKED_PRODUCTION_KIT",
-        "requires_tool_qualification": true
+        "requires_tool_qualification": true,
+        "status": "PASS"
       },
       {
         "id": "P1_COHERENCE_30_45",
@@ -833,7 +839,8 @@
           "music_or_temp_music",
           "sound_design",
           "at_least_one_real_evidence_visual"
-        ]
+        ],
+        "status": "READY"
       },
       {
         "id": "P2_PRODUCTION_60_90",
@@ -846,12 +853,14 @@
           "audio_visual_sync",
           "evidence_and_explanation_mix",
           "repeatable_operator_workflow"
-        ]
+        ],
+        "status": "BLOCKED_UNTIL_P1_PASS"
       },
       {
         "id": "P3_FULL_EPISODE_8_PLUS_MINUTES",
         "duration_seconds_min": 480,
-        "requires": "P2_PASS"
+        "requires": "P2_PASS",
+        "status": "BLOCKED_UNTIL_P2_PASS"
       }
     ],
     "full_length_episode_before_p2_pass": "BLOCK",
@@ -869,6 +878,7 @@
       "evidence_risk",
       "anti_slop_failure",
       "material_new_visual_language"
-    ]
+    ],
+    "active_pilot_stage": "P1_COHERENCE_30_45"
   }
 }
