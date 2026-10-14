@@ -102,12 +102,46 @@ REQUIRED_SCRIPT_PASSES = [
 
 
 def validate_config(cfg: dict[str, Any]) -> bool:
-    if cfg.get("version") != "1.2":
-        raise ChannelOperatingSystemError("channel operating system must be version 1.2")
+    if cfg.get("version") != "1.3":
+        raise ChannelOperatingSystemError("channel operating system must be version 1.3")
     if cfg.get("channel_model") != "broad_format_first_multilingual_visual_documentary":
         raise ChannelOperatingSystemError("channel model drifted")
-    if cfg.get("visual_system") != "Editorial Renaissance Motion":
+    if cfg.get("visual_system") != "Modern Editorial Surrealism":
         raise ChannelOperatingSystemError("visual system drifted")
+
+    visual_identity = cfg.get("visual_identity", {})
+    if visual_identity.get("version") != "2.0-candidate":
+        raise ChannelOperatingSystemError("visual identity version drifted")
+    if visual_identity.get("bible") != "docs/operations/media/MODERN_EDITORIAL_SURREALISM_VISUAL_BIBLE.md":
+        raise ChannelOperatingSystemError("visual identity bible drifted")
+    if visual_identity.get("primary_reference") != "user-provided 1000061003.mp4":
+        raise ChannelOperatingSystemError("visual identity primary reference drifted")
+    if visual_identity.get("reference_authority") != "PRIMARY_VISUAL_REFERENCE":
+        raise ChannelOperatingSystemError("visual identity reference authority drifted")
+    required_visual_principles = {
+        "editorial_clarity",
+        "one_hero_object",
+        "strong_negative_space",
+        "episode_specific_visual_metaphor",
+        "controlled_surrealism",
+        "contrast_between_old_and_new",
+        "meaning_driven_motion",
+        "topic_flexible_visual_language",
+    }
+    if not required_visual_principles.issubset(set(visual_identity.get("core_principles", []))):
+        raise ChannelOperatingSystemError("visual identity core principles are incomplete")
+    if visual_identity.get("episode_accent_required") is not True:
+        raise ChannelOperatingSystemError("episode accent color is required")
+    if visual_identity.get("architecture_is_topic_dependent_only") is not True:
+        raise ChannelOperatingSystemError("architecture must remain topic-dependent")
+    if visual_identity.get("classical_art_is_optional_not_mandatory") is not True:
+        raise ChannelOperatingSystemError("classical art must remain optional")
+    if int(visual_identity.get("thumbnail_hypotheses_per_episode", 0)) < 3:
+        raise ChannelOperatingSystemError("thumbnail hypothesis count is too low")
+    if int(visual_identity.get("hero_objects_per_key_frame", 0)) != 1:
+        raise ChannelOperatingSystemError("key frames must keep one dominant hero object")
+    if visual_identity.get("synthetic_documentary_evidence_forbidden") is not True:
+        raise ChannelOperatingSystemError("synthetic imagery cannot substitute for documentary evidence")
     if cfg.get("publication_authority") != "GATED":
         raise ChannelOperatingSystemError("publishing must remain gated")
 
