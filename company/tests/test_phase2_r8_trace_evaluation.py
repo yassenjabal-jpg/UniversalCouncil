@@ -109,6 +109,39 @@ class Phase2R8TraceEvaluationTests(unittest.TestCase):
         self.assertAlmostEqual(report["blocker_recall"], 0.5)
         self.assertAlmostEqual(report["blocker_f1"], 0.5)
 
+
+    def test_trace_constructor_and_payload_validation_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "trace.jsonl"
+            with self.assertRaises(TraceError):
+                TraceRecorder(path, trace_id="", task_id="task")
+            with self.assertRaises(TraceError):
+                TraceRecorder(path, trace_id="trace", task_id="")
+            recorder = TraceRecorder(path, trace_id="trace", task_id="task")
+            with self.assertRaises(TraceError):
+                recorder.record(TraceEventType.FRAME, "not-a-dict")
+
+    def test_trace_reader_rejects_corrupt_and_non_object_events(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "trace.jsonl"
+            recorder = TraceRecorder(path, trace_id="trace", task_id="task")
+            path.write_text("{", encoding="utf-8")
+            with self.assertRaises(TraceError):
+                recorder.events()
+            path.write_text("[]\n", encoding="utf-8")
+            with self.assertRaises(TraceError):
+                recorder.events()
+
+    def test_empty_blocker_sets_score_perfectly(self):
+        report = evaluate_trace(
+            [{"seq": 1, "event": "Frame", "data": {"actual_decision": "KEEP", "observed_blockers": []}}],
+            expected_decision="KEEP",
+            expected_blockers=[],
+        )
+        self.assertEqual(report["blocker_precision"], 1.0)
+        self.assertEqual(report["blocker_recall"], 1.0)
+        self.assertEqual(report["blocker_f1"], 1.0)
+
     def test_hybrid_executor_emits_explainable_material_trace(self):
         with tempfile.TemporaryDirectory() as tmp:
             recorder = TraceRecorder(
