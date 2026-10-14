@@ -11,7 +11,7 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
 
     def test_specialized_tool_first_is_governing_policy(self):
         cfg = self.load_policy()
-        self.assertEqual(cfg["version"], "1.5")
+        self.assertEqual(cfg["version"], "1.6")
         self.assertEqual(cfg["policy"], "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT")
         self.assertIn("python_as_primary_video_editor", cfg["prohibitions"])
         self.assertIn("python_as_primary_audio_mastering_tool", cfg["prohibitions"])
@@ -56,8 +56,19 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
         self.assertEqual(cfg["gates"]["p2_without_verified_motion_authoring"], "BLOCK")
         self.assertEqual(cfg["gates"]["p2_without_clean_1080p_finishing_route"], "BLOCK")
         self.assertEqual(cfg["gates"]["p2_without_delivery_audio_finishing_route"], "BLOCK")
-        self.assertEqual(cfg["current_motion_state"]["p1_result"], "PASS_INTERNAL_COHERENCE")
-        self.assertEqual(cfg["current_motion_state"]["p2_state"], "BLOCKED_CAPABILITY_GAP")
+        self.assertEqual(
+            cfg["current_motion_state"]["after_effects"],
+            "QUALIFIED_PRIMARY_1080P_30FPS_WATERMARK_FREE",
+        )
+        self.assertEqual(
+            cfg["current_motion_state"]["p1_result"],
+            "REFERENCE_FIDELITY_RETRY_IN_PROGRESS",
+        )
+        self.assertEqual(
+            cfg["current_motion_state"]["p2_state"],
+            "BLOCKED_REFERENCE_FIDELITY_RETRY",
+        )
+        self.assertTrue(cfg["current_motion_state"]["qualification_artifact"])
 
     def test_public_master_fails_closed_without_professional_finishing(self):
         cfg = self.load_policy()
