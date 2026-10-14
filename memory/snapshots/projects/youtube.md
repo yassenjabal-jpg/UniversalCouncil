@@ -107,26 +107,24 @@
 - **Tags:** youtube, channel, what-if, speculative-documentary
 
 ## youtube.channel_operating_system.current
-- **Event:** `MEM-20261013-015645-fbd625`
+- **Event:** `MEM-20261015-025701-shot13`
 - **Level:** `L3_CANONICAL`
 - **Kind:** `architecture`
 - **Confidence:** `verified`
-- **Updated:** `2026-10-13T01:56:45+03:00`
-- **Summary:** Channel Operating System v1.2 Studio-Benchmarked is the current production method. It adopts professional YouTube studio disciplines from Kurzgesagt, Veritasium, Simplicissimus/fern, Cleo Abram/Huge If True and Johnny Harris while preserving a small functions-not-headcount model.
+- **Updated:** `2026-10-15T02:57:01+03:00`
+- **Summary:** Channel Operating System v1.3 retains the studio-benchmarked workflow while adding stage-routed craft participation, a Shot Design + Camera Plan stage before the animatic, and fail-closed application recovery.
 - **Details:**
-  - `adopted_disciplines`: ["Media Producer / Production Coordinator", "Independent Fact Checker", "Thumbnail & Packaging Designer", "Visual Story Case before script lock", "Pre-production Craft Review with editor/art/sound before script lock", "Five-pass script development S0-S4", "Separate Claim Source and Visual Source/Rights ledgers", "Production Readiness Gate before expensive production", "Packaging Stage A before script and Stage B after rough cut", "Motion Editor as early story partner"]
-  - `benchmark_artifact`: docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md
-  - `benchmark_profile`: professional_youtube_studio_benchmark_2026_10_13
+  - `cinematography_required_before_animatic`: true
   - `governing_config`: company/config/channel_operating_system.json
   - `governing_doc`: docs/operations/media/CHANNEL_OPERATING_SYSTEM.md
-  - `merge_commit`: b42b80f89e8053c8506f03300e0dc3fb058ca11f
-  - `quality_gates`: 18
-  - `staffing_rule`: functions_not_headcount; combine execution during pilot when efficient, preserve independent clearance boundaries
-  - `verification`: {"channel_validator_coverage": "100% lines / 100% branches", "full_company_tests": "278 PASS, 1 expected skip after coverage-fix commit", "github_codeql": "PASS", "github_company_stage0": "PASS", "media_controls_coverage": "100% lines / 100% branches"}
-  - `version`: 1.2
-  - `workflow_stages`: 33
-- **Supersedes:** `MEM-20261012-211243-175c37`
-- **Tags:** youtube, channel-operating-system, v1.2, studio-benchmark, producer, fact-check, thumbnail, visual-story
+  - `new_stage`: shot_design_and_camera_plan
+  - `production_readiness_additions`: ["shot_design_approved", "camera_continuity_checked"]
+  - `quality_gate`: G7 Shot Design + Animatic + Spotting Gate
+  - `research_rationale`: docs/research/2026-10-15-agentic-video-studio-comparison.md
+  - `studio_routing_model`: SMALL_CORE_ROUTED_CAPABILITIES
+  - `version`: 1.3
+- **Supersedes:** `MEM-20261013-015645-fbd625`
+- **Tags:** youtube, studio, cinematography, shot-design, workflow, recovery
 
 ## youtube.execution.final_prelaunch_decision
 - **Event:** `MEM-20261012-203304-1de95d`
