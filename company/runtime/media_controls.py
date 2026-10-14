@@ -55,8 +55,8 @@ PUBLISHED_PERFORMANCE_METRICS = {
 
 
 def validate_media_team(config):
-    if config.get("version") != "1.6":
-        raise MediaControlError("media venture must be version 1.6")
+    if config.get("version") != "1.7":
+        raise MediaControlError("media venture must be version 1.7")
 
     functions = {f["id"]: f for f in config.get("production_functions", [])}
     missing = REQUIRED_MEDIA_FUNCTIONS - set(functions)
@@ -128,11 +128,35 @@ def validate_media_team(config):
         "thumbnail_generation_is_one_job_one_prompt_version_one_asset",
         "only_one_official_thumbnail_concept_may_be_generated_per_episode",
         "multi_panel_thumbnail_outputs_are_rejected",
+        "visual_art_director_has_final_visual_decision_within_locked_system",
+        "council_reviews_visual_work_at_defined_gates_after_lock_not_per_frame",
+        "red_team_may_block_drift_but_does_not_replace_art_direction",
+        "full_length_episode_blocked_until_p2_visual_production_pilot_passes",
+        "primary_visual_generator_selected_by_qualification_not_remaining_credits",
     }
     if not required_prompt_rules.issubset(independence):
         raise MediaControlError("visual prompt execution boundaries are incomplete")
 
+    production_system = config.get("visual_production_system", {})
+    if production_system.get("art_director_final_visual_authority_within_lock") is not True:
+        raise MediaControlError("Visual Art Director final visual authority is required")
+    if production_system.get("council_gate_review_only_after_lock") is not True:
+        raise MediaControlError("Council must switch to gate-only visual review after lock")
+    if production_system.get("per_frame_full_council_review_after_lock") is not False:
+        raise MediaControlError("per-frame full Council review must remain disabled after lock")
+    if production_system.get("pilot_ladder") != [
+        "P0_REFERENCE_FRAME_LOCK",
+        "P1_COHERENCE_30_45",
+        "P2_PRODUCTION_60_90",
+        "P3_FULL_EPISODE_8_PLUS_MINUTES",
+    ]:
+        raise MediaControlError("visual production pilot ladder drifted")
+    if production_system.get("full_episode_requires") != "P2_PASS":
+        raise MediaControlError("full episode must require P2 PASS")
+
     toolchain = config.get("media_toolchain", {})
+    if toolchain.get("image_generation_primary_tool") != "UNQUALIFIED_PENDING_TOOL_QUALIFICATION":
+        raise MediaControlError("primary image generator must remain unqualified until benchmark passes")
     for capability in {
         "dialogue_cleanup",
         "music_supervision",
