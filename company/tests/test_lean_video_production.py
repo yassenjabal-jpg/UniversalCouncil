@@ -290,6 +290,9 @@ class LeanProductionTests(unittest.TestCase):
                 "version",
                 "stage_authorities",
                 "gate_authorities",
+                "studio_identity",
+                "studio_operating_model",
+                "gate_placement",
                 "craft_contributor_contract",
                 "target_duration_seconds_min",
                 "per_frame_review",
@@ -354,6 +357,28 @@ class LeanProductionTests(unittest.TestCase):
         cfg["production_system"]["editing_routes"]["tertiary"] = {}
         with self.assertRaises(ProductionWorkflowError):
             validate_production_config(cfg)
+
+    def test_active_media_identity_is_the_studio(self):
+        self.assertEqual(self.cfg["production_system"]["studio_identity"]["name_ar"], "الاستوديو")
+        self.assertEqual(self.cfg["production_system"]["studio_identity"]["name_en"], "The Studio")
+        self.assertEqual(
+            self.cfg["production_system"]["studio_operating_model"]["config"],
+            "company/config/studio_operating_model.json",
+        )
+        self.assertEqual(
+            self.cfg["production_system"]["gate_placement"]["Preproduction Lock"],
+            "after_asset_pack",
+        )
+
+        for mutate in [
+            lambda c: c["production_system"]["studio_identity"].update(name_en="Council"),
+            lambda c: c["production_system"]["studio_operating_model"].update(version="old"),
+            lambda c: c["production_system"]["gate_placement"].update({"Preproduction Lock": "after_visual_direction"}),
+        ]:
+            cfg = copy.deepcopy(self.cfg)
+            mutate(cfg)
+            with self.assertRaises(ProductionWorkflowError):
+                validate_production_config(cfg)
 
     def test_stale_content_invalidates_only_dependent_gates(self):
         for name, first_gate in [("script", 0), ("assets", 1), ("export", 2)]:
