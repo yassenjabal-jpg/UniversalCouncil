@@ -1,0 +1,82 @@
+{
+  "version": "0.1-shadow",
+  "status": "CANDIDATE_SHADOW_ONLY",
+  "governing_council_version": "0.3.0",
+  "dimensions": [
+    "domain",
+    "materiality",
+    "uncertainty",
+    "risk",
+    "freshness",
+    "blocker_authority",
+    "required_capability"
+  ],
+  "levels": {
+    "materiality": [
+      "LOW",
+      "MATERIAL",
+      "HIGH",
+      "CRITICAL"
+    ],
+    "uncertainty": [
+      "LOW",
+      "MEDIUM",
+      "HIGH"
+    ],
+    "risk": [
+      "LOW",
+      "MEDIUM",
+      "HIGH",
+      "CRITICAL"
+    ],
+    "freshness": [
+      "LOW",
+      "MEDIUM",
+      "HIGH"
+    ]
+  },
+  "callable_core_capabilities": [
+    "chair",
+    "evidence",
+    "redteam",
+    "execution",
+    "risk",
+    "human",
+    "value"
+  ],
+  "domain_specialists": {
+    "health": "health",
+    "software": "software",
+    "security": "security",
+    "finance": "finance",
+    "business": "business",
+    "product": "product",
+    "science": "science",
+    "legal": "legal",
+    "education": "education",
+    "media": "media",
+    "design": "design",
+    "travel": "travel",
+    "data": "data",
+    "career": "career"
+  },
+  "commercial_mandatory_specialists": [
+    "customer_skeptic",
+    "moat_auditor"
+  ],
+  "activation_rules": {
+    "evidence": {
+      "uncertainty_at_least": "HIGH",
+      "freshness_at_least": "HIGH"
+    },
+    "redteam": {
+      "materiality_at_least": "MATERIAL",
+      "uncertainty_at_least": "MEDIUM"
+    },
+    "risk": {
+      "risk_at_least": "MEDIUM"
+    }
+  },
+  "objective": "smallest_useful_set_of_voices",
+  "free_text_keyword_routing": false
+}
