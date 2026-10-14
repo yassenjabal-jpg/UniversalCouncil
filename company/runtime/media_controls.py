@@ -40,6 +40,8 @@ REQUIRED_PILOT_METRICS = {
     "thumbnail_variants_produced",
     "production_readiness_failures",
     "edit_rework_after_script_lock",
+    "generation_brief_rework_rounds",
+    "prompt_drift_defects",
 }
 
 PUBLISHED_PERFORMANCE_METRICS = {
@@ -53,8 +55,8 @@ PUBLISHED_PERFORMANCE_METRICS = {
 
 
 def validate_media_team(config):
-    if config.get("version") != "1.4":
-        raise MediaControlError("media venture must be version 1.4")
+    if config.get("version") != "1.5":
+        raise MediaControlError("media venture must be version 1.5")
 
     functions = {f["id"]: f for f in config.get("production_functions", [])}
     missing = REQUIRED_MEDIA_FUNCTIONS - set(functions)
@@ -86,6 +88,41 @@ def validate_media_team(config):
 
     if "benchmark_artifact" not in config:
         raise MediaControlError("studio benchmark artifact is required")
+
+    visual_brief = config.get("visual_generation_brief_capability", {})
+    if visual_brief.get("id") != "visual_generation_brief_compiler":
+        raise MediaControlError("visual generation brief capability missing")
+    if visual_brief.get("permanent_role") is not False:
+        raise MediaControlError("visual generation brief compiler must remain a capability, not headcount")
+    if set(visual_brief.get("composed_by", [])) != {
+        "Visual Art Director / Frame Curator",
+        "Thumbnail & Packaging Designer",
+        "Synthesis & Alternatives Designer",
+    }:
+        raise MediaControlError("visual generation brief compiler composition drifted")
+    if visual_brief.get("anti_slop_approver") != "Red Team":
+        raise MediaControlError("visual generation brief must be approved by Red Team")
+    if visual_brief.get("executor") != "Technical Operator":
+        raise MediaControlError("visual generation brief executor must be Technical Operator")
+    if visual_brief.get("artifact_template") != "docs/templates/media/VISUAL_GENERATION_BRIEF.md":
+        raise MediaControlError("visual generation brief template drifted")
+    for flag in {
+        "no_prompt_no_generation",
+        "no_anti_slop_approval_no_execution",
+        "tool_creative_rewrite_forbidden",
+        "material_deviation_returns_to_council",
+    }:
+        if visual_brief.get(flag) is not True:
+            raise MediaControlError(f"visual generation brief boundary missing: {flag}")
+
+    required_prompt_rules = {
+        "generated_visual_execution_requires_approved_generation_brief",
+        "red_team_anti_slop_must_approve_generation_brief_before_execution",
+        "technical_operator_cannot_creatively_rewrite_approved_visual_brief",
+        "material_prompt_deviation_returns_to_council",
+    }
+    if not required_prompt_rules.issubset(independence):
+        raise MediaControlError("visual prompt execution boundaries are incomplete")
 
     toolchain = config.get("media_toolchain", {})
     for capability in {
