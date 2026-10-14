@@ -181,6 +181,13 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertEqual(qualification["comparison_contract"], "SAME_FRAME_SAME_BRIEF")
         self.assertTrue(qualification["remaining_credits_must_not_select_primary_tool"])
         self.assertEqual(sum(qualification["score_weights"].values()), 100)
+        self.assertTrue(qualification["qualification_passed"])
+        self.assertEqual(qualification["primary_generator_status"], "QUALIFIED_PRIMARY")
+        self.assertEqual(qualification["backup_generator_status"], "QUALIFIED_BACKUP")
+        self.assertEqual(qualification["primary_generator"], "runway:nano-banana-2-lite")
+        self.assertEqual(qualification["backup_generator"], "runway:nano-banana-pro")
+        self.assertGreater(qualification["primary_score"], qualification["backup_score"])
+        self.assertTrue(qualification["qualification_artifact"])
 
         ladder = {stage["id"]: stage for stage in system["pilot_ladder"]}
         self.assertEqual(ladder["P1_COHERENCE_30_45"]["duration_seconds_min"], 30)
@@ -223,6 +230,13 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             ),
             lambda c: c["production_system"]["tool_qualification"].__setitem__(
                 "remaining_credits_must_not_select_primary_tool", False
+            ),
+            lambda c: c["production_system"]["tool_qualification"].__setitem__("qualification_passed", False),
+            lambda c: c["production_system"]["tool_qualification"].__setitem__(
+                "primary_generator_status", "UNQUALIFIED"
+            ),
+            lambda c: c["production_system"]["tool_qualification"].__setitem__(
+                "backup_generator_status", "UNQUALIFIED"
             ),
             lambda c: c["production_system"].__setitem__("pilot_ladder", c["production_system"]["pilot_ladder"][:-1]),
             lambda c: c["production_system"]["pilot_ladder"][1].__setitem__("duration_seconds_min", 20),
