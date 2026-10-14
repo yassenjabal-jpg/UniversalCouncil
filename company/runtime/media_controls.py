@@ -117,10 +117,12 @@ def validate_media_team(config):
     if pilot.get("required_before_scale") is not True or pilot.get("video_count") != 3:
         raise MediaControlError("business-scale observation contract drift")
     tools = config.get("media_toolchain", {})
-    if tools.get("video_editing") != "DESCRIPT_PRIMARY_DELIVERY_PENDING_SYSTEM_PILOT":
-        raise MediaControlError("single primary editor contract drift")
-    if tools.get("after_effects_motion_assembly") != "BACKUP_NATIVE_ONLY_HISTORICAL_EVIDENCE_REVERIFY_ON_USE":
-        raise MediaControlError("backup cannot imply current delivery verification")
+    if tools.get("video_editing") != "AE_NATIVE_CURRENT_PILOT_ROUTE_REVERIFY_EACH_RUN":
+        raise MediaControlError("current delivery editor contract drift")
+    if tools.get("after_effects_motion_assembly") != "PRIMARY_NATIVE_ROUTE_REVERIFY_EACH_RUN":
+        raise MediaControlError("After Effects primary route contract drift")
+    if tools.get("descript_editing") != "ROUGH_TRANSCRIPT_UTILITY_ONLY_FINAL_DELIVERY_DISQUALIFIED":
+        raise MediaControlError("Descript must remain rough/transcript utility only")
     return True
 
 
