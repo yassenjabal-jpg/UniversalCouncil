@@ -785,7 +785,9 @@
       "p0_passed": true,
       "production_kit": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.0.md",
       "reference_set_brief": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_REFERENCE_FRAME_SET_v1.0.md",
-      "council_review": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_COUNCIL_REVIEW.md"
+      "council_review": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_COUNCIL_REVIEW.md",
+      "reference_temporal_grammar": "docs/operations/media/reference/REFERENCE_TEMPORAL_GRAMMAR_1000061003_v1.0.md",
+      "production_kit_candidate": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.1_CANDIDATE.md"
     },
     "authority_model": {
       "council_after_lock": "SYSTEM_AND_GATE_REVIEW_ONLY",
@@ -857,11 +859,10 @@
           "evidence_and_explanation_mix",
           "repeatable_operator_workflow"
         ],
-        "status": "BLOCKED_CAPABILITY_GAP",
+        "status": "BLOCKED_REFERENCE_FIDELITY_RETRY",
         "blocking_capabilities": [
-          "professional_motion_authoring",
-          "clean_1080p_or_better_finishing_without_watermark",
-          "delivery_level_audio_finishing"
+          "p1_reference_fidelity_retry_not_passed",
+          "delivery_level_audio_finishing_not_verified"
         ]
       },
       {
@@ -887,15 +888,35 @@
       "anti_slop_failure",
       "material_new_visual_language"
     ],
-    "active_pilot_stage": "P2_PREPARATION_BLOCKED_CAPABILITY_GAP",
+    "active_pilot_stage": "P1_REFERENCE_FIDELITY_RETRY_PHASE_4",
     "p1_status": "PASS_INTERNAL_COHERENCE",
     "p1_review": "docs/operations/media/pilots/2026-10-14/P1_DAY24_COUNCIL_REVIEW.md",
     "p1_internal_render": "https://share.descript.com/view/h6bKHYCNPe2",
     "current_capability_gaps": [
-      "after_effects_runtime_evidence_stale_current_executable_not_found_on_YASSIN",
-      "professional_motion_authoring_not_currently_verified",
-      "public_picture_finishing_not_verified",
-      "delivery_audio_finishing_not_verified"
-    ]
+      "backup_motion_route_unresolved",
+      "delivery_audio_finishing_not_verified",
+      "p1_reference_fidelity_retry_not_passed"
+    ],
+    "motion_tool_qualification": {
+      "status": "PASS_PRIMARY",
+      "primary_route": "Adobe After Effects 2026 on YASSIN",
+      "score": 90,
+      "qualification_artifact": "docs/operations/media/pilots/2026-10-14/P2_MOTION_TOOL_QUALIFICATION_AFTER_EFFECTS.md",
+      "benchmark_resolution": "1920x1080",
+      "benchmark_fps": 30,
+      "benchmark_duration_seconds": 5,
+      "clean_export_verified": true,
+      "watermark_free": true,
+      "backup_route_status": "UNRESOLVED"
+    },
+    "retry_pipeline": {
+      "roadmap": "docs/operations/media/pilots/2026-10-14/P1_DAY24_RETRY_PRODUCTION_ROADMAP_v2.0.md",
+      "reference_fidelity_review": "docs/operations/media/pilots/2026-10-14/P1_DAY24_VS_REFERENCE_COMPREHENSIVE_COUNCIL_REVIEW.md",
+      "phase_1_temporal_identity": "PASS_REFERENCE_GRAMMAR_LOCK",
+      "phase_2_motion_tool": "PASS_PRIMARY",
+      "phase_3_visual_script": "PASS_CANDIDATE",
+      "phase_4_shot_bible": "ACTIVE",
+      "visual_event_script": "docs/operations/media/pilots/2026-10-14/P1_DAY24_VISUAL_EVENT_SCRIPT_v2.0.md"
+    }
   }
 }
