@@ -1,5 +1,5 @@
 {
-  "version": "1.5",
+  "version": "1.6",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
   "visual_system": "Modern Editorial Surrealism",
   "primary_language": "Arabic",
@@ -746,5 +746,122 @@
     "multi_panel_output_forbidden": true,
     "context_isolation_required": true,
     "only_selected_brief_may_enter_generation_context": true
+  },
+  "production_system": {
+    "version": "1.0",
+    "governing_principle": "COUNCIL_DESIGNS_SYSTEM_ART_DIRECTOR_LOCKS_OPERATORS_PRODUCE_COUNCIL_REVIEWS_GATES",
+    "visual_system_lock": {
+      "required": true,
+      "reference_frame_count_min": 4,
+      "reference_frame_count_max": 6,
+      "required_frame_families": [
+        "Hero Question",
+        "Object Macro",
+        "Evidence or Archive",
+        "Diagram or Mechanism",
+        "Editorial Cutout",
+        "Conceptual Surrealism"
+      ],
+      "production_kit_required": true,
+      "production_kit_template": "docs/templates/media/VISUAL_PRODUCTION_KIT.md",
+      "required_kit_fields": [
+        "palette",
+        "typography",
+        "grid",
+        "negative_space_rules",
+        "texture_rules",
+        "shadow_rules",
+        "image_source_treatments",
+        "frame_families",
+        "transition_grammar",
+        "motion_rules",
+        "diagram_language",
+        "anti_slop_rules"
+      ],
+      "lock_authority": "Visual Art Director / Frame Curator",
+      "red_team_blocker": true,
+      "owner_brand_veto": true
+    },
+    "authority_model": {
+      "council_after_lock": "SYSTEM_AND_GATE_REVIEW_ONLY",
+      "visual_art_director": "FINAL_VISUAL_DECISION_WITHIN_LOCKED_SYSTEM",
+      "technical_operator": "EXECUTION_ONLY_NO_CREATIVE_REWRITE",
+      "red_team": "BLOCK_ON_DRIFT_AI_SLOP_OR_REFERENCE_FAILURE",
+      "per_frame_full_council_review_after_lock": false
+    },
+    "tool_qualification": {
+      "required_before_visual_system_lock": true,
+      "protocol": "docs/operations/media/TOOL_QUALIFICATION_PROTOCOL.md",
+      "comparison_contract": "SAME_FRAME_SAME_BRIEF",
+      "minimum_viable_candidates": 2,
+      "score_weights": {
+        "prompt_fidelity": 30,
+        "composition_control": 20,
+        "style_consistency": 20,
+        "artifact_quality": 10,
+        "editability": 10,
+        "speed": 5,
+        "cost": 5
+      },
+      "primary_selection_rule": "QUALITY_AND_FIDELITY_DOMINATE_COST",
+      "remaining_credits_must_not_select_primary_tool": true,
+      "primary_generator_status": "UNQUALIFIED",
+      "backup_generator_status": "UNQUALIFIED"
+    },
+    "pilot_ladder": [
+      {
+        "id": "P0_REFERENCE_FRAME_LOCK",
+        "output": "4_TO_6_COHERENT_REFERENCE_FRAMES_PLUS_LOCKED_PRODUCTION_KIT",
+        "requires_tool_qualification": true
+      },
+      {
+        "id": "P1_COHERENCE_30_45",
+        "duration_seconds_min": 30,
+        "duration_seconds_max": 45,
+        "requires": "P0_PASS",
+        "required_elements": [
+          "temporary_or_owner_narration",
+          "6_to_10_visual_beats",
+          "meaning_driven_transitions",
+          "music_or_temp_music",
+          "sound_design",
+          "at_least_one_real_evidence_visual"
+        ]
+      },
+      {
+        "id": "P2_PRODUCTION_60_90",
+        "duration_seconds_min": 60,
+        "duration_seconds_max": 90,
+        "requires": "P1_PASS",
+        "required_elements": [
+          "locked_visual_system",
+          "locked_motion_grammar",
+          "audio_visual_sync",
+          "evidence_and_explanation_mix",
+          "repeatable_operator_workflow"
+        ]
+      },
+      {
+        "id": "P3_FULL_EPISODE_8_PLUS_MINUTES",
+        "duration_seconds_min": 480,
+        "requires": "P2_PASS"
+      }
+    ],
+    "full_length_episode_before_p2_pass": "BLOCK",
+    "council_review_gates": [
+      "visual_system_lock",
+      "p1_pilot_review",
+      "p2_pilot_review",
+      "animatic",
+      "picture_lock",
+      "final_qc"
+    ],
+    "per_frame_council_review_after_lock": "FORBIDDEN_UNLESS_EXCEPTION",
+    "exception_triggers": [
+      "brand_drift",
+      "evidence_risk",
+      "anti_slop_failure",
+      "material_new_visual_language"
+    ]
   }
 }
