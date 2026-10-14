@@ -26,6 +26,48 @@ BASE_CFG = json.loads((ROOT / "company/config/hybrid_execution.json").read_text(
 BASE_REGISTRY = json.loads((ROOT / "company/config/tool_authority.json").read_text(encoding="utf-8"))
 
 
+def execution_test_registry():
+    registry = copy.deepcopy(BASE_REGISTRY)
+    scopes = {
+        "desktop_computer_use.observe": [
+            "status",
+            "list_windows",
+            "inspect_ui",
+            "search_ui",
+            "read_values_properties",
+            "screenshot",
+            "before_after_verification",
+            "audit_logging",
+        ],
+        "desktop_computer_use.control": [
+            "semantic_invoke",
+            "semantic_set_value",
+            "focus",
+            "scroll_into_view",
+            "wait_for",
+            "physical_click",
+            "physical_hover",
+            "physical_drag",
+            "send_keys",
+            "window_or_element_recording",
+            "before_after_verification",
+            "audit_logging",
+        ],
+    }
+    for operation, verified_scope in scopes.items():
+        record = next(item for item in registry["capabilities"] if item["operation"] == operation)
+        metadata = {"expires_at": "2026-10-20T00:00:00+00:00", "test_fixture": True}
+        record["evidence_state"] = "CURRENT_VERIFIED"
+        record["historical_capability"] = dict(metadata)
+        record["current_verified_capability"] = dict(metadata)
+        record["verified_scope"] = verified_scope
+        record["last_verified_at"] = "2026-10-13"
+    return registry
+
+
+EXECUTION_TEST_REGISTRY = execution_test_registry()
+
+
 class MockAdapter:
     def __init__(self, result):
         self.result = result
@@ -157,14 +199,14 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             first = HybridExecutor(
                 BASE_CFG,
                 gui_adapter=MockAdapter(verified),
-                authority_registry=BASE_REGISTRY,
+                authority_registry=EXECUTION_TEST_REGISTRY,
                 controller_lease=HostControllerLease(lease_path),
             )
             second_adapter = MockAdapter(verified)
             second = HybridExecutor(
                 BASE_CFG,
                 gui_adapter=second_adapter,
-                authority_registry=BASE_REGISTRY,
+                authority_registry=EXECUTION_TEST_REGISTRY,
                 controller_lease=HostControllerLease(lease_path),
             )
             state1 = SharedExecutionState("lease-1")
@@ -188,7 +230,13 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             self.assertEqual(second_adapter.calls, [])
 
             state1.release_controller("technical_operator")
-            first.controller_lease.release("desktop:YASSIN", "technical_operator:lease-1")
+            token = first.controller_lease.acquire(
+                "desktop:YASSIN",
+                "technical_operator",
+                host="YASSIN",
+                session_id="lease-1",
+            )
+            first.controller_lease.release(token)
 
     def test_f06_gui_timeout_becomes_unknown(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -205,7 +253,9 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             ):
                 result = adapter.dispatch({"gui_request": {"action": "screenshot"}})
             self.assertEqual(result["state"], ResultState.UNKNOWN.value)
-            self.assertEqual(result["reason"], "gui_action_timeout")
+            self.assertEqual(result["reason"], "gui_no_progress_timeout")
+            self.assertIn(result["liveness"], {"NO_PROGRESS", "STALLED"})
+            self.assertEqual(result["recovery_sequence"][0:2], ["NO_PROGRESS", "DIAGNOSE"])
 
     def test_f06_pending_journal_intent_requires_reconciliation(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -222,7 +272,7 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             executor = HybridExecutor(
                 BASE_CFG,
                 native_adapter=adapter,
-                authority_registry=BASE_REGISTRY,
+                authority_registry=EXECUTION_TEST_REGISTRY,
                 journal=journal,
             )
             result = executor.execute(
@@ -292,7 +342,7 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
         executor = HybridExecutor(
             BASE_CFG,
             native_adapter=adapter,
-            authority_registry=BASE_REGISTRY,
+            authority_registry=EXECUTION_TEST_REGISTRY,
         )
         no_requester = executor.execute(
             {
@@ -326,7 +376,7 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             executor = HybridExecutor(
                 BASE_CFG,
                 native_adapter=adapter,
-                authority_registry=BASE_REGISTRY,
+                authority_registry=EXECUTION_TEST_REGISTRY,
                 journal=journal,
             )
             result = executor.execute(
@@ -346,7 +396,12 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "controller.lock"
             blocker = HostControllerLease(path)
-            blocker.acquire("desktop:YASSIN", "other")
+            blocker_token = blocker.acquire(
+                "desktop:YASSIN",
+                "other",
+                host="YASSIN",
+                session_id="other-task",
+            )
             adapter = MockAdapter(
                 {
                     "state": ResultState.SUCCEEDED.value,
@@ -356,7 +411,7 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             executor = HybridExecutor(
                 BASE_CFG,
                 gui_adapter=adapter,
-                authority_registry=BASE_REGISTRY,
+                authority_registry=EXECUTION_TEST_REGISTRY,
                 controller_lease=HostControllerLease(path),
             )
             result = executor.execute_batch(
@@ -368,7 +423,7 @@ class Phase2AuthorityVerificationReproductionTests(unittest.TestCase):
             self.assertEqual(result["state"], ResultState.BLOCKED.value)
             self.assertEqual(result["results"], [])
             self.assertEqual(adapter.calls, [])
-            blocker.release("desktop:YASSIN", "other")
+            blocker.release(blocker_token)
 
     def test_f15_stale_capability_evidence_is_not_current(self):
         record = copy.deepcopy(

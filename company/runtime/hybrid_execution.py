@@ -4,12 +4,22 @@ import json
 import os
 import subprocess
 import tempfile
+import time
 from dataclasses import dataclass, field
 from enum import StrEnum
 from pathlib import Path
 from typing import Any, Protocol
 
 from company.runtime.execution_controls import ExecutionControlError, ExecutionJournal, HostControllerLease
+from company.runtime.execution_recovery import (
+    CancellationToken,
+    CheckpointStore,
+    ExecutionWatchdog,
+    RecoveryPolicy,
+    action_plan_hash,
+    decide_recovery,
+)
+from company.runtime.execution_trace import TraceEventType, TraceRecorder
 from company.runtime.tool_authority import capability_currentness, get_capability
 
 
@@ -39,6 +49,7 @@ class ResultState(StrEnum):
     FAILED = "FAILED"
     UNKNOWN = "UNKNOWN"
     BLOCKED = "BLOCKED"
+    CANCELLED = "CANCELLED"
 
 
 GUI_OBSERVE_ACTIONS = {
@@ -64,6 +75,26 @@ GUI_CONTROL_ACTIONS = {
 }
 GUI_STATE_CHANGE_ACTIONS = {"invoke", "set_value", "click", "send_keys", "drag", "record"}
 GUI_REVERSIBLE_ACTIONS = {"focus", "scroll_into_view", "wait_for", "hover"}
+
+GUI_ACTION_EVIDENCE_SCOPE = {
+    "status": "status",
+    "list_windows": "list_windows",
+    "inspect": "inspect_ui",
+    "search": "search_ui",
+    "get_value": "read_values_properties",
+    "get_property": "read_values_properties",
+    "screenshot": "screenshot",
+    "invoke": "semantic_invoke",
+    "set_value": "semantic_set_value",
+    "focus": "focus",
+    "scroll_into_view": "scroll_into_view",
+    "wait_for": "wait_for",
+    "click": "physical_click",
+    "hover": "physical_hover",
+    "drag": "physical_drag",
+    "send_keys": "send_keys",
+    "record": "window_or_element_recording",
+}
 
 
 class Adapter(Protocol):
@@ -236,6 +267,19 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise HybridExecutionError("result projection bounds are too small")
     if cfg.get("automation_graduation", {}).get("verified_repeats_required", 0) < 2:
         raise HybridExecutionError("automation graduation requires repeated verification")
+    recovery = cfg.get("recovery", {})
+    if int(recovery.get("max_retries", -1)) < 0:
+        raise HybridExecutionError("recovery max_retries must be >= 0")
+    no_progress = float(recovery.get("no_progress_seconds", 0))
+    stalled = float(recovery.get("stalled_seconds", 0))
+    if no_progress <= 0 or stalled <= no_progress:
+        raise HybridExecutionError("recovery stalled_seconds must exceed positive no_progress_seconds")
+    if float(recovery.get("poll_interval_seconds", 0)) <= 0:
+        raise HybridExecutionError("recovery poll_interval_seconds must be > 0")
+    if recovery.get("unknown_requires_reconciliation") is not True:
+        raise HybridExecutionError("UNKNOWN outcomes must require reconciliation")
+    if recovery.get("replay_completed_action_default") is not False:
+        raise HybridExecutionError("completed action replay must remain opt-in")
     return True
 
 
@@ -439,6 +483,18 @@ def enforce_tool_authority(
             raise HybridExecutionError(f"authority scope is required: {planned.authority_operation}")
         if scope not in allowed_action_scopes:
             raise HybridExecutionError(f"authority scope is not allowed: {planned.authority_operation} -> {scope}")
+
+    verified_scope = record.get("verified_scope")
+    if verified_scope is not None and planned.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}:
+        request = planned.payload.get("gui_request") or {}
+        gui_action = str(request.get("action", ""))
+        evidence_scope = GUI_ACTION_EVIDENCE_SCOPE.get(gui_action)
+        if evidence_scope is None:
+            raise HybridExecutionError(f"GUI action has no evidence-scope mapping: {gui_action}")
+        if evidence_scope not in set(verified_scope):
+            raise HybridExecutionError(
+                f"current evidence does not verify GUI scope: {planned.authority_operation} -> {evidence_scope}"
+            )
     return record
 
 
@@ -467,6 +523,13 @@ class CouncilVideoStudioGuiAdapter:
             raise HybridExecutionError("CouncilVideoStudio root is unavailable")
         self.root = Path(root).resolve()
         self.timeout_seconds = int(gui_cfg.get("action_timeout_seconds", 30))
+        recovery_cfg = cfg.get("recovery", {})
+        self.recovery_policy = RecoveryPolicy(
+            max_retries=int(recovery_cfg.get("max_retries", 0)),
+            poll_interval_seconds=float(recovery_cfg.get("poll_interval_seconds", 0.25)),
+            no_progress_seconds=float(recovery_cfg.get("no_progress_seconds", 5)),
+            stalled_seconds=float(recovery_cfg.get("stalled_seconds", 15)),
+        )
         self.script = self.root / gui_cfg["verified_action_relative"]
         if not self.script.is_file():
             raise HybridExecutionError("verified_action.py is unavailable")
@@ -492,11 +555,30 @@ class CouncilVideoStudioGuiAdapter:
                 timeout=self.timeout_seconds,
             )
         except subprocess.TimeoutExpired as exc:
+            watchdog = ExecutionWatchdog(self.recovery_policy, started_at=0.0)
+            watchdog.observe({"stdout": "", "stderr": ""}, busy=False, now=0.0)
+            observation = watchdog.observe(
+                {
+                    "stdout": str(exc.stdout or "").strip(),
+                    "stderr": str(exc.stderr or "").strip(),
+                },
+                busy=False,
+                now=float(self.timeout_seconds),
+            )
+            decision = decide_recovery(
+                observation.state,
+                attempts=0,
+                policy=self.recovery_policy,
+            )
             return {
                 "state": ResultState.UNKNOWN.value,
                 "plane": "GUI",
-                "reason": "gui_action_timeout",
+                "reason": "gui_no_progress_timeout",
                 "timeout_seconds": self.timeout_seconds,
+                "liveness": observation.state.value,
+                "unchanged_seconds": observation.unchanged_seconds,
+                "recovery_decision": decision.value,
+                "recovery_sequence": ["NO_PROGRESS", "DIAGNOSE", decision.value],
                 "stdout": str(exc.stdout or "").strip(),
                 "stderr": str(exc.stderr or "").strip(),
             }
@@ -541,6 +623,8 @@ class HybridExecutor:
         authority_registry: dict[str, Any] | None = None,
         controller_lease: HostControllerLease | None = None,
         journal: ExecutionJournal | None = None,
+        cancellation_token: CancellationToken | None = None,
+        trace: TraceRecorder | None = None,
     ):
         validate_config(cfg)
         self.cfg = cfg
@@ -552,6 +636,23 @@ class HybridExecutor:
         self.authority_registry = authority_registry
         self.controller_lease = controller_lease or HostControllerLease()
         self.journal = journal
+        self.cancellation_token = cancellation_token
+        self.trace = trace
+
+    def _trace(self, event: TraceEventType, data: dict[str, Any]) -> None:
+        if self.trace is not None:
+            self.trace.record(event, data)
+
+    @staticmethod
+    def _route_reason(planned: PlannedAction) -> str:
+        reasons = {
+            ExecutionPath.GUI_UIA: "semantic GUI request selected by hybrid routing",
+            ExecutionPath.GUI_VISUAL: "visual GUI fallback explicitly requested",
+            ExecutionPath.DC: "host-support or explicitly approved DC fallback",
+            ExecutionPath.NATIVE: "structured native/API operation available",
+            ExecutionPath.ROUTINE: "approved reusable routine selected",
+        }
+        return reasons[planned.path]
 
     def _adapter_for(self, path: ExecutionPath) -> Adapter:
         if path == ExecutionPath.DC:
@@ -587,8 +688,37 @@ class HybridExecutor:
         task_approved: bool,
         owner_confirmed: bool = False,
         retain_controller: bool = False,
+        attempt: int = 1,
     ) -> dict[str, Any]:
         planned = plan_action(action, self.cfg)
+        if self.trace is not None and not any(
+            event.get("event") == TraceEventType.FRAME.value for event in self.trace.events()
+        ):
+            self._trace(
+                TraceEventType.FRAME,
+                {
+                    "goal": str(action.get("goal") or "hybrid execution"),
+                    "action_ids": [planned.action_id],
+                },
+            )
+        self._trace(
+            TraceEventType.ROUTE,
+            {
+                "action_id": planned.action_id,
+                "path": planned.path.value,
+                "reason": self._route_reason(planned),
+                "route_version": f"hybrid-{self.cfg.get('version', 'unknown')}",
+                "authority": planned.authority_operation,
+            },
+        )
+        self._trace(
+            TraceEventType.ROLE,
+            {
+                "action_id": planned.action_id,
+                "role": requester or "UNSET",
+                "responsibility": "execution_requester",
+            },
+        )
         if not requester:
             state.record_result(planned, ResultState.BLOCKED)
             return {"state": ResultState.BLOCKED.value, "planned": planned, "reason": "requester identity is required"}
@@ -606,6 +736,16 @@ class HybridExecutor:
                 self.authority_registry,
                 principal=requester,
             )
+            self._trace(
+                TraceEventType.EVIDENCE,
+                {
+                    "action_id": planned.action_id,
+                    "authority": planned.authority_operation,
+                    "evidence_level": authority_record.get("evidence_level"),
+                    "last_verified_at": authority_record.get("last_verified_at"),
+                    "evidence_state": authority_record.get("evidence_state", "LEGACY_CURRENTNESS"),
+                },
+            )
         except HybridExecutionError as exc:
             state.record_result(planned, ResultState.BLOCKED)
             return {
@@ -613,7 +753,30 @@ class HybridExecutor:
                 "planned": planned,
                 "reason": str(exc),
             }
-        if authority_record["approval_policy"] in {"OWNER_EXPLICIT", "ASK_BEFORE_WRITE"} and not task_approved:
+        self._trace(
+            TraceEventType.TOOL,
+            {
+                "action_id": planned.action_id,
+                "authority": planned.authority_operation,
+                "path": planned.path.value,
+                "target": planned.payload.get("authority_target")
+                or planned.payload.get("target_repo")
+                or planned.payload.get("target"),
+                "selected": True,
+                "cost_usd": float(planned.payload.get("cost_usd", 0.0) or 0.0),
+            },
+        )
+        approval_required = authority_record["approval_policy"] in {"OWNER_EXPLICIT", "ASK_BEFORE_WRITE"}
+        self._trace(
+            TraceEventType.APPROVAL,
+            {
+                "action_id": planned.action_id,
+                "human_required": approval_required,
+                "approved": bool(task_approved) if approval_required else True,
+                "policy": authority_record["approval_policy"],
+            },
+        )
+        if approval_required and not task_approved:
             state.record_result(planned, ResultState.BLOCKED)
             return {
                 "state": ResultState.BLOCKED.value,
@@ -624,26 +787,58 @@ class HybridExecutor:
             state.record_result(planned, ResultState.BLOCKED)
             return {"state": ResultState.BLOCKED.value, "planned": planned}
 
-        if self.journal is not None and planned.action_id in self.journal.pending_action_ids():
-            state.record_result(planned, ResultState.UNKNOWN)
+        if self.cancellation_token is not None and self.cancellation_token.is_cancelled():
+            self._trace(
+                TraceEventType.RECOVERY,
+                {
+                    "action_id": planned.action_id,
+                    "outcome": "CANCELLED",
+                    "attempt": attempt,
+                    "reason": self.cancellation_token.reason() or "execution cancelled",
+                },
+            )
+            state.record_result(planned, ResultState.CANCELLED)
             return {
-                "state": ResultState.UNKNOWN.value,
+                "state": ResultState.CANCELLED.value,
                 "planned": planned,
-                "reason": "pending prior intent requires reconciliation",
+                "reason": self.cancellation_token.reason() or "execution cancelled",
             }
+
+        if self.journal is not None:
+            if planned.action_id in self.journal.pending_action_ids(task_id=state.task_id):
+                state.record_result(planned, ResultState.UNKNOWN)
+                return {
+                    "state": ResultState.UNKNOWN.value,
+                    "planned": planned,
+                    "reason": "pending prior intent requires reconciliation",
+                }
+            previous = self.journal.last_result_state(state.task_id, planned.action_id)
+            if previous == ResultState.SUCCEEDED.value and planned.payload.get("allow_replay") is not True:
+                state.record_result(planned, ResultState.BLOCKED)
+                return {
+                    "state": ResultState.BLOCKED.value,
+                    "planned": planned,
+                    "reason": "completed action replay is blocked; use a new action id or explicit allow_replay",
+                }
 
         controls_desktop = (
             planned.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}
             and planned.authority_operation == "desktop_computer_use.control"
         )
-        controller_resource = f"desktop:{planned.payload.get('authority_target', 'YASSIN')}"
-        controller_holder = f"{requester}:{state.task_id}"
+        controller_host = str(planned.payload.get("authority_target", "YASSIN"))
+        controller_resource = f"desktop:{controller_host}"
+        lease_token = None
         if controls_desktop:
             state_acquired = False
             try:
                 state.acquire_controller(requester)
                 state_acquired = True
-                self.controller_lease.acquire(controller_resource, controller_holder)
+                lease_token = self.controller_lease.acquire(
+                    controller_resource,
+                    requester,
+                    host=controller_host,
+                    session_id=state.task_id,
+                )
             except (ExecutionControlError, HybridExecutionError) as exc:
                 if state_acquired and state.controller_lease == requester:
                     state.release_controller(requester)
@@ -664,13 +859,36 @@ class HybridExecutor:
                     authority_operation=planned.authority_operation,
                 )
 
+            if controls_desktop and lease_token is not None:
+                self.controller_lease.assert_current(lease_token)
+            dispatch_started = time.perf_counter()
             result = self._adapter_for(planned.path).dispatch(planned.payload)
+            latency_ms = (time.perf_counter() - dispatch_started) * 1000
             raw_state = result.get("state")
+            self._trace(
+                TraceEventType.EXECUTION,
+                {
+                    "action_id": planned.action_id,
+                    "state": raw_state,
+                    "attempt": attempt,
+                    "latency_ms": round(latency_ms, 3),
+                    "fencing_token": lease_token.fencing_token if lease_token is not None else None,
+                },
+            )
             if raw_state == ResultState.HOST_DISPATCH_REQUIRED.value:
                 state.record_result(planned, ResultState.HOST_DISPATCH_REQUIRED)
                 self._journal_result(state, planned, ResultState.HOST_DISPATCH_REQUIRED)
                 return {"state": raw_state, "planned": planned, "result": result}
             if raw_state == ResultState.UNKNOWN.value:
+                self._trace(
+                    TraceEventType.RECOVERY,
+                    {
+                        "action_id": planned.action_id,
+                        "outcome": "RECONCILE_REQUIRED",
+                        "attempt": attempt,
+                        "reason": result.get("reason", "unknown execution outcome"),
+                    },
+                )
                 state.record_result(planned, ResultState.UNKNOWN)
                 self._journal_result(state, planned, ResultState.UNKNOWN)
                 return {"state": ResultState.UNKNOWN.value, "planned": planned, "result": result}
@@ -681,6 +899,14 @@ class HybridExecutor:
 
             if planned.requires_verification:
                 verification = self.verifier.verify(planned.payload, result)
+                self._trace(
+                    TraceEventType.VERIFICATION,
+                    {
+                        "action_id": planned.action_id,
+                        "verified": bool(verification.get("verified")),
+                        "mode": verification.get("mode"),
+                    },
+                )
                 if not verification.get("verified"):
                     state.record_result(planned, ResultState.UNKNOWN)
                     self._journal_result(state, planned, ResultState.UNKNOWN)
@@ -692,6 +918,14 @@ class HybridExecutor:
                     }
             else:
                 verification = {"verified": True, "mode": "not_required"}
+                self._trace(
+                    TraceEventType.VERIFICATION,
+                    {
+                        "action_id": planned.action_id,
+                        "verified": True,
+                        "mode": "not_required",
+                    },
+                )
 
             state.record_result(planned, ResultState.SUCCEEDED)
             self._journal_result(state, planned, ResultState.SUCCEEDED)
@@ -704,7 +938,51 @@ class HybridExecutor:
         finally:
             if controls_desktop and not retain_controller and state.controller_lease == requester:
                 state.release_controller(requester)
-                self.controller_lease.release(controller_resource, controller_holder)
+                if lease_token is not None:
+                    self.controller_lease.release(lease_token)
+
+    def execute_with_recovery(
+        self,
+        action: dict[str, Any],
+        state: SharedExecutionState,
+        *,
+        requester: str,
+        task_approved: bool,
+        owner_confirmed: bool = False,
+        retain_controller: bool = False,
+    ) -> dict[str, Any]:
+        configured_max = int(self.cfg.get("recovery", {}).get("max_retries", 0))
+        requested_max = int(action.get("max_retries", 0) or 0)
+        retry_limit = min(max(0, requested_max), configured_max)
+        attempts = 0
+
+        while True:
+            result = self.execute(
+                action,
+                state,
+                requester=requester,
+                task_approved=task_approved,
+                owner_confirmed=owner_confirmed,
+                retain_controller=retain_controller,
+                attempt=attempts + 1,
+            )
+            result["attempts"] = attempts + 1
+            if result["state"] != ResultState.FAILED.value:
+                return result
+            provider = result.get("result")
+            safe_to_retry = isinstance(provider, dict) and provider.get("safe_to_retry") is True
+            if attempts >= retry_limit or action.get("retry_safe") is not True or not safe_to_retry:
+                return result
+            attempts += 1
+            self._trace(
+                TraceEventType.RECOVERY,
+                {
+                    "action_id": str(action.get("id")),
+                    "outcome": "RETRYING",
+                    "attempt": attempts + 1,
+                    "reason": "bounded retry explicitly safe in action and provider result",
+                },
+            )
 
     def execute_batch(
         self,
@@ -714,6 +992,9 @@ class HybridExecutor:
         requester: str,
         task_approved: bool,
         owner_confirmed: bool = False,
+        checkpoint_store: CheckpointStore | None = None,
+        plan_hash: str | None = None,
+        resume_from: int = 0,
     ) -> dict[str, Any]:
         if not isinstance(actions, list) or not actions:
             raise HybridExecutionError("batch requires at least one action")
@@ -721,27 +1002,51 @@ class HybridExecutor:
         if len(actions) > maximum:
             raise HybridExecutionError(f"batch exceeds max deterministic steps: {maximum}")
 
+        if resume_from < 0 or resume_from > len(actions):
+            raise HybridExecutionError("resume_from is outside the batch action range")
+        actual_plan_hash = action_plan_hash(actions)
+        if plan_hash is not None and plan_hash != actual_plan_hash:
+            raise HybridExecutionError("batch plan hash mismatch")
+        effective_plan_hash = plan_hash or actual_plan_hash
+
+        completed_ids = self.journal.completed_action_ids(state.task_id) if self.journal is not None else set()
+        expected_resumed = {str(action["id"]) for action in actions[:resume_from]}
+        if resume_from and not expected_resumed.issubset(completed_ids):
+            raise HybridExecutionError("resume checkpoint is not backed by successful journal results")
+        if resume_from == len(actions):
+            return {
+                "state": ResultState.SUCCEEDED.value,
+                "completed": len(actions),
+                "stopped_at": None,
+                "results": [],
+                "resumed_from": resume_from,
+            }
+
         planned = [plan_action(action, self.cfg) for action in actions]
         controlling = next(
             (
                 item
-                for item in planned
+                for item in planned[resume_from:]
                 if item.path in {ExecutionPath.GUI_UIA, ExecutionPath.GUI_VISUAL}
                 and item.authority_operation == "desktop_computer_use.control"
             ),
             None,
         )
         controls_desktop = controlling is not None
-        controller_resource = (
-            f"desktop:{controlling.payload.get('authority_target', 'YASSIN')}" if controlling is not None else ""
-        )
-        controller_holder = f"{requester}:{state.task_id}"
+        controller_host = str(controlling.payload.get("authority_target", "YASSIN")) if controlling is not None else ""
+        controller_resource = f"desktop:{controller_host}" if controller_host else ""
+        batch_lease_token = None
         if controls_desktop:
             state_acquired = False
             try:
                 state.acquire_controller(requester)
                 state_acquired = True
-                self.controller_lease.acquire(controller_resource, controller_holder)
+                batch_lease_token = self.controller_lease.acquire(
+                    controller_resource,
+                    requester,
+                    host=controller_host,
+                    session_id=state.task_id,
+                )
             except (ExecutionControlError, HybridExecutionError) as exc:
                 if state_acquired and state.controller_lease == requester:
                     state.release_controller(requester)
@@ -755,8 +1060,19 @@ class HybridExecutor:
 
         results: list[dict[str, Any]] = []
         try:
-            for index, action in enumerate(actions):
-                result = self.execute(
+            for index in range(resume_from, len(actions)):
+                action = actions[index]
+                if self.cancellation_token is not None and self.cancellation_token.is_cancelled():
+                    state.record_result(planned[index], ResultState.CANCELLED)
+                    return {
+                        "state": ResultState.CANCELLED.value,
+                        "completed": index,
+                        "stopped_at": index,
+                        "results": results,
+                        "reason": self.cancellation_token.reason() or "execution cancelled",
+                    }
+
+                result = self.execute_with_recovery(
                     action,
                     state,
                     requester=requester,
@@ -772,16 +1088,35 @@ class HybridExecutor:
                         "stopped_at": index,
                         "results": results,
                     }
+
+                completed_ids.add(str(action["id"]))
+                if checkpoint_store is not None:
+                    ordered_completed = [
+                        str(candidate["id"])
+                        for candidate in actions[: index + 1]
+                        if str(candidate["id"]) in completed_ids
+                    ]
+                    checkpoint_store.save(
+                        task_id=state.task_id,
+                        plan_hash=effective_plan_hash,
+                        next_action_index=index + 1,
+                        completed_action_ids=ordered_completed,
+                        state=state.as_dict(),
+                        completed=index + 1 == len(actions),
+                    )
+
             return {
                 "state": ResultState.SUCCEEDED.value,
-                "completed": len(results),
+                "completed": len(actions),
                 "stopped_at": None,
                 "results": results,
+                "resumed_from": resume_from,
             }
         finally:
             if controls_desktop and state.controller_lease == requester:
                 state.release_controller(requester)
-                self.controller_lease.release(controller_resource, controller_holder)
+                if batch_lease_token is not None:
+                    self.controller_lease.release(batch_lease_token)
 
 
 def eligible_for_routine_graduation(history: list[dict[str, Any]], cfg: dict[str, Any]) -> bool:

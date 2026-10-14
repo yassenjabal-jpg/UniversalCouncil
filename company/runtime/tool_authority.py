@@ -42,6 +42,8 @@ AUTHORITY_ENUMS = {
     "enforcement": {"CONNECTOR_POLICY", "POLICY_ENFORCED_ONLY", "GATEWAY_ENFORCED"},
 }
 
+EVIDENCE_STATES = {"HISTORICAL", "CURRENT_VERIFIED", "STALE", "REVOKED"}
+
 EVIDENCE_MAX_AGE_DAYS = {
     "ADVERTISED": 7,
     "METADATA_OBSERVED": 14,
@@ -118,6 +120,20 @@ def validate_registry(cfg: dict[str, Any]) -> bool:
         max_age = record.get("max_evidence_age_days")
         if max_age is not None and (not isinstance(max_age, int) or max_age < 1):
             raise ToolAuthorityError(f"{operation}: max_evidence_age_days must be a positive integer")
+        evidence_state = record.get("evidence_state")
+        if evidence_state is not None:
+            if evidence_state not in EVIDENCE_STATES:
+                raise ToolAuthorityError(f"{operation}: unknown evidence_state")
+            historical = record.get("historical_capability")
+            current = record.get("current_verified_capability")
+            if not isinstance(historical, dict):
+                raise ToolAuthorityError(f"{operation}: evidence_state requires historical_capability metadata")
+            if evidence_state == "CURRENT_VERIFIED" and not isinstance(current, dict):
+                raise ToolAuthorityError(f"{operation}: CURRENT_VERIFIED requires current_verified_capability metadata")
+            if evidence_state != "CURRENT_VERIFIED" and current is not None:
+                raise ToolAuthorityError(
+                    f"{operation}: non-current evidence cannot populate current_verified_capability"
+                )
 
     missing_operations = MINIMUM_OPERATIONS - operations
     if missing_operations:
@@ -138,6 +154,25 @@ def validate_registry(cfg: dict[str, Any]) -> bool:
     return True
 
 
+def capability_dimensions(
+    record: dict[str, Any],
+    *,
+    as_of: datetime | None = None,
+) -> dict[str, Any]:
+    classification = str(record.get("classification", "UNAVAILABLE"))
+    availability = "UNAVAILABLE" if classification in {"UNAVAILABLE", "ADMIN_BLOCKED"} else "AVAILABLE"
+    currentness = capability_currentness(record, as_of=as_of)
+    return {
+        "availability": availability,
+        "authority": classification,
+        "historical_capability": bool(
+            record.get("historical_capability") or record.get("evidence_receipt") or record.get("source_or_pin")
+        ),
+        "current_verified_capability": bool(currentness.get("current")),
+        "currentness_reason": currentness.get("reason"),
+    }
+
+
 def capability_currentness(
     record: dict[str, Any],
     *,
@@ -146,6 +181,32 @@ def capability_currentness(
     as_of = as_of or datetime.now(timezone.utc)
     if as_of.tzinfo is None:
         raise ToolAuthorityError("as_of must be timezone-aware")
+    evidence_state = record.get("evidence_state")
+    if evidence_state is not None and evidence_state != "CURRENT_VERIFIED":
+        reasons = {
+            "HISTORICAL": "historical_capability_only",
+            "STALE": "stale_capability_evidence",
+            "REVOKED": "revoked_capability_evidence",
+        }
+        return {
+            "current": False,
+            "reason": reasons.get(str(evidence_state), "non_current_capability_evidence"),
+            "age_days": None,
+        }
+    if evidence_state == "CURRENT_VERIFIED":
+        metadata = record.get("current_verified_capability")
+        if not isinstance(metadata, dict):
+            return {"current": False, "reason": "missing_current_capability_metadata", "age_days": None}
+        expires_at = metadata.get("expires_at")
+        if expires_at:
+            try:
+                expiry = datetime.fromisoformat(str(expires_at))
+            except ValueError:
+                return {"current": False, "reason": "invalid_capability_expiry", "age_days": None}
+            if expiry.tzinfo is None:
+                return {"current": False, "reason": "invalid_capability_expiry", "age_days": None}
+            if as_of.astimezone(timezone.utc) > expiry.astimezone(timezone.utc):
+                return {"current": False, "reason": "expired_capability_evidence", "age_days": None}
     try:
         verified = datetime.fromisoformat(str(record["last_verified_at"]))
     except ValueError:

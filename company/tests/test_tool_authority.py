@@ -7,6 +7,7 @@ from pathlib import Path
 from company.runtime.tool_authority import (
     ToolAuthorityError,
     capability_currentness,
+    capability_dimensions,
     get_capability,
     requires_explicit_approval,
     validate_registry,
@@ -256,6 +257,104 @@ class ToolAuthorityTests(unittest.TestCase):
 
         with self.assertRaises(ToolAuthorityError):
             capability_currentness(record, as_of=datetime(2026, 10, 14))
+
+    def test_evidence_state_registry_validation_failures(self):
+        operation = "github.read"
+
+        bad = copy.deepcopy(self.cfg)
+        record = next(item for item in bad["capabilities"] if item["operation"] == operation)
+        record["evidence_state"] = "UNKNOWN_STATE"
+        record["historical_capability"] = {}
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(bad)
+
+        bad = copy.deepcopy(self.cfg)
+        record = next(item for item in bad["capabilities"] if item["operation"] == operation)
+        record["evidence_state"] = "HISTORICAL"
+        record.pop("historical_capability", None)
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(bad)
+
+        bad = copy.deepcopy(self.cfg)
+        record = next(item for item in bad["capabilities"] if item["operation"] == operation)
+        record["evidence_state"] = "CURRENT_VERIFIED"
+        record["historical_capability"] = {}
+        record.pop("current_verified_capability", None)
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(bad)
+
+        bad = copy.deepcopy(self.cfg)
+        record = next(item for item in bad["capabilities"] if item["operation"] == operation)
+        record["evidence_state"] = "HISTORICAL"
+        record["historical_capability"] = {}
+        record["current_verified_capability"] = {}
+        with self.assertRaises(ToolAuthorityError):
+            validate_registry(bad)
+
+    def test_capability_dimensions_separate_availability_authority_and_evidence(self):
+        available = copy.deepcopy(get_capability(self.cfg, "github.read"))
+        dims = capability_dimensions(
+            available,
+            as_of=datetime(2026, 10, 14, tzinfo=timezone.utc),
+        )
+        self.assertEqual(dims["availability"], "AVAILABLE")
+        self.assertEqual(dims["authority"], available["classification"])
+        self.assertTrue(dims["historical_capability"])
+
+        unavailable = copy.deepcopy(available)
+        unavailable["classification"] = "UNAVAILABLE"
+        dims = capability_dimensions(
+            unavailable,
+            as_of=datetime(2026, 10, 14, tzinfo=timezone.utc),
+        )
+        self.assertEqual(dims["availability"], "UNAVAILABLE")
+
+    def test_currentness_honors_explicit_evidence_states_and_expiry(self):
+        base = copy.deepcopy(get_capability(self.cfg, "github.read"))
+        now = datetime(2026, 10, 14, tzinfo=timezone.utc)
+
+        for state, reason in (
+            ("HISTORICAL", "historical_capability_only"),
+            ("STALE", "stale_capability_evidence"),
+            ("REVOKED", "revoked_capability_evidence"),
+        ):
+            record = copy.deepcopy(base)
+            record["evidence_state"] = state
+            record["historical_capability"] = {}
+            record["current_verified_capability"] = None
+            result = capability_currentness(record, as_of=now)
+            self.assertFalse(result["current"])
+            self.assertEqual(result["reason"], reason)
+
+        record = copy.deepcopy(base)
+        record["evidence_state"] = "CURRENT_VERIFIED"
+        record["historical_capability"] = {}
+        record["current_verified_capability"] = None
+        self.assertEqual(
+            capability_currentness(record, as_of=now)["reason"],
+            "missing_current_capability_metadata",
+        )
+
+        for expiry, reason in (
+            ("bad", "invalid_capability_expiry"),
+            ("2026-10-20T00:00:00", "invalid_capability_expiry"),
+            ("2026-10-13T00:00:00+00:00", "expired_capability_evidence"),
+        ):
+            record = copy.deepcopy(base)
+            record["evidence_state"] = "CURRENT_VERIFIED"
+            record["historical_capability"] = {}
+            record["current_verified_capability"] = {"expires_at": expiry}
+            result = capability_currentness(record, as_of=now)
+            self.assertFalse(result["current"])
+            self.assertEqual(result["reason"], reason)
+
+        current = copy.deepcopy(base)
+        current["evidence_state"] = "CURRENT_VERIFIED"
+        current["historical_capability"] = {}
+        current["current_verified_capability"] = {"expires_at": "2026-10-20T00:00:00+00:00"}
+        current["last_verified_at"] = "2026-10-13T23:00:00+03:00"
+        result = capability_currentness(current, as_of=now)
+        self.assertTrue(result["current"])
 
     def test_unknown_operation_lookup_is_rejected(self):
         with self.assertRaises(ToolAuthorityError):

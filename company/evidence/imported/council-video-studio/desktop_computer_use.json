@@ -1,15 +1,26 @@
 {
-  "schema_version": "1.0",
-  "receipt_id": "council-video-studio-yassin-desktop-computer-use-2026-10-12",
+  "schema_version": "1.1",
+  "receipt_id": "phase2-r7-yassin-20261013T235038Z",
   "source_project": "CouncilVideoStudio",
+  "source_repository": "local:CouncilVideoStudio",
   "source_commit": "42544d3a7bfb0fcced63962c45a40dcafd692572",
-  "observed_at": "2026-10-12T02:50:25+03:00",
+  "component": "yassin_control_bridge",
+  "component_version": "0.7.1",
+  "host": "YASSIN",
+  "session_id": "phase2-r7-yassin-20261013T235038Z",
+  "observed_at": "2026-10-13T23:50:38.332446+00:00",
+  "expires_at": "2026-10-19T23:50:38.332446+00:00",
+  "verifier": "UniversalCouncil.phase2_r7",
+  "verifier_version": "1.0",
   "capability_id": "desktop_computer_use",
   "status": "RUNTIME_VERIFIED",
   "evidence_level": "HOST_INVOKED",
   "verified_scope": [
+    "status",
     "list_windows",
-    "inspect_ui",
+    "inspect_ui"
+  ],
+  "unverified_scope": [
     "search_ui",
     "read_values_properties",
     "screenshot",
@@ -24,9 +35,7 @@
     "send_keys",
     "window_or_element_recording",
     "before_after_verification",
-    "audit_logging"
-  ],
-  "unverified_scope": [
+    "audit_logging",
     "credential_entry",
     "password_capture",
     "security_setting_bypass",
@@ -51,5 +60,48 @@
       "path": "tests/test_yassin_control.py",
       "sha256": "42fac4595dd5d966e438ead97aaaecc2c59cafaa2161c3362b371474aac9ca6f"
     }
-  ]
+  ],
+  "ingested_at": "2026-10-13T23:51:02.138130+00:00",
+  "evidence_state": "CURRENT_VERIFIED",
+  "evidence_metadata": {
+    "source_repository": "local:CouncilVideoStudio",
+    "source_commit": "42544d3a7bfb0fcced63962c45a40dcafd692572",
+    "component": "yassin_control_bridge",
+    "component_version": "0.7.1",
+    "host": "YASSIN",
+    "session_id": "phase2-r7-yassin-20261013T235038Z",
+    "observed_at": "2026-10-13T23:50:38.332446+00:00",
+    "ingested_at": "2026-10-13T23:51:02.138130+00:00",
+    "expires_at": "2026-10-19T23:50:38.332446+00:00",
+    "verifier": "UniversalCouncil.phase2_r7",
+    "verifier_version": "1.0",
+    "verified_scope": [
+      "status",
+      "list_windows",
+      "inspect_ui"
+    ],
+    "unverified_scope": [
+      "search_ui",
+      "read_values_properties",
+      "screenshot",
+      "semantic_invoke",
+      "semantic_set_value",
+      "focus",
+      "scroll_into_view",
+      "wait_for",
+      "physical_click",
+      "physical_hover",
+      "physical_drag",
+      "send_keys",
+      "window_or_element_recording",
+      "before_after_verification",
+      "audit_logging",
+      "credential_entry",
+      "password_capture",
+      "security_setting_bypass",
+      "purchases",
+      "external_publish",
+      "external_message_send"
+    ]
+  }
 }
