@@ -359,7 +359,7 @@
     "full_episode_requires": "P2_PASS",
     "tool_qualification_status": "PASS",
     "p0_status": "PASS",
-    "active_stage": "P1_REFERENCE_FIDELITY_RETRY_PHASE_4",
+    "active_stage": "P1_REFERENCE_FIDELITY_RETRY_PHASE_5",
     "production_kit": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.0.md",
     "p0_review": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_COUNCIL_REVIEW.md",
     "p1_status": "PASS_INTERNAL_COHERENCE",
@@ -373,6 +373,8 @@
     "reference_temporal_grammar": "docs/operations/media/reference/REFERENCE_TEMPORAL_GRAMMAR_1000061003_v1.0.md",
     "motion_qualification_status": "PASS_PRIMARY",
     "motion_qualification_artifact": "docs/operations/media/pilots/2026-10-14/P2_MOTION_TOOL_QUALIFICATION_AFTER_EFFECTS.md",
-    "visual_event_script": "docs/operations/media/pilots/2026-10-14/P1_DAY24_VISUAL_EVENT_SCRIPT_v2.0.md"
+    "visual_event_script": "docs/operations/media/pilots/2026-10-14/P1_DAY24_VISUAL_EVENT_SCRIPT_v2.0.md",
+    "shot_bible": "docs/operations/media/pilots/2026-10-14/P1_DAY24_SHOT_BIBLE_ASSET_GRAPH_v2.0.md",
+    "critical_motion_prototypes_status": "ACTIVE"
   }
 }
