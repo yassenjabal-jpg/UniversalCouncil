@@ -1,7 +1,7 @@
 {
   "version": "1.2",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
-  "visual_system": "Editorial Renaissance Motion",
+  "visual_system": "Modern Editorial Surrealism",
   "primary_language": "Arabic",
   "secondary_language_rollout": [
     "English",
@@ -347,7 +347,7 @@
       "F12 Ending Reflection"
     ],
     "composition_rules": {
-      "negative_space_percent": "35-55",
+      "negative_space_percent": "35-60",
       "dominant_hero_objects": 1,
       "max_primary_text_blocks": 1,
       "max_micro_captions": 1,
@@ -390,7 +390,10 @@
       "human narrator identity preserved",
       "visual assets pass continuity palette/type/grid check",
       "at least three episode-specific visual motifs",
-      "transition map has narrative motivation"
+      "transition map has narrative motivation",
+      "thumbnail hero object is episode-specific",
+      "episode uses a unique visual metaphor rather than a repeated scene template",
+      "architecture/classical art appears only when narratively justified"
     ],
     "fail_action": "RETURN_TO_EDITORIAL_OR_VISUAL_TREATMENT"
   },
@@ -617,5 +620,34 @@
       "mobile_legibility_check"
     ],
     "thumbnail_designer_independent_craft_function": true
+  },
+  "visual_identity": {
+    "version": "2.0-candidate",
+    "bible": "docs/operations/media/MODERN_EDITORIAL_SURREALISM_VISUAL_BIBLE.md",
+    "primary_reference": "user-provided 1000061003.mp4",
+    "reference_authority": "PRIMARY_VISUAL_REFERENCE",
+    "core_principles": [
+      "editorial_clarity",
+      "one_hero_object",
+      "strong_negative_space",
+      "episode_specific_visual_metaphor",
+      "controlled_surrealism",
+      "contrast_between_old_and_new",
+      "meaning_driven_motion",
+      "topic_flexible_visual_language"
+    ],
+    "brand_anchors": [
+      "electric_cobalt_or_azure",
+      "paper_ivory",
+      "ink_charcoal"
+    ],
+    "episode_accent_required": true,
+    "architecture_is_topic_dependent_only": true,
+    "classical_art_is_optional_not_mandatory": true,
+    "anti_template_rule": "no more than two major structural devices may carry over from the immediately previous thumbnail",
+    "thumbnail_hypotheses_per_episode": 3,
+    "hero_objects_per_key_frame": 1,
+    "negative_space_percent": "35-60",
+    "synthetic_documentary_evidence_forbidden": true
   }
 }
