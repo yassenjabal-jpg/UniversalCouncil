@@ -36,6 +36,34 @@ MANDATORY_CRAFT_FUNCTIONS = {
 
 CONDITIONAL_CRAFT_FUNCTIONS = {"localization_producer"}
 
+STUDIO_DEPARTMENTS = {
+    "studio_management": ["media_producer"],
+    "editorial_research": [
+        "editorial_director",
+        "independent_fact_checker",
+        "script_voice_director",
+        "audience_growth_strategist",
+    ],
+    "visual_design": ["visual_art_director", "thumbnail_packaging_designer"],
+    "post_production": ["motion_picture_editor", "music_sound_supervisor", "dialogue_mix_engineer"],
+    "qc_delivery": ["independent_qc_reviewer"],
+    "conditional": ["localization_producer"],
+}
+
+STUDIO_CORE_POD = {
+    "media_producer",
+    "editorial_director",
+    "independent_fact_checker",
+    "script_voice_director",
+    "visual_art_director",
+    "motion_picture_editor",
+    "music_sound_supervisor",
+    "dialogue_mix_engineer",
+    "audience_growth_strategist",
+    "thumbnail_packaging_designer",
+    "independent_qc_reviewer",
+}
+
 REQUIRED_PILOT_METRICS = {
     "production_time_per_video",
     "owner_human_minutes_per_video",
@@ -72,9 +100,94 @@ PUBLISHED_PERFORMANCE_METRICS = {
 }
 
 
+def validate_studio_model(model):
+    if model.get("version") != "1.0":
+        raise MediaControlError("Studio operating model must be version 1.0")
+    if model.get("identity") != {
+        "name_ar": "الاستوديو",
+        "name_en": "The Studio",
+        "legacy_operating_name": "Council",
+        "scope": "MEDIA_PRODUCTION_ONLY",
+        "repository_name_unchanged": True,
+        "historical_evidence_keeps_legacy_name": True,
+    }:
+        raise MediaControlError("active media identity must remain The Studio")
+
+    departments = model.get("departments", {})
+    expected_department_keys = {
+        "studio_management",
+        "editorial_research",
+        "visual_design",
+        "post_production",
+        "qc_delivery",
+    }
+    if set(departments) != expected_department_keys:
+        raise MediaControlError("Studio departments drifted")
+    if departments["studio_management"].get("lead") != "media_producer":
+        raise MediaControlError("Studio Management lead drifted")
+    if departments["editorial_research"].get("lead") != "editorial_director":
+        raise MediaControlError("Editorial & Research lead drifted")
+    if departments["visual_design"].get("lead") != "visual_art_director":
+        raise MediaControlError("Visual Design lead drifted")
+    if departments["post_production"].get("lead") != "motion_picture_editor":
+        raise MediaControlError("Post Production lead drifted")
+    if departments["qc_delivery"].get("lead") != "independent_qc_reviewer":
+        raise MediaControlError("QC & Delivery lead drifted")
+
+    pod = model.get("episode_pod", {})
+    if pod.get("created_per_episode") is not True or set(pod.get("required_core", [])) != STUDIO_CORE_POD:
+        raise MediaControlError("Episode Pod core drifted")
+    if pod.get("conditional") != ["localization_producer"]:
+        raise MediaControlError("Episode Pod localization boundary drifted")
+
+    flow = model.get("production_flow", [])
+    if [stage.get("id") for stage in flow] != [
+        "research_script",
+        "visual_direction",
+        "asset_pack",
+        "edit_motion",
+        "final_qc",
+    ]:
+        raise MediaControlError("Studio production flow must retain five compatible stages")
+
+    gates = model.get("gates", [])
+    if [gate.get("technical_id") for gate in gates] != [
+        "Preproduction Lock",
+        "Rough Cut Review",
+        "Final QC",
+    ]:
+        raise MediaControlError("Studio must retain exactly the three governing gates")
+    if [gate.get("placement") for gate in gates] != ["after_asset_pack", "during_edit_motion", "after_export"]:
+        raise MediaControlError("Studio gate placement drifted")
+
+    required_doctrine = {
+        "STORY_AND_EVIDENCE_BEFORE_POLISH",
+        "WRITE_FOR_PICTURE_NOT_TEXT_ALONE",
+        "SPECIALISTS_PRODUCE_STAGE_AUTHORITY_DECIDES",
+        "PACKAGING_AND_RETENTION_BEGIN_BEFORE_EDIT",
+        "SOUND_DESIGN_BEGINS_BEFORE_PICTURE_LOCK",
+        "ONE_CENTRAL_EDIT_TIMELINE",
+        "AUTOMATE_REPETITION_NOT_CREATIVE_JUDGMENT",
+        "INDEPENDENT_QC_BEFORE_DELIVERY",
+    }
+    if not required_doctrine.issubset(set(model.get("doctrine", []))):
+        raise MediaControlError("Studio doctrine drifted")
+    return True
+
+
 def validate_media_team(config):
     if config.get("version") != "2.0":
         raise MediaControlError("media venture must be version 2.0")
+    if config.get("operating_identity") != {
+        "name_ar": "الاستوديو",
+        "name_en": "The Studio",
+        "previous_name": "Council",
+        "scope": "media production",
+        "governing_model": "company/config/studio_operating_model.json",
+    }:
+        raise MediaControlError("active media organization must be The Studio")
+    if config.get("studio_departments") != STUDIO_DEPARTMENTS:
+        raise MediaControlError("Studio department membership drifted")
     functions = {f["id"]: f for f in config.get("production_functions", [])}
     if set(functions) != REQUIRED_MEDIA_FUNCTIONS:
         raise MediaControlError("media functions missing or duplicated")
@@ -100,6 +213,7 @@ def validate_media_team(config):
         "missing_required_craft_output_blocks_stage_lock",
         "specialist_output_does_not_transfer_final_stage_authority",
         "localization_required_makes_localization_output_mandatory",
+        "studio_reviews_visual_work_at_defined_gates_after_lock_not_per_frame",
     }
     if not required.issubset(set(config.get("function_independence_rules", []))):
         raise MediaControlError("independent facts/QC and final authority required")
