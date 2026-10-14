@@ -165,7 +165,7 @@ class Phase3R11IntelligentRoutingTests(unittest.TestCase):
             self.assertTrue(result["activation_reasons"][role_id])
         self.assertEqual(
             set(result["dimensions"]),
-            {"domain","materiality","uncertainty","risk","freshness","blocker_authority","required_capability"},
+            {"domain", "materiality", "uncertainty", "risk", "freshness", "blocker_authority", "required_capability"},
         )
 
 
