@@ -353,6 +353,10 @@
       "P3_FULL_EPISODE_8_PLUS_MINUTES"
     ],
     "full_episode_requires": "P2_PASS",
-    "tool_qualification_status": "PASS"
+    "tool_qualification_status": "PASS",
+    "p0_status": "PASS",
+    "active_stage": "P1_COHERENCE_30_45",
+    "production_kit": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.0.md",
+    "p0_review": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_COUNCIL_REVIEW.md"
   }
 }
