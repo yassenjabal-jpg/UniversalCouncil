@@ -1,11 +1,14 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "policy": "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
   "principles": [
     "Use specialized creative tools for creative craft.",
     "Use code for orchestration, validation, metadata, automation, reproducibility and QC.",
     "Never substitute a homemade script for a missing professional craft tool merely because scripting is easier.",
-    "If no suitable specialized tool is available, declare CAPABILITY_GAP and stop or escalate."
+    "If no suitable specialized tool is available, declare CAPABILITY_GAP and stop or escalate.",
+    "Generated visual craft requires a versioned Council-authored Visual Generation Brief before tool execution.",
+    "Anti-Slop approval is mandatory before generated visual execution.",
+    "Generation tools and Technical Operator may not materially reinterpret or creatively rewrite an approved brief."
   ],
   "prohibitions": [
     "python_as_primary_video_editor",
@@ -43,7 +46,10 @@
         "Runway image models"
       ],
       "status": "AVAILABLE",
-      "code_role": "prompt/version registry only"
+      "code_role": "prompt/version registry only",
+      "generation_brief_required": true,
+      "anti_slop_approval_required": true,
+      "creative_prompt_rewrite_by_executor_forbidden": true
     },
     "ai_video_generation": {
       "preferred": [
@@ -52,7 +58,9 @@
       ],
       "status": "PARTIAL_CAPABILITY",
       "notes": "Runway connected but current workspace exposes no video models; do not pretend video generation is available there.",
-      "code_role": "job orchestration only"
+      "code_role": "job orchestration only",
+      "generation_brief_required": true,
+      "anti_slop_approval_required": true
     },
     "motion_graphics_compositing": {
       "preferred": [
@@ -135,7 +143,9 @@
     "pilot_motion_design": "ALLOW_WITH_AFTER_EFFECTS",
     "pilot_voice_cleanup": "ALLOW_WITH_DESCRIPT",
     "public_final_master": "BLOCK_UNTIL_PRO_AUDIO_AND_NLE_FINISHING_RUNTIME_VERIFIED",
-    "automatic_publish": "BLOCK"
+    "automatic_publish": "BLOCK",
+    "visual_generation_without_approved_brief": "BLOCK",
+    "visual_generation_without_anti_slop_approval": "BLOCK"
   },
   "escalation_rule": "If a required craft stage is blocked, HR/Capability Director must scout or request a specialized tool. The Technical Operator may not fill the gap by authoring a custom craft replacement without an explicit Council exception approved by Owner.",
   "exception_rule": {
