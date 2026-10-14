@@ -17,7 +17,33 @@ This document and `company/config/channel_operating_system.json` replace the DAY
 
 Total target: **235–360 active minutes** for an 8+ minute episode. This is a planning hypothesis, not a demonstrated benchmark. Record wall time, active time, service queue and render time separately. Source complexity, owner narration availability and factual uncertainty can exceed the target; reduce optional detail and execution overhead without changing the locked artistic grammar, factual integrity or quality; hold missing craft rather than substitute an infographic identity.
 
-The Council designs the system and challenges material risks at the three existing gates. It does not vote on ordinary frames, prototypes, motion presets, or prompts. Stage authorities settle craft choices within the locked brief. Advisers are activated only for a concrete unresolved issue. Fact-check independence and independent final QC remain mandatory. The Producer controls cost/schedule and asset delivery; editorial truth stays with the Showrunner, visual treatment with the Art Director. The Owner retains narration identity/brand veto and publication authority; publishing is a separate authorization action, not a fourth production gate.
+The Council designs the system and challenges material risks at the three existing gates. It does not vote on ordinary frames, prototypes, motion presets, or prompts. Stage authorities settle craft choices within the locked brief. **Production specialists are mandatory craft contributors, not optional advisers:** they work in parallel inside the five existing stages and must deliver their named production artifacts before the relevant stage can lock. Their outputs do not create new gates, transfer final authority, or trigger committee voting. Fact-check independence and independent final QC remain mandatory. The Producer controls cost/schedule and asset delivery; editorial truth stays with the Showrunner, visual treatment with the Art Director. The Owner retains narration identity/brand veto and publication authority; publishing is a separate authorization action, not a fourth production gate.
+
+## Mandatory craft contributors inside the five stages
+
+These are production deliverables, not additional approvals. Missing or stale outputs block the existing stage lock.
+
+| Stage | Mandatory contributor | Required craft output |
+|---|---|---|
+| Research/Script | Independent Fact Checker | Claim ledger |
+| Research/Script | Script & Voice Director | Narration performance map |
+| Research/Script | Audience Growth & Packaging Strategist | Hook / retention notes |
+| Visual Direction | Motion & Picture Editor | Motion feasibility map |
+| Visual Direction | Music Supervisor & Sound Designer | Sonic / visual intent |
+| Visual Direction | Thumbnail & Packaging Designer | Packaging-hook continuity note |
+| Asset Pack | Visual Art Director | Visual asset clearance |
+| Asset Pack | Music Supervisor & Sound Designer | Music / SFX asset plan |
+| Asset Pack | Dialogue & Mix Engineer | Dialogue / mix input specification |
+| Asset Pack | Thumbnail & Packaging Designer | Thumbnail / packaging specification |
+| Edit/Motion | Script & Voice Director | Narration continuity notes |
+| Edit/Motion | Music Supervisor & Sound Designer | Spotting sheet |
+| Edit/Motion | Dialogue & Mix Engineer | Rough-mix receipt |
+| Edit/Motion | Visual Art Director | Visual conform notes |
+| Final QC work | Dialogue & Mix Engineer | Final-mix receipt |
+| Final QC work | Independent Fact Checker | Final fact spot-check |
+| Localized variant only | Localization Producer | Localization conform package |
+
+Execution rule: **specialists produce in parallel → stage authority resolves conflicts and decides → the existing gate occurs once.** A specialist may identify a blocking craft defect, but that defect is resolved inside the current stage/gate rather than creating a new review queue.
 
 ## Exactly three gates
 
