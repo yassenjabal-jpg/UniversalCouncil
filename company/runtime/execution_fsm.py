@@ -28,8 +28,8 @@ def validate_fsm_config(cfg: dict[str, Any]) -> bool:
         raise ExecutionFSMError("verification must be required")
     if cfg.get("checkpoint_required") is not True:
         raise ExecutionFSMError("checkpoint must be required")
-    expected_success = ["OBSERVE","PLAN","ACT","VERIFY","CHECKPOINT","COMPLETE"]
-    expected_failure = ["DIAGNOSE","RECOVER","VERIFY"]
+    expected_success = ["OBSERVE", "PLAN", "ACT", "VERIFY", "CHECKPOINT", "COMPLETE"]
+    expected_failure = ["DIAGNOSE", "RECOVER", "VERIFY"]
     if cfg.get("success_path") != expected_success:
         raise ExecutionFSMError("success path does not match canonical R16 sequence")
     if cfg.get("failure_path") != expected_failure:
@@ -53,13 +53,13 @@ def validate_transition(current: FSMState, nxt: FSMState, cfg: dict[str, Any]) -
 def _validate_plan(plan: dict[str, Any]) -> None:
     if not isinstance(plan, dict):
         raise ExecutionFSMError("planner must return an object")
-    for field in ("route","route_reason","route_version","authority"):
+    for field in ("route", "route_reason", "route_version", "authority"):
         if plan.get(field) in (None, ""):
             raise ExecutionFSMError(f"plan missing {field}")
     authority = plan["authority"]
     if not isinstance(authority, dict) or not authority:
         raise ExecutionFSMError("plan authority must be a non-empty object")
-    for field in ("operation","target","scope"):
+    for field in ("operation", "target", "scope"):
         if not str(authority.get(field) or "").strip():
             raise ExecutionFSMError(f"plan authority missing {field}")
 
