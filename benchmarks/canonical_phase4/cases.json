@@ -1,0 +1,325 @@
+[
+  {
+    "case_id": "canary_material_commercial_blocker",
+    "stage": "CANARY",
+    "title": "Material commercial decision must preserve buyer and moat blockers",
+    "domains": [
+      "business"
+    ],
+    "materiality": "MATERIAL",
+    "uncertainty": "HIGH",
+    "risk": "MEDIUM",
+    "freshness": "HIGH",
+    "commercial": true,
+    "required_capabilities": [
+      "evidence",
+      "redteam",
+      "value",
+      "human"
+    ],
+    "active_domain_blockers": [
+      "customer_skeptic",
+      "moat_auditor"
+    ],
+    "required_specialists": [
+      "business",
+      "customer_skeptic",
+      "moat_auditor"
+    ],
+    "expected_disposition": "BLOCK",
+    "task_class": "external_service",
+    "operation": "read",
+    "target": "market_evidence",
+    "scope": "commercial_validation",
+    "available_routes": [
+      "authorized_connector_api",
+      "gui_semantic_uia"
+    ],
+    "authorized_routes": [
+      "authorized_connector_api"
+    ],
+    "expected_route": "authorized_connector_api",
+    "evidence_required": true,
+    "injected_failure": false,
+    "expected_recovery": false,
+    "expected_dissent_preserved": true
+  },
+  {
+    "case_id": "canary_authority_bounded_fallback",
+    "stage": "CANARY",
+    "title": "Fallback must remain inside operation target and scope authority",
+    "domains": [
+      "software"
+    ],
+    "materiality": "MATERIAL",
+    "uncertainty": "MEDIUM",
+    "risk": "HIGH",
+    "freshness": "LOW",
+    "commercial": false,
+    "required_capabilities": [
+      "execution",
+      "risk"
+    ],
+    "active_domain_blockers": [],
+    "required_specialists": [
+      "software"
+    ],
+    "expected_disposition": "PROCEED",
+    "task_class": "structured_application",
+    "operation": "edit",
+    "target": "application",
+    "scope": "document",
+    "available_routes": [
+      "native_api",
+      "semantic_uia",
+      "visual_grounding"
+    ],
+    "authorized_routes": [
+      "semantic_uia",
+      "visual_grounding"
+    ],
+    "expected_route": "semantic_uia",
+    "evidence_required": false,
+    "injected_failure": false,
+    "expected_recovery": false,
+    "expected_dissent_preserved": false
+  },
+  {
+    "case_id": "representative_low_stakes_software",
+    "stage": "REPRESENTATIVE",
+    "title": "Low-stakes reversible software configuration decision",
+    "domains": [
+      "software"
+    ],
+    "materiality": "LOW",
+    "uncertainty": "LOW",
+    "risk": "LOW",
+    "freshness": "LOW",
+    "commercial": false,
+    "required_capabilities": [
+      "execution"
+    ],
+    "active_domain_blockers": [],
+    "required_specialists": [
+      "software"
+    ],
+    "expected_disposition": "PROCEED",
+    "task_class": "structured_application",
+    "operation": "edit",
+    "target": "application",
+    "scope": "configuration",
+    "available_routes": [
+      "native_api",
+      "semantic_uia"
+    ],
+    "authorized_routes": [
+      "native_api",
+      "semantic_uia"
+    ],
+    "expected_route": "native_api",
+    "evidence_required": false,
+    "injected_failure": false,
+    "expected_recovery": false,
+    "expected_dissent_preserved": false
+  },
+  {
+    "case_id": "representative_science_freshness",
+    "stage": "REPRESENTATIVE",
+    "title": "High-freshness scientific decision requires evidence capability",
+    "domains": [
+      "science"
+    ],
+    "materiality": "MATERIAL",
+    "uncertainty": "HIGH",
+    "risk": "MEDIUM",
+    "freshness": "HIGH",
+    "commercial": false,
+    "required_capabilities": [
+      "evidence",
+      "redteam",
+      "risk"
+    ],
+    "active_domain_blockers": [],
+    "required_specialists": [
+      "science"
+    ],
+    "expected_disposition": "PROCEED",
+    "task_class": "external_service",
+    "operation": "read",
+    "target": "research_sources",
+    "scope": "decision_evidence",
+    "available_routes": [
+      "authorized_connector_api",
+      "gui_semantic_uia"
+    ],
+    "authorized_routes": [
+      "authorized_connector_api"
+    ],
+    "expected_route": "authorized_connector_api",
+    "evidence_required": true,
+    "injected_failure": false,
+    "expected_recovery": false,
+    "expected_dissent_preserved": true
+  },
+  {
+    "case_id": "representative_visual_interaction",
+    "stage": "REPRESENTATIVE",
+    "title": "Visual application interaction should prefer semantic UIA",
+    "domains": [
+      "design"
+    ],
+    "materiality": "MATERIAL",
+    "uncertainty": "MEDIUM",
+    "risk": "MEDIUM",
+    "freshness": "LOW",
+    "commercial": false,
+    "required_capabilities": [
+      "execution",
+      "human"
+    ],
+    "active_domain_blockers": [],
+    "required_specialists": [
+      "design"
+    ],
+    "expected_disposition": "PROCEED",
+    "task_class": "visual_interaction",
+    "operation": "edit",
+    "target": "application",
+    "scope": "canvas",
+    "available_routes": [
+      "semantic_uia",
+      "visual_grounding",
+      "bounded_physical_input"
+    ],
+    "authorized_routes": [
+      "semantic_uia",
+      "visual_grounding"
+    ],
+    "expected_route": "semantic_uia",
+    "evidence_required": false,
+    "injected_failure": false,
+    "expected_recovery": false,
+    "expected_dissent_preserved": false
+  },
+  {
+    "case_id": "representative_unknown_recovery",
+    "stage": "REPRESENTATIVE",
+    "title": "Unknown execution outcome must diagnose recover verify and checkpoint",
+    "domains": [
+      "software"
+    ],
+    "materiality": "HIGH",
+    "uncertainty": "HIGH",
+    "risk": "HIGH",
+    "freshness": "LOW",
+    "commercial": false,
+    "required_capabilities": [
+      "execution",
+      "risk",
+      "redteam"
+    ],
+    "active_domain_blockers": [],
+    "required_specialists": [
+      "software"
+    ],
+    "expected_disposition": "PROCEED",
+    "task_class": "structured_application",
+    "operation": "edit",
+    "target": "application",
+    "scope": "document",
+    "available_routes": [
+      "native_api",
+      "semantic_uia"
+    ],
+    "authorized_routes": [
+      "native_api",
+      "semantic_uia"
+    ],
+    "expected_route": "native_api",
+    "evidence_required": false,
+    "injected_failure": true,
+    "expected_recovery": true,
+    "expected_dissent_preserved": true
+  },
+  {
+    "case_id": "representative_security_blocker",
+    "stage": "REPRESENTATIVE",
+    "title": "Security domain blocker must prevent execution",
+    "domains": [
+      "security"
+    ],
+    "materiality": "HIGH",
+    "uncertainty": "MEDIUM",
+    "risk": "CRITICAL",
+    "freshness": "MEDIUM",
+    "commercial": false,
+    "required_capabilities": [
+      "risk",
+      "evidence",
+      "redteam"
+    ],
+    "active_domain_blockers": [
+      "security"
+    ],
+    "required_specialists": [
+      "security"
+    ],
+    "expected_disposition": "BLOCK",
+    "task_class": "external_service",
+    "operation": "write",
+    "target": "external_service",
+    "scope": "credentials",
+    "available_routes": [
+      "authorized_connector_api",
+      "gui_semantic_uia"
+    ],
+    "authorized_routes": [],
+    "expected_route": null,
+    "evidence_required": true,
+    "injected_failure": false,
+    "expected_recovery": false,
+    "expected_dissent_preserved": true
+  },
+  {
+    "case_id": "representative_commercial_value",
+    "stage": "REPRESENTATIVE",
+    "title": "Commercial value decision preserves buyer and moat challenge roles",
+    "domains": [
+      "business"
+    ],
+    "materiality": "MATERIAL",
+    "uncertainty": "MEDIUM",
+    "risk": "MEDIUM",
+    "freshness": "MEDIUM",
+    "commercial": true,
+    "required_capabilities": [
+      "value",
+      "human",
+      "evidence",
+      "redteam"
+    ],
+    "active_domain_blockers": [],
+    "required_specialists": [
+      "business",
+      "customer_skeptic",
+      "moat_auditor"
+    ],
+    "expected_disposition": "PROCEED",
+    "task_class": "external_service",
+    "operation": "read",
+    "target": "market_evidence",
+    "scope": "commercial_validation",
+    "available_routes": [
+      "authorized_connector_api",
+      "gui_semantic_uia"
+    ],
+    "authorized_routes": [
+      "authorized_connector_api"
+    ],
+    "expected_route": "authorized_connector_api",
+    "evidence_required": true,
+    "injected_failure": false,
+    "expected_recovery": false,
+    "expected_dissent_preserved": true
+  }
+]
