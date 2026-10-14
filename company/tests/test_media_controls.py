@@ -246,9 +246,7 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["visual_production_system"].__setitem__(
                 "art_director_final_visual_authority_within_lock", False
             ),
-            lambda c: c["visual_production_system"].__setitem__(
-                "per_frame_full_council_review_after_lock", True
-            ),
+            lambda c: c["visual_production_system"].__setitem__("per_frame_full_council_review_after_lock", True),
             lambda c: c["visual_production_system"].__setitem__("full_episode_requires", "NONE"),
         ]
         for mutate in mutations:
