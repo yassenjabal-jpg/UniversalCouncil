@@ -21,7 +21,6 @@ class ChannelOperatingSystemTests(unittest.TestCase):
     def test_current_config_is_valid(self):
         self.assertTrue(validate_config(copy.deepcopy(CONFIG)))
 
-
     def test_rebuilt_visual_identity_contract(self):
         self.assertEqual(CONFIG["version"], "1.3")
         self.assertEqual(CONFIG["visual_system"], "Modern Editorial Surrealism")
