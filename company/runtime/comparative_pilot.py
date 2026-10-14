@@ -7,7 +7,7 @@ from typing import Any
 
 from company.runtime.council_intelligent_routing import route_decision
 from company.runtime.execution_contract import build_execution_contract
-from company.runtime.task_aware_router import route_execution
+from company.runtime.task_aware_router import TaskAwareRoutingError, route_execution
 
 
 class ComparativePilotError(ValueError):
@@ -271,19 +271,22 @@ def _task_aware_route(root: Path, packet: dict[str, Any]) -> str | None:
         },
         contract_cfg,
     )
-    routed = route_execution(
-        {
-            "task_class": packet["task_class"],
-            "operation": packet["operation"],
-            "target": packet["target"],
-            "scope": packet["scope"],
-            "available_routes": packet["available_routes"],
-            "authorized_routes": packet["authorized_routes"],
-            "allow_physical_input": False,
-        },
-        contract,
-        router_cfg,
-    )
+    try:
+        routed = route_execution(
+            {
+                "task_class": packet["task_class"],
+                "operation": packet["operation"],
+                "target": packet["target"],
+                "scope": packet["scope"],
+                "available_routes": packet["available_routes"],
+                "authorized_routes": packet["authorized_routes"],
+                "allow_physical_input": False,
+            },
+            contract,
+            router_cfg,
+        )
+    except TaskAwareRoutingError:
+        return None
     return routed["route"]
 
 
