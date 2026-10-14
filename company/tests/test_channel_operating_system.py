@@ -33,6 +33,8 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertLess(
             workflow.index("audio_spotting_and_sonic_concept"), workflow.index("reference_frame_assignment")
         )
+        self.assertLess(workflow.index("reference_frame_assignment"), workflow.index("shot_design_and_camera_plan"))
+        self.assertLess(workflow.index("shot_design_and_camera_plan"), workflow.index("animatic"))
         self.assertLess(workflow.index("animatic"), workflow.index("production_readiness_review"))
         self.assertLess(workflow.index("production_readiness_review"), workflow.index("production"))
         self.assertLess(workflow.index("editorial_rough_cut"), workflow.index("packaging_finalization_and_test_plan"))
@@ -47,6 +49,7 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             "Independent Fact Checker",
             "Thumbnail & Packaging Designer",
             "Audience Growth & Packaging Strategist",
+            "Cinematography / Shot Design",
             "Motion & Picture Editor",
         }:
             self.assertIn(role, roles)
@@ -72,6 +75,30 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertIn("Motion & Picture Editor", preprod["participants"])
         self.assertIn("Music Supervisor & Sound Designer", preprod["participants"])
         self.assertIn("Media Producer / Production Coordinator", preprod["participants"])
+        self.assertIn("Cinematography / Shot Design", preprod["participants"])
+
+    def test_shot_design_contract_is_explicit(self):
+        shot = CONFIG["shot_design_system"]
+        self.assertTrue(shot["required"])
+        self.assertTrue(shot["must_precede_animatic"])
+        self.assertEqual(shot["accountable_function"], "Cinematography / Shot Design")
+        for field in {
+            "shot_id",
+            "story_beat_id",
+            "shot_purpose",
+            "framing",
+            "shot_size",
+            "camera_motion",
+            "depth_layers",
+            "subject_staging",
+            "screen_direction",
+            "continuity_link",
+            "transition_motivation",
+            "sound_sync_note",
+            "asset_requirements",
+        }:
+            self.assertIn(field, shot["required_fields"])
+        self.assertEqual(shot["fail_action"], "RETURN_TO_VISUAL_TREATMENT_OR_STORYBOARD")
 
     def test_script_development_is_multi_pass_and_fact_checked(self):
         scripts = CONFIG["script_development"]
@@ -94,6 +121,8 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             "script_locked",
             "independent_fact_check_passed",
             "visual_rights_clear",
+            "shot_design_approved",
+            "camera_continuity_checked",
             "audio_spotting_complete",
             "specialized_tools_available",
             "schedule_acceptable",
@@ -106,6 +135,18 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertTrue(packaging["thumbnail_designer_independent_craft_function"])
         self.assertGreaterEqual(len(packaging["stage_a_before_script"]), 4)
         self.assertGreaterEqual(len(packaging["stage_b_after_rough_cut"]), 4)
+
+    def test_small_core_routed_capability_model(self):
+        routing = CONFIG["studio_routing_model"]
+        self.assertEqual(routing["mode"], "SMALL_CORE_ROUTED_CAPABILITIES")
+        self.assertEqual(
+            set(routing["core_functions"]),
+            {"Media Producer / Production Coordinator", "Editorial Director / Showrunner"},
+        )
+        self.assertIn("Cinematography / Shot Design", routing["stage_routed_craft_functions"])
+        self.assertIn("do_not_call_every_function_for_every_stage", routing["rules"])
+        self.assertIn("default_to_artifact_delta_or_blocker_not_long_report", routing["rules"])
+        self.assertIn("owner_interruption_is_exception_not_default", routing["rules"])
 
     def test_audio_contract(self):
         audio = CONFIG["audio_system"]
@@ -134,6 +175,8 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["visual_story_case"].__setitem__("required_fields", []),
             lambda c: c["preproduction_craft_review"].__setitem__("required", False),
             lambda c: c["preproduction_craft_review"].__setitem__("participants", []),
+            lambda c: c["shot_design_system"].__setitem__("required", False),
+            lambda c: c["shot_design_system"].__setitem__("required_fields", []),
             lambda c: c["script_development"].__setitem__("single_pass_forbidden", False),
             lambda c: c["script_development"].__setitem__("required_passes", ["one"]),
             lambda c: c["script_development"].__setitem__("fact_check_before_lock", False),
@@ -155,6 +198,9 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["roles"].pop("Independent Fact Checker"),
             lambda c: c["roles"].pop("Thumbnail & Packaging Designer"),
             lambda c: c["roles"].pop("Media Producer / Production Coordinator"),
+            lambda c: c["roles"].pop("Cinematography / Shot Design"),
+            lambda c: c["studio_routing_model"].__setitem__("mode", "EVERYONE_ALWAYS_ACTIVE"),
+            lambda c: c["studio_routing_model"].__setitem__("rules", []),
         ]
         for mutate in mutations:
             cfg = copy.deepcopy(CONFIG)
@@ -180,6 +226,10 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["visual_story_case"].__setitem__("must_precede_script_lock", False),
             lambda c: c["visual_story_case"].__setitem__("fail_action", "IGNORE"),
             lambda c: c["preproduction_craft_review"].__setitem__("must_precede_script_lock", False),
+            lambda c: c["shot_design_system"].__setitem__("must_precede_animatic", False),
+            lambda c: c["shot_design_system"].__setitem__("accountable_function", "Motion & Picture Editor"),
+            lambda c: c["shot_design_system"].__setitem__("fail_action", "IGNORE"),
+            lambda c: c["shot_design_system"].__setitem__("rules", []),
             lambda c: c["script_development"].__setitem__("visual_draft_requires_editor_review", False),
             lambda c: c["production_readiness"].__setitem__("fail_action", "CONTINUE"),
             lambda c: c["packaging_system"].__setitem__("stage_a_before_script", []),
