@@ -61,6 +61,25 @@ class MediaCapabilityTests(unittest.TestCase):
         }:
             self.assertIn(rule, rules)
 
+    def test_visual_generation_brief_capability_is_composed_and_fail_closed(self):
+        cfg = self.load_config()
+        capability = cfg["visual_generation_brief_capability"]
+        self.assertFalse(capability["permanent_role"])
+        self.assertEqual(
+            set(capability["composed_by"]),
+            {
+                "Visual Art Director / Frame Curator",
+                "Thumbnail & Packaging Designer",
+                "Synthesis & Alternatives Designer",
+            },
+        )
+        self.assertEqual(capability["anti_slop_approver"], "Red Team")
+        self.assertEqual(capability["executor"], "Technical Operator")
+        self.assertTrue(capability["no_prompt_no_generation"])
+        self.assertTrue(capability["no_anti_slop_approval_no_execution"])
+        self.assertTrue(capability["tool_creative_rewrite_forbidden"])
+        self.assertTrue(capability["material_deviation_returns_to_council"])
+
     def test_audio_roles_are_distinct_and_active(self):
         cfg = self.load_config()
         by_id = {x["id"]: x for x in cfg["production_functions"]}
@@ -97,6 +116,8 @@ class MediaCapabilityTests(unittest.TestCase):
             "thumbnail_variants_produced",
             "production_readiness_failures",
             "edit_rework_after_script_lock",
+            "generation_brief_rework_rounds",
+            "prompt_drift_defects",
         }:
             self.assertIn(metric, REQUIRED_PILOT_METRICS)
 
@@ -177,6 +198,11 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["media_toolchain"].pop("dialogue_cleanup"),
             lambda c: c["pilot"].__setitem__("required_before_scale", False),
             lambda c: c["pilot"].__setitem__("video_count", 2),
+            lambda c: c.pop("visual_generation_brief_capability"),
+            lambda c: c["visual_generation_brief_capability"].__setitem__("permanent_role", True),
+            lambda c: c["visual_generation_brief_capability"].__setitem__("composed_by", ["Prompt Engineer"]),
+            lambda c: c["visual_generation_brief_capability"].__setitem__("anti_slop_approver", "Technical Operator"),
+            lambda c: c["visual_generation_brief_capability"].__setitem__("no_prompt_no_generation", False),
         ]
         for mutate in mutations:
             cfg = self.load_config()
