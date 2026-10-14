@@ -22,7 +22,7 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertTrue(validate_config(copy.deepcopy(CONFIG)))
 
     def test_rebuilt_visual_identity_contract(self):
-        self.assertEqual(CONFIG["version"], "1.3")
+        self.assertEqual(CONFIG["version"], "1.4")
         self.assertEqual(CONFIG["visual_system"], "Modern Editorial Surrealism")
         identity = CONFIG["visual_identity"]
         self.assertEqual(identity["version"], "2.0-candidate")
@@ -38,6 +38,29 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertEqual(identity["hero_objects_per_key_frame"], 1)
         self.assertTrue(identity["synthetic_documentary_evidence_forbidden"])
         self.assertEqual(CONFIG["frame_bible"]["composition_rules"]["negative_space_percent"], "35-60")
+
+    def test_visual_generation_brief_is_mandatory_and_fail_closed(self):
+        brief = CONFIG["visual_generation_brief_system"]
+        self.assertEqual(brief["status"], "REQUIRED_FOR_ANY_GENERATED_VISUAL")
+        self.assertFalse("Prompt Engineer" in brief["composed_by"])
+        self.assertEqual(
+            set(brief["composed_by"]),
+            {
+                "Visual Art Director / Frame Curator",
+                "Thumbnail & Packaging Designer",
+                "Synthesis & Alternatives Designer",
+            },
+        )
+        self.assertEqual(brief["approval_required_from"], ["Red Team / Anti-Slop"])
+        self.assertEqual(brief["executor"], "Technical Operator")
+        self.assertEqual(brief["approval_state_required"], "APPROVED_BY_ANTI_SLOP")
+        self.assertIn("NO_PROMPT_NO_GENERATION", brief["execution_rules"])
+        self.assertIn("NO_ANTI_SLOP_APPROVAL_NO_EXECUTION", brief["execution_rules"])
+        self.assertIn("TOOL_MUST_NOT_CREATIVELY_REWRITE_APPROVED_BRIEF", brief["execution_rules"])
+        self.assertIn("MATERIAL_DEVIATION_RETURNS_TO_COUNCIL", brief["execution_rules"])
+        self.assertGreaterEqual(brief["minimum_zero_architecture_hypotheses_per_three"], 1)
+        self.assertIn("visual_generation_briefs_approved", CONFIG["production_readiness"]["required_checks"])
+        self.assertIn("G6A Visual Generation Brief + Anti-Slop Approval", CONFIG["quality_gates"])
 
     def test_topic_weights_total_100(self):
         self.assertEqual(sum(CONFIG["topic_scoring"]["fields"].values()), 100)
@@ -151,6 +174,16 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["visual_identity"].__setitem__("thumbnail_hypotheses_per_episode", 1),
             lambda c: c["visual_identity"].__setitem__("hero_objects_per_key_frame", 2),
             lambda c: c["visual_identity"].__setitem__("synthetic_documentary_evidence_forbidden", False),
+            lambda c: c.pop("visual_generation_brief_system"),
+            lambda c: c["visual_generation_brief_system"].__setitem__("status", "OPTIONAL"),
+            lambda c: c["visual_generation_brief_system"].__setitem__("composed_by", ["Prompt Engineer"]),
+            lambda c: c["visual_generation_brief_system"].__setitem__("approval_required_from", []),
+            lambda c: c["visual_generation_brief_system"].__setitem__("executor", "Image Tool"),
+            lambda c: c["visual_generation_brief_system"].__setitem__("required_fields", []),
+            lambda c: c["visual_generation_brief_system"].__setitem__("execution_rules", []),
+            lambda c: c["visual_generation_brief_system"].__setitem__("approval_state_required", "AUTO"),
+            lambda c: c["visual_generation_brief_system"].__setitem__("thumbnail_hypothesis_languages_required", ["same"]),
+            lambda c: c["visual_generation_brief_system"].__setitem__("minimum_zero_architecture_hypotheses_per_three", 0),
             lambda c: c.__setitem__("publication_authority", "AUTO"),
             lambda c: c["benchmark_profile"].__setitem__("adopt_disciplines_not_headcount", False),
             lambda c: c["benchmark_profile"].__setitem__("reference_models", []),
@@ -168,6 +201,7 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["script_development"].__setitem__("fact_check_before_lock", False),
             lambda c: c["production_readiness"].__setitem__("required", False),
             lambda c: c["production_readiness"].__setitem__("required_checks", []),
+            lambda c: c["packaging_system"].__setitem__("generated_visual_rule", "generate freely"),
             lambda c: c["packaging_system"].__setitem__("thumbnail_designer_independent_craft_function", False),
             lambda c: c["script_schema"].__setitem__("required_columns", ["narration"]),
             lambda c: c["frame_bible"].__setitem__(
