@@ -104,8 +104,8 @@ REQUIRED_SCRIPT_PASSES = [
 
 
 def validate_config(cfg: dict[str, Any]) -> bool:
-    if cfg.get("version") != "1.5":
-        raise ChannelOperatingSystemError("channel operating system must be version 1.5")
+    if cfg.get("version") != "1.6":
+        raise ChannelOperatingSystemError("channel operating system must be version 1.6")
     if cfg.get("channel_model") != "broad_format_first_multilingual_visual_documentary":
         raise ChannelOperatingSystemError("channel model drifted")
     if cfg.get("visual_system") != "Modern Editorial Surrealism":
@@ -236,6 +236,76 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     }:
         if visual_brief.get(flag) is not True:
             raise ChannelOperatingSystemError(f"single-thumbnail execution boundary missing: {flag}")
+    production_system = cfg.get("production_system", {})
+    if production_system.get("version") != "1.0":
+        raise ChannelOperatingSystemError("production system version drifted")
+    if (
+        production_system.get("governing_principle")
+        != "COUNCIL_DESIGNS_SYSTEM_ART_DIRECTOR_LOCKS_OPERATORS_PRODUCE_COUNCIL_REVIEWS_GATES"
+    ):
+        raise ChannelOperatingSystemError("production system governing principle drifted")
+
+    visual_lock = production_system.get("visual_system_lock", {})
+    if visual_lock.get("required") is not True:
+        raise ChannelOperatingSystemError("visual system lock is required")
+    if int(visual_lock.get("reference_frame_count_min", 0)) < 4:
+        raise ChannelOperatingSystemError("visual system lock needs at least four reference frames")
+    if int(visual_lock.get("reference_frame_count_max", 99)) > 6:
+        raise ChannelOperatingSystemError("visual system lock reference frame ceiling drifted")
+    if visual_lock.get("production_kit_required") is not True:
+        raise ChannelOperatingSystemError("visual production kit is required")
+    if visual_lock.get("lock_authority") != "Visual Art Director / Frame Curator":
+        raise ChannelOperatingSystemError("visual system lock authority drifted")
+    if visual_lock.get("red_team_blocker") is not True:
+        raise ChannelOperatingSystemError("Red Team must retain visual-lock blocker authority")
+
+    authority_model = production_system.get("authority_model", {})
+    if authority_model.get("council_after_lock") != "SYSTEM_AND_GATE_REVIEW_ONLY":
+        raise ChannelOperatingSystemError("Council must review gates, not micromanage locked production")
+    if (
+        authority_model.get("visual_art_director")
+        != "FINAL_VISUAL_DECISION_WITHIN_LOCKED_SYSTEM"
+    ):
+        raise ChannelOperatingSystemError("Visual Art Director final visual authority drifted")
+    if authority_model.get("technical_operator") != "EXECUTION_ONLY_NO_CREATIVE_REWRITE":
+        raise ChannelOperatingSystemError("Technical Operator execution boundary drifted")
+    if authority_model.get("per_frame_full_council_review_after_lock") is not False:
+        raise ChannelOperatingSystemError("per-frame Council review must stay disabled after lock")
+
+    qualification = production_system.get("tool_qualification", {})
+    if qualification.get("required_before_visual_system_lock") is not True:
+        raise ChannelOperatingSystemError("visual tool qualification must precede system lock")
+    if qualification.get("comparison_contract") != "SAME_FRAME_SAME_BRIEF":
+        raise ChannelOperatingSystemError("tool qualification comparison contract drifted")
+    if int(qualification.get("minimum_viable_candidates", 0)) < 2:
+        raise ChannelOperatingSystemError("tool qualification needs at least two viable candidates")
+    weights = qualification.get("score_weights", {})
+    if sum(int(value) for value in weights.values()) != 100:
+        raise ChannelOperatingSystemError("tool qualification weights must total 100")
+    if int(weights.get("prompt_fidelity", 0)) + int(weights.get("style_consistency", 0)) < 50:
+        raise ChannelOperatingSystemError("quality and fidelity must dominate tool selection")
+    if qualification.get("remaining_credits_must_not_select_primary_tool") is not True:
+        raise ChannelOperatingSystemError("remaining credits must not select the primary visual tool")
+
+    ladder = production_system.get("pilot_ladder", [])
+    if [stage.get("id") for stage in ladder] != [
+        "P0_REFERENCE_FRAME_LOCK",
+        "P1_COHERENCE_30_45",
+        "P2_PRODUCTION_60_90",
+        "P3_FULL_EPISODE_8_PLUS_MINUTES",
+    ]:
+        raise ChannelOperatingSystemError("media pilot ladder drifted")
+    if ladder[1].get("duration_seconds_min") != 30 or ladder[1].get("duration_seconds_max") != 45:
+        raise ChannelOperatingSystemError("P1 pilot must remain 30-45 seconds")
+    if ladder[2].get("duration_seconds_min") != 60 or ladder[2].get("duration_seconds_max") != 90:
+        raise ChannelOperatingSystemError("P2 pilot must remain 60-90 seconds")
+    if ladder[3].get("duration_seconds_min") != 480 or ladder[3].get("requires") != "P2_PASS":
+        raise ChannelOperatingSystemError("full episode must be 8+ minutes and require P2 PASS")
+    if production_system.get("full_length_episode_before_p2_pass") != "BLOCK":
+        raise ChannelOperatingSystemError("full-length production must fail closed before P2 PASS")
+    if production_system.get("per_frame_council_review_after_lock") != "FORBIDDEN_UNLESS_EXCEPTION":
+        raise ChannelOperatingSystemError("Council per-frame review boundary drifted")
+
     if cfg.get("publication_authority") != "GATED":
         raise ChannelOperatingSystemError("publishing must remain gated")
 
@@ -382,7 +452,10 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     if len(packaging.get("stage_b_after_rough_cut", [])) < 4:
         raise ChannelOperatingSystemError("final packaging stage is incomplete")
     generated_visual_rule = packaging.get("generated_visual_rule", "")
-    if "no generated thumbnail asset may be executed before an approved Visual Generation Brief" not in generated_visual_rule:
+    if (
+        "no generated thumbnail asset may be executed before an approved Visual Generation Brief"
+        not in generated_visual_rule
+    ):
         raise ChannelOperatingSystemError("packaging generation-brief rule drifted")
     if "one brief, one generation job, and one independent asset only" not in generated_visual_rule:
         raise ChannelOperatingSystemError("single-thumbnail packaging lock drifted")
