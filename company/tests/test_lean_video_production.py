@@ -380,6 +380,23 @@ class LeanProductionTests(unittest.TestCase):
             with self.assertRaises(ProductionWorkflowError):
                 validate_production_config(cfg)
 
+    def test_studio_preproduction_is_mandatory_not_on_demand(self):
+        self.assertEqual(self.cfg["preproduction_craft_review"]["mode"], "MANDATORY_PARALLEL_CRAFT_REVIEW")
+        self.assertNotIn("advisers_on_demand", self.cfg["preproduction_craft_review"])
+        self.assertIn(
+            "specialist_craft_outputs_complete",
+            self.cfg["production_readiness"]["required_checks"],
+        )
+        for mutate in [
+            lambda c: c["preproduction_craft_review"].update(mode="ADVISERS_ON_DEMAND"),
+            lambda c: c["preproduction_craft_review"].update(advisers_on_demand=["Motion & Picture Editor"]),
+            lambda c: c["production_readiness"].update(required_checks=["script_locked"]),
+        ]:
+            cfg = copy.deepcopy(self.cfg)
+            mutate(cfg)
+            with self.assertRaises(ProductionWorkflowError):
+                validate_production_config(cfg)
+
     def test_stale_content_invalidates_only_dependent_gates(self):
         for name, first_gate in [("script", 0), ("assets", 1), ("export", 2)]:
             run = self.make_run("system_pilot", "changed-" + name)
