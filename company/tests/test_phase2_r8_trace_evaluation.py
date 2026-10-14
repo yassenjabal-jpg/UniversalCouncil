@@ -109,7 +109,6 @@ class Phase2R8TraceEvaluationTests(unittest.TestCase):
         self.assertAlmostEqual(report["blocker_recall"], 0.5)
         self.assertAlmostEqual(report["blocker_f1"], 0.5)
 
-
     def test_trace_constructor_and_payload_validation_fail_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "trace.jsonl"
