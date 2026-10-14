@@ -19,19 +19,26 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
         self.assertEqual(cfg["quality_gates"], ["Preproduction Lock", "Rough Cut Review", "Final QC"])
         self.assertEqual(cfg["quality_gates"], self.channel["quality_gates"])
         self.assertEqual(cfg["editing_routes"], self.channel["production_system"]["editing_routes"])
+        ae = "Adobe After Effects 2026 native automation"
+        rough = "Descript rough/transcript utility"
         for name in [
             "motion_graphics_compositing",
-            "dialogue_cleanup_text_edit",
             "picture_edit_finishing",
             "audio_edit_mix_master",
-            "captions_transcript",
             "render_export",
         ]:
             with self.subTest(stage=name):
                 tool = cfg["tool_matrix"][name]
+                self.assertEqual(tool["preferred"], [ae])
+                self.assertEqual(tool["backup"], [])
+                self.assertEqual(tool["rough_utility"], [rough])
+                self.assertEqual(tool["status"], "CURRENT_PILOT_ROUTE_REVERIFY_EACH_RUN")
+        for name in ["dialogue_cleanup_text_edit", "captions_transcript"]:
+            with self.subTest(stage=name):
+                tool = cfg["tool_matrix"][name]
                 self.assertEqual(tool["preferred"], ["Descript"])
-                self.assertEqual(tool["backup"], ["Adobe After Effects 2026 native automation"])
-                self.assertEqual(tool["status"], "DELIVERY_PENDING_SYSTEM_PILOT")
+                self.assertEqual(tool["backup"], [ae])
+                self.assertEqual(tool["status"], "ROUGH_UTILITY_AVAILABLE")
         self.assertFalse(cfg["editing_routes"]["gui_retry_loops"])
         self.assertEqual(cfg["editing_routes"]["max_routes"], 2)
 
@@ -40,7 +47,7 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
             ("max_routes", 3),
             ("gui_retry_loops", True),
             ("max_backup_activations", 2),
-            ("backup_requires_current_probe", False),
+            ("backup_requires_current_probe", True),
             ("max_primary_diagnosis_minutes", 60),
             ("tertiary", {"tool": "Another editor"}),
         ]:
@@ -56,12 +63,18 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
 
     def test_connectivity_does_not_claim_delivery_quality(self):
         routes = self.cfg["editing_routes"]
-        self.assertEqual(routes["primary"]["connection_status"], "LIVE_VERIFIED")
-        self.assertEqual(routes["primary"]["delivery_status"], "FAILED_FINAL_QC_NATIVE_RTL_720P_WATERMARK")
-        self.assertEqual(routes["backup"]["connection_status"], "REVERIFY_ON_ACTIVATION")
+        self.assertEqual(routes["primary"]["tool"], "Adobe After Effects 2026")
+        self.assertEqual(routes["primary"]["connection_status"], "REVERIFY_ON_EACH_RUN")
         self.assertEqual(
-            routes["backup"]["delivery_status"], "MEASURED_41_SECOND_TECHNICAL_PILOT_NOT_FULL_PRODUCTION_QUALIFIED"
+            routes["primary"]["delivery_status"], "MEASURED_41_SECOND_TECHNICAL_PILOT_NOT_FULL_PRODUCTION_QUALIFIED"
         )
+        self.assertTrue(routes["primary"]["requires_current_probe"])
+        self.assertEqual(routes["backup"]["tool"], "Descript")
+        self.assertEqual(routes["backup"]["connection_status"], "LIVE_VERIFIED")
+        self.assertEqual(
+            routes["backup"]["delivery_status"], "ROUGH_PREP_ONLY_FINAL_DELIVERY_DISQUALIFIED_RTL_720P_WATERMARK"
+        )
+        self.assertFalse(routes["backup"]["eligible_for_final_delivery"])
         for name in ["primary", "backup"]:
             self.assertTrue((ROOT / routes[name]["evidence"]).is_file())
         self.assertIn("historical", self.cfg["current_verified_environment"]["historical_environment_note"])
