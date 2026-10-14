@@ -153,6 +153,12 @@ def validate_media_team(config):
         raise MediaControlError("visual production pilot ladder drifted")
     if production_system.get("full_episode_requires") != "P2_PASS":
         raise MediaControlError("full episode must require P2 PASS")
+    if production_system.get("p0_status") != "PASS":
+        raise MediaControlError("P0 visual-system lock must pass before active production")
+    if production_system.get("active_stage") != "P1_COHERENCE_30_45":
+        raise MediaControlError("media venture must advance to P1 after P0 PASS")
+    if not production_system.get("production_kit") or not production_system.get("p0_review"):
+        raise MediaControlError("P0 production artifacts are missing")
 
     toolchain = config.get("media_toolchain", {})
     if toolchain.get("image_generation_primary_tool") != "RUNWAY_NANO_BANANA_2_LITE_QUALIFIED":
