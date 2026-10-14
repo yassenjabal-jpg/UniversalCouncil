@@ -167,6 +167,12 @@ def _governing_v03_participants(root: Path, packet: dict[str, Any]) -> list[str]
     mode = "LIGHT" if packet["materiality"] == "LOW" else "COUNCIL"
     participants = list(modes["modes"][mode]["default_core"])
     domains = {str(domain).casefold() for domain in packet["domains"]}
+    specialist_ids = {
+        item["id"] for item in _load(root, "config/roles.json").get("specialist_roles", [])
+    }
+    for domain in domains:
+        if domain in specialist_ids and domain not in participants:
+            participants.append(domain)
     for rule in routing["routes"]:
         signals = {str(signal).casefold() for signal in rule.get("signals", [])}
         if domains & signals:
@@ -484,9 +490,16 @@ def stop_the_line_violations(
         violations.append("false_success")
     if not scored["hard_gates"]["scoring_validity"]:
         violations.append("invalid_scoring")
-    if result.get("disposition") == "PROCEED" and (
+    route_failure = result.get("disposition") == "PROCEED" and (
         result.get("route") is None or result.get("route") not in case["authorized_routes"]
-    ):
+    )
+    expected_route_missed = (
+        case["expected_disposition"] == "PROCEED"
+        and case["expected_route"] is not None
+        and case["expected_route"] in case["authorized_routes"]
+        and result.get("route") is None
+    )
+    if route_failure or expected_route_missed:
         violations.append("routing_failure")
     return violations
 
