@@ -92,6 +92,10 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertTrue(system["council_gate_review_only_after_lock"])
         self.assertFalse(system["per_frame_full_council_review_after_lock"])
         self.assertEqual(system["full_episode_requires"], "P2_PASS")
+        self.assertEqual(system["p0_status"], "PASS")
+        self.assertEqual(system["active_stage"], "P1_COHERENCE_30_45")
+        self.assertTrue(system["production_kit"])
+        self.assertTrue(system["p0_review"])
         self.assertEqual(
             system["pilot_ladder"],
             [
@@ -253,6 +257,8 @@ class MediaCapabilityTests(unittest.TestCase):
             ),
             lambda c: c["visual_production_system"].__setitem__("per_frame_full_council_review_after_lock", True),
             lambda c: c["visual_production_system"].__setitem__("full_episode_requires", "NONE"),
+            lambda c: c["visual_production_system"].__setitem__("p0_status", "FAIL"),
+            lambda c: c["visual_production_system"].__setitem__("active_stage", "P0_REFERENCE_FRAME_LOCK"),
         ]
         for mutate in mutations:
             cfg = self.load_config()
