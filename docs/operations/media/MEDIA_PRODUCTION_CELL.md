@@ -172,6 +172,41 @@ Owns:
 - language-version QC
 - reconform requests
 
+
+
+## Composed Capability — Visual Prompt / Generation Brief Compiler
+
+This is **not** a permanent new role or headcount.
+
+Composed by:
+- Visual Art Director / Frame Curator
+- Thumbnail & Packaging Designer
+- Synthesis & Alternatives Designer
+
+Produces:
+- the complete, versioned, executable Visual Generation Brief;
+- explicit allowed/forbidden elements;
+- reference fidelity constraints;
+- variant differentiation constraints;
+- Anti-AI-Slop constraints;
+- negative/rejection constraints.
+
+Approval:
+- Red Team / Anti-Slop must issue `APPROVED_BY_ANTI_SLOP`.
+
+Execution:
+- Technical Operator executes the approved artifact only.
+
+Boundaries:
+- **NO PROMPT, NO GENERATION**
+- **NO ANTI-SLOP APPROVAL, NO EXECUTION**
+- Technical Operator cannot creatively rewrite the brief
+- generation tool cannot be allowed to materially reinterpret the brief
+- material deviations return to the Council
+
+Template:
+`docs/templates/media/VISUAL_GENERATION_BRIEF.md`
+
 ## Shared support
 
 ### Evidence & Research Lead
@@ -182,6 +217,8 @@ Visual rights, copyright, music rights, AI disclosure, policy.
 
 ### Technical Operator
 Specialized tool routing, project structure, render/export, automation, archive integrity.
+
+For generated visual work, Technical Operator executes only an approved, versioned Visual Generation Brief and records the prompt/tool receipt. It has no authority to creatively rewrite the approved brief.
 
 ### Finance Controller
 Time/cost/credits, cost per finished minute, budget visibility.
@@ -204,6 +241,7 @@ Voice identity, brand authority, L4 decisions, publish approval.
 | Script S0â€“S4 | Showrunner | Script/Voice | Research, Motion, Art | Showrunner |
 | Independent Fact Check | Fact Checker | Fact Checker | Research, Script | Fact Checker |
 | Visual/Sonic Treatment | Showrunner | Art + Sound | Motion | Showrunner |
+| Visual Generation Brief | Art Director | Art + Thumbnail + Synthesis | Red Team / Anti-Slop | Red Team / Anti-Slop |
 | Animatic | Motion | Motion | Showrunner, Growth, Sound | Showrunner |
 | Production Readiness | Producer | Producer | all craft leads | Producer + Showrunner |
 | Narration | Script/Voice | Owner narrator | Showrunner | Owner |
