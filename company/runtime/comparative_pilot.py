@@ -297,10 +297,10 @@ def run_architecture(
     validate_pilot_config(cfg)
     if architecture_id not in ARCHITECTURE_IDS:
         raise ComparativePilotError(f"unknown architecture: {architecture_id}")
-    if set(packet) != TASK_FIELDS:
-        raise ComparativePilotError("invalid task packet shape")
     if set(packet) & SCORING_ONLY_FIELDS:
         raise ComparativePilotError("benchmark leakage detected")
+    if set(packet) != TASK_FIELDS:
+        raise ComparativePilotError("invalid task packet shape")
 
     if architecture_id == "A":
         participants = _governing_v03_participants(root, packet)
