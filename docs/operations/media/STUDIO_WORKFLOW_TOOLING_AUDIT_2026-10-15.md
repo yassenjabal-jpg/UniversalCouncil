@@ -44,7 +44,7 @@ Professional collaborative workflows separate story edit from motion/VFX and mak
 
 Blackmagic Resolve confirms the same organizational pattern from another ecosystem: editor, colorist, VFX artist and sound engineer work as separate specialties in one coordinated project. Avid's audio-post workflow likewise separates dialogue, sound design and final mix.
 
-Therefore the Council target is:
+Therefore The Studio target is:
 **Premiere timeline → AE motion/VFX → Audition sound/mix → Media Encoder export → independent MediaInfo/Youlean/Frame.io QC.**
 
 ---
