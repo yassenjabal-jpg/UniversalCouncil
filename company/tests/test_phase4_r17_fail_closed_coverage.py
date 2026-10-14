@@ -18,14 +18,10 @@ def get_case(case_id: str) -> dict:
 
 def normalized_without_dimension(cfg: dict, dimension: str) -> dict:
     broken = copy.deepcopy(cfg)
-    broken["evaluation_dimensions"] = [
-        item for item in broken["evaluation_dimensions"] if item != dimension
-    ]
+    broken["evaluation_dimensions"] = [item for item in broken["evaluation_dimensions"] if item != dimension]
     broken["weights"].pop(dimension)
     total = sum(broken["weights"].values())
-    broken["weights"] = {
-        key: value / total for key, value in broken["weights"].items()
-    }
+    broken["weights"] = {key: value / total for key, value in broken["weights"].items()}
     return broken
 
 
