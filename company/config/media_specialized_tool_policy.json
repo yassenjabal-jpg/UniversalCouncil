@@ -1,5 +1,5 @@
 {
-  "version": "1.3",
+  "version": "1.4",
   "policy": "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
   "principles": [
     "Use specialized creative tools for creative craft.",
@@ -183,7 +183,12 @@
     },
     "selection_rule": "QUALITY_AND_FIDELITY_DOMINATE_COST",
     "remaining_credits_must_not_select_primary_tool": true,
-    "primary_tool_state": "UNQUALIFIED",
-    "backup_tool_state": "UNQUALIFIED"
+    "primary_tool_state": "QUALIFIED_PRIMARY",
+    "backup_tool_state": "QUALIFIED_BACKUP",
+    "primary_tool": "runway:nano-banana-2-lite",
+    "primary_score": 94.1,
+    "backup_tool": "runway:nano-banana-pro",
+    "backup_score": 89.2,
+    "qualification_artifact": "docs/operations/media/visual_generation_briefs/2026-10-14/VISUAL_TOOL_QUALIFICATION_DAY24.md"
   }
 }
