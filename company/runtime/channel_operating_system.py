@@ -20,6 +20,7 @@ REQUIRED_WORKFLOW = [
     "independent_fact_check",
     "script_lock",
     "visual_treatment",
+    "visual_generation_brief_compile_and_anti_slop_approval",
     "audio_spotting_and_sonic_concept",
     "reference_frame_assignment",
     "storyboard_transition_audio_map",
@@ -51,6 +52,7 @@ REQUIRED_GATES = {
     "G4 Pre-production Craft Review",
     "G5 Script + Independent Fact Check Lock",
     "G6 Visual + Sonic Treatment Lock",
+    "G6A Visual Generation Brief + Anti-Slop Approval",
     "G7 Animatic + Spotting Gate",
     "G8 Production Readiness Gate",
     "G9 Picture Lock Gate",
@@ -102,8 +104,8 @@ REQUIRED_SCRIPT_PASSES = [
 
 
 def validate_config(cfg: dict[str, Any]) -> bool:
-    if cfg.get("version") != "1.3":
-        raise ChannelOperatingSystemError("channel operating system must be version 1.3")
+    if cfg.get("version") != "1.4":
+        raise ChannelOperatingSystemError("channel operating system must be version 1.4")
     if cfg.get("channel_model") != "broad_format_first_multilingual_visual_documentary":
         raise ChannelOperatingSystemError("channel model drifted")
     if cfg.get("visual_system") != "Modern Editorial Surrealism":
@@ -142,6 +144,77 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("key frames must keep one dominant hero object")
     if visual_identity.get("synthetic_documentary_evidence_forbidden") is not True:
         raise ChannelOperatingSystemError("synthetic imagery cannot substitute for documentary evidence")
+
+    visual_brief = cfg.get("visual_generation_brief_system", {})
+    if visual_brief.get("version") != "1.0":
+        raise ChannelOperatingSystemError("visual generation brief system version drifted")
+    if visual_brief.get("status") != "REQUIRED_FOR_ANY_GENERATED_VISUAL":
+        raise ChannelOperatingSystemError("visual generation brief system must be required")
+    if visual_brief.get("capability_model") != "venture_scoped_composed_capability_not_headcount":
+        raise ChannelOperatingSystemError("visual generation brief capability model drifted")
+    required_compilers = {
+        "Visual Art Director / Frame Curator",
+        "Thumbnail & Packaging Designer",
+        "Synthesis & Alternatives Designer",
+    }
+    if set(visual_brief.get("composed_by", [])) != required_compilers:
+        raise ChannelOperatingSystemError("visual generation brief compiler composition drifted")
+    if visual_brief.get("approval_required_from") != ["Red Team / Anti-Slop"]:
+        raise ChannelOperatingSystemError("visual generation brief anti-slop approval drifted")
+    if visual_brief.get("executor") != "Technical Operator":
+        raise ChannelOperatingSystemError("visual generation brief executor drifted")
+    if visual_brief.get("artifact_template") != "docs/templates/media/VISUAL_GENERATION_BRIEF.md":
+        raise ChannelOperatingSystemError("visual generation brief template drifted")
+    required_generation_fields = {
+        "episode_topic",
+        "viewer_question",
+        "click_promise",
+        "visual_metaphor_one_sentence",
+        "metaphor_rationale",
+        "hero_object",
+        "image_language",
+        "layout_family",
+        "composition_and_negative_space",
+        "camera_crop_and_perspective",
+        "background",
+        "brand_anchor_colors",
+        "episode_accent_color",
+        "lighting",
+        "texture_material",
+        "typography_direction",
+        "allowed_elements",
+        "forbidden_elements",
+        "difference_from_previous_thumbnail",
+        "reference_fidelity_notes",
+        "mobile_legibility_requirements",
+        "anti_ai_slop_constraints",
+        "documentary_evidence_boundary",
+        "final_generation_instruction",
+        "negative_constraints",
+        "anti_slop_approval_status",
+        "prompt_version",
+    }
+    if not required_generation_fields.issubset(set(visual_brief.get("required_fields", []))):
+        raise ChannelOperatingSystemError("visual generation brief required fields are incomplete")
+    required_execution_rules = {
+        "NO_PROMPT_NO_GENERATION",
+        "NO_ANTI_SLOP_APPROVAL_NO_EXECUTION",
+        "TOOL_MUST_NOT_CREATIVELY_REWRITE_APPROVED_BRIEF",
+        "MATERIAL_DEVIATION_RETURNS_TO_COUNCIL",
+        "EXECUTION_MUST_RECORD_PROMPT_VERSION_AND_TOOL",
+    }
+    if not required_execution_rules.issubset(set(visual_brief.get("execution_rules", []))):
+        raise ChannelOperatingSystemError("visual generation brief execution rules are incomplete")
+    if visual_brief.get("approval_state_required") != "APPROVED_BY_ANTI_SLOP":
+        raise ChannelOperatingSystemError("visual generation brief approval state drifted")
+    if set(visual_brief.get("thumbnail_hypothesis_languages_required", [])) != {
+        "Object Macro",
+        "Editorial Cutout",
+        "Conceptual Surrealism",
+    }:
+        raise ChannelOperatingSystemError("thumbnail hypothesis image-language contract drifted")
+    if int(visual_brief.get("minimum_zero_architecture_hypotheses_per_three", 0)) < 1:
+        raise ChannelOperatingSystemError("zero-architecture thumbnail hypothesis requirement missing")
     if cfg.get("publication_authority") != "GATED":
         raise ChannelOperatingSystemError("publishing must remain gated")
 
@@ -265,6 +338,7 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         "script_locked",
         "independent_fact_check_passed",
         "key_visuals_approved",
+        "visual_generation_briefs_approved",
         "claim_sources_complete",
         "visual_rights_clear",
         "storyboard_sufficient",
@@ -286,6 +360,10 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         raise ChannelOperatingSystemError("early packaging stage is incomplete")
     if len(packaging.get("stage_b_after_rough_cut", [])) < 4:
         raise ChannelOperatingSystemError("final packaging stage is incomplete")
+    if "no generated thumbnail asset may be executed before an approved Visual Generation Brief" not in packaging.get(
+        "generated_visual_rule", ""
+    ):
+        raise ChannelOperatingSystemError("packaging generation-brief rule drifted")
 
     frame_types = cfg.get("frame_bible", {}).get("canonical_frame_types", [])
     if len(frame_types) != 12:
