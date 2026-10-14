@@ -22,6 +22,7 @@ REQUIRED_WORKFLOW = [
     "visual_treatment",
     "audio_spotting_and_sonic_concept",
     "reference_frame_assignment",
+    "shot_design_and_camera_plan",
     "storyboard_transition_audio_map",
     "asset_registry",
     "animatic",
@@ -51,7 +52,7 @@ REQUIRED_GATES = {
     "G4 Pre-production Craft Review",
     "G5 Script + Independent Fact Check Lock",
     "G6 Visual + Sonic Treatment Lock",
-    "G7 Animatic + Spotting Gate",
+    "G7 Shot Design + Animatic + Spotting Gate",
     "G8 Production Readiness Gate",
     "G9 Picture Lock Gate",
     "G10 Audio-Visual Sync Gate",
@@ -73,6 +74,7 @@ REQUIRED_PRODUCTION_ROLES = {
     "Editorial Director / Showrunner",
     "Script & Voice Director",
     "Visual Art Director / Frame Curator",
+    "Cinematography / Shot Design",
     "Motion & Picture Editor",
     "Music Supervisor & Sound Designer",
     "Dialogue & Mix Engineer",
@@ -102,8 +104,8 @@ REQUIRED_SCRIPT_PASSES = [
 
 
 def validate_config(cfg: dict[str, Any]) -> bool:
-    if cfg.get("version") != "1.2":
-        raise ChannelOperatingSystemError("channel operating system must be version 1.2")
+    if cfg.get("version") != "1.3":
+        raise ChannelOperatingSystemError("channel operating system must be version 1.3")
     if cfg.get("channel_model") != "broad_format_first_multilingual_visual_documentary":
         raise ChannelOperatingSystemError("channel model drifted")
     if cfg.get("visual_system") != "Editorial Renaissance Motion":
@@ -187,11 +189,41 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         "Evidence & Research Lead",
         "Motion & Picture Editor",
         "Visual Art Director / Frame Curator",
+        "Cinematography / Shot Design",
         "Music Supervisor & Sound Designer",
         "Audience Growth & Packaging Strategist",
     }
     if not required_preprod.issubset(set(preprod.get("participants", []))):
         raise ChannelOperatingSystemError("pre-production craft review participants are incomplete")
+
+    shot_design = cfg.get("shot_design_system", {})
+    if shot_design.get("required") is not True:
+        raise ChannelOperatingSystemError("shot design system is required")
+    if shot_design.get("must_precede_animatic") is not True:
+        raise ChannelOperatingSystemError("shot design must precede animatic")
+    if shot_design.get("accountable_function") != "Cinematography / Shot Design":
+        raise ChannelOperatingSystemError("cinematography accountability drifted")
+    required_shot_fields = {
+        "shot_id",
+        "story_beat_id",
+        "shot_purpose",
+        "framing",
+        "shot_size",
+        "camera_motion",
+        "depth_layers",
+        "subject_staging",
+        "screen_direction",
+        "continuity_link",
+        "transition_motivation",
+        "sound_sync_note",
+        "asset_requirements",
+    }
+    if not required_shot_fields.issubset(set(shot_design.get("required_fields", []))):
+        raise ChannelOperatingSystemError("shot design contract is incomplete")
+    if shot_design.get("fail_action") != "RETURN_TO_VISUAL_TREATMENT_OR_STORYBOARD":
+        raise ChannelOperatingSystemError("shot design failure must return to visual treatment/storyboard")
+    if len(shot_design.get("rules", [])) < 6:
+        raise ChannelOperatingSystemError("shot design rules are incomplete")
 
     scripts = cfg.get("script_development", {})
     if scripts.get("single_pass_forbidden") is not True:
@@ -216,6 +248,8 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         "pause_before_ms",
         "pause_after_ms",
         "visual_beat_id",
+        "shot_design_id",
+        "camera_intent",
         "music_state",
         "sfx",
         "evidence_ids",
@@ -234,6 +268,8 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         "claim_sources_complete",
         "visual_rights_clear",
         "storyboard_sufficient",
+        "shot_design_approved",
+        "camera_continuity_checked",
         "audio_spotting_complete",
         "asset_registry_ready",
         "specialized_tools_available",
@@ -300,6 +336,39 @@ def validate_config(cfg: dict[str, Any]) -> bool:
 
     if set(cfg.get("quality_gates", [])) != REQUIRED_GATES:
         raise ChannelOperatingSystemError("quality gates drifted")
+
+    routing = cfg.get("studio_routing_model", {})
+    if routing.get("mode") != "SMALL_CORE_ROUTED_CAPABILITIES":
+        raise ChannelOperatingSystemError("studio must use small-core routed-capability model")
+    if set(routing.get("core_functions", [])) != {
+        "Media Producer / Production Coordinator",
+        "Editorial Director / Showrunner",
+    }:
+        raise ChannelOperatingSystemError("studio core functions drifted")
+    routed = set(routing.get("stage_routed_craft_functions", []))
+    required_routed = {
+        "Script & Voice Director",
+        "Visual Art Director / Frame Curator",
+        "Cinematography / Shot Design",
+        "Motion & Picture Editor",
+        "Music Supervisor & Sound Designer",
+        "Dialogue & Mix Engineer",
+        "Audience Growth & Packaging Strategist",
+        "Thumbnail & Packaging Designer",
+        "Localization Producer",
+    }
+    if routed != required_routed:
+        raise ChannelOperatingSystemError("stage-routed craft function set drifted")
+    routing_rules = set(routing.get("rules", []))
+    if {
+        "do_not_call_every_function_for_every_stage",
+        "default_to_artifact_delta_or_blocker_not_long_report",
+        "parallelize_independent_craft_work_when_safe",
+        "one_synthesis_per_gate",
+        "shared_production_state_prevents_context_repetition",
+        "owner_interruption_is_exception_not_default",
+    } - routing_rules:
+        raise ChannelOperatingSystemError("studio anti-bureaucracy routing rules are incomplete")
 
     roles = cfg.get("roles", {})
     missing_roles = REQUIRED_PRODUCTION_ROLES - set(roles)

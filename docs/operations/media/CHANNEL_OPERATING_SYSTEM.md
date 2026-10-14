@@ -1,4 +1,4 @@
-# Channel Operating System v1.2 — Studio-Benchmarked
+# Channel Operating System v1.3 — Studio-Benchmarked
 
 Normative operating method for the broad, format-first, multilingual visual-documentary channel.
 
@@ -16,6 +16,7 @@ Companion systems:
 - `PACKAGING_BIBLE.md`
 - `AUDIO_NARRATION_BIBLE.md`
 - `AUDIOVISUAL_SOUND_SYSTEM.md`
+- `STUDIO_EXECUTION_RECOVERY.md`
 
 ## Operating doctrine
 
@@ -33,7 +34,11 @@ The benchmark reference set includes:
 - Cleo Abram / Huge If True
 - Johnny Harris
 
-## What changed in v1.2
+## What changed in v1.3
+
+The studio now uses a small always-active core and stage-routed craft capabilities, adds an explicit Cinematography / Shot Design stage before the animatic, and requires recoverable application handoffs with checkpoints and UNKNOWN-state reconciliation.
+
+The v1.2 studio-benchmarked disciplines remain in force.
 
 The media system now treats production as a professional editorial studio rather than an AI-agent sequence.
 
@@ -168,17 +173,22 @@ Sound is designed with picture.
 ### 14. Reference Frame Assignment
 Minimum 8; target 12.
 
-### 15. Storyboard + Transition + Audio Map
+### 15. Shot Design + Camera Plan
+Cinematography / Shot Design defines shot purpose, framing, shot size, camera motion, depth, staging, screen direction, continuity and transition motivation.
+
+No camera move exists only to make the shot feel expensive.
+
+### 16. Storyboard + Transition + Audio Map
 Every major beat connects:
 picture + narration + music + SFX + transition logic.
 
-### 16. Asset Registry
+### 17. Asset Registry
 No unregistered asset enters production.
 
-### 17. Animatic
+### 18. Animatic
 Cheap timing test before expensive production.
 
-### 18. Production Readiness Review
+### 19. Production Readiness Review
 Production does not start until:
 - script locked
 - independent fact check passed
@@ -195,38 +205,38 @@ Production does not start until:
 Fail:
 **HOLD_PRODUCTION**
 
-### 19. Narration Recording + Dialogue Edit
+### 20. Narration Recording + Dialogue Edit
 Owner narration remains channel identity.
 
-### 20. Production
+### 21. Production
 Gather/create/animate assets.
 
-### 21. Editorial Rough Cut
+### 22. Editorial Rough Cut
 Editor shapes story, pacing and visual rhythm.
 
-### 22. Packaging Finalization — Stage B
+### 23. Packaging Finalization — Stage B
 After rough cut:
 - final title variants
 - final thumbnail variants
 - mobile-legibility review
 - A/B test plan
 
-### 23. Picture Lock
+### 24. Picture Lock
 Showrunner approves picture timing.
 
-### 24. Music + Sound Design
+### 25. Music + Sound Design
 Final detailed sound work against locked picture.
 
-### 25. Mix + Master
+### 26. Mix + Master
 Dialogue/Mix Engineer creates technical master.
 
-### 26. Audio-Visual Sync QC
+### 27. Audio-Visual Sync QC
 Picture and sound reviewed as one system.
 
-### 27. Multilingual Preflight
+### 28. Multilingual Preflight
 Language-safe master verified.
 
-### 28. Anti-Slop Gate
+### 29. Anti-Slop Gate
 Reject:
 - interchangeable scripts
 - generic AI composition chains
@@ -235,16 +245,16 @@ Reject:
 - decorative transitions
 - synthetic narration cadence
 
-### 29. Fact / Policy / Continuity QC
+### 30. Fact / Policy / Continuity QC
 Final factual, rights and continuity check.
 
-### 30. Export QC
+### 31. Export QC
 Delivery integrity.
 
-### 31. Owner Publish Gate
+### 32. Owner Publish Gate
 Public publication requires explicit Owner approval.
 
-### 32. Analytics Postmortem
+### 33. Analytics Postmortem
 Read:
 - CTR
 - first 30 seconds
@@ -256,7 +266,7 @@ Read:
 - comments
 - language share
 
-### 33. Memory + Routine Update
+### 34. Memory + Routine Update
 Persist only durable learning.
 
 ## Quality gates

@@ -27,18 +27,27 @@ class MediaCapabilityTests(unittest.TestCase):
         ids = {x["id"] for x in cfg["production_functions"]}
         self.assertEqual(ids, REQUIRED_MEDIA_FUNCTIONS)
 
-    def test_studio_benchmark_functions_are_active(self):
+    def test_studio_uses_small_core_and_routed_craft_capabilities(self):
         cfg = self.load_config()
         by_id = {x["id"]: x for x in cfg["production_functions"]}
+        self.assertEqual(by_id["media_producer"]["default_status"], "CORE_ALWAYS_ACTIVE")
+        self.assertEqual(by_id["editorial_director"]["default_status"], "CORE_ALWAYS_ACTIVE")
+        self.assertEqual(by_id["independent_fact_checker"]["default_status"], "MANDATORY_CLEARANCE")
         for function_id in {
-            "media_producer",
-            "independent_fact_checker",
+            "script_voice_director",
+            "visual_art_director",
+            "cinematography_shot_designer",
             "audience_growth_strategist",
             "thumbnail_packaging_designer",
             "motion_picture_editor",
+            "music_sound_supervisor",
+            "dialogue_mix_engineer",
         }:
-            self.assertEqual(by_id[function_id]["default_status"], "ACTIVE_FOR_MEDIA_PILOT")
+            self.assertEqual(by_id[function_id]["default_status"], "ROUTED_CRAFT_CAPABILITY")
         self.assertEqual(by_id["localization_producer"]["default_status"], "ON_DEMAND")
+        self.assertEqual(cfg["operating_model"]["mode"], "SMALL_CORE_ROUTED_CRAFT_CAPABILITIES")
+        self.assertTrue(cfg["operating_model"]["parallelize_when_safe"])
+        self.assertTrue(cfg["operating_model"]["single_synthesis_per_gate"])
 
     def test_growth_and_thumbnail_craft_are_separate(self):
         cfg = self.load_config()
@@ -50,6 +59,17 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertIn("title_strategy", by_id["audience_growth_strategist"]["owns"])
         self.assertIn("typography", by_id["thumbnail_packaging_designer"]["owns"])
 
+    def test_cinematography_is_explicit_and_separate_from_editing(self):
+        cfg = self.load_config()
+        by_id = {x["id"]: x for x in cfg["production_functions"]}
+        cine = by_id["cinematography_shot_designer"]
+        motion = by_id["motion_picture_editor"]
+        self.assertIn("framing_and_shot_size", cine["owns"])
+        self.assertIn("camera_motion_intent", cine["owns"])
+        self.assertIn("shot_to_shot_continuity", cine["owns"])
+        self.assertNotEqual(set(cine["owns"]), set(motion["owns"]))
+        self.assertEqual(cfg["media_toolchain"]["cinematography_shot_design"], "PROCESS_DEFINED_SPECIALIZED_TOOL_REQUIRED")
+
     def test_fact_check_and_producer_boundaries_are_explicit(self):
         cfg = self.load_config()
         rules = set(cfg["function_independence_rules"])
@@ -58,14 +78,17 @@ class MediaCapabilityTests(unittest.TestCase):
             "producer_controls_schedule_resources_not_editorial_truth",
             "motion_editor_participates_before_script_lock",
             "growth_strategist_does_not_replace_thumbnail_design_review",
+            "cinematography_defines_shot_language_but_does_not_self_approve_picture_lock",
+            "routed_craft_function_is_invoked_by_stage_not_kept_permanently_active",
+            "unknown_execution_state_cannot_be_promoted_to_success",
         }:
             self.assertIn(rule, rules)
 
-    def test_audio_roles_are_distinct_and_active(self):
+    def test_audio_roles_are_distinct_and_stage_routed(self):
         cfg = self.load_config()
         by_id = {x["id"]: x for x in cfg["production_functions"]}
-        self.assertEqual(by_id["music_sound_supervisor"]["default_status"], "ACTIVE_FOR_MEDIA_PILOT")
-        self.assertEqual(by_id["dialogue_mix_engineer"]["default_status"], "ACTIVE_FOR_MEDIA_PILOT")
+        self.assertEqual(by_id["music_sound_supervisor"]["default_status"], "ROUTED_CRAFT_CAPABILITY")
+        self.assertEqual(by_id["dialogue_mix_engineer"]["default_status"], "ROUTED_CRAFT_CAPABILITY")
         self.assertNotEqual(
             set(by_id["music_sound_supervisor"]["owns"]),
             set(by_id["dialogue_mix_engineer"]["owns"]),
@@ -97,6 +120,12 @@ class MediaCapabilityTests(unittest.TestCase):
             "thumbnail_variants_produced",
             "production_readiness_failures",
             "edit_rework_after_script_lock",
+            "shot_design_rework",
+            "camera_continuity_defects",
+            "studio_coordination_overhead_minutes",
+            "unnecessary_function_invocations",
+            "handoff_recovery_count",
+            "unknown_execution_events",
         }:
             self.assertIn(metric, REQUIRED_PILOT_METRICS)
 
@@ -157,10 +186,13 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c.__setitem__("version", "broken"),
             lambda c: c.__setitem__(
                 "production_functions",
-                [f for f in c["production_functions"] if f["id"] != "media_producer"],
+                [f for f in c["production_functions"] if f["id"] != "cinematography_shot_designer"],
             ),
             lambda c: next(f for f in c["production_functions"] if f["id"] == "media_producer").__setitem__(
-                "default_status", "ON_DEMAND"
+                "default_status", "ROUTED_CRAFT_CAPABILITY"
+            ),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "motion_picture_editor").__setitem__(
+                "default_status", "CORE_ALWAYS_ACTIVE"
             ),
             lambda c: next(f for f in c["production_functions"] if f["id"] == "localization_producer").__setitem__(
                 "default_status", "DISABLED"
@@ -174,7 +206,10 @@ class MediaCapabilityTests(unittest.TestCase):
                 ],
             ),
             lambda c: c.pop("benchmark_artifact"),
+            lambda c: c["operating_model"].__setitem__("mode", "EVERYONE_ALWAYS_ACTIVE"),
+            lambda c: c["operating_model"].__setitem__("forbidden_defaults", []),
             lambda c: c["media_toolchain"].pop("dialogue_cleanup"),
+            lambda c: c["execution_recovery"].__setitem__("unknown_is_never_success", False),
             lambda c: c["pilot"].__setitem__("required_before_scale", False),
             lambda c: c["pilot"].__setitem__("video_count", 2),
         ]

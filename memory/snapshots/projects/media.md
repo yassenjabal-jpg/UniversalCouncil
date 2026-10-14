@@ -31,24 +31,26 @@
 - **Tags:** media, workflow, production
 
 ## media.production_cell.current
-- **Event:** `MEM-20261013-015655-c15cc7`
+- **Event:** `MEM-20261015-025700-lean13`
 - **Level:** `L3_CANONICAL`
 - **Kind:** `architecture`
 - **Confidence:** `verified`
-- **Updated:** `2026-10-13T01:56:55+03:00`
-- **Summary:** Media Production Cell v1.2 is studio-benchmarked: Producer-led execution, independent fact checking, separate growth and thumbnail craft, editor/art/sound participation in pre-production, and specialist craft functions with independent review boundaries.
+- **Updated:** `2026-10-15T02:57:00+03:00`
+- **Summary:** Media Production Cell v1.3 uses a small always-active Producer/Showrunner core, stage-routed craft capabilities, an explicit Cinematography / Shot Design function, and recoverable cross-application handoffs where UNKNOWN is never success.
 - **Details:**
-  - `benchmark_artifact`: docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md
+  - `added_function`: Cinematography / Shot Design
+  - `anti_bureaucracy_rules`: ["do not call every function for every stage", "artifact delta or blocker by default", "parallelize independent craft work when safe", "one synthesis per gate"]
+  - `core_functions`: ["Media Producer / Production Coordinator", "Editorial Director / Showrunner"]
   - `governing_config`: company/config/media_venture.json
   - `governing_doc`: docs/operations/media/MEDIA_PRODUCTION_CELL.md
-  - `independence_rules`: ["Researcher/writer cannot self-clear material facts", "Growth strategy does not replace thumbnail design review", "Producer controls schedule/resources but not editorial truth", "Motion Editor participates before Script Lock", "Motion Editor cannot self-approve Picture Lock", "Music/Sound cannot self-approve final technical mix"]
-  - `merge_commit`: b42b80f89e8053c8506f03300e0dc3fb058ca11f
-  - `new_pilot_metrics`: ["schedule_variance", "milestone_slips", "script_revision_rounds", "fact_check_defects_caught_prelock", "visual_story_case_rework", "thumbnail_variants_produced", "production_readiness_failures", "edit_rework_after_script_lock"]
-  - `on_demand_functions`: ["Localization Producer"]
-  - `required_pilot_functions`: ["Media Producer / Production Coordinator", "Editorial Director / Showrunner", "Independent Fact Checker", "Script & Voice Director", "Visual Art Director / Frame Curator", "Motion & Picture Editor", "Music Supervisor & Sound Designer", "Dialogue & Mix Engineer", "Audience Growth & Packaging Strategist", "Thumbnail & Packaging Designer"]
-  - `version`: 1.2
-- **Supersedes:** `MEM-20261012-211252-9ffb75`
-- **Tags:** media, production-cell, studio-benchmark, producer, fact-check, thumbnail, preproduction
+  - `mandatory_clearance`: ["Independent Fact Checker"]
+  - `operating_model`: SMALL_CORE_ROUTED_CRAFT_CAPABILITIES
+  - `recovery_doc`: docs/operations/media/STUDIO_EXECUTION_RECOVERY.md
+  - `recovery_invariants`: ["UNKNOWN != SUCCESS", "checkpoint before application handoff", "independent postcondition after state change", "same-route retry bounded to one", "authorized fallback only"]
+  - `research_rationale`: docs/research/2026-10-15-agentic-video-studio-comparison.md
+  - `version`: 1.3
+- **Supersedes:** `MEM-20261013-015655-c15cc7`
+- **Tags:** media, studio, lean-routing, cinematography, shot-design, recovery
 
 ## media.specialized_tool_policy.current
 - **Event:** `MEM-20261012-212638-4d1282`

@@ -1,4 +1,4 @@
-﻿# Media Production Cell v1.2 â€” Studio-Benchmarked
+﻿# Media Production Cell v1.3 â€” Studio-Benchmarked
 
 ## Principle
 
@@ -11,6 +11,52 @@ During the pilot:
 - critical approvals remain separate;
 - role minutes and rework are measured;
 - after three videos HR may recommend MERGE/KEEP/REPLACE.
+
+## Lean studio routing
+
+The pilot no longer treats every production function as an always-active agent/process.
+
+Permanent core:
+- Media Producer / Production Coordinator
+- Editorial Director / Showrunner
+
+Mandatory independent clearance:
+- Independent Fact Checker at the factual-clearance gate.
+
+All other craft functions are stage-routed capabilities. They are invoked only when the active stage requires their craft judgment, execution, blocker, or clearance.
+
+Default contribution format:
+- decision or artifact delta;
+- material blocker, if any;
+- next required handoff.
+
+Forbidden defaults:
+- every function reviewing every stage;
+- mandatory long-form reports;
+- one independent runtime agent per function;
+- repeating context already present in shared production state.
+
+Independent approvals remain independent even when one person/tool covers more than one execution function.
+
+## Cinematography / Shot Design
+
+Owns:
+- shot purpose;
+- framing and shot size;
+- camera-motion intent;
+- depth and layering;
+- subject staging;
+- screen direction / eyeline;
+- shot-to-shot continuity;
+- camera-transition motivation;
+- visual rhythm support;
+- camera plan for the animatic;
+- feasibility with the available production tools.
+
+Rule:
+camera movement is not decoration. Every move, reframing, scale change or transition must have a narrative, attention or continuity reason.
+
+The function participates before the animatic and cannot self-approve Picture Lock.
 
 ## Hierarchy
 
@@ -278,3 +324,26 @@ Keep a function separate only when pilot evidence shows one of:
 - measurable quality/rework benefit
 
 The goal is professional discipline without professional-studio bureaucracy.
+
+
+## Application handoff and recovery
+
+Creative applications are not assumed to succeed merely because an automation command returned.
+
+For every state-changing handoff between applications:
+1. persist a recoverable checkpoint before dispatch;
+2. record application/version, project path/version, expected postcondition and next safe action;
+3. verify the postcondition independently after the action;
+4. save another checkpoint after a verified state change.
+
+`UNKNOWN` is never success.
+
+On timeout, stall, frozen UI or ambiguous provider state:
+1. observe current application state;
+2. reconcile the execution journal with the project checkpoint;
+3. resume from the last verified checkpoint;
+4. retry the same route at most once, and only when reversible/idempotent;
+5. use an authorized fallback tool/route if quality and authority are preserved;
+6. otherwise HOLD rather than blindly clicking or replaying.
+
+This protocol is implemented by `company/runtime/media_execution_recovery.py` and configured in `company/config/media_venture.json`.

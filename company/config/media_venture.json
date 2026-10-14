@@ -1,12 +1,12 @@
 {
-  "version": "1.4",
+  "version": "1.5",
   "enabled": true,
   "team_model": "venture_scoped_smallest_effective_team_functions_not_headcount",
   "production_functions": [
     {
       "id": "media_producer",
       "name": "Media Producer / Production Coordinator",
-      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "default_status": "CORE_ALWAYS_ACTIVE",
       "owns": [
         "master_schedule",
         "milestones",
@@ -22,7 +22,7 @@
     {
       "id": "editorial_director",
       "name": "Editorial Director / Showrunner",
-      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "default_status": "CORE_ALWAYS_ACTIVE",
       "owns": [
         "idea_selection",
         "hook",
@@ -37,7 +37,7 @@
     {
       "id": "independent_fact_checker",
       "name": "Independent Fact Checker",
-      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "default_status": "MANDATORY_CLEARANCE",
       "owns": [
         "material_claim_verification",
         "numbers_dates_names",
@@ -49,7 +49,7 @@
     {
       "id": "script_voice_director",
       "name": "Script & Voice Director",
-      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "default_status": "ROUTED_CRAFT_CAPABILITY",
       "owns": [
         "five_pass_script_development",
         "scene_aware_script",
@@ -65,7 +65,7 @@
     {
       "id": "visual_art_director",
       "name": "Visual Art Director / Frame Curator",
-      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "default_status": "ROUTED_CRAFT_CAPABILITY",
       "owns": [
         "visual_story_case",
         "key_visual",
@@ -78,9 +78,27 @@
       ]
     },
     {
+      "id": "cinematography_shot_designer",
+      "name": "Cinematography / Shot Design",
+      "default_status": "ROUTED_CRAFT_CAPABILITY",
+      "owns": [
+        "shot_purpose",
+        "framing_and_shot_size",
+        "camera_motion_intent",
+        "depth_and_layering",
+        "subject_staging",
+        "screen_direction_and_eyeline",
+        "shot_to_shot_continuity",
+        "camera_transition_motivation",
+        "visual_rhythm_support",
+        "camera_plan_for_animatic",
+        "shot_feasibility_with_available_tools"
+      ]
+    },
+    {
       "id": "motion_picture_editor",
       "name": "Motion & Picture Editor",
-      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "default_status": "ROUTED_CRAFT_CAPABILITY",
       "owns": [
         "preproduction_craft_review",
         "visual_story_feasibility",
@@ -100,7 +118,7 @@
     {
       "id": "music_sound_supervisor",
       "name": "Music Supervisor & Sound Designer",
-      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "default_status": "ROUTED_CRAFT_CAPABILITY",
       "owns": [
         "preproduction_craft_review",
         "sonic_concept",
@@ -118,7 +136,7 @@
     {
       "id": "dialogue_mix_engineer",
       "name": "Dialogue & Mix Engineer",
-      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "default_status": "ROUTED_CRAFT_CAPABILITY",
       "owns": [
         "dialogue_cleanup",
         "dialogue_edit",
@@ -135,7 +153,7 @@
     {
       "id": "audience_growth_strategist",
       "name": "Audience Growth & Packaging Strategist",
-      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "default_status": "ROUTED_CRAFT_CAPABILITY",
       "owns": [
         "trend_radar",
         "topic_mining",
@@ -152,7 +170,7 @@
     {
       "id": "thumbnail_packaging_designer",
       "name": "Thumbnail & Packaging Designer",
-      "default_status": "ACTIVE_FOR_MEDIA_PILOT",
+      "default_status": "ROUTED_CRAFT_CAPABILITY",
       "owns": [
         "thumbnail_concepts",
         "image_selection_retouching",
@@ -187,7 +205,10 @@
     "growth_strategist_does_not_replace_thumbnail_design_review",
     "producer_controls_schedule_resources_not_editorial_truth",
     "motion_editor_participates_before_script_lock",
-    "same_human_or_tool_may_cover_multiple_functions_in_pilot_but_required_cross_function_reviews_remain"
+    "same_human_or_tool_may_cover_multiple_functions_in_pilot_but_required_cross_function_reviews_remain",
+    "cinematography_defines_shot_language_but_does_not_self_approve_picture_lock",
+    "routed_craft_function_is_invoked_by_stage_not_kept_permanently_active",
+    "unknown_execution_state_cannot_be_promoted_to_success"
   ],
   "existing_function_dependencies": [
     "Owner",
@@ -233,7 +254,14 @@
     "visual_story_case_rework",
     "thumbnail_variants_produced",
     "production_readiness_failures",
-    "edit_rework_after_script_lock"
+    "edit_rework_after_script_lock",
+    "shot_design_rework",
+    "camera_continuity_defects",
+    "studio_coordination_overhead_minutes",
+    "routed_function_invocations",
+    "unnecessary_function_invocations",
+    "handoff_recovery_count",
+    "unknown_execution_events"
   ],
   "post_publish_split_review_after_videos": 10,
   "full_scale_without_pilot_forbidden": true,
@@ -261,7 +289,8 @@
     "runway_video_generation": "BLOCKED_BY_CURRENT_PLAN_NO_VIDEO_MODELS",
     "openart_visual_generation": "INSTALLED",
     "figma_frame_design": "INSTALLED",
-    "canva_design": "INSTALLED"
+    "canva_design": "INSTALLED",
+    "cinematography_shot_design": "PROCESS_DEFINED_SPECIALIZED_TOOL_REQUIRED"
   },
   "runtime_evidence": {
     "after_effects_2026": {
@@ -285,5 +314,101 @@
     }
   },
   "specialized_tool_policy": "company/config/media_specialized_tool_policy.json",
-  "benchmark_artifact": "docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md"
+  "benchmark_artifact": "docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md",
+  "operating_model": {
+    "mode": "SMALL_CORE_ROUTED_CRAFT_CAPABILITIES",
+    "principle": "functions_are_capabilities_not_permanent_agent_processes",
+    "core_functions": [
+      "media_producer",
+      "editorial_director"
+    ],
+    "mandatory_clearance_functions": [
+      "independent_fact_checker"
+    ],
+    "routed_craft_functions": [
+      "script_voice_director",
+      "visual_art_director",
+      "cinematography_shot_designer",
+      "motion_picture_editor",
+      "music_sound_supervisor",
+      "dialogue_mix_engineer",
+      "audience_growth_strategist",
+      "thumbnail_packaging_designer"
+    ],
+    "on_demand_functions": [
+      "localization_producer"
+    ],
+    "routing_rule": "invoke a function only when the current stage contract requires its craft judgment, execution, blocker, or clearance",
+    "default_output_contract": [
+      "decision_or_artifact_delta",
+      "material_blocker_if_any",
+      "next_required_handoff"
+    ],
+    "forbidden_defaults": [
+      "every_function_reviews_every_stage",
+      "mandatory_long_form_reports",
+      "one_independent_agent_process_per_function",
+      "repeating_context already present in shared production state"
+    ],
+    "parallelize_when_safe": true,
+    "single_synthesis_per_gate": true,
+    "owner_interrupt_only_when": [
+      "material_brand_or_story_direction_conflict",
+      "owner_voice_or_performance_approval",
+      "credentials_subscription_or_spend_required",
+      "destructive_or_irreversible_action",
+      "public_publish_approval"
+    ]
+  },
+  "execution_recovery": {
+    "policy_version": "1.0",
+    "uses_hybrid_execution_journal": true,
+    "checkpoint_required_before_application_handoff": true,
+    "checkpoint_required_after_verified_state_change": true,
+    "unknown_is_never_success": true,
+    "replay_unknown_default": false,
+    "same_route_retry_limit": 1,
+    "required_checkpoint_fields": [
+      "episode_id",
+      "stage_id",
+      "action_id",
+      "application",
+      "application_version",
+      "project_path",
+      "artifact_or_project_version",
+      "expected_postcondition",
+      "last_verified_state",
+      "next_safe_action"
+    ],
+    "application_handoff_states": [
+      "PLANNED",
+      "APPLICATION_READY",
+      "PROJECT_OPENED",
+      "ACTION_DISPATCHED",
+      "POSTCONDITION_VERIFIED",
+      "CHECKPOINT_SAVED",
+      "FAILED",
+      "UNKNOWN"
+    ],
+    "recovery_sequence": [
+      "observe_current_application_state",
+      "reconcile_journal_and_project_checkpoint",
+      "resume_from_last_verified_checkpoint",
+      "retry_same_route_once_if_idempotent_or_reversible",
+      "use_authorized_fallback_tool_or_route",
+      "hold_and_escalate_when_state_remains_unknown"
+    ],
+    "no_progress_policy": {
+      "detect_no_progress": true,
+      "require_bounded_timeout": true,
+      "capture_diagnostic_state": true,
+      "do_not_repeat_blind_clicks": true
+    },
+    "fallback_constraints": [
+      "fallback_must_preserve_task_intent",
+      "fallback_must_be_authorized",
+      "fallback_must_not_silently_reduce_quality_gate",
+      "fallback_must_not_destroy_or_overwrite_unverified_work"
+    ]
+  }
 }
