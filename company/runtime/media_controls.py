@@ -155,10 +155,18 @@ def validate_media_team(config):
         raise MediaControlError("full episode must require P2 PASS")
     if production_system.get("p0_status") != "PASS":
         raise MediaControlError("P0 visual-system lock must pass before active production")
-    if production_system.get("active_stage") != "P1_COHERENCE_30_45":
-        raise MediaControlError("media venture must advance to P1 after P0 PASS")
+    if production_system.get("p1_status") != "PASS_INTERNAL_COHERENCE":
+        raise MediaControlError("P1 internal coherence must pass before P2 preparation")
+    if production_system.get("active_stage") != "P2_PREPARATION_BLOCKED_CAPABILITY_GAP":
+        raise MediaControlError("media venture must hold at P2 preparation while capability gaps remain")
+    if production_system.get("p2_status") != "BLOCKED_CAPABILITY_GAP":
+        raise MediaControlError("P2 must remain blocked until craft capability gaps are resolved")
     if not production_system.get("production_kit") or not production_system.get("p0_review"):
         raise MediaControlError("P0 production artifacts are missing")
+    if not production_system.get("p1_review") or not production_system.get("p1_internal_render"):
+        raise MediaControlError("P1 review artifacts are missing")
+    if len(production_system.get("p2_blockers", [])) < 3:
+        raise MediaControlError("P2 blockers are incomplete")
 
     toolchain = config.get("media_toolchain", {})
     if toolchain.get("image_generation_primary_tool") != "RUNWAY_NANO_BANANA_2_LITE_QUALIFIED":
@@ -167,6 +175,12 @@ def validate_media_team(config):
         raise MediaControlError("qualified backup image generator drifted")
     if not toolchain.get("image_generation_qualification_artifact"):
         raise MediaControlError("image generator qualification artifact is missing")
+    if toolchain.get("after_effects_motion_assembly") != "STALE_EVIDENCE_CURRENT_EXECUTABLE_NOT_FOUND":
+        raise MediaControlError("After Effects capability state must reflect current YASSIN verification")
+    if toolchain.get("motion_authoring") != "CAPABILITY_GAP":
+        raise MediaControlError("professional motion authoring must remain a capability gap")
+    if toolchain.get("descript_rough_edit") != "RUNTIME_VERIFIED_INTERNAL_ONLY":
+        raise MediaControlError("Descript must remain classified as an internal rough-edit route")
     for capability in {
         "dialogue_cleanup",
         "music_supervision",
