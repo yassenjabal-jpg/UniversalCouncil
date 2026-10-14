@@ -11,11 +11,20 @@ class MediaSpecializedToolPolicyTests(unittest.TestCase):
 
     def test_specialized_tool_first_is_governing_policy(self):
         cfg = self.load_policy()
-        self.assertEqual(cfg["version"], "1.0")
+        self.assertEqual(cfg["version"], "1.1")
         self.assertEqual(cfg["policy"], "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT")
         self.assertIn("python_as_primary_video_editor", cfg["prohibitions"])
         self.assertIn("python_as_primary_audio_mastering_tool", cfg["prohibitions"])
         self.assertIn("generated_code_as_substitute_for_unavailable_nle_or_daw", cfg["prohibitions"])
+        still = cfg["tool_matrix"]["still_image_generation"]
+        self.assertTrue(still["generation_brief_required"])
+        self.assertTrue(still["anti_slop_approval_required"])
+        self.assertTrue(still["creative_prompt_rewrite_by_executor_forbidden"])
+        video = cfg["tool_matrix"]["ai_video_generation"]
+        self.assertTrue(video["generation_brief_required"])
+        self.assertTrue(video["anti_slop_approval_required"])
+        self.assertEqual(cfg["gates"]["visual_generation_without_approved_brief"], "BLOCK")
+        self.assertEqual(cfg["gates"]["visual_generation_without_anti_slop_approval"], "BLOCK")
 
     def test_public_master_fails_closed_without_professional_finishing(self):
         cfg = self.load_policy()
