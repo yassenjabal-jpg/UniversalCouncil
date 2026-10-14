@@ -55,8 +55,8 @@ PUBLISHED_PERFORMANCE_METRICS = {
 
 
 def validate_media_team(config):
-    if config.get("version") != "1.7":
-        raise MediaControlError("media venture must be version 1.7")
+    if config.get("version") != "1.8":
+        raise MediaControlError("media venture must be version 1.8")
 
     functions = {f["id"]: f for f in config.get("production_functions", [])}
     missing = REQUIRED_MEDIA_FUNCTIONS - set(functions)
@@ -157,16 +157,22 @@ def validate_media_team(config):
         raise MediaControlError("P0 visual-system lock must pass before active production")
     if production_system.get("p1_status") != "PASS_INTERNAL_COHERENCE":
         raise MediaControlError("P1 internal coherence must pass before P2 preparation")
-    if production_system.get("active_stage") != "P2_PREPARATION_BLOCKED_CAPABILITY_GAP":
-        raise MediaControlError("media venture must hold at P2 preparation while capability gaps remain")
-    if production_system.get("p2_status") != "BLOCKED_CAPABILITY_GAP":
-        raise MediaControlError("P2 must remain blocked until craft capability gaps are resolved")
+    if production_system.get("active_stage") != "P1_REFERENCE_FIDELITY_RETRY_PHASE_4":
+        raise MediaControlError("media venture must remain in DAY24 reference-fidelity retry phase 4")
+    if production_system.get("p2_status") != "BLOCKED_REFERENCE_FIDELITY_RETRY":
+        raise MediaControlError("P2 must remain blocked until the P1 reference-fidelity retry passes")
     if not production_system.get("production_kit") or not production_system.get("p0_review"):
         raise MediaControlError("P0 production artifacts are missing")
     if not production_system.get("p1_review") or not production_system.get("p1_internal_render"):
         raise MediaControlError("P1 review artifacts are missing")
-    if len(production_system.get("p2_blockers", [])) < 3:
+    if len(production_system.get("p2_blockers", [])) < 2:
         raise MediaControlError("P2 blockers are incomplete")
+    if not production_system.get("reference_temporal_grammar"):
+        raise MediaControlError("reference temporal grammar is missing")
+    if production_system.get("motion_qualification_status") != "PASS_PRIMARY":
+        raise MediaControlError("primary motion route qualification is missing")
+    if not production_system.get("motion_qualification_artifact") or not production_system.get("visual_event_script"):
+        raise MediaControlError("retry motion/script artifacts are missing")
 
     toolchain = config.get("media_toolchain", {})
     if toolchain.get("image_generation_primary_tool") != "RUNWAY_NANO_BANANA_2_LITE_QUALIFIED":
@@ -175,10 +181,12 @@ def validate_media_team(config):
         raise MediaControlError("qualified backup image generator drifted")
     if not toolchain.get("image_generation_qualification_artifact"):
         raise MediaControlError("image generator qualification artifact is missing")
-    if toolchain.get("after_effects_motion_assembly") != "STALE_EVIDENCE_CURRENT_EXECUTABLE_NOT_FOUND":
-        raise MediaControlError("After Effects capability state must reflect current YASSIN verification")
-    if toolchain.get("motion_authoring") != "CAPABILITY_GAP":
-        raise MediaControlError("professional motion authoring must remain a capability gap")
+    if toolchain.get("after_effects_motion_assembly") != "RUNTIME_VERIFIED_QUALIFIED_PRIMARY":
+        raise MediaControlError("After Effects qualified-primary state drifted")
+    if toolchain.get("motion_authoring") != "QUALIFIED_PRIMARY_AFTER_EFFECTS_2026":
+        raise MediaControlError("professional motion authoring primary route drifted")
+    if toolchain.get("picture_edit_finishing") != "QUALIFIED_1080P_AFTER_EFFECTS_PILOT":
+        raise MediaControlError("qualified 1080p picture finishing state drifted")
     if toolchain.get("descript_rough_edit") != "RUNTIME_VERIFIED_INTERNAL_ONLY":
         raise MediaControlError("Descript must remain classified as an internal rough-edit route")
     for capability in {
