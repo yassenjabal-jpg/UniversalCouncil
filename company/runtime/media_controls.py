@@ -155,8 +155,12 @@ def validate_media_team(config):
         raise MediaControlError("full episode must require P2 PASS")
 
     toolchain = config.get("media_toolchain", {})
-    if toolchain.get("image_generation_primary_tool") != "UNQUALIFIED_PENDING_TOOL_QUALIFICATION":
-        raise MediaControlError("primary image generator must remain unqualified until benchmark passes")
+    if toolchain.get("image_generation_primary_tool") != "RUNWAY_NANO_BANANA_2_LITE_QUALIFIED":
+        raise MediaControlError("qualified primary image generator drifted")
+    if toolchain.get("image_generation_backup_tool") != "RUNWAY_NANO_BANANA_PRO_QUALIFIED":
+        raise MediaControlError("qualified backup image generator drifted")
+    if not toolchain.get("image_generation_qualification_artifact"):
+        raise MediaControlError("image generator qualification artifact is missing")
     for capability in {
         "dialogue_cleanup",
         "music_supervision",
