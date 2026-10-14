@@ -98,6 +98,11 @@ class MediaCapabilityTests(unittest.TestCase):
         model = json.loads((ROOT / "company/config/studio_operating_model.json").read_text(encoding="utf-8"))
         self.assertTrue(validate_studio_model(model))
         self.assertEqual(model["identity"]["name_ar"], "الاستوديو")
+        self.assertIn("technical_operations", model["shared_studio_services"])
+        self.assertEqual(
+            model["shared_studio_services"]["technical_operations"]["roles"],
+            ["Technical Operator"],
+        )
         self.assertEqual(
             [stage["id"] for stage in model["production_flow"]],
             [
@@ -120,6 +125,7 @@ class MediaCapabilityTests(unittest.TestCase):
         mutations = [
             lambda m: m["identity"].update(name_en="Council"),
             lambda m: m["departments"].pop("post_production"),
+            lambda m: m.update(shared_studio_services={}),
             lambda m: m["episode_pod"].update(required_core=[]),
             lambda m: m["production_flow"].append({"id": "extra_stage"}),
             lambda m: m["gates"].append({"technical_id": "Fourth Gate", "placement": "after_export"}),
