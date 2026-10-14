@@ -1,5 +1,5 @@
 {
-  "version": "1.2",
+  "version": "1.3",
   "policy": "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
   "principles": [
     "Use specialized creative tools for creative craft.",
@@ -10,7 +10,9 @@
     "Anti-Slop approval is mandatory before generated visual execution.",
     "Generation tools and Technical Operator may not materially reinterpret or creatively rewrite an approved brief.",
     "For episode thumbnail generation, execute exactly one selected Council concept as one job, one prompt version and one independent asset.",
-    "Triptych, diptych, contact-sheet, collage and multi-panel thumbnail outputs are rejected."
+    "Triptych, diptych, contact-sheet, collage and multi-panel thumbnail outputs are rejected.",
+    "The primary visual generator is selected by a controlled same-frame same-brief qualification test, not by remaining credits or convenience.",
+    "After the visual system is locked, the Council reviews at defined gates; the Visual Art Director owns frame-level visual decisions inside the lock."
   ],
   "prohibitions": [
     "python_as_primary_video_editor",
@@ -154,7 +156,9 @@
     "visual_generation_without_approved_brief": "BLOCK",
     "visual_generation_without_anti_slop_approval": "BLOCK",
     "thumbnail_generation_multiple_concepts_or_assets": "BLOCK",
-    "thumbnail_generation_multi_panel_output": "BLOCK"
+    "thumbnail_generation_multi_panel_output": "BLOCK",
+    "full_length_episode_before_p2_visual_pilot": "BLOCK",
+    "visual_system_lock_without_tool_qualification": "BLOCK"
   },
   "escalation_rule": "If a required craft stage is blocked, HR/Capability Director must scout or request a specialized tool. The Technical Operator may not fill the gap by authoring a custom craft replacement without an explicit Council exception approved by Owner.",
   "exception_rule": {
@@ -162,5 +166,24 @@
     "must_show_reason_specialized_tool_not_viable": true,
     "must_be_time_bounded": true,
     "must_not_become_default": true
+  },
+  "tool_qualification": {
+    "required_before_primary_visual_generator_lock": true,
+    "protocol": "docs/operations/media/TOOL_QUALIFICATION_PROTOCOL.md",
+    "comparison_contract": "SAME_FRAME_SAME_BRIEF",
+    "minimum_viable_candidates": 2,
+    "weights": {
+      "prompt_fidelity": 30,
+      "composition_control": 20,
+      "style_consistency": 20,
+      "artifact_quality": 10,
+      "editability": 10,
+      "speed": 5,
+      "cost": 5
+    },
+    "selection_rule": "QUALITY_AND_FIDELITY_DOMINATE_COST",
+    "remaining_credits_must_not_select_primary_tool": true,
+    "primary_tool_state": "UNQUALIFIED",
+    "backup_tool_state": "UNQUALIFIED"
   }
 }
