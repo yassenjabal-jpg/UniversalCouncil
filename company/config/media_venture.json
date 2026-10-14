@@ -214,7 +214,7 @@
     "only_one_official_thumbnail_concept_may_be_generated_per_episode",
     "multi_panel_thumbnail_outputs_are_rejected",
     "visual_art_director_has_final_visual_decision_within_locked_system",
-    "council_reviews_visual_work_at_defined_gates_after_lock_not_per_frame",
+    "studio_reviews_visual_work_at_defined_gates_after_lock_not_per_frame",
     "red_team_may_block_drift_but_does_not_replace_art_direction",
     "stage_owner_has_final_authority",
     "asset_pack_approved_by_art_director_inside_preproduction_lock",
@@ -430,6 +430,39 @@
     "current_detected_desktop_apps": [
       "Adobe After Effects 2026",
       "Adobe Creative Cloud"
+    ]
+  },
+  "operating_identity": {
+    "name_ar": "الاستوديو",
+    "name_en": "The Studio",
+    "previous_name": "Council",
+    "scope": "media production",
+    "governing_model": "company/config/studio_operating_model.json"
+  },
+  "studio_departments": {
+    "studio_management": [
+      "media_producer"
+    ],
+    "editorial_research": [
+      "editorial_director",
+      "independent_fact_checker",
+      "script_voice_director",
+      "audience_growth_strategist"
+    ],
+    "visual_design": [
+      "visual_art_director",
+      "thumbnail_packaging_designer"
+    ],
+    "post_production": [
+      "motion_picture_editor",
+      "music_sound_supervisor",
+      "dialogue_mix_engineer"
+    ],
+    "qc_delivery": [
+      "independent_qc_reviewer"
+    ],
+    "conditional": [
+      "localization_producer"
     ]
   }
 }
