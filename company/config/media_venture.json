@@ -282,7 +282,7 @@
     "captions": "CAN_BUILD_OR_VERIFY",
     "platform_publishing": "CAPABILITY_GAP",
     "analytics_ingestion": "NEEDS_RUNTIME_VERIFICATION",
-    "after_effects_motion_assembly": "RUNTIME_VERIFIED",
+    "after_effects_motion_assembly": "STALE_EVIDENCE_CURRENT_EXECUTABLE_NOT_FOUND",
     "picture_edit_finishing": "PUBLIC_FINISHING_CAPABILITY_GAP",
     "render_export_public_master": "PUBLIC_FINISHING_CAPABILITY_GAP",
     "descript_editing": "CONNECTED_AND_AVAILABLE",
@@ -292,7 +292,11 @@
     "canva_design": "INSTALLED",
     "image_generation_primary_tool": "RUNWAY_NANO_BANANA_2_LITE_QUALIFIED",
     "image_generation_backup_tool": "RUNWAY_NANO_BANANA_PRO_QUALIFIED",
-    "image_generation_qualification_artifact": "docs/operations/media/visual_generation_briefs/2026-10-14/VISUAL_TOOL_QUALIFICATION_DAY24.md"
+    "image_generation_qualification_artifact": "docs/operations/media/visual_generation_briefs/2026-10-14/VISUAL_TOOL_QUALIFICATION_DAY24.md",
+    "motion_authoring": "CAPABILITY_GAP",
+    "descript_rough_edit": "RUNTIME_VERIFIED_INTERNAL_ONLY",
+    "p1_internal_coherence_render": "RUNTIME_VERIFIED_720P_30FPS_WATERMARKED",
+    "audio_finishing_internal": "PARTIAL_DESCRIPT_GAIN_LIMITED"
   },
   "runtime_evidence": {
     "after_effects_2026": {
@@ -355,8 +359,17 @@
     "full_episode_requires": "P2_PASS",
     "tool_qualification_status": "PASS",
     "p0_status": "PASS",
-    "active_stage": "P1_COHERENCE_30_45",
+    "active_stage": "P2_PREPARATION_BLOCKED_CAPABILITY_GAP",
     "production_kit": "docs/operations/media/VISUAL_PRODUCTION_KIT_v1.0.md",
-    "p0_review": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_COUNCIL_REVIEW.md"
+    "p0_review": "docs/operations/media/visual_generation_briefs/2026-10-14/P0_DAY24_COUNCIL_REVIEW.md",
+    "p1_status": "PASS_INTERNAL_COHERENCE",
+    "p1_review": "docs/operations/media/pilots/2026-10-14/P1_DAY24_COUNCIL_REVIEW.md",
+    "p1_internal_render": "https://share.descript.com/view/h6bKHYCNPe2",
+    "p2_status": "BLOCKED_CAPABILITY_GAP",
+    "p2_blockers": [
+      "professional_motion_authoring",
+      "clean_1080p_or_better_finishing_without_watermark",
+      "delivery_level_audio_finishing"
+    ]
   }
 }
