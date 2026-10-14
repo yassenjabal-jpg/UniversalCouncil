@@ -15,6 +15,7 @@ from company.runtime.evidence_sync import (
     discover_receipts,
     latest_by_capability,
     resolve_source_root,
+    receipt_evidence_state,
     sync_repository,
     validate_imported_evidence,
     validate_receipt,
