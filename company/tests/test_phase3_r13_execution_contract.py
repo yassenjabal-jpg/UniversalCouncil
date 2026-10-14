@@ -20,11 +20,11 @@ class Phase3R13DecisionExecutionSeparationTests(unittest.TestCase):
         self.assertTrue(validate_execution_contract_config(CFG))
         self.assertEqual(
             set(CFG["council_owns"]),
-            {"what","why","constraints","authority","blocking_conditions","verification_target"},
+            {"what", "why", "constraints", "authority", "blocking_conditions", "verification_target"},
         )
         self.assertEqual(
             set(CFG["execution_orchestrator_owns"]),
-            {"how","where","tool","route","recovery","verification_method"},
+            {"how", "where", "tool", "route", "recovery", "verification_method"},
         )
         self.assertFalse(CFG["execution_orchestrator_is_voting_member"])
 
@@ -47,7 +47,7 @@ class Phase3R13DecisionExecutionSeparationTests(unittest.TestCase):
             CFG,
         )
         self.assertTrue(contract["execution_ready"])
-        for forbidden in ("how","where","tool","route","recovery","verification_method"):
+        for forbidden in ("how", "where", "tool", "route", "recovery", "verification_method"):
             self.assertNotIn(forbidden, contract)
 
     def test_council_cannot_preselect_tool_or_route(self):
@@ -65,10 +65,10 @@ class Phase3R13DecisionExecutionSeparationTests(unittest.TestCase):
             "blocking_conditions": [],
             "verification_target": "tests pass",
         }
-        for field, value in (("tool","github"),("route","api"),("how","edit json")):
+        for field, value in (("tool", "github"), ("route", "api"), ("how", "edit json")):
             with self.subTest(field=field):
                 with self.assertRaises(ExecutionContractError):
-                    build_execution_contract({**base, field:value}, CFG)
+                    build_execution_contract({**base, field: value}, CFG)
 
     def test_unresolved_blocker_makes_contract_not_execution_ready(self):
         contract = build_execution_contract(
@@ -84,7 +84,11 @@ class Phase3R13DecisionExecutionSeparationTests(unittest.TestCase):
                     "scopes": ["service-a"],
                 },
                 "blocking_conditions": [
-                    {"blocker_id":"SEC-1","status":"OPEN","authority_scope":"security"}
+                    {
+                        "blocker_id": "SEC-1",
+                        "status": "OPEN",
+                        "authority_scope": "security",
+                    }
                 ],
                 "verification_target": "healthy deployment",
             },
@@ -95,15 +99,15 @@ class Phase3R13DecisionExecutionSeparationTests(unittest.TestCase):
             build_execution_plan(
                 contract,
                 {
-                    "how":"deploy script",
-                    "where":"prod",
-                    "tool":"approved_gateway",
-                    "route":"native",
-                    "operation":"deploy",
-                    "target":"prod",
-                    "scope":"service-a",
-                    "recovery":"rollback",
-                    "verification_method":"health check",
+                    "how": "deploy script",
+                    "where": "prod",
+                    "tool": "approved_gateway",
+                    "route": "native",
+                    "operation": "deploy",
+                    "target": "prod",
+                    "scope": "service-a",
+                    "recovery": "rollback",
+                    "verification_method": "health check",
                 },
                 CFG,
             )
@@ -127,60 +131,60 @@ class Phase3R13DecisionExecutionSeparationTests(unittest.TestCase):
             CFG,
         )
         base_plan = {
-            "how":"update file",
-            "where":"repo",
-            "tool":"github_connector",
-            "route":"native_api",
-            "operation":"github.write",
-            "target":"repo",
-            "scope":"phase3_branch",
-            "recovery":"revert commit",
-            "verification_method":"tests",
+            "how": "update file",
+            "where": "repo",
+            "tool": "github_connector",
+            "route": "native_api",
+            "operation": "github.write",
+            "target": "repo",
+            "scope": "phase3_branch",
+            "recovery": "revert commit",
+            "verification_method": "tests",
         }
         plan = build_execution_plan(contract, base_plan, CFG)
         self.assertFalse(plan["voting_member"])
         self.assertEqual(plan["decision_id"], "bounded")
 
         for field, value in (
-            ("operation","github.merge"),
-            ("target","other-repo"),
-            ("scope","main"),
+            ("operation", "github.merge"),
+            ("target", "other-repo"),
+            ("scope", "main"),
         ):
             with self.subTest(field=field):
                 with self.assertRaises(ExecutionContractError):
-                    build_execution_plan(contract, {**base_plan, field:value}, CFG)
+                    build_execution_plan(contract, {**base_plan, field: value}, CFG)
 
     def test_execution_orchestrator_cannot_change_why_or_constraints(self):
         contract = build_execution_contract(
             {
-                "decision_id":"immutable",
-                "what":"Run test",
-                "why":"Verify behavior",
-                "constraints":["read-only"],
-                "authority":{
-                    "principal":"technical_operator",
-                    "operations":["test.run"],
-                    "targets":["YASSIN"],
-                    "scopes":["worktree"],
+                "decision_id": "immutable",
+                "what": "Run test",
+                "why": "Verify behavior",
+                "constraints": ["read-only"],
+                "authority": {
+                    "principal": "technical_operator",
+                    "operations": ["test.run"],
+                    "targets": ["YASSIN"],
+                    "scopes": ["worktree"],
                 },
-                "blocking_conditions":[],
-                "verification_target":"test pass",
+                "blocking_conditions": [],
+                "verification_target": "test pass",
             },
             CFG,
         )
-        for forbidden in ("why","constraints","authority"):
+        for forbidden in ("why", "constraints", "authority"):
             with self.subTest(forbidden=forbidden):
-                proposal={
-                    "how":"python unittest",
-                    "where":"YASSIN",
-                    "tool":"remote_shell",
-                    "route":"host",
-                    "operation":"test.run",
-                    "target":"YASSIN",
-                    "scope":"worktree",
-                    "recovery":"stop",
-                    "verification_method":"exit code plus test report",
-                    forbidden:"override",
+                proposal = {
+                    "how": "python unittest",
+                    "where": "YASSIN",
+                    "tool": "remote_shell",
+                    "route": "host",
+                    "operation": "test.run",
+                    "target": "YASSIN",
+                    "scope": "worktree",
+                    "recovery": "stop",
+                    "verification_method": "exit code plus test report",
+                    forbidden: "override",
                 }
                 with self.assertRaises(ExecutionContractError):
                     build_execution_plan(contract, proposal, CFG)
