@@ -93,14 +93,18 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertFalse(system["per_frame_full_council_review_after_lock"])
         self.assertEqual(system["full_episode_requires"], "P2_PASS")
         self.assertEqual(system["p0_status"], "PASS")
-        self.assertEqual(system["active_stage"], "P2_PREPARATION_BLOCKED_CAPABILITY_GAP")
+        self.assertEqual(system["active_stage"], "P1_REFERENCE_FIDELITY_RETRY_PHASE_4")
         self.assertTrue(system["production_kit"])
         self.assertTrue(system["p0_review"])
         self.assertEqual(system["p1_status"], "PASS_INTERNAL_COHERENCE")
         self.assertTrue(system["p1_review"])
         self.assertTrue(system["p1_internal_render"])
-        self.assertEqual(system["p2_status"], "BLOCKED_CAPABILITY_GAP")
-        self.assertGreaterEqual(len(system["p2_blockers"]), 3)
+        self.assertEqual(system["p2_status"], "BLOCKED_REFERENCE_FIDELITY_RETRY")
+        self.assertGreaterEqual(len(system["p2_blockers"]), 2)
+        self.assertTrue(system["reference_temporal_grammar"])
+        self.assertEqual(system["motion_qualification_status"], "PASS_PRIMARY")
+        self.assertTrue(system["motion_qualification_artifact"])
+        self.assertTrue(system["visual_event_script"])
         self.assertEqual(
             system["pilot_ladder"],
             [
@@ -136,17 +140,23 @@ class MediaCapabilityTests(unittest.TestCase):
         cfg = self.load_config()
         self.assertFalse(cfg["live_publish_authority"])
         self.assertEqual(cfg["media_toolchain"]["platform_publishing"], "CAPABILITY_GAP")
-        self.assertEqual(cfg["media_toolchain"]["video_editing"], "PARTIAL_RUNTIME_VERIFIED")
+        self.assertEqual(
+            cfg["media_toolchain"]["video_editing"],
+            "AFTER_EFFECTS_PRIMARY_DESCRIPT_ROUGH_SECONDARY",
+        )
         self.assertEqual(
             cfg["media_toolchain"]["after_effects_motion_assembly"],
-            "STALE_EVIDENCE_CURRENT_EXECUTABLE_NOT_FOUND",
+            "RUNTIME_VERIFIED_QUALIFIED_PRIMARY",
         )
-        self.assertEqual(cfg["media_toolchain"]["motion_authoring"], "CAPABILITY_GAP")
+        self.assertEqual(
+            cfg["media_toolchain"]["motion_authoring"],
+            "QUALIFIED_PRIMARY_AFTER_EFFECTS_2026",
+        )
         self.assertEqual(cfg["media_toolchain"]["descript_rough_edit"], "RUNTIME_VERIFIED_INTERNAL_ONLY")
         self.assertEqual(cfg["media_toolchain"]["dialogue_cleanup"], "CONNECTED_DESCRIPT_AVAILABLE")
         self.assertEqual(
             cfg["media_toolchain"]["picture_edit_finishing"],
-            "PUBLIC_FINISHING_CAPABILITY_GAP",
+            "QUALIFIED_1080P_AFTER_EFFECTS_PILOT",
         )
         self.assertEqual(
             cfg["media_toolchain"]["mix_mastering"],
@@ -272,6 +282,9 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["visual_production_system"].__setitem__("p2_status", "READY"),
             lambda c: c["visual_production_system"].__setitem__("p2_blockers", []),
             lambda c: c["visual_production_system"].__setitem__("active_stage", "P0_REFERENCE_FRAME_LOCK"),
+            lambda c: c["visual_production_system"].__setitem__("motion_qualification_status", "FAIL"),
+            lambda c: c["visual_production_system"].__setitem__("reference_temporal_grammar", ""),
+            lambda c: c["media_toolchain"].__setitem__("after_effects_motion_assembly", "STALE"),
         ]
         for mutate in mutations:
             cfg = self.load_config()
