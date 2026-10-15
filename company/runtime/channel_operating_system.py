@@ -208,7 +208,9 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     writing = cfg.get("writing_phase", {})
     _require(writing.get("exit_gate") == "SCRIPT_LOCK", "writing must end at Script Lock")
     sections = writing.get("sections", [])
-    _require([s.get("id") for s in sections] == ["W1_title_development", "W2_script_development"], "writing sections drifted")
+    _require(
+        [s.get("id") for s in sections] == ["W1_title_development", "W2_script_development"], "writing sections drifted"
+    )
     title_section, script_section = sections
     _validate_single_program_stages(title_section.get("stages", []), "title development")
     _validate_single_program_stages(script_section.get("stages", []), "script development")
@@ -218,7 +220,10 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     _require(int(title_system.get("required_candidate_count", 0)) == 3, "exactly three title candidates required")
     _require(title_system.get("owner_selection_required") is True, "Owner title selection is required")
     _require(title_system.get("owner_is_only_final_title_authority") is True, "Owner must retain title authority")
-    _require(title_system.get("script_start_before_owner_selection_forbidden") is True, "script cannot start before title selection")
+    _require(
+        title_system.get("script_start_before_owner_selection_forbidden") is True,
+        "script cannot start before title selection",
+    )
     required_title_fields = {
         "title",
         "why_now",
@@ -232,7 +237,10 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         "eight_minute_story_feasibility",
         "risk_notes",
     }
-    _require(required_title_fields.issubset(set(title_system.get("candidate_required_fields", []))), "title cards are incomplete")
+    _require(
+        required_title_fields.issubset(set(title_system.get("candidate_required_fields", []))),
+        "title cards are incomplete",
+    )
     required_feasibility = {
         "sufficient_research_material",
         "credible_sources_available",
@@ -241,7 +249,10 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         "meaningful_payoff_or_insight",
         "title_promise_can_be_fulfilled",
     }
-    _require(required_feasibility.issubset(set(title_system.get("feasibility_checks", []))), "title feasibility checks are incomplete")
+    _require(
+        required_feasibility.issubset(set(title_system.get("feasibility_checks", []))),
+        "title feasibility checks are incomplete",
+    )
     revision = title_system.get("post_lock_revision", {})
     _require(revision.get("automatic_change_forbidden") is True, "locked title cannot change automatically")
     _require(revision.get("owner_reapproval_required") is True, "title revision requires Owner reapproval")
@@ -292,7 +303,9 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     pre_review = cfg.get("preproduction_craft_review", {})
     _require(pre_review.get("required") is True, "pre-production craft review required")
     _require(pre_review.get("must_follow_script_lock") is True, "pre-production craft review must follow Script Lock")
-    _require(pre_review.get("must_precede_production_ready_lock") is True, "pre-production review must precede readiness")
+    _require(
+        pre_review.get("must_precede_production_ready_lock") is True, "pre-production review must precede readiness"
+    )
     _require(pre_review.get("may_return_to_writing_via_ticket") is True, "pre-production must use return tickets")
 
     shot = cfg.get("shot_design_system", {})
@@ -320,22 +333,30 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         "schedule_acceptable",
         "budget_acceptable",
     }
-    _require(required_readiness.issubset(set(readiness.get("required_checks", []))), "production readiness checks incomplete")
+    _require(
+        required_readiness.issubset(set(readiness.get("required_checks", []))), "production readiness checks incomplete"
+    )
     _require(readiness.get("fail_action") == "HOLD_PRODUCTION", "production readiness must fail closed")
 
     production = cfg.get("production_phase", {})
-    _require(production.get("entry_requirement") == "PRODUCTION_READY_LOCK", "production must require Production Ready Lock")
+    _require(
+        production.get("entry_requirement") == "PRODUCTION_READY_LOCK", "production must require Production Ready Lock"
+    )
     _require(production.get("mode") == "SERIAL_PRODUCTION_LINE_WITH_FEEDBACK_GATES", "production line mode drifted")
     _require(production.get("one_active_department") is True, "only one production department may be active")
     _require(production.get("parallel_craft_departments") is False, "parallel craft departments must be forbidden")
     _require(production.get("one_program_per_stage") is True, "production must use one program per stage")
-    _require(production.get("program_switch_only_at_stage_boundary") is True, "program changes require a stage boundary")
+    _require(
+        production.get("program_switch_only_at_stage_boundary") is True, "program changes require a stage boundary"
+    )
     _require(production.get("next_department_requires_accepted_handoff") is True, "accepted handoff required")
     _require(production.get("downstream_direct_upstream_edit_forbidden") is True, "downstream direct repair forbidden")
     _require(production.get("defect_action") == "RETURN_TICKET_TO_SOURCE_DEPARTMENT", "defects must return to source")
 
     departments = production.get("departments", [])
-    _require([d.get("id") for d in departments] == REQUIRED_PRODUCTION_DEPARTMENTS, "production department order drifted")
+    _require(
+        [d.get("id") for d in departments] == REQUIRED_PRODUCTION_DEPARTMENTS, "production department order drifted"
+    )
     for department in departments:
         _require(bool(department.get("accountable")), f"department {department.get('id')} missing accountable function")
         _require(bool(department.get("handoff")), f"department {department.get('id')} missing handoff")
@@ -363,18 +384,25 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         "do_not_change",
         "resume_handoff",
     }
-    _require(required_return_fields.issubset(set(handoff.get("return_ticket_required_fields", []))), "return ticket incomplete")
+    _require(
+        required_return_fields.issubset(set(handoff.get("return_ticket_required_fields", []))),
+        "return ticket incomplete",
+    )
 
     stage_contract = cfg.get("stage_execution_contract", {})
     _require(stage_contract.get("exactly_one_primary_program") is True, "one primary program required")
-    _require(stage_contract.get("simultaneous_secondary_craft_program_forbidden") is True, "second craft program forbidden")
+    _require(
+        stage_contract.get("simultaneous_secondary_craft_program_forbidden") is True, "second craft program forbidden"
+    )
     _require(stage_contract.get("program_switch_requires_new_stage") is True, "program switch requires new stage")
     _require(stage_contract.get("checkpoint_before_stage_exit") is True, "checkpoint required before stage exit")
     _require(stage_contract.get("output_verification_required") is True, "stage output verification required")
 
     routing = cfg.get("studio_routing_model", {})
     _require(routing.get("mode") == "THREE_PHASE_STUDIO_WITH_SERIAL_PRODUCTION", "studio routing mode drifted")
-    _require(routing.get("phase_sequence") == ["Writing", "Pre-production", "Production"], "studio phase sequence drifted")
+    _require(
+        routing.get("phase_sequence") == ["Writing", "Pre-production", "Production"], "studio phase sequence drifted"
+    )
     _require(
         set(routing.get("core_functions", [])) == {"Media Producer / Production Coordinator"},
         "only Producer may remain always-active control plane",
@@ -393,15 +421,29 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     _require(required_rules.issubset(rules), "studio routing rules incomplete")
 
     packaging = cfg.get("packaging_system", {})
-    _require(packaging.get("thumbnail_designer_independent_craft_function") is True, "thumbnail craft must stay distinct")
-    _require("exactly_three_title_candidates" in packaging.get("stage_a_before_script", []), "early packaging must supply three titles")
-    _require("owner_title_selection" in packaging.get("stage_a_before_script", []), "early packaging must include Owner selection")
-    _require(packaging.get("title_changes_after_owner_lock_require_owner_reapproval") is True, "title revisions need Owner")
+    _require(
+        packaging.get("thumbnail_designer_independent_craft_function") is True, "thumbnail craft must stay distinct"
+    )
+    _require(
+        "exactly_three_title_candidates" in packaging.get("stage_a_before_script", []),
+        "early packaging must supply three titles",
+    )
+    _require(
+        "owner_title_selection" in packaging.get("stage_a_before_script", []),
+        "early packaging must include Owner selection",
+    )
+    _require(
+        packaging.get("title_changes_after_owner_lock_require_owner_reapproval") is True, "title revisions need Owner"
+    )
     _require(len(packaging.get("stage_b_after_picture_lock", [])) >= 4, "final packaging stage incomplete")
 
     audio = cfg.get("audio_system", {})
-    _require(audio.get("principle") == "sound is designed with picture, not added after picture", "audio principle drifted")
-    _require(audio.get("sonic_concept_required_in_preproduction") is True, "sonic concept must happen in pre-production")
+    _require(
+        audio.get("principle") == "sound is designed with picture, not added after picture", "audio principle drifted"
+    )
+    _require(
+        audio.get("sonic_concept_required_in_preproduction") is True, "sonic concept must happen in pre-production"
+    )
     _require(audio.get("final_sound_design_after_picture_lock") is True, "final sound design requires Picture Lock")
     _require(audio.get("picture_lock_required_before_final_sound_design") is True, "picture lock audio rule drifted")
     _require(set(audio.get("mandatory_stems", [])) == REQUIRED_AUDIO_STEMS, "mandatory audio stems drifted")
