@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261015-030400-human1",
+  "created_at": "2026-10-15T03:04:00+03:00",
+  "scope": "project/media",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "media.production_cell.current",
+  "summary": "Media Production Cell v1.4 adds a bounded on-demand Human Assistance Pool. The Producer may request the smallest necessary human intervention when automation, tools, physical access, credentials, specialist craft or expert judgment create a real gap; returned work must be verified before the studio resumes.",
+  "details": {
+    "version": "1.4",
+    "human_assistance_mode": "ON_DEMAND_BOUNDED_ASSISTANCE",
+    "coordinator": "Media Producer / Production Coordinator",
+    "principle": "ask for the smallest human action needed then return control to the studio",
+    "eligible_helpers": [
+      "Owner",
+      "trusted local operator",
+      "domain expert",
+      "craft specialist",
+      "technician/vendor support"
+    ],
+    "owner_gates": [
+      "credentials/identity",
+      "spend/subscription",
+      "external sharing",
+      "irreversible action",
+      "publish authority"
+    ],
+    "recurring_gap_threshold": 3,
+    "recurring_gap_action": "capability review for tool, training, workflow, automation or staffing",
+    "governing_config": "company/config/media_venture.json",
+    "governing_doc": "docs/operations/media/MEDIA_PRODUCTION_CELL.md",
+    "assistance_doc": "docs/operations/media/HUMAN_ASSISTANCE_LANE.md"
+  },
+  "supersedes": [
+    "MEM-20261015-025700-lean13"
+  ],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "studio",
+    "human-assistance",
+    "on-demand",
+    "capability-gap"
+  ],
+  "source": {
+    "type": "repository",
+    "ref": "feat/studio-human-assistance-20261015",
+    "commit": "522287af597422b6b814eee9e6c5883f6e01ef30"
+  }
+}
