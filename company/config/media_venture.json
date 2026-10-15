@@ -1,5 +1,5 @@
 {
-  "version": "1.9",
+  "version": "2.0",
   "enabled": true,
   "team_model": "venture_scoped_smallest_effective_team_functions_not_headcount",
   "production_functions": [
@@ -308,7 +308,12 @@
     "writing_cycle_time",
     "preproduction_cycle_time",
     "production_cycle_time",
-    "return_ticket_count"
+    "return_ticket_count",
+    "story_premise_rejection_count",
+    "degraded_discovery_hold_count",
+    "thumbnail_hypothesis_count",
+    "red_team_click_rejection_count",
+    "owner_w1_rejection_count"
   ],
   "post_publish_split_review_after_videos": 10,
   "full_scale_without_pilot_forbidden": true,
@@ -402,6 +407,12 @@
       "market_and_social_read_before_title_candidates",
       "story_feasibility_before_title_candidates",
       "exactly_three_topic_candidates_with_two_title_variants_each",
+      "youtube_native_or_authorized_native_fallback_before_owner_gate",
+      "degraded_discovery_forces_hold",
+      "story_premise_required_before_title_candidates",
+      "story_archetype_diversity_required",
+      "thumbnail_hypothesis_required_before_owner_gate",
+      "red_team_stranger_click_pass_required_before_owner_gate",
       "owner_selects_one_title",
       "script_work_forbidden_before_owner_title_lock",
       "locked_title_change_requires_owner_reapproval",
@@ -712,6 +723,13 @@
     "owner_selection_required": true,
     "script_start_before_selection_forbidden": true,
     "automatic_post_lock_revision_forbidden": true,
-    "owner_reapproval_for_revision": true
+    "owner_reapproval_for_revision": true,
+    "native_youtube_discovery_required": true,
+    "authorized_native_fallback_allowed": true,
+    "degraded_discovery_requires_hold": true,
+    "story_premise_required": true,
+    "story_archetype_diversity_required": true,
+    "thumbnail_hypothesis_required": true,
+    "red_team_click_pass_required": true
   }
 }
