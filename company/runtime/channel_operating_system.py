@@ -84,6 +84,7 @@ REQUIRED_PRODUCTION_ROLES = {
     "Finance Controller",
     "Red Team",
     "Owner",
+    "Human Assistance Pool / On-Demand Specialist",
 }
 
 REQUIRED_AUDIO_STEMS = {
@@ -104,8 +105,8 @@ REQUIRED_SCRIPT_PASSES = [
 
 
 def validate_config(cfg: dict[str, Any]) -> bool:
-    if cfg.get("version") != "1.3":
-        raise ChannelOperatingSystemError("channel operating system must be version 1.3")
+    if cfg.get("version") != "1.4":
+        raise ChannelOperatingSystemError("channel operating system must be version 1.4")
     if cfg.get("channel_model") != "broad_format_first_multilingual_visual_documentary":
         raise ChannelOperatingSystemError("channel model drifted")
     if cfg.get("visual_system") != "Editorial Renaissance Motion":
@@ -359,6 +360,8 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     }
     if routed != required_routed:
         raise ChannelOperatingSystemError("stage-routed craft function set drifted")
+    if set(routing.get("on_demand_support_functions", [])) != {"Human Assistance Pool / On-Demand Specialist"}:
+        raise ChannelOperatingSystemError("on-demand human support routing drifted")
     routing_rules = set(routing.get("rules", []))
     if {
         "do_not_call_every_function_for_every_stage",
@@ -369,6 +372,55 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         "owner_interruption_is_exception_not_default",
     } - routing_rules:
         raise ChannelOperatingSystemError("studio anti-bureaucracy routing rules are incomplete")
+
+    assistance = cfg.get("human_assistance_lane", {})
+    if assistance.get("enabled") is not True or assistance.get("available_at_any_stage") is not True:
+        raise ChannelOperatingSystemError("human assistance lane must remain available on demand")
+    if assistance.get("coordinator") != "Media Producer / Production Coordinator":
+        raise ChannelOperatingSystemError("human assistance must be producer-coordinated")
+    if assistance.get("principle") != "smallest necessary human intervention, then return control to the studio":
+        raise ChannelOperatingSystemError("human assistance principle drifted")
+    triggers = set(assistance.get("trigger_conditions", []))
+    required_triggers = {
+        "automated recovery exhausted",
+        "physical action required",
+        "credentials or identity step required",
+        "specialized human craft gap",
+        "material domain expertise gap",
+        "high-uncertainty visual/audio judgment",
+        "human contact required for rights/source confirmation",
+        "bounded human action is materially faster and lower risk than further automation",
+    }
+    if not required_triggers.issubset(triggers):
+        raise ChannelOperatingSystemError("human assistance triggers are incomplete")
+    request_packet = set(assistance.get("request_packet", []))
+    if {
+        "reason",
+        "exact task",
+        "current verified state",
+        "artifact/project reference",
+        "allowed scope",
+        "do not change",
+        "expected return",
+        "acceptance criteria",
+        "return handoff",
+    } - request_packet:
+        raise ChannelOperatingSystemError("human assistance request contract is incomplete")
+    assistance_rules = set(assistance.get("rules", []))
+    if {
+        "human assistance is optional and on-demand, never an always-active bottleneck",
+        "request the smallest useful action",
+        "do not transfer publish authority",
+        "owner approval required for credentials, spend, subscriptions, external sharing or irreversible actions",
+        "verify human output before resuming automated production",
+        "checkpoint before and after the human handoff",
+        "record recurring human-help causes as capability gaps",
+    } - assistance_rules:
+        raise ChannelOperatingSystemError("human assistance governance rules are incomplete")
+    if int(assistance.get("recurring_gap_threshold", 0)) < 2:
+        raise ChannelOperatingSystemError("human assistance recurring-gap threshold is invalid")
+    if assistance.get("recurring_gap_action") != "capability review for tool, training, workflow or staffing change":
+        raise ChannelOperatingSystemError("human assistance recurring-gap action drifted")
 
     roles = cfg.get("roles", {})
     missing_roles = REQUIRED_PRODUCTION_ROLES - set(roles)
