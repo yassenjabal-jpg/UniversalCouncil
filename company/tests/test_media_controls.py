@@ -175,18 +175,18 @@ class MediaCapabilityTests(unittest.TestCase):
                 "production_functions",
                 [f for f in c["production_functions"] if f["id"] != "cinematography_shot_designer"],
             ),
-            lambda c: next(
-                f for f in c["production_functions"] if f["id"] == "independent_fact_checker"
-            ).__setitem__("default_status", "PHASE_ROUTED_CRAFT"),
-            lambda c: next(
-                f for f in c["production_functions"] if f["id"] == "motion_picture_editor"
-            ).__setitem__("default_status", "CONTROL_PLANE_ALWAYS_ACTIVE"),
-            lambda c: next(
-                f for f in c["production_functions"] if f["id"] == "localization_producer"
-            ).__setitem__("default_status", "DISABLED"),
-            lambda c: next(
-                f for f in c["production_functions"] if f["id"] == "human_assistance_pool"
-            ).__setitem__("default_status", "CONTROL_PLANE_ALWAYS_ACTIVE"),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "independent_fact_checker").__setitem__(
+                "default_status", "PHASE_ROUTED_CRAFT"
+            ),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "motion_picture_editor").__setitem__(
+                "default_status", "CONTROL_PLANE_ALWAYS_ACTIVE"
+            ),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "localization_producer").__setitem__(
+                "default_status", "DISABLED"
+            ),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "human_assistance_pool").__setitem__(
+                "default_status", "CONTROL_PLANE_ALWAYS_ACTIVE"
+            ),
             lambda c: c["operating_model"].__setitem__("control_plane_functions", []),
             lambda c: c["operating_model"].__setitem__("mandatory_clearance_functions", []),
             lambda c: c["operating_model"].__setitem__("phase_routed_craft_functions", []),
@@ -200,21 +200,11 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["stage_execution_contract"].__setitem__(
                 "simultaneous_secondary_craft_program_forbidden", False
             ),
-            lambda c: c["stage_execution_contract"].__setitem__(
-                "program_switch_requires_new_stage", False
-            ),
-            lambda c: c["stage_execution_contract"].__setitem__(
-                "checkpoint_before_stage_exit", False
-            ),
-            lambda c: c["stage_execution_contract"].__setitem__(
-                "output_verification_required", False
-            ),
-            lambda c: c["handoff_contract"].__setitem__(
-                "acceptance_required_before_next_department", False
-            ),
-            lambda c: c["handoff_contract"].__setitem__(
-                "rejection_action", "DOWNSTREAM_FIXES_IT"
-            ),
+            lambda c: c["stage_execution_contract"].__setitem__("program_switch_requires_new_stage", False),
+            lambda c: c["stage_execution_contract"].__setitem__("checkpoint_before_stage_exit", False),
+            lambda c: c["stage_execution_contract"].__setitem__("output_verification_required", False),
+            lambda c: c["handoff_contract"].__setitem__("acceptance_required_before_next_department", False),
+            lambda c: c["handoff_contract"].__setitem__("rejection_action", "DOWNSTREAM_FIXES_IT"),
             lambda c: c.__setitem__(
                 "function_independence_rules",
                 [
@@ -229,12 +219,8 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["human_assistance"].__setitem__("request_packet_required_fields", []),
             lambda c: c["human_assistance"].__setitem__("constraints", []),
             lambda c: c["human_assistance"].__setitem__("resume_policy", []),
-            lambda c: c["human_assistance"]["recurring_gap_policy"].__setitem__(
-                "repeated_same_gap_threshold", 0
-            ),
-            lambda c: c["human_assistance"]["recurring_gap_policy"].__setitem__(
-                "action", "IGNORE"
-            ),
+            lambda c: c["human_assistance"]["recurring_gap_policy"].__setitem__("repeated_same_gap_threshold", 0),
+            lambda c: c["human_assistance"]["recurring_gap_policy"].__setitem__("action", "IGNORE"),
             lambda c: c.pop("benchmark_artifact"),
             lambda c: c["media_toolchain"].pop("dialogue_cleanup"),
             lambda c: c["pilot"].__setitem__("required_before_scale", False),
