@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-14T23:58:59+00:00",
-  "event_count": 66,
+  "generated_at": "2026-10-15T03:04:04+03:00",
+  "event_count": 68,
   "active_count": 53,
-  "superseded_count": 13,
+  "superseded_count": 15,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-15T02:57:01+03:00",
+  "latest_event_at": "2026-10-15T03:04:01+03:00",
   "scopes": {
     "council": [
       {
@@ -184,12 +184,12 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261015-025700-lean13",
+        "event_id": "MEM-20261015-030400-human1",
         "subject": "media.production_cell.current",
         "level": "L3_CANONICAL",
         "kind": "architecture",
-        "summary": "Media Production Cell v1.3 uses a small always-active Producer/Showrunner core, stage-routed craft capabilities, an explicit Cinematography / Shot Design function, and recoverable cross-application handoffs where UNKNOWN is never success.",
-        "created_at": "2026-10-15T02:57:00+03:00",
+        "summary": "Media Production Cell v1.4 adds a bounded on-demand Human Assistance Pool. The Producer may request the smallest necessary human intervention when automation, tools, physical access, credentials, specialist craft or expert judgment create a real gap; returned work must be verified before the studio resumes.",
+        "created_at": "2026-10-15T03:04:00+03:00",
         "confidence": "verified"
       },
       {
@@ -395,12 +395,12 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261015-025701-shot13",
+        "event_id": "MEM-20261015-030401-assist",
         "subject": "youtube.channel_operating_system.current",
         "level": "L3_CANONICAL",
         "kind": "architecture",
-        "summary": "Channel Operating System v1.3 retains the studio-benchmarked workflow while adding stage-routed craft participation, a Shot Design + Camera Plan stage before the animatic, and fail-closed application recovery.",
-        "created_at": "2026-10-15T02:57:01+03:00",
+        "summary": "Channel Operating System v1.4 makes bounded human assistance available at any production stage without turning it into a permanent review layer. Human requests carry scope, do-not-change boundaries, acceptance criteria and a return handoff, and do not transfer publish authority.",
+        "created_at": "2026-10-15T03:04:01+03:00",
         "confidence": "verified"
       },
       {

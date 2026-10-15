@@ -107,24 +107,24 @@
 - **Tags:** youtube, channel, what-if, speculative-documentary
 
 ## youtube.channel_operating_system.current
-- **Event:** `MEM-20261015-025701-shot13`
+- **Event:** `MEM-20261015-030401-assist`
 - **Level:** `L3_CANONICAL`
 - **Kind:** `architecture`
 - **Confidence:** `verified`
-- **Updated:** `2026-10-15T02:57:01+03:00`
-- **Summary:** Channel Operating System v1.3 retains the studio-benchmarked workflow while adding stage-routed craft participation, a Shot Design + Camera Plan stage before the animatic, and fail-closed application recovery.
+- **Updated:** `2026-10-15T03:04:01+03:00`
+- **Summary:** Channel Operating System v1.4 makes bounded human assistance available at any production stage without turning it into a permanent review layer. Human requests carry scope, do-not-change boundaries, acceptance criteria and a return handoff, and do not transfer publish authority.
 - **Details:**
-  - `cinematography_required_before_animatic`: true
+  - `assistance_doc`: docs/operations/media/HUMAN_ASSISTANCE_LANE.md
   - `governing_config`: company/config/channel_operating_system.json
   - `governing_doc`: docs/operations/media/CHANNEL_OPERATING_SYSTEM.md
-  - `new_stage`: shot_design_and_camera_plan
-  - `production_readiness_additions`: ["shot_design_approved", "camera_continuity_checked"]
-  - `quality_gate`: G7 Shot Design + Animatic + Spotting Gate
-  - `research_rationale`: docs/research/2026-10-15-agentic-video-studio-comparison.md
-  - `studio_routing_model`: SMALL_CORE_ROUTED_CAPABILITIES
-  - `version`: 1.3
-- **Supersedes:** `MEM-20261013-015645-fbd625`
-- **Tags:** youtube, studio, cinematography, shot-design, workflow, recovery
+  - `human_assistance_available_at_any_stage`: true
+  - `human_assistance_role`: Human Assistance Pool / On-Demand Specialist
+  - `publish_authority_transferred`: false
+  - `recurring_gap_threshold`: 3
+  - `verification_before_resume`: true
+  - `version`: 1.4
+- **Supersedes:** `MEM-20261015-025701-shot13`
+- **Tags:** youtube, studio, human-assistance, workflow
 
 ## youtube.execution.final_prelaunch_decision
 - **Event:** `MEM-20261012-203304-1de95d`

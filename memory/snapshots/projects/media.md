@@ -31,26 +31,26 @@
 - **Tags:** media, workflow, production
 
 ## media.production_cell.current
-- **Event:** `MEM-20261015-025700-lean13`
+- **Event:** `MEM-20261015-030400-human1`
 - **Level:** `L3_CANONICAL`
 - **Kind:** `architecture`
 - **Confidence:** `verified`
-- **Updated:** `2026-10-15T02:57:00+03:00`
-- **Summary:** Media Production Cell v1.3 uses a small always-active Producer/Showrunner core, stage-routed craft capabilities, an explicit Cinematography / Shot Design function, and recoverable cross-application handoffs where UNKNOWN is never success.
+- **Updated:** `2026-10-15T03:04:00+03:00`
+- **Summary:** Media Production Cell v1.4 adds a bounded on-demand Human Assistance Pool. The Producer may request the smallest necessary human intervention when automation, tools, physical access, credentials, specialist craft or expert judgment create a real gap; returned work must be verified before the studio resumes.
 - **Details:**
-  - `added_function`: Cinematography / Shot Design
-  - `anti_bureaucracy_rules`: ["do not call every function for every stage", "artifact delta or blocker by default", "parallelize independent craft work when safe", "one synthesis per gate"]
-  - `core_functions`: ["Media Producer / Production Coordinator", "Editorial Director / Showrunner"]
+  - `assistance_doc`: docs/operations/media/HUMAN_ASSISTANCE_LANE.md
+  - `coordinator`: Media Producer / Production Coordinator
+  - `eligible_helpers`: ["Owner", "trusted local operator", "domain expert", "craft specialist", "technician/vendor support"]
   - `governing_config`: company/config/media_venture.json
   - `governing_doc`: docs/operations/media/MEDIA_PRODUCTION_CELL.md
-  - `mandatory_clearance`: ["Independent Fact Checker"]
-  - `operating_model`: SMALL_CORE_ROUTED_CRAFT_CAPABILITIES
-  - `recovery_doc`: docs/operations/media/STUDIO_EXECUTION_RECOVERY.md
-  - `recovery_invariants`: ["UNKNOWN != SUCCESS", "checkpoint before application handoff", "independent postcondition after state change", "same-route retry bounded to one", "authorized fallback only"]
-  - `research_rationale`: docs/research/2026-10-15-agentic-video-studio-comparison.md
-  - `version`: 1.3
-- **Supersedes:** `MEM-20261013-015655-c15cc7`
-- **Tags:** media, studio, lean-routing, cinematography, shot-design, recovery
+  - `human_assistance_mode`: ON_DEMAND_BOUNDED_ASSISTANCE
+  - `owner_gates`: ["credentials/identity", "spend/subscription", "external sharing", "irreversible action", "publish authority"]
+  - `principle`: ask for the smallest human action needed then return control to the studio
+  - `recurring_gap_action`: capability review for tool, training, workflow, automation or staffing
+  - `recurring_gap_threshold`: 3
+  - `version`: 1.4
+- **Supersedes:** `MEM-20261015-025700-lean13`
+- **Tags:** media, studio, human-assistance, on-demand, capability-gap
 
 ## media.specialized_tool_policy.current
 - **Event:** `MEM-20261012-212638-4d1282`
