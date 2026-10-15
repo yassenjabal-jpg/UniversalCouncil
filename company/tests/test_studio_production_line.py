@@ -210,7 +210,9 @@ class StudioProductionLineTests(unittest.TestCase):
             validate_title_candidate_packet(duplicate_id)
 
         duplicate_title = self.packet()
-        duplicate_title["topics"][1]["title_variants"][0]["title"] = duplicate_title["topics"][0]["title_variants"][0]["title"]
+        duplicate_title["topics"][1]["title_variants"][0]["title"] = duplicate_title["topics"][0]["title_variants"][0][
+            "title"
+        ]
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(duplicate_title)
 
