@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-15T07:05:57+00:00",
-  "event_count": 69,
-  "active_count": 54,
+  "generated_at": "2026-10-15T07:16:50+00:00",
+  "event_count": 70,
+  "active_count": 55,
   "superseded_count": 15,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-15T10:05:29+03:00",
+  "latest_event_at": "2026-10-15T10:17:00+03:00",
   "scopes": {
     "council": [
       {
@@ -346,6 +346,15 @@
         "summary": "Owner directed a real full visual redesign implementation for RevenueSystem: the result must be immediately and visibly different from the current hardened UI, using the approved unified UI design spec rather than treating layout/test hardening as visual redesign.",
         "created_at": "2026-10-15T10:05:29+03:00",
         "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261015-101700-uifig1",
+        "subject": "revenuesystem.visual_redesign.figma_reference",
+        "level": "L3_CANONICAL",
+        "kind": "evidence",
+        "summary": "A real editable Figma visual reference was created for the RevenueSystem redesign and bound into the implementation plan; it includes the design system plus Dashboard, Daily Revenue, Reconciliation and Account Statement reference screens.",
+        "created_at": "2026-10-15T10:17:00+03:00",
+        "confidence": "verified"
       }
     ],
     "project/youtube": [

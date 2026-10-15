@@ -239,3 +239,20 @@
   - `preserve`: ["business logic", "financial calculations", "database schema", "existing keyboard contracts", "currency separation"]
   - `visual_goal`: visible redesign of shell, dashboard, revenue entry, reconciliation, accounts, reports, administration and dialogs
 - **Tags:** revenuesystem, ui, visual-redesign, owner-directive
+
+## revenuesystem.visual_redesign.figma_reference
+- **Event:** `MEM-20261015-101700-uifig1`
+- **Level:** `L3_CANONICAL`
+- **Kind:** `evidence`
+- **Confidence:** `verified`
+- **Updated:** `2026-10-15T10:17:00+03:00`
+- **Summary:** A real editable Figma visual reference was created for the RevenueSystem redesign and bound into the implementation plan; it includes the design system plus Dashboard, Daily Revenue, Reconciliation and Account Statement reference screens.
+- **Details:**
+  - `figma_file_key`: uQVEOfpl3GM5InXc5ZL3PB
+  - `figma_file_url`: https://www.figma.com/design/uQVEOfpl3GM5InXc5ZL3PB
+  - `frames`: {"account_statement": "6:377", "daily_revenue": "6:113", "dashboard": "6:2", "design_system": "4:32", "reconciliation": "6:236"}
+  - `implementation_branch`: codex/visual-redesign-implementation-20261015
+  - `plan_commit`: a345c57d1536c8d6ef6e460c63e2586f4c62854a
+  - `status`: visual reference created; WPF implementation not started
+  - `tools_used`: ["Figma create-new-file", "Figma design-system discovery", "Figma variables/tokens", "Figma editable screen composition"]
+- **Tags:** revenuesystem, ui, figma, visual-redesign, evidence
