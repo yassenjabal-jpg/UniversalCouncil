@@ -165,7 +165,6 @@ class StudioProductionLineTests(unittest.TestCase):
         }
         self.assertTrue(validate_return_ticket(ticket))
 
-
     def test_title_packet_failure_paths_are_covered(self):
         base = self.packet()
 
