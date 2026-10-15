@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261015-030401-assist",
+  "created_at": "2026-10-15T03:04:01+03:00",
+  "scope": "project/youtube",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "youtube.channel_operating_system.current",
+  "summary": "Channel Operating System v1.4 makes bounded human assistance available at any production stage without turning it into a permanent review layer. Human requests carry scope, do-not-change boundaries, acceptance criteria and a return handoff, and do not transfer publish authority.",
+  "details": {
+    "version": "1.4",
+    "human_assistance_available_at_any_stage": true,
+    "human_assistance_role": "Human Assistance Pool / On-Demand Specialist",
+    "verification_before_resume": true,
+    "publish_authority_transferred": false,
+    "recurring_gap_threshold": 3,
+    "governing_config": "company/config/channel_operating_system.json",
+    "governing_doc": "docs/operations/media/CHANNEL_OPERATING_SYSTEM.md",
+    "assistance_doc": "docs/operations/media/HUMAN_ASSISTANCE_LANE.md"
+  },
+  "supersedes": [
+    "MEM-20261015-025701-shot13"
+  ],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "studio",
+    "human-assistance",
+    "workflow"
+  ],
+  "source": {
+    "type": "repository",
+    "ref": "feat/studio-human-assistance-20261015",
+    "commit": "522287af597422b6b814eee9e6c5883f6e01ef30"
+  }
+}

@@ -1,4 +1,4 @@
-﻿# Media Production Cell v1.3 â€” Studio-Benchmarked
+﻿# Media Production Cell v1.4 â€” Studio-Benchmarked
 
 ## Principle
 
@@ -217,6 +217,45 @@ Owns:
 - localized thumbnail text
 - language-version QC
 - reconform requests
+
+## Human Assistance Pool — On Demand
+
+Human assistance is a supported execution path, not a permanent production bottleneck.
+
+It may be used when:
+- automated/application recovery has been exhausted;
+- a physical-world action is required;
+- a credential/login or identity-bound action requires the Owner;
+- a specialized craft capability is missing;
+- visual/audio judgment remains materially uncertain;
+- domain expertise is needed;
+- rights/source confirmation requires human contact;
+- a bounded human action is clearly faster and lower-risk than continued automation.
+
+Coordinator:
+Media Producer / Production Coordinator.
+
+The request must be bounded. The studio sends:
+- reason;
+- exact human task;
+- current verified state;
+- project/artifact reference;
+- allowed scope;
+- explicit **do not change** boundary;
+- expected return;
+- acceptance criteria;
+- return handoff.
+
+Rules:
+- request the smallest useful intervention;
+- do not hand an entire stage to a human when one bounded action is enough;
+- no credentials, spend, subscriptions, external sharing or irreversible action without Owner authorization;
+- human assistance never gains publish authority;
+- verify the returned result before resuming;
+- checkpoint before and after the handoff;
+- repeated identical requests become a capability-gap review.
+
+After three recurrences of the same assistance gap, the studio must review whether the correct fix is a tool, training, workflow, automation or staffing change.
 
 ## Shared support
 

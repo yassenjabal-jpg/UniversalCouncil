@@ -88,3 +88,12 @@ Owner input is requested only for:
 - Policy: `company/config/media_venture.json -> execution_recovery`
 - Validator/state decisions: `company/runtime/media_execution_recovery.py`
 - Durable generic journal/lease: `company/runtime/execution_controls.py`
+
+
+## Human assistance fallback
+
+If automated recovery and authorized tool fallback cannot safely restore progress, the Media Producer may open a bounded Human Assistance request.
+
+The human helper is given the last verified checkpoint, exact task, allowed scope, do-not-change boundary, expected return and acceptance criteria.
+
+Human intervention does not convert UNKNOWN to SUCCESS by itself. The returned state must still be verified and checkpointed before the studio resumes.

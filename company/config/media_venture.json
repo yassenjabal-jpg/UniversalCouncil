@@ -1,5 +1,5 @@
 {
-  "version": "1.5",
+  "version": "1.6",
   "enabled": true,
   "team_model": "venture_scoped_smallest_effective_team_functions_not_headcount",
   "production_functions": [
@@ -194,6 +194,21 @@
         "language_version_qc",
         "timing_reconform_request"
       ]
+    },
+    {
+      "id": "human_assistance_pool",
+      "name": "Human Assistance Pool / On-Demand Specialist",
+      "default_status": "ON_DEMAND_ASSISTANCE",
+      "owns": [
+        "bounded_manual_intervention",
+        "physical_world_action",
+        "specialized_human_craft_help",
+        "credential_or_login_step_when_owner_authorizes",
+        "human_visual_or_audio_judgment_when_automation_is_uncertain",
+        "recovery_help_after_automated_routes_are_exhausted",
+        "external_domain_expert_consultation",
+        "return_handoff_to_studio_with_evidence"
+      ]
     }
   ],
   "function_independence_rules": [
@@ -208,7 +223,9 @@
     "same_human_or_tool_may_cover_multiple_functions_in_pilot_but_required_cross_function_reviews_remain",
     "cinematography_defines_shot_language_but_does_not_self_approve_picture_lock",
     "routed_craft_function_is_invoked_by_stage_not_kept_permanently_active",
-    "unknown_execution_state_cannot_be_promoted_to_success"
+    "unknown_execution_state_cannot_be_promoted_to_success",
+    "human_assistance_is_bounded_and_does_not_transfer_stage_or_publish_authority",
+    "human_return_must_be_verified_before_resume"
   ],
   "existing_function_dependencies": [
     "Owner",
@@ -261,7 +278,11 @@
     "routed_function_invocations",
     "unnecessary_function_invocations",
     "handoff_recovery_count",
-    "unknown_execution_events"
+    "unknown_execution_events",
+    "human_assistance_requests",
+    "human_assistance_minutes",
+    "human_assistance_resolution_rate",
+    "repeated_human_assistance_gap_count"
   ],
   "post_publish_split_review_after_videos": 10,
   "full_scale_without_pilot_forbidden": true,
@@ -336,7 +357,8 @@
       "thumbnail_packaging_designer"
     ],
     "on_demand_functions": [
-      "localization_producer"
+      "localization_producer",
+      "human_assistance_pool"
     ],
     "routing_rule": "invoke a function only when the current stage contract requires its craft judgment, execution, blocker, or clearance",
     "default_output_contract": [
@@ -357,7 +379,8 @@
       "owner_voice_or_performance_approval",
       "credentials_subscription_or_spend_required",
       "destructive_or_irreversible_action",
-      "public_publish_approval"
+      "public_publish_approval",
+      "human_assistance_request_requires_owner_identity_credentials_spend_or_external_sharing"
     ]
   },
   "execution_recovery": {
@@ -410,5 +433,69 @@
       "fallback_must_not_silently_reduce_quality_gate",
       "fallback_must_not_destroy_or_overwrite_unverified_work"
     ]
+  },
+  "human_assistance": {
+    "enabled": true,
+    "mode": "ON_DEMAND_BOUNDED_ASSISTANCE",
+    "principle": "ask_for_the_smallest_human_action_needed_then_return_control_to_the_studio",
+    "coordinator": "media_producer",
+    "may_be_requested_by": [
+      "media_producer",
+      "editorial_director",
+      "technical_operator",
+      "active_stage_craft_function"
+    ],
+    "eligible_helpers": [
+      "Owner",
+      "trusted_local_operator",
+      "domain_expert",
+      "craft_specialist",
+      "technician_or_vendor_support"
+    ],
+    "trigger_conditions": [
+      "automation_or_application_recovery_exhausted",
+      "physical_world_action_required",
+      "credential_or_login_step_required",
+      "specialized_craft_capability_gap",
+      "high_uncertainty_visual_or_audio_judgment",
+      "material_domain_expertise_gap",
+      "rights_or_source_confirmation_requires_human_contact",
+      "human_intervention_is_materially_faster_and_lower_risk_than_further_automation"
+    ],
+    "request_packet_required_fields": [
+      "request_id",
+      "episode_id",
+      "stage_id",
+      "reason",
+      "exact_human_task",
+      "current_verified_state",
+      "artifact_or_project_reference",
+      "allowed_scope",
+      "do_not_change",
+      "expected_return_artifact_or_answer",
+      "acceptance_criteria",
+      "return_handoff"
+    ],
+    "constraints": [
+      "request_only_the_minimum_human_action",
+      "do_not_delegate_entire_stage_when_a_bounded_action_is_enough",
+      "do_not_share_private_or_sensitive_material_without_authorization",
+      "no_spend_subscription_or_purchase_without_owner_approval",
+      "no_credentials_or_identity_use_without_owner_authorization",
+      "human_helper_does_not_gain_publish_authority",
+      "human_output_must_be_verified_before_rejoining_automated_flow",
+      "record_reason_and_outcome_for_capability_learning"
+    ],
+    "resume_policy": [
+      "verify_human_return_against_acceptance_criteria",
+      "save_checkpoint",
+      "record_assistance_outcome",
+      "resume_from_return_handoff",
+      "do_not_repeat_completed_human_work"
+    ],
+    "recurring_gap_policy": {
+      "repeated_same_gap_threshold": 3,
+      "action": "OPEN_CAPABILITY_REVIEW_FOR_TOOL_TRAINING_WORKFLOW_OR_STAFFING_FIX"
+    }
   }
 }

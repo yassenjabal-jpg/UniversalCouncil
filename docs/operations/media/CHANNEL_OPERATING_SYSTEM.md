@@ -1,4 +1,4 @@
-# Channel Operating System v1.3 — Studio-Benchmarked
+# Channel Operating System v1.4 — Studio-Benchmarked
 
 Normative operating method for the broad, format-first, multilingual visual-documentary channel.
 
@@ -17,6 +17,7 @@ Companion systems:
 - `AUDIO_NARRATION_BIBLE.md`
 - `AUDIOVISUAL_SOUND_SYSTEM.md`
 - `STUDIO_EXECUTION_RECOVERY.md`
+- `HUMAN_ASSISTANCE_LANE.md`
 
 ## Operating doctrine
 
@@ -397,3 +398,23 @@ Brand/publication:
 Owner.
 
 [executed on device: YASSIN (4ca4bced-f8ec-41f7-b8af-9fb86e0ede61)]
+
+
+## Human assistance lane
+
+Human assistance can be invoked from any production stage when the automated route is blocked, materially uncertain, physically impossible, or inefficient compared with a bounded human action.
+
+This is not a new permanent reviewer.
+
+The Media Producer coordinates the request. The helper receives only the minimum scope required and returns a specific artifact, answer or completed action against explicit acceptance criteria.
+
+Examples:
+- Owner completes a login/credential-bound step.
+- A technician fixes a desktop/application condition the studio cannot safely resolve.
+- A human editor checks a perceptual issue the automated QC cannot confidently judge.
+- A domain expert resolves a material factual ambiguity.
+- A craft specialist performs one capability the current toolchain does not yet support.
+
+Once the returned work is verified and checkpointed, the studio resumes from the defined return handoff.
+
+Repeated dependence on the same human task is treated as evidence of a capability gap, not as the intended steady-state workflow.

@@ -45,6 +45,11 @@ class MediaCapabilityTests(unittest.TestCase):
         }:
             self.assertEqual(by_id[function_id]["default_status"], "ROUTED_CRAFT_CAPABILITY")
         self.assertEqual(by_id["localization_producer"]["default_status"], "ON_DEMAND")
+        self.assertEqual(by_id["human_assistance_pool"]["default_status"], "ON_DEMAND_ASSISTANCE")
+        self.assertEqual(
+            set(cfg["operating_model"]["on_demand_functions"]),
+            {"localization_producer", "human_assistance_pool"},
+        )
         self.assertEqual(cfg["operating_model"]["mode"], "SMALL_CORE_ROUTED_CRAFT_CAPABILITIES")
         self.assertTrue(cfg["operating_model"]["parallelize_when_safe"])
         self.assertTrue(cfg["operating_model"]["single_synthesis_per_gate"])
@@ -70,6 +75,28 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertNotEqual(set(cine["owns"]), set(motion["owns"]))
         self.assertEqual(cfg["media_toolchain"]["cinematography_shot_design"], "PROCESS_DEFINED_SPECIALIZED_TOOL_REQUIRED")
 
+    def test_human_assistance_is_bounded_on_demand_and_returns_control(self):
+        cfg = self.load_config()
+        assistance = cfg["human_assistance"]
+        self.assertTrue(assistance["enabled"])
+        self.assertEqual(assistance["mode"], "ON_DEMAND_BOUNDED_ASSISTANCE")
+        self.assertEqual(assistance["coordinator"], "media_producer")
+        self.assertIn("automation_or_application_recovery_exhausted", assistance["trigger_conditions"])
+        self.assertIn("exact_human_task", assistance["request_packet_required_fields"])
+        self.assertIn("do_not_change", assistance["request_packet_required_fields"])
+        self.assertIn(
+            "human_helper_does_not_gain_publish_authority",
+            assistance["constraints"],
+        )
+        self.assertEqual(
+            assistance["resume_policy"][-1],
+            "do_not_repeat_completed_human_work",
+        )
+        self.assertGreaterEqual(
+            assistance["recurring_gap_policy"]["repeated_same_gap_threshold"],
+            2,
+        )
+
     def test_fact_check_and_producer_boundaries_are_explicit(self):
         cfg = self.load_config()
         rules = set(cfg["function_independence_rules"])
@@ -81,6 +108,8 @@ class MediaCapabilityTests(unittest.TestCase):
             "cinematography_defines_shot_language_but_does_not_self_approve_picture_lock",
             "routed_craft_function_is_invoked_by_stage_not_kept_permanently_active",
             "unknown_execution_state_cannot_be_promoted_to_success",
+            "human_assistance_is_bounded_and_does_not_transfer_stage_or_publish_authority",
+            "human_return_must_be_verified_before_resume",
         }:
             self.assertIn(rule, rules)
 
@@ -126,6 +155,10 @@ class MediaCapabilityTests(unittest.TestCase):
             "unnecessary_function_invocations",
             "handoff_recovery_count",
             "unknown_execution_events",
+            "human_assistance_requests",
+            "human_assistance_minutes",
+            "human_assistance_resolution_rate",
+            "repeated_human_assistance_gap_count",
         }:
             self.assertIn(metric, REQUIRED_PILOT_METRICS)
 
@@ -197,6 +230,9 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: next(f for f in c["production_functions"] if f["id"] == "localization_producer").__setitem__(
                 "default_status", "DISABLED"
             ),
+            lambda c: next(f for f in c["production_functions"] if f["id"] == "human_assistance_pool").__setitem__(
+                "default_status", "CORE_ALWAYS_ACTIVE"
+            ),
             lambda c: c.__setitem__(
                 "function_independence_rules",
                 [
@@ -208,6 +244,13 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c.pop("benchmark_artifact"),
             lambda c: c["operating_model"].__setitem__("mode", "EVERYONE_ALWAYS_ACTIVE"),
             lambda c: c["operating_model"].__setitem__("forbidden_defaults", []),
+            lambda c: c["operating_model"].__setitem__("on_demand_functions", ["localization_producer"]),
+            lambda c: c["human_assistance"].__setitem__("enabled", False),
+            lambda c: c["human_assistance"].__setitem__("mode", "ALWAYS_ACTIVE"),
+            lambda c: c["human_assistance"].__setitem__("trigger_conditions", []),
+            lambda c: c["human_assistance"].__setitem__("request_packet_required_fields", []),
+            lambda c: c["human_assistance"].__setitem__("constraints", []),
+            lambda c: c["human_assistance"].__setitem__("resume_policy", []),
             lambda c: c["media_toolchain"].pop("dialogue_cleanup"),
             lambda c: c["execution_recovery"].__setitem__("unknown_is_never_success", False),
             lambda c: c["pilot"].__setitem__("required_before_scale", False),
