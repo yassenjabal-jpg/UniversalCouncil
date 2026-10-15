@@ -28,14 +28,16 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertTrue(CONFIG["master_pipeline"]["phase_order_locked"])
         self.assertEqual(CONFIG["workflow"], REQUIRED_WORKFLOW)
 
-    def test_title_gate_requires_exactly_three_and_owner_selection(self):
+    def test_title_gate_requires_three_topics_two_titles_each_and_owner_selection(self):
         title = CONFIG["writing_phase"]["title_system"]
-        self.assertEqual(title["required_candidate_count"], 3)
+        self.assertEqual(title["required_topic_count"], 3)
+        self.assertEqual(title["required_titles_per_topic"], 2)
         self.assertTrue(title["owner_selection_required"])
         self.assertTrue(title["owner_is_only_final_title_authority"])
         self.assertTrue(title["script_start_before_owner_selection_forbidden"])
         self.assertTrue(title["post_lock_revision"]["owner_reapproval_required"])
-        self.assertIn("eight_minute_story_feasibility", title["candidate_required_fields"])
+        self.assertIn("eight_minute_story_feasibility", title["topic_required_fields"])
+        self.assertIn("viewer_promise", title["title_variant_required_fields"])
 
     def test_writing_has_title_then_script_sections(self):
         sections = CONFIG["writing_phase"]["sections"]
@@ -118,7 +120,7 @@ class ChannelOperatingSystemTests(unittest.TestCase):
 
     def test_packaging_strategy_is_early_but_execution_is_late(self):
         packaging = CONFIG["packaging_system"]
-        self.assertIn("exactly_three_title_candidates", packaging["stage_a_before_script"])
+        self.assertIn("three_distinct_topics_with_two_titles_each", packaging["stage_a_before_script"])
         self.assertIn("owner_title_selection", packaging["stage_a_before_script"])
         self.assertTrue(packaging["title_changes_after_owner_lock_require_owner_reapproval"])
         self.assertGreaterEqual(len(packaging["stage_b_after_picture_lock"]), 4)
@@ -140,7 +142,7 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         mutations = [
             lambda c: c.__setitem__("version", "bad"),
             lambda c: c["master_pipeline"].__setitem__("phases", ["production"]),
-            lambda c: c["writing_phase"]["title_system"].__setitem__("required_candidate_count", 4),
+            lambda c: c["writing_phase"]["title_system"].__setitem__("required_topic_count", 4),
             lambda c: c["writing_phase"]["title_system"].__setitem__("owner_selection_required", False),
             lambda c: c["script_development"].__setitem__("required_passes", ["one"]),
             lambda c: c["pre_production_phase"].__setitem__("entry_requirement", "NONE"),

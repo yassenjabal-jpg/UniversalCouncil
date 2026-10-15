@@ -1,8 +1,8 @@
 # Studio Master Pipeline
 
 Status: CANONICAL MEDIA OPERATIONS
-Version: 1.0
-Date: 2026-10-15
+Version: 1.1
+Date: 2026-10-16
 
 ## Master structure
 
@@ -34,36 +34,45 @@ Required sequence:
 2. Cross-platform/social trend scan — Brave Browser
 3. Market/opportunity synthesis — ChatGPT
 4. Story feasibility check — ChatGPT
-5. Generate **exactly three** title candidates — ChatGPT
-6. Present all three to the Owner
-7. Owner selects exactly one
-8. Save **OWNER_TITLE_LOCK**
+5. Generate **exactly three distinct topic candidates** — ChatGPT
+6. Generate **exactly two distinct title variants for each topic** — ChatGPT
+7. Present the three topic cards and all six title variants to the Owner
+8. Owner selects exactly one title from exactly one topic
+9. Save **OWNER_TITLE_LOCK**
 
-Each title card must include:
-- title
+Each topic card must include:
+- topic
 - why now
 - market signal
 - story angle
-- click reason
-- viewer promise
 - competition level
 - visual potential
 - evidence feasibility
 - eight-minute story feasibility
 - risk notes
+- exactly two title variants
 
-A title cannot reach the Owner if it:
+Each title variant must include:
+- title
+- click reason
+- viewer promise
+
+The three topics must be meaningfully distinct from one another.
+The two titles inside a topic must use meaningfully different framing while preserving the same underlying story promise.
+
+A topic cannot reach the Owner if it:
 - relies only on a short-lived trend without a durable story;
-- promises something the episode cannot deliver;
 - lacks credible research material;
 - lacks enough visual potential;
 - needs filler to sustain the target long-form duration.
+
+A title variant cannot reach the Owner if it promises something the episode cannot deliver.
 
 ## Owner Title Gate
 
 The Owner is the final title authority.
 
-The script cannot start until the Owner chooses one of the three titles.
+The script cannot start until the Owner chooses one of the six title variants, which also locks its associated topic.
 
 After OWNER_TITLE_LOCK:
 - automatic title changes are forbidden;

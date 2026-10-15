@@ -1,5 +1,5 @@
 {
-  "version": "1.8",
+  "version": "1.9",
   "enabled": true,
   "team_model": "venture_scoped_smallest_effective_team_functions_not_headcount",
   "production_functions": [
@@ -231,7 +231,7 @@
     "downstream_department_cannot_silently_edit_locked_upstream_artifacts",
     "handoff_acceptance_is_required_before_next_department_activation",
     "only_media_producer_remains_control_plane_always_active",
-    "exactly_three_titles_must_reach_owner_title_gate",
+    "three_topics_with_two_titles_each_must_reach_owner_title_gate",
     "script_cannot_start_before_owner_title_lock",
     "locked_title_change_requires_owner_reapproval",
     "preproduction_cannot_start_before_script_lock",
@@ -301,7 +301,8 @@
     "program_switch_violation_count",
     "parallel_department_violation_count",
     "stage_rework_count",
-    "title_candidate_count",
+    "topic_candidate_count",
+    "title_variant_count",
     "owner_title_selection_rounds",
     "title_revision_requests",
     "writing_cycle_time",
@@ -400,7 +401,7 @@
     "writing_rules": [
       "market_and_social_read_before_title_candidates",
       "story_feasibility_before_title_candidates",
-      "exactly_three_title_candidates",
+      "exactly_three_topic_candidates_with_two_title_variants_each",
       "owner_selects_one_title",
       "script_work_forbidden_before_owner_title_lock",
       "locked_title_change_requires_owner_reapproval",
@@ -702,7 +703,9 @@
     "phase_skip_forbidden": true
   },
   "title_gate_contract": {
-    "candidate_count": 3,
+    "topic_count": 3,
+    "titles_per_topic": 2,
+    "total_title_count": 6,
     "market_scan_required": true,
     "social_network_scan_required": true,
     "story_feasibility_required": true,
