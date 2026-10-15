@@ -193,6 +193,19 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         _require(required_field in fields, f"topic scoring missing {required_field}")
     topic_gates = cfg.get("topic_scoring", {}).get("gates", {})
     _require(int(topic_gates.get("minimum_total", 0)) >= 70, "topic score gate too weak")
+    minimum_to_field = {
+        "minimum_curiosity_gap": "curiosity_gap",
+        "minimum_story_novelty": "story_novelty",
+        "minimum_story_engine_strength": "story_engine_strength",
+        "minimum_thumbnail_one_frame_strength": "thumbnail_one_frame_strength",
+        "minimum_evidence_sourceability": "evidence_sourceability",
+        "minimum_visual_explainability": "visual_explainability",
+    }
+    for minimum_key, field_key in minimum_to_field.items():
+        _require(
+            int(topic_gates.get(minimum_key, 0)) <= int(fields.get(field_key, 0)),
+            f"{minimum_key} cannot exceed its scoring weight",
+        )
     _require(int(topic_gates.get("minimum_curiosity_gap", 0)) >= 7, "curiosity gate too weak")
     _require(int(topic_gates.get("minimum_story_engine_strength", 0)) >= 7, "story-engine gate too weak")
     _require(

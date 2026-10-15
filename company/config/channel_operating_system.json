@@ -76,15 +76,15 @@
   "topic_scoring": {
     "scale": 100,
     "fields": {
-      "cross_platform_velocity": 8,
+      "cross_platform_velocity": 7,
       "curiosity_gap": 12,
       "story_novelty": 12,
       "story_engine_strength": 12,
       "thumbnail_one_frame_strength": 12,
       "viewer_stakes_or_emotional_charge": 8,
       "channel_format_fit": 8,
-      "evergreen_half_life": 6,
-      "visual_explainability": 6,
+      "evergreen_half_life": 5,
+      "visual_explainability": 8,
       "evidence_sourceability": 8,
       "multilingual_portability": 3,
       "competition_opportunity": 2,

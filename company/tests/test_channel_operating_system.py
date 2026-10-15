@@ -159,6 +159,7 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["writing_phase"]["title_system"].__setitem__("youtube_native_discovery_required", False),
             lambda c: c["research_system"].__setitem__("degraded_discovery_requires_hold", False),
             lambda c: c["topic_scoring"]["gates"].__setitem__("require_thumbnail_hypothesis", False),
+            lambda c: c["topic_scoring"]["gates"].__setitem__("minimum_visual_explainability", 99),
             lambda c: c["script_development"].__setitem__("required_passes", ["one"]),
             lambda c: c["pre_production_phase"].__setitem__("entry_requirement", "NONE"),
             lambda c: c["production_phase"].__setitem__("parallel_craft_departments", True),
