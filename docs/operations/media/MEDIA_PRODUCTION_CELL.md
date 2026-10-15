@@ -1,388 +1,228 @@
-﻿# Media Production Cell v1.4 â€” Studio-Benchmarked
-
-## Principle
+# Media Production Cell v1.5
 
-The Media Production Cell is modeled after professional explainer/documentary studios while remaining intentionally small.
-
-Functions are not headcount.
-
-During the pilot:
-- one human/tool may cover multiple functions;
-- critical approvals remain separate;
-- role minutes and rework are measured;
-- after three videos HR may recommend MERGE/KEEP/REPLACE.
-
-## Lean studio routing
+Status: CANONICAL MEDIA OPERATIONS
+Date: 2026-10-15
 
-The pilot no longer treats every production function as an always-active agent/process.
-
-Permanent core:
-- Media Producer / Production Coordinator
-- Editorial Director / Showrunner
-
-Mandatory independent clearance:
-- Independent Fact Checker at the factual-clearance gate.
-
-All other craft functions are stage-routed capabilities. They are invoked only when the active stage requires their craft judgment, execution, blocker, or clearance.
-
-Default contribution format:
-- decision or artifact delta;
-- material blocker, if any;
-- next required handoff.
-
-Forbidden defaults:
-- every function reviewing every stage;
-- mandatory long-form reports;
-- one independent runtime agent per function;
-- repeating context already present in shared production state.
-
-Independent approvals remain independent even when one person/tool covers more than one execution function.
-
-## Cinematography / Shot Design
-
-Owns:
-- shot purpose;
-- framing and shot size;
-- camera-motion intent;
-- depth and layering;
-- subject staging;
-- screen direction / eyeline;
-- shot-to-shot continuity;
-- camera-transition motivation;
-- visual rhythm support;
-- camera plan for the animatic;
-- feasibility with the available production tools.
-
-Rule:
-camera movement is not decoration. Every move, reframing, scale change or transition must have a narrative, attention or continuity reason.
-
-The function participates before the animatic and cannot self-approve Picture Lock.
-
-## Hierarchy
-
-Owner
-â†’ Editorial Director / Showrunner
-â†’ Media Producer / Production Coordinator
-â†’ craft functions
-â†’ Technical / Assurance / Finance support
-
-The Producer manages execution.
-The Showrunner manages story.
-Neither replaces the other.
-
-## 1. Media Producer / Production Coordinator
-
-Owns:
-- master schedule
-- milestones
-- dependencies
-- review calendar
-- resource plan
-- vendor coordination
-- production risk
-- delivery readiness
-- schedule/budget visibility
-
-Does not own:
-- factual clearance
-- story truth
-- brand veto
-
-## 2. Editorial Director / Showrunner
-
-Owns:
-- topic/story fit
-- thesis
-- narrative architecture
-- script lock
-- visual-story coherence
-- picture lock
-- final editorial approval
-
-## 3. Independent Fact Checker
-
-Owns:
-- material claim verification
-- numbers/dates/names
-- contradiction review
-- uncertainty wording
-- factual clearance
-
-Rule:
-the researcher/writer cannot be the sole approver of their own material claims.
-
-## 4. Script & Voice Director
-
-Owns:
-- five-pass script development
-- narration intent
-- emotion
-- pace/pitch/emphasis
-- pronunciation
-- recording direction
-- pickup list
-- narration continuity
-
-## 5. Visual Art Director / Frame Curator
-
-Owns:
-- Visual Story Case
-- key visual
-- visual treatment
-- reference-frame board
-- palette/type/grid
-- episode motifs
-- visual continuity
-
-## 6. Motion & Picture Editor
-
-Owns:
-- visual feasibility
-- Story Skeleton review
-- Visual Draft review
-- first-30-second pacing
-- storyboard timing
-- animatic
-- motion design
-- editorial rough cut
-- picture edit
-- transition execution
-- picture-lock conform
-
-Rule:
-the Editor enters during pre-production, not after script completion.
-
-Cannot self-approve:
-Picture Lock.
-
-## 7. Music Supervisor & Sound Designer
-
-Owns:
-- sonic concept
-- spotting
-- music brief
-- cue sheet
-- music rights/provenance
-- sound design
-- sonic motifs
-- silence
-- transition SFX
-- AV sync intent
-
-## 8. Dialogue & Mix Engineer
-
-Owns:
-- dialogue cleanup/edit
-- noise/EQ/de-ess
-- automation
-- music/dialogue balance
-- stems
-- mix/master
-- technical audio QC
-- dub parity
-
-## 9. Audience Growth & Packaging Strategist
-
-Owns:
-- trend radar
-- topic mining
-- audience hypothesis
-- title strategy
-- first-30-second packaging
-- CTR/retention learning
-- A/B test design
-- platform adaptation
-
-## 10. Thumbnail & Packaging Designer
-
-Owns:
-- thumbnail concepts
-- image selection/retouching
-- compositing
-- typography
-- visual hierarchy
-- brand consistency
-- mobile legibility
-- test-ready variants
-
-## 11. Localization Producer
-
-On demand.
-
-Owns:
-- translation adaptation
-- dub script
-- subtitle timing
-- localized metadata
-- localized thumbnail text
-- language-version QC
-- reconform requests
-
-## Human Assistance Pool — On Demand
-
-Human assistance is a supported execution path, not a permanent production bottleneck.
-
-It may be used when:
-- automated/application recovery has been exhausted;
-- a physical-world action is required;
-- a credential/login or identity-bound action requires the Owner;
-- a specialized craft capability is missing;
-- visual/audio judgment remains materially uncertain;
-- domain expertise is needed;
-- rights/source confirmation requires human contact;
-- a bounded human action is clearly faster and lower-risk than continued automation.
-
-Coordinator:
-Media Producer / Production Coordinator.
-
-The request must be bounded. The studio sends:
-- reason;
-- exact human task;
-- current verified state;
-- project/artifact reference;
-- allowed scope;
-- explicit **do not change** boundary;
-- expected return;
-- acceptance criteria;
-- return handoff.
-
-Rules:
-- request the smallest useful intervention;
-- do not hand an entire stage to a human when one bounded action is enough;
-- no credentials, spend, subscriptions, external sharing or irreversible action without Owner authorization;
-- human assistance never gains publish authority;
-- verify the returned result before resuming;
-- checkpoint before and after the handoff;
-- repeated identical requests become a capability-gap review.
-
-After three recurrences of the same assistance gap, the studio must review whether the correct fix is a tool, training, workflow, automation or staffing change.
-
-## Shared support
-
-### Evidence & Research Lead
-Research, claim source sheet, synthesis, source freshness, expert-consultation trigger.
-
-### Risk & Assurance
-Visual rights, copyright, music rights, AI disclosure, policy.
-
-### Technical Operator
-Specialized tool routing, project structure, render/export, automation, archive integrity.
-
-### Finance Controller
-Time/cost/credits, cost per finished minute, budget visibility.
-
-### Red Team
-Anti-slop, generic-template challenge, Visual Story Case challenge.
-
-### Owner
-Voice identity, brand authority, L4 decisions, publish approval.
-
-## RACI â€” benchmarked workflow
-
-| Stage | Accountable | Responsible | Required consultation | Approval |
-|---|---|---|---|---|
-| Topic | Showrunner | Growth + Research | Producer | Showrunner |
-| Evidence | Research | Research | Fact Checker | Fact Checker for material claims |
-| Visual Story Case | Art Director | Art + Motion | Research, Showrunner | Showrunner |
-| Packaging A | Growth | Growth + Thumbnail | Showrunner | Showrunner |
-| Pre-production Craft Review | Producer | Producer | Showrunner, Research, Motion, Art, Sound, Growth | Showrunner |
-| Script S0â€“S4 | Showrunner | Script/Voice | Research, Motion, Art | Showrunner |
-| Independent Fact Check | Fact Checker | Fact Checker | Research, Script | Fact Checker |
-| Visual/Sonic Treatment | Showrunner | Art + Sound | Motion | Showrunner |
-| Animatic | Motion | Motion | Showrunner, Growth, Sound | Showrunner |
-| Production Readiness | Producer | Producer | all craft leads | Producer + Showrunner |
-| Narration | Script/Voice | Owner narrator | Showrunner | Owner |
-| Production | Producer | craft functions | Technical | Producer |
-| Rough Cut | Showrunner | Motion | Growth, Art, Sound | Showrunner |
-| Packaging B | Growth | Growth + Thumbnail | Showrunner | Showrunner |
-| Picture Lock | Showrunner | Motion | Art, Sound | Showrunner |
-| Music/SFX | Sound | Sound | Motion, Showrunner | Showrunner |
-| Mix/Master | Mix Engineer | Mix Engineer | Sound, Showrunner | technical audio QC |
-| AV Sync | Showrunner | Motion + Mix | Sound | Showrunner |
-| Final Fact/Policy | Assurance | Fact Checker + Assurance | Showrunner | Assurance |
-| Export | Technical | Technical | Motion, Mix | Technical |
-| Publish | Owner | Technical when authorized | Growth, Assurance | Owner |
-
-## Lock system
-
-### Visual Story Case Pass
-Story proved as video.
-
-### Script Lock
-S0â€“S4 complete.
-Fact check passed.
-
-### Production Readiness Lock
-No expensive production starts before dependencies are clear.
-
-### Picture Lock
-Timing stable.
-Any timing change after lock triggers audio reconform.
-
-### Sound Lock
-Only defect fixes after approval.
-
-## Producer metrics
+Governing config:
+`company/config/media_venture.json`
+
+Master workflow:
+`STUDIO_MASTER_PIPELINE.md`
+
+## Operating model
+
+The Studio uses a three-phase project architecture:
+
+1. **Writing**
+2. **Pre-production**
+3. **Production**
+
+Only the Media Producer remains always active as a non-craft control plane.
+
+All creative/editorial functions are activated only inside the phase or production department that owns their work.
+
+The Independent Fact Checker remains an independent clearance function.
+
+Human Assistance remains an on-demand bounded exception.
+
+## Writing
+
+Writing has two sections.
+
+### Market & Title Development
+
+The project starts from market and audience evidence, not from a preselected script idea.
+
+Required:
+- read YouTube demand;
+- read social/platform trends;
+- synthesize a market opportunity;
+- verify evidence, visual and eight-minute story feasibility;
+- produce **exactly three** title candidates;
+- present all three to the Owner.
+
+The Owner selects one.
+
+No script work starts before:
+**OWNER_TITLE_LOCK**
+
+The Studio may later propose a title refinement, but the title cannot change without explicit Owner reapproval.
+
+### Script Development
+
+After Owner Title Lock:
+
+S0 Story Question  
+S1 Research Pack  
+S2 Story Architecture  
+S3 First Script  
+S4 Editorial Rewrite  
+S5 Independent Fact Check  
+S6 Narration Rewrite  
+S7 Locked Script
+
+Writing exits only at:
+**SCRIPT_LOCK**
+
+## Pre-production
+
+Pre-production begins only after Script Lock.
+
+Its job is to transform the script into a complete manufacturing plan.
+
+It owns:
+- script breakdown;
+- Visual Story Case;
+- art direction;
+- asset plan;
+- rights/source preclearance;
+- shot design;
+- storyboard;
+- camera and continuity plan;
+- sonic concept;
+- narration plan;
+- title-promise alignment;
+- animatic;
+- Production Readiness Review.
+
+It exits only at:
+**PRODUCTION_READY_LOCK**
+
+A script problem returns to Writing through a formal return ticket.
+
+A title/story mismatch creates an Owner title-revision request; it never silently changes the title.
+
+## Production
+
+Official production mode:
+
+**SERIAL PRODUCTION LINE WITH FEEDBACK GATES**
+
+Only one craft department may be active on the project at a time.
+
+Each department:
+1. receives an accepted input packet;
+2. completes its internal stages in order;
+3. uses exactly one primary program per stage;
+4. verifies its output;
+5. checkpoints;
+6. issues a handoff packet;
+7. waits for acceptance before the next department starts.
+
+Production departments:
+
+1. Voice & Narration
+2. Visual Asset Production
+3. Motion & Compositing
+4. Picture Editing
+5. Sound Design & Mix
+6. Thumbnail & Packaging
+7. Assurance & Delivery
+8. Learning & Archive
+
+The exact stage/program map is defined in:
+`STUDIO_MASTER_PIPELINE.md`
+
+## Feedback rule
+
+A downstream department may not silently repair locked upstream work.
+
+If it finds a defect:
+- issue a Return Ticket;
+- identify the source department;
+- identify the artifact and defect;
+- state the requested correction;
+- state what must not change;
+- return the work to the source department.
+
+The source department repairs and reissues its handoff.
+
+## One Program Per Stage
+
+Every stage has one named primary program.
+
+A second simultaneous craft program is forbidden.
+
+Changing the primary program requires:
+- closing/checkpointing the current stage;
+- opening a new stage or recovery stage.
+
+## Control plane
+
+The Media Producer may:
+- open and close stages;
+- manage schedule/dependencies;
+- validate handoffs;
+- trigger recovery;
+- coordinate bounded Human Assistance;
+- preserve checkpoints and delivery state.
+
+The Producer does not edit craft artifacts.
+
+## Core authority boundaries
+
+Owner:
+- final title selection;
+- title revision approval after lock;
+- voice/performance approval where required;
+- brand authority;
+- public publish approval;
+- credentials, spend, subscriptions and irreversible external actions.
+
+Showrunner:
+- story architecture;
+- script quality;
+- editorial coherence;
+- editorial approval.
+
+Independent Fact Checker:
+- material factual clearance.
+
+Craft departments:
+- own their stage outputs;
+- may not self-approve an independent clearance they do not own.
+
+## Human Assistance
+
+Human Assistance may be called when automation, physical access, credentials, specialist craft or expert judgment creates a real blocker.
+
+It does not:
+- bypass Owner Title Gate;
+- bypass Script Lock;
+- bypass Production Ready Lock;
+- transfer publish authority;
+- become a parallel craft department;
+- silently repair another department's locked work.
+
+See:
+`HUMAN_ASSISTANCE_LANE.md`
+
+## Recovery
+
+Application/tool success is never inferred from a command alone.
+
+`UNKNOWN != SUCCESS`
+
+Every state-changing application handoff requires checkpointing and postcondition verification.
+
+See:
+`STUDIO_EXECUTION_RECOVERY.md`
+
+## Success metrics
 
 Track:
-- schedule variance
-- milestone slips
-- blocked days
-- review-delay days
-- late dependency count
-- production-readiness failures
-- downstream rework caused by upstream changes
-
-## Fact-check metrics
-
-Track:
-- material defects found before lock
-- defects found after lock
-- source contradictions
-- expert consultations triggered
-- factual corrections after rough cut
-
-## Packaging metrics
-
-Track:
-- title hypotheses
-- thumbnail hypotheses
-- final variants
-- mobile legibility failures
-- A/B test results
-- CTR by packaging version
-
-## Staffing rule
-
-Do not hire/add permanent seats merely because a benchmark studio has them.
-
-Keep a function separate only when pilot evidence shows one of:
-- distinct specialist craft
-- independent clearance requirement
-- project-control responsibility
-- measurable quality/rework benefit
-
-The goal is professional discipline without professional-studio bureaucracy.
-
-
-## Application handoff and recovery
-
-Creative applications are not assumed to succeed merely because an automation command returned.
-
-For every state-changing handoff between applications:
-1. persist a recoverable checkpoint before dispatch;
-2. record application/version, project path/version, expected postcondition and next safe action;
-3. verify the postcondition independently after the action;
-4. save another checkpoint after a verified state change.
-
-`UNKNOWN` is never success.
-
-On timeout, stall, frozen UI or ambiguous provider state:
-1. observe current application state;
-2. reconcile the execution journal with the project checkpoint;
-3. resume from the last verified checkpoint;
-4. retry the same route at most once, and only when reversible/idempotent;
-5. use an authorized fallback tool/route if quality and authority are preserved;
-6. otherwise HOLD rather than blindly clicking or replaying.
-
-This protocol is implemented by `company/runtime/media_execution_recovery.py` and configured in `company/config/media_venture.json`.
+- writing cycle time;
+- owner title selection rounds;
+- title revision requests;
+- pre-production cycle time;
+- production cycle time;
+- department cycle time;
+- stage cycle time;
+- handoff rejection count;
+- return ticket count;
+- stage rework;
+- program-switch violations;
+- parallel-department violations;
+- human assistance usage;
+- quality defects;
+- audience performance after publication.
