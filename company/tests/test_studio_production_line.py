@@ -166,5 +166,171 @@ class StudioProductionLineTests(unittest.TestCase):
         self.assertTrue(validate_return_ticket(ticket))
 
 
+    def test_title_packet_failure_paths_are_covered(self):
+        base = self.packet()
+
+        missing_field = self.packet()
+        missing_field["candidates"][0].pop("viewer_promise")
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(missing_field)
+
+        empty_id = self.packet()
+        empty_id["candidates"][0]["id"] = ""
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(empty_id)
+
+        empty_title = self.packet()
+        empty_title["candidates"][0]["title"] = " "
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(empty_title)
+
+        duplicate_id = self.packet()
+        duplicate_id["candidates"][1]["id"] = duplicate_id["candidates"][0]["id"]
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(duplicate_id)
+
+        duplicate_title = self.packet()
+        duplicate_title["candidates"][1]["title"] = duplicate_title["candidates"][0]["title"]
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(duplicate_title)
+
+        evidence_fail = self.packet()
+        evidence_fail["candidates"][0]["evidence_feasibility"] = "FAIL"
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(evidence_fail)
+
+        duration_fail = self.packet()
+        duration_fail["candidates"][0]["eight_minute_story_feasibility"] = "FAIL"
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(duration_fail)
+
+        visual_fail = self.packet()
+        visual_fail["candidates"][0]["visual_potential"] = "LOW"
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(visual_fail)
+
+        self.assertTrue(validate_title_candidate_packet(base))
+
+    def test_owner_title_lock_failure_paths_are_covered(self):
+        packet = self.packet()
+        cases = [
+            {
+                "authority": "Owner",
+                "status": "PENDING",
+                "selected_title_id": "T1",
+                "locked_title": "Title One",
+            },
+            {
+                "authority": "Owner",
+                "status": "OWNER_TITLE_LOCK",
+                "selected_title_id": "T1",
+                "locked_title": "",
+            },
+            {
+                "authority": "Owner",
+                "status": "OWNER_TITLE_LOCK",
+                "selected_title_id": "T1",
+                "locked_title": "Wrong Title",
+            },
+        ]
+        for selection in cases:
+            with self.assertRaises(StudioProductionLineError):
+                validate_owner_title_lock(packet, selection)
+
+    def test_title_revision_missing_fields_fails(self):
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_revision_request(
+                {
+                    "current_title": "A",
+                    "proposed_title": "B",
+                    "reason": "accuracy",
+                    "evidence": "source",
+                    "owner_reapproval_status": "APPROVED",
+                }
+            )
+
+    def test_phase_transition_unknown_reverse_and_missing_gates_fail(self):
+        with self.assertRaises(StudioProductionLineError):
+            validate_phase_transition("unknown", "production", {})
+        with self.assertRaises(StudioProductionLineError):
+            validate_phase_transition("pre_production", "writing", {})
+        with self.assertRaises(StudioProductionLineError):
+            validate_phase_transition(
+                "writing",
+                "pre_production",
+                {"owner_title_lock": False, "script_lock": True},
+            )
+        with self.assertRaises(StudioProductionLineError):
+            validate_phase_transition(
+                "pre_production",
+                "production",
+                {"production_ready_lock": False},
+            )
+
+    def test_stage_record_failure_paths_are_covered(self):
+        with self.assertRaises(StudioProductionLineError):
+            validate_stage_record({"stage_id": "x"})
+        with self.assertRaises(StudioProductionLineError):
+            validate_stage_record(
+                {
+                    "stage_id": "x",
+                    "program": " ",
+                    "status": "VERIFIED_COMPLETE",
+                    "output_ref": "o",
+                    "checkpoint_ref": "c",
+                }
+            )
+        with self.assertRaises(StudioProductionLineError):
+            validate_stage_record(
+                {
+                    "stage_id": "x",
+                    "program": "ChatGPT",
+                    "status": "IN_PROGRESS",
+                    "output_ref": "o",
+                    "checkpoint_ref": "c",
+                }
+            )
+
+    def test_handoff_failure_paths_are_covered(self):
+        with self.assertRaises(StudioProductionLineError):
+            validate_department_handoff({"project_id": "EP-1"})
+
+        handoff = {
+            "project_id": "EP-001",
+            "handoff_id": "H-001",
+            "from_department": "P01_voice_narration",
+            "to_department": "P02_visual_assets",
+            "completed_stage_ids": ["narration_recording"],
+            "artifact_manifest": ["voice.wav"],
+            "locked_artifacts": ["voice.wav"],
+            "change_log": [],
+            "known_limitations": [],
+            "qc_result": "PASS",
+            "acceptance_criteria": ["voice ready"],
+            "checkpoint_ref": "cp-1",
+            "handoff_status": "INVALID",
+        }
+        with self.assertRaises(StudioProductionLineError):
+            validate_department_handoff(handoff)
+
+    def test_return_ticket_failure_paths_are_covered(self):
+        with self.assertRaises(StudioProductionLineError):
+            validate_return_ticket({"return_ticket_id": "R1"})
+
+        ticket = {
+            "return_ticket_id": "R-1",
+            "source_department": "P02_visual_assets",
+            "detecting_department": "P02_visual_assets",
+            "artifact_ref": "asset-17",
+            "defect": "bad",
+            "reason_for_rejection": "bad",
+            "requested_correction": "fix",
+            "do_not_change": "style",
+            "resume_handoff": "VISUAL_ASSET_PACKET",
+        }
+        with self.assertRaises(StudioProductionLineError):
+            validate_return_ticket(ticket)
+
+
 if __name__ == "__main__":
     unittest.main()
