@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261016-025015-d07917",
+  "created_at": "2026-10-16T02:50:15+03:00",
+  "scope": "project/media",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "architecture",
+  "subject": "media.production_cell.current",
+  "summary": "Media Production Cell v1.7 and media venture config v2.0 retain the three-phase serial studio while strengthening W1. Owner-facing candidates must be three distinct YouTube story experiences rather than abstract subjects, with story-archetype diversity, thumbnail hypotheses, Red Team click clearance and native discovery confidence. Degraded discovery blocks the gate.",
+  "details": {
+    "production_cell_doc_version": "1.7",
+    "media_config_version": "2.0",
+    "master_pipeline_version": "1.2",
+    "packaging_bible_version": "2",
+    "macro_phases": [
+      "writing",
+      "pre_production",
+      "production"
+    ],
+    "w1_story_count": 3,
+    "w1_titles_per_story": 2,
+    "story_archetype_diversity_required": true,
+    "thumbnail_hypothesis_required": true,
+    "red_team_click_clearance_required": true,
+    "native_discovery_required": true,
+    "degraded_discovery_requires_hold": true,
+    "production_mode": "SERIAL_PRODUCTION_LINE_WITH_FEEDBACK_GATES",
+    "governing_config": "company/config/media_venture.json",
+    "governing_doc": "docs/operations/media/MEDIA_PRODUCTION_CELL.md",
+    "master_pipeline_doc": "docs/operations/media/STUDIO_MASTER_PIPELINE.md"
+  },
+  "supersedes": [
+    "MEM-20261016-023359-511337"
+  ],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "studio",
+    "W1",
+    "story-gate",
+    "packaging",
+    "red-team"
+  ],
+  "source": {
+    "type": "repository",
+    "ref": "main",
+    "commit": "f6021007bfdb6aff77e5ecf6679100dc86e90a20"
+  }
+}

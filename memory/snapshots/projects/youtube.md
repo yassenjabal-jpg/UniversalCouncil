@@ -107,29 +107,37 @@
 - **Tags:** youtube, channel, what-if, speculative-documentary
 
 ## youtube.channel_operating_system.current
-- **Event:** `MEM-20261016-023358-53828d`
+- **Event:** `MEM-20261016-025013-6e5a1f`
 - **Level:** `L4_OWNER_DIRECTIVE`
 - **Kind:** `architecture`
 - **Confidence:** `owner_confirmed`
-- **Updated:** `2026-10-16T02:33:58+03:00`
-- **Summary:** Channel Operating System v1.7 requires market/social reading and story feasibility before exactly three distinct topic candidates are presented, with exactly two distinct title variants per topic. The Owner selects one title from one topic at OWNER_TITLE_LOCK; script development cannot start before that lock, and later title revision still requires Owner reapproval.
+- **Updated:** `2026-10-16T02:50:13+03:00`
+- **Summary:** Channel Operating System v1.8 makes W1 story-first and YouTube-native. Before Owner Title Gate the Studio must present exactly three concrete story premises using three distinct story archetypes, each with a hero anchor, tension or mystery, viewer stakes, key visual, one thumbnail hypothesis and exactly two title variants. Every title must pass Stranger Click and YouTube Title Style checks. Materially degraded native discovery forces HOLD rather than silent substitution with generic news relevance.
 - **Details:**
-  - `automatic_title_change_after_lock_forbidden`: true
-  - `channel_operating_system_version`: 1.7
+  - `authorized_native_fallback_allowed`: true
+  - `channel_operating_system_version`: 1.8
+  - `concrete_hero_anchor_required`: true
+  - `degraded_discovery_requires_hold`: true
+  - `distinct_story_archetypes_required`: true
   - `governing_config`: company/config/channel_operating_system.json
   - `governing_doc`: docs/operations/media/CHANNEL_OPERATING_SYSTEM.md
+  - `key_visual_required`: true
   - `master_pipeline_doc`: docs/operations/media/STUDIO_MASTER_PIPELINE.md
+  - `master_pipeline_version`: 1.2
+  - `native_youtube_discovery_required`: true
   - `owner_is_final_title_authority`: true
-  - `owner_reapproval_required_for_title_revision`: true
-  - `owner_selects_one_topic_and_one_title`: true
-  - `required_titles_per_topic`: 2
-  - `required_topic_count`: 3
+  - `packaging_bible_version`: 2
+  - `packaging_doc`: docs/operations/media/PACKAGING_BIBLE.md
+  - `required_story_count`: 3
+  - `required_titles_per_story`: 2
   - `script_start_before_owner_title_lock_forbidden`: true
-  - `title_distinctness_within_topic_required`: true
-  - `topic_distinctness_required`: true
-  - `total_titles_presented`: 6
-- **Supersedes:** `MEM-20261015-105711-ttlgt1`
-- **Tags:** youtube, studio, writing, topic-gate, title-gate, owner
+  - `stranger_click_test_required`: true
+  - `tension_or_mystery_required`: true
+  - `thumbnail_hypothesis_required`: true
+  - `viewer_stakes_required`: true
+  - `youtube_title_style_pass_required`: true
+- **Supersedes:** `MEM-20261016-023358-53828d`
+- **Tags:** youtube, studio, W1, story-premise, packaging, thumbnail, owner-title-gate
 
 ## youtube.execution.final_prelaunch_decision
 - **Event:** `MEM-20261012-203304-1de95d`

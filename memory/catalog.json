@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-15T23:34:26+00:00",
-  "event_count": 74,
+  "generated_at": "2026-10-16T02:50:18+03:00",
+  "event_count": 76,
   "active_count": 55,
-  "superseded_count": 19,
+  "superseded_count": 21,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-16T02:33:59+03:00",
+  "latest_event_at": "2026-10-16T02:50:15+03:00",
   "scopes": {
     "council": [
       {
@@ -184,12 +184,12 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261016-023359-511337",
+        "event_id": "MEM-20261016-025015-d07917",
         "subject": "media.production_cell.current",
         "level": "L4_OWNER_DIRECTIVE",
         "kind": "architecture",
-        "summary": "Media Production Cell v1.6 retains the three-phase Writing → Pre-production → Production pipeline and updates W1 so the Studio must produce exactly three distinct topics with exactly two title variants each before the Owner selects one topic/title pair. Production remains serial with one active craft department and one primary program per stage.",
-        "created_at": "2026-10-16T02:33:59+03:00",
+        "summary": "Media Production Cell v1.7 and media venture config v2.0 retain the three-phase serial studio while strengthening W1. Owner-facing candidates must be three distinct YouTube story experiences rather than abstract subjects, with story-archetype diversity, thumbnail hypotheses, Red Team click clearance and native discovery confidence. Degraded discovery blocks the gate.",
+        "created_at": "2026-10-16T02:50:15+03:00",
         "confidence": "owner_confirmed"
       },
       {
@@ -413,12 +413,12 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261016-023358-53828d",
+        "event_id": "MEM-20261016-025013-6e5a1f",
         "subject": "youtube.channel_operating_system.current",
         "level": "L4_OWNER_DIRECTIVE",
         "kind": "architecture",
-        "summary": "Channel Operating System v1.7 requires market/social reading and story feasibility before exactly three distinct topic candidates are presented, with exactly two distinct title variants per topic. The Owner selects one title from one topic at OWNER_TITLE_LOCK; script development cannot start before that lock, and later title revision still requires Owner reapproval.",
-        "created_at": "2026-10-16T02:33:58+03:00",
+        "summary": "Channel Operating System v1.8 makes W1 story-first and YouTube-native. Before Owner Title Gate the Studio must present exactly three concrete story premises using three distinct story archetypes, each with a hero anchor, tension or mystery, viewer stakes, key visual, one thumbnail hypothesis and exactly two title variants. Every title must pass Stranger Click and YouTube Title Style checks. Materially degraded native discovery forces HOLD rather than silent substitution with generic news relevance.",
+        "created_at": "2026-10-16T02:50:13+03:00",
         "confidence": "owner_confirmed"
       },
       {
