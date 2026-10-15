@@ -149,7 +149,7 @@ def _validate_single_program_stages(stages: list[dict[str, Any]], context: str) 
 
 
 def validate_config(cfg: dict[str, Any]) -> bool:
-    _require(cfg.get("version") == "1.6", "channel operating system must be version 1.6")
+    _require(cfg.get("version") == "1.7", "channel operating system must be version 1.7")
     _require(
         cfg.get("channel_model") == "broad_format_first_multilingual_visual_documentary",
         "channel model drifted",
@@ -217,20 +217,24 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     _require(script_section.get("entry_requirement") == "OWNER_TITLE_LOCK", "script must require Owner Title Lock")
 
     title_system = writing.get("title_system", {})
-    _require(int(title_system.get("required_candidate_count", 0)) == 3, "exactly three title candidates required")
+    _require(int(title_system.get("required_topic_count", 0)) == 3, "exactly three topic candidates required")
+    _require(int(title_system.get("required_titles_per_topic", 0)) == 2, "each topic must have exactly two titles")
+    _require(title_system.get("topic_distinctness_required") is True, "topic candidates must be distinct")
+    _require(
+        title_system.get("title_distinctness_within_topic_required") is True,
+        "title variants within each topic must be distinct",
+    )
     _require(title_system.get("owner_selection_required") is True, "Owner title selection is required")
     _require(title_system.get("owner_is_only_final_title_authority") is True, "Owner must retain title authority")
     _require(
         title_system.get("script_start_before_owner_selection_forbidden") is True,
         "script cannot start before title selection",
     )
-    required_title_fields = {
-        "title",
+    required_topic_fields = {
+        "topic",
         "why_now",
         "market_signal",
         "story_angle",
-        "click_reason",
-        "viewer_promise",
         "competition_level",
         "visual_potential",
         "evidence_feasibility",
@@ -238,8 +242,13 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         "risk_notes",
     }
     _require(
-        required_title_fields.issubset(set(title_system.get("candidate_required_fields", []))),
-        "title cards are incomplete",
+        required_topic_fields.issubset(set(title_system.get("topic_required_fields", []))),
+        "topic cards are incomplete",
+    )
+    required_title_variant_fields = {"title", "click_reason", "viewer_promise"}
+    _require(
+        required_title_variant_fields.issubset(set(title_system.get("title_variant_required_fields", []))),
+        "title variants are incomplete",
     )
     required_feasibility = {
         "sufficient_research_material",
@@ -270,8 +279,11 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     _require(research.get("separate_claim_and_visual_ledgers") is True, "claim and visual ledgers must stay separate")
     _require(research.get("market_and_social_scan_required_before_title_gate") is True, "market/social scan required")
     _require(research.get("title_feasibility_required_before_owner_gate") is True, "title feasibility required")
-    _require(int(research.get("minimum_title_candidates", 0)) == 3, "minimum title candidates must be three")
-    _require(int(research.get("maximum_title_candidates", 0)) == 3, "maximum title candidates must be three")
+    _require(int(research.get("required_topic_candidates", 0)) == 3, "exactly three topics are required")
+    _require(
+        int(research.get("required_title_variants_per_topic", 0)) == 2,
+        "exactly two title variants per topic are required",
+    )
 
     pre = cfg.get("pre_production_phase", {})
     _require(pre.get("entry_requirement") == "SCRIPT_LOCK", "pre-production must require Script Lock")
@@ -411,7 +423,7 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     required_rules = {
         "writing_precedes_preproduction",
         "preproduction_precedes_production",
-        "exactly_three_titles_before_owner_title_gate",
+        "three_topics_two_titles_each_before_owner_title_gate",
         "script_cannot_start_before_owner_title_lock",
         "one_program_only_per_stage",
         "activate_one_production_department_only",
@@ -425,8 +437,8 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         packaging.get("thumbnail_designer_independent_craft_function") is True, "thumbnail craft must stay distinct"
     )
     _require(
-        "exactly_three_title_candidates" in packaging.get("stage_a_before_script", []),
-        "early packaging must supply three titles",
+        "three_distinct_topics_with_two_titles_each" in packaging.get("stage_a_before_script", []),
+        "early packaging must supply three topics with two titles each",
     )
     _require(
         "owner_title_selection" in packaging.get("stage_a_before_script", []),

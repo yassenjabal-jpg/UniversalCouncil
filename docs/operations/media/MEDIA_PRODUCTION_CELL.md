@@ -1,7 +1,7 @@
-# Media Production Cell v1.5
+# Media Production Cell v1.6
 
 Status: CANONICAL MEDIA OPERATIONS
-Date: 2026-10-15
+Date: 2026-10-16
 
 Governing config:
 `company/config/media_venture.json`
@@ -38,10 +38,11 @@ Required:
 - read social/platform trends;
 - synthesize a market opportunity;
 - verify evidence, visual and eight-minute story feasibility;
-- produce **exactly three** title candidates;
-- present all three to the Owner.
+- produce **exactly three distinct topic candidates**;
+- produce **exactly two distinct title variants for each topic**;
+- present all three topics and all six title variants to the Owner.
 
-The Owner selects one.
+The Owner selects one title from one topic.
 
 No script work starts before:
 **OWNER_TITLE_LOCK**

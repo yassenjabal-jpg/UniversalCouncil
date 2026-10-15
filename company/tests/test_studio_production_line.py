@@ -12,20 +12,32 @@ from company.runtime.studio_production_line import (
 )
 
 
-def title_card(idx: int, title: str):
+def topic_card(idx: int, topic: str):
     return {
-        "id": f"T{idx}",
-        "title": title,
+        "id": f"P{idx}",
+        "topic": topic,
         "why_now": "current market signal",
         "market_signal": "rising audience interest",
         "story_angle": "specific documentary angle",
-        "click_reason": "clear curiosity gap",
-        "viewer_promise": "specific answer",
         "competition_level": "MEDIUM",
         "visual_potential": "HIGH",
         "evidence_feasibility": "PASS",
         "eight_minute_story_feasibility": "PASS",
         "risk_notes": "bounded",
+        "title_variants": [
+            {
+                "id": f"P{idx}A",
+                "title": f"{topic}: direct title",
+                "click_reason": "direct curiosity gap",
+                "viewer_promise": "specific answer",
+            },
+            {
+                "id": f"P{idx}B",
+                "title": f"{topic}: documentary title",
+                "click_reason": "alternative curiosity framing",
+                "viewer_promise": "same story promise from a different angle",
+            },
+        ],
     }
 
 
@@ -35,17 +47,22 @@ class StudioProductionLineTests(unittest.TestCase):
             "market_scan_status": "PASS",
             "social_trend_scan_status": "PASS",
             "story_feasibility_status": "PASS",
-            "candidates": [
-                title_card(1, "Title One"),
-                title_card(2, "Title Two"),
-                title_card(3, "Title Three"),
+            "topics": [
+                topic_card(1, "Topic One"),
+                topic_card(2, "Topic Two"),
+                topic_card(3, "Topic Three"),
             ],
         }
 
-    def test_exactly_three_titles_are_required(self):
+    def test_exactly_three_topics_with_two_titles_each_are_required(self):
         packet = self.packet()
         self.assertTrue(validate_title_candidate_packet(packet))
-        packet["candidates"] = packet["candidates"][:2]
+        packet["topics"] = packet["topics"][:2]
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(packet)
+
+        packet = self.packet()
+        packet["topics"][0]["title_variants"] = packet["topics"][0]["title_variants"][:1]
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(packet)
 
@@ -61,8 +78,10 @@ class StudioProductionLineTests(unittest.TestCase):
         selection = {
             "authority": "Owner",
             "status": "OWNER_TITLE_LOCK",
-            "selected_title_id": "T2",
-            "locked_title": "Title Two",
+            "selected_topic_id": "P2",
+            "selected_title_id": "P2B",
+            "locked_topic": "Topic Two",
+            "locked_title": "Topic Two: documentary title",
         }
         self.assertTrue(validate_owner_title_lock(packet, selection))
 
@@ -70,7 +89,7 @@ class StudioProductionLineTests(unittest.TestCase):
         with self.assertRaises(StudioProductionLineError):
             validate_owner_title_lock(packet, selection)
 
-    def test_locked_title_must_be_one_of_three(self):
+    def test_locked_title_must_belong_to_selected_topic(self):
         packet = self.packet()
         with self.assertRaises(StudioProductionLineError):
             validate_owner_title_lock(
@@ -78,7 +97,9 @@ class StudioProductionLineTests(unittest.TestCase):
                 {
                     "authority": "Owner",
                     "status": "OWNER_TITLE_LOCK",
-                    "selected_title_id": "T9",
+                    "selected_topic_id": "P1",
+                    "selected_title_id": "P2A",
+                    "locked_topic": "Topic One",
                     "locked_title": "Other",
                 },
             )
@@ -169,42 +190,66 @@ class StudioProductionLineTests(unittest.TestCase):
         base = self.packet()
 
         missing_field = self.packet()
-        missing_field["candidates"][0].pop("viewer_promise")
+        missing_field["topics"][0]["title_variants"][0].pop("viewer_promise")
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(missing_field)
 
         empty_id = self.packet()
-        empty_id["candidates"][0]["id"] = ""
+        empty_id["topics"][0]["id"] = ""
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(empty_id)
 
         empty_title = self.packet()
-        empty_title["candidates"][0]["title"] = " "
+        empty_title["topics"][0]["title_variants"][0]["title"] = " "
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(empty_title)
 
         duplicate_id = self.packet()
-        duplicate_id["candidates"][1]["id"] = duplicate_id["candidates"][0]["id"]
+        duplicate_id["topics"][1]["id"] = duplicate_id["topics"][0]["id"]
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(duplicate_id)
 
         duplicate_title = self.packet()
-        duplicate_title["candidates"][1]["title"] = duplicate_title["candidates"][0]["title"]
+        duplicate_title["topics"][1]["title_variants"][0]["title"] = duplicate_title["topics"][0]["title_variants"][0][
+            "title"
+        ]
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(duplicate_title)
 
+        missing_topic_field = self.packet()
+        missing_topic_field["topics"][0].pop("story_angle")
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(missing_topic_field)
+
+        duplicate_topic = self.packet()
+        duplicate_topic["topics"][1]["topic"] = duplicate_topic["topics"][0]["topic"]
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(duplicate_topic)
+
+        wrong_variant_count = self.packet()
+        wrong_variant_count["topics"][0]["title_variants"] = wrong_variant_count["topics"][0]["title_variants"][:1]
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(wrong_variant_count)
+
+        duplicate_title_id = self.packet()
+        duplicate_title_id["topics"][1]["title_variants"][0]["id"] = duplicate_title_id["topics"][0]["title_variants"][
+            0
+        ]["id"]
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(duplicate_title_id)
+
         evidence_fail = self.packet()
-        evidence_fail["candidates"][0]["evidence_feasibility"] = "FAIL"
+        evidence_fail["topics"][0]["evidence_feasibility"] = "FAIL"
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(evidence_fail)
 
         duration_fail = self.packet()
-        duration_fail["candidates"][0]["eight_minute_story_feasibility"] = "FAIL"
+        duration_fail["topics"][0]["eight_minute_story_feasibility"] = "FAIL"
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(duration_fail)
 
         visual_fail = self.packet()
-        visual_fail["candidates"][0]["visual_potential"] = "LOW"
+        visual_fail["topics"][0]["visual_potential"] = "LOW"
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(visual_fail)
 
@@ -216,13 +261,17 @@ class StudioProductionLineTests(unittest.TestCase):
             {
                 "authority": "Owner",
                 "status": "PENDING",
-                "selected_title_id": "T1",
-                "locked_title": "Title One",
+                "selected_topic_id": "P1",
+                "selected_title_id": "P1A",
+                "locked_topic": "Topic One",
+                "locked_title": "Topic One: direct title",
             },
             {
                 "authority": "Owner",
                 "status": "OWNER_TITLE_LOCK",
-                "selected_title_id": "T1",
+                "selected_topic_id": "P1",
+                "selected_title_id": "P1A",
+                "locked_topic": "Topic One",
                 "locked_title": "",
             },
             {
@@ -232,6 +281,35 @@ class StudioProductionLineTests(unittest.TestCase):
                 "locked_title": "Wrong Title",
             },
         ]
+        cases.extend(
+            [
+                {
+                    "authority": "Owner",
+                    "status": "OWNER_TITLE_LOCK",
+                    "selected_topic_id": "P9",
+                    "selected_title_id": "P9A",
+                    "locked_topic": "Other",
+                    "locked_title": "Other",
+                },
+                {
+                    "authority": "Owner",
+                    "status": "OWNER_TITLE_LOCK",
+                    "selected_topic_id": "P1",
+                    "selected_title_id": "P2A",
+                    "locked_topic": "Topic One",
+                    "locked_title": "Topic Two: direct title",
+                },
+                {
+                    "authority": "Owner",
+                    "status": "OWNER_TITLE_LOCK",
+                    "selected_topic_id": "P1",
+                    "selected_title_id": "P1A",
+                    "locked_topic": "Wrong Topic",
+                    "locked_title": "Topic One: direct title",
+                },
+            ]
+        )
+
         for selection in cases:
             with self.assertRaises(StudioProductionLineError):
                 validate_owner_title_lock(packet, selection)

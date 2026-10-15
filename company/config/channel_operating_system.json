@@ -1,5 +1,5 @@
 {
-  "version": "1.6",
+  "version": "1.7",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
   "visual_system": "Editorial Renaissance Motion",
   "primary_language": "Arabic",
@@ -595,8 +595,8 @@
     ],
     "market_and_social_scan_required_before_title_gate": true,
     "title_feasibility_required_before_owner_gate": true,
-    "minimum_title_candidates": 3,
-    "maximum_title_candidates": 3
+    "required_topic_candidates": 3,
+    "required_title_variants_per_topic": 2
   },
   "visual_story_case": {
     "required": true,
@@ -668,7 +668,7 @@
   "packaging_system": {
     "stage_a_before_script": [
       "market_signal_read",
-      "exactly_three_title_candidates",
+      "three_distinct_topics_with_two_titles_each",
       "owner_title_selection",
       "click_and_answer_promise"
     ],
@@ -750,7 +750,7 @@
     "rules": [
       "writing_precedes_preproduction",
       "preproduction_precedes_production",
-      "exactly_three_titles_before_owner_title_gate",
+      "three_topics_two_titles_each_before_owner_title_gate",
       "script_cannot_start_before_owner_title_lock",
       "one_program_only_per_stage",
       "activate_one_production_department_only",
@@ -1087,9 +1087,9 @@
     ]
   },
   "writing_phase": {
-    "version": "1.0",
+    "version": "1.1",
     "name": "Writing",
-    "purpose": "select a market-grounded title first, then write and lock the script",
+    "purpose": "select one title from three market-grounded topics with two title variants each, then write and lock the script",
     "sections": [
       {
         "id": "W1_title_development",
@@ -1119,7 +1119,7 @@
           {
             "id": "title_candidate_generation",
             "program": "ChatGPT",
-            "output": "exactly_three_title_cards"
+            "output": "three_topic_cards_two_titles_each"
           },
           {
             "id": "owner_title_gate",
@@ -1178,22 +1178,28 @@
       }
     ],
     "title_system": {
-      "required_candidate_count": 3,
+      "required_topic_count": 3,
+      "required_titles_per_topic": 2,
       "owner_selection_required": true,
       "owner_is_only_final_title_authority": true,
       "script_start_before_owner_selection_forbidden": true,
-      "candidate_required_fields": [
-        "title",
+      "topic_distinctness_required": true,
+      "title_distinctness_within_topic_required": true,
+      "topic_required_fields": [
+        "topic",
         "why_now",
         "market_signal",
         "story_angle",
-        "click_reason",
-        "viewer_promise",
         "competition_level",
         "visual_potential",
         "evidence_feasibility",
         "eight_minute_story_feasibility",
         "risk_notes"
+      ],
+      "title_variant_required_fields": [
+        "title",
+        "click_reason",
+        "viewer_promise"
       ],
       "feasibility_checks": [
         "sufficient_research_material",

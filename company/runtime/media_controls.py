@@ -77,7 +77,8 @@ REQUIRED_PILOT_METRICS = {
     "human_assistance_minutes",
     "human_assistance_resolution_rate",
     "repeated_human_assistance_gap_count",
-    "title_candidate_count",
+    "topic_candidate_count",
+    "title_variant_count",
     "owner_title_selection_rounds",
     "title_revision_requests",
     "writing_cycle_time",
@@ -102,8 +103,8 @@ PUBLISHED_PERFORMANCE_METRICS = {
 
 
 def validate_media_team(config):
-    if config.get("version") != "1.8":
-        raise MediaControlError("media venture must be version 1.8")
+    if config.get("version") != "1.9":
+        raise MediaControlError("media venture must be version 1.9")
 
     functions = {f["id"]: f for f in config.get("production_functions", [])}
     missing = REQUIRED_MEDIA_FUNCTIONS - set(functions)
@@ -144,7 +145,7 @@ def validate_media_team(config):
     if {
         "market_and_social_read_before_title_candidates",
         "story_feasibility_before_title_candidates",
-        "exactly_three_title_candidates",
+        "exactly_three_topic_candidates_with_two_title_variants_each",
         "owner_selects_one_title",
         "script_work_forbidden_before_owner_title_lock",
         "locked_title_change_requires_owner_reapproval",
@@ -189,8 +190,12 @@ def validate_media_team(config):
         raise MediaControlError("master pipeline cannot allow phase skipping")
 
     title_gate = config.get("title_gate_contract", {})
-    if int(title_gate.get("candidate_count", 0)) != 3:
-        raise MediaControlError("Owner Title Gate must receive exactly three candidates")
+    if int(title_gate.get("topic_count", 0)) != 3:
+        raise MediaControlError("Owner Title Gate must receive exactly three topic candidates")
+    if int(title_gate.get("titles_per_topic", 0)) != 2:
+        raise MediaControlError("each topic must provide exactly two title variants")
+    if int(title_gate.get("total_title_count", 0)) != 6:
+        raise MediaControlError("Owner Title Gate must receive six title variants in total")
     for required_flag in {
         "market_scan_required",
         "social_network_scan_required",
@@ -238,7 +243,7 @@ def validate_media_team(config):
         "human_assistance_is_bounded_and_does_not_transfer_stage_or_publish_authority",
         "human_return_must_be_verified_before_resume",
         "only_media_producer_remains_control_plane_always_active",
-        "exactly_three_titles_must_reach_owner_title_gate",
+        "three_topics_with_two_titles_each_must_reach_owner_title_gate",
         "script_cannot_start_before_owner_title_lock",
         "locked_title_change_requires_owner_reapproval",
         "preproduction_cannot_start_before_script_lock",

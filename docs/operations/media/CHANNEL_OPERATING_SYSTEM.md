@@ -1,7 +1,7 @@
-# Channel Operating System v1.6
+# Channel Operating System v1.7
 
 Status: CANONICAL
-Date: 2026-10-15
+Date: 2026-10-16
 
 Governing config:
 `company/config/channel_operating_system.json`
@@ -51,21 +51,26 @@ It then performs a feasibility check.
 
 Only feasible stories can produce title candidates.
 
-The Studio produces **exactly three** title cards.
+The Studio produces **exactly three distinct topic cards**.
 
-Each card explains:
+Each topic card explains:
+- the topic;
 - why now;
 - market signal;
 - story angle;
-- click reason;
-- viewer promise;
 - competition;
 - visual potential;
 - evidence feasibility;
 - eight-minute story feasibility;
 - risk.
 
-The Owner chooses one.
+Each topic card carries **exactly two distinct title variants**.
+Each title variant explains:
+- title;
+- click reason;
+- viewer promise.
+
+The Owner chooses one title from one topic.
 
 That creates:
 **OWNER_TITLE_LOCK**

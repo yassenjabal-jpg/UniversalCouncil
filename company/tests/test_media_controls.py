@@ -58,10 +58,12 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertEqual(pipeline["production_entry_requires"], "PRODUCTION_READY_LOCK")
         self.assertTrue(pipeline["phase_skip_forbidden"])
 
-    def test_title_gate_is_owner_controlled_and_exactly_three(self):
+    def test_title_gate_is_owner_controlled_three_topics_two_titles_each(self):
         cfg = self.load_config()
         title = cfg["title_gate_contract"]
-        self.assertEqual(title["candidate_count"], 3)
+        self.assertEqual(title["topic_count"], 3)
+        self.assertEqual(title["titles_per_topic"], 2)
+        self.assertEqual(title["total_title_count"], 6)
         self.assertTrue(title["market_scan_required"])
         self.assertTrue(title["social_network_scan_required"])
         self.assertTrue(title["story_feasibility_required"])
@@ -101,7 +103,8 @@ class MediaCapabilityTests(unittest.TestCase):
 
     def test_new_pipeline_metrics_are_required_for_pilot(self):
         for metric in {
-            "title_candidate_count",
+            "topic_candidate_count",
+            "title_variant_count",
             "owner_title_selection_rounds",
             "title_revision_requests",
             "writing_cycle_time",
@@ -134,7 +137,7 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["operating_model"].__setitem__("mode", "PARALLEL_STUDIO"),
             lambda c: c["operating_model"].__setitem__("macro_phases", ["production"]),
             lambda c: c["operating_model"].__setitem__("production_rules", []),
-            lambda c: c["title_gate_contract"].__setitem__("candidate_count", 4),
+            lambda c: c["title_gate_contract"].__setitem__("topic_count", 4),
             lambda c: c["title_gate_contract"].__setitem__("owner_selection_required", False),
             lambda c: c["master_pipeline_contract"].__setitem__("production_entry_requires", "NONE"),
             lambda c: c["stage_execution_contract"].__setitem__("exactly_one_primary_program", False),
