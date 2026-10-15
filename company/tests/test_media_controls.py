@@ -169,5 +169,133 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertTrue(validate_media_scale_request(record))
 
 
+    def test_media_team_validator_legacy_and_new_failure_paths(self):
+        mutations = [
+            lambda c: c.__setitem__(
+                "production_functions",
+                [f for f in c["production_functions"] if f["id"] != "cinematography_shot_designer"],
+            ),
+            lambda c: next(
+                f for f in c["production_functions"] if f["id"] == "independent_fact_checker"
+            ).__setitem__("default_status", "PHASE_ROUTED_CRAFT"),
+            lambda c: next(
+                f for f in c["production_functions"] if f["id"] == "motion_picture_editor"
+            ).__setitem__("default_status", "CONTROL_PLANE_ALWAYS_ACTIVE"),
+            lambda c: next(
+                f for f in c["production_functions"] if f["id"] == "localization_producer"
+            ).__setitem__("default_status", "DISABLED"),
+            lambda c: next(
+                f for f in c["production_functions"] if f["id"] == "human_assistance_pool"
+            ).__setitem__("default_status", "CONTROL_PLANE_ALWAYS_ACTIVE"),
+            lambda c: c["operating_model"].__setitem__("control_plane_functions", []),
+            lambda c: c["operating_model"].__setitem__("mandatory_clearance_functions", []),
+            lambda c: c["operating_model"].__setitem__("phase_routed_craft_functions", []),
+            lambda c: c["operating_model"].__setitem__("on_demand_functions", []),
+            lambda c: c["operating_model"].__setitem__("writing_rules", []),
+            lambda c: c["operating_model"].__setitem__("forbidden_defaults", []),
+            lambda c: c["master_pipeline_contract"].__setitem__("writing_exit_requires", []),
+            lambda c: c["master_pipeline_contract"].__setitem__("preproduction_entry_requires", "NONE"),
+            lambda c: c["master_pipeline_contract"].__setitem__("preproduction_exit_requires", "NONE"),
+            lambda c: c["master_pipeline_contract"].__setitem__("phase_skip_forbidden", False),
+            lambda c: c["stage_execution_contract"].__setitem__(
+                "simultaneous_secondary_craft_program_forbidden", False
+            ),
+            lambda c: c["stage_execution_contract"].__setitem__(
+                "program_switch_requires_new_stage", False
+            ),
+            lambda c: c["stage_execution_contract"].__setitem__(
+                "checkpoint_before_stage_exit", False
+            ),
+            lambda c: c["stage_execution_contract"].__setitem__(
+                "output_verification_required", False
+            ),
+            lambda c: c["handoff_contract"].__setitem__(
+                "acceptance_required_before_next_department", False
+            ),
+            lambda c: c["handoff_contract"].__setitem__(
+                "rejection_action", "DOWNSTREAM_FIXES_IT"
+            ),
+            lambda c: c.__setitem__(
+                "function_independence_rules",
+                [
+                    rule
+                    for rule in c["function_independence_rules"]
+                    if rule != "script_cannot_start_before_owner_title_lock"
+                ],
+            ),
+            lambda c: c["human_assistance"].__setitem__("mode", "ALWAYS_ACTIVE"),
+            lambda c: c["human_assistance"].__setitem__("coordinator", "editorial_director"),
+            lambda c: c["human_assistance"].__setitem__("trigger_conditions", []),
+            lambda c: c["human_assistance"].__setitem__("request_packet_required_fields", []),
+            lambda c: c["human_assistance"].__setitem__("constraints", []),
+            lambda c: c["human_assistance"].__setitem__("resume_policy", []),
+            lambda c: c["human_assistance"]["recurring_gap_policy"].__setitem__(
+                "repeated_same_gap_threshold", 0
+            ),
+            lambda c: c["human_assistance"]["recurring_gap_policy"].__setitem__(
+                "action", "IGNORE"
+            ),
+            lambda c: c.pop("benchmark_artifact"),
+            lambda c: c["media_toolchain"].pop("dialogue_cleanup"),
+            lambda c: c["pilot"].__setitem__("required_before_scale", False),
+            lambda c: c["pilot"].__setitem__("video_count", 2),
+        ]
+        for mutate in mutations:
+            cfg = self.load_config()
+            mutate(cfg)
+            with self.assertRaises(MediaControlError):
+                validate_media_team(cfg)
+
+    def test_every_title_gate_boolean_is_enforced(self):
+        for key in {
+            "market_scan_required",
+            "social_network_scan_required",
+            "story_feasibility_required",
+            "owner_selection_required",
+            "script_start_before_selection_forbidden",
+            "automatic_post_lock_revision_forbidden",
+            "owner_reapproval_for_revision",
+        }:
+            cfg = self.load_config()
+            cfg["title_gate_contract"][key] = False
+            with self.assertRaises(MediaControlError):
+                validate_media_team(cfg)
+
+    def test_assistance_and_pilot_record_failure_paths(self):
+        cfg = self.load_config()
+        cfg["human_assistance"]["enabled"] = False
+        with self.assertRaises(MediaControlError):
+            validate_media_team(cfg)
+
+        base = {
+            "videos_completed": 3,
+            "metrics": self.base_metrics(),
+            "hr_review_status": "KEEP",
+            "scale_decision": "HOLD",
+        }
+
+        missing = dict(base)
+        missing.pop("metrics")
+        with self.assertRaises(MediaControlError):
+            validate_media_pilot_record(missing)
+
+        invalid_hr = dict(base)
+        invalid_hr["hr_review_status"] = "SELF_APPROVED"
+        with self.assertRaises(MediaControlError):
+            validate_media_pilot_record(invalid_hr)
+
+        invalid_scale = dict(base)
+        invalid_scale["scale_decision"] = "AUTO_SCALE"
+        with self.assertRaises(MediaControlError):
+            validate_media_pilot_record(invalid_scale)
+
+        published = dict(base)
+        with self.assertRaises(MediaControlError):
+            validate_media_pilot_record(published, published=True)
+
+        with self.assertRaises(MediaControlError):
+            validate_media_scale_request(base)
+
+
 if __name__ == "__main__":
     unittest.main()
