@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261015-105710-prdlne",
+  "created_at": "2026-10-15T10:57:10+03:00",
+  "scope": "project/media",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "media.production_cell.current",
+  "summary": "Media Production Cell v1.5 uses a three-phase master pipeline: Writing, Pre-production, then Production. Production is a serial department line with one active craft department at a time, one primary program per stage, verified handoffs, and return tickets instead of downstream cross-editing.",
+  "details": {
+    "media_config_version": "1.8",
+    "production_cell_doc_version": "1.5",
+    "macro_phases": [
+      "writing",
+      "pre_production",
+      "production"
+    ],
+    "production_mode": "SERIAL_PRODUCTION_LINE_WITH_FEEDBACK_GATES",
+    "producer_role": "CONTROL_PLANE_ALWAYS_ACTIVE_NON_CRAFT",
+    "one_active_production_department": true,
+    "one_program_per_stage": true,
+    "handoff_acceptance_required": true,
+    "downstream_direct_repair_forbidden": true,
+    "defect_action": "RETURN_TICKET_TO_SOURCE_DEPARTMENT",
+    "production_departments": [
+      "Voice & Narration",
+      "Visual Asset Production",
+      "Motion & Compositing",
+      "Picture Editing",
+      "Sound Design & Mix",
+      "Thumbnail & Packaging",
+      "Assurance & Delivery",
+      "Learning & Archive"
+    ],
+    "governing_config": "company/config/media_venture.json",
+    "governing_doc": "docs/operations/media/MEDIA_PRODUCTION_CELL.md",
+    "master_pipeline_doc": "docs/operations/media/STUDIO_MASTER_PIPELINE.md"
+  },
+  "supersedes": [
+    "MEM-20261015-030400-human1"
+  ],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "studio",
+    "writing",
+    "pre-production",
+    "production",
+    "serial-production-line",
+    "handoff"
+  ],
+  "source": {
+    "type": "repository",
+    "ref": "main",
+    "commit": "bbf4d48baf3e8949696108300b3807f2415053ff"
+  }
+}
