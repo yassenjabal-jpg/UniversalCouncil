@@ -51,6 +51,7 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             "Audience Growth & Packaging Strategist",
             "Cinematography / Shot Design",
             "Motion & Picture Editor",
+            "Human Assistance Pool / On-Demand Specialist",
         }:
             self.assertIn(role, roles)
         self.assertNotEqual(
@@ -147,6 +148,31 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertIn("do_not_call_every_function_for_every_stage", routing["rules"])
         self.assertIn("default_to_artifact_delta_or_blocker_not_long_report", routing["rules"])
         self.assertIn("owner_interruption_is_exception_not_default", routing["rules"])
+        self.assertEqual(
+            set(routing["on_demand_support_functions"]),
+            {"Human Assistance Pool / On-Demand Specialist"},
+        )
+
+    def test_human_assistance_lane_is_bounded_and_optional(self):
+        assistance = CONFIG["human_assistance_lane"]
+        self.assertTrue(assistance["enabled"])
+        self.assertTrue(assistance["available_at_any_stage"])
+        self.assertEqual(
+            assistance["coordinator"],
+            "Media Producer / Production Coordinator",
+        )
+        self.assertIn("automated recovery exhausted", assistance["trigger_conditions"])
+        self.assertIn("exact task", assistance["request_packet"])
+        self.assertIn("do not change", assistance["request_packet"])
+        self.assertIn(
+            "do not transfer publish authority",
+            assistance["rules"],
+        )
+        self.assertIn(
+            "verify human output before resuming automated production",
+            assistance["rules"],
+        )
+        self.assertGreaterEqual(assistance["recurring_gap_threshold"], 2)
 
     def test_audio_contract(self):
         audio = CONFIG["audio_system"]
@@ -199,7 +225,9 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["roles"].pop("Thumbnail & Packaging Designer"),
             lambda c: c["roles"].pop("Media Producer / Production Coordinator"),
             lambda c: c["roles"].pop("Cinematography / Shot Design"),
+            lambda c: c["roles"].pop("Human Assistance Pool / On-Demand Specialist"),
             lambda c: c["studio_routing_model"].__setitem__("mode", "EVERYONE_ALWAYS_ACTIVE"),
+            lambda c: c["studio_routing_model"].__setitem__("on_demand_support_functions", []),
             lambda c: c["studio_routing_model"].__setitem__("rules", []),
         ]
         for mutate in mutations:
@@ -252,6 +280,11 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["audio_system"].__setitem__("anti_patterns", []),
             lambda c: c["anti_slop_gate"].__setitem__("checks", ["one"]),
             lambda c: c["anti_slop_gate"].__setitem__("fail_action", "IGNORE"),
+            lambda c: c["human_assistance_lane"].__setitem__("enabled", False),
+            lambda c: c["human_assistance_lane"].__setitem__("available_at_any_stage", False),
+            lambda c: c["human_assistance_lane"].__setitem__("trigger_conditions", []),
+            lambda c: c["human_assistance_lane"].__setitem__("request_packet", []),
+            lambda c: c["human_assistance_lane"].__setitem__("rules", []),
         ]
         for mutate in mutations:
             cfg = copy.deepcopy(CONFIG)
