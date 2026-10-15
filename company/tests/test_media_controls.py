@@ -168,7 +168,6 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertTrue(validate_media_pilot_record(record))
         self.assertTrue(validate_media_scale_request(record))
 
-
     def test_media_team_validator_legacy_and_new_failure_paths(self):
         mutations = [
             lambda c: c.__setitem__(
