@@ -146,6 +146,7 @@
     "packaging_qc",
     "final_fact_policy_qc",
     "anti_slop_gate",
+    "multilingual_preflight",
     "final_conform_qc",
     "render_export_master",
     "export_qc",
@@ -566,7 +567,9 @@
       "SFX louder than key narration without narrative reason",
       "music chosen after final cut with no spotting",
       "same music bed across unrelated episodes"
-    ]
+    ],
+    "sonic_concept_required_in_preproduction": true,
+    "final_sound_design_after_picture_lock": true
   },
   "benchmark_profile": {
     "name": "professional_youtube_studio_benchmark_2026_10_13",
@@ -589,11 +592,15 @@
       "scientific_core_claim",
       "contested_claim",
       "novel_or_uncertain_core_claim"
-    ]
+    ],
+    "market_and_social_scan_required_before_title_gate": true,
+    "title_feasibility_required_before_owner_gate": true,
+    "minimum_title_candidates": 3,
+    "maximum_title_candidates": 3
   },
   "visual_story_case": {
     "required": true,
-    "must_precede_script_lock": true,
+    "must_precede_script_lock": false,
     "required_fields": [
       "why_video_not_article",
       "key_visual",
@@ -602,7 +609,9 @@
       "visual_transformation_or_reveal",
       "editor_feasibility_note"
     ],
-    "fail_action": "RETURN_TOPIC_TO_BACKLOG_OR_REFRAME"
+    "fail_action": "RETURN_TO_WRITING_OR_REFRAME_WITH_RETURN_TICKET",
+    "must_follow_script_lock": true,
+    "must_precede_production_ready_lock": true
   },
   "preproduction_craft_review": {
     "required": true,
@@ -998,6 +1007,12 @@
             "program": "Adobe Premiere Pro 2025",
             "required": true,
             "output": "anti_slop_pass"
+          },
+          {
+            "id": "multilingual_preflight",
+            "program": "Adobe Premiere Pro 2025",
+            "required": false,
+            "output": "language_safe_master"
           },
           {
             "id": "final_conform_qc",
@@ -1498,6 +1513,12 @@
             "program": "Adobe Premiere Pro 2025",
             "required": true,
             "output": "anti_slop_pass"
+          },
+          {
+            "id": "multilingual_preflight",
+            "program": "Adobe Premiere Pro 2025",
+            "required": false,
+            "output": "language_safe_master"
           },
           {
             "id": "final_conform_qc",
