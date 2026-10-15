@@ -1,5 +1,5 @@
 {
-  "version": "1.4",
+  "version": "1.5",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
   "visual_system": "Editorial Renaissance Motion",
   "primary_language": "Arabic",
@@ -100,35 +100,48 @@
     "topic_clustering",
     "topic_scorecard",
     "evidence_pack",
-    "visual_story_case",
     "packaging_hypotheses",
     "story_thesis",
-    "preproduction_craft_review",
+    "visual_story_case",
     "script_development",
+    "script_internal_qc",
     "independent_fact_check",
+    "visual_rights_clearance",
     "script_lock",
-    "visual_treatment",
-    "audio_spotting_and_sonic_concept",
+    "narration_recording",
+    "dialogue_cleanup",
+    "narration_master_qc",
+    "asset_registry",
+    "visual_treatment_raster",
+    "vector_graphics",
+    "optional_3d_scene_design",
     "reference_frame_assignment",
     "shot_design_and_camera_plan",
-    "storyboard_transition_audio_map",
-    "asset_registry",
+    "storyboard_transition_map",
     "animatic",
     "production_readiness_review",
-    "narration_recording_and_dialogue_edit",
-    "production",
+    "motion_design",
+    "compositing",
+    "motion_department_qc",
     "editorial_rough_cut",
-    "packaging_finalization_and_test_plan",
+    "picture_refinement",
     "picture_lock",
+    "audio_spotting_and_sonic_concept",
     "music_sound_design",
     "mix_master",
     "audiovisual_sync_qc",
+    "thumbnail_composite",
+    "packaging_typography",
+    "packaging_finalization_and_test_plan",
     "multilingual_preflight",
     "anti_slop_gate",
     "fact_policy_qc",
+    "final_conform_qc",
+    "render_export_master",
     "export_qc",
     "publish_gate",
     "analytics_postmortem",
+    "project_archive",
     "memory_and_routine_update"
   ],
   "roles": {
@@ -421,24 +434,18 @@
     "fail_action": "RETURN_TO_EDITORIAL_OR_VISUAL_TREATMENT"
   },
   "quality_gates": [
-    "G0 Trend/Topic Gate",
-    "G1 Evidence Gate",
-    "G2 Visual Story Case Gate",
-    "G3 Packaging Hypothesis Gate",
-    "G4 Pre-production Craft Review",
-    "G5 Script + Independent Fact Check Lock",
-    "G6 Visual + Sonic Treatment Lock",
-    "G7 Shot Design + Animatic + Spotting Gate",
-    "G8 Production Readiness Gate",
-    "G9 Picture Lock Gate",
-    "G10 Audio-Visual Sync Gate",
-    "G11 Packaging Finalization Gate",
-    "G12 Anti-Slop Gate",
-    "G13 Fact/Policy/Continuity QC",
-    "G14 Mix/Master QC",
-    "G15 Export QC",
-    "G16 Owner Publish Gate",
-    "G17 Post-Publish Learning Gate"
+    "G0 Topic/Evidence Handoff",
+    "G1 Script Candidate Handoff",
+    "G2 Independent Verification + Script Lock",
+    "G3 Narration Master Handoff",
+    "G4 Visual Asset Handoff",
+    "G5 Previs + Production Readiness Handoff",
+    "G6 Motion Sequence Handoff",
+    "G7 Picture Lock Handoff",
+    "G8 Sound/Mix + AV Sync Handoff",
+    "G9 Packaging Handoff",
+    "G10 Assurance + Export + Owner Publish Gate",
+    "G11 Learning + Archive Closeout"
   ],
   "analytics": {
     "pre_publish": [
@@ -618,17 +625,16 @@
     "required_checks": [
       "script_locked",
       "independent_fact_check_passed",
-      "key_visuals_approved",
-      "claim_sources_complete",
       "visual_rights_clear",
-      "storyboard_sufficient",
-      "audio_spotting_complete",
+      "narration_master_ready",
+      "key_visuals_approved",
       "asset_registry_ready",
-      "specialized_tools_available",
-      "schedule_acceptable",
-      "budget_acceptable",
       "shot_design_approved",
-      "camera_continuity_checked"
+      "camera_continuity_checked",
+      "animatic_locked",
+      "required_specialized_tools_available",
+      "schedule_acceptable",
+      "budget_acceptable"
     ],
     "fail_action": "HOLD_PRODUCTION"
   },
@@ -683,19 +689,20 @@
     "fail_action": "RETURN_TO_VISUAL_TREATMENT_OR_STORYBOARD"
   },
   "studio_routing_model": {
-    "mode": "SMALL_CORE_ROUTED_CAPABILITIES",
+    "mode": "STRICT_SERIAL_DEPARTMENT_LINE",
     "core_functions": [
-      "Media Producer / Production Coordinator",
-      "Editorial Director / Showrunner"
+      "Media Producer / Production Coordinator"
     ],
     "stage_routed_craft_functions": [
+      "Audience Growth & Packaging Strategist",
+      "Editorial Director / Showrunner",
       "Script & Voice Director",
+      "Independent Fact Checker",
       "Visual Art Director / Frame Curator",
       "Cinematography / Shot Design",
       "Motion & Picture Editor",
       "Music Supervisor & Sound Designer",
       "Dialogue & Mix Engineer",
-      "Audience Growth & Packaging Strategist",
       "Thumbnail & Packaging Designer",
       "Localization Producer"
     ],
@@ -706,12 +713,14 @@
       "Owner Publish Gate"
     ],
     "rules": [
-      "do_not_call_every_function_for_every_stage",
-      "default_to_artifact_delta_or_blocker_not_long_report",
-      "parallelize_independent_craft_work_when_safe",
-      "one_synthesis_per_gate",
-      "shared_production_state_prevents_context_repetition",
-      "owner_interruption_is_exception_not_default"
+      "activate_one_craft_department_only",
+      "finish_required_stages_before_department_handoff",
+      "one_program_only_per_stage",
+      "program_change_only_at_stage_boundary",
+      "next_department_waits_for_handoff_acceptance",
+      "downstream_department_returns_defects_to_source_instead_of_cross_editing",
+      "producer_coordinates_but_does_not_edit_craft_artifacts",
+      "human_assistance_is_bounded_exception_not_parallel_department"
     ],
     "on_demand_support_functions": [
       "Human Assistance Pool / On-Demand Specialist"
@@ -754,5 +763,397 @@
     ],
     "recurring_gap_threshold": 3,
     "recurring_gap_action": "capability review for tool, training, workflow or staffing change"
+  },
+  "serial_production_line": {
+    "version": "1.0",
+    "mode": "STRICT_SERIAL_DEPARTMENT_LINE",
+    "one_active_craft_department": true,
+    "parallel_department_work": false,
+    "one_program_per_stage": true,
+    "program_switch_only_at_stage_boundary": true,
+    "producer_is_control_plane_not_craft_department": true,
+    "downstream_direct_upstream_edits_forbidden": true,
+    "handoff_acceptance_required": true,
+    "return_to_source_on_reject": true,
+    "departments": [
+      {
+        "id": "D01_strategy_research",
+        "name": "Strategy & Research",
+        "accountable": "Audience Growth & Packaging Strategist",
+        "stages": [
+          {
+            "id": "signal_capture",
+            "program": "vidIQ",
+            "required": true,
+            "output": "topic_signal_pack"
+          },
+          {
+            "id": "topic_clustering",
+            "program": "ChatGPT",
+            "required": true,
+            "output": "clustered_topic_candidates"
+          },
+          {
+            "id": "topic_scorecard",
+            "program": "ChatGPT",
+            "required": true,
+            "output": "approved_topic_scorecard"
+          },
+          {
+            "id": "evidence_pack",
+            "program": "Brave Browser",
+            "required": true,
+            "output": "claim_and_source_pack"
+          },
+          {
+            "id": "packaging_hypotheses",
+            "program": "ChatGPT",
+            "required": true,
+            "output": "early_title_thumbnail_hypotheses"
+          }
+        ],
+        "handoff": "STRATEGY_RESEARCH_PACKET"
+      },
+      {
+        "id": "D02_editorial_script",
+        "name": "Editorial & Script",
+        "accountable": "Editorial Director / Showrunner",
+        "stages": [
+          {
+            "id": "story_thesis",
+            "program": "ChatGPT",
+            "required": true,
+            "output": "story_thesis"
+          },
+          {
+            "id": "visual_story_case",
+            "program": "ChatGPT",
+            "required": true,
+            "output": "visual_story_case"
+          },
+          {
+            "id": "script_development",
+            "program": "ChatGPT",
+            "required": true,
+            "output": "script_s0_to_s4_candidate"
+          },
+          {
+            "id": "script_internal_qc",
+            "program": "ChatGPT",
+            "required": true,
+            "output": "script_candidate_packet"
+          }
+        ],
+        "handoff": "SCRIPT_CANDIDATE_PACKET"
+      },
+      {
+        "id": "D03_verification_clearance",
+        "name": "Independent Verification & Clearance",
+        "accountable": "Independent Fact Checker",
+        "stages": [
+          {
+            "id": "independent_fact_check",
+            "program": "Brave Browser",
+            "required": true,
+            "output": "fact_check_clearance"
+          },
+          {
+            "id": "visual_rights_clearance",
+            "program": "Brave Browser",
+            "required": true,
+            "output": "visual_rights_clearance"
+          },
+          {
+            "id": "script_lock",
+            "program": "ChatGPT",
+            "required": true,
+            "output": "fact_cleared_locked_script"
+          }
+        ],
+        "handoff": "VERIFIED_SCRIPT_PACKET"
+      },
+      {
+        "id": "D04_voice_narration",
+        "name": "Voice & Narration",
+        "accountable": "Script & Voice Director",
+        "stages": [
+          {
+            "id": "narration_recording",
+            "program": "Adobe Audition 2025",
+            "required": true,
+            "output": "raw_narration_session"
+          },
+          {
+            "id": "dialogue_cleanup",
+            "program": "Adobe Audition 2025",
+            "required": true,
+            "output": "clean_dialogue_master"
+          },
+          {
+            "id": "narration_master_qc",
+            "program": "Adobe Audition 2025",
+            "required": true,
+            "output": "approved_narration_master"
+          }
+        ],
+        "handoff": "NARRATION_MASTER_PACKET"
+      },
+      {
+        "id": "D05_visual_art",
+        "name": "Visual Art",
+        "accountable": "Visual Art Director / Frame Curator",
+        "stages": [
+          {
+            "id": "asset_registry",
+            "program": "Adobe Bridge 2025",
+            "required": true,
+            "output": "registered_asset_library"
+          },
+          {
+            "id": "visual_treatment_raster",
+            "program": "Adobe Photoshop 2025",
+            "required": true,
+            "output": "raster_visual_treatment"
+          },
+          {
+            "id": "vector_graphics",
+            "program": "Adobe Illustrator 2025",
+            "required": true,
+            "output": "vector_graphics_pack"
+          },
+          {
+            "id": "optional_3d_scene_design",
+            "program": "Adobe Substance 3D Stager",
+            "required": false,
+            "output": "optional_3d_scene_pack"
+          },
+          {
+            "id": "reference_frame_assignment",
+            "program": "Adobe Photoshop 2025",
+            "required": true,
+            "output": "locked_reference_frames"
+          }
+        ],
+        "handoff": "VISUAL_ASSET_PACKET"
+      },
+      {
+        "id": "D06_cinematography_previs",
+        "name": "Cinematography & Previsualization",
+        "accountable": "Cinematography / Shot Design",
+        "stages": [
+          {
+            "id": "shot_design_and_camera_plan",
+            "program": "Adobe Photoshop 2025",
+            "required": true,
+            "output": "shot_camera_plan"
+          },
+          {
+            "id": "storyboard_transition_map",
+            "program": "Adobe Photoshop 2025",
+            "required": true,
+            "output": "storyboard_transition_map"
+          },
+          {
+            "id": "animatic",
+            "program": "Adobe After Effects 2025",
+            "required": true,
+            "output": "locked_animatic"
+          },
+          {
+            "id": "production_readiness_review",
+            "program": "ChatGPT",
+            "required": true,
+            "output": "production_readiness_packet"
+          }
+        ],
+        "handoff": "PREVIS_LOCK_PACKET"
+      },
+      {
+        "id": "D07_motion_compositing",
+        "name": "Motion & Compositing",
+        "accountable": "Motion & Picture Editor",
+        "stages": [
+          {
+            "id": "motion_design",
+            "program": "Adobe After Effects 2025",
+            "required": true,
+            "output": "motion_sequences"
+          },
+          {
+            "id": "compositing",
+            "program": "Adobe After Effects 2025",
+            "required": true,
+            "output": "composited_sequences"
+          },
+          {
+            "id": "motion_department_qc",
+            "program": "Adobe After Effects 2025",
+            "required": true,
+            "output": "motion_qc_pass"
+          }
+        ],
+        "handoff": "MOTION_SEQUENCE_PACKET"
+      },
+      {
+        "id": "D08_picture_edit",
+        "name": "Picture Editing",
+        "accountable": "Motion & Picture Editor",
+        "stages": [
+          {
+            "id": "editorial_rough_cut",
+            "program": "Adobe Premiere Pro 2025",
+            "required": true,
+            "output": "rough_cut"
+          },
+          {
+            "id": "picture_refinement",
+            "program": "Adobe Premiere Pro 2025",
+            "required": true,
+            "output": "refined_cut"
+          },
+          {
+            "id": "picture_lock",
+            "program": "Adobe Premiere Pro 2025",
+            "required": true,
+            "output": "picture_locked_sequence"
+          }
+        ],
+        "handoff": "PICTURE_LOCK_PACKET"
+      },
+      {
+        "id": "D09_sound_mix",
+        "name": "Sound Design & Mix",
+        "accountable": "Dialogue & Mix Engineer",
+        "stages": [
+          {
+            "id": "audio_spotting_and_sonic_concept",
+            "program": "Adobe Audition 2025",
+            "required": true,
+            "output": "sonic_plan"
+          },
+          {
+            "id": "music_sound_design",
+            "program": "Adobe Audition 2025",
+            "required": true,
+            "output": "sound_design_session"
+          },
+          {
+            "id": "mix_master",
+            "program": "Adobe Audition 2025",
+            "required": true,
+            "output": "mix_master_stems"
+          },
+          {
+            "id": "audiovisual_sync_qc",
+            "program": "Adobe Premiere Pro 2025",
+            "required": true,
+            "output": "av_sync_qc_pass"
+          }
+        ],
+        "handoff": "FINAL_AUDIO_PICTURE_PACKET"
+      },
+      {
+        "id": "D10_packaging",
+        "name": "Packaging & Thumbnail",
+        "accountable": "Thumbnail & Packaging Designer",
+        "stages": [
+          {
+            "id": "thumbnail_composite",
+            "program": "Adobe Photoshop 2025",
+            "required": true,
+            "output": "thumbnail_composites"
+          },
+          {
+            "id": "packaging_typography",
+            "program": "Adobe Illustrator 2025",
+            "required": true,
+            "output": "packaging_typography_assets"
+          },
+          {
+            "id": "packaging_finalization_and_test_plan",
+            "program": "Adobe Photoshop 2025",
+            "required": true,
+            "output": "final_packaging_variants"
+          }
+        ],
+        "handoff": "PACKAGING_PACKET"
+      },
+      {
+        "id": "D11_assurance_delivery",
+        "name": "Assurance & Delivery",
+        "accountable": "Technical Operator",
+        "stages": [
+          {
+            "id": "multilingual_preflight",
+            "program": "Adobe Premiere Pro 2025",
+            "required": true,
+            "output": "language_safe_master"
+          },
+          {
+            "id": "anti_slop_gate",
+            "program": "Adobe Premiere Pro 2025",
+            "required": true,
+            "output": "anti_slop_pass"
+          },
+          {
+            "id": "fact_policy_qc",
+            "program": "Brave Browser",
+            "required": true,
+            "output": "final_fact_policy_clearance"
+          },
+          {
+            "id": "final_conform_qc",
+            "program": "Adobe Premiere Pro 2025",
+            "required": true,
+            "output": "final_conform_pass"
+          },
+          {
+            "id": "render_export_master",
+            "program": "Adobe Media Encoder 2025",
+            "required": true,
+            "output": "delivery_master"
+          },
+          {
+            "id": "export_qc",
+            "program": "Adobe Premiere Pro 2025",
+            "required": true,
+            "output": "export_qc_pass"
+          },
+          {
+            "id": "publish_gate",
+            "program": "Brave Browser",
+            "required": true,
+            "output": "owner_publish_gate_result"
+          }
+        ],
+        "handoff": "DELIVERY_MASTER_PACKET"
+      },
+      {
+        "id": "D12_learning_archive",
+        "name": "Learning & Archive",
+        "accountable": "Media Producer / Production Coordinator",
+        "stages": [
+          {
+            "id": "analytics_postmortem",
+            "program": "vidIQ",
+            "required": true,
+            "output": "performance_postmortem"
+          },
+          {
+            "id": "project_archive",
+            "program": "Adobe Bridge 2025",
+            "required": true,
+            "output": "archived_project_manifest"
+          },
+          {
+            "id": "memory_and_routine_update",
+            "program": "ChatGPT",
+            "required": true,
+            "output": "durable_learning_update"
+          }
+        ],
+        "handoff": "PROJECT_CLOSED_PACKET"
+      }
+    ]
   }
 }
