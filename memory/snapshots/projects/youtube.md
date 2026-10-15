@@ -107,24 +107,31 @@
 - **Tags:** youtube, channel, what-if, speculative-documentary
 
 ## youtube.channel_operating_system.current
-- **Event:** `MEM-20261015-030401-assist`
+- **Event:** `MEM-20261015-105711-ttlgt1`
 - **Level:** `L3_CANONICAL`
 - **Kind:** `architecture`
 - **Confidence:** `verified`
-- **Updated:** `2026-10-15T03:04:01+03:00`
-- **Summary:** Channel Operating System v1.4 makes bounded human assistance available at any production stage without turning it into a permanent review layer. Human requests carry scope, do-not-change boundaries, acceptance criteria and a return handoff, and do not transfer publish authority.
+- **Updated:** `2026-10-15T10:57:11+03:00`
+- **Summary:** Channel Operating System v1.6 requires market/social reading and story feasibility before exactly three title candidates are presented to the Owner. The Owner selects one title at OWNER_TITLE_LOCK; script development cannot start before that lock, and any later title revision requires Owner reapproval. Script Lock precedes Pre-production, and Production cannot start before PRODUCTION_READY_LOCK.
 - **Details:**
-  - `assistance_doc`: docs/operations/media/HUMAN_ASSISTANCE_LANE.md
+  - `automatic_title_change_after_lock_forbidden`: true
+  - `channel_operating_system_version`: 1.6
   - `governing_config`: company/config/channel_operating_system.json
   - `governing_doc`: docs/operations/media/CHANNEL_OPERATING_SYSTEM.md
-  - `human_assistance_available_at_any_stage`: true
-  - `human_assistance_role`: Human Assistance Pool / On-Demand Specialist
-  - `publish_authority_transferred`: false
-  - `recurring_gap_threshold`: 3
-  - `verification_before_resume`: true
-  - `version`: 1.4
-- **Supersedes:** `MEM-20261015-025701-shot13`
-- **Tags:** youtube, studio, human-assistance, workflow
+  - `macro_phases`: ["writing", "pre_production", "production"]
+  - `master_pipeline_doc`: docs/operations/media/STUDIO_MASTER_PIPELINE.md
+  - `owner_is_final_title_authority`: true
+  - `owner_reapproval_required_for_title_revision`: true
+  - `owner_title_selection_required`: true
+  - `preproduction_entry_requires`: SCRIPT_LOCK
+  - `preproduction_exit_requires`: PRODUCTION_READY_LOCK
+  - `production_entry_requires`: PRODUCTION_READY_LOCK
+  - `script_passes`: ["S0 Story Question", "S1 Research Pack", "S2 Story Architecture", "S3 First Script", "S4 Editorial Rewrite", "S5 Independent Fact Check", "S6 Narration Rewrite", "S7 Locked Script"]
+  - `script_start_before_owner_title_lock_forbidden`: true
+  - `title_candidate_count`: 3
+  - `writing_exit_requires`: ["OWNER_TITLE_LOCK", "SCRIPT_LOCK"]
+- **Supersedes:** `MEM-20261015-030401-assist`
+- **Tags:** youtube, studio, title-gate, owner, script, pre-production, production
 
 ## youtube.execution.final_prelaunch_decision
 - **Event:** `MEM-20261012-203304-1de95d`

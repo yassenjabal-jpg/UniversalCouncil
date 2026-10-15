@@ -31,26 +31,29 @@
 - **Tags:** media, workflow, production
 
 ## media.production_cell.current
-- **Event:** `MEM-20261015-030400-human1`
+- **Event:** `MEM-20261015-105710-prdlne`
 - **Level:** `L3_CANONICAL`
 - **Kind:** `architecture`
 - **Confidence:** `verified`
-- **Updated:** `2026-10-15T03:04:00+03:00`
-- **Summary:** Media Production Cell v1.4 adds a bounded on-demand Human Assistance Pool. The Producer may request the smallest necessary human intervention when automation, tools, physical access, credentials, specialist craft or expert judgment create a real gap; returned work must be verified before the studio resumes.
+- **Updated:** `2026-10-15T10:57:10+03:00`
+- **Summary:** Media Production Cell v1.5 uses a three-phase master pipeline: Writing, Pre-production, then Production. Production is a serial department line with one active craft department at a time, one primary program per stage, verified handoffs, and return tickets instead of downstream cross-editing.
 - **Details:**
-  - `assistance_doc`: docs/operations/media/HUMAN_ASSISTANCE_LANE.md
-  - `coordinator`: Media Producer / Production Coordinator
-  - `eligible_helpers`: ["Owner", "trusted local operator", "domain expert", "craft specialist", "technician/vendor support"]
+  - `defect_action`: RETURN_TICKET_TO_SOURCE_DEPARTMENT
+  - `downstream_direct_repair_forbidden`: true
   - `governing_config`: company/config/media_venture.json
   - `governing_doc`: docs/operations/media/MEDIA_PRODUCTION_CELL.md
-  - `human_assistance_mode`: ON_DEMAND_BOUNDED_ASSISTANCE
-  - `owner_gates`: ["credentials/identity", "spend/subscription", "external sharing", "irreversible action", "publish authority"]
-  - `principle`: ask for the smallest human action needed then return control to the studio
-  - `recurring_gap_action`: capability review for tool, training, workflow, automation or staffing
-  - `recurring_gap_threshold`: 3
-  - `version`: 1.4
-- **Supersedes:** `MEM-20261015-025700-lean13`
-- **Tags:** media, studio, human-assistance, on-demand, capability-gap
+  - `handoff_acceptance_required`: true
+  - `macro_phases`: ["writing", "pre_production", "production"]
+  - `master_pipeline_doc`: docs/operations/media/STUDIO_MASTER_PIPELINE.md
+  - `media_config_version`: 1.8
+  - `one_active_production_department`: true
+  - `one_program_per_stage`: true
+  - `producer_role`: CONTROL_PLANE_ALWAYS_ACTIVE_NON_CRAFT
+  - `production_cell_doc_version`: 1.5
+  - `production_departments`: ["Voice & Narration", "Visual Asset Production", "Motion & Compositing", "Picture Editing", "Sound Design & Mix", "Thumbnail & Packaging", "Assurance & Delivery", "Learning & Archive"]
+  - `production_mode`: SERIAL_PRODUCTION_LINE_WITH_FEEDBACK_GATES
+- **Supersedes:** `MEM-20261015-030400-human1`
+- **Tags:** media, studio, writing, pre-production, production, serial-production-line, handoff
 
 ## media.specialized_tool_policy.current
 - **Event:** `MEM-20261012-212638-4d1282`

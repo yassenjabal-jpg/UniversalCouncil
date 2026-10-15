@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-15T07:16:50+00:00",
-  "event_count": 70,
+  "generated_at": "2026-10-15T07:59:51+00:00",
+  "event_count": 72,
   "active_count": 55,
-  "superseded_count": 15,
+  "superseded_count": 17,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-15T10:17:00+03:00",
+  "latest_event_at": "2026-10-15T10:57:11+03:00",
   "scopes": {
     "council": [
       {
@@ -184,12 +184,12 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261015-030400-human1",
+        "event_id": "MEM-20261015-105710-prdlne",
         "subject": "media.production_cell.current",
         "level": "L3_CANONICAL",
         "kind": "architecture",
-        "summary": "Media Production Cell v1.4 adds a bounded on-demand Human Assistance Pool. The Producer may request the smallest necessary human intervention when automation, tools, physical access, credentials, specialist craft or expert judgment create a real gap; returned work must be verified before the studio resumes.",
-        "created_at": "2026-10-15T03:04:00+03:00",
+        "summary": "Media Production Cell v1.5 uses a three-phase master pipeline: Writing, Pre-production, then Production. Production is a serial department line with one active craft department at a time, one primary program per stage, verified handoffs, and return tickets instead of downstream cross-editing.",
+        "created_at": "2026-10-15T10:57:10+03:00",
         "confidence": "verified"
       },
       {
@@ -413,12 +413,12 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261015-030401-assist",
+        "event_id": "MEM-20261015-105711-ttlgt1",
         "subject": "youtube.channel_operating_system.current",
         "level": "L3_CANONICAL",
         "kind": "architecture",
-        "summary": "Channel Operating System v1.4 makes bounded human assistance available at any production stage without turning it into a permanent review layer. Human requests carry scope, do-not-change boundaries, acceptance criteria and a return handoff, and do not transfer publish authority.",
-        "created_at": "2026-10-15T03:04:01+03:00",
+        "summary": "Channel Operating System v1.6 requires market/social reading and story feasibility before exactly three title candidates are presented to the Owner. The Owner selects one title at OWNER_TITLE_LOCK; script development cannot start before that lock, and any later title revision requires Owner reapproval. Script Lock precedes Pre-production, and Production cannot start before PRODUCTION_READY_LOCK.",
+        "created_at": "2026-10-15T10:57:11+03:00",
         "confidence": "verified"
       },
       {
