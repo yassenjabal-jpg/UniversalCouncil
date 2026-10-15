@@ -227,16 +227,14 @@ class StudioProductionLineTests(unittest.TestCase):
             validate_title_candidate_packet(duplicate_topic)
 
         wrong_variant_count = self.packet()
-        wrong_variant_count["topics"][0]["title_variants"] = wrong_variant_count["topics"][0]["title_variants"][
-            :1
-        ]
+        wrong_variant_count["topics"][0]["title_variants"] = wrong_variant_count["topics"][0]["title_variants"][:1]
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(wrong_variant_count)
 
         duplicate_title_id = self.packet()
-        duplicate_title_id["topics"][1]["title_variants"][0]["id"] = duplicate_title_id["topics"][0]["title_variants"][0][
-            "id"
-        ]
+        duplicate_title_id["topics"][1]["title_variants"][0]["id"] = duplicate_title_id["topics"][0]["title_variants"][
+            0
+        ]["id"]
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(duplicate_title_id)
 
