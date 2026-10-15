@@ -1,5 +1,5 @@
 {
-  "version": "1.6",
+  "version": "1.7",
   "enabled": true,
   "team_model": "venture_scoped_smallest_effective_team_functions_not_headcount",
   "production_functions": [
@@ -225,7 +225,11 @@
     "routed_craft_function_is_invoked_by_stage_not_kept_permanently_active",
     "unknown_execution_state_cannot_be_promoted_to_success",
     "human_assistance_is_bounded_and_does_not_transfer_stage_or_publish_authority",
-    "human_return_must_be_verified_before_resume"
+    "human_return_must_be_verified_before_resume",
+    "only_one_craft_department_is_active_at_a_time",
+    "one_stage_one_program",
+    "downstream_department_cannot_silently_edit_locked_upstream_artifacts",
+    "handoff_acceptance_is_required_before_next_department_activation"
   ],
   "existing_function_dependencies": [
     "Owner",
@@ -282,7 +286,14 @@
     "human_assistance_requests",
     "human_assistance_minutes",
     "human_assistance_resolution_rate",
-    "repeated_human_assistance_gap_count"
+    "repeated_human_assistance_gap_count",
+    "department_cycle_time",
+    "stage_cycle_time",
+    "handoff_rejection_count",
+    "upstream_return_ticket_count",
+    "program_switch_violation_count",
+    "parallel_department_violation_count",
+    "stage_rework_count"
   ],
   "post_publish_split_review_after_videos": 10,
   "full_scale_without_pilot_forbidden": true,
@@ -311,7 +322,14 @@
     "openart_visual_generation": "INSTALLED",
     "figma_frame_design": "INSTALLED",
     "canva_design": "INSTALLED",
-    "cinematography_shot_design": "PROCESS_DEFINED_SPECIALIZED_TOOL_REQUIRED"
+    "cinematography_shot_design": "PROCESS_DEFINED_SPECIALIZED_TOOL_REQUIRED",
+    "premiere_pro_2025": "APPLICATION_RUNTIME_VERIFIED_2026_10_15",
+    "after_effects_2025": "APPLICATION_RUNTIME_VERIFIED_2026_10_15",
+    "audition_2025": "APPLICATION_RUNTIME_VERIFIED_2026_10_15",
+    "media_encoder_2025": "APPLICATION_RUNTIME_VERIFIED_2026_10_15",
+    "photoshop_2025": "APPLICATION_RUNTIME_VERIFIED_2026_10_15",
+    "illustrator_2025": "APPLICATION_RUNTIME_VERIFIED_2026_10_15",
+    "bridge_2025": "APPLICATION_RUNTIME_VERIFIED_2026_10_15"
   },
   "runtime_evidence": {
     "after_effects_2026": {
@@ -337,8 +355,8 @@
   "specialized_tool_policy": "company/config/media_specialized_tool_policy.json",
   "benchmark_artifact": "docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md",
   "operating_model": {
-    "mode": "SMALL_CORE_ROUTED_CRAFT_CAPABILITIES",
-    "principle": "functions_are_capabilities_not_permanent_agent_processes",
+    "mode": "SERIAL_DEPARTMENT_PRODUCTION_LINE",
+    "principle": "one_craft_department_at_a_time_with_verified_handoff_between_departments",
     "core_functions": [
       "media_producer",
       "editorial_director"
@@ -360,19 +378,22 @@
       "localization_producer",
       "human_assistance_pool"
     ],
-    "routing_rule": "invoke a function only when the current stage contract requires its craft judgment, execution, blocker, or clearance",
+    "routing_rule": "activate exactly one craft department; complete its internal stages serially; accept its handoff packet before activating the next department",
     "default_output_contract": [
-      "decision_or_artifact_delta",
-      "material_blocker_if_any",
-      "next_required_handoff"
+      "stage_artifact",
+      "stage_checkpoint",
+      "department_handoff_packet",
+      "material_blocker_if_any"
     ],
     "forbidden_defaults": [
-      "every_function_reviews_every_stage",
+      "two_craft_departments_editing_the_same_project_in_parallel",
+      "two_creative_programs_used_in_one_stage",
+      "downstream_department_silently_fixing_locked_upstream_work",
+      "program_switch_inside_a_stage",
       "mandatory_long_form_reports",
-      "one_independent_agent_process_per_function",
       "repeating_context already present in shared production state"
     ],
-    "parallelize_when_safe": true,
+    "parallelize_when_safe": false,
     "single_synthesis_per_gate": true,
     "owner_interrupt_only_when": [
       "material_brand_or_story_direction_conflict",
@@ -381,7 +402,13 @@
       "destructive_or_irreversible_action",
       "public_publish_approval",
       "human_assistance_request_requires_owner_identity_credentials_spend_or_external_sharing"
-    ]
+    ],
+    "single_active_craft_department": true,
+    "single_program_per_stage": true,
+    "program_change_only_at_stage_boundary": true,
+    "cross_department_direct_edit_forbidden": true,
+    "upstream_rework_requires_return_ticket": true,
+    "producer_control_plane_is_non_craft": true
   },
   "execution_recovery": {
     "policy_version": "1.0",
@@ -497,5 +524,157 @@
       "repeated_same_gap_threshold": 3,
       "action": "OPEN_CAPABILITY_REVIEW_FOR_TOOL_TRAINING_WORKFLOW_OR_STAFFING_FIX"
     }
+  },
+  "department_model": {
+    "version": "1.0",
+    "activation": "ONE_ACTIVE_CRAFT_DEPARTMENT",
+    "control_plane": [
+      "media_producer",
+      "execution_recovery",
+      "human_assistance_pool",
+      "owner_gates"
+    ],
+    "control_plane_may_modify_creative_artifacts": false,
+    "departments": [
+      {
+        "id": "D01_strategy_research",
+        "name": "Strategy & Research",
+        "functions": [
+          "audience_growth_strategist",
+          "Evidence & Research Lead"
+        ]
+      },
+      {
+        "id": "D02_editorial_script",
+        "name": "Editorial & Script",
+        "functions": [
+          "editorial_director",
+          "script_voice_director"
+        ]
+      },
+      {
+        "id": "D03_verification_clearance",
+        "name": "Independent Verification & Clearance",
+        "functions": [
+          "independent_fact_checker"
+        ]
+      },
+      {
+        "id": "D04_voice_narration",
+        "name": "Voice & Narration",
+        "functions": [
+          "script_voice_director",
+          "dialogue_mix_engineer"
+        ]
+      },
+      {
+        "id": "D05_visual_art",
+        "name": "Visual Art",
+        "functions": [
+          "visual_art_director"
+        ]
+      },
+      {
+        "id": "D06_cinematography_previs",
+        "name": "Cinematography & Previsualization",
+        "functions": [
+          "cinematography_shot_designer"
+        ]
+      },
+      {
+        "id": "D07_motion_compositing",
+        "name": "Motion & Compositing",
+        "functions": [
+          "motion_picture_editor"
+        ]
+      },
+      {
+        "id": "D08_picture_edit",
+        "name": "Picture Editing",
+        "functions": [
+          "motion_picture_editor",
+          "editorial_director"
+        ]
+      },
+      {
+        "id": "D09_sound_mix",
+        "name": "Sound Design & Mix",
+        "functions": [
+          "music_sound_supervisor",
+          "dialogue_mix_engineer"
+        ]
+      },
+      {
+        "id": "D10_packaging",
+        "name": "Packaging & Thumbnail",
+        "functions": [
+          "thumbnail_packaging_designer"
+        ]
+      },
+      {
+        "id": "D11_assurance_delivery",
+        "name": "Assurance & Delivery",
+        "functions": [
+          "Technical Operator",
+          "Assurance Reviewer",
+          "independent_fact_checker"
+        ]
+      },
+      {
+        "id": "D12_learning_archive",
+        "name": "Learning & Archive",
+        "functions": [
+          "audience_growth_strategist",
+          "media_producer"
+        ]
+      }
+    ],
+    "department_rules": [
+      "a_department_must_receive_an_accepted_input_packet_before_starting",
+      "a_department_must_finish_all_required_internal_stages_before_handoff",
+      "each_internal_stage_has_exactly_one_designated_program",
+      "only_the_active_department_may_create_or_edit_craft_artifacts",
+      "downstream_defect_returns_to_the_source_department_instead_of_cross_editing",
+      "handoff_acceptance_locks_the_departments_delivered_artifacts_until_formal_return",
+      "conditional_stage_skip_must_be_explicit_and_recorded",
+      "the_next_department_starts_only_after_handoff_acceptance"
+    ]
+  },
+  "handoff_contract": {
+    "version": "1.0",
+    "required_fields": [
+      "project_id",
+      "handoff_id",
+      "from_department",
+      "to_department",
+      "input_packet_id",
+      "completed_stage_ids",
+      "artifact_manifest",
+      "locked_artifacts",
+      "change_log",
+      "known_limitations",
+      "qc_result",
+      "acceptance_criteria",
+      "checkpoint_ref",
+      "handoff_status"
+    ],
+    "valid_statuses": [
+      "READY_FOR_REVIEW",
+      "ACCEPTED",
+      "REJECTED_RETURN_TO_SOURCE"
+    ],
+    "acceptance_required_before_next_department": true,
+    "rejection_action": "RETURN_TO_SOURCE_DEPARTMENT",
+    "downstream_direct_repair_forbidden": true
+  },
+  "stage_execution_contract": {
+    "version": "1.0",
+    "exactly_one_primary_program": true,
+    "simultaneous_secondary_craft_program_forbidden": true,
+    "program_switch_requires_new_stage": true,
+    "checkpoint_before_stage_exit": true,
+    "output_verification_required": true,
+    "fallback_tool_requires_recovery_stage": true,
+    "human_assistance_does_not_count_as_second_program_when_it_is_bounded_and_non_craft": true
   }
 }
