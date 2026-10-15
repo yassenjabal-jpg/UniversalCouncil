@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261016-023358-53828d",
+  "created_at": "2026-10-16T02:33:58+03:00",
+  "scope": "project/youtube",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "architecture",
+  "subject": "youtube.channel_operating_system.current",
+  "summary": "Channel Operating System v1.7 requires market/social reading and story feasibility before exactly three distinct topic candidates are presented, with exactly two distinct title variants per topic. The Owner selects one title from one topic at OWNER_TITLE_LOCK; script development cannot start before that lock, and later title revision still requires Owner reapproval.",
+  "details": {
+    "channel_operating_system_version": "1.7",
+    "required_topic_count": 3,
+    "required_titles_per_topic": 2,
+    "total_titles_presented": 6,
+    "topic_distinctness_required": true,
+    "title_distinctness_within_topic_required": true,
+    "owner_selects_one_topic_and_one_title": true,
+    "owner_is_final_title_authority": true,
+    "script_start_before_owner_title_lock_forbidden": true,
+    "automatic_title_change_after_lock_forbidden": true,
+    "owner_reapproval_required_for_title_revision": true,
+    "governing_config": "company/config/channel_operating_system.json",
+    "governing_doc": "docs/operations/media/CHANNEL_OPERATING_SYSTEM.md",
+    "master_pipeline_doc": "docs/operations/media/STUDIO_MASTER_PIPELINE.md"
+  },
+  "supersedes": [
+    "MEM-20261015-105711-ttlgt1"
+  ],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "studio",
+    "writing",
+    "topic-gate",
+    "title-gate",
+    "owner"
+  ],
+  "source": {
+    "type": "repository",
+    "ref": "main",
+    "commit": "ff4fd56baef3769848d589e16cc9f6ec6237194b"
+  }
+}

@@ -31,29 +31,28 @@
 - **Tags:** media, workflow, production
 
 ## media.production_cell.current
-- **Event:** `MEM-20261015-105710-prdlne`
-- **Level:** `L3_CANONICAL`
+- **Event:** `MEM-20261016-023359-511337`
+- **Level:** `L4_OWNER_DIRECTIVE`
 - **Kind:** `architecture`
-- **Confidence:** `verified`
-- **Updated:** `2026-10-15T10:57:10+03:00`
-- **Summary:** Media Production Cell v1.5 uses a three-phase master pipeline: Writing, Pre-production, then Production. Production is a serial department line with one active craft department at a time, one primary program per stage, verified handoffs, and return tickets instead of downstream cross-editing.
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-16T02:33:59+03:00`
+- **Summary:** Media Production Cell v1.6 retains the three-phase Writing → Pre-production → Production pipeline and updates W1 so the Studio must produce exactly three distinct topics with exactly two title variants each before the Owner selects one topic/title pair. Production remains serial with one active craft department and one primary program per stage.
 - **Details:**
-  - `defect_action`: RETURN_TICKET_TO_SOURCE_DEPARTMENT
-  - `downstream_direct_repair_forbidden`: true
   - `governing_config`: company/config/media_venture.json
   - `governing_doc`: docs/operations/media/MEDIA_PRODUCTION_CELL.md
-  - `handoff_acceptance_required`: true
   - `macro_phases`: ["writing", "pre_production", "production"]
   - `master_pipeline_doc`: docs/operations/media/STUDIO_MASTER_PIPELINE.md
-  - `media_config_version`: 1.8
+  - `media_config_version`: 1.9
   - `one_active_production_department`: true
   - `one_program_per_stage`: true
-  - `producer_role`: CONTROL_PLANE_ALWAYS_ACTIVE_NON_CRAFT
-  - `production_cell_doc_version`: 1.5
-  - `production_departments`: ["Voice & Narration", "Visual Asset Production", "Motion & Compositing", "Picture Editing", "Sound Design & Mix", "Thumbnail & Packaging", "Assurance & Delivery", "Learning & Archive"]
+  - `owner_title_gate_required`: true
+  - `production_cell_doc_version`: 1.6
   - `production_mode`: SERIAL_PRODUCTION_LINE_WITH_FEEDBACK_GATES
-- **Supersedes:** `MEM-20261015-030400-human1`
-- **Tags:** media, studio, writing, pre-production, production, serial-production-line, handoff
+  - `w1_titles_per_topic`: 2
+  - `w1_topic_count`: 3
+  - `w1_total_titles`: 6
+- **Supersedes:** `MEM-20261015-105710-prdlne`
+- **Tags:** media, studio, writing, topic-gate, serial-production-line
 
 ## media.specialized_tool_policy.current
 - **Event:** `MEM-20261012-212638-4d1282`

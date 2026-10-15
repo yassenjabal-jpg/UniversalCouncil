@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-15T07:59:51+00:00",
-  "event_count": 72,
+  "generated_at": "2026-10-16T02:34:15+03:00",
+  "event_count": 74,
   "active_count": 55,
-  "superseded_count": 17,
+  "superseded_count": 19,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-15T10:57:11+03:00",
+  "latest_event_at": "2026-10-16T02:33:59+03:00",
   "scopes": {
     "council": [
       {
@@ -184,13 +184,13 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261015-105710-prdlne",
+        "event_id": "MEM-20261016-023359-511337",
         "subject": "media.production_cell.current",
-        "level": "L3_CANONICAL",
+        "level": "L4_OWNER_DIRECTIVE",
         "kind": "architecture",
-        "summary": "Media Production Cell v1.5 uses a three-phase master pipeline: Writing, Pre-production, then Production. Production is a serial department line with one active craft department at a time, one primary program per stage, verified handoffs, and return tickets instead of downstream cross-editing.",
-        "created_at": "2026-10-15T10:57:10+03:00",
-        "confidence": "verified"
+        "summary": "Media Production Cell v1.6 retains the three-phase Writing → Pre-production → Production pipeline and updates W1 so the Studio must produce exactly three distinct topics with exactly two title variants each before the Owner selects one topic/title pair. Production remains serial with one active craft department and one primary program per stage.",
+        "created_at": "2026-10-16T02:33:59+03:00",
+        "confidence": "owner_confirmed"
       },
       {
         "event_id": "MEM-20261012-212638-4d1282",
@@ -413,13 +413,13 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261015-105711-ttlgt1",
+        "event_id": "MEM-20261016-023358-53828d",
         "subject": "youtube.channel_operating_system.current",
-        "level": "L3_CANONICAL",
+        "level": "L4_OWNER_DIRECTIVE",
         "kind": "architecture",
-        "summary": "Channel Operating System v1.6 requires market/social reading and story feasibility before exactly three title candidates are presented to the Owner. The Owner selects one title at OWNER_TITLE_LOCK; script development cannot start before that lock, and any later title revision requires Owner reapproval. Script Lock precedes Pre-production, and Production cannot start before PRODUCTION_READY_LOCK.",
-        "created_at": "2026-10-15T10:57:11+03:00",
-        "confidence": "verified"
+        "summary": "Channel Operating System v1.7 requires market/social reading and story feasibility before exactly three distinct topic candidates are presented, with exactly two distinct title variants per topic. The Owner selects one title from one topic at OWNER_TITLE_LOCK; script development cannot start before that lock, and later title revision still requires Owner reapproval.",
+        "created_at": "2026-10-16T02:33:58+03:00",
+        "confidence": "owner_confirmed"
       },
       {
         "event_id": "MEM-20261012-203304-1de95d",

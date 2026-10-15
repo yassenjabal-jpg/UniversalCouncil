@@ -107,31 +107,29 @@
 - **Tags:** youtube, channel, what-if, speculative-documentary
 
 ## youtube.channel_operating_system.current
-- **Event:** `MEM-20261015-105711-ttlgt1`
-- **Level:** `L3_CANONICAL`
+- **Event:** `MEM-20261016-023358-53828d`
+- **Level:** `L4_OWNER_DIRECTIVE`
 - **Kind:** `architecture`
-- **Confidence:** `verified`
-- **Updated:** `2026-10-15T10:57:11+03:00`
-- **Summary:** Channel Operating System v1.6 requires market/social reading and story feasibility before exactly three title candidates are presented to the Owner. The Owner selects one title at OWNER_TITLE_LOCK; script development cannot start before that lock, and any later title revision requires Owner reapproval. Script Lock precedes Pre-production, and Production cannot start before PRODUCTION_READY_LOCK.
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-16T02:33:58+03:00`
+- **Summary:** Channel Operating System v1.7 requires market/social reading and story feasibility before exactly three distinct topic candidates are presented, with exactly two distinct title variants per topic. The Owner selects one title from one topic at OWNER_TITLE_LOCK; script development cannot start before that lock, and later title revision still requires Owner reapproval.
 - **Details:**
   - `automatic_title_change_after_lock_forbidden`: true
-  - `channel_operating_system_version`: 1.6
+  - `channel_operating_system_version`: 1.7
   - `governing_config`: company/config/channel_operating_system.json
   - `governing_doc`: docs/operations/media/CHANNEL_OPERATING_SYSTEM.md
-  - `macro_phases`: ["writing", "pre_production", "production"]
   - `master_pipeline_doc`: docs/operations/media/STUDIO_MASTER_PIPELINE.md
   - `owner_is_final_title_authority`: true
   - `owner_reapproval_required_for_title_revision`: true
-  - `owner_title_selection_required`: true
-  - `preproduction_entry_requires`: SCRIPT_LOCK
-  - `preproduction_exit_requires`: PRODUCTION_READY_LOCK
-  - `production_entry_requires`: PRODUCTION_READY_LOCK
-  - `script_passes`: ["S0 Story Question", "S1 Research Pack", "S2 Story Architecture", "S3 First Script", "S4 Editorial Rewrite", "S5 Independent Fact Check", "S6 Narration Rewrite", "S7 Locked Script"]
+  - `owner_selects_one_topic_and_one_title`: true
+  - `required_titles_per_topic`: 2
+  - `required_topic_count`: 3
   - `script_start_before_owner_title_lock_forbidden`: true
-  - `title_candidate_count`: 3
-  - `writing_exit_requires`: ["OWNER_TITLE_LOCK", "SCRIPT_LOCK"]
-- **Supersedes:** `MEM-20261015-030401-assist`
-- **Tags:** youtube, studio, title-gate, owner, script, pre-production, production
+  - `title_distinctness_within_topic_required`: true
+  - `topic_distinctness_required`: true
+  - `total_titles_presented`: 6
+- **Supersedes:** `MEM-20261015-105711-ttlgt1`
+- **Tags:** youtube, studio, writing, topic-gate, title-gate, owner
 
 ## youtube.execution.final_prelaunch_decision
 - **Event:** `MEM-20261012-203304-1de95d`

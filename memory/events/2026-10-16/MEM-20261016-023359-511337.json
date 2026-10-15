@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261016-023359-511337",
+  "created_at": "2026-10-16T02:33:59+03:00",
+  "scope": "project/media",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "architecture",
+  "subject": "media.production_cell.current",
+  "summary": "Media Production Cell v1.6 retains the three-phase Writing → Pre-production → Production pipeline and updates W1 so the Studio must produce exactly three distinct topics with exactly two title variants each before the Owner selects one topic/title pair. Production remains serial with one active craft department and one primary program per stage.",
+  "details": {
+    "production_cell_doc_version": "1.6",
+    "media_config_version": "1.9",
+    "macro_phases": [
+      "writing",
+      "pre_production",
+      "production"
+    ],
+    "w1_topic_count": 3,
+    "w1_titles_per_topic": 2,
+    "w1_total_titles": 6,
+    "owner_title_gate_required": true,
+    "one_active_production_department": true,
+    "one_program_per_stage": true,
+    "production_mode": "SERIAL_PRODUCTION_LINE_WITH_FEEDBACK_GATES",
+    "governing_config": "company/config/media_venture.json",
+    "governing_doc": "docs/operations/media/MEDIA_PRODUCTION_CELL.md",
+    "master_pipeline_doc": "docs/operations/media/STUDIO_MASTER_PIPELINE.md"
+  },
+  "supersedes": [
+    "MEM-20261015-105710-prdlne"
+  ],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "studio",
+    "writing",
+    "topic-gate",
+    "serial-production-line"
+  ],
+  "source": {
+    "type": "repository",
+    "ref": "main",
+    "commit": "ff4fd56baef3769848d589e16cc9f6ec6237194b"
+  }
+}
