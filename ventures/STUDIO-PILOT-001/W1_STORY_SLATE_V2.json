@@ -1,0 +1,290 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "date": "2026-10-16",
+  "status": "OWNER_TITLE_GATE_PENDING",
+  "governing_main_sha": "58741784da60c45779fc35397f2a9c337f697cd9",
+  "market_scan_status": "PASS",
+  "social_trend_scan_status": "PASS",
+  "story_feasibility_status": "PASS",
+  "youtube_native_discovery_status": "PASS",
+  "discovery_evidence_mode": "AUTHORIZED_NATIVE_FALLBACK",
+  "packaging_hypothesis_status": "PASS",
+  "red_team_click_challenge_status": "PASS",
+  "discovery_note": "Connected vidIQ paid research remains unavailable because credit balance is zero until 2026-11-08. Public YouTube search/results were used as the authorized native fallback. Current web, official sources and communities were used for factual freshness and secondary interest signals. No TikTok velocity is claimed.",
+  "score_weights": {
+    "cross_platform_velocity": 7,
+    "curiosity_gap": 12,
+    "story_novelty": 12,
+    "story_engine_strength": 12,
+    "thumbnail_one_frame_strength": 12,
+    "viewer_stakes_or_emotional_charge": 8,
+    "channel_format_fit": 8,
+    "evergreen_half_life": 5,
+    "visual_explainability": 8,
+    "evidence_sourceability": 8,
+    "multilingual_portability": 3,
+    "competition_opportunity": 2,
+    "production_cost": 1,
+    "policy_brand_safety": 2
+  },
+  "topics": [
+    {
+      "id": "P1",
+      "topic": "Shanidar A: violence and care in one Neanderthal life",
+      "story_premise": "A 75,000-year-old Neanderthal from Shanidar Cave in Iraq survived a devastating facial injury that likely required care, yet also carries a perimortem shoulder wound consistent with a wooden spear—putting violence and compassion inside the same human story.",
+      "story_archetype": "historical_paradox",
+      "hero_anchor": "Shanidar A's perforated scapula and the reconstructed story of the individual",
+      "tension_or_mystery": "How can one skeleton preserve evidence of both prolonged care and lethal violence, and what can the bones actually prove?",
+      "viewer_stakes": "The answer changes how we imagine Neanderthals—and how ancient the roots of care, social bonds and interpersonal violence may be.",
+      "why_now": "A new peer-reviewed Scientific Reports paper was published on 2026-10-15 and Reuters reported the find the same day.",
+      "market_signal": "Neanderthal long-form has proven multi-million-view demand on YouTube, while Shanidar has existing documentary interest and low Arabic saturation for this exact new discovery.",
+      "competition_level": "LOW_MEDIUM_ARABIC",
+      "key_visual": "Macro view of the scapula perforation beside a simple wooden-spear trajectory, contrasted with the cave burial context.",
+      "thumbnail_hypothesis": {
+        "hero_subject": "Shanidar A scapula with the visible perforation",
+        "visual_tension": "A small ancient hole that implies a violent final event",
+        "composition": "Large pale bone at left/center, dark Shanidar cave field behind it, one wooden spear silhouette aligned toward the perforation, strong negative space",
+        "text_0_4_words": "75 ألف سنة",
+        "works_without_explanatory_text": true
+      },
+      "visual_potential": "HIGH",
+      "evidence_feasibility": "PASS",
+      "eight_minute_story_feasibility": "PASS",
+      "risk_notes": "Do not identify a killer or claim motive. Distinguish confirmed trauma morphology from interpretation; keep the burial/care debate accurately qualified.",
+      "score": {
+        "cross_platform_velocity": 5,
+        "curiosity_gap": 11,
+        "story_novelty": 12,
+        "story_engine_strength": 11,
+        "thumbnail_one_frame_strength": 10,
+        "viewer_stakes_or_emotional_charge": 6,
+        "channel_format_fit": 8,
+        "evergreen_half_life": 5,
+        "visual_explainability": 7,
+        "evidence_sourceability": 8,
+        "multilingual_portability": 3,
+        "competition_opportunity": 2,
+        "production_cost": 1,
+        "policy_brand_safety": 2,
+        "total": 91
+      },
+      "evidence": [
+        {
+          "type": "PRIMARY",
+          "name": "Scientific Reports — Evidence for funerary behaviour and lethal trauma in a new Neanderthal individual from Shanidar Cave",
+          "url": "https://www.nature.com/articles/s41598-026-69193-z"
+        },
+        {
+          "type": "CURRENT_NEWS",
+          "name": "Reuters — Bones from Iraqi cave hint at violence and compassion in Neanderthals",
+          "url": "https://www.reuters.com/science/bones-iraqi-cave-hint-violence-compassion-neanderthals-2026-10-15/"
+        },
+        {
+          "type": "YOUTUBE_NATIVE",
+          "name": "BREAKING NEWS - Neanderthal Cave Excavated // Shanidar",
+          "views": 517716,
+          "url": "https://www.youtube.com/watch?v=qEeGf9zKjz4"
+        },
+        {
+          "type": "YOUTUBE_NATIVE_OUTLIER_SIGNAL",
+          "name": "NORTH 02 Neanderthal catalogue includes A Neanderthal Odyssey at ~5.9M and Neanderthal - Ancient Human at ~3.6M",
+          "url": "https://vidiq.com/youtube-stats/channel/%40north02/"
+        }
+      ],
+      "title_variants": [
+        {
+          "id": "P1A",
+          "title": "هذا الثقب عمره 75 ألف سنة… ويبدو أنه أثر رمح",
+          "click_reason": "A tiny physical clue creates an immediate ancient-crime-scene question.",
+          "viewer_promise": "Explain what the wound is, how researchers inferred a wooden spear, and what the same skeleton reveals about Neanderthal care.",
+          "thumbnail_complement": "The thumbnail shows the hole and spear silhouette; the title supplies age and the startling interpretation instead of repeating the image.",
+          "stranger_click_test": "PASS",
+          "youtube_title_style_status": "PASS"
+        },
+        {
+          "id": "P1B",
+          "title": "عاش بعد إصابة مدمرة… ثم مات قبل 75 ألف سنة",
+          "click_reason": "A human survival arc creates emotional contrast before the final mystery is revealed.",
+          "viewer_promise": "Reconstruct Shanidar A's injuries, survival, possible care and the perimortem spear-consistent wound without inventing a killer.",
+          "thumbnail_complement": "The image shows the final wound; the title adds the earlier survival story and emotional contradiction.",
+          "stranger_click_test": "PASS",
+          "youtube_title_style_status": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "topic": "North Korea's remote-worker laptop farms",
+      "story_premise": "American companies believed they had hired U.S.-based remote engineers, while employer-issued laptops sat in ordinary U.S. homes and were remotely controlled as part of an alleged DPRK IT-worker scheme.",
+      "story_archetype": "scam_or_heist",
+      "hero_anchor": "The physical laptop farms—racks of employer laptops inside ordinary American residences",
+      "tension_or_mystery": "How can a worker appear to be physically in the United States when only the company laptop is there?",
+      "viewer_stakes": "It turns remote hiring, identity checks and ordinary work-from-home infrastructure into a national-security and corporate-trust vulnerability.",
+      "why_now": "On 2026-10-13 the U.S. Justice Department announced coordinated actions affecting more than 70 companies and the seizure of about 187 laptops/KVM devices.",
+      "market_signal": "A current NBC News investigation on the scheme has over 700k views, with additional BBC coverage and active current community discussion.",
+      "competition_level": "MEDIUM_GLOBAL_LOW_ARABIC",
+      "key_visual": "Rows of company laptops with sticky notes in a domestic room, one foreground laptop appearing like a normal employee workstation.",
+      "thumbnail_hypothesis": {
+        "hero_subject": "One normal corporate laptop in front of a rack of many tagged laptops",
+        "visual_tension": "The single 'employee' computer is physically surrounded by an impossible hidden workforce",
+        "composition": "Foreground laptop and employee badge silhouette, background metal shelves packed with laptops, shallow depth, no hooded-hacker cliché",
+        "text_0_4_words": "187 لابتوب",
+        "works_without_explanatory_text": true
+      },
+      "visual_potential": "HIGH",
+      "evidence_feasibility": "PASS",
+      "eight_minute_story_feasibility": "PASS",
+      "risk_notes": "Use allegation language for charged conduct. Do not generalize to North Korean people. Separate DOJ claims, convictions from prior cases and current charges.",
+      "score": {
+        "cross_platform_velocity": 7,
+        "curiosity_gap": 12,
+        "story_novelty": 11,
+        "story_engine_strength": 12,
+        "thumbnail_one_frame_strength": 12,
+        "viewer_stakes_or_emotional_charge": 8,
+        "channel_format_fit": 8,
+        "evergreen_half_life": 4,
+        "visual_explainability": 7,
+        "evidence_sourceability": 8,
+        "multilingual_portability": 3,
+        "competition_opportunity": 2,
+        "production_cost": 1,
+        "policy_brand_safety": 2,
+        "total": 97
+      },
+      "evidence": [
+        {
+          "type": "PRIMARY",
+          "name": "U.S. DOJ — Coordinated actions against DPRK remote IT worker schemes",
+          "url": "https://www.justice.gov/opa/pr/justice-department-announces-coordinated-actions-combat-north-korean-remote-it-worker"
+        },
+        {
+          "type": "PRIMARY",
+          "name": "U.S. Attorney NDTX — Operation Lonestar Roundup",
+          "url": "https://www.justice.gov/usao-ndtx/pr/operation-lonestar-roundup-dismantles-north-korean-it-worker-network-used-penetrate-us"
+        },
+        {
+          "type": "CURRENT_NEWS",
+          "name": "Reuters — DOJ arrests two, seizes 187 devices",
+          "url": "https://www.reuters.com/legal/government/doj-arrests-two-seizes-187-devices-north-korean-laptop-farm-crackdown-texas-2026-10-13/"
+        },
+        {
+          "type": "YOUTUBE_NATIVE",
+          "name": "NBC News — A rare look inside a suspected cell of covert North Korean IT workers",
+          "views": 702563,
+          "url": "https://www.youtube.com/watch?v=qb5JY-gefbg"
+        },
+        {
+          "type": "YOUTUBE_NATIVE",
+          "name": "BBC World Service — Could your colleague be a North Korean in disguise?",
+          "views": 6844,
+          "url": "https://www.youtube.com/watch?v=dELLMFMPBoA"
+        }
+      ],
+      "title_variants": [
+        {
+          "id": "P2A",
+          "title": "وظفوهم كأمريكيين… ولم يكونوا في أمريكا أصلًا",
+          "click_reason": "The contradiction is instantly understandable even to viewers with no cyber-security background.",
+          "viewer_promise": "Show how false/stolen identities, U.S.-hosted laptops and remote access allegedly made foreign workers appear domestic to employers.",
+          "thumbnail_complement": "The thumbnail reveals the hidden laptop farm; the title reveals the human deception behind it.",
+          "stranger_click_test": "PASS",
+          "youtube_title_style_status": "PASS"
+        },
+        {
+          "id": "P2B",
+          "title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+          "click_reason": "A specific, strange number plus an unexpected location creates a concrete mystery.",
+          "viewer_promise": "Explain what the 187 devices were allegedly used for, why physical U.S. laptops mattered and how the scheme reached dozens of employers.",
+          "thumbnail_complement": "The image proves the physical scale; the title supplies the unlikely country/location relationship and asks why.",
+          "stranger_click_test": "PASS",
+          "youtube_title_style_status": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "P3",
+      "topic": "Hera investigates what DART did to Dimorphos",
+      "story_premise": "Humanity deliberately slammed a spacecraft into an asteroid and changed its orbit; now ESA's Hera is closing in to inspect the aftermath and learn whether that one-off success can become a repeatable planetary-defense technique.",
+      "story_archetype": "experiment_or_challenge",
+      "hero_anchor": "Dimorphos—the asteroid moonlet humanity deliberately struck—and the approaching Hera spacecraft",
+      "tension_or_mystery": "We know DART changed Dimorphos's orbit, but we still need close-up measurements of how the asteroid responded and what that means for repeatable deflection.",
+      "viewer_stakes": "The experiment is a prototype for how humanity might one day respond to a genuinely hazardous asteroid.",
+      "why_now": "Hera got its first glimpse of Didymos on 2026-10-07 and is performing its major October braking sequence as it approaches the binary asteroid system.",
+      "market_signal": "NASA's official DART impact broadcast has more than 5.6 million YouTube views, demonstrating proven native interest in the experiment; Hera provides the fresh second act.",
+      "competition_level": "MEDIUM_GLOBAL_LOW_ARABIC_FOR_HERA_UPDATE",
+      "key_visual": "Tiny Hera spacecraft approaching the enormous rough face of Dimorphos with the DART impact region as the mystery target.",
+      "thumbnail_hypothesis": {
+        "hero_subject": "Dimorphos dominating the frame with a tiny Hera spacecraft approaching",
+        "visual_tension": "A human-made machine returns to inspect a world we deliberately hit",
+        "composition": "Asteroid fills roughly two-thirds of frame, tiny gold spacecraft in opposite corner, impact region highlighted only by lighting/terrain contrast, no fake Earth-threat imagery",
+        "text_0_4_words": "بعد 4 سنوات",
+        "works_without_explanatory_text": true
+      },
+      "visual_potential": "HIGH",
+      "evidence_feasibility": "PASS",
+      "eight_minute_story_feasibility": "PASS",
+      "risk_notes": "Do not imply Didymos/Dimorphos threatens Earth. Do not state Hera has completed close-up inspection before rendezvous/arrival evidence supports it.",
+      "score": {
+        "cross_platform_velocity": 5,
+        "curiosity_gap": 12,
+        "story_novelty": 12,
+        "story_engine_strength": 12,
+        "thumbnail_one_frame_strength": 12,
+        "viewer_stakes_or_emotional_charge": 8,
+        "channel_format_fit": 8,
+        "evergreen_half_life": 5,
+        "visual_explainability": 8,
+        "evidence_sourceability": 8,
+        "multilingual_portability": 3,
+        "competition_opportunity": 1,
+        "production_cost": 1,
+        "policy_brand_safety": 2,
+        "total": 97
+      },
+      "evidence": [
+        {
+          "type": "PRIMARY",
+          "name": "ESA — Destination sighted: Hera's first glimpse of Didymos",
+          "url": "https://www.esa.int/ESA_Multimedia/Images/2026/10/Destination_sighted_Hera_s_first_glimpse_of_Didymos"
+        },
+        {
+          "type": "PRIMARY",
+          "name": "ESA — Brake! Time for Hera to go slow",
+          "url": "https://www.esa.int/Space_Safety/Hera/Brake%21_Time_for_ESA_s_Hera_asteroid_mission_to_go_slow"
+        },
+        {
+          "type": "PRIMARY",
+          "name": "NASA Science — Didymos & Dimorphos / DART",
+          "url": "https://science.nasa.gov/solar-system/asteroids/didymos/"
+        },
+        {
+          "type": "YOUTUBE_NATIVE",
+          "name": "NASA — DART's Impact with Asteroid Dimorphos (Official Broadcast)",
+          "views": 5634828,
+          "url": "https://www.youtube.com/watch?v=4RA8Tfa6Sck"
+        }
+      ],
+      "title_variants": [
+        {
+          "id": "P3A",
+          "title": "ناسا صدمت هذا الكويكب عمدًا… والآن نريد معرفة ما فعلناه",
+          "click_reason": "The deliberate collision is inherently surprising, while the second half creates a fresh unresolved question.",
+          "viewer_promise": "Explain why DART hit Dimorphos, what changed, what remains unknown and what Hera is approaching to measure.",
+          "thumbnail_complement": "The image shows Hera approaching the battered asteroid; the title explains that humans caused the mystery.",
+          "stranger_click_test": "PASS",
+          "youtube_title_style_status": "PASS"
+        },
+        {
+          "id": "P3B",
+          "title": "غيّرنا مسار كويكب بضربة واحدة… لكن التجربة لم تنتهِ",
+          "click_reason": "A completed-looking success is immediately reopened by the contradiction that the experiment is still unfinished.",
+          "viewer_promise": "Show how DART changed the orbit and why Hera's close-up investigation is necessary before kinetic deflection becomes a well-understood technique.",
+          "thumbnail_complement": "The thumbnail supplies the returning spacecraft and aftermath; the title supplies the cause-and-unfinished-experiment tension.",
+          "stranger_click_test": "PASS",
+          "youtube_title_style_status": "PASS"
+        }
+      ]
+    }
+  ]
+}
