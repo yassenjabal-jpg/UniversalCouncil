@@ -216,6 +216,28 @@ class StudioProductionLineTests(unittest.TestCase):
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(duplicate_title)
 
+        missing_topic_field = self.packet()
+        missing_topic_field["topics"][0].pop("story_angle")
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(missing_topic_field)
+
+        duplicate_topic = self.packet()
+        duplicate_topic["topics"][1]["topic"] = duplicate_topic["topics"][0]["topic"]
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(duplicate_topic)
+
+        wrong_variant_count = self.packet()
+        wrong_variant_count["topics"][0]["title_variants"] = wrong_variant_count["topics"][0]["title_variants"][:1]
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(wrong_variant_count)
+
+        duplicate_title_id = self.packet()
+        duplicate_title_id["topics"][1]["title_variants"][0]["id"] = duplicate_title_id["topics"][0]["title_variants"][0][
+            "id"
+        ]
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(duplicate_title_id)
+
         evidence_fail = self.packet()
         evidence_fail["topics"][0]["evidence_feasibility"] = "FAIL"
         with self.assertRaises(StudioProductionLineError):
@@ -259,6 +281,35 @@ class StudioProductionLineTests(unittest.TestCase):
                 "locked_title": "Wrong Title",
             },
         ]
+        cases.extend(
+            [
+                {
+                    "authority": "Owner",
+                    "status": "OWNER_TITLE_LOCK",
+                    "selected_topic_id": "P9",
+                    "selected_title_id": "P9A",
+                    "locked_topic": "Other",
+                    "locked_title": "Other",
+                },
+                {
+                    "authority": "Owner",
+                    "status": "OWNER_TITLE_LOCK",
+                    "selected_topic_id": "P1",
+                    "selected_title_id": "P2A",
+                    "locked_topic": "Topic One",
+                    "locked_title": "Topic Two: direct title",
+                },
+                {
+                    "authority": "Owner",
+                    "status": "OWNER_TITLE_LOCK",
+                    "selected_topic_id": "P1",
+                    "selected_title_id": "P1A",
+                    "locked_topic": "Wrong Topic",
+                    "locked_title": "Topic One: direct title",
+                },
+            ]
+        )
+
         for selection in cases:
             with self.assertRaises(StudioProductionLineError):
                 validate_owner_title_lock(packet, selection)
