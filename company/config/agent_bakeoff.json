@@ -1,0 +1,93 @@
+{
+  "version": "1.0",
+  "minimum_live_decision_cases": 16,
+  "minimum_mechanics_score": 0.8,
+  "winner_policy": "ALL_16_PROVENANCE_DESKTOP_2_OF_2",
+  "required_mechanics_for_winner": [
+    "framework_import",
+    "isolated_roles",
+    "parallel_first_positions",
+    "fan_in",
+    "failure_injection",
+    "failure_recovery",
+    "checkpoint_resume",
+    "hitl_pause",
+    "usage_capture",
+    "trace_capture"
+  ],
+  "runtimes": {
+    "baseline": {
+      "kind": "current_council_protocol",
+      "governing_version": "0.3.0"
+    },
+    "openai_agents": {
+      "kind": "candidate",
+      "package": "openai-agents",
+      "pin": "0.23.1"
+    },
+    "microsoft_agent_framework": {
+      "kind": "candidate",
+      "packages": {
+        "agent-framework-core": "1.19.0",
+        "agent-framework-orchestrations": "1.3.1"
+      }
+    }
+  },
+  "weights": {
+    "decision_correctness": 0.22,
+    "blocker_f1": 0.11,
+    "routing_accuracy": 0.09,
+    "dissent_preservation": 0.09,
+    "policy_compliance": 0.12,
+    "desktop_execution": 0.1,
+    "unique_contribution": 0.06,
+    "non_duplication": 0.05,
+    "completion": 0.04,
+    "mechanics": 0.04,
+    "runtime_native_recovery": 0.08
+  },
+  "minimum_desktop_execution_score": 1,
+  "required_desktop_case_count": 2,
+  "require_provenance": true,
+  "required_provenance_keys": [
+    "experiment_id",
+    "source_sha",
+    "config_sha256",
+    "cases_sha256",
+    "packets_sha256",
+    "runner_sha256",
+    "evaluator_sha256",
+    "requirements_sha256",
+    "model",
+    "model_digest",
+    "execution_host",
+    "financial_cost_usd"
+  ],
+  "required_runner_id": "YASSIN",
+  "maximum_cost_usd": 0,
+  "desktop_required_case_ids": [
+    "c02_gui_primary_hybrid",
+    "c04_after_effects_runtime_status"
+  ],
+  "desktop_required_passes": 2,
+  "live_stages": {
+    "canary": [
+      "c14_specialized_tool_policy"
+    ],
+    "representative": [
+      "c01_restructure_v04",
+      "c10_intelligence_gateway",
+      "c14_specialized_tool_policy",
+      "c15_market_reality_gate"
+    ],
+    "full": "ALL_16"
+  },
+  "live_execution_policy": {
+    "execution_host": "YASSIN_ONLY",
+    "external_compute": false,
+    "external_paid_api": false,
+    "local_model_endpoint": "127.0.0.1",
+    "staged_run_required": true,
+    "resume_required": true
+  }
+}
