@@ -21,6 +21,7 @@ REQUIRED_MEDIA_FUNCTIONS = {
     "audience_growth_strategist",
     "thumbnail_packaging_designer",
     "localization_producer",
+    "human_assistance_pool",
 }
 
 CORE_FUNCTIONS = {
@@ -72,6 +73,10 @@ REQUIRED_PILOT_METRICS = {
     "unnecessary_function_invocations",
     "handoff_recovery_count",
     "unknown_execution_events",
+    "human_assistance_requests",
+    "human_assistance_minutes",
+    "human_assistance_resolution_rate",
+    "repeated_human_assistance_gap_count",
 }
 
 PUBLISHED_PERFORMANCE_METRICS = {
@@ -85,8 +90,8 @@ PUBLISHED_PERFORMANCE_METRICS = {
 
 
 def validate_media_team(config):
-    if config.get("version") != "1.5":
-        raise MediaControlError("media venture must be version 1.5")
+    if config.get("version") != "1.6":
+        raise MediaControlError("media venture must be version 1.6")
 
     functions = {f["id"]: f for f in config.get("production_functions", [])}
     missing = REQUIRED_MEDIA_FUNCTIONS - set(functions)
@@ -107,6 +112,8 @@ def validate_media_team(config):
 
     if functions["localization_producer"].get("default_status") != "ON_DEMAND":
         raise MediaControlError("localization producer must remain on-demand")
+    if functions["human_assistance_pool"].get("default_status") != "ON_DEMAND_ASSISTANCE":
+        raise MediaControlError("human assistance pool must remain on-demand")
 
     model = config.get("operating_model", {})
     if model.get("mode") != "SMALL_CORE_ROUTED_CRAFT_CAPABILITIES":
@@ -117,6 +124,8 @@ def validate_media_team(config):
         raise MediaControlError("mandatory clearance function set drifted")
     if set(model.get("routed_craft_functions", [])) != ROUTED_CRAFT_FUNCTIONS:
         raise MediaControlError("routed craft function set drifted")
+    if set(model.get("on_demand_functions", [])) != {"localization_producer", "human_assistance_pool"}:
+        raise MediaControlError("on-demand function set drifted")
     if model.get("parallelize_when_safe") is not True or model.get("single_synthesis_per_gate") is not True:
         raise MediaControlError("studio efficiency controls are incomplete")
     forbidden = set(model.get("forbidden_defaults", []))
@@ -139,9 +148,76 @@ def validate_media_team(config):
         "cinematography_defines_shot_language_but_does_not_self_approve_picture_lock",
         "routed_craft_function_is_invoked_by_stage_not_kept_permanently_active",
         "unknown_execution_state_cannot_be_promoted_to_success",
+        "human_assistance_is_bounded_and_does_not_transfer_stage_or_publish_authority",
+        "human_return_must_be_verified_before_resume",
     }
     if not required_independence.issubset(independence):
         raise MediaControlError("media function independence rules are incomplete")
+
+    assistance = config.get("human_assistance", {})
+    if assistance.get("enabled") is not True:
+        raise MediaControlError("human assistance lane must be enabled")
+    if assistance.get("mode") != "ON_DEMAND_BOUNDED_ASSISTANCE":
+        raise MediaControlError("human assistance must remain bounded and on-demand")
+    if assistance.get("coordinator") != "media_producer":
+        raise MediaControlError("media producer must coordinate human assistance")
+    triggers = set(assistance.get("trigger_conditions", []))
+    required_triggers = {
+        "automation_or_application_recovery_exhausted",
+        "physical_world_action_required",
+        "credential_or_login_step_required",
+        "specialized_craft_capability_gap",
+        "high_uncertainty_visual_or_audio_judgment",
+        "material_domain_expertise_gap",
+        "rights_or_source_confirmation_requires_human_contact",
+        "human_intervention_is_materially_faster_and_lower_risk_than_further_automation",
+    }
+    if not required_triggers.issubset(triggers):
+        raise MediaControlError("human assistance triggers are incomplete")
+    packet = set(assistance.get("request_packet_required_fields", []))
+    required_packet = {
+        "request_id",
+        "episode_id",
+        "stage_id",
+        "reason",
+        "exact_human_task",
+        "current_verified_state",
+        "artifact_or_project_reference",
+        "allowed_scope",
+        "do_not_change",
+        "expected_return_artifact_or_answer",
+        "acceptance_criteria",
+        "return_handoff",
+    }
+    if not required_packet.issubset(packet):
+        raise MediaControlError("human assistance request packet is incomplete")
+    constraints = set(assistance.get("constraints", []))
+    required_constraints = {
+        "request_only_the_minimum_human_action",
+        "do_not_delegate_entire_stage_when_a_bounded_action_is_enough",
+        "do_not_share_private_or_sensitive_material_without_authorization",
+        "no_spend_subscription_or_purchase_without_owner_approval",
+        "no_credentials_or_identity_use_without_owner_authorization",
+        "human_helper_does_not_gain_publish_authority",
+        "human_output_must_be_verified_before_rejoining_automated_flow",
+        "record_reason_and_outcome_for_capability_learning",
+    }
+    if not required_constraints.issubset(constraints):
+        raise MediaControlError("human assistance constraints are incomplete")
+    resume = assistance.get("resume_policy", [])
+    if resume != [
+        "verify_human_return_against_acceptance_criteria",
+        "save_checkpoint",
+        "record_assistance_outcome",
+        "resume_from_return_handoff",
+        "do_not_repeat_completed_human_work",
+    ]:
+        raise MediaControlError("human assistance resume policy drifted")
+    recurring = assistance.get("recurring_gap_policy", {})
+    if int(recurring.get("repeated_same_gap_threshold", 0)) < 2:
+        raise MediaControlError("recurring human-assistance gap threshold is too low or missing")
+    if recurring.get("action") != "OPEN_CAPABILITY_REVIEW_FOR_TOOL_TRAINING_WORKFLOW_OR_STAFFING_FIX":
+        raise MediaControlError("recurring human-assistance gap action drifted")
 
     if "benchmark_artifact" not in config:
         raise MediaControlError("studio benchmark artifact is required")
