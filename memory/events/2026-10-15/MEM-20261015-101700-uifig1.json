@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261015-101700-uifig1",
+  "created_at": "2026-10-15T10:17:00+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L3_CANONICAL",
+  "kind": "evidence",
+  "subject": "revenuesystem.visual_redesign.figma_reference",
+  "summary": "A real editable Figma visual reference was created for the RevenueSystem redesign and bound into the implementation plan; it includes the design system plus Dashboard, Daily Revenue, Reconciliation and Account Statement reference screens.",
+  "details": {
+    "figma_file_key": "uQVEOfpl3GM5InXc5ZL3PB",
+    "figma_file_url": "https://www.figma.com/design/uQVEOfpl3GM5InXc5ZL3PB",
+    "frames": {
+      "design_system": "4:32",
+      "dashboard": "6:2",
+      "daily_revenue": "6:113",
+      "reconciliation": "6:236",
+      "account_statement": "6:377"
+    },
+    "plan_commit": "a345c57d1536c8d6ef6e460c63e2586f4c62854a",
+    "implementation_branch": "codex/visual-redesign-implementation-20261015",
+    "tools_used": [
+      "Figma create-new-file",
+      "Figma design-system discovery",
+      "Figma variables/tokens",
+      "Figma editable screen composition"
+    ],
+    "status": "visual reference created; WPF implementation not started"
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "ui",
+    "figma",
+    "visual-redesign",
+    "evidence"
+  ],
+  "source": {
+    "type": "tool",
+    "ref": "Figma file uQVEOfpl3GM5InXc5ZL3PB"
+  }
+}
