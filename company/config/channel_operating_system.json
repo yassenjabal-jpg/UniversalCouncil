@@ -1,5 +1,5 @@
 {
-  "version": "1.3",
+  "version": "1.4",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
   "visual_system": "Editorial Renaissance Motion",
   "primary_language": "Arabic",
@@ -297,6 +297,16 @@
       "visual rhythm support",
       "camera plan for animatic",
       "shot feasibility with available tools"
+    ],
+    "Human Assistance Pool / On-Demand Specialist": [
+      "bounded manual intervention",
+      "physical-world action",
+      "credential/login assistance when authorized",
+      "specialized human craft help",
+      "domain expert consultation",
+      "human visual/audio judgment when automation is uncertain",
+      "recovery assistance after automated routes are exhausted",
+      "return verified result to studio"
     ]
   },
   "script_schema": {
@@ -702,6 +712,47 @@
       "one_synthesis_per_gate",
       "shared_production_state_prevents_context_repetition",
       "owner_interruption_is_exception_not_default"
+    ],
+    "on_demand_support_functions": [
+      "Human Assistance Pool / On-Demand Specialist"
     ]
+  },
+  "human_assistance_lane": {
+    "enabled": true,
+    "available_at_any_stage": true,
+    "coordinator": "Media Producer / Production Coordinator",
+    "principle": "smallest necessary human intervention, then return control to the studio",
+    "trigger_conditions": [
+      "automated recovery exhausted",
+      "physical action required",
+      "credentials or identity step required",
+      "specialized human craft gap",
+      "material domain expertise gap",
+      "high-uncertainty visual/audio judgment",
+      "human contact required for rights/source confirmation",
+      "bounded human action is materially faster and lower risk than further automation"
+    ],
+    "request_packet": [
+      "reason",
+      "exact task",
+      "current verified state",
+      "artifact/project reference",
+      "allowed scope",
+      "do not change",
+      "expected return",
+      "acceptance criteria",
+      "return handoff"
+    ],
+    "rules": [
+      "human assistance is optional and on-demand, never an always-active bottleneck",
+      "request the smallest useful action",
+      "do not transfer publish authority",
+      "owner approval required for credentials, spend, subscriptions, external sharing or irreversible actions",
+      "verify human output before resuming automated production",
+      "checkpoint before and after the human handoff",
+      "record recurring human-help causes as capability gaps"
+    ],
+    "recurring_gap_threshold": 3,
+    "recurring_gap_action": "capability review for tool, training, workflow or staffing change"
   }
 }
