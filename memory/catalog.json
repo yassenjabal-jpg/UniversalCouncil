@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-15T00:04:59+00:00",
-  "event_count": 68,
-  "active_count": 53,
+  "generated_at": "2026-10-15T07:05:57+00:00",
+  "event_count": 69,
+  "active_count": 54,
   "superseded_count": 15,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-15T03:04:01+03:00",
+  "latest_event_at": "2026-10-15T10:05:29+03:00",
   "scopes": {
     "council": [
       {
@@ -336,6 +336,15 @@
         "kind": "requirement",
         "summary": "RevenueSystem UI must minimize wasted title-bar space, prevent overlapping text, show popup fields without unnecessary sidebars/scrolling where feasible, keep window controls top-right, and preserve reliable keyboard navigation.",
         "created_at": "2026-10-12T19:28:51+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261015-100529-ui01aa",
+        "subject": "revenuesystem.visual_redesign.current",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "requirement",
+        "summary": "Owner directed a real full visual redesign implementation for RevenueSystem: the result must be immediately and visibly different from the current hardened UI, using the approved unified UI design spec rather than treating layout/test hardening as visual redesign.",
+        "created_at": "2026-10-15T10:05:29+03:00",
         "confidence": "owner_confirmed"
       }
     ],

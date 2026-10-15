@@ -222,3 +222,20 @@
   - `popup_goal`: show all important fields without sidebars when feasible
   - `window_controls`: top-right
 - **Tags:** revenuesystem, ui, keyboard, hardening
+
+## revenuesystem.visual_redesign.current
+- **Event:** `MEM-20261015-100529-ui01aa`
+- **Level:** `L4_OWNER_DIRECTIVE`
+- **Kind:** `requirement`
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-15T10:05:29+03:00`
+- **Summary:** Owner directed a real full visual redesign implementation for RevenueSystem: the result must be immediately and visibly different from the current hardened UI, using the approved unified UI design spec rather than treating layout/test hardening as visual redesign.
+- **Details:**
+  - `excluded`: ["production database", "LAN operations", "installer/deployment", "production release"]
+  - `governing_spec`: docs/superpowers/specs/2026-09-28-unified-ui-design-system.md
+  - `implementation_branch`: codex/visual-redesign-implementation-20261015
+  - `implementation_plan`: docs/superpowers/plans/2026-10-15-visual-redesign-implementation.md
+  - `plan_commit`: 73066de19e7ffc05aa6c7d872a67cbdb09e81a09
+  - `preserve`: ["business logic", "financial calculations", "database schema", "existing keyboard contracts", "currency separation"]
+  - `visual_goal`: visible redesign of shell, dashboard, revenue entry, reconciliation, accounts, reports, administration and dialogs
+- **Tags:** revenuesystem, ui, visual-redesign, owner-directive
