@@ -26,7 +26,6 @@ REQUIRED_MEDIA_FUNCTIONS = {
 
 CORE_FUNCTIONS = {
     "media_producer",
-    "editorial_director",
 }
 
 MANDATORY_CLEARANCE_FUNCTIONS = {
@@ -34,6 +33,7 @@ MANDATORY_CLEARANCE_FUNCTIONS = {
 }
 
 ROUTED_CRAFT_FUNCTIONS = {
+    "editorial_director",
     "script_voice_director",
     "visual_art_director",
     "cinematography_shot_designer",
@@ -77,6 +77,18 @@ REQUIRED_PILOT_METRICS = {
     "human_assistance_minutes",
     "human_assistance_resolution_rate",
     "repeated_human_assistance_gap_count",
+    "title_candidate_count",
+    "owner_title_selection_rounds",
+    "title_revision_requests",
+    "writing_cycle_time",
+    "preproduction_cycle_time",
+    "production_cycle_time",
+    "department_cycle_time",
+    "stage_cycle_time",
+    "handoff_rejection_count",
+    "return_ticket_count",
+    "program_switch_violation_count",
+    "parallel_department_violation_count",
 }
 
 PUBLISHED_PERFORMANCE_METRICS = {
@@ -90,8 +102,8 @@ PUBLISHED_PERFORMANCE_METRICS = {
 
 
 def validate_media_team(config):
-    if config.get("version") != "1.6":
-        raise MediaControlError("media venture must be version 1.6")
+    if config.get("version") != "1.8":
+        raise MediaControlError("media venture must be version 1.8")
 
     functions = {f["id"]: f for f in config.get("production_functions", [])}
     missing = REQUIRED_MEDIA_FUNCTIONS - set(functions)
@@ -99,16 +111,16 @@ def validate_media_team(config):
         raise MediaControlError(f"missing media functions: {sorted(missing)}")
 
     for function_id in CORE_FUNCTIONS:
-        if functions[function_id].get("default_status") != "CORE_ALWAYS_ACTIVE":
-            raise MediaControlError(f"{function_id} must remain core-active")
+        if functions[function_id].get("default_status") != "CONTROL_PLANE_ALWAYS_ACTIVE":
+            raise MediaControlError(f"{function_id} must remain control-plane active")
 
     for function_id in MANDATORY_CLEARANCE_FUNCTIONS:
         if functions[function_id].get("default_status") != "MANDATORY_CLEARANCE":
             raise MediaControlError(f"{function_id} must remain mandatory clearance")
 
     for function_id in ROUTED_CRAFT_FUNCTIONS:
-        if functions[function_id].get("default_status") != "ROUTED_CRAFT_CAPABILITY":
-            raise MediaControlError(f"{function_id} must be stage-routed craft capability")
+        if functions[function_id].get("default_status") != "PHASE_ROUTED_CRAFT":
+            raise MediaControlError(f"{function_id} must be phase-routed craft")
 
     if functions["localization_producer"].get("default_status") != "ON_DEMAND":
         raise MediaControlError("localization producer must remain on-demand")
@@ -116,25 +128,100 @@ def validate_media_team(config):
         raise MediaControlError("human assistance pool must remain on-demand")
 
     model = config.get("operating_model", {})
-    if model.get("mode") != "SMALL_CORE_ROUTED_CRAFT_CAPABILITIES":
-        raise MediaControlError("studio operating model must use a small core with routed craft capabilities")
-    if set(model.get("core_functions", [])) != CORE_FUNCTIONS:
-        raise MediaControlError("studio core function set drifted")
+    if model.get("mode") != "THREE_PHASE_STUDIO_WITH_SERIAL_PRODUCTION":
+        raise MediaControlError("studio operating model must use writing, pre-production, then serial production")
+    if set(model.get("control_plane_functions", [])) != CORE_FUNCTIONS:
+        raise MediaControlError("studio control-plane function set drifted")
     if set(model.get("mandatory_clearance_functions", [])) != MANDATORY_CLEARANCE_FUNCTIONS:
         raise MediaControlError("mandatory clearance function set drifted")
-    if set(model.get("routed_craft_functions", [])) != ROUTED_CRAFT_FUNCTIONS:
-        raise MediaControlError("routed craft function set drifted")
+    if set(model.get("phase_routed_craft_functions", [])) != ROUTED_CRAFT_FUNCTIONS:
+        raise MediaControlError("phase-routed craft function set drifted")
     if set(model.get("on_demand_functions", [])) != {"localization_producer", "human_assistance_pool"}:
         raise MediaControlError("on-demand function set drifted")
-    if model.get("parallelize_when_safe") is not True or model.get("single_synthesis_per_gate") is not True:
-        raise MediaControlError("studio efficiency controls are incomplete")
+    if model.get("macro_phases") != ["writing", "pre_production", "production"]:
+        raise MediaControlError("studio macro phase order drifted")
+    writing_rules = set(model.get("writing_rules", []))
+    if {
+        "market_and_social_read_before_title_candidates",
+        "story_feasibility_before_title_candidates",
+        "exactly_three_title_candidates",
+        "owner_selects_one_title",
+        "script_work_forbidden_before_owner_title_lock",
+        "locked_title_change_requires_owner_reapproval",
+        "script_lock_required_before_preproduction",
+    } - writing_rules:
+        raise MediaControlError("writing phase governance is incomplete")
+    production_rules = set(model.get("production_rules", []))
+    if {
+        "one_active_craft_department",
+        "no_parallel_craft_departments",
+        "each_department_completes_internal_stages_before_handoff",
+        "one_program_per_stage",
+        "program_change_only_at_stage_boundary",
+        "accepted_handoff_required_before_next_department",
+        "downstream_department_must_return_upstream_defects_to_source",
+        "producer_coordinates_but_does_not_edit_craft_artifacts",
+    } - production_rules:
+        raise MediaControlError("serial production governance is incomplete")
     forbidden = set(model.get("forbidden_defaults", []))
     if {
-        "every_function_reviews_every_stage",
-        "mandatory_long_form_reports",
-        "one_independent_agent_process_per_function",
+        "script_before_owner_title_lock",
+        "automatic_title_change_after_owner_lock",
+        "production_before_production_ready_lock",
+        "two_craft_departments_editing_same_project_in_parallel",
+        "two_creative_programs_in_one_stage",
+        "downstream_department_silently_fixing_locked_upstream_work",
     } - forbidden:
-        raise MediaControlError("anti-bureaucracy defaults are incomplete")
+        raise MediaControlError("production-line forbidden defaults are incomplete")
+
+    pipeline = config.get("master_pipeline_contract", {})
+    if pipeline.get("phase_sequence") != ["writing", "pre_production", "production"]:
+        raise MediaControlError("master pipeline phase sequence drifted")
+    if set(pipeline.get("writing_exit_requires", [])) != {"OWNER_TITLE_LOCK", "SCRIPT_LOCK"}:
+        raise MediaControlError("writing exit gate is incomplete")
+    if pipeline.get("preproduction_entry_requires") != "SCRIPT_LOCK":
+        raise MediaControlError("pre-production must require Script Lock")
+    if pipeline.get("preproduction_exit_requires") != "PRODUCTION_READY_LOCK":
+        raise MediaControlError("pre-production must end at Production Ready Lock")
+    if pipeline.get("production_entry_requires") != "PRODUCTION_READY_LOCK":
+        raise MediaControlError("production must require Production Ready Lock")
+    if pipeline.get("phase_skip_forbidden") is not True:
+        raise MediaControlError("master pipeline cannot allow phase skipping")
+
+    title_gate = config.get("title_gate_contract", {})
+    if int(title_gate.get("candidate_count", 0)) != 3:
+        raise MediaControlError("Owner Title Gate must receive exactly three candidates")
+    for required_flag in {
+        "market_scan_required",
+        "social_network_scan_required",
+        "story_feasibility_required",
+        "owner_selection_required",
+        "script_start_before_selection_forbidden",
+        "automatic_post_lock_revision_forbidden",
+        "owner_reapproval_for_revision",
+    }:
+        if title_gate.get(required_flag) is not True:
+            raise MediaControlError(f"title gate requirement missing: {required_flag}")
+
+    stage_contract = config.get("stage_execution_contract", {})
+    if stage_contract.get("exactly_one_primary_program") is not True:
+        raise MediaControlError("each stage must have exactly one primary program")
+    if stage_contract.get("simultaneous_secondary_craft_program_forbidden") is not True:
+        raise MediaControlError("simultaneous second craft program must be forbidden")
+    if stage_contract.get("program_switch_requires_new_stage") is not True:
+        raise MediaControlError("program changes require a new stage")
+    if stage_contract.get("checkpoint_before_stage_exit") is not True:
+        raise MediaControlError("stage exit requires a checkpoint")
+    if stage_contract.get("output_verification_required") is not True:
+        raise MediaControlError("stage output must be verified")
+
+    handoff = config.get("handoff_contract", {})
+    if handoff.get("acceptance_required_before_next_department") is not True:
+        raise MediaControlError("next department requires accepted handoff")
+    if handoff.get("downstream_direct_repair_forbidden") is not True:
+        raise MediaControlError("downstream direct upstream repair must remain forbidden")
+    if handoff.get("rejection_action") != "RETURN_TICKET_TO_SOURCE_DEPARTMENT":
+        raise MediaControlError("handoff rejection must return work to source department")
 
     independence = set(config.get("function_independence_rules", []))
     required_independence = {
@@ -150,6 +237,16 @@ def validate_media_team(config):
         "unknown_execution_state_cannot_be_promoted_to_success",
         "human_assistance_is_bounded_and_does_not_transfer_stage_or_publish_authority",
         "human_return_must_be_verified_before_resume",
+        "only_media_producer_remains_control_plane_always_active",
+        "exactly_three_titles_must_reach_owner_title_gate",
+        "script_cannot_start_before_owner_title_lock",
+        "locked_title_change_requires_owner_reapproval",
+        "preproduction_cannot_start_before_script_lock",
+        "production_cannot_start_before_production_ready_lock",
+        "only_one_production_craft_department_is_active_at_a_time",
+        "one_stage_one_program",
+        "downstream_department_cannot_silently_edit_locked_upstream_artifacts",
+        "handoff_acceptance_is_required_before_next_department_activation",
     }
     if not required_independence.issubset(independence):
         raise MediaControlError("media function independence rules are incomplete")
