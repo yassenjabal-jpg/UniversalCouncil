@@ -1,12 +1,12 @@
 {
-  "version": "1.7",
+  "version": "1.8",
   "enabled": true,
   "team_model": "venture_scoped_smallest_effective_team_functions_not_headcount",
   "production_functions": [
     {
       "id": "media_producer",
       "name": "Media Producer / Production Coordinator",
-      "default_status": "CORE_ALWAYS_ACTIVE",
+      "default_status": "CONTROL_PLANE_ALWAYS_ACTIVE",
       "owns": [
         "master_schedule",
         "milestones",
@@ -22,7 +22,7 @@
     {
       "id": "editorial_director",
       "name": "Editorial Director / Showrunner",
-      "default_status": "CORE_ALWAYS_ACTIVE",
+      "default_status": "PHASE_ROUTED_CRAFT",
       "owns": [
         "idea_selection",
         "hook",
@@ -49,7 +49,7 @@
     {
       "id": "script_voice_director",
       "name": "Script & Voice Director",
-      "default_status": "ROUTED_CRAFT_CAPABILITY",
+      "default_status": "PHASE_ROUTED_CRAFT",
       "owns": [
         "five_pass_script_development",
         "scene_aware_script",
@@ -65,7 +65,7 @@
     {
       "id": "visual_art_director",
       "name": "Visual Art Director / Frame Curator",
-      "default_status": "ROUTED_CRAFT_CAPABILITY",
+      "default_status": "PHASE_ROUTED_CRAFT",
       "owns": [
         "visual_story_case",
         "key_visual",
@@ -80,7 +80,7 @@
     {
       "id": "cinematography_shot_designer",
       "name": "Cinematography / Shot Design",
-      "default_status": "ROUTED_CRAFT_CAPABILITY",
+      "default_status": "PHASE_ROUTED_CRAFT",
       "owns": [
         "shot_purpose",
         "framing_and_shot_size",
@@ -98,7 +98,7 @@
     {
       "id": "motion_picture_editor",
       "name": "Motion & Picture Editor",
-      "default_status": "ROUTED_CRAFT_CAPABILITY",
+      "default_status": "PHASE_ROUTED_CRAFT",
       "owns": [
         "preproduction_craft_review",
         "visual_story_feasibility",
@@ -118,7 +118,7 @@
     {
       "id": "music_sound_supervisor",
       "name": "Music Supervisor & Sound Designer",
-      "default_status": "ROUTED_CRAFT_CAPABILITY",
+      "default_status": "PHASE_ROUTED_CRAFT",
       "owns": [
         "preproduction_craft_review",
         "sonic_concept",
@@ -136,7 +136,7 @@
     {
       "id": "dialogue_mix_engineer",
       "name": "Dialogue & Mix Engineer",
-      "default_status": "ROUTED_CRAFT_CAPABILITY",
+      "default_status": "PHASE_ROUTED_CRAFT",
       "owns": [
         "dialogue_cleanup",
         "dialogue_edit",
@@ -153,7 +153,7 @@
     {
       "id": "audience_growth_strategist",
       "name": "Audience Growth & Packaging Strategist",
-      "default_status": "ROUTED_CRAFT_CAPABILITY",
+      "default_status": "PHASE_ROUTED_CRAFT",
       "owns": [
         "trend_radar",
         "topic_mining",
@@ -170,7 +170,7 @@
     {
       "id": "thumbnail_packaging_designer",
       "name": "Thumbnail & Packaging Designer",
-      "default_status": "ROUTED_CRAFT_CAPABILITY",
+      "default_status": "PHASE_ROUTED_CRAFT",
       "owns": [
         "thumbnail_concepts",
         "image_selection_retouching",
@@ -229,7 +229,14 @@
     "only_one_craft_department_is_active_at_a_time",
     "one_stage_one_program",
     "downstream_department_cannot_silently_edit_locked_upstream_artifacts",
-    "handoff_acceptance_is_required_before_next_department_activation"
+    "handoff_acceptance_is_required_before_next_department_activation",
+    "only_media_producer_remains_control_plane_always_active",
+    "exactly_three_titles_must_reach_owner_title_gate",
+    "script_cannot_start_before_owner_title_lock",
+    "locked_title_change_requires_owner_reapproval",
+    "preproduction_cannot_start_before_script_lock",
+    "production_cannot_start_before_production_ready_lock",
+    "only_one_production_craft_department_is_active_at_a_time"
   ],
   "existing_function_dependencies": [
     "Owner",
@@ -293,7 +300,14 @@
     "upstream_return_ticket_count",
     "program_switch_violation_count",
     "parallel_department_violation_count",
-    "stage_rework_count"
+    "stage_rework_count",
+    "title_candidate_count",
+    "owner_title_selection_rounds",
+    "title_revision_requests",
+    "writing_cycle_time",
+    "preproduction_cycle_time",
+    "production_cycle_time",
+    "return_ticket_count"
   ],
   "post_publish_split_review_after_videos": 10,
   "full_scale_without_pilot_forbidden": true,
@@ -355,16 +369,16 @@
   "specialized_tool_policy": "company/config/media_specialized_tool_policy.json",
   "benchmark_artifact": "docs/research/YOUTUBE_STUDIO_BENCHMARK_ARENA_2026-10-13.md",
   "operating_model": {
-    "mode": "SERIAL_DEPARTMENT_PRODUCTION_LINE",
-    "principle": "one_craft_department_at_a_time_with_verified_handoff_between_departments",
-    "core_functions": [
-      "media_producer",
-      "editorial_director"
+    "mode": "THREE_PHASE_STUDIO_WITH_SERIAL_PRODUCTION",
+    "principle": "writing_then_preproduction_then_serial_production_with_verified_handoffs",
+    "control_plane_functions": [
+      "media_producer"
     ],
     "mandatory_clearance_functions": [
       "independent_fact_checker"
     ],
-    "routed_craft_functions": [
+    "phase_routed_craft_functions": [
+      "editorial_director",
       "script_voice_director",
       "visual_art_director",
       "cinematography_shot_designer",
@@ -378,37 +392,56 @@
       "localization_producer",
       "human_assistance_pool"
     ],
-    "routing_rule": "activate exactly one craft department; complete its internal stages serially; accept its handoff packet before activating the next department",
-    "default_output_contract": [
-      "stage_artifact",
-      "stage_checkpoint",
-      "department_handoff_packet",
-      "material_blocker_if_any"
+    "macro_phases": [
+      "writing",
+      "pre_production",
+      "production"
+    ],
+    "writing_rules": [
+      "market_and_social_read_before_title_candidates",
+      "story_feasibility_before_title_candidates",
+      "exactly_three_title_candidates",
+      "owner_selects_one_title",
+      "script_work_forbidden_before_owner_title_lock",
+      "locked_title_change_requires_owner_reapproval",
+      "script_lock_required_before_preproduction"
+    ],
+    "preproduction_rules": [
+      "preproduction_starts_only_after_script_lock",
+      "one_program_per_stage",
+      "title_promise_alignment_required",
+      "animatic_required",
+      "production_ready_lock_required_before_production"
+    ],
+    "production_rules": [
+      "one_active_craft_department",
+      "no_parallel_craft_departments",
+      "each_department_completes_internal_stages_before_handoff",
+      "one_program_per_stage",
+      "program_change_only_at_stage_boundary",
+      "accepted_handoff_required_before_next_department",
+      "downstream_department_must_return_upstream_defects_to_source",
+      "producer_coordinates_but_does_not_edit_craft_artifacts"
     ],
     "forbidden_defaults": [
-      "two_craft_departments_editing_the_same_project_in_parallel",
-      "two_creative_programs_used_in_one_stage",
+      "script_before_owner_title_lock",
+      "automatic_title_change_after_owner_lock",
+      "production_before_production_ready_lock",
+      "two_craft_departments_editing_same_project_in_parallel",
+      "two_creative_programs_in_one_stage",
       "downstream_department_silently_fixing_locked_upstream_work",
-      "program_switch_inside_a_stage",
-      "mandatory_long_form_reports",
-      "repeating_context already present in shared production state"
+      "mandatory_long_form_reports"
     ],
-    "parallelize_when_safe": false,
-    "single_synthesis_per_gate": true,
     "owner_interrupt_only_when": [
+      "owner_title_selection",
+      "material_title_revision_after_lock",
       "material_brand_or_story_direction_conflict",
       "owner_voice_or_performance_approval",
       "credentials_subscription_or_spend_required",
       "destructive_or_irreversible_action",
       "public_publish_approval",
       "human_assistance_request_requires_owner_identity_credentials_spend_or_external_sharing"
-    ],
-    "single_active_craft_department": true,
-    "single_program_per_stage": true,
-    "program_change_only_at_stage_boundary": true,
-    "cross_department_direct_edit_forbidden": true,
-    "upstream_rework_requires_return_ticket": true,
-    "producer_control_plane_is_non_craft": true
+    ]
   },
   "execution_recovery": {
     "policy_version": "1.0",
@@ -641,40 +674,41 @@
     ]
   },
   "handoff_contract": {
-    "version": "1.0",
-    "required_fields": [
-      "project_id",
-      "handoff_id",
-      "from_department",
-      "to_department",
-      "input_packet_id",
-      "completed_stage_ids",
-      "artifact_manifest",
-      "locked_artifacts",
-      "change_log",
-      "known_limitations",
-      "qc_result",
-      "acceptance_criteria",
-      "checkpoint_ref",
-      "handoff_status"
-    ],
-    "valid_statuses": [
-      "READY_FOR_REVIEW",
-      "ACCEPTED",
-      "REJECTED_RETURN_TO_SOURCE"
-    ],
     "acceptance_required_before_next_department": true,
-    "rejection_action": "RETURN_TO_SOURCE_DEPARTMENT",
-    "downstream_direct_repair_forbidden": true
+    "downstream_direct_repair_forbidden": true,
+    "rejection_action": "RETURN_TICKET_TO_SOURCE_DEPARTMENT"
   },
   "stage_execution_contract": {
-    "version": "1.0",
     "exactly_one_primary_program": true,
     "simultaneous_secondary_craft_program_forbidden": true,
     "program_switch_requires_new_stage": true,
     "checkpoint_before_stage_exit": true,
-    "output_verification_required": true,
-    "fallback_tool_requires_recovery_stage": true,
-    "human_assistance_does_not_count_as_second_program_when_it_is_bounded_and_non_craft": true
+    "output_verification_required": true
+  },
+  "master_pipeline_contract": {
+    "phase_sequence": [
+      "writing",
+      "pre_production",
+      "production"
+    ],
+    "writing_exit_requires": [
+      "OWNER_TITLE_LOCK",
+      "SCRIPT_LOCK"
+    ],
+    "preproduction_entry_requires": "SCRIPT_LOCK",
+    "preproduction_exit_requires": "PRODUCTION_READY_LOCK",
+    "production_entry_requires": "PRODUCTION_READY_LOCK",
+    "feedback_mode": "FORMAL_RETURN_TICKET",
+    "phase_skip_forbidden": true
+  },
+  "title_gate_contract": {
+    "candidate_count": 3,
+    "market_scan_required": true,
+    "social_network_scan_required": true,
+    "story_feasibility_required": true,
+    "owner_selection_required": true,
+    "script_start_before_selection_forbidden": true,
+    "automatic_post_lock_revision_forbidden": true,
+    "owner_reapproval_for_revision": true
   }
 }
