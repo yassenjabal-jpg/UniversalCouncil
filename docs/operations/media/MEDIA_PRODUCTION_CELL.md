@@ -1,4 +1,4 @@
-# Media Production Cell v1.6
+# Media Production Cell v1.7
 
 Status: CANONICAL MEDIA OPERATIONS
 Date: 2026-10-16
@@ -31,23 +31,30 @@ Writing has two sections.
 
 ### Market & Title Development
 
-The project starts from market and audience evidence, not from a preselected script idea.
+The project starts from market and audience evidence, but **newsworthiness is not enough**.
 
 Required:
-- read YouTube demand;
+- read YouTube demand/outliers;
 - read social/platform trends;
-- synthesize a market opportunity;
+- synthesize market opportunity;
+- turn promising subjects into concrete story premises;
+- require a hero anchor, tension/mystery, viewer stakes and key visual;
 - verify evidence, visual and eight-minute story feasibility;
-- produce **exactly three distinct topic candidates**;
-- produce **exactly two distinct title variants for each topic**;
-- present all three topics and all six title variants to the Owner.
+- create one thumbnail hypothesis for each story;
+- produce **exactly three story candidates with three different story archetypes**;
+- produce **exactly two title variants for each story**;
+- run a Red Team Stranger Click challenge;
+- present only cleared story/title/thumbnail packages to the Owner.
 
-The Owner selects one title from one topic.
+A generic web/news fallback cannot silently replace missing YouTube-native evidence. Material degradation forces **DEGRADED_DISCOVERY_HOLD**.
+
+The Owner selects one title from one story.
 
 No script work starts before:
 **OWNER_TITLE_LOCK**
 
 The Studio may later propose a title refinement, but the title cannot change without explicit Owner reapproval.
+
 
 ### Script Development
 

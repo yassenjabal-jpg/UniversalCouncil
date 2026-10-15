@@ -1,7 +1,7 @@
 # Studio Master Pipeline
 
 Status: CANONICAL MEDIA OPERATIONS
-Version: 1.1
+Version: 1.2
 Date: 2026-10-16
 
 ## Master structure
@@ -24,49 +24,97 @@ Writing has two mandatory sections.
 
 ## 1A. Market & Title Development
 
-The project does **not** begin with a script.
+The project does **not** begin with a script or an abstract subject.
 
-It begins with reading the market, current audience interest and social/platform signals.
+It begins by finding a **YouTube-native story premise**: a specific story with a concrete anchor, unresolved tension, viewer stakes and a one-frame packaging idea.
 
 Required sequence:
 
-1. YouTube market scan — vidIQ
+1. YouTube market/outlier scan — vidIQ
 2. Cross-platform/social trend scan — Brave Browser
 3. Market/opportunity synthesis — ChatGPT
-4. Story feasibility check — ChatGPT
-5. Generate **exactly three distinct topic candidates** — ChatGPT
-6. Generate **exactly two distinct title variants for each topic** — ChatGPT
-7. Present the three topic cards and all six title variants to the Owner
-8. Owner selects exactly one title from exactly one topic
-9. Save **OWNER_TITLE_LOCK**
+4. Story premise generation — ChatGPT
+5. Story feasibility check — ChatGPT
+6. Packaging hypothesis — ChatGPT
+7. Generate **exactly three story candidates from three distinct story archetypes**, with **exactly two title variants per story** — ChatGPT
+8. Red Team stranger-click challenge — ChatGPT
+9. Present the three story cards and all six title variants to the Owner
+10. Owner selects exactly one title from exactly one story
+11. Save **OWNER_TITLE_LOCK**
 
-Each topic card must include:
-- topic
-- why now
-- market signal
-- story angle
-- competition level
-- visual potential
-- evidence feasibility
-- eight-minute story feasibility
-- risk notes
-- exactly two title variants
+The Studio must distinguish **subject** from **story**.
+
+Weak subject:
+"AI infrastructure financing"
+
+Required story premise:
+a concrete person/object/place/event + an unexpected condition, mystery or contradiction + clear viewer stakes + a payoff that changes how the viewer sees the subject.
+
+Each story card must include:
+- topic;
+- one-sentence story premise;
+- story archetype;
+- concrete hero anchor: person, object, place or event;
+- tension, contradiction or unresolved mystery;
+- viewer stakes / emotional charge;
+- why now;
+- market signal;
+- competition level;
+- one key visual;
+- one structured thumbnail hypothesis;
+- high visual potential;
+- evidence feasibility;
+- eight-minute story feasibility;
+- risk notes;
+- exactly two title variants.
+
+The three candidates must use **three different story archetypes**, not merely three different subject categories.
+
+Each thumbnail hypothesis must include:
+- hero subject;
+- visual tension;
+- composition;
+- optional 0–4 words;
+- explicit confirmation that the image works without explanatory copy.
 
 Each title variant must include:
-- title
-- click reason
-- viewer promise
+- title;
+- click reason;
+- viewer promise;
+- how it complements rather than repeats the thumbnail;
+- Stranger Click Test = PASS;
+- YouTube Title Style = PASS.
 
-The three topics must be meaningfully distinct from one another.
-The two titles inside a topic must use meaningfully different framing while preserving the same underlying story promise.
-
-A topic cannot reach the Owner if it:
+A story cannot reach the Owner if it:
+- is an abstract category without a story premise;
 - relies only on a short-lived trend without a durable story;
 - lacks credible research material;
-- lacks enough visual potential;
-- needs filler to sustain the target long-form duration.
+- lacks a concrete anchor;
+- lacks tension, contradiction or mystery;
+- lacks viewer stakes;
+- lacks a strong one-frame thumbnail hypothesis;
+- needs filler to sustain the target long-form duration;
+- duplicates another candidate's story archetype.
 
-A title variant cannot reach the Owner if it promises something the episode cannot deliver.
+A title cannot reach the Owner if it:
+- promises something the episode cannot deliver;
+- reads like a newspaper section heading, report title or generic explainer;
+- requires explanatory thumbnail text to become interesting;
+- fails the Stranger Click Test.
+
+### Discovery evidence rule
+
+Owner Title Gate requires current YouTube-native/outlier evidence.
+
+Allowed:
+- normal configured native research;
+- an explicitly authorized YouTube-native fallback route that still observes real platform demand/outliers.
+
+If native discovery becomes materially degraded, the Studio records:
+**DEGRADED_DISCOVERY_HOLD**
+
+A news/web fallback may establish factual relevance, but it cannot silently substitute for YouTube-native discovery quality.
+
 
 ## Owner Title Gate
 

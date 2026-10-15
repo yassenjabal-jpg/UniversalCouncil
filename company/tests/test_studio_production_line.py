@@ -12,14 +12,33 @@ from company.runtime.studio_production_line import (
 )
 
 
+STORY_ARCHETYPES = [
+    "mystery_investigation",
+    "hidden_system",
+    "engineering_impossibility",
+]
+
+
 def topic_card(idx: int, topic: str):
     return {
         "id": f"P{idx}",
         "topic": topic,
+        "story_premise": f"A concrete story premise for {topic}",
+        "story_archetype": STORY_ARCHETYPES[idx - 1],
+        "hero_anchor": f"hero-{idx}",
+        "tension_or_mystery": "an unresolved contradiction",
+        "viewer_stakes": "the answer changes how the viewer understands the subject",
         "why_now": "current market signal",
         "market_signal": "rising audience interest",
-        "story_angle": "specific documentary angle",
         "competition_level": "MEDIUM",
+        "key_visual": "one unmistakable visual anchor",
+        "thumbnail_hypothesis": {
+            "hero_subject": f"hero-{idx}",
+            "visual_tension": "one visible contradiction",
+            "composition": "single dominant subject with negative space",
+            "text_0_4_words": "",
+            "works_without_explanatory_text": True,
+        },
         "visual_potential": "HIGH",
         "evidence_feasibility": "PASS",
         "eight_minute_story_feasibility": "PASS",
@@ -30,12 +49,18 @@ def topic_card(idx: int, topic: str):
                 "title": f"{topic}: direct title",
                 "click_reason": "direct curiosity gap",
                 "viewer_promise": "specific answer",
+                "thumbnail_complement": "title asks what the image does not explain",
+                "stranger_click_test": "PASS",
+                "youtube_title_style_status": "PASS",
             },
             {
                 "id": f"P{idx}B",
                 "title": f"{topic}: documentary title",
                 "click_reason": "alternative curiosity framing",
                 "viewer_promise": "same story promise from a different angle",
+                "thumbnail_complement": "title adds the consequence behind the image",
+                "stranger_click_test": "PASS",
+                "youtube_title_style_status": "PASS",
             },
         ],
     }
@@ -47,6 +72,10 @@ class StudioProductionLineTests(unittest.TestCase):
             "market_scan_status": "PASS",
             "social_trend_scan_status": "PASS",
             "story_feasibility_status": "PASS",
+            "youtube_native_discovery_status": "PASS",
+            "discovery_evidence_mode": "FULL",
+            "packaging_hypothesis_status": "PASS",
+            "red_team_click_challenge_status": "PASS",
             "topics": [
                 topic_card(1, "Topic One"),
                 topic_card(2, "Topic Two"),
@@ -66,12 +95,28 @@ class StudioProductionLineTests(unittest.TestCase):
         with self.assertRaises(StudioProductionLineError):
             validate_title_candidate_packet(packet)
 
-    def test_title_candidates_require_market_social_and_story_feasibility(self):
-        for key in {"market_scan_status", "social_trend_scan_status", "story_feasibility_status"}:
+    def test_title_candidates_require_discovery_feasibility_packaging_and_red_team(self):
+        for key in {
+            "market_scan_status",
+            "social_trend_scan_status",
+            "story_feasibility_status",
+            "youtube_native_discovery_status",
+            "packaging_hypothesis_status",
+            "red_team_click_challenge_status",
+        }:
             packet = self.packet()
             packet[key] = "FAIL"
             with self.assertRaises(StudioProductionLineError):
                 validate_title_candidate_packet(packet)
+
+        packet = self.packet()
+        packet["discovery_evidence_mode"] = "DEGRADED_HOLD"
+        with self.assertRaises(StudioProductionLineError):
+            validate_title_candidate_packet(packet)
+
+        packet = self.packet()
+        packet["discovery_evidence_mode"] = "AUTHORIZED_NATIVE_FALLBACK"
+        self.assertTrue(validate_title_candidate_packet(packet))
 
     def test_owner_is_only_title_lock_authority(self):
         packet = self.packet()
@@ -189,69 +234,115 @@ class StudioProductionLineTests(unittest.TestCase):
     def test_title_packet_failure_paths_are_covered(self):
         base = self.packet()
 
-        missing_field = self.packet()
-        missing_field["topics"][0]["title_variants"][0].pop("viewer_promise")
-        with self.assertRaises(StudioProductionLineError):
-            validate_title_candidate_packet(missing_field)
+        cases = []
+
+        missing_variant_field = self.packet()
+        missing_variant_field["topics"][0]["title_variants"][0].pop("viewer_promise")
+        cases.append(missing_variant_field)
 
         empty_id = self.packet()
         empty_id["topics"][0]["id"] = ""
-        with self.assertRaises(StudioProductionLineError):
-            validate_title_candidate_packet(empty_id)
+        cases.append(empty_id)
 
         empty_title = self.packet()
         empty_title["topics"][0]["title_variants"][0]["title"] = " "
-        with self.assertRaises(StudioProductionLineError):
-            validate_title_candidate_packet(empty_title)
+        cases.append(empty_title)
 
-        duplicate_id = self.packet()
-        duplicate_id["topics"][1]["id"] = duplicate_id["topics"][0]["id"]
-        with self.assertRaises(StudioProductionLineError):
-            validate_title_candidate_packet(duplicate_id)
+        duplicate_topic_id = self.packet()
+        duplicate_topic_id["topics"][1]["id"] = duplicate_topic_id["topics"][0]["id"]
+        cases.append(duplicate_topic_id)
+
+        duplicate_topic = self.packet()
+        duplicate_topic["topics"][1]["topic"] = duplicate_topic["topics"][0]["topic"]
+        cases.append(duplicate_topic)
+
+        missing_topic_field = self.packet()
+        missing_topic_field["topics"][0].pop("story_premise")
+        cases.append(missing_topic_field)
+
+        empty_story_field = self.packet()
+        empty_story_field["topics"][0]["hero_anchor"] = " "
+        cases.append(empty_story_field)
+
+        unsupported_archetype = self.packet()
+        unsupported_archetype["topics"][0]["story_archetype"] = "generic_explainer"
+        cases.append(unsupported_archetype)
+
+        duplicate_archetype = self.packet()
+        duplicate_archetype["topics"][1]["story_archetype"] = duplicate_archetype["topics"][0]["story_archetype"]
+        cases.append(duplicate_archetype)
+
+        non_object_thumbnail = self.packet()
+        non_object_thumbnail["topics"][0]["thumbnail_hypothesis"] = "pretty image"
+        cases.append(non_object_thumbnail)
+
+        missing_thumbnail_field = self.packet()
+        missing_thumbnail_field["topics"][0]["thumbnail_hypothesis"].pop("visual_tension")
+        cases.append(missing_thumbnail_field)
+
+        empty_thumbnail_field = self.packet()
+        empty_thumbnail_field["topics"][0]["thumbnail_hypothesis"]["composition"] = ""
+        cases.append(empty_thumbnail_field)
+
+        too_much_thumbnail_text = self.packet()
+        too_much_thumbnail_text["topics"][0]["thumbnail_hypothesis"]["text_0_4_words"] = "one two three four five"
+        cases.append(too_much_thumbnail_text)
+
+        explanatory_thumbnail = self.packet()
+        explanatory_thumbnail["topics"][0]["thumbnail_hypothesis"]["works_without_explanatory_text"] = False
+        cases.append(explanatory_thumbnail)
+
+        wrong_variant_count = self.packet()
+        wrong_variant_count["topics"][0]["title_variants"] = wrong_variant_count["topics"][0]["title_variants"][:1]
+        cases.append(wrong_variant_count)
 
         duplicate_title = self.packet()
         duplicate_title["topics"][1]["title_variants"][0]["title"] = duplicate_title["topics"][0]["title_variants"][0][
             "title"
         ]
-        with self.assertRaises(StudioProductionLineError):
-            validate_title_candidate_packet(duplicate_title)
-
-        missing_topic_field = self.packet()
-        missing_topic_field["topics"][0].pop("story_angle")
-        with self.assertRaises(StudioProductionLineError):
-            validate_title_candidate_packet(missing_topic_field)
-
-        duplicate_topic = self.packet()
-        duplicate_topic["topics"][1]["topic"] = duplicate_topic["topics"][0]["topic"]
-        with self.assertRaises(StudioProductionLineError):
-            validate_title_candidate_packet(duplicate_topic)
-
-        wrong_variant_count = self.packet()
-        wrong_variant_count["topics"][0]["title_variants"] = wrong_variant_count["topics"][0]["title_variants"][:1]
-        with self.assertRaises(StudioProductionLineError):
-            validate_title_candidate_packet(wrong_variant_count)
+        cases.append(duplicate_title)
 
         duplicate_title_id = self.packet()
         duplicate_title_id["topics"][1]["title_variants"][0]["id"] = duplicate_title_id["topics"][0]["title_variants"][
             0
         ]["id"]
-        with self.assertRaises(StudioProductionLineError):
-            validate_title_candidate_packet(duplicate_title_id)
+        cases.append(duplicate_title_id)
+
+        empty_click_reason = self.packet()
+        empty_click_reason["topics"][0]["title_variants"][0]["click_reason"] = ""
+        cases.append(empty_click_reason)
+
+        empty_viewer_promise = self.packet()
+        empty_viewer_promise["topics"][0]["title_variants"][0]["viewer_promise"] = ""
+        cases.append(empty_viewer_promise)
+
+        empty_thumbnail_complement = self.packet()
+        empty_thumbnail_complement["topics"][0]["title_variants"][0]["thumbnail_complement"] = ""
+        cases.append(empty_thumbnail_complement)
+
+        stranger_click_fail = self.packet()
+        stranger_click_fail["topics"][0]["title_variants"][0]["stranger_click_test"] = "FAIL"
+        cases.append(stranger_click_fail)
+
+        article_title = self.packet()
+        article_title["topics"][0]["title_variants"][0]["youtube_title_style_status"] = "FAIL"
+        cases.append(article_title)
 
         evidence_fail = self.packet()
         evidence_fail["topics"][0]["evidence_feasibility"] = "FAIL"
-        with self.assertRaises(StudioProductionLineError):
-            validate_title_candidate_packet(evidence_fail)
+        cases.append(evidence_fail)
 
         duration_fail = self.packet()
         duration_fail["topics"][0]["eight_minute_story_feasibility"] = "FAIL"
-        with self.assertRaises(StudioProductionLineError):
-            validate_title_candidate_packet(duration_fail)
+        cases.append(duration_fail)
 
         visual_fail = self.packet()
-        visual_fail["topics"][0]["visual_potential"] = "LOW"
-        with self.assertRaises(StudioProductionLineError):
-            validate_title_candidate_packet(visual_fail)
+        visual_fail["topics"][0]["visual_potential"] = "MEDIUM"
+        cases.append(visual_fail)
+
+        for packet in cases:
+            with self.assertRaises(StudioProductionLineError):
+                validate_title_candidate_packet(packet)
 
         self.assertTrue(validate_title_candidate_packet(base))
 

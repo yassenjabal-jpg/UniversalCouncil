@@ -1,4 +1,4 @@
-# Channel Operating System v1.7
+# Channel Operating System v1.8
 
 Status: CANONICAL
 Date: 2026-10-16
@@ -40,42 +40,39 @@ A later phase may return work upstream only through a formal return ticket.
 
 ### Title development comes first
 
-The Studio reads:
+The Studio searches for **stories**, not merely timely subjects.
+
+It reads:
 - YouTube demand and outliers;
 - current market interest;
 - social/platform trends;
 - specialist/community signals;
 - durable audience questions.
 
-It then performs a feasibility check.
+Before the Owner sees anything, each candidate must become a YouTube-native story premise with:
+- one concrete hero anchor;
+- one contradiction, mystery or unresolved tension;
+- explicit viewer stakes;
+- one key visual;
+- one thumbnail hypothesis;
+- exactly two title variants.
 
-Only feasible stories can produce title candidates.
+The Studio produces **exactly three story candidates using three distinct story archetypes**.
 
-The Studio produces **exactly three distinct topic cards**.
+Each title is judged together with its thumbnail hypothesis and must pass:
+- Stranger Click Test;
+- YouTube Title Style check;
+- promise accuracy.
 
-Each topic card explains:
-- the topic;
-- why now;
-- market signal;
-- story angle;
-- competition;
-- visual potential;
-- evidence feasibility;
-- eight-minute story feasibility;
-- risk.
+If YouTube-native discovery is materially degraded, the workflow enters **DEGRADED_DISCOVERY_HOLD** rather than replacing platform evidence with generic news relevance.
 
-Each topic card carries **exactly two distinct title variants**.
-Each title variant explains:
-- title;
-- click reason;
-- viewer promise.
-
-The Owner chooses one title from one topic.
+The Owner chooses one title from one story.
 
 That creates:
 **OWNER_TITLE_LOCK**
 
 The script cannot start before this gate.
+
 
 ### Script development
 

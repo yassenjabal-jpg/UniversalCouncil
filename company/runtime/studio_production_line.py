@@ -7,13 +7,32 @@ class StudioProductionLineError(ValueError):
     pass
 
 
+ALLOWED_STORY_ARCHETYPES = {
+    "mystery_investigation",
+    "hidden_system",
+    "human_odyssey",
+    "engineering_impossibility",
+    "rise_and_fall",
+    "scam_or_heist",
+    "survival_or_disaster",
+    "transformation",
+    "historical_paradox",
+    "experiment_or_challenge",
+}
+
 TOPIC_CARD_REQUIRED_FIELDS = {
     "id",
     "topic",
+    "story_premise",
+    "story_archetype",
+    "hero_anchor",
+    "tension_or_mystery",
+    "viewer_stakes",
     "why_now",
     "market_signal",
-    "story_angle",
     "competition_level",
+    "key_visual",
+    "thumbnail_hypothesis",
     "visual_potential",
     "evidence_feasibility",
     "eight_minute_story_feasibility",
@@ -21,11 +40,22 @@ TOPIC_CARD_REQUIRED_FIELDS = {
     "title_variants",
 }
 
+THUMBNAIL_HYPOTHESIS_REQUIRED_FIELDS = {
+    "hero_subject",
+    "visual_tension",
+    "composition",
+    "text_0_4_words",
+    "works_without_explanatory_text",
+}
+
 TITLE_VARIANT_REQUIRED_FIELDS = {
     "id",
     "title",
     "click_reason",
     "viewer_promise",
+    "thumbnail_complement",
+    "stranger_click_test",
+    "youtube_title_style_status",
 }
 
 PHASE_SEQUENCE = ["writing", "pre_production", "production"]
@@ -44,6 +74,14 @@ def validate_title_candidate_packet(packet: dict[str, Any]) -> bool:
         raise StudioProductionLineError("social trend scan must pass before title candidates")
     if packet.get("story_feasibility_status") != "PASS":
         raise StudioProductionLineError("story feasibility must pass before title candidates")
+    if packet.get("youtube_native_discovery_status") != "PASS":
+        raise StudioProductionLineError("YouTube-native discovery must pass before Owner Title Gate")
+    if packet.get("discovery_evidence_mode") not in {"FULL", "AUTHORIZED_NATIVE_FALLBACK"}:
+        raise StudioProductionLineError("degraded discovery evidence requires HOLD before Owner Title Gate")
+    if packet.get("packaging_hypothesis_status") != "PASS":
+        raise StudioProductionLineError("packaging hypothesis must pass before title candidates")
+    if packet.get("red_team_click_challenge_status") != "PASS":
+        raise StudioProductionLineError("Red Team stranger-click challenge must pass before Owner Title Gate")
 
     topics = packet.get("topics", [])
     if len(topics) != 3:
@@ -51,12 +89,15 @@ def validate_title_candidate_packet(packet: dict[str, Any]) -> bool:
 
     topic_ids: set[str] = set()
     topic_names: set[str] = set()
+    story_archetypes: set[str] = set()
     title_ids: set[str] = set()
     titles: set[str] = set()
+
     for topic_card in topics:
         missing = TOPIC_CARD_REQUIRED_FIELDS - set(topic_card)
         if missing:
             raise StudioProductionLineError(f"topic card missing fields: {sorted(missing)}")
+
         topic_id = str(topic_card["id"]).strip()
         topic_name = str(topic_card["topic"]).strip()
         if not topic_id or not topic_name:
@@ -67,6 +108,38 @@ def validate_title_candidate_packet(packet: dict[str, Any]) -> bool:
             raise StudioProductionLineError("the three topic candidates must be meaningfully distinct")
         topic_ids.add(topic_id)
         topic_names.add(topic_name.casefold())
+
+        for field in {
+            "story_premise",
+            "hero_anchor",
+            "tension_or_mystery",
+            "viewer_stakes",
+            "key_visual",
+        }:
+            if not str(topic_card.get(field, "")).strip():
+                raise StudioProductionLineError(f"topic card {field} must be non-empty")
+
+        story_archetype = str(topic_card["story_archetype"]).strip()
+        if story_archetype not in ALLOWED_STORY_ARCHETYPES:
+            raise StudioProductionLineError("topic uses an unsupported story archetype")
+        if story_archetype in story_archetypes:
+            raise StudioProductionLineError("the three topics must use distinct story archetypes")
+        story_archetypes.add(story_archetype)
+
+        thumbnail = topic_card.get("thumbnail_hypothesis")
+        if not isinstance(thumbnail, dict):
+            raise StudioProductionLineError("thumbnail hypothesis must be a structured object")
+        thumbnail_missing = THUMBNAIL_HYPOTHESIS_REQUIRED_FIELDS - set(thumbnail)
+        if thumbnail_missing:
+            raise StudioProductionLineError(f"thumbnail hypothesis missing fields: {sorted(thumbnail_missing)}")
+        for field in {"hero_subject", "visual_tension", "composition"}:
+            if not str(thumbnail.get(field, "")).strip():
+                raise StudioProductionLineError(f"thumbnail hypothesis {field} must be non-empty")
+        thumbnail_text = thumbnail.get("text_0_4_words")
+        if not isinstance(thumbnail_text, str) or len(thumbnail_text.split()) > 4:
+            raise StudioProductionLineError("thumbnail text must contain zero to four words")
+        if thumbnail.get("works_without_explanatory_text") is not True:
+            raise StudioProductionLineError("thumbnail must work without explanatory copy")
 
         variants = topic_card.get("title_variants", [])
         if len(variants) != 2:
@@ -86,6 +159,16 @@ def validate_title_candidate_packet(packet: dict[str, Any]) -> bool:
                 raise StudioProductionLineError("all presented title variants must be distinct")
             if title.casefold() in local_titles:
                 raise StudioProductionLineError("the two title variants for a topic must be distinct")
+            if not str(variant.get("click_reason", "")).strip():
+                raise StudioProductionLineError("title variant click reason must be non-empty")
+            if not str(variant.get("viewer_promise", "")).strip():
+                raise StudioProductionLineError("title variant viewer promise must be non-empty")
+            if not str(variant.get("thumbnail_complement", "")).strip():
+                raise StudioProductionLineError("title must explain how it complements the thumbnail")
+            if variant.get("stranger_click_test") != "PASS":
+                raise StudioProductionLineError("every title must pass the stranger-click test")
+            if variant.get("youtube_title_style_status") != "PASS":
+                raise StudioProductionLineError("article-like titles cannot reach Owner Title Gate")
             title_ids.add(title_id)
             titles.add(title.casefold())
             local_titles.add(title.casefold())
@@ -94,8 +177,8 @@ def validate_title_candidate_packet(packet: dict[str, Any]) -> bool:
             raise StudioProductionLineError("every topic candidate must be evidence-feasible")
         if topic_card.get("eight_minute_story_feasibility") != "PASS":
             raise StudioProductionLineError("every topic candidate must sustain the target long-form story")
-        if topic_card.get("visual_potential") not in {"MEDIUM", "HIGH"}:
-            raise StudioProductionLineError("every topic candidate needs adequate visual potential")
+        if topic_card.get("visual_potential") != "HIGH":
+            raise StudioProductionLineError("every topic candidate needs high visual potential")
 
     return True
 

@@ -11,8 +11,11 @@ REQUIRED_WORKFLOW = [
     "market_scan",
     "social_trend_scan",
     "market_synthesis",
+    "story_premise_generation",
     "story_feasibility_check",
+    "packaging_hypothesis",
     "title_candidate_generation",
+    "red_team_click_challenge",
     "owner_title_gate",
     "story_question",
     "script_research_pack",
@@ -149,7 +152,7 @@ def _validate_single_program_stages(stages: list[dict[str, Any]], context: str) 
 
 
 def validate_config(cfg: dict[str, Any]) -> bool:
-    _require(cfg.get("version") == "1.7", "channel operating system must be version 1.7")
+    _require(cfg.get("version") == "1.8", "channel operating system must be version 1.8")
     _require(
         cfg.get("channel_model") == "broad_format_first_multilingual_visual_documentary",
         "channel model drifted",
@@ -179,12 +182,38 @@ def validate_config(cfg: dict[str, Any]) -> bool:
 
     fields = cfg.get("topic_scoring", {}).get("fields", {})
     _require(sum(int(value) for value in fields.values()) == 100, "topic scoring weights must total 100")
+    for required_field in {
+        "curiosity_gap",
+        "story_novelty",
+        "story_engine_strength",
+        "thumbnail_one_frame_strength",
+        "viewer_stakes_or_emotional_charge",
+        "evidence_sourceability",
+    }:
+        _require(required_field in fields, f"topic scoring missing {required_field}")
     topic_gates = cfg.get("topic_scoring", {}).get("gates", {})
     _require(int(topic_gates.get("minimum_total", 0)) >= 70, "topic score gate too weak")
+    _require(int(topic_gates.get("minimum_curiosity_gap", 0)) >= 7, "curiosity gate too weak")
+    _require(int(topic_gates.get("minimum_story_engine_strength", 0)) >= 7, "story-engine gate too weak")
+    _require(
+        int(topic_gates.get("minimum_thumbnail_one_frame_strength", 0)) >= 7,
+        "thumbnail one-frame gate too weak",
+    )
     _require(topic_gates.get("require_one_sentence_question") is True, "topic must have one-sentence question")
+    _require(topic_gates.get("require_concrete_story_anchor") is True, "topic needs a concrete story anchor")
+    _require(
+        topic_gates.get("require_unresolved_tension_or_contradiction") is True,
+        "topic needs tension or contradiction",
+    )
+    _require(topic_gates.get("require_story_archetype") is True, "topic needs a story archetype")
+    _require(topic_gates.get("require_thumbnail_hypothesis") is True, "topic needs a thumbnail hypothesis")
     _require(
         topic_gates.get("reject_if_only_trending_without_durable_question") is True,
         "trend-only topics must fail",
+    )
+    _require(
+        topic_gates.get("reject_if_abstract_category_without_story_premise") is True,
+        "abstract category-only topics must fail",
     )
 
     _require(cfg.get("workflow") == REQUIRED_WORKFLOW, "workflow stages or order drifted")
@@ -220,22 +249,35 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     _require(int(title_system.get("required_topic_count", 0)) == 3, "exactly three topic candidates required")
     _require(int(title_system.get("required_titles_per_topic", 0)) == 2, "each topic must have exactly two titles")
     _require(title_system.get("topic_distinctness_required") is True, "topic candidates must be distinct")
+    _require(title_system.get("story_archetype_diversity_required") is True, "story archetypes must be diverse")
     _require(
         title_system.get("title_distinctness_within_topic_required") is True,
         "title variants within each topic must be distinct",
     )
+    _require(title_system.get("youtube_native_discovery_required") is True, "YouTube-native discovery is required")
+    _require(title_system.get("authorized_native_fallback_allowed") is True, "authorized native fallback is required")
+    _require(title_system.get("degraded_discovery_requires_hold") is True, "degraded discovery must hold")
+    _require(title_system.get("packaging_hypothesis_required") is True, "thumbnail hypothesis is required")
+    _require(title_system.get("red_team_stranger_click_required") is True, "Red Team click challenge is required")
     _require(title_system.get("owner_selection_required") is True, "Owner title selection is required")
     _require(title_system.get("owner_is_only_final_title_authority") is True, "Owner must retain title authority")
     _require(
         title_system.get("script_start_before_owner_selection_forbidden") is True,
         "script cannot start before title selection",
     )
+    _require(len(title_system.get("allowed_story_archetypes", [])) >= 8, "story archetype set is too narrow")
     required_topic_fields = {
         "topic",
+        "story_premise",
+        "story_archetype",
+        "hero_anchor",
+        "tension_or_mystery",
+        "viewer_stakes",
         "why_now",
         "market_signal",
-        "story_angle",
         "competition_level",
+        "key_visual",
+        "thumbnail_hypothesis",
         "visual_potential",
         "evidence_feasibility",
         "eight_minute_story_feasibility",
@@ -245,7 +287,25 @@ def validate_config(cfg: dict[str, Any]) -> bool:
         required_topic_fields.issubset(set(title_system.get("topic_required_fields", []))),
         "topic cards are incomplete",
     )
-    required_title_variant_fields = {"title", "click_reason", "viewer_promise"}
+    required_thumbnail_fields = {
+        "hero_subject",
+        "visual_tension",
+        "composition",
+        "text_0_4_words",
+        "works_without_explanatory_text",
+    }
+    _require(
+        required_thumbnail_fields.issubset(set(title_system.get("thumbnail_hypothesis_required_fields", []))),
+        "thumbnail hypothesis contract is incomplete",
+    )
+    required_title_variant_fields = {
+        "title",
+        "click_reason",
+        "viewer_promise",
+        "thumbnail_complement",
+        "stranger_click_test",
+        "youtube_title_style_status",
+    }
     _require(
         required_title_variant_fields.issubset(set(title_system.get("title_variant_required_fields", []))),
         "title variants are incomplete",
@@ -279,6 +339,12 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     _require(research.get("separate_claim_and_visual_ledgers") is True, "claim and visual ledgers must stay separate")
     _require(research.get("market_and_social_scan_required_before_title_gate") is True, "market/social scan required")
     _require(research.get("title_feasibility_required_before_owner_gate") is True, "title feasibility required")
+    _require(
+        research.get("native_youtube_outlier_evidence_required_before_owner_gate") is True,
+        "YouTube-native outlier evidence is required",
+    )
+    _require(research.get("authorized_native_fallback_allowed") is True, "authorized native fallback is required")
+    _require(research.get("degraded_discovery_requires_hold") is True, "degraded discovery must hold")
     _require(int(research.get("required_topic_candidates", 0)) == 3, "exactly three topics are required")
     _require(
         int(research.get("required_title_variants_per_topic", 0)) == 2,
@@ -436,13 +502,19 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     _require(
         packaging.get("thumbnail_designer_independent_craft_function") is True, "thumbnail craft must stay distinct"
     )
+    stage_a = set(packaging.get("stage_a_before_script", []))
     _require(
-        "three_distinct_topics_with_two_titles_each" in packaging.get("stage_a_before_script", []),
-        "early packaging must supply three topics with two titles each",
-    )
-    _require(
-        "owner_title_selection" in packaging.get("stage_a_before_script", []),
-        "early packaging must include Owner selection",
+        {
+            "youtube_native_outlier_read",
+            "three_distinct_story_premises",
+            "three_distinct_story_archetypes",
+            "one_thumbnail_hypothesis_per_topic",
+            "two_title_variants_per_topic",
+            "title_thumbnail_pair_review",
+            "red_team_stranger_click_pass",
+            "owner_title_selection",
+        }.issubset(stage_a),
+        "early packaging must enforce story, thumbnail and click gates",
     )
     _require(
         packaging.get("title_changes_after_owner_lock_require_owner_reapproval") is True, "title revisions need Owner"

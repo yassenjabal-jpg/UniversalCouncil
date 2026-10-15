@@ -36,8 +36,16 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertTrue(title["owner_is_only_final_title_authority"])
         self.assertTrue(title["script_start_before_owner_selection_forbidden"])
         self.assertTrue(title["post_lock_revision"]["owner_reapproval_required"])
-        self.assertIn("eight_minute_story_feasibility", title["topic_required_fields"])
-        self.assertIn("viewer_promise", title["title_variant_required_fields"])
+        self.assertTrue(title["story_archetype_diversity_required"])
+        self.assertTrue(title["youtube_native_discovery_required"])
+        self.assertTrue(title["degraded_discovery_requires_hold"])
+        self.assertTrue(title["packaging_hypothesis_required"])
+        self.assertTrue(title["red_team_stranger_click_required"])
+        self.assertIn("story_premise", title["topic_required_fields"])
+        self.assertIn("thumbnail_hypothesis", title["topic_required_fields"])
+        self.assertIn("works_without_explanatory_text", title["thumbnail_hypothesis_required_fields"])
+        self.assertIn("thumbnail_complement", title["title_variant_required_fields"])
+        self.assertIn("stranger_click_test", title["title_variant_required_fields"])
 
     def test_writing_has_title_then_script_sections(self):
         sections = CONFIG["writing_phase"]["sections"]
@@ -120,7 +128,10 @@ class ChannelOperatingSystemTests(unittest.TestCase):
 
     def test_packaging_strategy_is_early_but_execution_is_late(self):
         packaging = CONFIG["packaging_system"]
-        self.assertIn("three_distinct_topics_with_two_titles_each", packaging["stage_a_before_script"])
+        self.assertIn("three_distinct_story_premises", packaging["stage_a_before_script"])
+        self.assertIn("three_distinct_story_archetypes", packaging["stage_a_before_script"])
+        self.assertIn("one_thumbnail_hypothesis_per_topic", packaging["stage_a_before_script"])
+        self.assertIn("red_team_stranger_click_pass", packaging["stage_a_before_script"])
         self.assertIn("owner_title_selection", packaging["stage_a_before_script"])
         self.assertTrue(packaging["title_changes_after_owner_lock_require_owner_reapproval"])
         self.assertGreaterEqual(len(packaging["stage_b_after_picture_lock"]), 4)
@@ -144,6 +155,10 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["master_pipeline"].__setitem__("phases", ["production"]),
             lambda c: c["writing_phase"]["title_system"].__setitem__("required_topic_count", 4),
             lambda c: c["writing_phase"]["title_system"].__setitem__("owner_selection_required", False),
+            lambda c: c["writing_phase"]["title_system"].__setitem__("story_archetype_diversity_required", False),
+            lambda c: c["writing_phase"]["title_system"].__setitem__("youtube_native_discovery_required", False),
+            lambda c: c["research_system"].__setitem__("degraded_discovery_requires_hold", False),
+            lambda c: c["topic_scoring"]["gates"].__setitem__("require_thumbnail_hypothesis", False),
             lambda c: c["script_development"].__setitem__("required_passes", ["one"]),
             lambda c: c["pre_production_phase"].__setitem__("entry_requirement", "NONE"),
             lambda c: c["production_phase"].__setitem__("parallel_craft_departments", True),

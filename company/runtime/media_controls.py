@@ -81,6 +81,11 @@ REQUIRED_PILOT_METRICS = {
     "title_variant_count",
     "owner_title_selection_rounds",
     "title_revision_requests",
+    "story_premise_rejection_count",
+    "degraded_discovery_hold_count",
+    "thumbnail_hypothesis_count",
+    "red_team_click_rejection_count",
+    "owner_w1_rejection_count",
     "writing_cycle_time",
     "preproduction_cycle_time",
     "production_cycle_time",
@@ -103,8 +108,8 @@ PUBLISHED_PERFORMANCE_METRICS = {
 
 
 def validate_media_team(config):
-    if config.get("version") != "1.9":
-        raise MediaControlError("media venture must be version 1.9")
+    if config.get("version") != "2.0":
+        raise MediaControlError("media venture must be version 2.0")
 
     functions = {f["id"]: f for f in config.get("production_functions", [])}
     missing = REQUIRED_MEDIA_FUNCTIONS - set(functions)
@@ -146,6 +151,12 @@ def validate_media_team(config):
         "market_and_social_read_before_title_candidates",
         "story_feasibility_before_title_candidates",
         "exactly_three_topic_candidates_with_two_title_variants_each",
+        "youtube_native_or_authorized_native_fallback_before_owner_gate",
+        "degraded_discovery_forces_hold",
+        "story_premise_required_before_title_candidates",
+        "story_archetype_diversity_required",
+        "thumbnail_hypothesis_required_before_owner_gate",
+        "red_team_stranger_click_pass_required_before_owner_gate",
         "owner_selects_one_title",
         "script_work_forbidden_before_owner_title_lock",
         "locked_title_change_requires_owner_reapproval",
@@ -200,6 +211,13 @@ def validate_media_team(config):
         "market_scan_required",
         "social_network_scan_required",
         "story_feasibility_required",
+        "native_youtube_discovery_required",
+        "authorized_native_fallback_allowed",
+        "degraded_discovery_requires_hold",
+        "story_premise_required",
+        "story_archetype_diversity_required",
+        "thumbnail_hypothesis_required",
+        "red_team_click_pass_required",
         "owner_selection_required",
         "script_start_before_selection_forbidden",
         "automatic_post_lock_revision_forbidden",

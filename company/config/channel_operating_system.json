@@ -1,5 +1,5 @@
 {
-  "version": "1.7",
+  "version": "1.8",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
   "visual_system": "Editorial Renaissance Motion",
   "primary_language": "Arabic",
@@ -76,31 +76,47 @@
   "topic_scoring": {
     "scale": 100,
     "fields": {
-      "cross_platform_velocity": 15,
-      "curiosity_gap": 15,
-      "channel_format_fit": 12,
-      "evergreen_half_life": 10,
-      "visual_explainability": 12,
-      "evidence_sourceability": 10,
-      "multilingual_portability": 8,
-      "competition_opportunity": 6,
-      "production_cost": 5,
-      "policy_brand_safety": 7
+      "cross_platform_velocity": 8,
+      "curiosity_gap": 12,
+      "story_novelty": 12,
+      "story_engine_strength": 12,
+      "thumbnail_one_frame_strength": 12,
+      "viewer_stakes_or_emotional_charge": 8,
+      "channel_format_fit": 8,
+      "evergreen_half_life": 6,
+      "visual_explainability": 6,
+      "evidence_sourceability": 8,
+      "multilingual_portability": 3,
+      "competition_opportunity": 2,
+      "production_cost": 1,
+      "policy_brand_safety": 2
     },
     "gates": {
       "minimum_total": 75,
+      "minimum_curiosity_gap": 8,
+      "minimum_story_novelty": 7,
+      "minimum_story_engine_strength": 8,
+      "minimum_thumbnail_one_frame_strength": 8,
       "minimum_evidence_sourceability": 6,
       "minimum_visual_explainability": 7,
       "require_one_sentence_question": true,
-      "reject_if_only_trending_without_durable_question": true
+      "require_concrete_story_anchor": true,
+      "require_unresolved_tension_or_contradiction": true,
+      "require_story_archetype": true,
+      "require_thumbnail_hypothesis": true,
+      "reject_if_only_trending_without_durable_question": true,
+      "reject_if_abstract_category_without_story_premise": true
     }
   },
   "workflow": [
     "market_scan",
     "social_trend_scan",
     "market_synthesis",
+    "story_premise_generation",
     "story_feasibility_check",
+    "packaging_hypothesis",
     "title_candidate_generation",
+    "red_team_click_challenge",
     "owner_title_gate",
     "story_question",
     "script_research_pack",
@@ -596,7 +612,10 @@
     "market_and_social_scan_required_before_title_gate": true,
     "title_feasibility_required_before_owner_gate": true,
     "required_topic_candidates": 3,
-    "required_title_variants_per_topic": 2
+    "required_title_variants_per_topic": 2,
+    "native_youtube_outlier_evidence_required_before_owner_gate": true,
+    "authorized_native_fallback_allowed": true,
+    "degraded_discovery_requires_hold": true
   },
   "visual_story_case": {
     "required": true,
@@ -668,7 +687,13 @@
   "packaging_system": {
     "stage_a_before_script": [
       "market_signal_read",
-      "three_distinct_topics_with_two_titles_each",
+      "youtube_native_outlier_read",
+      "three_distinct_story_premises",
+      "three_distinct_story_archetypes",
+      "one_thumbnail_hypothesis_per_topic",
+      "two_title_variants_per_topic",
+      "title_thumbnail_pair_review",
+      "red_team_stranger_click_pass",
       "owner_title_selection",
       "click_and_answer_promise"
     ],
@@ -1087,9 +1112,9 @@
     ]
   },
   "writing_phase": {
-    "version": "1.1",
+    "version": "1.2",
     "name": "Writing",
-    "purpose": "select one title from three market-grounded topics with two title variants each, then write and lock the script",
+    "purpose": "select one YouTube-native story/title pair from three distinct story premises and archetypes, then write and lock the script",
     "sections": [
       {
         "id": "W1_title_development",
@@ -1112,14 +1137,29 @@
             "output": "market_opportunity_map"
           },
           {
+            "id": "story_premise_generation",
+            "program": "ChatGPT",
+            "output": "youtube_story_premise_slate"
+          },
+          {
             "id": "story_feasibility_check",
             "program": "ChatGPT",
             "output": "story_feasibility_clearance"
           },
           {
+            "id": "packaging_hypothesis",
+            "program": "ChatGPT",
+            "output": "thumbnail_hypothesis_pack"
+          },
+          {
             "id": "title_candidate_generation",
             "program": "ChatGPT",
-            "output": "three_topic_cards_two_titles_each"
+            "output": "three_story_cards_two_titles_each"
+          },
+          {
+            "id": "red_team_click_challenge",
+            "program": "ChatGPT",
+            "output": "stranger_click_clearance"
           },
           {
             "id": "owner_title_gate",
@@ -1184,22 +1224,56 @@
       "owner_is_only_final_title_authority": true,
       "script_start_before_owner_selection_forbidden": true,
       "topic_distinctness_required": true,
+      "story_archetype_diversity_required": true,
       "title_distinctness_within_topic_required": true,
+      "youtube_native_discovery_required": true,
+      "authorized_native_fallback_allowed": true,
+      "degraded_discovery_requires_hold": true,
+      "packaging_hypothesis_required": true,
+      "red_team_stranger_click_required": true,
+      "allowed_story_archetypes": [
+        "mystery_investigation",
+        "hidden_system",
+        "human_odyssey",
+        "engineering_impossibility",
+        "rise_and_fall",
+        "scam_or_heist",
+        "survival_or_disaster",
+        "transformation",
+        "historical_paradox",
+        "experiment_or_challenge"
+      ],
       "topic_required_fields": [
         "topic",
+        "story_premise",
+        "story_archetype",
+        "hero_anchor",
+        "tension_or_mystery",
+        "viewer_stakes",
         "why_now",
         "market_signal",
-        "story_angle",
         "competition_level",
+        "key_visual",
+        "thumbnail_hypothesis",
         "visual_potential",
         "evidence_feasibility",
         "eight_minute_story_feasibility",
         "risk_notes"
       ],
+      "thumbnail_hypothesis_required_fields": [
+        "hero_subject",
+        "visual_tension",
+        "composition",
+        "text_0_4_words",
+        "works_without_explanatory_text"
+      ],
       "title_variant_required_fields": [
         "title",
         "click_reason",
-        "viewer_promise"
+        "viewer_promise",
+        "thumbnail_complement",
+        "stranger_click_test",
+        "youtube_title_style_status"
       ],
       "feasibility_checks": [
         "sufficient_research_material",
@@ -1209,14 +1283,23 @@
         "meaningful_payoff_or_insight",
         "title_promise_can_be_fulfilled",
         "competition_opportunity_is_acceptable",
-        "no_known_unmanageable_rights_or_asset_blocker"
+        "no_known_unmanageable_rights_or_asset_blocker",
+        "concrete_story_anchor_exists",
+        "unresolved_tension_or_contradiction_exists",
+        "thumbnail_works_as_one_frame",
+        "stranger_click_test_passes"
       ],
       "reject_if": [
         "trend_only_without_durable_story",
         "clickbait_promise_cannot_be_fulfilled",
         "insufficient_evidence",
         "insufficient_visual_story",
-        "requires_filler_to_reach_target_length"
+        "requires_filler_to_reach_target_length",
+        "abstract_topic_without_story_premise",
+        "three_candidates_share_same_story_archetype",
+        "thumbnail_requires_explanatory_copy",
+        "title_reads_like_article_or_section_heading",
+        "degraded_native_discovery_without_hold"
       ],
       "post_lock_revision": {
         "automatic_change_forbidden": true,

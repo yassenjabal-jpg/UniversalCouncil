@@ -67,6 +67,13 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertTrue(title["market_scan_required"])
         self.assertTrue(title["social_network_scan_required"])
         self.assertTrue(title["story_feasibility_required"])
+        self.assertTrue(title["native_youtube_discovery_required"])
+        self.assertTrue(title["authorized_native_fallback_allowed"])
+        self.assertTrue(title["degraded_discovery_requires_hold"])
+        self.assertTrue(title["story_premise_required"])
+        self.assertTrue(title["story_archetype_diversity_required"])
+        self.assertTrue(title["thumbnail_hypothesis_required"])
+        self.assertTrue(title["red_team_click_pass_required"])
         self.assertTrue(title["owner_selection_required"])
         self.assertTrue(title["script_start_before_selection_forbidden"])
         self.assertTrue(title["automatic_post_lock_revision_forbidden"])
@@ -107,6 +114,11 @@ class MediaCapabilityTests(unittest.TestCase):
             "title_variant_count",
             "owner_title_selection_rounds",
             "title_revision_requests",
+            "story_premise_rejection_count",
+            "degraded_discovery_hold_count",
+            "thumbnail_hypothesis_count",
+            "red_team_click_rejection_count",
+            "owner_w1_rejection_count",
             "writing_cycle_time",
             "preproduction_cycle_time",
             "production_cycle_time",
@@ -139,6 +151,9 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["operating_model"].__setitem__("production_rules", []),
             lambda c: c["title_gate_contract"].__setitem__("topic_count", 4),
             lambda c: c["title_gate_contract"].__setitem__("owner_selection_required", False),
+            lambda c: c["title_gate_contract"].__setitem__("native_youtube_discovery_required", False),
+            lambda c: c["title_gate_contract"].__setitem__("story_premise_required", False),
+            lambda c: c["title_gate_contract"].__setitem__("thumbnail_hypothesis_required", False),
             lambda c: c["master_pipeline_contract"].__setitem__("production_entry_requires", "NONE"),
             lambda c: c["stage_execution_contract"].__setitem__("exactly_one_primary_program", False),
             lambda c: c["handoff_contract"].__setitem__("downstream_direct_repair_forbidden", False),
