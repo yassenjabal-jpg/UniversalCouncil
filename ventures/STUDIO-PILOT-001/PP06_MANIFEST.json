@@ -1,0 +1,24 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_06_SHOT_DESIGN",
+  "status": "PASS_TO_PREPRODUCTION_07_STORYBOARD",
+  "primary_program": "Adobe Photoshop 2025",
+  "input_art_direction_lock": "ventures/STUDIO-PILOT-001/PP03_ART_DIRECTION_LOCK.json",
+  "input_asset_plan": "ventures/STUDIO-PILOT-001/PP04_ASSET_PLAN.json",
+  "input_rights": "ventures/STUDIO-PILOT-001/PP05_RIGHTS_SOURCE_PRECLEARANCE.json",
+  "output_matrix": "ventures/STUDIO-PILOT-001/PP06_SHOT_DESIGN_MATRIX.json",
+  "output_report": "ventures/STUDIO-PILOT-001/PP06_SHOT_DESIGN.md",
+  "output_visuals": "ventures/STUDIO-PILOT-001/pp06_visuals",
+  "photoshop_verification": "ventures/STUDIO-PILOT-001/PP06_PHOTOSHOP_VERIFICATION.json",
+  "shots_designed": 41,
+  "movement_sheets": 8,
+  "critical_shots": [
+    "V07.4",
+    "V08.4"
+  ],
+  "script_mutations": 0,
+  "art_direction_lock_preserved": true,
+  "next_stage": "PREPRODUCTION_07_STORYBOARD",
+  "next_primary_program": "Adobe Photoshop 2025"
+}
