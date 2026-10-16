@@ -1,0 +1,19 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S7_INDEPENDENT_FACT_CHECK",
+  "status": "PASS_TO_S8_VOICE_NARRATION_REWRITE",
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "checked_script": "ventures/STUDIO-PILOT-001/W2_S6_VISUAL_NARRATIVE_SCRIPT.md",
+  "fact_check_report": "ventures/STUDIO-PILOT-001/W2_S7_INDEPENDENT_FACT_CHECK.md",
+  "fact_ledger": "ventures/STUDIO-PILOT-001/W2_S7_FACT_CHECK_LEDGER.json",
+  "independent_fact_check_status": "PASS",
+  "title_accuracy_status": "OWNER_ACCEPTED_QUALIFIED",
+  "unsourced_material_claims_remaining": 0,
+  "current_allegation_separation": "PASS",
+  "proven_case_separation": "PASS",
+  "agency_observation_labeling": "PASS",
+  "analytical_inference_labeling": "PASS",
+  "corrections_applied": 4,
+  "return_to_s5_or_s6_required": false,
+  "next_stage": "S8_VOICE_NARRATION_REWRITE"
+}
