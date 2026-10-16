@@ -1,0 +1,772 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_04_ASSET_PLAN",
+  "stage_name": "Asset Plan",
+  "status": "ASSET_PLAN_READY_FOR_BRIDGE_INGEST",
+  "primary_program": "Adobe Bridge 2025",
+  "input_art_direction_lock": "ventures/STUDIO-PILOT-001/PP03_ART_DIRECTION_LOCK.json",
+  "input_breakdown": "ventures/STUDIO-PILOT-001/PP01_SCRIPT_BREAKDOWN.json",
+  "workspace_root": "C:\\Users\\alnaseem\\Desktop\\STUDIO-PILOT-001_ASSETS",
+  "governing_visual_system": "Editorial Renaissance Motion",
+  "asset_group_count": 11,
+  "shot_count": 41,
+  "collections": [
+    "01_REALITY_HOME",
+    "02_HERO_LAPTOP",
+    "03_MAPS_SPATIAL",
+    "04_EVIDENCE_DATA",
+    "05_HUMAN_CUTOUTS",
+    "06_TRUST_SIGNAL_SYSTEM",
+    "07_DISTRIBUTED_SCALE",
+    "08_CASE_SCALE",
+    "09_SENSITIVE_ACCESS",
+    "10_EVIDENCE_CHAIN",
+    "11_FINAL_METAPHOR"
+  ],
+  "assets": [
+    {
+      "asset_group_id": "A01",
+      "name": "Ordinary American home environment",
+      "type": "ILLUSTRATION/PHOTO_BASE",
+      "collection": "01_REALITY_HOME",
+      "source_strategy": "ORIGINAL_OR_LICENSED",
+      "bridge_role": "INGEST_TAG_RATE_SHORTLIST",
+      "later_primary_tool": "Photoshop 2025",
+      "used_by": [
+        "V01.1",
+        "V07.1",
+        "V08.1"
+      ],
+      "rights_rule": "original/licensed/generative reference; no implied real crime scene",
+      "status": "PLANNED",
+      "required_variants": 3,
+      "naming_pattern": "A01_{shot_or_role}_{source_or_variant}_v01",
+      "bridge_keywords": [
+        "STUDIO-PILOT-001",
+        "A01",
+        "01_REALITY_HOME",
+        "Editorial Renaissance Motion",
+        "PP04"
+      ]
+    },
+    {
+      "asset_group_id": "A02",
+      "name": "Generic employer laptop + shipping box",
+      "type": "HERO_OBJECT",
+      "collection": "02_HERO_LAPTOP",
+      "source_strategy": "ORIGINAL_OR_LICENSED",
+      "bridge_role": "INGEST_TAG_RATE_SHORTLIST",
+      "later_primary_tool": "Photoshop 2025",
+      "used_by": [
+        "V01.2",
+        "V01.3",
+        "V02.3",
+        "V03.3",
+        "V07.1",
+        "V08.5",
+        "V08.6"
+      ],
+      "rights_rule": "original/generic; no real company branding",
+      "status": "PLANNED",
+      "required_variants": 3,
+      "naming_pattern": "A02_{shot_or_role}_{source_or_variant}_v01",
+      "bridge_keywords": [
+        "STUDIO-PILOT-001",
+        "A02",
+        "02_HERO_LAPTOP",
+        "Editorial Renaissance Motion",
+        "PP04"
+      ]
+    },
+    {
+      "asset_group_id": "A03",
+      "name": "U.S./Nashville maps",
+      "type": "MAP_GRAPHIC",
+      "collection": "03_MAPS_SPATIAL",
+      "source_strategy": "ORIGINAL_VECTOR_OR_MAP_SAFE",
+      "bridge_role": "INGEST_TAG_RATE_SHORTLIST",
+      "later_primary_tool": "Illustrator/Photoshop 2025",
+      "used_by": [
+        "V01.4",
+        "V02.1",
+        "V04.1",
+        "V07.4"
+      ],
+      "rights_rule": "original vector/map-safe source",
+      "status": "PLANNED",
+      "required_variants": 3,
+      "naming_pattern": "A03_{shot_or_role}_{source_or_variant}_v01",
+      "bridge_keywords": [
+        "STUDIO-PILOT-001",
+        "A03",
+        "03_MAPS_SPATIAL",
+        "Editorial Renaissance Motion",
+        "PP04"
+      ]
+    },
+    {
+      "asset_group_id": "A04",
+      "name": "Official evidence/data cards",
+      "type": "DATA_CARD_SYSTEM",
+      "collection": "04_EVIDENCE_DATA",
+      "source_strategy": "OFFICIAL_SOURCE",
+      "bridge_role": "INGEST_TAG_RATE_SHORTLIST",
+      "later_primary_tool": "Photoshop 2025",
+      "used_by": [
+        "V01.5",
+        "V02.2",
+        "V04.3",
+        "V05.4",
+        "V06.1",
+        "V06.2",
+        "V06.3",
+        "V06.4",
+        "V06.5"
+      ],
+      "rights_rule": "official-source facts; source labels mandatory",
+      "status": "PLANNED",
+      "required_variants": 3,
+      "naming_pattern": "A04_{shot_or_role}_{source_or_variant}_v01",
+      "bridge_keywords": [
+        "STUDIO-PILOT-001",
+        "A04",
+        "04_EVIDENCE_DATA",
+        "Editorial Renaissance Motion",
+        "PP04"
+      ]
+    },
+    {
+      "asset_group_id": "A05",
+      "name": "Human/operator silhouettes",
+      "type": "ILLUSTRATION",
+      "collection": "05_HUMAN_CUTOUTS",
+      "source_strategy": "ORIGINAL_OR_LICENSED",
+      "bridge_role": "INGEST_TAG_RATE_SHORTLIST",
+      "later_primary_tool": "Photoshop 2025",
+      "used_by": [
+        "V01.4",
+        "V02.4",
+        "V05.3",
+        "V08.4"
+      ],
+      "rights_rule": "original",
+      "status": "PLANNED",
+      "required_variants": 3,
+      "naming_pattern": "A05_{shot_or_role}_{source_or_variant}_v01",
+      "bridge_keywords": [
+        "STUDIO-PILOT-001",
+        "A05",
+        "05_HUMAN_CUTOUTS",
+        "Editorial Renaissance Motion",
+        "PP04"
+      ]
+    },
+    {
+      "asset_group_id": "A06",
+      "name": "Employee/trust-signal card system",
+      "type": "INFOGRAPHIC_SYSTEM",
+      "collection": "06_TRUST_SIGNAL_SYSTEM",
+      "source_strategy": "ORIGINAL_DESIGN",
+      "bridge_role": "INGEST_TAG_RATE_SHORTLIST",
+      "later_primary_tool": "Photoshop/Illustrator 2025",
+      "used_by": [
+        "V03.1",
+        "V03.2",
+        "V05.1",
+        "V05.2",
+        "V05.5",
+        "V08.2",
+        "V08.3"
+      ],
+      "rights_rule": "original",
+      "status": "PLANNED",
+      "required_variants": 3,
+      "naming_pattern": "A06_{shot_or_role}_{source_or_variant}_v01",
+      "bridge_keywords": [
+        "STUDIO-PILOT-001",
+        "A06",
+        "06_TRUST_SIGNAL_SYSTEM",
+        "Editorial Renaissance Motion",
+        "PP04"
+      ]
+    },
+    {
+      "asset_group_id": "A07",
+      "name": "Distributed homes/farm scale system",
+      "type": "INFOGRAPHIC_SYSTEM",
+      "collection": "07_DISTRIBUTED_SCALE",
+      "source_strategy": "ORIGINAL_DESIGN",
+      "bridge_role": "INGEST_TAG_RATE_SHORTLIST",
+      "later_primary_tool": "Illustrator/Photoshop 2025",
+      "used_by": [
+        "V04.1",
+        "V04.2",
+        "V04.4"
+      ],
+      "rights_rule": "original",
+      "status": "PLANNED",
+      "required_variants": 3,
+      "naming_pattern": "A07_{shot_or_role}_{source_or_variant}_v01",
+      "bridge_keywords": [
+        "STUDIO-PILOT-001",
+        "A07",
+        "07_DISTRIBUTED_SCALE",
+        "Editorial Renaissance Motion",
+        "PP04"
+      ]
+    },
+    {
+      "asset_group_id": "A08",
+      "name": "Proven-case scale/count system",
+      "type": "INFOGRAPHIC_SYSTEM",
+      "collection": "08_CASE_SCALE",
+      "source_strategy": "OFFICIAL_FACTS_ORIGINAL_VISUALS",
+      "bridge_role": "INGEST_TAG_RATE_SHORTLIST",
+      "later_primary_tool": "Photoshop/Illustrator 2025",
+      "used_by": [
+        "V06.1",
+        "V06.2",
+        "V06.3",
+        "V06.4",
+        "V06.5"
+      ],
+      "rights_rule": "original visuals; sourced numbers",
+      "status": "PLANNED",
+      "required_variants": 3,
+      "naming_pattern": "A08_{shot_or_role}_{source_or_variant}_v01",
+      "bridge_keywords": [
+        "STUDIO-PILOT-001",
+        "A08",
+        "08_CASE_SCALE",
+        "Editorial Renaissance Motion",
+        "PP04"
+      ]
+    },
+    {
+      "asset_group_id": "A09",
+      "name": "Sensitive data/source code/defense abstraction",
+      "type": "ILLUSTRATION",
+      "collection": "09_SENSITIVE_ACCESS",
+      "source_strategy": "ORIGINAL_ABSTRACT",
+      "bridge_role": "INGEST_TAG_RATE_SHORTLIST",
+      "later_primary_tool": "Photoshop/Illustrator 2025",
+      "used_by": [
+        "V06.6"
+      ],
+      "rights_rule": "original; no fabricated screenshots",
+      "status": "PLANNED",
+      "required_variants": 3,
+      "naming_pattern": "A09_{shot_or_role}_{source_or_variant}_v01",
+      "bridge_keywords": [
+        "STUDIO-PILOT-001",
+        "A09",
+        "09_SENSITIVE_ACCESS",
+        "Editorial Renaissance Motion",
+        "PP04"
+      ]
+    },
+    {
+      "asset_group_id": "A10",
+      "name": "Physical evidence-chain system",
+      "type": "INFOGRAPHIC_SYSTEM",
+      "collection": "10_EVIDENCE_CHAIN",
+      "source_strategy": "ORIGINAL_DESIGN",
+      "bridge_role": "INGEST_TAG_RATE_SHORTLIST",
+      "later_primary_tool": "Illustrator/After Effects 2025",
+      "used_by": [
+        "V07.2",
+        "V07.3",
+        "V07.4",
+        "V07.5"
+      ],
+      "rights_rule": "original; explanatory synthesis",
+      "status": "PLANNED",
+      "required_variants": 3,
+      "naming_pattern": "A10_{shot_or_role}_{source_or_variant}_v01",
+      "bridge_keywords": [
+        "STUDIO-PILOT-001",
+        "A10",
+        "10_EVIDENCE_CHAIN",
+        "Editorial Renaissance Motion",
+        "PP04"
+      ]
+    },
+    {
+      "asset_group_id": "A11",
+      "name": "Final identity metaphor",
+      "type": "ILLUSTRATION/MOTION_CONCEPT",
+      "collection": "11_FINAL_METAPHOR",
+      "source_strategy": "ORIGINAL_DESIGN",
+      "bridge_role": "INGEST_TAG_RATE_SHORTLIST",
+      "later_primary_tool": "Photoshop/After Effects 2025",
+      "used_by": [
+        "V08.4",
+        "V08.6"
+      ],
+      "rights_rule": "original",
+      "status": "PLANNED",
+      "required_variants": 3,
+      "naming_pattern": "A11_{shot_or_role}_{source_or_variant}_v01",
+      "bridge_keywords": [
+        "STUDIO-PILOT-001",
+        "A11",
+        "11_FINAL_METAPHOR",
+        "Editorial Renaissance Motion",
+        "PP04"
+      ]
+    }
+  ],
+  "shot_asset_map": [
+    {
+      "shot_id": "V01.1",
+      "movement_id": "M01",
+      "asset_group_id": "A01",
+      "collection": "01_REALITY_HOME",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Ordinary U.S. suburban home exterior/interior; quiet, normal, no cyber cues.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V01.2",
+      "movement_id": "M01",
+      "asset_group_id": "A02",
+      "collection": "02_HERO_LAPTOP",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Generic employer laptop shipping box entering house.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V01.3",
+      "movement_id": "M01",
+      "asset_group_id": "A02",
+      "collection": "02_HERO_LAPTOP",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Cut from one laptop to shelf with several company-style laptops.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V01.4",
+      "movement_id": "M01",
+      "asset_group_id": "A03",
+      "collection": "03_MAPS_SPATIAL",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "U.S. map pin visually stays on laptop while human silhouette appears far away.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V01.5",
+      "movement_id": "M01",
+      "asset_group_id": "A04",
+      "collection": "04_EVIDENCE_DATA",
+      "evidence_mode": "DATA_CARD",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "visual_requirement": "Evidence card: ~187 computer devices; laptops + KVM equipment; October 2026 coordinated actions.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V02.1",
+      "movement_id": "M02",
+      "asset_group_id": "A03",
+      "collection": "03_MAPS_SPATIAL",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Map transitions from national view to Nashville, Tennessee.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V02.2",
+      "movement_id": "M02",
+      "asset_group_id": "A04",
+      "collection": "04_EVIDENCE_DATA",
+      "evidence_mode": "DATA_CARD",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "visual_requirement": "Matthew Isaac Knoot case card; sentenced/proven case; DOJ source badge.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V02.3",
+      "movement_id": "M02",
+      "asset_group_id": "A02",
+      "collection": "02_HERO_LAPTOP",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Employer -> shipped laptop -> Nashville residence reconstruction.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V02.4",
+      "movement_id": "M02",
+      "asset_group_id": "A05",
+      "collection": "05_HUMAN_CUTOUTS",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Laptop remains fixed in Nashville; operator marker appears outside U.S.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V02.5",
+      "movement_id": "M02",
+      "asset_group_id": null,
+      "collection": "UNMAPPED",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Freeze visual: الجهاز هنا. الإنسان هناك.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V03.1",
+      "movement_id": "M03",
+      "asset_group_id": "A06",
+      "collection": "06_TRUST_SIGNAL_SYSTEM",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Single employee card appears.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V03.2",
+      "movement_id": "M03",
+      "asset_group_id": "A06",
+      "collection": "06_TRUST_SIGNAL_SYSTEM",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Three trust signals light separately: company device, employee account, device location.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V03.3",
+      "movement_id": "M03",
+      "asset_group_id": "A02",
+      "collection": "02_HERO_LAPTOP",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Location pin visibly attaches to laptop, not person.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V03.4",
+      "movement_id": "M03",
+      "asset_group_id": null,
+      "collection": "UNMAPPED",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Large conceptual payoff: اللابتوب = بديل عن الموقع، مو عن الإنسان.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V04.1",
+      "movement_id": "M04",
+      "asset_group_id": "A03",
+      "collection": "03_MAPS_SPATIAL",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "One home becomes several homes across a U.S. map.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V04.2",
+      "movement_id": "M04",
+      "asset_group_id": "A07",
+      "collection": "07_DISTRIBUTED_SCALE",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Each home shows only a few device icons.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V04.3",
+      "movement_id": "M04",
+      "asset_group_id": "A04",
+      "collection": "04_EVIDENCE_DATA",
+      "evidence_mode": "DATA_CARD",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "visual_requirement": "Three distinct cards: Texas 40+ residences; coordinated ~187 devices; related Ohio 70+ companies.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V04.4",
+      "movement_id": "M04",
+      "asset_group_id": "A07",
+      "collection": "07_DISTRIBUTED_SCALE",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Zoom out: devices + homes + facilitators + companies.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V04.5",
+      "movement_id": "M04",
+      "asset_group_id": null,
+      "collection": "UNMAPPED",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Employee silhouette cracks into components leading into M05.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V05.1",
+      "movement_id": "M05",
+      "asset_group_id": "A06",
+      "collection": "06_TRUST_SIGNAL_SYSTEM",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Fictional composite employee أحمد appears; visibly labeled example, not real person.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V05.2",
+      "movement_id": "M05",
+      "asset_group_id": "A06",
+      "collection": "06_TRUST_SIGNAL_SYSTEM",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Employee card splits into identity / application-interview / hosted laptop / actual work / payment-account.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V05.3",
+      "movement_id": "M05",
+      "asset_group_id": "A05",
+      "collection": "05_HUMAN_CUTOUTS",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Different silhouettes attach to different cards.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V05.4",
+      "movement_id": "M05",
+      "asset_group_id": "A04",
+      "collection": "04_EVIDENCE_DATA",
+      "evidence_mode": "DATA_CARD",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "visual_requirement": "FBI observation card: third-party freelancers may apply/interview/perform portions or entire jobs.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V05.5",
+      "movement_id": "M05",
+      "asset_group_id": "A06",
+      "collection": "06_TRUST_SIGNAL_SYSTEM",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Cards collapse into one employer-facing employee avatar.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V06.1",
+      "movement_id": "M06",
+      "asset_group_id": "A04",
+      "collection": "04_EVIDENCE_DATA",
+      "evidence_mode": "DATA_CARD",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "visual_requirement": "Court-established case timeline begins; separate from current October allegations.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V06.2",
+      "movement_id": "M06",
+      "asset_group_id": "A04",
+      "collection": "04_EVIDENCE_DATA",
+      "evidence_mode": "DATA_CARD",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "visual_requirement": "80+ U.S. identity cards spread across screen.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V06.3",
+      "movement_id": "M06",
+      "asset_group_id": "A04",
+      "collection": "04_EVIDENCE_DATA",
+      "evidence_mode": "DATA_CARD",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "visual_requirement": "100+ company icons appear behind identities.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V06.4",
+      "movement_id": "M06",
+      "asset_group_id": "A04",
+      "collection": "04_EVIDENCE_DATA",
+      "evidence_mode": "DATA_CARD",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "visual_requirement": "Five facilitator nodes, then hundreds of hosted company computers.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V06.5",
+      "movement_id": "M06",
+      "asset_group_id": "A04",
+      "collection": "04_EVIDENCE_DATA",
+      "evidence_mode": "DATA_CARD",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "visual_requirement": "Separate money figures: >$5M illicit proceeds; nearly $700K facilitators; >=$3M victim costs/damages.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V06.6",
+      "movement_id": "M06",
+      "asset_group_id": "A09",
+      "collection": "09_SENSITIVE_ACCESS",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Move from money to sensitive-data/source-code/defense-contractor symbols; ITAR label.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V07.1",
+      "movement_id": "M07",
+      "asset_group_id": "A01",
+      "collection": "01_REALITY_HOME",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Reuse opening house/laptop shot to create memory callback.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V07.2",
+      "movement_id": "M07",
+      "asset_group_id": "A10",
+      "collection": "10_EVIDENCE_CHAIN",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Evidence chain grows: laptop -> shipping address -> residence -> facilitator.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V07.3",
+      "movement_id": "M07",
+      "asset_group_id": "A10",
+      "collection": "10_EVIDENCE_CHAIN",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Add account/legal/financial-record symbols.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V07.4",
+      "movement_id": "M07",
+      "asset_group_id": "A03",
+      "collection": "03_MAPS_SPATIAL",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Reverse earlier map animation: hiding path becomes evidence path.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V07.5",
+      "movement_id": "M07",
+      "asset_group_id": "A10",
+      "collection": "10_EVIDENCE_CHAIN",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Split screen: DIGITAL IDENTITY / PHYSICAL FOOTPRINT.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V08.1",
+      "movement_id": "M08",
+      "asset_group_id": "A01",
+      "collection": "01_REALITY_HOME",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Return to same opening shelf.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V08.2",
+      "movement_id": "M08",
+      "asset_group_id": "A06",
+      "collection": "06_TRUST_SIGNAL_SYSTEM",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Employee avatar breaks into six trust signals: name/interview/device/location/account/work.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V08.3",
+      "movement_id": "M08",
+      "asset_group_id": "A06",
+      "collection": "06_TRUST_SIGNAL_SYSTEM",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Each signal receives green looks-valid check.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V08.4",
+      "movement_id": "M08",
+      "asset_group_id": "A05",
+      "collection": "05_HUMAN_CUTOUTS",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Checks remain green while human silhouette behind them changes.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V08.5",
+      "movement_id": "M08",
+      "asset_group_id": "A02",
+      "collection": "02_HERO_LAPTOP",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "All clutter disappears; only laptop remains.",
+      "status": "PLANNED"
+    },
+    {
+      "shot_id": "V08.6",
+      "movement_id": "M08",
+      "asset_group_id": "A02",
+      "collection": "02_HERO_LAPTOP",
+      "evidence_mode": "ILLUSTRATION",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "visual_requirement": "Laptop briefly becomes simple human outline, then returns to laptop.",
+      "status": "PLANNED"
+    }
+  ],
+  "bridge_workflow": [
+    "Ingest into collection folder",
+    "Apply project + asset-group keywords",
+    "Mark source class: OFFICIAL / LICENSED / ORIGINAL / SYNTHETIC_REFERENCE",
+    "Apply rights status",
+    "Rate candidates 1-5 stars",
+    "Reject dark-first or visual-system drift",
+    "Shortlist 3 candidates per asset group where applicable",
+    "Hand off only approved shortlist to PP05/PP06"
+  ],
+  "bridge_labels": {
+    "GREEN": "APPROVED_STYLE_FIT",
+    "YELLOW": "SOURCE_OR_RIGHTS_REVIEW",
+    "RED": "REJECTED_DO_NOT_USE",
+    "BLUE": "OFFICIAL_SOURCE_REFERENCE"
+  },
+  "rights_states": [
+    "CLEAR_ORIGINAL",
+    "CLEAR_OFFICIAL_PUBLIC_SOURCE",
+    "NEEDS_LICENSE_REVIEW",
+    "REFERENCE_ONLY",
+    "REJECTED"
+  ],
+  "source_classes": [
+    "OFFICIAL",
+    "LICENSED",
+    "ORIGINAL",
+    "SYNTHETIC_REFERENCE"
+  ],
+  "asset_acceptance_rules": [
+    "Must conform to ART_DIRECTION_LOCK.",
+    "Ivory/white-light remains dominant for editorial assets.",
+    "No fake evidence.",
+    "No real victim-company logos unless PP05 clears them.",
+    "No generic cyber stock.",
+    "No dark-first visual fallback.",
+    "No asset may introduce new factual claims.",
+    "Synthetic reference may guide composition but cannot replace documentary evidence."
+  ],
+  "next_stage_after_ingest": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE"
+}
