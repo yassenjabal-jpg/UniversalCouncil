@@ -1,0 +1,75 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S1_RESEARCH_PACK",
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "claim_status_legend": {
+    "CURRENT_ALLEGATION": "Claim from a current indictment/complaint or law-enforcement action; not yet adjudicated.",
+    "PROVEN_CASE": "Claim grounded in guilty plea, sentencing, conviction, or court-established facts from a prior related case.",
+    "AGENCY_OBSERVATION": "Current FBI/agency threat observation; general pattern, not automatically attributable to every defendant in the current case."
+  },
+  "claims": [
+    {
+      "id": "C01",
+      "status": "CURRENT_ALLEGATION",
+      "claim": "On 2026-10-13 DOJ announced coordinated actions involving more than 70 U.S. companies and seizure of approximately 187 computer devices used in alleged DPRK remote-IT-worker schemes.",
+      "sources": [
+        "https://www.justice.gov/opa/pr/justice-department-announces-coordinated-actions-combat-north-korean-remote-it-worker",
+        "https://www.justice.gov/usao-ndoh/pr/14-indicted-north-korean-remote-it-worker-conspiracy-affecting-more-70-us-companies"
+      ]
+    },
+    {
+      "id": "C02",
+      "status": "CURRENT_ALLEGATION",
+      "claim": "In Texas, the FBI searched more than 40 residences and seized a mix of laptops and KVM devices described as laptop-farm infrastructure.",
+      "sources": [
+        "https://www.justice.gov/usao-ndtx/pr/operation-lonestar-roundup-dismantles-north-korean-it-worker-network-used-penetrate-us"
+      ]
+    },
+    {
+      "id": "C03",
+      "status": "PROVEN_CASE",
+      "claim": "In the Matthew Isaac Knoot case, employer laptops were shipped to his Nashville residences; unauthorized remote-desktop software let a North Korean IT worker operating from China appear to victim companies as if the worker were located in Nashville.",
+      "sources": [
+        "https://www.justice.gov/opa/pr/two-us-nationals-sentenced-facilitating-fraudulent-remote-information-technology-worker-0"
+      ]
+    },
+    {
+      "id": "C04",
+      "status": "PROVEN_CASE",
+      "claim": "A separate multi-year scheme involving Kejia Wang and Zhenxing Wang used stolen identities, more than 100 U.S. companies and U.S.-hosted laptop farms, and generated more than $5 million in illicit revenue; both U.S. nationals were sentenced in 2026.",
+      "sources": [
+        "https://www.justice.gov/opa/pr/two-us-nationals-sentenced-facilitating-fraudulent-remote-information-technology-worker",
+        "https://www.justice.gov/usao-ma/pr/two-us-nationals-sentenced-facilitating-fraudulent-remote-worker-scheme-generated-5"
+      ]
+    },
+    {
+      "id": "C05",
+      "status": "AGENCY_OBSERVATION",
+      "claim": "The FBI says DPRK IT workers increasingly use paid facilitators, remote-desktop software, KVM-over-IP devices, smaller distributed laptop farms, stolen identities and third-party freelancers to support fraudulent employment.",
+      "sources": [
+        "https://www.ic3.gov/PSA/2026/PSA261013"
+      ]
+    },
+    {
+      "id": "C06",
+      "status": "AGENCY_OBSERVATION",
+      "claim": "The FBI warns that once embedded, DPRK IT workers may create insider risk involving sensitive data theft and extortion; this is a general threat pattern and must not be presented as proven conduct by every person in the October 2026 action.",
+      "sources": [
+        "https://www.fbi.gov/investigate/counterintelligence/global-threat"
+      ]
+    },
+    {
+      "id": "C07",
+      "status": "AGENCY_OBSERVATION",
+      "claim": "U.S.-based device hosting can help overseas workers circumvent controls that depend on the physical location of company-issued equipment.",
+      "sources": [
+        "https://www.ic3.gov/PSA/2025/PSA250723-4"
+      ]
+    }
+  ],
+  "title_accuracy_finding": {
+    "status": "REVISION_REQUIRED",
+    "finding": "The locked title says 187 laptops, but the strongest current DOJ source describes approximately 187 computer devices, and the Texas source refers to laptops and KVM devices. The evidence does not cleanly support saying all 187 were laptops.",
+    "automatic_change_forbidden": true
+  }
+}
