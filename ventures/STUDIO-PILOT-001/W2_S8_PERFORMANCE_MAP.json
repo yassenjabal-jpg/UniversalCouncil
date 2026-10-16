@@ -1,0 +1,116 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S8_VOICE_NARRATION_REWRITE",
+  "status": "PASS_TO_S9_RED_TEAM_RETENTION_REVIEW",
+  "input_script": "ventures/STUDIO-PILOT-001/W2_S6_VISUAL_NARRATIVE_SCRIPT.md",
+  "fact_check_ref": "ventures/STUDIO-PILOT-001/W2_S7_INDEPENDENT_FACT_CHECK.md",
+  "output_script": "ventures/STUDIO-PILOT-001/W2_S8_VOICE_NARRATION_SCRIPT.md",
+  "voice_identity": {
+    "language": "clear Arabic with light Iraqi warmth",
+    "character": [
+      "warm",
+      "curious",
+      "reflective",
+      "intelligent",
+      "lightly conversational"
+    ],
+    "forbidden": [
+      "TV news voice",
+      "constant excitement",
+      "trailer voice",
+      "synthetic perfect cadence",
+      "dramatic pause after every sentence"
+    ]
+  },
+  "pronunciations": {
+    "Nashville": "ناشفِل",
+    "Matthew_Isaac_Knoot": "ماثيو آيزَك نوت",
+    "KVM": "كي في إم",
+    "FBI": "إف بي آي",
+    "ITAR": "آي تار"
+  },
+  "movements": [
+    {
+      "id": "M01",
+      "emotion": [
+        "فضول هادئ",
+        "دهشة مضبوطة"
+      ],
+      "pace": "medium",
+      "music": "M0->M1"
+    },
+    {
+      "id": "M02",
+      "emotion": [
+        "سؤال حقيقي",
+        "سر صغير"
+      ],
+      "pace": "calm conversational",
+      "music": "M1"
+    },
+    {
+      "id": "M03",
+      "emotion": [
+        "شرح بسيط",
+        "تأكيد"
+      ],
+      "pace": "slightly slow",
+      "music": "M3"
+    },
+    {
+      "id": "M04",
+      "emotion": [
+        "فضول",
+        "تصاعد"
+      ],
+      "pace": "medium",
+      "music": "M2"
+    },
+    {
+      "id": "M05",
+      "emotion": [
+        "قرب من المشاهد",
+        "دهشة مضبوطة"
+      ],
+      "pace": "conversational",
+      "music": "M3->M2"
+    },
+    {
+      "id": "M06",
+      "emotion": [
+        "جدية",
+        "تصاعد",
+        "تحذير هادئ"
+      ],
+      "pace": "controlled",
+      "music": "M3->M4"
+    },
+    {
+      "id": "M07",
+      "emotion": [
+        "هدوء",
+        "كشف"
+      ],
+      "pace": "slow reveal",
+      "music": "M4->M5"
+    },
+    {
+      "id": "M08",
+      "emotion": [
+        "تأمل",
+        "تأكيد هادئ"
+      ],
+      "pace": "unhurried",
+      "music": "M6->M7"
+    }
+  ],
+  "s8_rules": {
+    "no_new_facts": true,
+    "preserve_s7_legal_status": true,
+    "visual_silence_allowed": true,
+    "emphasis_max_words_per_sentence": 2,
+    "avoid_pause_after_every_sentence": true,
+    "final_line_requires_long_pause": true
+  },
+  "next_stage": "S9_RED_TEAM_RETENTION_REVIEW"
+}
