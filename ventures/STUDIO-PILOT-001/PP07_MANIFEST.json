@@ -2,7 +2,7 @@
   "project_id": "STUDIO-PILOT-001",
   "phase": "PRE_PRODUCTION",
   "stage_id": "PREPRODUCTION_07_STORYBOARD",
-  "status": "IN_PROGRESS",
+  "status": "PASS",
   "primary_program": "Adobe Photoshop 2025",
   "governing_visual_system": "Editorial Renaissance Motion",
   "entry_lock": "ventures/STUDIO-PILOT-001/PP06_VISUAL_LOCK.json",
@@ -13,5 +13,13 @@
   "output_dir": "ventures/STUDIO-PILOT-001/pp07_photoshop_storyboard",
   "stage_rule": "Storyboard must visualize all 41 shots and preserve locked script, facts, visual grammar, shot timing and movement grouping. No downstream stage may repair a PP07 defect silently.",
   "next_stage_on_pass": "PREPRODUCTION_08_CAMERA_CONTINUITY_PLAN",
-  "next_primary_program": "Adobe Photoshop 2025"
+  "next_primary_program": "Adobe Photoshop 2025",
+  "completed_shots": 41,
+  "completed_movements": 8,
+  "output_index": "ventures/STUDIO-PILOT-001/PP07_STORYBOARD_INDEX.json",
+  "studio_review": "ventures/STUDIO-PILOT-001/PP07_STUDIO_REVIEW_2026-10-16.md",
+  "contact_sheet": "ventures/STUDIO-PILOT-001/pp07_photoshop_storyboard/PP07_STORYBOARD_CONTACT_SHEET.jpg",
+  "binary_output_commit": "4d55eb6",
+  "qc_result": "PASS_AFTER_DATA_CARD_CORRECTION",
+  "next_stage": "PREPRODUCTION_08_CAMERA_CONTINUITY_PLAN"
 }
