@@ -1,0 +1,13 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_04_ASSET_PLAN",
+  "status": "ASSET_PLAN_READY_FOR_BRIDGE_INGEST",
+  "primary_program": "Adobe Bridge 2025",
+  "input_art_direction_lock": "ventures/STUDIO-PILOT-001/PP03_ART_DIRECTION_LOCK.json",
+  "output_asset_plan": "ventures/STUDIO-PILOT-001/PP04_ASSET_PLAN.json",
+  "asset_groups": 11,
+  "shots_mapped": 41,
+  "workspace_root": "C:\\Users\\alnaseem\\Desktop\\STUDIO-PILOT-001_ASSETS",
+  "next_stage_after_ingest": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE"
+}
