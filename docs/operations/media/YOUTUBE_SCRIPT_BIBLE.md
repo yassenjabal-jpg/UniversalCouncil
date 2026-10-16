@@ -1,6 +1,6 @@
 # YouTube Script Bible v1
 
-Status: CANONICAL  
+Status: CANONICAL
 Date: 2026-10-16
 
 ## Purpose
@@ -32,16 +32,16 @@ The script must continuously answer two questions:
 
 ## W2 stages
 
-S0 — Story Question  
-S1 — Research Pack  
-S2 — Story Architecture  
-S3 — Hook & Retention Map  
-S4 — First Script  
-S5 — YouTube Editorial Rewrite  
-S6 — Visual/Narrative Pass  
-S7 — Independent Fact Check  
-S8 — Voice/Narration Rewrite  
-S9 — Red Team Retention Review  
+S0 — Story Question
+S1 — Research Pack
+S2 — Story Architecture
+S3 — Hook & Retention Map
+S4 — First Script
+S5 — YouTube Editorial Rewrite
+S6 — Visual/Narrative Pass
+S7 — Independent Fact Check
+S8 — Voice/Narration Rewrite
+S9 — Red Team Retention Review
 S10 — Locked Script
 
 No stage may be silently skipped.
