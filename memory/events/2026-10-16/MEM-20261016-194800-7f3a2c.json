@@ -24,14 +24,7 @@
       "charcoal": "#151515"
     }
   },
-  "supersedes": [
-    "MEM-20261012-192851-1da653",
-    "MEM-20261012-193314-8ee7c3",
-    "MEM-20261012-193314-fa1354",
-    "MEM-20261012-193314-1b9bff",
-    "MEM-20261012-193314-354f51",
-    "MEM-20261012-193314-0ca4ca"
-  ],
+  "supersedes": [],
   "confidence": "owner_confirmed",
   "sensitivity": "normal",
   "tags": [
