@@ -1,0 +1,30 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S5_YOUTUBE_EDITORIAL_REWRITE",
+  "status": "PASS_TO_S6_VISUAL_NARRATIVE_PASS",
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "source_script": "ventures/STUDIO-PILOT-001/W2_S4_FIRST_SCRIPT.md",
+  "source_retention_map": "ventures/STUDIO-PILOT-001/W2_S3_HOOK_RETENTION_MAP.json",
+  "source_claim_sheet": "ventures/STUDIO-PILOT-001/W2_S1_CLAIM_SOURCE_SHEET.json",
+  "script_ref": "ventures/STUDIO-PILOT-001/W2_S5_YOUTUBE_EDITORIAL_REWRITE.md",
+  "segment_count": 12,
+  "editorial_rewrite_status": "PASS",
+  "anti_article_test_status": "PASS",
+  "spoken_language_precheck_status": "PASS",
+  "owner_title_lock_status": "PASS",
+  "hook_retention_map_status": "PASS",
+  "first_script_status": "PASS",
+  "visual_narrative_pass_status": "NOT_YET_S6",
+  "independent_fact_check_status": "NOT_YET_S7",
+  "voice_narration_rewrite_status": "NOT_YET_S8",
+  "red_team_retention_review_status": "NOT_YET_S9",
+  "script_lock_status": "NOT_LOCKED",
+  "editorial_changes": [
+    "moved concrete contradiction forward",
+    "shortened institutional and article-like sentences",
+    "removed redundant explanation",
+    "reframed exposition as object/action/consequence/reveal",
+    "strengthened handoffs between retention beats",
+    "kept legal attribution inside natural narration"
+  ]
+}
