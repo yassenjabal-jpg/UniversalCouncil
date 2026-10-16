@@ -199,7 +199,6 @@ def validate_title_candidate_packet(packet: dict[str, Any]) -> bool:
         variants = topic_card.get("title_variants", [])
         if len(variants) != 2:
             raise StudioProductionLineError("each topic must contain exactly two title variants")
-        local_titles: set[str] = set()
         for variant in variants:
             variant_missing = TITLE_VARIANT_REQUIRED_FIELDS - set(variant)
             if variant_missing:
@@ -212,8 +211,6 @@ def validate_title_candidate_packet(packet: dict[str, Any]) -> bool:
                 raise StudioProductionLineError("title variant ids must be globally unique")
             if title.casefold() in titles:
                 raise StudioProductionLineError("all presented title variants must be distinct")
-            if title.casefold() in local_titles:
-                raise StudioProductionLineError("the two title variants for a topic must be distinct")
             if not str(variant.get("click_reason", "")).strip():
                 raise StudioProductionLineError("title variant click reason must be non-empty")
             if not str(variant.get("viewer_promise", "")).strip():
@@ -226,7 +223,6 @@ def validate_title_candidate_packet(packet: dict[str, Any]) -> bool:
                 raise StudioProductionLineError("article-like titles cannot reach Owner Title Gate")
             title_ids.add(title_id)
             titles.add(title.casefold())
-            local_titles.add(title.casefold())
 
         if topic_card.get("evidence_feasibility") != "PASS":
             raise StudioProductionLineError("every topic candidate must be evidence-feasible")
