@@ -1,0 +1,133 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S7_INDEPENDENT_FACT_CHECK",
+  "checked_on": "2026-10-16",
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "fact_check_status": "PASS_WITH_OWNER_TITLE_QUALIFIER",
+  "claims": [
+    {
+      "id": "F01",
+      "script_area": "TITLE + M01",
+      "type": "TITLE_ACCURACY",
+      "status": "OWNER_ACCEPTED_QUALIFIED",
+      "finding": "The locked title says 187 laptops. DOJ's coordinated-action release says approximately 187 computer devices; the Texas release describes 187 laptops and KVM devices. Evidence does not cleanly establish that all 187 were laptops.",
+      "required_treatment": "Keep Owner-locked title unchanged, but first minute must explicitly qualify the 187 as computer devices including laptops/KVM equipment and tie them to DPRK IT-worker laptop farms.",
+      "sources": [
+        "https://www.justice.gov/opa/pr/justice-department-announces-coordinated-actions-combat-north-korean-remote-it-worker",
+        "https://www.justice.gov/usao-ndtx/pr/operation-lonestar-roundup-dismantles-north-korean-it-worker-network-used-penetrate-us"
+      ]
+    },
+    {
+      "id": "F02",
+      "script_area": "M01/M04",
+      "type": "CURRENT_ALLEGATION_AND_LAW_ENFORCEMENT_ACTION",
+      "status": "PASS",
+      "finding": "On October 13, 2026 DOJ announced coordinated Ohio/Texas actions and seizure of approximately 187 computer devices used by DPRK IT workers.",
+      "sources": [
+        "https://www.justice.gov/opa/pr/justice-department-announces-coordinated-actions-combat-north-korean-remote-it-worker"
+      ]
+    },
+    {
+      "id": "F03",
+      "script_area": "M04",
+      "type": "CURRENT_LAW_ENFORCEMENT_ACTION",
+      "status": "PASS",
+      "finding": "Operation Lonestar Roundup involved searches of over 40 Texas residences and seizure of 187 laptops and KVM devices according to the Northern District of Texas release.",
+      "sources": [
+        "https://www.justice.gov/usao-ndtx/pr/operation-lonestar-roundup-dismantles-north-korean-it-worker-network-used-penetrate-us"
+      ]
+    },
+    {
+      "id": "F04",
+      "script_area": "M04",
+      "type": "CURRENT_ALLEGATION",
+      "status": "PASS",
+      "finding": "The Northern District of Ohio indictment concerns a conspiracy affecting more than 70 U.S. companies. This remains an indictment, not proof of guilt.",
+      "sources": [
+        "https://www.justice.gov/usao-ndoh/pr/14-indicted-north-korean-remote-it-worker-conspiracy-affecting-more-70-us-companies"
+      ]
+    },
+    {
+      "id": "F05",
+      "script_area": "M02/M03",
+      "type": "PROVEN_CASE",
+      "status": "PASS",
+      "finding": "Matthew Isaac Knoot was sentenced in 2026. Victim companies shipped laptops to his Nashville residences; unauthorized remote-desktop applications enabled a North Korean IT worker operating from China to appear as if working from Nashville.",
+      "sources": [
+        "https://www.justice.gov/opa/pr/two-us-nationals-sentenced-facilitating-fraudulent-remote-information-technology-worker-0"
+      ]
+    },
+    {
+      "id": "F06",
+      "script_area": "M03",
+      "type": "AGENCY_OBSERVATION",
+      "status": "PASS_AS_EXPLANATORY_INFERENCE",
+      "finding": "FBI guidance says U.S.-based individuals provide locations for company devices, enabling DPRK workers to circumvent controls intended to prevent overseas hiring/unauthorized access. The script's 'laptop becomes a stand-in for employee location' is an explanatory inference from this documented mechanism, not an FBI quotation.",
+      "sources": [
+        "https://www.ic3.gov/psa/2025/psa250723-4"
+      ]
+    },
+    {
+      "id": "F07",
+      "script_area": "M04/M05",
+      "type": "AGENCY_OBSERVATION",
+      "status": "PASS",
+      "finding": "The FBI's October 13, 2026 guidance says DPRK IT workers are using more facilitators, more numerous laptop farms with fewer laptops at each location, and third-party foreign freelancers who may apply, interview, or perform portions or entire jobs.",
+      "sources": [
+        "https://www.ic3.gov/PSA/2026/PSA261013"
+      ]
+    },
+    {
+      "id": "F08",
+      "script_area": "M06",
+      "type": "PROVEN_CASE",
+      "status": "PASS",
+      "finding": "The Kejia Wang/Zhenxing Wang case reached sentencing in April 2026. Court documents cited by DOJ support: more than 80 U.S. identities, more than 100 U.S. companies, at least five facilitators supervised by Kejia Wang, hundreds of victim-company computers hosted at residences, more than $5M illicit revenue, at least $3M in victim legal/remediation/other damages, shell companies/financial accounts, and access to sensitive employer data/source code including ITAR-controlled data from a California defense contractor.",
+      "sources": [
+        "https://www.justice.gov/opa/pr/two-us-nationals-sentenced-facilitating-fraudulent-remote-information-technology-worker",
+        "https://www.justice.gov/usao-ma/pr/two-us-nationals-sentenced-facilitating-fraudulent-remote-worker-scheme-generated-5"
+      ]
+    },
+    {
+      "id": "F09",
+      "script_area": "M06",
+      "type": "PRECISION_CORRECTION",
+      "status": "CORRECTED",
+      "finding": "The script previously said victim companies incurred 'millions' in extra costs. DOJ supports a precise floor of at least $3 million in legal fees, network remediation costs, and other damages/losses.",
+      "correction_commit": "2d5aab13d2bd9cd592486ed8f2b45fa4ced38885"
+    },
+    {
+      "id": "F10",
+      "script_area": "M06",
+      "type": "LEGAL_STATUS_PRECISION",
+      "status": "CORRECTED",
+      "finding": "The ITAR passage is supported in the same scheme that reached sentencing, but the narration should not separately label the specific ITAR access event as independently adjudicated. Wording was changed to attribute the statement to DOJ within the sentenced case.",
+      "correction_commit": "2d5aab13d2bd9cd592486ed8f2b45fa4ced38885"
+    },
+    {
+      "id": "F11",
+      "script_area": "M07",
+      "type": "ANALYTICAL_INFERENCE",
+      "status": "PASS",
+      "finding": "The 'physical footprint becomes evidence' reversal is editorial synthesis grounded in documented shipments, residences, hosted devices, searches, seizures, facilitators, shell companies and financial accounts. It must remain framed as explanation, not as a quoted government conclusion."
+    },
+    {
+      "id": "F12",
+      "script_area": "M08",
+      "type": "ANALYTICAL_INFERENCE",
+      "status": "PASS",
+      "finding": "The final 'trust signals' framing is the Studio's explanatory model. It is consistent with FBI guidance that no single indicator reliably identifies DPRK IT workers and that multiple compounding behaviors must be examined. It is not an agency quotation.",
+      "sources": [
+        "https://www.ic3.gov/PSA/2026/PSA261013"
+      ]
+    }
+  ],
+  "corrections_applied": [
+    "Clarified in M01 that employer-shipped laptops are established in proven cases rather than implying every device in the October 2026 seizure was employer-issued.",
+    "Explicitly tied the ~187-device statement to DPRK IT workers and their facilitators/laptop farms.",
+    "Changed victim-cost wording to at least $3 million.",
+    "Changed ITAR wording to attribute the detail to DOJ within the scheme that reached sentencing, without overclaiming adjudication of the specific access event."
+  ],
+  "unresolved_material_claims": 0,
+  "next_stage": "S8_VOICE_NARRATION_REWRITE"
+}
