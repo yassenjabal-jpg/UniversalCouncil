@@ -1,0 +1,190 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+  "stage_name": "Rights & Source Pre-clearance",
+  "status": "PASS_TO_PREPRODUCTION_06_SHOT_DESIGN",
+  "primary_program": "Browser",
+  "input_asset_plan": "ventures/STUDIO-PILOT-001/PP04_ASSET_PLAN.json",
+  "governing_visual_system": "Editorial Renaissance Motion",
+  "source_policies": [
+    {
+      "source_id": "SRC-POL-DOJ",
+      "authority": "U.S. Department of Justice",
+      "status": "PRECLEARED_WITH_RESTRICTIONS",
+      "rule": "DOJ-generated website information is public domain unless otherwise indicated; citation is appropriate. DOJ seals/logos/official insignia require advance written authorization. Third-party-attributed photos/graphics require permission from the original source.",
+      "operational_rule": "Use DOJ facts/text as source material and rebuild them into original Editorial Renaissance Motion evidence cards. Do not reproduce DOJ seals/logos. Do not assume third-party photos are cleared.",
+      "source_url": "https://www.justice.gov/legalpolicies"
+    },
+    {
+      "source_id": "SRC-POL-FBI",
+      "authority": "Federal Bureau of Investigation",
+      "status": "PRECLEARED_WITH_RESTRICTIONS",
+      "rule": "FBI-provided information not otherwise attributed is public information and may be distributed/copied, but seal and name/initial use must not create an impression of FBI approval or endorsement.",
+      "operational_rule": "Use plain-text source attribution only; no FBI seal/logo; no styling that implies endorsement.",
+      "source_url": "https://www.fbi.gov/privacy-policy"
+    },
+    {
+      "source_id": "SRC-POL-IC3",
+      "authority": "Internet Crime Complaint Center / FBI",
+      "status": "PRECLEARED_WITH_RESTRICTIONS",
+      "rule": "Treat IC3 factual guidance as FBI-origin public information unless attributed otherwise.",
+      "operational_rule": "Use data-card paraphrase and plain-text source label; do not use FBI/IC3 seals as decorative branding.",
+      "source_url": "https://www.ic3.gov/"
+    },
+    {
+      "source_id": "SRC-POL-MAP",
+      "authority": "Natural Earth",
+      "status": "PRECLEARED_PUBLIC_DOMAIN",
+      "rule": "Natural Earth vector and raster map data are public domain and may be modified and used commercially.",
+      "operational_rule": "Preferred base for all episode maps; restyle fully into ivory/cobalt/brass system.",
+      "source_url": "https://www.naturalearthdata.com/about/terms-of-use/"
+    }
+  ],
+  "evidence_sources": [
+    {
+      "id": "E01",
+      "title": "DOJ coordinated actions — Oct 13, 2026",
+      "class": "OFFICIAL_GOVERNMENT",
+      "legal_status": "CURRENT_ACTIONS_AND_ALLEGATIONS",
+      "url": "https://www.justice.gov/opa/pr/justice-department-announces-coordinated-actions-combat-north-korean-remote-it-worker",
+      "allowed_use": "FACTS_AND_ORIGINAL_DATA_CARD",
+      "shots": [
+        "V01.5",
+        "V04.3"
+      ],
+      "restrictions": [
+        "No DOJ seal/logo",
+        "Do not present allegations as convictions",
+        "Check any embedded photo attribution separately"
+      ]
+    },
+    {
+      "id": "E02",
+      "title": "Operation Lonestar Roundup — Northern District of Texas",
+      "class": "OFFICIAL_GOVERNMENT",
+      "legal_status": "LAW_ENFORCEMENT_ACTION",
+      "url": "https://www.justice.gov/usao-ndtx/pr/operation-lonestar-roundup-dismantles-north-korean-it-worker-network-used-penetrate-us",
+      "allowed_use": "FACTS_AND_ORIGINAL_DATA_CARD",
+      "shots": [
+        "V01.5",
+        "V04.3"
+      ],
+      "restrictions": [
+        "No DOJ/FBI insignia",
+        "Keep 40+ residences and 187 laptops/KVM contextualized to this operation"
+      ]
+    },
+    {
+      "id": "E03",
+      "title": "Matthew Isaac Knoot sentencing",
+      "class": "OFFICIAL_GOVERNMENT",
+      "legal_status": "SENTENCED_PROVEN_CASE",
+      "url": "https://www.justice.gov/opa/pr/two-us-nationals-sentenced-facilitating-fraudulent-remote-information-technology-worker-0",
+      "allowed_use": "FACTS_AND_ORIGINAL_CASE_CARD",
+      "shots": [
+        "V02.2"
+      ],
+      "restrictions": [
+        "No mugshot/photo by default",
+        "No DOJ/FBI seal",
+        "Use name + status + date + brief fact only"
+      ]
+    },
+    {
+      "id": "E04",
+      "title": "Kejia Wang / Zhenxing Wang sentencing",
+      "class": "OFFICIAL_GOVERNMENT",
+      "legal_status": "SENTENCED_PROVEN_CASE",
+      "url": "https://www.justice.gov/opa/pr/two-us-nationals-sentenced-facilitating-fraudulent-remote-information-technology-worker",
+      "allowed_use": "FACTS_AND_ORIGINAL_DATA_CARD",
+      "shots": [
+        "V06.1",
+        "V06.2",
+        "V06.3",
+        "V06.4",
+        "V06.5"
+      ],
+      "restrictions": [
+        "No seal/logo",
+        "Use exact numbers from S7 only",
+        "Do not reconstruct money routing"
+      ]
+    },
+    {
+      "id": "E05",
+      "title": "FBI / IC3 DPRK IT-worker guidance — Oct 13, 2026",
+      "class": "OFFICIAL_GOVERNMENT_GUIDANCE",
+      "legal_status": "AGENCY_OBSERVATION",
+      "url": "https://www.ic3.gov/PSA/2026/PSA261013",
+      "allowed_use": "FACTS_AND_ORIGINAL_OBSERVATION_CARD",
+      "shots": [
+        "V05.4"
+      ],
+      "restrictions": [
+        "Label as FBI observation/pattern",
+        "Do not imply every case follows the pattern",
+        "No seal/logo"
+      ]
+    }
+  ],
+  "non_evidence_assets": [
+    {
+      "group": "A01/A02/A05",
+      "classes": [
+        "home/laptop/person"
+      ],
+      "status": "ORIGINAL_OR_LICENSED_ONLY",
+      "rule": "Prefer original Photoshop composite, controlled synthetic illustration, or licensed stock with recorded license. Never use a real victim-company identity."
+    },
+    {
+      "group": "A03",
+      "classes": [
+        "maps"
+      ],
+      "status": "PRECLEARED_PUBLIC_DOMAIN_BASE",
+      "rule": "Use Natural Earth base data and fully restyle."
+    },
+    {
+      "group": "A06/A07/A09/A10/A11",
+      "classes": [
+        "diagram/identity/evidence-chain/metaphor"
+      ],
+      "status": "ORIGINAL_DESIGN_ONLY",
+      "rule": "Create in Photoshop/Illustrator/After Effects; no third-party dashboard screenshots."
+    }
+  ],
+  "prohibited_by_default": [
+    "DOJ seal/logo",
+    "FBI seal/logo",
+    "IC3/FBI branding used as endorsement",
+    "third-party photos embedded on government pages unless separately cleared",
+    "real victim-company logos",
+    "unlicensed mugshots",
+    "fabricated official documents",
+    "fabricated source-code screenshots presented as evidence",
+    "generic cyber stock used as evidence"
+  ],
+  "shot_preclearance": {
+    "V01.5": "PRECLEARED_FACTS_DATA_CARD",
+    "V02.2": "PRECLEARED_FACTS_CASE_CARD",
+    "V04.3": "PRECLEARED_FACTS_MULTI_SOURCE_CARD",
+    "V05.4": "PRECLEARED_FACTS_AGENCY_OBSERVATION_CARD",
+    "V06.1": "PRECLEARED_FACTS_CASE_TIMELINE",
+    "V06.2": "PRECLEARED_FACTS_NUMBER_CARD",
+    "V06.3": "PRECLEARED_FACTS_NUMBER_CARD",
+    "V06.4": "PRECLEARED_FACTS_NUMBER_CARD",
+    "V06.5": "PRECLEARED_FACTS_NUMBER_CARD"
+  },
+  "gate": {
+    "official_fact_sources": "PASS",
+    "seal_logo_policy": "PASS",
+    "third_party_media_policy": "PASS",
+    "map_source": "PASS",
+    "all_evidence_shots_have_precleared_path": true,
+    "all_non_evidence_groups_have_original_or_licensed_path": true,
+    "unresolved_blocking_rights_issues": 0
+  },
+  "next_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+  "next_primary_program": "Adobe Photoshop 2025"
+}
