@@ -1,0 +1,47 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S6_VISUAL_NARRATIVE_PASS",
+  "status": "PASS_TO_S7_INDEPENDENT_FACT_CHECK",
+  "input_script": "ventures/STUDIO-PILOT-001/W2_S5_EDITORIAL_SCRIPT_V2.md",
+  "movement_count": 8,
+  "shot_block_count": 39,
+  "hero_object": "company laptop inside an ordinary U.S. home",
+  "allowed_visual_purposes": [
+    "EVIDENCE",
+    "EXPLANATION",
+    "ACTION",
+    "DEMONSTRATION",
+    "ATMOSPHERE",
+    "TRANSITION",
+    "REVEAL"
+  ],
+  "evidence_modes": [
+    "REAL_SOURCE",
+    "DATA_CARD",
+    "ILLUSTRATION"
+  ],
+  "generic_broll_dependency": false,
+  "no_fake_evidence": true,
+  "narration_image_redundancy_reduced": true,
+  "movement_visual_status": {
+    "M01": "PASS",
+    "M02": "PASS",
+    "M03": "PASS",
+    "M04": "PASS",
+    "M05": "PASS_WITH_NARRATION_COMPRESSION",
+    "M06": "PASS_SUBJECT_TO_S7_EXACT_CLAIM_VERIFICATION",
+    "M07": "PASS",
+    "M08": "PASS"
+  },
+  "script_changes_required": [
+    "M01 visual carries multi-company shelf detail",
+    "M02 mechanism stated once only",
+    "M03 labels carry device/account/location list",
+    "M04 screen carries exact 40+/187/70+ numbers",
+    "M05 split-screen cards carry distributed-employee detail",
+    "M06 screen carries scale/money figures while narration carries consequence",
+    "M07 focus only on investigative reversal",
+    "M08 sparse final narration with visual trust-signal payoff"
+  ],
+  "next_stage": "S7_INDEPENDENT_FACT_CHECK"
+}
