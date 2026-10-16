@@ -1,0 +1,13 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "return_ticket_id": "RT-W2-S5-001",
+  "source_department": "D02_editorial_script",
+  "detecting_department": "D02_editorial_script",
+  "artifact_ref": "current S5 candidate presented to Owner",
+  "defect": "Script circles the central mechanism and repeats already-understood concepts, creating attention dispersion and likely cold-viewer drop-off.",
+  "reason_for_rejection": "Rephrased explanation was incorrectly treated as retention movement. Multiple beats add no material novelty.",
+  "requested_correction": "Rebuild S5 into 7-8 story movements. Every beat must add at least one of NEW_FACT, NEW_CHARACTER, NEW_EVIDENCE, NEW_CONSEQUENCE, NEW_CONTRADICTION, NEW_SCALE, REVERSAL, PAYOFF. Prefer 8-9 strong minutes over padded 10 minutes.",
+  "do_not_change": "OWNER_TITLE_LOCK; factual attribution boundaries; first-minute 187-device precision treatment; no procedural evasion detail.",
+  "resume_handoff": "S5_EDITORIAL_REWRITE",
+  "status": "OPEN"
+}
