@@ -65,6 +65,23 @@
       "sources": [
         "https://www.ic3.gov/PSA/2025/PSA250723-4"
       ]
+    },
+    {
+      "id": "C08",
+      "status": "PROVEN_CASE",
+      "claim": "In the Kejia Wang/Zhenxing Wang case, court-established facts described a multi-year scheme using stolen identities of more than 80 U.S. persons to obtain remote jobs at more than 100 U.S. companies. Kejia Wang supervised at least five U.S. facilitators who collectively hosted hundreds of victim-company computers at residences. The defendants also used shell companies and financial accounts to receive proceeds; DOJ said the scheme generated more than $5 million and facilitators collectively received nearly $700,000. Workers in the scheme gained access to sensitive employer data and source code, including ITAR-controlled data at a defense contractor.",
+      "sources": [
+        "https://www.justice.gov/opa/pr/two-us-nationals-sentenced-facilitating-fraudulent-remote-information-technology-worker",
+        "https://www.justice.gov/usao-ma/pr/two-us-nationals-sentenced-facilitating-fraudulent-remote-worker-scheme-generated-5"
+      ]
+    },
+    {
+      "id": "C09",
+      "status": "AGENCY_OBSERVATION",
+      "claim": "The FBI's 2026 guidance says DPRK IT workers are increasingly using more facilitators, smaller distributed laptop farms with fewer laptops at each location, and third-party freelancers who may apply for jobs, conduct interviews, or perform portions or even entire jobs for a fraction of the salary.",
+      "sources": [
+        "https://www.ic3.gov/PSA/2026/PSA261013"
+      ]
     }
   ],
   "title_accuracy_finding": {
