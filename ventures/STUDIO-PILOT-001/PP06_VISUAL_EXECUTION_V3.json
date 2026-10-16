@@ -1,0 +1,101 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "PREPRODUCTION_06_SHOT_DESIGN",
+  "revision": "v3_refined_photoshop_keyframes",
+  "keyframe_revision": "v02",
+  "status": "AWAITING_OWNER_VISUAL_REVIEW",
+  "studio_rereview_status": "READY_FOR_OWNER_VISUAL_REVIEW",
+  "executed_on": "YASSIN",
+  "primary_program": "Adobe Photoshop 2025",
+  "method": "Photoshop 2025 ExtendScript executed through Photoshop COM; each original v01 PSD was opened, its prior layers preserved but hidden in the v02 document, and a new refined layered Photoshop composition was built and exported.",
+  "governing_visual_system": "Editorial Renaissance Motion",
+  "source_matrix": "ventures/STUDIO-PILOT-001/PP06_SHOT_DESIGN_MATRIX.json",
+  "prior_execution_record": "ventures/STUDIO-PILOT-001/PP06_VISUAL_EXECUTION_V2.json",
+  "initial_studio_review": "ventures/STUDIO-PILOT-001/PP06_STUDIO_VISUAL_REVIEW_2026-10-16.md",
+  "studio_rereview": "ventures/STUDIO-PILOT-001/PP06_STUDIO_REREVIEW_2026-10-16.md",
+  "output_dir": "ventures/STUDIO-PILOT-001/pp06_photoshop_keyframes",
+  "review_contact_sheet": "ventures/STUDIO-PILOT-001/pp06_photoshop_keyframes/PP06_V2_CONTACT_SHEET.jpg",
+  "binary_output_commit": "ae4a2f03877fce0b8a78bf122613c0971bfe3387",
+  "corrections_verified": {
+    "paper_ivory_white_light_dominance": true,
+    "repeated_dashboard_template_reduced": true,
+    "paper_print_materiality_added": true,
+    "arabic_viewer_facing_typography_demonstrated": true,
+    "mojibake_visible_copy_removed": true,
+    "m06_three_financial_figures_present": true,
+    "m06_source_zone_present": true,
+    "m07_before_pivot_after_reversal_demonstrated": true,
+    "m08_six_trust_signals_present": true,
+    "m08_account_signal_present": true,
+    "m08_vector_checkmarks_present": true
+  },
+  "keyframes": [
+    {
+      "id": "KF01",
+      "shot": "V01.4",
+      "movement": "M01",
+      "psd": "KF01_V01_4_v02.psd",
+      "png": "KF01_V01_4_v02.png",
+      "jpg": "KF01_V01_4_v02_preview.jpg"
+    },
+    {
+      "id": "KF02",
+      "shot": "V02.5",
+      "movement": "M02",
+      "psd": "KF02_V02_5_v02.psd",
+      "png": "KF02_V02_5_v02.png",
+      "jpg": "KF02_V02_5_v02_preview.jpg"
+    },
+    {
+      "id": "KF03",
+      "shot": "V03.3",
+      "movement": "M03",
+      "psd": "KF03_V03_3_v02.psd",
+      "png": "KF03_V03_3_v02.png",
+      "jpg": "KF03_V03_3_v02_preview.jpg"
+    },
+    {
+      "id": "KF04",
+      "shot": "V04.3",
+      "movement": "M04",
+      "psd": "KF04_V04_3_v02.psd",
+      "png": "KF04_V04_3_v02.png",
+      "jpg": "KF04_V04_3_v02_preview.jpg"
+    },
+    {
+      "id": "KF05",
+      "shot": "V05.2",
+      "movement": "M05",
+      "psd": "KF05_V05_2_v02.psd",
+      "png": "KF05_V05_2_v02.png",
+      "jpg": "KF05_V05_2_v02_preview.jpg"
+    },
+    {
+      "id": "KF06",
+      "shot": "V06.5",
+      "movement": "M06",
+      "psd": "KF06_V06_5_v02.psd",
+      "png": "KF06_V06_5_v02.png",
+      "jpg": "KF06_V06_5_v02_preview.jpg"
+    },
+    {
+      "id": "KF07",
+      "shot": "V07.4",
+      "movement": "M07",
+      "psd": "KF07_V07_4_v02.psd",
+      "png": "KF07_V07_4_v02.png",
+      "jpg": "KF07_V07_4_v02_preview.jpg"
+    },
+    {
+      "id": "KF08",
+      "shot": "V08.4",
+      "movement": "M08",
+      "psd": "KF08_V08_4_v02.psd",
+      "png": "KF08_V08_4_v02.png",
+      "jpg": "KF08_V08_4_v02_preview.jpg"
+    }
+  ],
+  "owner_review_required": true,
+  "visual_lock_granted": false,
+  "storyboard_entry": "BLOCKED_PENDING_OWNER_VISUAL_APPROVAL"
+}
