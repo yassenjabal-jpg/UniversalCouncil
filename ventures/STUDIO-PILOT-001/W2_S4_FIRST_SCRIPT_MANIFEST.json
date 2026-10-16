@@ -1,0 +1,30 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S4_FIRST_SCRIPT",
+  "status": "READY_FOR_S5_EDITORIAL_REWRITE",
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "source_retention_map": "ventures/STUDIO-PILOT-001/W2_S3_HOOK_RETENTION_MAP.json",
+  "source_claim_sheet": "ventures/STUDIO-PILOT-001/W2_S1_CLAIM_SOURCE_SHEET.json",
+  "script_ref": "ventures/STUDIO-PILOT-001/W2_S4_FIRST_SCRIPT.md",
+  "segment_count": 12,
+  "expected_runtime_seconds": 600,
+  "first_script_status": "PASS",
+  "owner_title_lock_status": "PASS",
+  "story_question_status": "PASS",
+  "research_pack_status": "PASS",
+  "story_architecture_status": "PASS",
+  "hook_retention_map_status": "PASS",
+  "factual_clearance_status": "NOT_YET_S7",
+  "editorial_rewrite_status": "NOT_YET_S5",
+  "visual_narrative_pass_status": "NOT_YET_S6",
+  "narration_rewrite_status": "NOT_YET_S8",
+  "red_team_retention_review_status": "NOT_YET_S9",
+  "script_lock_status": "NOT_LOCKED",
+  "constraints": [
+    "Do not change Owner-locked title without Owner reapproval",
+    "Keep first-minute 187-device qualifier",
+    "Do not merge current allegations with proven cases",
+    "Do not add procedural evasion detail",
+    "Do not claim S4 is final narration"
+  ]
+}
