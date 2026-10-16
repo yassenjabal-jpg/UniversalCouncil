@@ -274,7 +274,6 @@ def validate_title_revision_request(request: dict[str, Any]) -> bool:
     return True
 
 
-
 def validate_script_lock_packet(packet: dict[str, Any]) -> bool:
     required_refs = {
         "locked_title",
@@ -374,6 +373,7 @@ def validate_script_lock_packet(packet: dict[str, Any]) -> bool:
                 raise StudioProductionLineError(f"drop-off risk {field} must be non-empty")
 
     return True
+
 
 def validate_phase_transition(current_phase: str, target_phase: str, state: dict[str, Any]) -> bool:
     if current_phase not in PHASE_SEQUENCE or target_phase not in PHASE_SEQUENCE:
