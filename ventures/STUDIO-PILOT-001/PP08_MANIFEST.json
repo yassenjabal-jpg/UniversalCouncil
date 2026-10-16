@@ -1,0 +1,26 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_08_CAMERA_CONTINUITY_PLAN",
+  "status": "IN_PROGRESS",
+  "primary_program": "Adobe Photoshop 2025",
+  "governing_visual_system": "Editorial Renaissance Motion",
+  "entry_storyboard": "ventures/STUDIO-PILOT-001/PP07_MANIFEST.json",
+  "storyboard_index": "ventures/STUDIO-PILOT-001/PP07_STORYBOARD_INDEX.json",
+  "source_matrix": "ventures/STUDIO-PILOT-001/PP06_SHOT_DESIGN_MATRIX.json",
+  "shot_count": 41,
+  "movement_count": 8,
+  "required_dimensions": [
+    "framing_and_shot_size",
+    "camera_motion_intent",
+    "depth_and_layering",
+    "subject_staging",
+    "screen_direction",
+    "shot_to_shot_continuity",
+    "camera_transition_motivation",
+    "continuity_with_locked_keyframes"
+  ],
+  "output_dir": "ventures/STUDIO-PILOT-001/pp08_photoshop_camera_continuity",
+  "next_stage_on_pass": "PREPRODUCTION_09_SONIC_CONCEPT_SPOTTING",
+  "next_primary_program": "Adobe Audition 2025"
+}
