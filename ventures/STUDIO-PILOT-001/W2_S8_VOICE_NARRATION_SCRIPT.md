@@ -26,6 +26,8 @@ Next gate: **S9 Red Team Retention Review**
 
 ## M01 — 0:00–0:45
 
+**Evidence:** C01, C02, C07
+
 **Performance:** [فضول هادئ] → [دهشة مضبوطة]  
 **Pace:** medium, then slightly slower at the reveal  
 **Music:** M0 → M1  
@@ -62,6 +64,8 @@ Next gate: **S9 Red Team Retention Review**
 ---
 
 ## M02 — 0:45–1:40
+
+**Evidence:** C03
 
 **Performance:** [سؤال حقيقي] → [سر صغير]  
 **Pace:** calm, conversational  
@@ -101,6 +105,8 @@ Next gate: **S9 Red Team Retention Review**
 ---
 
 ## M03 — 1:40–2:25
+
+**Evidence:** C03, C07
 
 **Performance:** [شرح بسيط] → [تأكيد]  
 **Pace:** slightly slower  
@@ -145,6 +151,8 @@ Next gate: **S9 Red Team Retention Review**
 
 ## M04 — 2:25–3:30
 
+**Evidence:** C01, C02, C05, C09
+
 **Performance:** [فضول] → [تصاعد]  
 **Pace:** medium  
 **Music:** M2  
@@ -182,6 +190,8 @@ Next gate: **S9 Red Team Retention Review**
 ---
 
 ## M05 — 3:30–4:45
+
+**Evidence:** C04, C05, C09
 
 **Performance:** [قرب من المشاهد] → [دهشة مضبوطة]  
 **Pace:** conversational, slightly quicker in the setup, slower at reveal  
@@ -224,6 +234,8 @@ Next gate: **S9 Red Team Retention Review**
 ---
 
 ## M06 — 4:45–6:05
+
+**Evidence:** C04, C08
 
 **Performance:** [جدية] → [تصاعد] → [تحذير هادئ]  
 **Pace:** controlled; numbers must not sound like a list  
@@ -269,6 +281,8 @@ Next gate: **S9 Red Team Retention Review**
 ---
 
 ## M07 — 6:05–7:15
+
+**Evidence:** C02, C03, C04, C05, C08
 
 **Performance:** [هدوء] → [كشف]  
 **Pace:** slower; let reversal land  
@@ -316,6 +330,8 @@ Next gate: **S9 Red Team Retention Review**
 ---
 
 ## M08 — 7:15–8:35
+
+**Evidence:** C05, C07, C09
 
 **Performance:** [تأمل] → [تأكيد هادئ]  
 **Pace:** unhurried  
