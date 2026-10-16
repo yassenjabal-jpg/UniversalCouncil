@@ -1,0 +1,73 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "PREPRODUCTION_06_SHOT_DESIGN",
+  "revision": "v2_actual_photoshop_keyframes",
+  "status": "AWAITING_OWNER_VISUAL_REVIEW",
+  "executed_on": "YASSIN",
+  "primary_program": "Adobe Photoshop 2025",
+  "method": "Photoshop COM automation creating native layered PSD documents and Photoshop-exported PNG previews",
+  "governing_visual_system": "Editorial Renaissance Motion",
+  "source_matrix": "ventures/STUDIO-PILOT-001/PP06_SHOT_DESIGN_MATRIX.json",
+  "output_dir": "ventures/STUDIO-PILOT-001/pp06_photoshop_keyframes",
+  "keyframes": [
+    {
+      "id": "KF01",
+      "shot": "V01.4",
+      "movement": "M01",
+      "psd": "KF01_V01_4_v01.psd",
+      "png": "KF01_V01_4_v01.png"
+    },
+    {
+      "id": "KF02",
+      "shot": "V02.5",
+      "movement": "M02",
+      "psd": "KF02_V02_5_v01.psd",
+      "png": "KF02_V02_5_v01.png"
+    },
+    {
+      "id": "KF03",
+      "shot": "V03.3",
+      "movement": "M03",
+      "psd": "KF03_V03_3_v01.psd",
+      "png": "KF03_V03_3_v01.png"
+    },
+    {
+      "id": "KF04",
+      "shot": "V04.3",
+      "movement": "M04",
+      "psd": "KF04_V04_3_v01.psd",
+      "png": "KF04_V04_3_v01.png"
+    },
+    {
+      "id": "KF05",
+      "shot": "V05.2",
+      "movement": "M05",
+      "psd": "KF05_V05_2_v01.psd",
+      "png": "KF05_V05_2_v01.png"
+    },
+    {
+      "id": "KF06",
+      "shot": "V06.5",
+      "movement": "M06",
+      "psd": "KF06_V06_5_v01.psd",
+      "png": "KF06_V06_5_v01.png"
+    },
+    {
+      "id": "KF07",
+      "shot": "V07.4",
+      "movement": "M07",
+      "psd": "KF07_V07_4_v01.psd",
+      "png": "KF07_V07_4_v01.png"
+    },
+    {
+      "id": "KF08",
+      "shot": "V08.4",
+      "movement": "M08",
+      "psd": "KF08_V08_4_v01.psd",
+      "png": "KF08_V08_4_v01.png"
+    }
+  ],
+  "owner_review_required": true,
+  "storyboard_entry": "BLOCKED_PENDING_OWNER_VISUAL_APPROVAL",
+  "commit_with_binary_outputs": "18745c9"
+}
