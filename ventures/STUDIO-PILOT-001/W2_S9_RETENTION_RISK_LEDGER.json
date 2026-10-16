@@ -1,0 +1,107 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S9_RED_TEAM_RETENTION_REVIEW",
+  "status": "PASS_TO_S10_SCRIPT_LOCK_REVIEW",
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "reviewed_script": "ventures/STUDIO-PILOT-001/W2_S8_VOICE_NARRATION_SCRIPT.md",
+  "picture_runtime_seconds": 515,
+  "cold_viewer_assumption": "Viewer does not know the channel, has no prior DPRK/cyber interest, and clicked only because the title/thumbnail felt strange.",
+  "risks": [
+    {
+      "id": "RISK-01",
+      "timestamp": "0:24-0:38",
+      "risk": "The first legal/accuracy qualifier around the 187 figure could interrupt the hook and feel like a correction before the story has started.",
+      "correction": "Keep it to one compact sentence, use the visual evidence card for the device-type distinction, and immediately return to the concrete question: why must the device be inside an American home?",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "RISK-02",
+      "timestamp": "1:42-2:08",
+      "risk": "After the Nashville case proves the trick, another long explanation of device/account/location could feel like re-explaining something the viewer already understands.",
+      "correction": "Let the visual labels carry the signal list, keep voice sparse, and reach the early payoff 'اللابتوب يصير بديلًا عن موقع الموظف' quickly.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "RISK-03",
+      "timestamp": "2:45-3:10",
+      "risk": "40+ residences / 187 devices / 70+ companies can become a static statistics dump.",
+      "correction": "Reveal the three cards separately, do not narrate every figure again, and use the voice only to interpret the scale and open the next question about the employee itself.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "RISK-04",
+      "timestamp": "3:32-4:05",
+      "risk": "The fictional Ahmed example could feel artificial or classroom-like if it becomes a list of components.",
+      "correction": "Explicitly label Ahmed as an illustration, split the employee visually while narration pauses, and make the reveal about multiple hands behind one visible name.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "RISK-05",
+      "timestamp": "4:50-5:50",
+      "risk": "The proven-case section originally stacked too many figures and legal details, risking a news-report cadence and cognitive overload.",
+      "correction": "S9 trimmed spoken number density. Exact figures stay on screen where appropriate; narration carries only the scale and consequence. Applied in commit 0fbcdd1aa7370e4e690a85bb2c90cbccdbf43c27.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "RISK-06",
+      "timestamp": "6:08-6:35",
+      "risk": "The reversal originally began with a long inventory of physical traces before reaching the actual twist.",
+      "correction": "S9 reduced the inventory to four concrete anchors—device, address, shipment, receiver—then reaches the reversal immediately. Applied in commit 0fbcdd1aa7370e4e690a85bb2c90cbccdbf43c27.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "RISK-07",
+      "timestamp": "7:35-8:20",
+      "risk": "The reflective ending could restate the same trust-signal idea after the viewer has already understood it.",
+      "correction": "S9 removed the repeated spoken list of device/address/connection/work and lets the green-check visual carry those signals. Voice moves directly to the final human-identity payoff.",
+      "status": "RESOLVED"
+    }
+  ],
+  "movement_novelty": [
+    {
+      "id": "M01",
+      "reason_to_stay": "Impossible physical contradiction: the laptop is in the U.S.; the worker may not be."
+    },
+    {
+      "id": "M02",
+      "reason_to_stay": "A sentenced Nashville case proves the premise with a real person and residence."
+    },
+    {
+      "id": "M03",
+      "reason_to_stay": "Early title payoff explains why the physical laptop matters."
+    },
+    {
+      "id": "M04",
+      "reason_to_stay": "Scale expands from one device to distributed homes, devices and companies."
+    },
+    {
+      "id": "M05",
+      "reason_to_stay": "The apparent employee itself splits across multiple actors."
+    },
+    {
+      "id": "M06",
+      "reason_to_stay": "A proven case escalates to industrial scale, money, victim costs and sensitive access."
+    },
+    {
+      "id": "M07",
+      "reason_to_stay": "Reversal: the physical infrastructure that enables the disguise also creates evidence."
+    },
+    {
+      "id": "M08",
+      "reason_to_stay": "Final insight: multiple valid-looking signals can still point to the wrong human."
+    }
+  ],
+  "gates": {
+    "first_30_second_retention": "PASS",
+    "cold_viewer_test": "PASS",
+    "all_material_dropoff_risks_resolved": true,
+    "max_story_interval_seconds": 80,
+    "hard_90_second_ceiling": "PASS",
+    "filler_segments_remaining": 0,
+    "article_like_paragraphs_remaining": 0,
+    "unsourced_material_claims_remaining": 0,
+    "title_promise_paid": "PASS",
+    "final_payoff_closed": "PASS"
+  },
+  "result": "PASS_TO_S10_SCRIPT_LOCK_REVIEW"
+}
