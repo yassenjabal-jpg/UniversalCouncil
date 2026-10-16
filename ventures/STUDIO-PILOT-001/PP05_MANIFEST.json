@@ -1,0 +1,14 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+  "status": "PASS_TO_PREPRODUCTION_06_SHOT_DESIGN",
+  "primary_program": "Browser",
+  "input_asset_plan": "ventures/STUDIO-PILOT-001/PP04_ASSET_PLAN.json",
+  "output_preclearance": "ventures/STUDIO-PILOT-001/PP05_RIGHTS_SOURCE_PRECLEARANCE.json",
+  "evidence_shots_precleared": 9,
+  "blocking_rights_issues": 0,
+  "approved_map_base": "Natural Earth — public domain",
+  "next_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+  "next_primary_program": "Adobe Photoshop 2025"
+}
