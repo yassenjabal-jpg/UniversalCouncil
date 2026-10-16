@@ -113,17 +113,18 @@
     "final_line_requires_long_pause": true
   },
   "next_stage": "S9_RED_TEAM_RETENTION_REVIEW",
-  "measured_arabic_word_tokens": 852,
+  "measured_arabic_word_tokens": 831,
   "estimated_voice_seconds": {
-    "wpm115": 445,
-    "wpm120": 426,
-    "wpm125": 409
+    "wpm115": 434,
+    "wpm120": 416,
+    "wpm125": 399
   },
   "picture_runtime_target_seconds": 515,
   "visual_silence_hold_budget_seconds": {
-    "at_wpm115": 70,
-    "at_wpm120": 89,
-    "at_wpm125": 106
+    "at_wpm115": 81,
+    "at_wpm120": 99,
+    "at_wpm125": 116
   },
-  "runtime_policy": "Do not fill planned visual holds with repeated narration. Picture runtime may exceed voice-only runtime when evidence cards, diagrams, maps, and reveals are carrying information."
+  "runtime_policy": "Do not fill planned visual holds with repeated narration. Picture runtime may exceed voice-only runtime when evidence cards, diagrams, maps, and reveals are carrying information.",
+  "s9_retention_trim_commit": "0fbcdd1aa7370e4e690a85bb2c90cbccdbf43c27"
 }
