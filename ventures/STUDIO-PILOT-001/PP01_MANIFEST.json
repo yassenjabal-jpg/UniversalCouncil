@@ -1,0 +1,16 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_01_SCRIPT_BREAKDOWN",
+  "status": "PASS_TO_PREPRODUCTION_02_VISUAL_STORY_CASE",
+  "input_lock": "ventures/STUDIO-PILOT-001/SCRIPT_LOCK.json",
+  "input_script": "ventures/STUDIO-PILOT-001/W2_S10_LOCKED_SCRIPT.md",
+  "input_script_blob_sha": "26769f91cb98eb3f80d0634aae2ab8880f5ecb3a",
+  "breakdown_json": "ventures/STUDIO-PILOT-001/PP01_SCRIPT_BREAKDOWN.json",
+  "breakdown_report": "ventures/STUDIO-PILOT-001/PP01_SCRIPT_BREAKDOWN.md",
+  "movement_count": 8,
+  "shot_block_count": 41,
+  "asset_group_count": 11,
+  "script_mutations": 0,
+  "next_stage": "PREPRODUCTION_02_VISUAL_STORY_CASE"
+}
