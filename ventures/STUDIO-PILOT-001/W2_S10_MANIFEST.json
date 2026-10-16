@@ -1,0 +1,19 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S10_LOCKED_SCRIPT",
+  "status": "SCRIPT_LOCK",
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "canonical_locked_script": "ventures/STUDIO-PILOT-001/W2_S10_LOCKED_SCRIPT.md",
+  "canonical_locked_script_blob_sha": "26769f91cb98eb3f80d0634aae2ab8880f5ecb3a",
+  "script_lock_ref": "ventures/STUDIO-PILOT-001/SCRIPT_LOCK.json",
+  "gate_matrix_ref": "ventures/STUDIO-PILOT-001/W2_S10_GATE_MATRIX.json",
+  "reconciliation_ref": "ventures/STUDIO-PILOT-001/W2_S10_FINAL_RECONCILIATION.json",
+  "review_ref": "ventures/STUDIO-PILOT-001/W2_S10_SCRIPT_LOCK_REVIEW.md",
+  "gate_count": 24,
+  "gates_passed": 24,
+  "gates_failed": 0,
+  "writing_phase_status": "COMPLETE",
+  "preproduction_entry": "ALLOWED",
+  "next_macro_phase": "PRE_PRODUCTION",
+  "next_stage": "PREPRODUCTION_01_SCRIPT_BREAKDOWN"
+}
