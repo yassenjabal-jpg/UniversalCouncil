@@ -2,12 +2,14 @@
   "project_id": "STUDIO-PILOT-001",
   "phase": "PRE_PRODUCTION",
   "stage_id": "PREPRODUCTION_03_ART_DIRECTION",
-  "status": "AWAITING_OWNER_STYLE_FRAME_APPROVAL",
+  "status": "ART_DIRECTION_LOCK",
   "governing_visual_system": "Editorial Renaissance Motion",
   "art_direction_ref": "ventures/STUDIO-PILOT-001/PP03_ART_DIRECTION.json",
   "report_ref": "ventures/STUDIO-PILOT-001/PP03_ART_DIRECTION.md",
   "frame_plan_ref": "ventures/STUDIO-PILOT-001/PP03_STYLE_FRAME_PLAN.json",
   "trial_frame_count": 4,
   "previous_exploratory_frames": "REJECTED_DO_NOT_USE",
-  "next_stage_if_approved": "PREPRODUCTION_04_ASSET_PLAN"
+  "next_stage_if_approved": "PREPRODUCTION_04_ASSET_PLAN",
+  "owner_style_direction_status": "APPROVED_CONTINUE",
+  "next_stage": "PREPRODUCTION_04_ASSET_PLAN"
 }
