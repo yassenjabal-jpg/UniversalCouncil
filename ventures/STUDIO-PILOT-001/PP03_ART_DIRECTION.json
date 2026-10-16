@@ -3,7 +3,7 @@
   "phase": "PRE_PRODUCTION",
   "stage_id": "PREPRODUCTION_03_ART_DIRECTION",
   "stage_name": "Art Direction",
-  "status": "AWAITING_OWNER_STYLE_FRAME_APPROVAL",
+  "status": "ART_DIRECTION_LOCK",
   "primary_program": "Adobe Photoshop 2025",
   "governing_visual_system": "Editorial Renaissance Motion",
   "governing_visual_bible": "docs/operations/media/EDITORIAL_RENAISSANCE_VISUAL_BIBLE.md",
@@ -175,5 +175,8 @@
     "Every frame must explain, prove, reveal, orient, or reset."
   ],
   "lock_condition": "Owner approves the new Style Frame set; only then may PP03 become ART_DIRECTION_LOCK and PP04 begin.",
-  "next_stage_if_approved": "PREPRODUCTION_04_ASSET_PLAN"
+  "next_stage_if_approved": "PREPRODUCTION_04_ASSET_PLAN",
+  "owner_style_direction_status": "APPROVED_CONTINUE",
+  "owner_approval_basis": "Owner previously confirmed the bright ivory/white Editorial Renaissance Motion direction and instructed to continue work after the restart.",
+  "locked_on": "2026-10-16"
 }
