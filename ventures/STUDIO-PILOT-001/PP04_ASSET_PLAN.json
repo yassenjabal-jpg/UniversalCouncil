@@ -3,7 +3,7 @@
   "phase": "PRE_PRODUCTION",
   "stage_id": "PREPRODUCTION_04_ASSET_PLAN",
   "stage_name": "Asset Plan",
-  "status": "ASSET_PLAN_READY_FOR_BRIDGE_INGEST",
+  "status": "PASS_TO_PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
   "primary_program": "Adobe Bridge 2025",
   "input_art_direction_lock": "ventures/STUDIO-PILOT-001/PP03_ART_DIRECTION_LOCK.json",
   "input_breakdown": "ventures/STUDIO-PILOT-001/PP01_SCRIPT_BREAKDOWN.json",
@@ -768,5 +768,23 @@
     "No asset may introduce new factual claims.",
     "Synthetic reference may guide composition but cannot replace documentary evidence."
   ],
-  "next_stage_after_ingest": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE"
+  "next_stage_after_ingest": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+  "bridge_execution": {
+    "device": "YASSIN",
+    "workspace_root": "C:\\Users\\alnaseem\\Desktop\\STUDIO-PILOT-001_ASSETS",
+    "folder_count": 14,
+    "asset_register": "PP04_ASSET_REGISTER.csv",
+    "bridge_process_verified": true,
+    "bridge_process_name": "Adobe Bridge.exe",
+    "verified_pid": 5968
+  },
+  "exit_gate": {
+    "asset_groups_mapped": "11/11 PASS",
+    "shots_mapped": "41/41 PASS",
+    "workspace_created": true,
+    "bridge_opened": true,
+    "naming_versioning_defined": true,
+    "rights_states_defined": true,
+    "art_direction_lock_preserved": true
+  }
 }
