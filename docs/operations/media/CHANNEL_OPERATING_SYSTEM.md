@@ -1,4 +1,4 @@
-# Channel Operating System v1.8
+# Channel Operating System v1.9
 
 Status: CANONICAL
 Date: 2026-10-16
@@ -15,6 +15,7 @@ Companion systems:
 - `EDITORIAL_RENAISSANCE_VISUAL_BIBLE.md`
 - `REFERENCE_FRAME_SPECS.md`
 - `PACKAGING_BIBLE.md`
+- `YOUTUBE_SCRIPT_BIBLE.md`
 - `AUDIO_NARRATION_BIBLE.md`
 - `AUDIOVISUAL_SOUND_SYSTEM.md`
 - `STUDIO_EXECUTION_RECOVERY.md`
@@ -76,14 +77,36 @@ The script cannot start before this gate.
 
 ### Script development
 
+W2 writes for a viewer, not for a reader.
+
 S0 Story Question  
 S1 Research Pack  
 S2 Story Architecture  
-S3 First Script  
-S4 Editorial Rewrite  
-S5 Independent Fact Check  
-S6 Narration Rewrite  
-S7 Locked Script
+S3 Hook & Retention Map  
+S4 First Script  
+S5 YouTube Editorial Rewrite  
+S6 Visual/Narrative Pass  
+S7 Independent Fact Check  
+S8 Voice/Narration Rewrite  
+S9 Red Team Retention Review  
+S10 Locked Script
+
+Before Script Lock the episode must prove:
+- a concrete hook before background exposition;
+- a strong first 30 seconds;
+- a reason to continue at least every 90 seconds;
+- preferred visual/story change every 30–60 seconds;
+- managed open loops;
+- a visual beat map;
+- no unresolved filler;
+- no article-like paragraphs;
+- spoken-language clarity;
+- Cold Viewer PASS;
+- Red Team drop-off risks resolved.
+
+Detailed rules:
+`YOUTUBE_SCRIPT_BIBLE.md`.
+
 
 Exit:
 **SCRIPT_LOCK**
