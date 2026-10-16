@@ -1,0 +1,18 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_02_VISUAL_STORY_CASE",
+  "status": "PASS_TO_PREPRODUCTION_03_ART_DIRECTION",
+  "primary_program": "ChatGPT",
+  "input_breakdown": "ventures/STUDIO-PILOT-001/PP01_SCRIPT_BREAKDOWN.json",
+  "input_script_lock": "ventures/STUDIO-PILOT-001/SCRIPT_LOCK.json",
+  "output_case": "ventures/STUDIO-PILOT-001/PP02_VISUAL_STORY_CASE.json",
+  "output_report": "ventures/STUDIO-PILOT-001/PP02_VISUAL_STORY_CASE.md",
+  "required_fields_passed": 6,
+  "required_fields_total": 6,
+  "movement_visual_case": "8/8 PASS",
+  "craft_review": "UNANIMOUS_PASS",
+  "return_ticket_required": false,
+  "next_stage": "PREPRODUCTION_03_ART_DIRECTION",
+  "next_primary_program": "Adobe Photoshop 2025"
+}
