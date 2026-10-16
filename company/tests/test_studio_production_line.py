@@ -555,6 +555,112 @@ class StudioProductionLineTests(unittest.TestCase):
         with self.assertRaises(StudioProductionLineError):
             validate_script_lock_packet(no_payoff)
 
+    def test_script_lock_structural_failure_paths_are_covered(self):
+        cases = []
+
+        missing_ref = self.script_lock_packet()
+        missing_ref.pop("script_ref")
+        cases.append(missing_ref)
+
+        empty_ref = self.script_lock_packet()
+        empty_ref["script_ref"] = " "
+        cases.append(empty_ref)
+
+        bad_lock_status = self.script_lock_packet()
+        bad_lock_status["script_lock_status"] = "PENDING"
+        cases.append(bad_lock_status)
+
+        first_30_not_object = self.script_lock_packet()
+        first_30_not_object["first_30_seconds"] = "hook"
+        cases.append(first_30_not_object)
+
+        first_30_missing = self.script_lock_packet()
+        first_30_missing["first_30_seconds"].pop("central_mystery")
+        cases.append(first_30_missing)
+
+        first_30_empty = self.script_lock_packet()
+        first_30_empty["first_30_seconds"]["hook"] = ""
+        cases.append(first_30_empty)
+
+        first_30_fail = self.script_lock_packet()
+        first_30_fail["first_30_seconds"]["status"] = "FAIL"
+        cases.append(first_30_fail)
+
+        no_beats = self.script_lock_packet()
+        no_beats["retention_beats"] = []
+        cases.append(no_beats)
+
+        beat_not_object = self.script_lock_packet()
+        beat_not_object["retention_beats"][0] = "beat"
+        cases.append(beat_not_object)
+
+        beat_missing = self.script_lock_packet()
+        beat_missing["retention_beats"][0].pop("visual_beat")
+        cases.append(beat_missing)
+
+        beat_bad_time_type = self.script_lock_packet()
+        beat_bad_time_type["retention_beats"][0]["start_sec"] = "zero"
+        cases.append(beat_bad_time_type)
+
+        beat_reverse = self.script_lock_packet()
+        beat_reverse["retention_beats"][0]["end_sec"] = 0
+        cases.append(beat_reverse)
+
+        beat_bad_function = self.script_lock_packet()
+        beat_bad_function["retention_beats"][0]["narrative_function"] = "SUMMARY"
+        cases.append(beat_bad_function)
+
+        beat_empty_reason = self.script_lock_packet()
+        beat_empty_reason["retention_beats"][0]["reason_to_continue"] = ""
+        cases.append(beat_empty_reason)
+
+        filler = self.script_lock_packet()
+        filler["filler_segments_detected"] = 1
+        cases.append(filler)
+
+        unsourced = self.script_lock_packet()
+        unsourced["unsourced_material_claims_remaining"] = 1
+        cases.append(unsourced)
+
+        no_risks = self.script_lock_packet()
+        no_risks["red_team_dropoff_risks"] = []
+        cases.append(no_risks)
+
+        risk_not_object = self.script_lock_packet()
+        risk_not_object["red_team_dropoff_risks"] = ["risk"]
+        cases.append(risk_not_object)
+
+        risk_missing = self.script_lock_packet()
+        risk_missing["red_team_dropoff_risks"][0].pop("correction")
+        cases.append(risk_missing)
+
+        risk_bad_time = self.script_lock_packet()
+        risk_bad_time["red_team_dropoff_risks"][0]["time_sec"] = -1
+        cases.append(risk_bad_time)
+
+        risk_empty_text = self.script_lock_packet()
+        risk_empty_text["red_team_dropoff_risks"][0]["risk"] = ""
+        cases.append(risk_empty_text)
+
+        for packet in cases:
+            with self.assertRaises(StudioProductionLineError):
+                validate_script_lock_packet(packet)
+
+    def test_owner_lock_rejects_wrong_locked_title_text(self):
+        packet = self.packet()
+        with self.assertRaises(StudioProductionLineError):
+            validate_owner_title_lock(
+                packet,
+                {
+                    "authority": "Owner",
+                    "status": "OWNER_TITLE_LOCK",
+                    "selected_topic_id": "P1",
+                    "selected_title_id": "P1A",
+                    "locked_topic": "Topic One",
+                    "locked_title": "Wrong locked title",
+                },
+            )
+
     def test_stage_record_failure_paths_are_covered(self):
         with self.assertRaises(StudioProductionLineError):
             validate_stage_record({"stage_id": "x"})
