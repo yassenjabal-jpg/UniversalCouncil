@@ -1,0 +1,75 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S10_FINAL_RECONCILIATION",
+  "status": "PASS",
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "final_structure": {
+    "movement_count": 8,
+    "source_script": "ventures/STUDIO-PILOT-001/W2_S8_VOICE_NARRATION_SCRIPT.md",
+    "picture_runtime_seconds": 515,
+    "max_story_interval_seconds": 80
+  },
+  "open_loop_reconciliation": [
+    {
+      "id": "L1_FINAL",
+      "question": "كيف يمكن أن يكون اللابتوب داخل أمريكا بينما العامل نفسه خارجها؟",
+      "open": "M01",
+      "deepen": "M02",
+      "close": "M03",
+      "closure": "اللابتوب يصبح بديلًا عن موقع الموظف بالنسبة إلى الإشارات التي تراها الشركة.",
+      "status": "CLOSED"
+    },
+    {
+      "id": "L2_FINAL",
+      "question": "إذا كانت الحيلة تعمل لجهاز واحد، إلى أي حجم يمكن أن تصل؟",
+      "open": "M03",
+      "close": "M04",
+      "closure": "تتوسع إلى بيوت متعددة، وسطاء، عشرات الشركات، وعشرات/مئات الأجهزة بحسب القضايا والإجراءات المختلفة.",
+      "status": "CLOSED"
+    },
+    {
+      "id": "L3_FINAL",
+      "question": "هل «الموظف» نفسه دائمًا شخص واحد؟",
+      "open": "M04",
+      "close": "M05",
+      "closure": "الهوية والمقابلة والجهاز والعمل يمكن أن تُوزّع بين أطراف مختلفة في بعض الأنماط التي رصدها FBI.",
+      "status": "CLOSED"
+    },
+    {
+      "id": "L4_FINAL",
+      "question": "هل المشكلة مجرد رواتب احتيالية؟",
+      "open": "M05",
+      "close": "M06",
+      "closure": "القضية تتوسع إلى ملايين الدولارات، تكاليف على الشركات، ووصول إلى بيانات وسورس كود في قضايا مثبتة.",
+      "status": "CLOSED"
+    },
+    {
+      "id": "L5_FINAL",
+      "question": "كيف تُكشف شبكة موزعة صُممت لتبدو طبيعية؟",
+      "open": "M06",
+      "close": "M07",
+      "closure": "البنية المادية اللازمة للحيلة تترك أجهزة وعناوين وشحنات ووسطاء وسجلات يمكن أن تتحول إلى خيوط تحقيق.",
+      "status": "CLOSED"
+    },
+    {
+      "id": "L6_FINAL",
+      "question": "ما الفكرة الأكبر التي تكشفها القصة عن الثقة في الموظف البعيد؟",
+      "open": "M07",
+      "close": "M08",
+      "closure": "يمكن أن تكون عدة إشارات منفردة صحيحة بينما تكون هوية الإنسان الذي جُمعت حوله هذه الإشارات غير ما تتصوره الشركة.",
+      "status": "CLOSED"
+    }
+  ],
+  "visual_reconciliation": {
+    "movement_count": 8,
+    "shot_blocks": 41,
+    "source_map": "ventures/STUDIO-PILOT-001/W2_S6_VISUAL_NARRATIVE_MAP.json",
+    "every_movement_has_visual_purpose": true,
+    "generic_broll_dependency": false,
+    "evidence_vs_illustration_separated": true,
+    "status": "PASS"
+  },
+  "supersession_note": "The original S3 map used 12 retention beats. S5 was formally returned and rebuilt into 8 materially novel movements. This S10 reconciliation does not rewrite history; it maps the final locked candidate to current open loops and visual beats for Script Lock eligibility.",
+  "all_final_loops_closed": true,
+  "result": "PASS_FOR_SCRIPT_LOCK_REVIEW"
+}
