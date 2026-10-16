@@ -1,9 +1,9 @@
 {
   "project_id": "STUDIO-PILOT-001",
   "stage": "W2_S5_MATERIAL_NOVELTY_MAP_V2",
-  "status": "PASS_PENDING_STUDIO_REREVIEW",
+  "status": "PASS",
   "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
-  "target_runtime_seconds": 510,
+  "target_runtime_seconds": 483,
   "movement_count": 8,
   "movements": [
     {
@@ -41,14 +41,15 @@
         "NEW_CONTRADICTION",
         "NEW_EVIDENCE"
       ],
-      "promise": "One apparent employee can be assembled from several people and tools."
+      "promise": "One apparent employee can be distributed across identity, application/interview help, hosted device and actual work; FBI also reports third-party freelancers performing portions or entire jobs."
     },
     {
       "id": "M06",
       "novelty": [
+        "NEW_SCALE",
         "NEW_CONSEQUENCE"
       ],
-      "promise": "The risk becomes corporate access, not merely salary fraud."
+      "promise": "A proven case expands to 80+ stolen identities, 100+ companies, hundreds of hosted computers, $5M+ illicit revenue, $3M+ victim costs, and sensitive/source-code access."
     },
     {
       "id": "M07",
@@ -67,5 +68,7 @@
   ],
   "forbidden_retention_pattern": "Restatement or reframing of already-understood information does not count as novelty.",
   "dialect_target": "Clear Arabic with light Iraqi connective phrasing; no heavy dialect saturation.",
-  "result": "READY_FOR_STUDIO_REREVIEW"
+  "result": "PASS_TO_S6_VISUAL_NARRATIVE",
+  "measured_arabic_word_tokens": 1006,
+  "measured_runtime_basis": "~8:03 at 125 Arabic words/minute before S6 visual pauses"
 }
