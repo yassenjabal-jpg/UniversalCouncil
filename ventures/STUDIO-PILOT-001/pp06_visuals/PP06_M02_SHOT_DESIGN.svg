@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <rect width="1920" height="1080" fill="#F6F1E8"/>
+    <text x="70" y="58" font-family="Arial" font-size="40" font-weight="700" fill="#151515">M02 — PP06 SHOT DESIGN</text>
+    <text x="70" y="95" font-family="Arial" font-size="22" fill="#174FA6">Editorial Renaissance Motion • Ivory-first • Shot hierarchy & composition</text>
+    <g>
+      <rect x="70" y="120" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="70" y="120" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="105" y="165" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V02.1</text>
+      <text x="105" y="198" font-family="Arial" font-size="18" fill="#174FA6">TRANSITION / ILLUSTRATION</text>
+      <path d="M 140 330 C 240 240, 370 390, 500 275 S 553.3333333333334 350, 583.3333333333334 255" fill="none" stroke="#174FA6" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="160" cy="330" r="22" fill="#B58A3E"/><circle cx="563.3333333333334" cy="260" r="22" fill="#173C32"/>
+    <rect x="280" y="230" width="170" height="90" rx="14" fill="#8EACD2" opacity=".55"/>
+      <text x="105" y="488" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="105" dy="0">Map transitions from national view to</tspan><tspan x="105" dy="24">Nashville, Tennessee.</tspan>
+      </text>
+      <line x1="105" y1="525" x2="608.3333333333334" y2="525" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="673.3333333333334" y="120" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="673.3333333333334" y="120" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="708.3333333333334" y="165" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V02.2</text>
+      <text x="708.3333333333334" y="198" font-family="Arial" font-size="18" fill="#174FA6">EVIDENCE / DATA_CARD</text>
+      <rect x="703.3333333333334" y="200" width="513.3333333333334" height="280" rx="18" fill="#fffdf8" stroke="#174FA6" stroke-width="3"/>
+    <rect x="728.3333333333334" y="240" width="180" height="70" rx="8" fill="#174FA6"/>
+    <rect x="933.3333333333334" y="240" width="228.33333333333337" height="22" fill="#8EACD2"/>
+    <rect x="933.3333333333334" y="278" width="183.33333333333337" height="16" fill="#D9C8B1"/>
+    <line x1="728.3333333333334" y1="460" x2="1191.6666666666667" y2="460" stroke="#B58A3E" stroke-width="5"/>
+      <text x="708.3333333333334" y="488" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="708.3333333333334" dy="0">Matthew Isaac Knoot case card;</tspan><tspan x="708.3333333333334" dy="24">sentenced/proven case; DOJ source badge.</tspan>
+      </text>
+      <line x1="708.3333333333334" y1="525" x2="1211.6666666666667" y2="525" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="1276.6666666666667" y="120" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="1276.6666666666667" y="120" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="1311.6666666666667" y="165" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V02.3</text>
+      <text x="1311.6666666666667" y="198" font-family="Arial" font-size="18" fill="#174FA6">ACTION / ILLUSTRATION</text>
+      <path d="M 1346.6666666666667 330 C 1446.6666666666667 240, 1576.6666666666667 390, 1706.6666666666667 275 S 1760 350, 1790 255" fill="none" stroke="#174FA6" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="1366.6666666666667" cy="330" r="22" fill="#B58A3E"/><circle cx="1770" cy="260" r="22" fill="#173C32"/>
+    <rect x="1486.6666666666667" y="230" width="170" height="90" rx="14" fill="#8EACD2" opacity=".55"/>
+      <text x="1311.6666666666667" y="488" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="1311.6666666666667" dy="0">Employer -&gt; shipped laptop -&gt; Nashville</tspan><tspan x="1311.6666666666667" dy="24">residence reconstruction.</tspan>
+      </text>
+      <line x1="1311.6666666666667" y1="525" x2="1815" y2="525" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="70" y="580" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="70" y="580" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="105" y="625" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V02.4</text>
+      <text x="105" y="658" font-family="Arial" font-size="18" fill="#174FA6">EXPLANATION / ILLUSTRATION</text>
+      <path d="M 140 790 C 240 700, 370 850, 500 735 S 553.3333333333334 810, 583.3333333333334 715" fill="none" stroke="#174FA6" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="160" cy="790" r="22" fill="#B58A3E"/><circle cx="563.3333333333334" cy="720" r="22" fill="#173C32"/>
+    <rect x="280" y="690" width="170" height="90" rx="14" fill="#8EACD2" opacity=".55"/>
+      <text x="105" y="948" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="105" dy="0">Laptop remains fixed in Nashville;</tspan><tspan x="105" dy="24">operator marker appears outside U.S.</tspan>
+      </text>
+      <line x1="105" y1="985" x2="608.3333333333334" y2="985" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="673.3333333333334" y="580" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="673.3333333333334" y="580" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="708.3333333333334" y="625" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V02.5</text>
+      <text x="708.3333333333334" y="658" font-family="Arial" font-size="18" fill="#174FA6">REVEAL / ILLUSTRATION</text>
+      <rect x="778.3333333333334" y="700" width="363.33333333333337" height="220" rx="28" fill="#8EACD2" opacity=".6"/>
+  <line x1="793.3333333333334" y1="890" x2="1126.6666666666667" y2="695" stroke="#174FA6" stroke-width="8"/>
+  <circle cx="1096.6666666666667" cy="725" r="18" fill="#B58A3E"/>
+      <text x="708.3333333333334" y="948" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="708.3333333333334" dy="0">Freeze visual: الجهاز هنا. الإنسان هناك.</tspan>
+      </text>
+      <line x1="708.3333333333334" y1="985" x2="1211.6666666666667" y2="985" stroke="#B58A3E" stroke-width="3"/>
+    </g>
+  </svg>
