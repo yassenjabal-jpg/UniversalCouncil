@@ -1,0 +1,235 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S3_HOOK_RETENTION_MAP",
+  "status": "PASS",
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "target_runtime_seconds": 600,
+  "preferred_change_window_seconds": [
+    30,
+    60
+  ],
+  "hard_max_seconds_without_new_reason_to_continue": 90,
+  "first_30_seconds": {
+    "hook": "شركة أمريكية ترسل لابتوب عمل إلى عنوان داخل أمريكا. الجهاز يفتح من أمريكا، الاتصال يبدو أمريكيًا، والموظف يدخل كل يوم. ثم نكشف أن الشخص الذي يحرك هذا الجهاز قد يكون على بعد آلاف الكيلومترات.",
+    "central_mystery": "إذا كان اللابتوب فعلًا داخل أمريكا، فكيف يمكن للموظف ألا يكون هناك أصلًا؟",
+    "concrete_visual": "صندوق شحن يصل إلى منزل أمريكي → لابتوب على مكتب → خريطة اتصال أمريكية → قطع مفاجئ إلى مشغّل في الخارج يتحكم بالجهاز نفسه.",
+    "title_payoff_bridge": "عند 0:25 يظهر رف كامل من الأجهزة، ثم يُطرح العنوان حرفيًا كالسؤال الذي سيشرح الفيديو لماذا وُجدت هذه الأجهزة داخل بيوت أمريكية.",
+    "background_exposition_before_hook": false,
+    "status": "PASS"
+  },
+  "accuracy_treatment": {
+    "window": "0:30-0:45",
+    "rule": "Keep Owner-locked title unchanged, but state immediately that the October 2026 operation involved approximately 187 seized computer devices, including laptops and KVM equipment. Do not state that every seized device was a laptop.",
+    "narration_intent": "precision without deflating the hook"
+  },
+  "retention_beats": [
+    {
+      "id": "R01",
+      "start_sec": 0,
+      "end_sec": 50,
+      "narrative_function": "HOOK",
+      "reason_to_continue": "The viewer sees an apparently normal U.S. remote employee and then learns that only the laptop may actually be in America.",
+      "visual_beat": "Package delivery → U.S. login pin → remote cursor moves → hard reveal of overseas operator → first glimpse of laptop shelves.",
+      "open_loop_action": "OPEN L1: Where is the employee really? OPEN L2: Why does the physical laptop need to be in America? OPEN L3: Why so many devices?"
+    },
+    {
+      "id": "R02",
+      "start_sec": 50,
+      "end_sec": 100,
+      "narrative_function": "SETUP",
+      "reason_to_continue": "A real prosecuted Nashville case replaces the abstract premise with a person, a residence and employer-issued machines.",
+      "visual_beat": "Map to Nashville residence; employer laptop shipment; case timeline cards; no generic hacker imagery.",
+      "open_loop_action": "DEEPEN L2: the machine is not incidental—it is the geographic disguise."
+    },
+    {
+      "id": "R03",
+      "start_sec": 100,
+      "end_sec": 150,
+      "narrative_function": "REVEAL",
+      "reason_to_continue": "The mechanism becomes visible: the company sees signals from a U.S.-based device while another person can operate it remotely.",
+      "visual_beat": "Animated signal path: overseas operator → remote-access/KVM layer → U.S. laptop → employer network; location pin remains attached to the laptop, not the person.",
+      "open_loop_action": "CLOSE L1; PARTIAL_PAYOFF L2; HANDOFF to L3: one machine explains the trick, but not the scale."
+    },
+    {
+      "id": "R04",
+      "start_sec": 150,
+      "end_sec": 200,
+      "narrative_function": "ESCALATION",
+      "reason_to_continue": "The story expands from one deceptive workstation to a distributed physical infrastructure requiring facilitators and many locations.",
+      "visual_beat": "One laptop duplicates into several employer machines; ordinary houses light up on a U.S. map; shelves replace the single desk.",
+      "open_loop_action": "DEEPEN L3: Why distribute the devices across homes instead of one obvious center?"
+    },
+    {
+      "id": "R05",
+      "start_sec": 200,
+      "end_sec": 250,
+      "narrative_function": "REVEAL",
+      "reason_to_continue": "The current 2026 scale lands: 40+ residences, roughly 187 seized computer devices, and a related case affecting 70+ companies.",
+      "visual_beat": "Numbers appear one at a time over a house-to-house map; the 187 figure is labeled precisely as computer devices including laptops/KVM.",
+      "open_loop_action": "CLOSE L3; OPEN L4: If the laptop can be separated from the worker, what else can be separated?"
+    },
+    {
+      "id": "R06",
+      "start_sec": 250,
+      "end_sec": 300,
+      "narrative_function": "RESET",
+      "reason_to_continue": "After the scale reveal, the episode simplifies the system into one familiar idea: a company thinks seven signals all belong to one employee.",
+      "visual_beat": "A single employee card breaks into seven tiles: identity, profile, interview, laptop, location, work output, payroll.",
+      "open_loop_action": "OPEN L4 fully: Can every one of these signals belong to a different person or tool?"
+    },
+    {
+      "id": "R07",
+      "start_sec": 300,
+      "end_sec": 350,
+      "narrative_function": "ESCALATION",
+      "reason_to_continue": "The viewer learns that identity, interview, device hosting and actual work can be modularized, making the deception more resilient than one fake résumé.",
+      "visual_beat": "Tiles move to different silhouettes/locations; interview tile transfers to a helper; laptop stays in U.S.; work tile reconnects from overseas.",
+      "open_loop_action": "CLOSE L4; OPEN L5: Why would authorities treat this as more than ordinary employment fraud?"
+    },
+    {
+      "id": "R08",
+      "start_sec": 350,
+      "end_sec": 400,
+      "narrative_function": "REVEAL",
+      "reason_to_continue": "The stakes expand from wages to sanctions evasion and documented FBI concerns about insider access, data theft and extortion in related patterns.",
+      "visual_beat": "Payroll flow becomes a money path; corporate-access layer appears separately; labels clearly distinguish proven cases, current allegations and FBI-observed threat patterns.",
+      "open_loop_action": "PARTIAL_PAYOFF L5; OPEN L6: If the digital identity is so fragmented, what physical evidence gives the scheme away?"
+    },
+    {
+      "id": "R09",
+      "start_sec": 400,
+      "end_sec": 450,
+      "narrative_function": "SETUP",
+      "reason_to_continue": "The investigation turns around: the very U.S. physical presence that makes the employee look legitimate creates a chain of real-world evidence.",
+      "visual_beat": "Shipping label → residence → rack → KVM → account/payment records; each object snaps onto one evidence chain.",
+      "open_loop_action": "DEEPEN L6: Follow the physical trail back through the system."
+    },
+    {
+      "id": "R10",
+      "start_sec": 450,
+      "end_sec": 500,
+      "narrative_function": "REVEAL",
+      "reason_to_continue": "The paradox resolves: a laptop farm hides the human location but cannot erase the addresses, devices, facilitators and payment trails needed to keep the disguise alive.",
+      "visual_beat": "Earlier disguise diagram reverses direction; investigators trace from employer device back to house, facilitator and operator network.",
+      "open_loop_action": "CLOSE L6; CLOSE L5; OPEN L7: What did the companies fundamentally trust that they should not have treated as one fact?"
+    },
+    {
+      "id": "R11",
+      "start_sec": 500,
+      "end_sec": 550,
+      "narrative_function": "PAYOFF",
+      "reason_to_continue": "The viewer gets the conceptual answer promised by the title: the 187-device scale exists because the physical laptop itself can stand in for the remote worker's geography.",
+      "visual_beat": "Return to hero laptop; human silhouette fades away while device/location/identity layers remain; multiple machines explain multiple simultaneous employee identities.",
+      "open_loop_action": "PAYOFF title promise; DEEPEN L7 toward the broader trust lesson."
+    },
+    {
+      "id": "R12",
+      "start_sec": 550,
+      "end_sec": 600,
+      "narrative_function": "PAYOFF",
+      "reason_to_continue": "The final insight generalizes without fearmongering: identity, device location, human location and account ownership are separate trust signals, not one employee.",
+      "visual_beat": "Seven scattered employee tiles rebuild into a verified trust stack rather than one merged avatar; end on the ordinary laptop from the opening.",
+      "open_loop_action": "CLOSE L7; close all material promises from title and opening."
+    }
+  ],
+  "open_loops": [
+    {
+      "id": "L1",
+      "question": "Where is the employee really?",
+      "open_sec": 10,
+      "close_sec": 125
+    },
+    {
+      "id": "L2",
+      "question": "Why must the physical laptop be inside the United States?",
+      "open_sec": 20,
+      "close_sec": 145
+    },
+    {
+      "id": "L3",
+      "question": "Why are so many devices spread across homes?",
+      "open_sec": 25,
+      "close_sec": 240
+    },
+    {
+      "id": "L4",
+      "question": "What other parts of one 'employee' can be separated?",
+      "open_sec": 240,
+      "close_sec": 345
+    },
+    {
+      "id": "L5",
+      "question": "Why is this more serious than salary fraud?",
+      "open_sec": 340,
+      "close_sec": 490
+    },
+    {
+      "id": "L6",
+      "question": "How can investigators find a system designed to look domestic?",
+      "open_sec": 385,
+      "close_sec": 490
+    },
+    {
+      "id": "L7",
+      "question": "What assumption in remote hiring is actually broken?",
+      "open_sec": 495,
+      "close_sec": 595
+    }
+  ],
+  "cold_viewer_precheck": {
+    "status": "PASS",
+    "assumption": "Viewer knows nothing about North Korea, remote-access tooling or the channel.",
+    "reasons_to_stay": [
+      "0-50: impossible employee contradiction",
+      "50-150: real case reveals the mechanism",
+      "150-250: scale expands to homes/devices/companies",
+      "250-350: one employee splits into modular trust signals",
+      "350-500: stakes and investigation reverse the system",
+      "500-600: title payoff and broader trust insight"
+    ]
+  },
+  "dropoff_precheck": [
+    {
+      "time_sec": 60,
+      "risk": "Legal/case setup could slow the hook.",
+      "correction": "Use only the minimum case identity needed to reconstruct the laptop journey; defer legal detail.",
+      "status": "RESOLVED"
+    },
+    {
+      "time_sec": 175,
+      "risk": "Infrastructure explanation could become technical.",
+      "correction": "Stay with one visible laptop duplicating into a farm; no protocol-level tutorial.",
+      "status": "RESOLVED"
+    },
+    {
+      "time_sec": 265,
+      "risk": "Seven trust-signal cards could feel like a list.",
+      "correction": "Animate the employee physically breaking apart instead of enumerating definitions.",
+      "status": "RESOLVED"
+    },
+    {
+      "time_sec": 370,
+      "risk": "National-security stakes could become generic.",
+      "correction": "Separate proven facts from FBI-observed risks and return immediately to the employee/company consequence.",
+      "status": "RESOLVED"
+    },
+    {
+      "time_sec": 525,
+      "risk": "Ending could become advice-heavy.",
+      "correction": "End on the conceptual trust revelation, not a security checklist.",
+      "status": "RESOLVED"
+    }
+  ],
+  "s3_exit_gate": {
+    "first_30_second_retention": "PASS",
+    "intervals_contiguous": true,
+    "max_interval_seconds": 50,
+    "minimum_runtime_seconds_met": true,
+    "hook_reveal_payoff_present": true,
+    "open_loops_mapped": true,
+    "visual_beats_mapped": true,
+    "cold_viewer_precheck": "PASS",
+    "title_accuracy_treatment_preserved": true,
+    "result": "PASS_TO_S4_FIRST_SCRIPT"
+  }
+}
