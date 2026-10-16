@@ -68,8 +68,10 @@
     }
   ],
   "title_accuracy_finding": {
-    "status": "REVISION_REQUIRED",
+    "status": "OWNER_ACCEPTED_TITLE_WITH_NARRATION_QUALIFIER",
     "finding": "The locked title says 187 laptops, but the strongest current DOJ source describes approximately 187 computer devices, and the Texas source refers to laptops and KVM devices. The evidence does not cleanly support saying all 187 were laptops.",
-    "automatic_change_forbidden": true
+    "automatic_change_forbidden": true,
+    "owner_decision": "Keep the original title.",
+    "required_script_treatment": "In the opening minute, explicitly state that the 187 figure refers to seized computer devices including laptops and KVM equipment, while the broader operation is commonly described as laptop-farm infrastructure."
   }
 }
