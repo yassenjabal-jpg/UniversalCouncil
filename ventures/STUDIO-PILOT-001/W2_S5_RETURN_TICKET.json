@@ -9,5 +9,9 @@
   "requested_correction": "Rebuild S5 into 7-8 story movements. Every beat must add at least one of NEW_FACT, NEW_CHARACTER, NEW_EVIDENCE, NEW_CONSEQUENCE, NEW_CONTRADICTION, NEW_SCALE, REVERSAL, PAYOFF. Prefer 8-9 strong minutes over padded 10 minutes.",
   "do_not_change": "OWNER_TITLE_LOCK; factual attribution boundaries; first-minute 187-device precision treatment; no procedural evasion detail.",
   "resume_handoff": "S5_EDITORIAL_REWRITE",
-  "status": "OPEN"
+  "status": "CLOSED_CORRECTED",
+  "corrected_artifact": "ventures/STUDIO-PILOT-001/W2_S5_EDITORIAL_SCRIPT_V2.md",
+  "correction_review": "ventures/STUDIO-PILOT-001/W2_S5_STUDIO_REREVIEW_V2.md",
+  "resolution": "Rebuilt S5 into 8 materially novel story movements, removed repeated mechanism explanation, added new sourced scale/consequence evidence, preserved light Iraqi conversational voice, and restored >=8-minute target without padding.",
+  "next_stage": "S6_VISUAL_NARRATIVE_PASS"
 }
