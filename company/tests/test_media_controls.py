@@ -79,6 +79,26 @@ class MediaCapabilityTests(unittest.TestCase):
         self.assertTrue(title["automatic_post_lock_revision_forbidden"])
         self.assertTrue(title["owner_reapproval_for_revision"])
 
+    def test_script_gate_is_retention_native_and_fail_closed(self):
+        cfg = self.load_config()
+        gate = cfg["script_gate_contract"]
+        self.assertEqual(gate["entry_requirement"], "OWNER_TITLE_LOCK")
+        self.assertEqual(gate["required_pass_count"], 11)
+        self.assertEqual(len(gate["passes"]), 11)
+        self.assertTrue(gate["hook_retention_map_before_first_script"])
+        self.assertTrue(gate["first_30_second_retention_pass_required"])
+        self.assertTrue(gate["anti_article_test_required"])
+        self.assertTrue(gate["spoken_language_test_required"])
+        self.assertTrue(gate["visual_beat_map_required"])
+        self.assertTrue(gate["open_loop_map_required"])
+        self.assertTrue(gate["cold_viewer_test_required"])
+        self.assertTrue(gate["independent_fact_check_required"])
+        self.assertTrue(gate["red_team_retention_review_required"])
+        self.assertTrue(gate["script_lock_only_after_all_pass"])
+        self.assertLessEqual(gate["max_seconds_without_new_reason_to_continue"], 90)
+        self.assertGreaterEqual(gate["minimum_target_runtime_seconds"], 480)
+        self.assertEqual(gate["failure_action"], "RETURN_TO_SCRIPT_STAGE")
+
     def test_serial_production_rules_are_explicit(self):
         cfg = self.load_config()
         rules = set(cfg["operating_model"]["production_rules"])
@@ -119,6 +139,14 @@ class MediaCapabilityTests(unittest.TestCase):
             "thumbnail_hypothesis_count",
             "red_team_click_rejection_count",
             "owner_w1_rejection_count",
+            "hook_rewrite_count",
+            "first_30_second_gate_failures",
+            "anti_article_rejection_count",
+            "cold_viewer_test_failures",
+            "retention_map_rework_count",
+            "red_team_script_return_count",
+            "visual_narrative_rework_count",
+            "filler_segment_rejection_count",
             "writing_cycle_time",
             "preproduction_cycle_time",
             "production_cycle_time",
@@ -154,6 +182,9 @@ class MediaCapabilityTests(unittest.TestCase):
             lambda c: c["title_gate_contract"].__setitem__("native_youtube_discovery_required", False),
             lambda c: c["title_gate_contract"].__setitem__("story_premise_required", False),
             lambda c: c["title_gate_contract"].__setitem__("thumbnail_hypothesis_required", False),
+            lambda c: c["script_gate_contract"].__setitem__("required_pass_count", 8),
+            lambda c: c["script_gate_contract"].__setitem__("anti_article_test_required", False),
+            lambda c: c["script_gate_contract"].__setitem__("max_seconds_without_new_reason_to_continue", 120),
             lambda c: c["master_pipeline_contract"].__setitem__("production_entry_requires", "NONE"),
             lambda c: c["stage_execution_contract"].__setitem__("exactly_one_primary_program", False),
             lambda c: c["handoff_contract"].__setitem__("downstream_direct_repair_forbidden", False),

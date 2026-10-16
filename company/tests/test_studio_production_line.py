@@ -6,6 +6,7 @@ from company.runtime.studio_production_line import (
     validate_owner_title_lock,
     validate_phase_transition,
     validate_return_ticket,
+    validate_script_lock_packet,
     validate_stage_record,
     validate_title_candidate_packet,
     validate_title_revision_request,
@@ -82,6 +83,74 @@ class StudioProductionLineTests(unittest.TestCase):
                 topic_card(3, "Topic Three"),
             ],
         }
+
+    def script_lock_packet(self):
+        functions = ["HOOK", "SETUP", "ESCALATION", "REVEAL", "RESET", "PAYOFF"]
+        beats = []
+        for index, narrative_function in enumerate(functions):
+            start = index * 80
+            beats.append(
+                {
+                    "start_sec": start,
+                    "end_sec": start + 80,
+                    "narrative_function": narrative_function,
+                    "reason_to_continue": f"reason-{index}",
+                    "visual_beat": f"visual-{index}",
+                    "open_loop_action": f"loop-{index}",
+                }
+            )
+        packet = {
+            "locked_title": "Owner locked title",
+            "script_title": "Owner locked title",
+            "owner_title_lock_ref": "OWNER_TITLE_LOCK.json",
+            "claim_source_sheet_ref": "CLAIMS.json",
+            "retention_map_ref": "RETENTION.json",
+            "visual_beat_map_ref": "VISUALS.json",
+            "script_ref": "SCRIPT.md",
+            "script_lock_status": "SCRIPT_LOCK",
+            "first_30_seconds": {
+                "hook": "concrete opening action",
+                "central_mystery": "why is this happening?",
+                "concrete_visual": "one unmistakable object",
+                "title_payoff_bridge": "the title question becomes the story question",
+                "background_exposition_before_hook": False,
+                "status": "PASS",
+            },
+            "retention_beats": beats,
+            "filler_segments_detected": 0,
+            "article_like_paragraphs_remaining": 0,
+            "unsourced_material_claims_remaining": 0,
+            "red_team_dropoff_risks": [
+                {
+                    "time_sec": 220,
+                    "risk": "explanation could become abstract",
+                    "correction": "return to the hero object and reveal a new consequence",
+                    "status": "RESOLVED",
+                }
+            ],
+        }
+        for field in {
+            "owner_title_lock_status",
+            "story_question_status",
+            "research_pack_status",
+            "story_architecture_status",
+            "hook_retention_map_status",
+            "first_script_status",
+            "youtube_editorial_rewrite_status",
+            "visual_narrative_pass_status",
+            "independent_fact_check_status",
+            "voice_narration_rewrite_status",
+            "red_team_retention_review_status",
+            "first_30_second_retention_status",
+            "anti_article_test_status",
+            "spoken_language_test_status",
+            "cold_viewer_test_status",
+            "visual_beat_map_status",
+            "open_loop_map_status",
+            "filler_check_status",
+        }:
+            packet[field] = "PASS"
+        return packet
 
     def test_exactly_three_topics_with_two_titles_each_are_required(self):
         packet = self.packet()
@@ -433,6 +502,163 @@ class StudioProductionLineTests(unittest.TestCase):
                 "pre_production",
                 "production",
                 {"production_ready_lock": False},
+            )
+
+    def test_script_lock_requires_youtube_native_retention_contract(self):
+        packet = self.script_lock_packet()
+        self.assertTrue(validate_script_lock_packet(packet))
+
+        bad_title = self.script_lock_packet()
+        bad_title["script_title"] = "Different title"
+        with self.assertRaises(StudioProductionLineError):
+            validate_script_lock_packet(bad_title)
+
+        article = self.script_lock_packet()
+        article["article_like_paragraphs_remaining"] = 1
+        with self.assertRaises(StudioProductionLineError):
+            validate_script_lock_packet(article)
+
+        cold_viewer = self.script_lock_packet()
+        cold_viewer["cold_viewer_test_status"] = "FAIL"
+        with self.assertRaises(StudioProductionLineError):
+            validate_script_lock_packet(cold_viewer)
+
+        exposition = self.script_lock_packet()
+        exposition["first_30_seconds"]["background_exposition_before_hook"] = True
+        with self.assertRaises(StudioProductionLineError):
+            validate_script_lock_packet(exposition)
+
+        unresolved = self.script_lock_packet()
+        unresolved["red_team_dropoff_risks"][0]["status"] = "OPEN"
+        with self.assertRaises(StudioProductionLineError):
+            validate_script_lock_packet(unresolved)
+
+    def test_script_lock_rejects_retention_gaps_long_intervals_and_short_runtime(self):
+        gap = self.script_lock_packet()
+        gap["retention_beats"][1]["start_sec"] = 90
+        with self.assertRaises(StudioProductionLineError):
+            validate_script_lock_packet(gap)
+
+        long_interval = self.script_lock_packet()
+        long_interval["retention_beats"][0]["end_sec"] = 100
+        long_interval["retention_beats"][1]["start_sec"] = 100
+        with self.assertRaises(StudioProductionLineError):
+            validate_script_lock_packet(long_interval)
+
+        short = self.script_lock_packet()
+        short["retention_beats"] = short["retention_beats"][:-1]
+        with self.assertRaises(StudioProductionLineError):
+            validate_script_lock_packet(short)
+
+        no_payoff = self.script_lock_packet()
+        no_payoff["retention_beats"][-1]["narrative_function"] = "RESET"
+        with self.assertRaises(StudioProductionLineError):
+            validate_script_lock_packet(no_payoff)
+
+    def test_script_lock_structural_failure_paths_are_covered(self):
+        cases = []
+
+        missing_ref = self.script_lock_packet()
+        missing_ref.pop("script_ref")
+        cases.append(missing_ref)
+
+        empty_ref = self.script_lock_packet()
+        empty_ref["script_ref"] = " "
+        cases.append(empty_ref)
+
+        bad_lock_status = self.script_lock_packet()
+        bad_lock_status["script_lock_status"] = "PENDING"
+        cases.append(bad_lock_status)
+
+        first_30_not_object = self.script_lock_packet()
+        first_30_not_object["first_30_seconds"] = "hook"
+        cases.append(first_30_not_object)
+
+        first_30_missing = self.script_lock_packet()
+        first_30_missing["first_30_seconds"].pop("central_mystery")
+        cases.append(first_30_missing)
+
+        first_30_empty = self.script_lock_packet()
+        first_30_empty["first_30_seconds"]["hook"] = ""
+        cases.append(first_30_empty)
+
+        first_30_fail = self.script_lock_packet()
+        first_30_fail["first_30_seconds"]["status"] = "FAIL"
+        cases.append(first_30_fail)
+
+        no_beats = self.script_lock_packet()
+        no_beats["retention_beats"] = []
+        cases.append(no_beats)
+
+        beat_not_object = self.script_lock_packet()
+        beat_not_object["retention_beats"][0] = "beat"
+        cases.append(beat_not_object)
+
+        beat_missing = self.script_lock_packet()
+        beat_missing["retention_beats"][0].pop("visual_beat")
+        cases.append(beat_missing)
+
+        beat_bad_time_type = self.script_lock_packet()
+        beat_bad_time_type["retention_beats"][0]["start_sec"] = "zero"
+        cases.append(beat_bad_time_type)
+
+        beat_reverse = self.script_lock_packet()
+        beat_reverse["retention_beats"][0]["end_sec"] = 0
+        cases.append(beat_reverse)
+
+        beat_bad_function = self.script_lock_packet()
+        beat_bad_function["retention_beats"][0]["narrative_function"] = "SUMMARY"
+        cases.append(beat_bad_function)
+
+        beat_empty_reason = self.script_lock_packet()
+        beat_empty_reason["retention_beats"][0]["reason_to_continue"] = ""
+        cases.append(beat_empty_reason)
+
+        filler = self.script_lock_packet()
+        filler["filler_segments_detected"] = 1
+        cases.append(filler)
+
+        unsourced = self.script_lock_packet()
+        unsourced["unsourced_material_claims_remaining"] = 1
+        cases.append(unsourced)
+
+        no_risks = self.script_lock_packet()
+        no_risks["red_team_dropoff_risks"] = []
+        cases.append(no_risks)
+
+        risk_not_object = self.script_lock_packet()
+        risk_not_object["red_team_dropoff_risks"] = ["risk"]
+        cases.append(risk_not_object)
+
+        risk_missing = self.script_lock_packet()
+        risk_missing["red_team_dropoff_risks"][0].pop("correction")
+        cases.append(risk_missing)
+
+        risk_bad_time = self.script_lock_packet()
+        risk_bad_time["red_team_dropoff_risks"][0]["time_sec"] = -1
+        cases.append(risk_bad_time)
+
+        risk_empty_text = self.script_lock_packet()
+        risk_empty_text["red_team_dropoff_risks"][0]["risk"] = ""
+        cases.append(risk_empty_text)
+
+        for packet in cases:
+            with self.assertRaises(StudioProductionLineError):
+                validate_script_lock_packet(packet)
+
+    def test_owner_lock_rejects_wrong_locked_title_text(self):
+        packet = self.packet()
+        with self.assertRaises(StudioProductionLineError):
+            validate_owner_title_lock(
+                packet,
+                {
+                    "authority": "Owner",
+                    "status": "OWNER_TITLE_LOCK",
+                    "selected_topic_id": "P1",
+                    "selected_title_id": "P1A",
+                    "locked_topic": "Topic One",
+                    "locked_title": "Wrong locked title",
+                },
             )
 
     def test_stage_record_failure_paths_are_covered(self):

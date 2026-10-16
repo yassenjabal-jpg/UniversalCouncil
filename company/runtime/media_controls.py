@@ -86,6 +86,14 @@ REQUIRED_PILOT_METRICS = {
     "thumbnail_hypothesis_count",
     "red_team_click_rejection_count",
     "owner_w1_rejection_count",
+    "hook_rewrite_count",
+    "first_30_second_gate_failures",
+    "anti_article_rejection_count",
+    "cold_viewer_test_failures",
+    "retention_map_rework_count",
+    "red_team_script_return_count",
+    "visual_narrative_rework_count",
+    "filler_segment_rejection_count",
     "writing_cycle_time",
     "preproduction_cycle_time",
     "production_cycle_time",
@@ -108,8 +116,8 @@ PUBLISHED_PERFORMANCE_METRICS = {
 
 
 def validate_media_team(config):
-    if config.get("version") != "2.0":
-        raise MediaControlError("media venture must be version 2.0")
+    if config.get("version") != "2.1":
+        raise MediaControlError("media venture must be version 2.1")
 
     functions = {f["id"]: f for f in config.get("production_functions", [])}
     missing = REQUIRED_MEDIA_FUNCTIONS - set(functions)
@@ -157,6 +165,15 @@ def validate_media_team(config):
         "story_archetype_diversity_required",
         "thumbnail_hypothesis_required_before_owner_gate",
         "red_team_stranger_click_pass_required_before_owner_gate",
+        "hook_retention_map_before_first_script",
+        "first_30_second_retention_gate_required",
+        "anti_article_test_required",
+        "spoken_language_test_required",
+        "visual_beat_map_required",
+        "open_loop_map_required",
+        "cold_viewer_test_required",
+        "red_team_retention_review_before_script_lock",
+        "no_more_than_90_seconds_without_new_reason_to_continue",
         "owner_selects_one_title",
         "script_work_forbidden_before_owner_title_lock",
         "locked_title_change_requires_owner_reapproval",
@@ -225,6 +242,34 @@ def validate_media_team(config):
     }:
         if title_gate.get(required_flag) is not True:
             raise MediaControlError(f"title gate requirement missing: {required_flag}")
+
+    script_gate = config.get("script_gate_contract", {})
+    if script_gate.get("entry_requirement") != "OWNER_TITLE_LOCK":
+        raise MediaControlError("script gate must require Owner Title Lock")
+    if int(script_gate.get("required_pass_count", 0)) != 11:
+        raise MediaControlError("script gate must contain eleven purposeful passes")
+    if len(script_gate.get("passes", [])) != 11:
+        raise MediaControlError("script gate pass list is incomplete")
+    for required_flag in {
+        "hook_retention_map_before_first_script",
+        "first_30_second_retention_pass_required",
+        "anti_article_test_required",
+        "spoken_language_test_required",
+        "visual_beat_map_required",
+        "open_loop_map_required",
+        "cold_viewer_test_required",
+        "independent_fact_check_required",
+        "red_team_retention_review_required",
+        "script_lock_only_after_all_pass",
+    }:
+        if script_gate.get(required_flag) is not True:
+            raise MediaControlError(f"script gate requirement missing: {required_flag}")
+    if int(script_gate.get("max_seconds_without_new_reason_to_continue", 999)) > 90:
+        raise MediaControlError("script gate cannot allow more than 90 seconds without a new reason to continue")
+    if int(script_gate.get("minimum_target_runtime_seconds", 0)) < 480:
+        raise MediaControlError("long-form script gate must require at least eight minutes")
+    if script_gate.get("failure_action") != "RETURN_TO_SCRIPT_STAGE":
+        raise MediaControlError("script gate failures must return to the responsible script stage")
 
     stage_contract = config.get("stage_execution_contract", {})
     if stage_contract.get("exactly_one_primary_program") is not True:
