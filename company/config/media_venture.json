@@ -1,5 +1,5 @@
 {
-  "version": "2.0",
+  "version": "2.1",
   "enabled": true,
   "team_model": "venture_scoped_smallest_effective_team_functions_not_headcount",
   "production_functions": [
@@ -31,7 +31,10 @@
         "script_quality",
         "editorial_pacing",
         "final_cut_editorial_approval",
-        "picture_lock_approval"
+        "picture_lock_approval",
+        "first_30_second_retention_gate",
+        "anti_article_clearance",
+        "cold_viewer_clearance"
       ]
     },
     {
@@ -51,7 +54,6 @@
       "name": "Script & Voice Director",
       "default_status": "PHASE_ROUTED_CRAFT",
       "owns": [
-        "five_pass_script_development",
         "scene_aware_script",
         "voice_intent",
         "emotion_direction",
@@ -59,7 +61,12 @@
         "pronunciation_guide",
         "recording_session_direction",
         "pickup_list",
-        "narration_continuity"
+        "narration_continuity",
+        "youtube_native_script_development",
+        "hook_retention_map",
+        "open_loop_map",
+        "spoken_language_pass",
+        "retention_aware_narration"
       ]
     },
     {
@@ -112,7 +119,9 @@
         "picture_edit",
         "transition_execution",
         "picture_lock_conform",
-        "subtitle_picture_integration"
+        "subtitle_picture_integration",
+        "script_visual_beat_review",
+        "script_dropoff_risk_review"
       ]
     },
     {
@@ -313,7 +322,15 @@
     "degraded_discovery_hold_count",
     "thumbnail_hypothesis_count",
     "red_team_click_rejection_count",
-    "owner_w1_rejection_count"
+    "owner_w1_rejection_count",
+    "hook_rewrite_count",
+    "first_30_second_gate_failures",
+    "anti_article_rejection_count",
+    "cold_viewer_test_failures",
+    "retention_map_rework_count",
+    "red_team_script_return_count",
+    "visual_narrative_rework_count",
+    "filler_segment_rejection_count"
   ],
   "post_publish_split_review_after_videos": 10,
   "full_scale_without_pilot_forbidden": true,
@@ -416,7 +433,16 @@
       "owner_selects_one_title",
       "script_work_forbidden_before_owner_title_lock",
       "locked_title_change_requires_owner_reapproval",
-      "script_lock_required_before_preproduction"
+      "script_lock_required_before_preproduction",
+      "hook_retention_map_before_first_script",
+      "first_30_second_retention_gate_required",
+      "anti_article_test_required",
+      "spoken_language_test_required",
+      "visual_beat_map_required",
+      "open_loop_map_required",
+      "cold_viewer_test_required",
+      "red_team_retention_review_before_script_lock",
+      "no_more_than_90_seconds_without_new_reason_to_continue"
     ],
     "preproduction_rules": [
       "preproduction_starts_only_after_script_lock",
@@ -731,5 +757,35 @@
     "story_archetype_diversity_required": true,
     "thumbnail_hypothesis_required": true,
     "red_team_click_pass_required": true
+  },
+  "script_gate_contract": {
+    "entry_requirement": "OWNER_TITLE_LOCK",
+    "required_pass_count": 11,
+    "passes": [
+      "S0 Story Question",
+      "S1 Research Pack",
+      "S2 Story Architecture",
+      "S3 Hook & Retention Map",
+      "S4 First Script",
+      "S5 YouTube Editorial Rewrite",
+      "S6 Visual/Narrative Pass",
+      "S7 Independent Fact Check",
+      "S8 Voice/Narration Rewrite",
+      "S9 Red Team Retention Review",
+      "S10 Locked Script"
+    ],
+    "hook_retention_map_before_first_script": true,
+    "first_30_second_retention_pass_required": true,
+    "anti_article_test_required": true,
+    "spoken_language_test_required": true,
+    "visual_beat_map_required": true,
+    "open_loop_map_required": true,
+    "cold_viewer_test_required": true,
+    "independent_fact_check_required": true,
+    "red_team_retention_review_required": true,
+    "max_seconds_without_new_reason_to_continue": 90,
+    "minimum_target_runtime_seconds": 480,
+    "script_lock_only_after_all_pass": true,
+    "failure_action": "RETURN_TO_SCRIPT_STAGE"
   }
 }

@@ -58,6 +58,61 @@ TITLE_VARIANT_REQUIRED_FIELDS = {
     "youtube_title_style_status",
 }
 
+SCRIPT_LOCK_PASS_STATUSES = {
+    "owner_title_lock_status",
+    "story_question_status",
+    "research_pack_status",
+    "story_architecture_status",
+    "hook_retention_map_status",
+    "first_script_status",
+    "youtube_editorial_rewrite_status",
+    "visual_narrative_pass_status",
+    "independent_fact_check_status",
+    "voice_narration_rewrite_status",
+    "red_team_retention_review_status",
+    "first_30_second_retention_status",
+    "anti_article_test_status",
+    "spoken_language_test_status",
+    "cold_viewer_test_status",
+    "visual_beat_map_status",
+    "open_loop_map_status",
+    "filler_check_status",
+}
+
+FIRST_30_SECONDS_REQUIRED_FIELDS = {
+    "hook",
+    "central_mystery",
+    "concrete_visual",
+    "title_payoff_bridge",
+    "background_exposition_before_hook",
+    "status",
+}
+
+RETENTION_BEAT_REQUIRED_FIELDS = {
+    "start_sec",
+    "end_sec",
+    "narrative_function",
+    "reason_to_continue",
+    "visual_beat",
+    "open_loop_action",
+}
+
+ALLOWED_NARRATIVE_FUNCTIONS = {
+    "HOOK",
+    "SETUP",
+    "ESCALATION",
+    "REVEAL",
+    "PAYOFF",
+    "RESET",
+}
+
+DROPOFF_RISK_REQUIRED_FIELDS = {
+    "time_sec",
+    "risk",
+    "correction",
+    "status",
+}
+
 PHASE_SEQUENCE = ["writing", "pre_production", "production"]
 
 HANDOFF_STATUSES = {
@@ -144,7 +199,6 @@ def validate_title_candidate_packet(packet: dict[str, Any]) -> bool:
         variants = topic_card.get("title_variants", [])
         if len(variants) != 2:
             raise StudioProductionLineError("each topic must contain exactly two title variants")
-        local_titles: set[str] = set()
         for variant in variants:
             variant_missing = TITLE_VARIANT_REQUIRED_FIELDS - set(variant)
             if variant_missing:
@@ -157,8 +211,6 @@ def validate_title_candidate_packet(packet: dict[str, Any]) -> bool:
                 raise StudioProductionLineError("title variant ids must be globally unique")
             if title.casefold() in titles:
                 raise StudioProductionLineError("all presented title variants must be distinct")
-            if title.casefold() in local_titles:
-                raise StudioProductionLineError("the two title variants for a topic must be distinct")
             if not str(variant.get("click_reason", "")).strip():
                 raise StudioProductionLineError("title variant click reason must be non-empty")
             if not str(variant.get("viewer_promise", "")).strip():
@@ -171,7 +223,6 @@ def validate_title_candidate_packet(packet: dict[str, Any]) -> bool:
                 raise StudioProductionLineError("article-like titles cannot reach Owner Title Gate")
             title_ids.add(title_id)
             titles.add(title.casefold())
-            local_titles.add(title.casefold())
 
         if topic_card.get("evidence_feasibility") != "PASS":
             raise StudioProductionLineError("every topic candidate must be evidence-feasible")
@@ -216,6 +267,107 @@ def validate_title_revision_request(request: dict[str, Any]) -> bool:
         raise StudioProductionLineError(f"title revision request missing: {sorted(missing)}")
     if request.get("owner_reapproval_status") != "APPROVED":
         raise StudioProductionLineError("locked title revision requires explicit Owner reapproval")
+    return True
+
+
+def validate_script_lock_packet(packet: dict[str, Any]) -> bool:
+    required_refs = {
+        "locked_title",
+        "script_title",
+        "owner_title_lock_ref",
+        "claim_source_sheet_ref",
+        "retention_map_ref",
+        "visual_beat_map_ref",
+        "script_ref",
+    }
+    missing_refs = required_refs - set(packet)
+    if missing_refs:
+        raise StudioProductionLineError(f"script lock packet missing references: {sorted(missing_refs)}")
+    for field in required_refs:
+        if not isinstance(packet.get(field), str) or not packet[field].strip():
+            raise StudioProductionLineError(f"script lock field {field} must be non-empty")
+    if packet["script_title"] != packet["locked_title"]:
+        raise StudioProductionLineError("script title must match the Owner-locked title")
+
+    for status_field in SCRIPT_LOCK_PASS_STATUSES:
+        if packet.get(status_field) != "PASS":
+            raise StudioProductionLineError(f"Script Lock requires {status_field}=PASS")
+    if packet.get("script_lock_status") != "SCRIPT_LOCK":
+        raise StudioProductionLineError("final script status must be SCRIPT_LOCK")
+
+    first_30 = packet.get("first_30_seconds")
+    if not isinstance(first_30, dict):
+        raise StudioProductionLineError("first 30 seconds must be a structured object")
+    missing_first_30 = FIRST_30_SECONDS_REQUIRED_FIELDS - set(first_30)
+    if missing_first_30:
+        raise StudioProductionLineError(f"first 30 seconds missing: {sorted(missing_first_30)}")
+    for field in {"hook", "central_mystery", "concrete_visual", "title_payoff_bridge"}:
+        if not isinstance(first_30.get(field), str) or not first_30[field].strip():
+            raise StudioProductionLineError(f"first 30 seconds {field} must be non-empty")
+    if first_30.get("background_exposition_before_hook") is not False:
+        raise StudioProductionLineError("background exposition cannot precede the hook")
+    if first_30.get("status") != "PASS":
+        raise StudioProductionLineError("first 30 seconds must pass the retention gate")
+
+    beats = packet.get("retention_beats")
+    if not isinstance(beats, list) or not beats:
+        raise StudioProductionLineError("retention beat map is required")
+    previous_end = 0.0
+    functions_used: set[str] = set()
+    for index, beat in enumerate(beats):
+        if not isinstance(beat, dict):
+            raise StudioProductionLineError("every retention beat must be structured")
+        missing = RETENTION_BEAT_REQUIRED_FIELDS - set(beat)
+        if missing:
+            raise StudioProductionLineError(f"retention beat missing fields: {sorted(missing)}")
+        start = beat.get("start_sec")
+        end = beat.get("end_sec")
+        if not isinstance(start, (int, float)) or not isinstance(end, (int, float)):
+            raise StudioProductionLineError("retention beat times must be numeric")
+        if start != previous_end:
+            raise StudioProductionLineError("retention beat map must cover the script without gaps")
+        if end <= start:
+            raise StudioProductionLineError("retention beat end must follow start")
+        if end - start > 90:
+            raise StudioProductionLineError("no script interval may exceed 90 seconds without a new reason to continue")
+        narrative_function = beat.get("narrative_function")
+        if narrative_function not in ALLOWED_NARRATIVE_FUNCTIONS:
+            raise StudioProductionLineError("retention beat uses an invalid narrative function")
+        functions_used.add(narrative_function)
+        for field in {"reason_to_continue", "visual_beat", "open_loop_action"}:
+            if not isinstance(beat.get(field), str) or not beat[field].strip():
+                raise StudioProductionLineError(f"retention beat {field} must be non-empty")
+        previous_end = end
+
+    if previous_end < 480:
+        raise StudioProductionLineError("locked long-form script must cover at least eight minutes")
+    if not {"HOOK", "REVEAL", "PAYOFF"}.issubset(functions_used):
+        raise StudioProductionLineError("retention map must contain hook, reveal and payoff functions")
+
+    if packet.get("filler_segments_detected") != 0:
+        raise StudioProductionLineError("Script Lock forbids unresolved filler segments")
+    if packet.get("article_like_paragraphs_remaining") != 0:
+        raise StudioProductionLineError("Script Lock forbids article-like paragraphs")
+    if packet.get("unsourced_material_claims_remaining") != 0:
+        raise StudioProductionLineError("Script Lock forbids unsourced material claims")
+
+    risks = packet.get("red_team_dropoff_risks")
+    if not isinstance(risks, list) or not risks:
+        raise StudioProductionLineError("Red Team must record drop-off risks before Script Lock")
+    for risk in risks:
+        if not isinstance(risk, dict):
+            raise StudioProductionLineError("drop-off risk must be structured")
+        missing = DROPOFF_RISK_REQUIRED_FIELDS - set(risk)
+        if missing:
+            raise StudioProductionLineError(f"drop-off risk missing fields: {sorted(missing)}")
+        if risk.get("status") != "RESOLVED":
+            raise StudioProductionLineError("all Red Team drop-off risks must be resolved")
+        if not isinstance(risk.get("time_sec"), (int, float)) or risk["time_sec"] < 0:
+            raise StudioProductionLineError("drop-off risk time must be a non-negative number")
+        for field in {"risk", "correction"}:
+            if not isinstance(risk.get(field), str) or not risk[field].strip():
+                raise StudioProductionLineError(f"drop-off risk {field} must be non-empty")
+
     return True
 
 

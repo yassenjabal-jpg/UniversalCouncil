@@ -47,12 +47,40 @@ class ChannelOperatingSystemTests(unittest.TestCase):
         self.assertIn("thumbnail_complement", title["title_variant_required_fields"])
         self.assertIn("stranger_click_test", title["title_variant_required_fields"])
 
-    def test_writing_has_title_then_script_sections(self):
+    def test_writing_has_title_then_youtube_native_script_sections(self):
         sections = CONFIG["writing_phase"]["sections"]
         self.assertEqual([s["id"] for s in sections], ["W1_title_development", "W2_script_development"])
         self.assertEqual(sections[1]["entry_requirement"], "OWNER_TITLE_LOCK")
         self.assertEqual(CONFIG["writing_phase"]["exit_gate"], "SCRIPT_LOCK")
         self.assertEqual(CONFIG["script_development"]["required_passes"], REQUIRED_SCRIPT_PASSES)
+        self.assertEqual(len(REQUIRED_SCRIPT_PASSES), 11)
+        stage_ids = [stage["id"] for stage in sections[1]["stages"]]
+        self.assertEqual(
+            stage_ids,
+            [
+                "story_question",
+                "script_research_pack",
+                "story_architecture",
+                "hook_retention_map",
+                "first_script",
+                "youtube_editorial_rewrite",
+                "visual_narrative_pass",
+                "independent_fact_check",
+                "narration_rewrite",
+                "red_team_retention_review",
+                "script_lock",
+            ],
+        )
+        script = CONFIG["script_development"]
+        self.assertTrue(script["hook_retention_map_required_before_first_script"])
+        self.assertTrue(script["first_30_second_retention_gate_required"])
+        self.assertTrue(script["anti_article_test_required"])
+        self.assertTrue(script["spoken_language_test_required"])
+        self.assertTrue(script["visual_beat_map_required"])
+        self.assertTrue(script["open_loop_map_required"])
+        self.assertTrue(script["cold_viewer_test_required"])
+        self.assertTrue(script["red_team_retention_review_required"])
+        self.assertLessEqual(script["max_seconds_without_new_reason_to_continue"], 90)
 
     def test_preproduction_is_between_script_and_production(self):
         pre = CONFIG["pre_production_phase"]
@@ -161,6 +189,8 @@ class ChannelOperatingSystemTests(unittest.TestCase):
             lambda c: c["topic_scoring"]["gates"].__setitem__("require_thumbnail_hypothesis", False),
             lambda c: c["topic_scoring"]["gates"].__setitem__("minimum_visual_explainability", 99),
             lambda c: c["script_development"].__setitem__("required_passes", ["one"]),
+            lambda c: c["script_development"].__setitem__("anti_article_test_required", False),
+            lambda c: c["script_development"].__setitem__("max_seconds_without_new_reason_to_continue", 120),
             lambda c: c["pre_production_phase"].__setitem__("entry_requirement", "NONE"),
             lambda c: c["production_phase"].__setitem__("parallel_craft_departments", True),
             lambda c: c["production_phase"].__setitem__("one_program_per_stage", False),
