@@ -1,0 +1,28 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_06_SHOT_DESIGN",
+  "status": "PP06_VISUAL_LOCK",
+  "locked_at": "2026-10-16",
+  "owner_approval_context": "Owner said 'اكمل العمل' immediately after receiving the GitHub links to the refined eight PP06 keyframes; the instruction is interpreted in-context as approval to continue from the visual-review gate.",
+  "governing_visual_system": "Editorial Renaissance Motion",
+  "approved_revision": "v3_refined_photoshop_keyframes",
+  "approved_keyframe_revision": "v02",
+  "approved_keyframes": [
+    "KF01_V01_4_v02",
+    "KF02_V02_5_v02",
+    "KF03_V03_3_v02",
+    "KF04_V04_3_v02",
+    "KF05_V05_2_v02",
+    "KF06_V06_5_v02",
+    "KF07_V07_4_v02",
+    "KF08_V08_4_v02"
+  ],
+  "review_sheet": "ventures/STUDIO-PILOT-001/pp06_photoshop_keyframes/PP06_V2_CONTACT_SHEET.jpg",
+  "source_execution_record": "ventures/STUDIO-PILOT-001/PP06_VISUAL_EXECUTION_V3.json",
+  "studio_rereview": "ventures/STUDIO-PILOT-001/PP06_STUDIO_REREVIEW_2026-10-16.md",
+  "script_mutations": 0,
+  "art_direction_mutations": 0,
+  "next_stage": "PREPRODUCTION_07_STORYBOARD",
+  "next_primary_program": "Adobe Photoshop 2025"
+}
