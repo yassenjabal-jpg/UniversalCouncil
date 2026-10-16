@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261016-231000-pp06share",
+  "created_at": "2026-10-16T23:10:00+03:00",
+  "scope": "project/youtube",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "workflow_preference",
+  "subject": "youtube.review_image_delivery.default",
+  "summary": "For Studio visual-review images, Dropbox is the default review-delivery channel. GitHub remains the source-of-truth repository for originals, PSDs, manifests, and version history. Review JPEG/PNG previews should be placed in a clearly named Dropbox project folder and shared from there whenever possible because GitHub's media viewer is inconvenient on mobile.",
+  "details": {
+    "default_review_delivery": "Dropbox",
+    "source_of_truth_for_originals": "GitHub",
+    "review_asset_format_preference": [
+      "JPEG sRGB",
+      "PNG only when compatibility is verified"
+    ],
+    "project_folder_convention": "/Studio Reviews/<project_id>/<stage>/",
+    "mobile_review_priority": true,
+    "fallback_order": [
+      "Dropbox",
+      "direct ChatGPT attachment when available",
+      "GitHub raw/direct image link",
+      "GitHub media viewer"
+    ],
+    "do_not_use_as_primary_review_channel": "GitHub media viewer",
+    "current_project": "STUDIO-PILOT-001",
+    "current_stage": "PP06_VISUAL_EXECUTION_V2",
+    "current_keyframe_count": 8
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "youtube",
+    "studio",
+    "review",
+    "images",
+    "dropbox",
+    "workflow",
+    "owner-directive"
+  ],
+  "source": {
+    "type": "chat",
+    "ref": "Owner directive 2026-10-16: use Dropbox for image review and remember it as project delivery method",
+    "commit": null
+  }
+}
