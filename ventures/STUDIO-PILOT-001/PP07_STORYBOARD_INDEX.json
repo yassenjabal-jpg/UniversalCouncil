@@ -1,0 +1,77 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage_id": "PREPRODUCTION_07_STORYBOARD",
+  "governing_visual_system": "Editorial Renaissance Motion",
+  "primary_program": "Adobe Photoshop 2025",
+  "source_matrix": "ventures/STUDIO-PILOT-001/PP06_SHOT_DESIGN_MATRIX.json",
+  "source_visual_lock": "ventures/STUDIO-PILOT-001/PP06_VISUAL_LOCK.json",
+  "output_dir": "ventures/STUDIO-PILOT-001/pp07_photoshop_storyboard",
+  "total_shots": 41,
+  "movement_count": 8,
+  "boards": [
+    {
+      "movement": "M01",
+      "shot_count": 5,
+      "range": "0:00-0:45",
+      "psd": "PP07_M01_STORYBOARD.psd",
+      "preview": "PP07_M01_STORYBOARD_preview.jpg"
+    },
+    {
+      "movement": "M02",
+      "shot_count": 5,
+      "range": "0:45-1:40",
+      "psd": "PP07_M02_STORYBOARD.psd",
+      "preview": "PP07_M02_STORYBOARD_preview.jpg"
+    },
+    {
+      "movement": "M03",
+      "shot_count": 4,
+      "range": "1:40-2:25",
+      "psd": "PP07_M03_STORYBOARD.psd",
+      "preview": "PP07_M03_STORYBOARD_preview.jpg"
+    },
+    {
+      "movement": "M04",
+      "shot_count": 5,
+      "range": "2:25-3:30",
+      "psd": "PP07_M04_STORYBOARD.psd",
+      "preview": "PP07_M04_STORYBOARD_preview.jpg"
+    },
+    {
+      "movement": "M05",
+      "shot_count": 5,
+      "range": "3:30-4:45",
+      "psd": "PP07_M05_STORYBOARD.psd",
+      "preview": "PP07_M05_STORYBOARD_preview.jpg"
+    },
+    {
+      "movement": "M06",
+      "shot_count": 6,
+      "range": "4:45-6:05",
+      "psd": "PP07_M06_STORYBOARD.psd",
+      "preview": "PP07_M06_STORYBOARD_preview.jpg"
+    },
+    {
+      "movement": "M07",
+      "shot_count": 5,
+      "range": "6:05-7:15",
+      "psd": "PP07_M07_STORYBOARD.psd",
+      "preview": "PP07_M07_STORYBOARD_preview.jpg"
+    },
+    {
+      "movement": "M08",
+      "shot_count": 6,
+      "range": "7:15-8:35",
+      "psd": "PP07_M08_STORYBOARD.psd",
+      "preview": "PP07_M08_STORYBOARD_preview.jpg"
+    }
+  ],
+  "contact_sheet": "PP07_STORYBOARD_CONTACT_SHEET.jpg",
+  "critical_shots": [
+    "V07.4",
+    "V08.4"
+  ],
+  "binary_commit": "4d55eb6",
+  "script_mutations": 0,
+  "art_direction_mutations": 0
+}
