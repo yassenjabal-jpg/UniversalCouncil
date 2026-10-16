@@ -1,0 +1,28 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "PP03_ART_DIRECTION",
+  "status": "TRIAL_STYLE_FRAMES_READY_FOR_GENERATION",
+  "style_frames": [
+    {
+      "id": "SF01",
+      "family": "F01 Hero Question",
+      "brief": "Bright ivory editorial frame with one ordinary company laptop as hero, cobalt paper block, brass micro-accent, subtle print grain, 35-55% negative space, refined Arabic editorial headline area, no dark background."
+    },
+    {
+      "id": "SF03",
+      "family": "F02 Evidence Document",
+      "brief": "Warm ivory paper evidence frame using a generic official document fragment, cobalt side field, brass highlight strokes, source/date area, no fabricated real-event imagery, document-first composition."
+    },
+    {
+      "id": "SF04",
+      "family": "F07 Map / Spatial",
+      "brief": "Ivory illustrated map composition showing a laptop anchored in the U.S. and a distant anonymous human marker elsewhere, thin cobalt route, brass endpoint, printed-map texture, no globe, no neon."
+    },
+    {
+      "id": "SF05",
+      "family": "F05 Mechanism Diagram",
+      "brief": "Ivory editorial mechanism frame where one fictional employee portrait/card separates into identity, interview, device, location, work, and account fragments; cobalt structure, brass annotations, classical/botanical cutout accents only as secondary texture."
+    }
+  ],
+  "rejection_rule": "Any frame that becomes dark-first, cinematic-noir, dashboard-like, cyberpunk, or generic AI art is rejected before Owner review."
+}
