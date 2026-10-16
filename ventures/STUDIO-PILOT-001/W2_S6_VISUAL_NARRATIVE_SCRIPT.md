@@ -11,7 +11,7 @@ Next gate: **S7 Independent Fact Check**
 
 ## M01 — 0:00–0:45 — NEW_CONTRADICTION
 
-**Visual:** Ordinary U.S. home → employer laptop box → shelf of laptops → U.S. map pin on device → data card for ~187 devices.
+**Evidence:** C01, C02, C07\n\n**Visual:** Ordinary U.S. home → employer laptop box → shelf of laptops → U.S. map pin on device → data card for ~187 devices.
 
 ### Narration
 
@@ -41,7 +41,7 @@ Next gate: **S7 Independent Fact Check**
 
 ## M02 — 0:45–1:40 — NEW_CHARACTER + NEW_EVIDENCE
 
-**Visual:** Nashville map → Matthew Isaac Knoot case card → illustrated shipment route → laptop stays in Nashville while human marker appears abroad.
+**Evidence:** C03\n\n**Visual:** Nashville map → Matthew Isaac Knoot case card → illustrated shipment route → laptop stays in Nashville while human marker appears abroad.
 
 ### Narration
 
@@ -75,7 +75,7 @@ Next gate: **S7 Independent Fact Check**
 
 ## M03 — 1:40–2:25 — EARLY PAYOFF
 
-**Visual:** Employee card → device/account/location indicators → map pin locks to laptop instead of human.
+**Evidence:** C03, C07\n\n**Visual:** Employee card → device/account/location indicators → map pin locks to laptop instead of human.
 
 ### Narration
 
@@ -111,7 +111,7 @@ Next gate: **S7 Independent Fact Check**
 
 ## M04 — 2:25–3:30 — NEW SCALE
 
-**Visual:** One home becomes many smaller homes across U.S. map → separate evidence cards for 40+ residences / ~187 devices / 70+ companies.
+**Evidence:** C01, C02, C05, C09\n\n**Visual:** One home becomes many smaller homes across U.S. map → separate evidence cards for 40+ residences / ~187 devices / 70+ companies.
 
 ### Narration
 
@@ -148,7 +148,7 @@ Next gate: **S7 Independent Fact Check**
 
 ## M05 — 3:30–4:45 — NEW CONTRADICTION
 
-**Visual:** Fictional “Ahmed” employee card clearly marked as illustration → card splits into identity / interview / hosted laptop / work / payment → different silhouettes attach → recombine into one employer-facing avatar.
+**Evidence:** C04, C05, C09\n\n**Visual:** Fictional “Ahmed” employee card clearly marked as illustration → card splits into identity / interview / hosted laptop / work / payment → different silhouettes attach → recombine into one employer-facing avatar.
 
 ### Narration
 
@@ -188,7 +188,7 @@ Next gate: **S7 Independent Fact Check**
 
 ## M06 — 4:45–6:05 — NEW SCALE + NEW CONSEQUENCE
 
-**Visual:** Court-established case timeline → 80+ identity cards → 100+ company icons → five facilitator nodes → hundreds of hosted computers → money figures → sensitive data/source code icon.
+**Evidence:** C04, C08\n\n**Visual:** Court-established case timeline → 80+ identity cards → 100+ company icons → five facilitator nodes → hundreds of hosted computers → money figures → sensitive data/source code icon.
 
 ### Narration
 
@@ -230,7 +230,7 @@ Next gate: **S7 Independent Fact Check**
 
 ## M07 — 6:05–7:15 — REVERSAL
 
-**Visual:** Reuse opening laptop → evidence chain grows outward: shipping address / residence / facilitator / records → reverse map animation → DIGITAL IDENTITY vs PHYSICAL FOOTPRINT.
+**Evidence:** C02, C03, C04, C05, C08\n\n**Visual:** Reuse opening laptop → evidence chain grows outward: shipping address / residence / facilitator / records → reverse map animation → DIGITAL IDENTITY vs PHYSICAL FOOTPRINT.
 
 ### Narration
 
@@ -274,7 +274,7 @@ Next gate: **S7 Independent Fact Check**
 
 ## M08 — 7:15–8:35 — FINAL PAYOFF
 
-**Visual:** Return to opening shelf → employee avatar splits into name/interview/device/location/account/work → each signal gets a green check → human silhouette changes behind the verified signals → final laptop-only frame.
+**Evidence:** C05, C07, C09\n\n**Visual:** Return to opening shelf → employee avatar splits into name/interview/device/location/account/work → each signal gets a green check → human silhouette changes behind the verified signals → final laptop-only frame.
 
 ### Narration
 
