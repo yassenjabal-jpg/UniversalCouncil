@@ -1,0 +1,1753 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_06_SHOT_DESIGN",
+  "status": "SHOT_DESIGN_MATRIX_COMPLETE",
+  "primary_program": "Adobe Photoshop 2025",
+  "governing_visual_system": "Editorial Renaissance Motion",
+  "input_art_direction_lock": "ventures/STUDIO-PILOT-001/PP03_ART_DIRECTION_LOCK.json",
+  "input_asset_plan": "ventures/STUDIO-PILOT-001/PP04_ASSET_PLAN.json",
+  "input_rights": "ventures/STUDIO-PILOT-001/PP05_RIGHTS_SOURCE_PRECLEARANCE.json",
+  "shot_count": 41,
+  "movement_count": 8,
+  "critical_shots": [
+    "V07.4",
+    "V08.4"
+  ],
+  "photoshop_template_rule": {
+    "width": 1920,
+    "height": 1080,
+    "resolution": 72,
+    "dominant_bg": "#F6F1E8",
+    "structure_blue": "#174FA6",
+    "accent_gold": "#B58A3E",
+    "text_charcoal": "#151515",
+    "deep_forest": "#173C32"
+  },
+  "shots": [
+    {
+      "shot_id": "V01.1",
+      "movement_id": "M01",
+      "tc_in": "0:00",
+      "tc_out": "0:06",
+      "purpose": "ATMOSPHERE",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Ordinary U.S. suburban home exterior/interior; quiet, normal, no cyber cues.",
+      "locked_constraints": "No logos; no fake evidence; architecture feels ordinary.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_object": "laptop/box/home object in right or center-right third",
+        "reality_field": "grounded photographic/illustrative base",
+        "editorial_field": "ivory paper negative space on left/top",
+        "transition_rule": "hero object edges may become page/panel wipe"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V01.2",
+      "movement_id": "M01",
+      "tc_in": "0:06",
+      "tc_out": "0:13",
+      "purpose": "ACTION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Generic employer laptop shipping box entering house.",
+      "locked_constraints": "No real employer logo unless later rights-cleared.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_object": "laptop/box/home object in right or center-right third",
+        "reality_field": "grounded photographic/illustrative base",
+        "editorial_field": "ivory paper negative space on left/top",
+        "transition_rule": "hero object edges may become page/panel wipe"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V01.3",
+      "movement_id": "M01",
+      "tc_in": "0:13",
+      "tc_out": "0:21",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Cut from one laptop to shelf with several company-style laptops.",
+      "locked_constraints": "Use fictional/generic labels only; do not invent real victim companies.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_object": "laptop/box/home object in right or center-right third",
+        "reality_field": "grounded photographic/illustrative base",
+        "editorial_field": "ivory paper negative space on left/top",
+        "transition_rule": "hero object edges may become page/panel wipe"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V01.4",
+      "movement_id": "M01",
+      "tc_in": "0:21",
+      "tc_out": "0:31",
+      "purpose": "EXPLANATION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "U.S. map pin visually stays on laptop while human silhouette appears far away.",
+      "locked_constraints": "Conceptual only; no operational mechanism detail.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C07"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "map_field": "left/center 60%",
+        "hero_anchor": "right lower third",
+        "route_style": "thin cobalt route; brass endpoint/accent",
+        "label_style": "paper labels, charcoal text",
+        "spatial_rule": "pin/object relationship must read in <2 sec"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V01.5",
+      "movement_id": "M01",
+      "tc_in": "0:31",
+      "tc_out": "0:45",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Evidence card: ~187 computer devices; laptops + KVM equipment; October 2026 coordinated actions.",
+      "locked_constraints": "Must show current-action/legal-status label; must not say all 187 were laptops.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "evidence_refs": [
+        "C01",
+        "C02"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "main_zone": "center-right 58%",
+        "source_strip": "bottom-left 32%",
+        "evidence_card": "off-white paper card with cobalt rule; brass micro-highlight",
+        "number_or_name": "large cobalt, editorial not dashboard",
+        "source_text": "small charcoal/plain-text attribution; no seal/logo",
+        "decoration": "minimal paper grain; no decorative architecture"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": [
+        "Hold card long enough to read exact figure/status."
+      ]
+    },
+    {
+      "shot_id": "V02.1",
+      "movement_id": "M02",
+      "tc_in": "0:45",
+      "tc_out": "0:53",
+      "purpose": "TRANSITION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Map transitions from national view to Nashville, Tennessee.",
+      "locked_constraints": "Geographic orientation only.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C03"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "map_field": "left/center 60%",
+        "hero_anchor": "right lower third",
+        "route_style": "thin cobalt route; brass endpoint/accent",
+        "label_style": "paper labels, charcoal text",
+        "spatial_rule": "pin/object relationship must read in <2 sec"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V02.2",
+      "movement_id": "M02",
+      "tc_in": "0:53",
+      "tc_out": "1:04",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Matthew Isaac Knoot case card; sentenced/proven case; DOJ source badge.",
+      "locked_constraints": "Do not use mugshot unless later source/rights clearance approves it.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "evidence_refs": [
+        "C03"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "main_zone": "center-right 58%",
+        "source_strip": "bottom-left 32%",
+        "evidence_card": "off-white paper card with cobalt rule; brass micro-highlight",
+        "number_or_name": "large cobalt, editorial not dashboard",
+        "source_text": "small charcoal/plain-text attribution; no seal/logo",
+        "decoration": "minimal paper grain; no decorative architecture"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": [
+        "Hold card long enough to read exact figure/status."
+      ]
+    },
+    {
+      "shot_id": "V02.3",
+      "movement_id": "M02",
+      "tc_in": "1:04",
+      "tc_out": "1:18",
+      "purpose": "ACTION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Employer -> shipped laptop -> Nashville residence reconstruction.",
+      "locked_constraints": "Label as illustrative reconstruction; no fake documentary framing.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C03"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "map_field": "left/center 60%",
+        "hero_anchor": "right lower third",
+        "route_style": "thin cobalt route; brass endpoint/accent",
+        "label_style": "paper labels, charcoal text",
+        "spatial_rule": "pin/object relationship must read in <2 sec"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V02.4",
+      "movement_id": "M02",
+      "tc_in": "1:18",
+      "tc_out": "1:30",
+      "purpose": "EXPLANATION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Laptop remains fixed in Nashville; operator marker appears outside U.S.",
+      "locked_constraints": "No step-by-step remote-access procedure.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C03"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "map_field": "left/center 60%",
+        "hero_anchor": "right lower third",
+        "route_style": "thin cobalt route; brass endpoint/accent",
+        "label_style": "paper labels, charcoal text",
+        "spatial_rule": "pin/object relationship must read in <2 sec"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V02.5",
+      "movement_id": "M02",
+      "tc_in": "1:30",
+      "tc_out": "1:40",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Freeze visual: الجهاز هنا. الإنسان هناك.",
+      "locked_constraints": "Keep wording aligned with locked narration.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C03"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_zone": "center 45%",
+        "text_zone": "upper-left 28%",
+        "annotation_zone": "lower-right 20%",
+        "reset_rule": "prefer sparse editorial composition"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V03.1",
+      "movement_id": "M03",
+      "tc_in": "1:40",
+      "tc_out": "1:50",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Single employee card appears.",
+      "locked_constraints": "Conceptual model, not source evidence.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C03",
+        "C07"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "primary_subject": "center-left 38%",
+        "fragment_zone": "right 48%",
+        "fragment_style": "paper cutouts/cards, cobalt edges, brass annotation",
+        "person_style": "neutral cutout/silhouette, not photoreal evidence",
+        "hierarchy": "one primary face/card; all other pieces subordinate"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V03.2",
+      "movement_id": "M03",
+      "tc_in": "1:50",
+      "tc_out": "2:02",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Three trust signals light separately: company device, employee account, device location.",
+      "locked_constraints": "Labels may carry explanation; voice should not duplicate.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C07"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "map_field": "left/center 60%",
+        "hero_anchor": "right lower third",
+        "route_style": "thin cobalt route; brass endpoint/accent",
+        "label_style": "paper labels, charcoal text",
+        "spatial_rule": "pin/object relationship must read in <2 sec"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V03.3",
+      "movement_id": "M03",
+      "tc_in": "2:02",
+      "tc_out": "2:13",
+      "purpose": "EXPLANATION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Location pin visibly attaches to laptop, not person.",
+      "locked_constraints": "Do not imply this is a literal employer UI.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C07"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "map_field": "left/center 60%",
+        "hero_anchor": "right lower third",
+        "route_style": "thin cobalt route; brass endpoint/accent",
+        "label_style": "paper labels, charcoal text",
+        "spatial_rule": "pin/object relationship must read in <2 sec"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V03.4",
+      "movement_id": "M03",
+      "tc_in": "2:13",
+      "tc_out": "2:25",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Large conceptual payoff: اللابتوب = بديل عن الموقع، مو عن الإنسان.",
+      "locked_constraints": "Must remain Studio explanatory synthesis, not FBI quote.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C07"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_zone": "center 45%",
+        "text_zone": "upper-left 28%",
+        "annotation_zone": "lower-right 20%",
+        "reset_rule": "prefer sparse editorial composition"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V04.1",
+      "movement_id": "M04",
+      "tc_in": "2:25",
+      "tc_out": "2:36",
+      "purpose": "TRANSITION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "One home becomes several homes across a U.S. map.",
+      "locked_constraints": "Communicate distribution, not evasion instructions.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "map_field": "left/center 60%",
+        "hero_anchor": "right lower third",
+        "route_style": "thin cobalt route; brass endpoint/accent",
+        "label_style": "paper labels, charcoal text",
+        "spatial_rule": "pin/object relationship must read in <2 sec"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V04.2",
+      "movement_id": "M04",
+      "tc_in": "2:36",
+      "tc_out": "2:48",
+      "purpose": "EXPLANATION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Each home shows only a few device icons.",
+      "locked_constraints": "Abstract scale visualization only.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_zone": "center 45%",
+        "text_zone": "upper-left 28%",
+        "annotation_zone": "lower-right 20%",
+        "reset_rule": "prefer sparse editorial composition"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V04.3",
+      "movement_id": "M04",
+      "tc_in": "2:48",
+      "tc_out": "3:02",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Three distinct cards: Texas 40+ residences; coordinated ~187 devices; related Ohio 70+ companies.",
+      "locked_constraints": "Never merge the figures into one defendant/case; separate source/status labels.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "evidence_refs": [
+        "C01",
+        "C02"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "main_zone": "center-right 58%",
+        "source_strip": "bottom-left 32%",
+        "evidence_card": "off-white paper card with cobalt rule; brass micro-highlight",
+        "number_or_name": "large cobalt, editorial not dashboard",
+        "source_text": "small charcoal/plain-text attribution; no seal/logo",
+        "decoration": "minimal paper grain; no decorative architecture"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": [
+        "Hold card long enough to read exact figure/status."
+      ]
+    },
+    {
+      "shot_id": "V04.4",
+      "movement_id": "M04",
+      "tc_in": "3:02",
+      "tc_out": "3:18",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Zoom out: devices + homes + facilitators + companies.",
+      "locked_constraints": "No procedural topology or exploitable detail.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_zone": "center 45%",
+        "text_zone": "upper-left 28%",
+        "annotation_zone": "lower-right 20%",
+        "reset_rule": "prefer sparse editorial composition"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V04.5",
+      "movement_id": "M04",
+      "tc_in": "3:18",
+      "tc_out": "3:30",
+      "purpose": "TRANSITION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Employee silhouette cracks into components leading into M05.",
+      "locked_constraints": "Sets up conceptual decomposition only.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "primary_subject": "center-left 38%",
+        "fragment_zone": "right 48%",
+        "fragment_style": "paper cutouts/cards, cobalt edges, brass annotation",
+        "person_style": "neutral cutout/silhouette, not photoreal evidence",
+        "hierarchy": "one primary face/card; all other pieces subordinate"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V05.1",
+      "movement_id": "M05",
+      "tc_in": "3:30",
+      "tc_out": "3:42",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Fictional composite employee أحمد appears; visibly labeled example, not real person.",
+      "locked_constraints": "Must say مثال توضيحي / مو شخص حقيقي.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "primary_subject": "center-left 38%",
+        "fragment_zone": "right 48%",
+        "fragment_style": "paper cutouts/cards, cobalt edges, brass annotation",
+        "person_style": "neutral cutout/silhouette, not photoreal evidence",
+        "hierarchy": "one primary face/card; all other pieces subordinate"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V05.2",
+      "movement_id": "M05",
+      "tc_in": "3:42",
+      "tc_out": "3:56",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Employee card splits into identity / application-interview / hosted laptop / actual work / payment-account.",
+      "locked_constraints": "No operational instructions.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "primary_subject": "center-left 38%",
+        "fragment_zone": "right 48%",
+        "fragment_style": "paper cutouts/cards, cobalt edges, brass annotation",
+        "person_style": "neutral cutout/silhouette, not photoreal evidence",
+        "hierarchy": "one primary face/card; all other pieces subordinate"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V05.3",
+      "movement_id": "M05",
+      "tc_in": "3:56",
+      "tc_out": "4:12",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Different silhouettes attach to different cards.",
+      "locked_constraints": "Keep actors anonymous and conceptual.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "primary_subject": "center-left 38%",
+        "fragment_zone": "right 48%",
+        "fragment_style": "paper cutouts/cards, cobalt edges, brass annotation",
+        "person_style": "neutral cutout/silhouette, not photoreal evidence",
+        "hierarchy": "one primary face/card; all other pieces subordinate"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V05.4",
+      "movement_id": "M05",
+      "tc_in": "4:12",
+      "tc_out": "4:28",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "FBI observation card: third-party freelancers may apply/interview/perform portions or entire jobs.",
+      "locked_constraints": "Must state pattern observation; not automatically every case.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "evidence_refs": [
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "main_zone": "center-right 58%",
+        "source_strip": "bottom-left 32%",
+        "evidence_card": "off-white paper card with cobalt rule; brass micro-highlight",
+        "number_or_name": "large cobalt, editorial not dashboard",
+        "source_text": "small charcoal/plain-text attribution; no seal/logo",
+        "decoration": "minimal paper grain; no decorative architecture"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": [
+        "Hold card long enough to read exact figure/status."
+      ]
+    },
+    {
+      "shot_id": "V05.5",
+      "movement_id": "M05",
+      "tc_in": "4:28",
+      "tc_out": "4:45",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Cards collapse into one employer-facing employee avatar.",
+      "locked_constraints": "Visual payoff: one visible name, multiple possible hands.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "primary_subject": "center-left 38%",
+        "fragment_zone": "right 48%",
+        "fragment_style": "paper cutouts/cards, cobalt edges, brass annotation",
+        "person_style": "neutral cutout/silhouette, not photoreal evidence",
+        "hierarchy": "one primary face/card; all other pieces subordinate"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V06.1",
+      "movement_id": "M06",
+      "tc_in": "4:45",
+      "tc_out": "4:57",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Court-established case timeline begins; separate from current October allegations.",
+      "locked_constraints": "Status label mandatory: sentenced/proven case.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "evidence_refs": [
+        "C04",
+        "C08"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "main_zone": "center-right 58%",
+        "source_strip": "bottom-left 32%",
+        "evidence_card": "off-white paper card with cobalt rule; brass micro-highlight",
+        "number_or_name": "large cobalt, editorial not dashboard",
+        "source_text": "small charcoal/plain-text attribution; no seal/logo",
+        "decoration": "minimal paper grain; no decorative architecture"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": [
+        "Hold card long enough to read exact figure/status."
+      ]
+    },
+    {
+      "shot_id": "V06.2",
+      "movement_id": "M06",
+      "tc_in": "4:57",
+      "tc_out": "5:10",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "80+ U.S. identity cards spread across screen.",
+      "locked_constraints": "Exact figure must match S7 wording.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "evidence_refs": [
+        "C08"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "main_zone": "center-right 58%",
+        "source_strip": "bottom-left 32%",
+        "evidence_card": "off-white paper card with cobalt rule; brass micro-highlight",
+        "number_or_name": "large cobalt, editorial not dashboard",
+        "source_text": "small charcoal/plain-text attribution; no seal/logo",
+        "decoration": "minimal paper grain; no decorative architecture"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": [
+        "Hold card long enough to read exact figure/status."
+      ]
+    },
+    {
+      "shot_id": "V06.3",
+      "movement_id": "M06",
+      "tc_in": "5:10",
+      "tc_out": "5:22",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "100+ company icons appear behind identities.",
+      "locked_constraints": "Do not imply all companies had same harm.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "evidence_refs": [
+        "C04",
+        "C08"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "main_zone": "center-right 58%",
+        "source_strip": "bottom-left 32%",
+        "evidence_card": "off-white paper card with cobalt rule; brass micro-highlight",
+        "number_or_name": "large cobalt, editorial not dashboard",
+        "source_text": "small charcoal/plain-text attribution; no seal/logo",
+        "decoration": "minimal paper grain; no decorative architecture"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": [
+        "Hold card long enough to read exact figure/status."
+      ]
+    },
+    {
+      "shot_id": "V06.4",
+      "movement_id": "M06",
+      "tc_in": "5:22",
+      "tc_out": "5:34",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Five facilitator nodes, then hundreds of hosted company computers.",
+      "locked_constraints": "High-level scale only; no network-operational instructions.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "evidence_refs": [
+        "C08"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "main_zone": "center-right 58%",
+        "source_strip": "bottom-left 32%",
+        "evidence_card": "off-white paper card with cobalt rule; brass micro-highlight",
+        "number_or_name": "large cobalt, editorial not dashboard",
+        "source_text": "small charcoal/plain-text attribution; no seal/logo",
+        "decoration": "minimal paper grain; no decorative architecture"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": [
+        "Hold card long enough to read exact figure/status."
+      ]
+    },
+    {
+      "shot_id": "V06.5",
+      "movement_id": "M06",
+      "tc_in": "5:34",
+      "tc_out": "5:48",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Separate money figures: >$5M illicit proceeds; nearly $700K facilitators; >=$3M victim costs/damages.",
+      "locked_constraints": "Do not animate money-routing mechanics.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "evidence_refs": [
+        "C08"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "main_zone": "center-right 58%",
+        "source_strip": "bottom-left 32%",
+        "evidence_card": "off-white paper card with cobalt rule; brass micro-highlight",
+        "number_or_name": "large cobalt, editorial not dashboard",
+        "source_text": "small charcoal/plain-text attribution; no seal/logo",
+        "decoration": "minimal paper grain; no decorative architecture"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": [
+        "Hold card long enough to read exact figure/status."
+      ]
+    },
+    {
+      "shot_id": "V06.6",
+      "movement_id": "M06",
+      "tc_in": "5:48",
+      "tc_out": "6:05",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Move from money to sensitive-data/source-code/defense-contractor symbols; ITAR label.",
+      "locked_constraints": "Abstract icons only; ITAR wording must remain S7-qualified.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C08"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_zone": "center 45%",
+        "text_zone": "upper-left 28%",
+        "annotation_zone": "lower-right 20%",
+        "reset_rule": "prefer sparse editorial composition"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V07.1",
+      "movement_id": "M07",
+      "tc_in": "6:05",
+      "tc_out": "6:18",
+      "purpose": "TRANSITION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Reuse opening house/laptop shot to create memory callback.",
+      "locked_constraints": "Must visually match M01 hero object.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C03",
+        "C05"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_object": "laptop/box/home object in right or center-right third",
+        "reality_field": "grounded photographic/illustrative base",
+        "editorial_field": "ivory paper negative space on left/top",
+        "transition_rule": "hero object edges may become page/panel wipe"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V07.2",
+      "movement_id": "M07",
+      "tc_in": "6:18",
+      "tc_out": "6:32",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Evidence chain grows: laptop -> shipping address -> residence -> facilitator.",
+      "locked_constraints": "Investigative synthesis, not quoted government diagram.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_object": "laptop/box/home object in right or center-right third",
+        "reality_field": "grounded photographic/illustrative base",
+        "editorial_field": "ivory paper negative space on left/top",
+        "transition_rule": "hero object edges may become page/panel wipe"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V07.3",
+      "movement_id": "M07",
+      "tc_in": "6:32",
+      "tc_out": "6:46",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Add account/legal/financial-record symbols.",
+      "locked_constraints": "Non-procedural; no evasion guidance.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C04",
+        "C08"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_zone": "center 45%",
+        "text_zone": "upper-left 28%",
+        "annotation_zone": "lower-right 20%",
+        "reset_rule": "prefer sparse editorial composition"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V07.4",
+      "movement_id": "M07",
+      "tc_in": "6:46",
+      "tc_out": "7:00",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Reverse earlier map animation: hiding path becomes evidence path.",
+      "locked_constraints": "Editorial synthesis, clearly illustrative.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C03",
+        "C05"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "phase_A": "device/hiding direction left-to-right",
+        "pivot": "central laptop node",
+        "phase_B": "same cobalt route reverses toward evidence nodes",
+        "reveal": "brass highlight appears only on reversal",
+        "readability": "must understand reversal without narration"
+      },
+      "motion_intent": "HIGH",
+      "storyboard_handoff_notes": [
+        "Highest-complexity shot; storyboard must show before/pivot/after states."
+      ]
+    },
+    {
+      "shot_id": "V07.5",
+      "movement_id": "M07",
+      "tc_in": "7:00",
+      "tc_out": "7:15",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Split screen: DIGITAL IDENTITY / PHYSICAL FOOTPRINT.",
+      "locked_constraints": "No claim that this phrase is official agency terminology.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C08"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "primary_subject": "center-left 38%",
+        "fragment_zone": "right 48%",
+        "fragment_style": "paper cutouts/cards, cobalt edges, brass annotation",
+        "person_style": "neutral cutout/silhouette, not photoreal evidence",
+        "hierarchy": "one primary face/card; all other pieces subordinate"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V08.1",
+      "movement_id": "M08",
+      "tc_in": "7:15",
+      "tc_out": "7:28",
+      "purpose": "TRANSITION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Return to same opening shelf.",
+      "locked_constraints": "Visual continuity with M01.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C07",
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_object": "laptop/box/home object in right or center-right third",
+        "reality_field": "grounded photographic/illustrative base",
+        "editorial_field": "ivory paper negative space on left/top",
+        "transition_rule": "hero object edges may become page/panel wipe"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V08.2",
+      "movement_id": "M08",
+      "tc_in": "7:28",
+      "tc_out": "7:45",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Employee avatar breaks into six trust signals: name/interview/device/location/account/work.",
+      "locked_constraints": "Studio conceptual model.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C07",
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "map_field": "left/center 60%",
+        "hero_anchor": "right lower third",
+        "route_style": "thin cobalt route; brass endpoint/accent",
+        "label_style": "paper labels, charcoal text",
+        "spatial_rule": "pin/object relationship must read in <2 sec"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V08.3",
+      "movement_id": "M08",
+      "tc_in": "7:45",
+      "tc_out": "7:58",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Each signal receives green looks-valid check.",
+      "locked_constraints": "Do not present as real employer verification UI.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C07",
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_zone": "center 45%",
+        "text_zone": "upper-left 28%",
+        "annotation_zone": "lower-right 20%",
+        "reset_rule": "prefer sparse editorial composition"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V08.4",
+      "movement_id": "M08",
+      "tc_in": "7:58",
+      "tc_out": "8:12",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Checks remain green while human silhouette behind them changes.",
+      "locked_constraints": "Core message: several valid-looking signals may still point to wrong human.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [
+        "C05",
+        "C07",
+        "C09"
+      ],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "signal_row": "six paper signals across upper 40%",
+        "checks": "green-looking but palette-safe deep-forest marks",
+        "human_layer": "large centered silhouette behind signals",
+        "reveal": "human changes while signals remain fixed",
+        "message": "several valid-looking signals != verified human"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": [
+        "Second critical reveal; avoid corporate-dashboard feel."
+      ]
+    },
+    {
+      "shot_id": "V08.5",
+      "movement_id": "M08",
+      "tc_in": "8:12",
+      "tc_out": "8:28",
+      "purpose": "ATMOSPHERE",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "All clutter disappears; only laptop remains.",
+      "locked_constraints": "Sparse; allow silence.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero_object": "laptop/box/home object in right or center-right third",
+        "reality_field": "grounded photographic/illustrative base",
+        "editorial_field": "ivory paper negative space on left/top",
+        "transition_rule": "hero object edges may become page/panel wipe"
+      },
+      "motion_intent": "LOW",
+      "storyboard_handoff_notes": []
+    },
+    {
+      "shot_id": "V08.6",
+      "movement_id": "M08",
+      "tc_in": "8:28",
+      "tc_out": "8:35",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "canvas": "1920x1080 / 16:9",
+      "bg": "#F6F1E8",
+      "dominant_balance": "55-70% ivory/white-light",
+      "safe_margins": "6% horizontal / 7% vertical",
+      "negative_space": "35-55%",
+      "hero_count": 1,
+      "headline_max": 1,
+      "micro_caption_max": 1,
+      "visual_requirement": "Laptop briefly becomes simple human outline, then returns to laptop.",
+      "locked_constraints": "Metaphor only; final line must match locked narration meaning.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "evidence_refs": [],
+      "layers": [
+        "BG_IVORY",
+        "PAPER_TEXTURE",
+        "HERO_OR_EVIDENCE",
+        "COBALT_STRUCTURE",
+        "BRASS_ANNOTATION",
+        "TEXT_PRIMARY",
+        "TEXT_SOURCE",
+        "MOTION_GUIDES"
+      ],
+      "layout": {
+        "hero": "single laptop centered lower-middle",
+        "transformation": "laptop silhouette briefly morphs to simple human outline",
+        "end_state": "return to laptop on ivory field",
+        "negative_space": "60%+",
+        "typography": "none unless final line needs micro-caption"
+      },
+      "motion_intent": "MEDIUM",
+      "storyboard_handoff_notes": []
+    }
+  ],
+  "gate": {
+    "all_41_shots_designed": true,
+    "all_shots_preserve_art_direction": true,
+    "all_data_cards_have_source_zone": true,
+    "critical_reveals_have_multistate_design": true,
+    "script_or_fact_changes": 0
+  },
+  "next_stage_if_photoshop_execution_passes": "PREPRODUCTION_07_STORYBOARD"
+}
