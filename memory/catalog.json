@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-15T23:50:32+00:00",
-  "event_count": 76,
-  "active_count": 55,
+  "generated_at": "2026-10-16T16:48:00+00:00",
+  "event_count": 77,
+  "active_count": 56,
   "superseded_count": 21,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-16T02:50:15+03:00",
+  "latest_event_at": "2026-10-16T19:48:00+03:00",
   "scopes": {
     "council": [
       {
@@ -408,7 +408,7 @@
         "subject": "youtube.channel.what_if",
         "level": "L3_CANONICAL",
         "kind": "architecture",
-        "summary": "«ماذا لو؟» is a speculative documentary channel using fact-grounded alternate history and near-future scenarios, with explicit separation between fact and hypothesis and Arabic retro-futurist visual language.",
+        "summary": "«ماذا لو؟» is a speculative documentary channel using fact-grounded alternate history and near-future scenarios, with explicit separation between fact and hypothesis.",
         "created_at": "2026-10-12T19:33:14+03:00",
         "confidence": "verified"
       },
@@ -435,7 +435,7 @@
         "subject": "youtube.ideation.review_process",
         "level": "L4_OWNER_DIRECTIVE",
         "kind": "requirement",
-        "summary": "The prior Council ideation process is now artifact-backed: market evidence and adversarial objections reduced many ideas to five differentiated channel concepts, each with its own narrative, visual direction, sample episodes and three-video pilot.",
+        "summary": "The prior Council ideation process is artifact-backed: market evidence and adversarial objections reduced many ideas to five differentiated channel concepts, each with its own narrative, sample episodes and three-video pilot.",
         "created_at": "2026-10-12T19:33:14+03:00",
         "confidence": "owner_confirmed"
       },
@@ -453,7 +453,7 @@
         "subject": "youtube.narration_visual_preferences",
         "level": "L2_PROJECT",
         "kind": "preference",
-        "summary": "Default documentary voice and visual direction: warm conversational narration mixing Iraqi Arabic and MSA, medium-slow reflective delivery with light humor, user-recorded voice with emotion tags, and editorial documentary visuals rather than a news-like style.",
+        "summary": "Default documentary voice direction: warm conversational narration mixing Iraqi Arabic and MSA, medium-slow reflective delivery with light humor, user-recorded voice with emotion tags. Visual direction is governed exclusively by youtube.visual_system.current.",
         "created_at": "2026-10-12T19:28:51+03:00",
         "confidence": "owner_confirmed"
       },
@@ -509,6 +509,15 @@
         "kind": "requirement",
         "summary": "Channel visuals must stay close in visual grammar to the user-supplied reference video: Editorial Renaissance Motion with cobalt/sky-blue fields, paper/ivory space, classical and botanical cutouts, sparse editorial serif typography, illustrated diagrams and object-led transitions.",
         "created_at": "2026-10-12T20:33:20+03:00",
+        "confidence": "owner_confirmed"
+      },
+      {
+        "event_id": "MEM-20261016-194800-7f3a2c",
+        "subject": "youtube.visual_system.exclusive",
+        "level": "L4_OWNER_DIRECTIVE",
+        "kind": "requirement",
+        "summary": "Editorial Renaissance Motion is the sole visual system for the channel and Studio. No alternative, legacy, experimental, or topic-specific visual style is retained as an active Studio memory or permitted as an execution fallback.",
+        "created_at": "2026-10-16T19:48:00+03:00",
         "confidence": "owner_confirmed"
       }
     ]
