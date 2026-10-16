@@ -1,5 +1,5 @@
 {
-  "version": "1.8",
+  "version": "1.9",
   "channel_model": "broad_format_first_multilingual_visual_documentary",
   "visual_system": "Editorial Renaissance Motion",
   "primary_language": "Arabic",
@@ -121,10 +121,13 @@
     "story_question",
     "script_research_pack",
     "story_architecture",
+    "hook_retention_map",
     "first_script",
-    "editorial_rewrite",
+    "youtube_editorial_rewrite",
+    "visual_narrative_pass",
     "independent_fact_check",
     "narration_rewrite",
+    "red_team_retention_review",
     "script_lock",
     "script_breakdown",
     "visual_story_case",
@@ -222,7 +225,10 @@
       "script lock",
       "visual-story coherence",
       "picture lock approval",
-      "final editorial approval"
+      "final editorial approval",
+      "first-30-second retention gate",
+      "anti-article clearance",
+      "cold-viewer script clearance"
     ],
     "Script & Voice Director": [
       "five-pass script development",
@@ -232,7 +238,11 @@
       "pace/pitch/emphasis",
       "pronunciation guide",
       "recording direction",
-      "pickup list"
+      "pickup list",
+      "hook and retention map",
+      "open-loop map",
+      "spoken-language pass",
+      "retention-aware narration rewrite"
     ],
     "Visual Art Director / Frame Curator": [
       "visual story case",
@@ -255,7 +265,9 @@
       "editorial rough cut",
       "picture edit",
       "transition execution",
-      "picture lock conform"
+      "picture lock conform",
+      "script visual-beat review",
+      "script pacing/drop-off risk review"
     ],
     "Music Supervisor & Sound Designer": [
       "preproduction craft review",
@@ -316,7 +328,11 @@
       "generic-template detection",
       "story/visual differentiation challenge",
       "generic sound-design detection",
-      "visual story case challenge"
+      "visual story case challenge",
+      "script anti-article challenge",
+      "cold-viewer challenge",
+      "drop-off risk challenge",
+      "retention map challenge"
     ],
     "Owner": [
       "human narration",
@@ -647,21 +663,89 @@
     "may_return_to_writing_via_ticket": true
   },
   "script_development": {
+    "version": "2.0",
     "single_pass_forbidden": true,
     "required_passes": [
       "S0 Story Question",
       "S1 Research Pack",
       "S2 Story Architecture",
-      "S3 First Script",
-      "S4 Editorial Rewrite",
-      "S5 Independent Fact Check",
-      "S6 Narration Rewrite",
-      "S7 Locked Script"
+      "S3 Hook & Retention Map",
+      "S4 First Script",
+      "S5 YouTube Editorial Rewrite",
+      "S6 Visual/Narrative Pass",
+      "S7 Independent Fact Check",
+      "S8 Voice/Narration Rewrite",
+      "S9 Red Team Retention Review",
+      "S10 Locked Script"
     ],
-    "fact_check_before_lock": true,
     "title_lock_required_before_start": true,
     "owner_title_authority_preserved": true,
-    "preproduction_return_ticket_allowed": true
+    "preproduction_return_ticket_allowed": true,
+    "hook_retention_map_required_before_first_script": true,
+    "first_30_second_retention_gate_required": true,
+    "background_exposition_before_hook_forbidden": true,
+    "anti_article_test_required": true,
+    "spoken_language_test_required": true,
+    "visual_beat_map_required": true,
+    "open_loop_map_required": true,
+    "cold_viewer_test_required": true,
+    "red_team_retention_review_required": true,
+    "independent_fact_check_before_voice_rewrite": true,
+    "fact_check_before_lock": true,
+    "youtube_editorial_rewrite_required": true,
+    "visual_narrative_pass_required": true,
+    "max_seconds_without_new_reason_to_continue": 90,
+    "target_visual_or_story_change_seconds": {
+      "preferred_min": 30,
+      "preferred_max": 60,
+      "hard_max_without_reason_to_continue": 90
+    },
+    "required_narrative_functions": [
+      "HOOK",
+      "SETUP",
+      "ESCALATION",
+      "REVEAL",
+      "PAYOFF",
+      "RESET"
+    ],
+    "retention_beat_required_fields": [
+      "start_sec",
+      "end_sec",
+      "narrative_function",
+      "reason_to_continue",
+      "visual_beat",
+      "open_loop_action"
+    ],
+    "first_30_seconds_required_fields": [
+      "hook",
+      "central_mystery",
+      "concrete_visual",
+      "title_payoff_bridge",
+      "background_exposition_before_hook",
+      "status"
+    ],
+    "script_lock_required_statuses": [
+      "owner_title_lock_status",
+      "story_question_status",
+      "research_pack_status",
+      "story_architecture_status",
+      "hook_retention_map_status",
+      "first_script_status",
+      "youtube_editorial_rewrite_status",
+      "visual_narrative_pass_status",
+      "independent_fact_check_status",
+      "voice_narration_rewrite_status",
+      "red_team_retention_review_status",
+      "first_30_second_retention_status",
+      "anti_article_test_status",
+      "spoken_language_test_status",
+      "cold_viewer_test_status",
+      "visual_beat_map_status",
+      "open_loop_map_status",
+      "filler_check_status",
+      "script_lock_status"
+    ],
+    "fail_action": "RETURN_TO_SCRIPT_STAGE"
   },
   "production_readiness": {
     "required": true,
@@ -1190,14 +1274,24 @@
             "output": "story_architecture"
           },
           {
+            "id": "hook_retention_map",
+            "program": "ChatGPT",
+            "output": "hook_retention_map"
+          },
+          {
             "id": "first_script",
             "program": "ChatGPT",
             "output": "first_full_script"
           },
           {
-            "id": "editorial_rewrite",
+            "id": "youtube_editorial_rewrite",
             "program": "ChatGPT",
-            "output": "editorial_script"
+            "output": "youtube_editorial_script"
+          },
+          {
+            "id": "visual_narrative_pass",
+            "program": "ChatGPT",
+            "output": "visual_narrative_script"
           },
           {
             "id": "independent_fact_check",
@@ -1208,6 +1302,11 @@
             "id": "narration_rewrite",
             "program": "ChatGPT",
             "output": "voice_ready_script"
+          },
+          {
+            "id": "red_team_retention_review",
+            "program": "ChatGPT",
+            "output": "retention_clearance"
           },
           {
             "id": "script_lock",
