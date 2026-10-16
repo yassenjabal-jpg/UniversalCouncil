@@ -1,0 +1,40 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_09_SONIC_CONCEPT_SPOTTING",
+  "status": "IN_PROGRESS",
+  "primary_program": "Adobe Audition 2025",
+  "input_storyboard": "ventures/STUDIO-PILOT-001/PP07_MANIFEST.json",
+  "input_camera_plan": "ventures/STUDIO-PILOT-001/PP08_CAMERA_CONTINUITY_PLAN.json",
+  "input_locked_script": "ventures/STUDIO-PILOT-001/W2_S10_LOCKED_SCRIPT.md",
+  "target_runtime": "8:35",
+  "required_outputs": [
+    "sonic_concept",
+    "spotting_map",
+    "music_state_map",
+    "silence_map",
+    "transition_sfx_intent",
+    "dialogue_density_map",
+    "sync_anchor_map"
+  ],
+  "cue_sheet_required_fields": [
+    "cue_id",
+    "in_time",
+    "out_time",
+    "duration",
+    "music_state",
+    "narrative_purpose",
+    "energy",
+    "tempo_bpm",
+    "tonal_center",
+    "instrumentation",
+    "source_or_license",
+    "stem_availability",
+    "dialogue_density",
+    "sync_hits",
+    "ducking_note",
+    "edit_points"
+  ],
+  "next_stage_on_pass": "PREPRODUCTION_10_NARRATION_PERFORMANCE_PLAN",
+  "next_primary_program": "ChatGPT"
+}
