@@ -1,0 +1,71 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S5_MATERIAL_NOVELTY_MAP_V2",
+  "status": "PASS_PENDING_STUDIO_REREVIEW",
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "target_runtime_seconds": 510,
+  "movement_count": 8,
+  "movements": [
+    {
+      "id": "M01",
+      "novelty": [
+        "NEW_CONTRADICTION"
+      ],
+      "promise": "A real U.S. laptop can represent a worker who is not in the U.S."
+    },
+    {
+      "id": "M02",
+      "novelty": [
+        "NEW_CHARACTER",
+        "NEW_EVIDENCE"
+      ],
+      "promise": "The Nashville case proves the mechanism with a convicted facilitator case."
+    },
+    {
+      "id": "M03",
+      "novelty": [
+        "PAYOFF"
+      ],
+      "promise": "Answer the title early: the laptop acts as a physical stand-in for worker location."
+    },
+    {
+      "id": "M04",
+      "novelty": [
+        "NEW_SCALE"
+      ],
+      "promise": "Move from one machine to distributed homes, devices and companies."
+    },
+    {
+      "id": "M05",
+      "novelty": [
+        "NEW_CONTRADICTION",
+        "NEW_EVIDENCE"
+      ],
+      "promise": "One apparent employee can be assembled from several people and tools."
+    },
+    {
+      "id": "M06",
+      "novelty": [
+        "NEW_CONSEQUENCE"
+      ],
+      "promise": "The risk becomes corporate access, not merely salary fraud."
+    },
+    {
+      "id": "M07",
+      "novelty": [
+        "REVERSAL"
+      ],
+      "promise": "The physical infrastructure that enables the disguise also creates evidence."
+    },
+    {
+      "id": "M08",
+      "novelty": [
+        "PAYOFF"
+      ],
+      "promise": "Final insight: companies may verify several real signals while still misidentifying the human behind them."
+    }
+  ],
+  "forbidden_retention_pattern": "Restatement or reframing of already-understood information does not count as novelty.",
+  "dialect_target": "Clear Arabic with light Iraqi connective phrasing; no heavy dialect saturation.",
+  "result": "READY_FOR_STUDIO_REREVIEW"
+}
