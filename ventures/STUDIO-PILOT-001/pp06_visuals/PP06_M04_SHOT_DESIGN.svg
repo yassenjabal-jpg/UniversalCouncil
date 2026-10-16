@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <rect width="1920" height="1080" fill="#F6F1E8"/>
+    <text x="70" y="58" font-family="Arial" font-size="40" font-weight="700" fill="#151515">M04 — PP06 SHOT DESIGN</text>
+    <text x="70" y="95" font-family="Arial" font-size="22" fill="#174FA6">Editorial Renaissance Motion • Ivory-first • Shot hierarchy & composition</text>
+    <g>
+      <rect x="70" y="120" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="70" y="120" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="105" y="165" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V04.1</text>
+      <text x="105" y="198" font-family="Arial" font-size="18" fill="#174FA6">TRANSITION / ILLUSTRATION</text>
+      <path d="M 140 330 C 240 240, 370 390, 500 275 S 553.3333333333334 350, 583.3333333333334 255" fill="none" stroke="#174FA6" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="160" cy="330" r="22" fill="#B58A3E"/><circle cx="563.3333333333334" cy="260" r="22" fill="#173C32"/>
+    <rect x="280" y="230" width="170" height="90" rx="14" fill="#8EACD2" opacity=".55"/>
+      <text x="105" y="488" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="105" dy="0">One home becomes several homes across a</tspan><tspan x="105" dy="24">U.S. map.</tspan>
+      </text>
+      <line x1="105" y1="525" x2="608.3333333333334" y2="525" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="673.3333333333334" y="120" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="673.3333333333334" y="120" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="708.3333333333334" y="165" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V04.2</text>
+      <text x="708.3333333333334" y="198" font-family="Arial" font-size="18" fill="#174FA6">EXPLANATION / ILLUSTRATION</text>
+      <rect x="818.3333333333334" y="240" width="280" height="170" rx="12" fill="#8EACD2" stroke="#174FA6" stroke-width="5"/>
+    <rect x="788.3333333333334" y="420" width="340" height="22" rx="10" fill="#151515"/>
+    <rect x="728.3333333333334" y="215" width="65" height="260" fill="#D9C8B1" opacity=".65"/>
+    <line x1="743.3333333333334" y1="230" x2="743.3333333333334" y2="450" stroke="#B58A3E" stroke-width="5"/>
+      <text x="708.3333333333334" y="488" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="708.3333333333334" dy="0">Each home shows only a few device icons.</tspan>
+      </text>
+      <line x1="708.3333333333334" y1="525" x2="1211.6666666666667" y2="525" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="1276.6666666666667" y="120" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="1276.6666666666667" y="120" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="1311.6666666666667" y="165" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V04.3</text>
+      <text x="1311.6666666666667" y="198" font-family="Arial" font-size="18" fill="#174FA6">EVIDENCE / DATA_CARD</text>
+      <rect x="1306.6666666666667" y="200" width="513.3333333333334" height="280" rx="18" fill="#fffdf8" stroke="#174FA6" stroke-width="3"/>
+    <rect x="1331.6666666666667" y="240" width="180" height="70" rx="8" fill="#174FA6"/>
+    <rect x="1536.6666666666667" y="240" width="228.33333333333337" height="22" fill="#8EACD2"/>
+    <rect x="1536.6666666666667" y="278" width="183.33333333333337" height="16" fill="#D9C8B1"/>
+    <line x1="1331.6666666666667" y1="460" x2="1795" y2="460" stroke="#B58A3E" stroke-width="5"/>
+      <text x="1311.6666666666667" y="488" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="1311.6666666666667" dy="0">Three distinct cards: Texas 40+</tspan><tspan x="1311.6666666666667" dy="24">residences; coordinated ~187 devices;</tspan><tspan x="1311.6666666666667" dy="24">related Ohio 70+ companies.</tspan>
+      </text>
+      <line x1="1311.6666666666667" y1="525" x2="1815" y2="525" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="70" y="580" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="70" y="580" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="105" y="625" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V04.4</text>
+      <text x="105" y="658" font-family="Arial" font-size="18" fill="#174FA6">REVEAL / ILLUSTRATION</text>
+      <rect x="215" y="700" width="280" height="170" rx="12" fill="#8EACD2" stroke="#174FA6" stroke-width="5"/>
+    <rect x="185" y="880" width="340" height="22" rx="10" fill="#151515"/>
+    <rect x="125" y="675" width="65" height="260" fill="#D9C8B1" opacity=".65"/>
+    <line x1="140" y1="690" x2="140" y2="910" stroke="#B58A3E" stroke-width="5"/>
+      <text x="105" y="948" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="105" dy="0">Zoom out: devices + homes + facilitators +</tspan><tspan x="105" dy="24">companies.</tspan>
+      </text>
+      <line x1="105" y1="985" x2="608.3333333333334" y2="985" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="673.3333333333334" y="580" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="673.3333333333334" y="580" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="708.3333333333334" y="625" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V04.5</text>
+      <text x="708.3333333333334" y="658" font-family="Arial" font-size="18" fill="#174FA6">TRANSITION / ILLUSTRATION</text>
+      <circle cx="823.3333333333334" cy="755" r="55" fill="#D9C8B1" stroke="#174FA6" stroke-width="5"/>
+    <rect x="778.3333333333334" y="810" width="90" height="105" rx="18" fill="#8EACD2"/>
+    <rect x="973.3333333333334" y="695" width="130" height="65" rx="10" fill="#fffdf8" stroke="#174FA6" stroke-width="3"/>
+    <rect x="993.3333333333334" y="785" width="130" height="65" rx="10" fill="#fffdf8" stroke="#174FA6" stroke-width="3"/>
+    <rect x="958.3333333333334" y="875" width="130" height="65" rx="10" fill="#fffdf8" stroke="#174FA6" stroke-width="3"/>
+    <line x1="878.3333333333334" y1="785" x2="973.3333333333334" y2="730" stroke="#B58A3E" stroke-width="4"/>
+    <line x1="878.3333333333334" y1="805" x2="993.3333333333334" y2="815" stroke="#B58A3E" stroke-width="4"/>
+      <text x="708.3333333333334" y="948" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="708.3333333333334" dy="0">Employee silhouette cracks into components</tspan><tspan x="708.3333333333334" dy="24">leading into M05.</tspan>
+      </text>
+      <line x1="708.3333333333334" y1="985" x2="1211.6666666666667" y2="985" stroke="#B58A3E" stroke-width="3"/>
+    </g>
+  </svg>
