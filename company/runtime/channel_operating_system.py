@@ -20,10 +20,13 @@ REQUIRED_WORKFLOW = [
     "story_question",
     "script_research_pack",
     "story_architecture",
+    "hook_retention_map",
     "first_script",
-    "editorial_rewrite",
+    "youtube_editorial_rewrite",
+    "visual_narrative_pass",
     "independent_fact_check",
     "narration_rewrite",
+    "red_team_retention_review",
     "script_lock",
     "script_breakdown",
     "visual_story_case",
@@ -120,11 +123,14 @@ REQUIRED_SCRIPT_PASSES = [
     "S0 Story Question",
     "S1 Research Pack",
     "S2 Story Architecture",
-    "S3 First Script",
-    "S4 Editorial Rewrite",
-    "S5 Independent Fact Check",
-    "S6 Narration Rewrite",
-    "S7 Locked Script",
+    "S3 Hook & Retention Map",
+    "S4 First Script",
+    "S5 YouTube Editorial Rewrite",
+    "S6 Visual/Narrative Pass",
+    "S7 Independent Fact Check",
+    "S8 Voice/Narration Rewrite",
+    "S9 Red Team Retention Review",
+    "S10 Locked Script",
 ]
 
 REQUIRED_PRODUCTION_DEPARTMENTS = [
@@ -152,7 +158,7 @@ def _validate_single_program_stages(stages: list[dict[str, Any]], context: str) 
 
 
 def validate_config(cfg: dict[str, Any]) -> bool:
-    _require(cfg.get("version") == "1.8", "channel operating system must be version 1.8")
+    _require(cfg.get("version") == "1.9", "channel operating system must be version 1.9")
     _require(
         cfg.get("channel_model") == "broad_format_first_multilingual_visual_documentary",
         "channel model drifted",
@@ -340,11 +346,55 @@ def validate_config(cfg: dict[str, Any]) -> bool:
     _require(revision.get("owner_reapproval_required") is True, "title revision requires Owner reapproval")
 
     scripts = cfg.get("script_development", {})
+    _require(scripts.get("version") == "2.0", "script development contract must be version 2.0")
     _require(scripts.get("single_pass_forbidden") is True, "single-pass scripting is forbidden")
     _require(scripts.get("required_passes") == REQUIRED_SCRIPT_PASSES, "script passes drifted")
     _require(scripts.get("fact_check_before_lock") is True, "fact check must precede Script Lock")
     _require(scripts.get("title_lock_required_before_start") is True, "script start must require title lock")
     _require(scripts.get("owner_title_authority_preserved") is True, "Owner title authority must be preserved")
+    for flag in {
+        "hook_retention_map_required_before_first_script",
+        "first_30_second_retention_gate_required",
+        "background_exposition_before_hook_forbidden",
+        "anti_article_test_required",
+        "spoken_language_test_required",
+        "visual_beat_map_required",
+        "open_loop_map_required",
+        "cold_viewer_test_required",
+        "red_team_retention_review_required",
+        "independent_fact_check_before_voice_rewrite",
+        "youtube_editorial_rewrite_required",
+        "visual_narrative_pass_required",
+    }:
+        _require(scripts.get(flag) is True, f"script gate missing {flag}")
+    _require(
+        int(scripts.get("max_seconds_without_new_reason_to_continue", 999)) <= 90,
+        "script cannot exceed 90 seconds without a new reason to continue",
+    )
+    _require(
+        set(scripts.get("required_narrative_functions", []))
+        == {"HOOK", "SETUP", "ESCALATION", "REVEAL", "PAYOFF", "RESET"},
+        "script narrative-function contract drifted",
+    )
+    _require(
+        set(scripts.get("retention_beat_required_fields", []))
+        == {"start_sec", "end_sec", "narrative_function", "reason_to_continue", "visual_beat", "open_loop_action"},
+        "retention beat contract drifted",
+    )
+    _require(
+        set(scripts.get("first_30_seconds_required_fields", []))
+        == {
+            "hook",
+            "central_mystery",
+            "concrete_visual",
+            "title_payoff_bridge",
+            "background_exposition_before_hook",
+            "status",
+        },
+        "first-30-second contract drifted",
+    )
+    _require(len(scripts.get("script_lock_required_statuses", [])) >= 18, "Script Lock status contract incomplete")
+    _require(scripts.get("fail_action") == "RETURN_TO_SCRIPT_STAGE", "script failures must return to writing")
 
     research = cfg.get("research_system", {})
     _require(research.get("claim_source_sheet_required") is True, "claim source sheet required")
