@@ -18,7 +18,6 @@
       "policy_safety": 8.5
     },
     "narrative": "shocking question -> fixed fact -> branching point -> three logical consequences -> closing question",
-    "visual_direction": "Arabic retro-futurism; cool cyan + desert gold; timelines; contemporary/future Arab cities; reality-vs-possibility split screens",
     "editorial_guardrail": "visually distinguish FACT / INFERENCE / SPECULATION",
     "pilot": [
       "Short: what if internet stopped in the Middle East for 24 hours?",
