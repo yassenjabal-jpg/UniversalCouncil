@@ -1,7 +1,7 @@
 {
   "project_id": "STUDIO-PILOT-001",
   "request_type": "OWNER_TITLE_REVISION_REQUEST",
-  "status": "PENDING_OWNER_REAPPROVAL",
+  "status": "OWNER_REJECTED",
   "current_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
   "proposed_title": "لماذا احتاجت كوريا الشمالية مزارع لابتوبات داخل بيوت أمريكية؟",
   "reason": "S1 found that official October 2026 sources support approximately 187 computer devices / laptops and KVM equipment, not a clean statement that all 187 seized items were laptops.",
@@ -10,6 +10,8 @@
     "Northern District of Texas, 2026-10-13: 187 laptops and KVM devices across more than 40 residences"
   ],
   "impact_on_script_or_packaging": "No story change. The proposed title removes the unsupported device-count precision while preserving the exact click premise: why DPRK-linked remote-worker schemes needed U.S.-based laptop farms.",
-  "owner_reapproval_status": "PENDING",
-  "automatic_change_applied": false
+  "owner_reapproval_status": "REJECTED",
+  "automatic_change_applied": false,
+  "owner_decision": "Keep the original locked title because it is more compelling for viewers.",
+  "resolution": "Original OWNER_TITLE_LOCK remains authoritative. Numerical nuance must be handled explicitly in narration and on-screen evidence."
 }
