@@ -27,7 +27,7 @@ Public YouTube results were used as the authorized platform-native fallback. Cur
 
 Titles:
 1. **هذا الثقب عمره 75 ألف سنة… ويبدو أنه أثر رمح**
-2. **عاش بعد إصابة مدمرة… ثم مات قبل 75 ألف سنة**
+2. **نجا من إصابة مدمرة… ثم أصابه رمح قبل 75 ألف سنة**
 
 Red Team: PASS. Both titles are concrete, non-institutional and thumbnail-complementary.
 
@@ -43,7 +43,7 @@ Red Team: PASS. Both titles are concrete, non-institutional and thumbnail-comple
 **Thumbnail:** one normal corporate laptop foreground + shelves of tagged laptops behind; optional text: “187 لابتوب”.
 
 Titles:
-1. **وظفوهم كأمريكيين… ولم يكونوا في أمريكا أصلًا**
+1. **ظنّوا أن الموظف في أمريكا… لكن اللابتوب وحده كان هناك**
 2. **لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟**
 
 Red Team: PASS. Strongest click engine in the slate.
@@ -61,7 +61,7 @@ Red Team: PASS. Strongest click engine in the slate.
 
 Titles:
 1. **ناسا صدمت هذا الكويكب عمدًا… والآن نريد معرفة ما فعلناه**
-2. **غيّرنا مسار كويكب بضربة واحدة… لكن التجربة لم تنتهِ**
+2. **أول مرة غيّر البشر مسار كويكب… والتجربة لم تنتهِ**
 
 Red Team: PASS. Strong spectacle without fake “Earth is about to be hit” stakes.
 
