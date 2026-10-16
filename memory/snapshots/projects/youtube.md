@@ -1,3 +1,17 @@
+## youtube.review_image_delivery.default
+- **Event:** `MEM-20261016-231000-pp06share`
+- **Level:** `L4_OWNER_DIRECTIVE`
+- **Kind:** `workflow_preference`
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-16T23:10:00+03:00`
+- **Summary:** Dropbox is the default channel for Studio visual-review images. GitHub remains source of truth for PSD/originals/version history. Prefer sRGB JPEG previews for mobile review; avoid GitHub media viewer as the primary review experience.
+- **Details:**
+  - `default_review_delivery`: Dropbox
+  - `source_of_truth_for_originals`: GitHub
+  - `project_folder_convention`: /Studio Reviews/<project_id>/<stage>/
+  - `fallback_order`: Dropbox → direct ChatGPT attachment → GitHub raw/direct image link → GitHub media viewer
+- **Tags:** youtube, studio, review, images, dropbox, workflow, owner-directive
+
 # Memory Snapshot — project / youtube
 
 > Generated from append-only memory events. Do not edit manually.
