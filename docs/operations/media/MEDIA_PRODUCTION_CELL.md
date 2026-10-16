@@ -60,16 +60,16 @@ The Studio may later propose a title refinement, but the title cannot change wit
 
 After Owner Title Lock:
 
-S0 Story Question  
-S1 Research Pack  
-S2 Story Architecture  
-S3 Hook & Retention Map  
-S4 First Script  
-S5 YouTube Editorial Rewrite  
-S6 Visual/Narrative Pass  
-S7 Independent Fact Check  
-S8 Voice/Narration Rewrite  
-S9 Red Team Retention Review  
+S0 Story Question
+S1 Research Pack
+S2 Story Architecture
+S3 Hook & Retention Map
+S4 First Script
+S5 YouTube Editorial Rewrite
+S6 Visual/Narrative Pass
+S7 Independent Fact Check
+S8 Voice/Narration Rewrite
+S9 Red Team Retention Review
 S10 Locked Script
 
 The Script & Voice Director owns the draft and spoken-language craft, but cannot self-clear:
