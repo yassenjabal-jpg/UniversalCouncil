@@ -6,7 +6,7 @@
   "level": "L2_PROJECT",
   "kind": "preference",
   "subject": "youtube.narration_visual_preferences",
-  "summary": "Default documentary voice and visual direction: warm conversational narration mixing Iraqi Arabic and MSA, medium-slow reflective delivery with light humor, user-recorded voice with emotion tags, and editorial documentary visuals rather than a news-like style.",
+  "summary": "Default documentary voice direction: warm conversational narration mixing Iraqi Arabic and MSA, medium-slow reflective delivery with light humor, user-recorded voice with emotion tags. Visual direction is governed exclusively by youtube.visual_system.current.",
   "details": {
     "voice_language": "Iraqi Arabic + MSA",
     "delivery": [
@@ -18,12 +18,11 @@
     ],
     "voice_source": "owner records own voice",
     "emotion_tags": true,
-    "visual_direction": "editorial documentary",
     "avoid": [
       "news-like presentation",
       "postman/mailman motif"
     ],
-    "historical_visual_reference": "vintage scientific / retro-futurism was explored but later direction became broader editorial documentary"
+    "visual_system_ref": "youtube.visual_system.current"
   },
   "supersedes": [],
   "confidence": "owner_confirmed",
