@@ -1,0 +1,320 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_02_VISUAL_STORY_CASE",
+  "stage_name": "Visual Story Case",
+  "status": "PASS_TO_PREPRODUCTION_03_ART_DIRECTION",
+  "primary_program": "ChatGPT",
+  "input_lock": "ventures/STUDIO-PILOT-001/SCRIPT_LOCK.json",
+  "input_breakdown": "ventures/STUDIO-PILOT-001/PP01_SCRIPT_BREAKDOWN.json",
+  "locked_script_blob_sha": "26769f91cb98eb3f80d0634aae2ab8880f5ecb3a",
+  "required_fields": {
+    "why_video_not_article": {
+      "verdict": "PASS",
+      "answer": "The story depends on the viewer repeatedly seeing a physical laptop stand in for a human location, then watching one apparent employee split into multiple trust signals, then seeing the same physical infrastructure reverse from disguise into evidence. Those spatial, object-based and transformation ideas lose force when reduced to prose."
+    },
+    "key_visual": {
+      "verdict": "PASS",
+      "concept": "An ordinary company laptop sitting inside an ordinary American home while the human operator is visually separated from it by geography.",
+      "role": "The laptop is the persistent hero object and changes meaning eight times across the episode."
+    },
+    "key_demonstration_or_diagram": {
+      "verdict": "PASS",
+      "concept": "Device-location / human-location separation followed by employee-card decomposition into identity, interview, hosted laptop, actual work and payment/account.",
+      "role": "Turns an abstract trust problem into a visible system the viewer can understand in seconds."
+    },
+    "archive_or_real_world_evidence": {
+      "verdict": "PASS",
+      "potential": [
+        "DOJ/FBI/IC3 evidence cards and public official releases",
+        "Matthew Isaac Knoot sentenced-case material",
+        "October 2026 Texas/Ohio operation figures",
+        "Kejia Wang/Zhenxing Wang sentenced-case figures",
+        "Official-source labels for current allegation vs proven case"
+      ],
+      "limitation": "PP02 confirms evidence potential, not rights clearance. Actual visual-source/rights approval occurs at PP05."
+    },
+    "visual_transformation_or_reveal": {
+      "verdict": "PASS",
+      "transformations": [
+        "ordinary home -> shelf of employer laptops",
+        "U.S. map pin stays on laptop while human appears elsewhere",
+        "one employee -> multiple trust-signal components",
+        "one laptop -> distributed homes and devices",
+        "digital disguise path -> physical evidence trail",
+        "green verified-looking signals -> different human behind them",
+        "final laptop -> brief human outline -> laptop"
+      ]
+    },
+    "editor_feasibility_note": {
+      "verdict": "PASS",
+      "assessment": "The episode can be built predominantly from original illustration, map graphics, evidence cards, controlled typography and object-led motion. It does not require unverifiable crime-scene footage, expensive 3D, reenactment actors, or generic cyber stock to carry the story.",
+      "hardest_beats": [
+        "V07.4 reverse-map reveal",
+        "V08.4 wrong-human reveal"
+      ],
+      "mitigation": "Reserve more motion-design attention for the two reveal beats; all other shots are low-to-medium complexity."
+    }
+  },
+  "why_video_proof": {
+    "thesis": "The viewer must see the mismatch between object, place and human—not merely be told it.",
+    "non_textual_information": [
+      {
+        "movement": "M01",
+        "visual_only_value": "Normal house + real-looking work laptops creates the contradiction before explanation."
+      },
+      {
+        "movement": "M02",
+        "visual_only_value": "Keeping the device fixed in Nashville while moving the human elsewhere makes the case mechanism instantly legible."
+      },
+      {
+        "movement": "M03",
+        "visual_only_value": "Attaching a location pin to the laptop instead of the person produces the central mental model."
+      },
+      {
+        "movement": "M04",
+        "visual_only_value": "A map multiplying homes conveys distributed scale without a spoken statistics dump."
+      },
+      {
+        "movement": "M05",
+        "visual_only_value": "One employee card splitting across several actors makes identity modularity comprehensible."
+      },
+      {
+        "movement": "M06",
+        "visual_only_value": "Layered scale cards convert many figures into escalating consequence instead of report-like narration."
+      },
+      {
+        "movement": "M07",
+        "visual_only_value": "Reversing the same path visually turns disguise into evidence—a genuine visual reversal."
+      },
+      {
+        "movement": "M08",
+        "visual_only_value": "Keeping verification checks green while changing the human behind them creates the final conceptual payoff."
+      }
+    ],
+    "article_failure_mode": "As an article, the episode would rely on repeated explanations of device location, identity and trust signals. In video, those explanations are externalized into objects, maps and transformations, allowing narration to stay conversational and sparse."
+  },
+  "movement_cases": [
+    {
+      "id": "M01",
+      "verdict": "VISUAL_ESSENTIAL",
+      "visual_question": "Can an ordinary American home visually contain the contradiction promised by the title?",
+      "proof": "Yes: normality -> shelf of laptops -> separated human/location.",
+      "must_show": [
+        "ordinary home",
+        "hero laptop/shelf",
+        "device/person geographic split",
+        "187-device evidence card"
+      ],
+      "must_not_show": [
+        "hooded hacker",
+        "North Korean military footage",
+        "fake victim-company logos"
+      ]
+    },
+    {
+      "id": "M02",
+      "verdict": "VISUAL_ESSENTIAL",
+      "visual_question": "Can one real case make the abstract mechanism physical?",
+      "proof": "Yes: Nashville map + case card + shipment reconstruction + fixed device / distant human.",
+      "must_show": [
+        "Nashville orientation",
+        "proven-case status",
+        "illustrative device route"
+      ],
+      "must_not_show": [
+        "unlicensed mugshot",
+        "fake leaked footage",
+        "remote-access tutorial"
+      ]
+    },
+    {
+      "id": "M03",
+      "verdict": "VISUAL_ESSENTIAL",
+      "visual_question": "Can the title answer be understood faster visually than verbally?",
+      "proof": "Yes: trust-signal cards and pin-on-device demonstration make the inference immediate.",
+      "must_show": [
+        "device/account/location signals",
+        "pin attached to laptop",
+        "payoff phrase"
+      ],
+      "must_not_show": [
+        "fake employer security dashboard"
+      ]
+    },
+    {
+      "id": "M04",
+      "verdict": "VISUAL_ESSENTIAL",
+      "visual_question": "Can the scale increase without becoming a list of numbers?",
+      "proof": "Yes: one home multiplies into several; three separate evidence cards preserve case boundaries.",
+      "must_show": [
+        "distributed homes map",
+        "40+/187/70+ as separate cards",
+        "system-scale zoom-out"
+      ],
+      "must_not_show": [
+        "merged-case statistic",
+        "operational topology"
+      ]
+    },
+    {
+      "id": "M05",
+      "verdict": "VISUAL_ESSENTIAL",
+      "visual_question": "Can the viewer see how one apparent employee can be assembled from several roles?",
+      "proof": "Yes: one fictional employee card splits and recombines.",
+      "must_show": [
+        "Ahmed clearly fictional",
+        "component split",
+        "different silhouettes",
+        "FBI pattern card"
+      ],
+      "must_not_show": [
+        "real-person implication",
+        "procedural how-to"
+      ]
+    },
+    {
+      "id": "M06",
+      "verdict": "VISUAL_STRONGLY_ADVANTAGED",
+      "visual_question": "Can a dense proven-case escalation remain emotionally legible?",
+      "proof": "Yes: scale is staged visually so narration carries consequence rather than raw statistics.",
+      "must_show": [
+        "sentenced-case status",
+        "80+ identities",
+        "100+ companies",
+        "hundreds of devices",
+        "money figures",
+        "sensitive-access consequence"
+      ],
+      "must_not_show": [
+        "money-routing animation",
+        "fabricated source-code screenshots"
+      ]
+    },
+    {
+      "id": "M07",
+      "verdict": "VISUAL_ESSENTIAL",
+      "visual_question": "Can the episode deliver a true visual reversal?",
+      "proof": "Yes: the same route that hid the worker is played backward as an evidence trail.",
+      "must_show": [
+        "hero-laptop callback",
+        "physical trace chain",
+        "reverse-map reveal",
+        "digital vs physical split"
+      ],
+      "must_not_show": [
+        "claim that diagram is official agency material"
+      ]
+    },
+    {
+      "id": "M08",
+      "verdict": "VISUAL_ESSENTIAL",
+      "visual_question": "Can the final thesis land without another spoken explanation?",
+      "proof": "Yes: green checks remain while the human changes behind them.",
+      "must_show": [
+        "trust-signal split",
+        "green checks",
+        "human-change reveal",
+        "final laptop metaphor"
+      ],
+      "must_not_show": [
+        "new factual claim",
+        "advice-list ending"
+      ]
+    }
+  ],
+  "key_visual_system": {
+    "hero_object": "company laptop in an ordinary U.S. home",
+    "semantic_progression": [
+      "ordinary object",
+      "case evidence anchor",
+      "location stand-in",
+      "scale unit",
+      "component of distributed employee",
+      "gateway to consequence",
+      "physical evidence",
+      "identity metaphor"
+    ],
+    "verdict": "PASS"
+  },
+  "evidence_strategy": {
+    "real_source_role": "Authority and factual anchoring",
+    "data_card_role": "Precise figures/legal status without overloading narration",
+    "illustration_role": "Explain spatial and conceptual relationships",
+    "separation_rule": "Illustration must never masquerade as real evidence",
+    "verdict": "PASS"
+  },
+  "editor_feasibility": {
+    "picture_runtime_seconds": 515,
+    "shot_blocks": 41,
+    "complexity_distribution": {
+      "low": 25,
+      "medium": 15,
+      "high": 1
+    },
+    "production_risk": "MODERATE",
+    "expensive_or_risky": [
+      "Rights-cleared real evidence may be limited; data-card fallback is acceptable if visually strong.",
+      "Reverse-map reveal must read instantly or M07 loses its payoff.",
+      "Final wrong-human reveal must feel elegant, not like a corporate infographic."
+    ],
+    "unnecessary_production": [
+      "No actor reenactments required.",
+      "No 3D by default.",
+      "No generic cyber stock required.",
+      "No real victim-company logo recreation required.",
+      "No North Korea history/military montage required."
+    ],
+    "verdict": "PASS"
+  },
+  "craft_review": {
+    "participants": [
+      {
+        "role": "Editorial Director / Showrunner",
+        "decision": "PASS",
+        "reason": "Every movement has a distinct visual job and the story does not depend on spoken repetition."
+      },
+      {
+        "role": "Media Producer / Production Coordinator",
+        "decision": "PASS",
+        "reason": "41 shots are bounded; only one high-complexity reveal; no expensive reenactment/3D dependency."
+      },
+      {
+        "role": "Cinematography / Shot Design",
+        "decision": "PASS",
+        "reason": "Hero-object continuity supports coherent framing and callbacks."
+      },
+      {
+        "role": "Visual Art Director / Frame Curator",
+        "decision": "PASS",
+        "reason": "Object-led, map-led and card-led language provides a strong base for art direction."
+      },
+      {
+        "role": "Motion & Picture Editor",
+        "decision": "PASS",
+        "reason": "The visual transformations carry story progression, especially M03, M05, M07 and M08."
+      },
+      {
+        "role": "Music Supervisor & Sound Designer",
+        "decision": "PASS",
+        "reason": "The structure contains clear silence/reveal/scale transitions for later sonic spotting without requiring music to manufacture drama."
+      }
+    ],
+    "dissent": [],
+    "verdict": "UNANIMOUS_PASS"
+  },
+  "gate": {
+    "why_video_not_article": "PASS",
+    "key_visual": "PASS",
+    "key_demonstration_or_diagram": "PASS",
+    "archive_or_real_world_evidence": "PASS",
+    "visual_transformation_or_reveal": "PASS",
+    "editor_feasibility_note": "PASS",
+    "movement_visual_case": "8/8 PASS",
+    "script_lock_preserved": true,
+    "return_ticket_required": false
+  },
+  "result": "PASS_TO_PREPRODUCTION_03_ART_DIRECTION",
+  "next_stage": "PREPRODUCTION_03_ART_DIRECTION",
+  "next_primary_program": "Adobe Photoshop 2025"
+}
