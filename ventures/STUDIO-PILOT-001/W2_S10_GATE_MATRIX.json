@@ -1,0 +1,176 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "stage": "W2_S10_SCRIPT_LOCK_REVIEW",
+  "status": "PASS",
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "source_candidate": "ventures/STUDIO-PILOT-001/W2_S8_VOICE_NARRATION_SCRIPT.md",
+  "source_candidate_blob_sha": "8ccc6513cfed64f57393f5d019cd7233c401a4b5",
+  "gate_count": 24,
+  "passed": 24,
+  "failed": 0,
+  "gates": [
+    {
+      "id": "G01",
+      "name": "Owner Title Lock",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/OWNER_TITLE_LOCK.json"
+    },
+    {
+      "id": "G02",
+      "name": "Story Question",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S0_STORY_QUESTION.md"
+    },
+    {
+      "id": "G03",
+      "name": "Research Pack",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S1_RESEARCH_PACK.md"
+    },
+    {
+      "id": "G04",
+      "name": "Story Architecture",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S2_STORY_ARCHITECTURE.md"
+    },
+    {
+      "id": "G05",
+      "name": "Hook & Retention Map",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S3_HOOK_RETENTION_MAP.json"
+    },
+    {
+      "id": "G06",
+      "name": "First Script",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S4_FIRST_SCRIPT_MANIFEST.json"
+    },
+    {
+      "id": "G07",
+      "name": "YouTube Editorial Rewrite",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S5_STUDIO_REREVIEW_V2.md"
+    },
+    {
+      "id": "G08",
+      "name": "Visual/Narrative Pass",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S6_MANIFEST.json"
+    },
+    {
+      "id": "G09",
+      "name": "Independent Fact Check",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S7_MANIFEST.json"
+    },
+    {
+      "id": "G10",
+      "name": "Voice/Narration Rewrite",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S8_MANIFEST.json"
+    },
+    {
+      "id": "G11",
+      "name": "Red Team Retention Review",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S9_MANIFEST.json"
+    },
+    {
+      "id": "G12",
+      "name": "First-30-Second Gate",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S9_RETENTION_RISK_LEDGER.json"
+    },
+    {
+      "id": "G13",
+      "name": "Anti-Article Test",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S9_RETENTION_RISK_LEDGER.json"
+    },
+    {
+      "id": "G14",
+      "name": "Spoken-Language Test",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S8_VOICE_QC.md"
+    },
+    {
+      "id": "G15",
+      "name": "Cold Viewer Test",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S9_RETENTION_RISK_LEDGER.json"
+    },
+    {
+      "id": "G16",
+      "name": "Visual Beat Map",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S6_VISUAL_NARRATIVE_MAP.json"
+    },
+    {
+      "id": "G17",
+      "name": "Open Loop Map",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S10_FINAL_RECONCILIATION.json"
+    },
+    {
+      "id": "G18",
+      "name": "Filler Check",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S9_RETENTION_RISK_LEDGER.json"
+    },
+    {
+      "id": "G19",
+      "name": "Runtime >= 8 minutes",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S8_PERFORMANCE_MAP.json"
+    },
+    {
+      "id": "G20",
+      "name": "No interval >90 sec",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S9_RETENTION_RISK_LEDGER.json"
+    },
+    {
+      "id": "G21",
+      "name": "All Red Team risks resolved",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S9_RETENTION_RISK_LEDGER.json"
+    },
+    {
+      "id": "G22",
+      "name": "Final title exact match",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S8_VOICE_NARRATION_SCRIPT.md"
+    },
+    {
+      "id": "G23",
+      "name": "First-minute 187 accuracy qualifier",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S8_VOICE_NARRATION_SCRIPT.md"
+    },
+    {
+      "id": "G24",
+      "name": "Final factual precision retained",
+      "status": "PASS",
+      "evidence": "ventures/STUDIO-PILOT-001/W2_S8_VOICE_NARRATION_SCRIPT.md"
+    }
+  ],
+  "runtime": {
+    "picture_runtime_seconds": 515,
+    "picture_runtime": "8:35",
+    "max_story_interval_seconds": 80,
+    "hard_ceiling_seconds": 90
+  },
+  "cleanliness": {
+    "filler_segments_remaining": 0,
+    "article_like_paragraphs_remaining": 0,
+    "unsourced_material_claims_remaining": 0,
+    "unresolved_red_team_risks": 0
+  },
+  "title_accuracy": {
+    "status": "OWNER_ACCEPTED_QUALIFIED",
+    "locked_title_literal_187_laptops_not_evidence_exact": true,
+    "mandatory_first_minute_qualifier_present": true,
+    "qualifier": "approximately 187 computer devices, including laptops/KVM equipment"
+  },
+  "result": "SCRIPT_LOCK_ELIGIBLE"
+}
