@@ -1,6 +1,6 @@
 # Studio Pilot 001 — W2 S1 Research Pack
 
-Status: **RESEARCH PASS / TITLE ACCURACY HOLD**  
+Status: **RESEARCH PASS / OWNER KEPT ORIGINAL TITLE**  
 Date: 2026-10-16  
 Entry: OWNER_TITLE_LOCK validated by runtime.
 
@@ -112,4 +112,4 @@ Avoid generic hooded-hacker B-roll.
 - Legal-risk controllability: PASS with attribution discipline
 - Locked-title numerical precision: **FAIL — OWNER REVISION REQUIRED**
 
-**Do not enter S2 Story Architecture until the Owner resolves the title revision request.**
+**Owner resolution:** keep the original locked title. S2 may proceed, but the script must explicitly clarify that the 187 figure refers to seized computer devices including laptops and KVM equipment.
