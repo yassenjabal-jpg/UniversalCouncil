@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <rect width="1920" height="1080" fill="#F6F1E8"/>
+    <text x="70" y="58" font-family="Arial" font-size="40" font-weight="700" fill="#151515">M08 — PP06 SHOT DESIGN</text>
+    <text x="70" y="95" font-family="Arial" font-size="22" fill="#174FA6">Editorial Renaissance Motion • Ivory-first • Shot hierarchy & composition</text>
+    <g>
+      <rect x="70" y="120" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="70" y="120" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="105" y="165" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V08.1</text>
+      <text x="105" y="198" font-family="Arial" font-size="18" fill="#174FA6">TRANSITION / ILLUSTRATION</text>
+      <rect x="215" y="240" width="280" height="170" rx="12" fill="#8EACD2" stroke="#174FA6" stroke-width="5"/>
+    <rect x="185" y="420" width="340" height="22" rx="10" fill="#151515"/>
+    <rect x="125" y="215" width="65" height="260" fill="#D9C8B1" opacity=".65"/>
+    <line x1="140" y1="230" x2="140" y2="450" stroke="#B58A3E" stroke-width="5"/>
+      <text x="105" y="488" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="105" dy="0">Return to same opening shelf.</tspan>
+      </text>
+      <line x1="105" y1="525" x2="608.3333333333334" y2="525" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="673.3333333333334" y="120" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="673.3333333333334" y="120" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="708.3333333333334" y="165" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V08.2</text>
+      <text x="708.3333333333334" y="198" font-family="Arial" font-size="18" fill="#174FA6">DEMONSTRATION / ILLUSTRATION</text>
+      <path d="M 743.3333333333334 330 C 843.3333333333334 240, 973.3333333333334 390, 1103.3333333333335 275 S 1156.6666666666667 350, 1186.6666666666667 255" fill="none" stroke="#174FA6" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="763.3333333333334" cy="330" r="22" fill="#B58A3E"/><circle cx="1166.6666666666667" cy="260" r="22" fill="#173C32"/>
+    <rect x="883.3333333333334" y="230" width="170" height="90" rx="14" fill="#8EACD2" opacity=".55"/>
+      <text x="708.3333333333334" y="488" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="708.3333333333334" dy="0">Employee avatar breaks into six trust</tspan><tspan x="708.3333333333334" dy="24">signals:</tspan><tspan x="708.3333333333334" dy="24">name/interview/device/location/account/work.</tspan>
+      </text>
+      <line x1="708.3333333333334" y1="525" x2="1211.6666666666667" y2="525" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="1276.6666666666667" y="120" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="1276.6666666666667" y="120" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="1311.6666666666667" y="165" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V08.3</text>
+      <text x="1311.6666666666667" y="198" font-family="Arial" font-size="18" fill="#174FA6">DEMONSTRATION / ILLUSTRATION</text>
+      <rect x="1381.6666666666667" y="240" width="363.33333333333337" height="220" rx="28" fill="#8EACD2" opacity=".6"/>
+  <line x1="1396.6666666666667" y1="430" x2="1730" y2="235" stroke="#174FA6" stroke-width="8"/>
+  <circle cx="1700" cy="265" r="18" fill="#B58A3E"/>
+      <text x="1311.6666666666667" y="488" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="1311.6666666666667" dy="0">Each signal receives green looks-valid</tspan><tspan x="1311.6666666666667" dy="24">check.</tspan>
+      </text>
+      <line x1="1311.6666666666667" y1="525" x2="1815" y2="525" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="70" y="580" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="70" y="580" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="105" y="625" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V08.4</text>
+      <text x="105" y="658" font-family="Arial" font-size="18" fill="#174FA6">REVEAL / ILLUSTRATION</text>
+      <circle cx="220" cy="755" r="55" fill="#D9C8B1" stroke="#174FA6" stroke-width="5"/>
+    <rect x="175" y="810" width="90" height="105" rx="18" fill="#8EACD2"/>
+    <rect x="370" y="695" width="130" height="65" rx="10" fill="#fffdf8" stroke="#174FA6" stroke-width="3"/>
+    <rect x="390" y="785" width="130" height="65" rx="10" fill="#fffdf8" stroke="#174FA6" stroke-width="3"/>
+    <rect x="355" y="875" width="130" height="65" rx="10" fill="#fffdf8" stroke="#174FA6" stroke-width="3"/>
+    <line x1="275" y1="785" x2="370" y2="730" stroke="#B58A3E" stroke-width="4"/>
+    <line x1="275" y1="805" x2="390" y2="815" stroke="#B58A3E" stroke-width="4"/>
+      <text x="105" y="948" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="105" dy="0">Checks remain green while human silhouette</tspan><tspan x="105" dy="24">behind them changes.</tspan>
+      </text>
+      <line x1="105" y1="985" x2="608.3333333333334" y2="985" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="673.3333333333334" y="580" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="673.3333333333334" y="580" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="708.3333333333334" y="625" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V08.5</text>
+      <text x="708.3333333333334" y="658" font-family="Arial" font-size="18" fill="#174FA6">ATMOSPHERE / ILLUSTRATION</text>
+      <rect x="818.3333333333334" y="700" width="280" height="170" rx="12" fill="#8EACD2" stroke="#174FA6" stroke-width="5"/>
+    <rect x="788.3333333333334" y="880" width="340" height="22" rx="10" fill="#151515"/>
+    <rect x="728.3333333333334" y="675" width="65" height="260" fill="#D9C8B1" opacity=".65"/>
+    <line x1="743.3333333333334" y1="690" x2="743.3333333333334" y2="910" stroke="#B58A3E" stroke-width="5"/>
+      <text x="708.3333333333334" y="948" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="708.3333333333334" dy="0">All clutter disappears; only laptop</tspan><tspan x="708.3333333333334" dy="24">remains.</tspan>
+      </text>
+      <line x1="708.3333333333334" y1="985" x2="1211.6666666666667" y2="985" stroke="#B58A3E" stroke-width="3"/>
+    </g><g>
+      <rect x="1276.6666666666667" y="580" width="573.3333333333334" height="430" rx="22" fill="#fffdf8" stroke="#D9C8B1" stroke-width="3"/>
+      <rect x="1276.6666666666667" y="580" width="16" height="430" rx="8" fill="#174FA6"/>
+      <text x="1311.6666666666667" y="625" font-family="Arial" font-size="29" font-weight="700" fill="#151515">V08.6</text>
+      <text x="1311.6666666666667" y="658" font-family="Arial" font-size="18" fill="#174FA6">REVEAL / ILLUSTRATION</text>
+      <circle cx="1426.6666666666667" cy="755" r="55" fill="#D9C8B1" stroke="#174FA6" stroke-width="5"/>
+    <rect x="1381.6666666666667" y="810" width="90" height="105" rx="18" fill="#8EACD2"/>
+    <rect x="1576.6666666666667" y="695" width="130" height="65" rx="10" fill="#fffdf8" stroke="#174FA6" stroke-width="3"/>
+    <rect x="1596.6666666666667" y="785" width="130" height="65" rx="10" fill="#fffdf8" stroke="#174FA6" stroke-width="3"/>
+    <rect x="1561.6666666666667" y="875" width="130" height="65" rx="10" fill="#fffdf8" stroke="#174FA6" stroke-width="3"/>
+    <line x1="1481.6666666666667" y1="785" x2="1576.6666666666667" y2="730" stroke="#B58A3E" stroke-width="4"/>
+    <line x1="1481.6666666666667" y1="805" x2="1596.6666666666667" y2="815" stroke="#B58A3E" stroke-width="4"/>
+      <text x="1311.6666666666667" y="948" font-family="Arial" font-size="18" fill="#151515">
+        <tspan x="1311.6666666666667" dy="0">Laptop briefly becomes simple human</tspan><tspan x="1311.6666666666667" dy="24">outline, then returns to laptop.</tspan>
+      </text>
+      <line x1="1311.6666666666667" y1="985" x2="1815" y2="985" stroke="#B58A3E" stroke-width="3"/>
+    </g>
+  </svg>
