@@ -2,7 +2,7 @@
   "project_id": "STUDIO-PILOT-001",
   "phase": "PRE_PRODUCTION",
   "stage_id": "PREPRODUCTION_06_SHOT_DESIGN",
-  "status": "PASS_TO_PREPRODUCTION_07_STORYBOARD",
+  "status": "AWAITING_OWNER_VISUAL_REVIEW",
   "primary_program": "Adobe Photoshop 2025",
   "input_art_direction_lock": "ventures/STUDIO-PILOT-001/PP03_ART_DIRECTION_LOCK.json",
   "input_asset_plan": "ventures/STUDIO-PILOT-001/PP04_ASSET_PLAN.json",
@@ -19,6 +19,20 @@
   ],
   "script_mutations": 0,
   "art_direction_lock_preserved": true,
-  "next_stage": "PREPRODUCTION_07_STORYBOARD",
-  "next_primary_program": "Adobe Photoshop 2025"
+  "next_stage": null,
+  "next_primary_program": "Adobe Photoshop 2025",
+  "execution_revision": "v2_actual_photoshop_keyframes",
+  "photoshop_keyframe_dir": "ventures/STUDIO-PILOT-001/pp06_photoshop_keyframes",
+  "keyframe_count": 8,
+  "keyframes": [
+    "KF01_V01_4_v01",
+    "KF02_V02_5_v01",
+    "KF03_V03_3_v01",
+    "KF04_V04_3_v01",
+    "KF05_V05_2_v01",
+    "KF06_V06_5_v01",
+    "KF07_V07_4_v01",
+    "KF08_V08_4_v01"
+  ],
+  "storyboard_entry": "BLOCKED_PENDING_OWNER_VISUAL_APPROVAL"
 }
