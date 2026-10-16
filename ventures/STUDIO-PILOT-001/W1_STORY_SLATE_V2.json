@@ -103,10 +103,10 @@
         },
         {
           "id": "P1B",
-          "title": "عاش بعد إصابة مدمرة… ثم مات قبل 75 ألف سنة",
-          "click_reason": "A human survival arc creates emotional contrast before the final mystery is revealed.",
+          "title": "نجا من إصابة مدمرة… ثم أصابه رمح قبل 75 ألف سنة",
+          "click_reason": "A survival story collides with a later violent wound, creating a clear human paradox.",
           "viewer_promise": "Reconstruct Shanidar A's injuries, survival, possible care and the perimortem spear-consistent wound without inventing a killer.",
-          "thumbnail_complement": "The image shows the final wound; the title adds the earlier survival story and emotional contradiction.",
+          "thumbnail_complement": "The image shows the spear-consistent wound; the title adds the earlier survival and care contrast.",
           "stranger_click_test": "PASS",
           "youtube_title_style_status": "PASS"
         }
@@ -184,10 +184,10 @@
       "title_variants": [
         {
           "id": "P2A",
-          "title": "وظفوهم كأمريكيين… ولم يكونوا في أمريكا أصلًا",
-          "click_reason": "The contradiction is instantly understandable even to viewers with no cyber-security background.",
+          "title": "ظنّوا أن الموظف في أمريكا… لكن اللابتوب وحده كان هناك",
+          "click_reason": "A normal remote-work assumption flips in one sentence: the device is domestic, the worker is not.",
           "viewer_promise": "Show how false/stolen identities, U.S.-hosted laptops and remote access allegedly made foreign workers appear domestic to employers.",
-          "thumbnail_complement": "The thumbnail reveals the hidden laptop farm; the title reveals the human deception behind it.",
+          "thumbnail_complement": "The thumbnail reveals the laptop farm; the title explains why the physical laptop location mattered.",
           "stranger_click_test": "PASS",
           "youtube_title_style_status": "PASS"
         },
@@ -277,8 +277,8 @@
         },
         {
           "id": "P3B",
-          "title": "غيّرنا مسار كويكب بضربة واحدة… لكن التجربة لم تنتهِ",
-          "click_reason": "A completed-looking success is immediately reopened by the contradiction that the experiment is still unfinished.",
+          "title": "أول مرة غيّر البشر مسار كويكب… والتجربة لم تنتهِ",
+          "click_reason": "A historic-sounding success is reopened by the unresolved second act.",
           "viewer_promise": "Show how DART changed the orbit and why Hera's close-up investigation is necessary before kinetic deflection becomes a well-understood technique.",
           "thumbnail_complement": "The thumbnail supplies the returning spacecraft and aftermath; the title supplies the cause-and-unfinished-experiment tension.",
           "stranger_click_test": "PASS",
