@@ -1,4 +1,4 @@
-# Media Production Cell v1.7
+# Media Production Cell v1.8
 
 Status: CANONICAL MEDIA OPERATIONS
 Date: 2026-10-16
@@ -63,11 +63,29 @@ After Owner Title Lock:
 S0 Story Question  
 S1 Research Pack  
 S2 Story Architecture  
-S3 First Script  
-S4 Editorial Rewrite  
-S5 Independent Fact Check  
-S6 Narration Rewrite  
-S7 Locked Script
+S3 Hook & Retention Map  
+S4 First Script  
+S5 YouTube Editorial Rewrite  
+S6 Visual/Narrative Pass  
+S7 Independent Fact Check  
+S8 Voice/Narration Rewrite  
+S9 Red Team Retention Review  
+S10 Locked Script
+
+The Script & Voice Director owns the draft and spoken-language craft, but cannot self-clear:
+- material facts;
+- first-30-second retention;
+- anti-article quality;
+- Cold Viewer quality;
+- Red Team drop-off objections.
+
+The Showrunner owns editorial clearance.
+The Motion & Picture Editor reviews visual beats and likely pacing/drop-off problems before lock.
+The Independent Fact Checker remains separate.
+The Red Team must timestamp likely abandonment points and verify the corrections.
+
+No interval longer than 90 seconds may exist without a fresh reason to continue.
+
 
 Writing exits only at:
 **SCRIPT_LOCK**
