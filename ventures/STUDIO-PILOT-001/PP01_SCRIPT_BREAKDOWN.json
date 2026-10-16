@@ -1,0 +1,1074 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_01_SCRIPT_BREAKDOWN",
+  "stage_name": "Script Breakdown",
+  "status": "PASS_TO_PREPRODUCTION_02_VISUAL_STORY_CASE",
+  "primary_program": "ChatGPT",
+  "active_craft_scope": "PREPRODUCTION_EDITORIAL_BREAKDOWN",
+  "entry_gate": {
+    "script_lock_status": "SCRIPT_LOCK",
+    "script_lock_ref": "ventures/STUDIO-PILOT-001/SCRIPT_LOCK.json",
+    "canonical_locked_script": "ventures/STUDIO-PILOT-001/W2_S10_LOCKED_SCRIPT.md",
+    "canonical_locked_script_blob_sha": "26769f91cb98eb3f80d0634aae2ab8880f5ecb3a"
+  },
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "picture_runtime_seconds": 515,
+  "movement_count": 8,
+  "shot_block_count": 41,
+  "script_mutations_made": 0,
+  "script_change_allowed": false,
+  "hero_object": "company laptop inside an ordinary U.S. home",
+  "evidence_modes": [
+    "REAL_SOURCE",
+    "DATA_CARD",
+    "ILLUSTRATION"
+  ],
+  "shots": [
+    {
+      "shot_id": "V01.1",
+      "movement_id": "M01",
+      "movement_range": "0:00-0:45",
+      "narrative_function": "HOOK_REVEAL",
+      "tc_in": "0:00",
+      "tc_out": "0:06",
+      "purpose": "ATMOSPHERE",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Ordinary U.S. suburban home exterior/interior; quiet, normal, no cyber cues.",
+      "evidence_refs": [],
+      "asset_key": "generic_home_environment",
+      "motion_complexity": "LOW",
+      "audio_cue": "M0 room tone",
+      "locked_constraints": "No logos; no fake evidence; architecture feels ordinary.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V01.2",
+      "movement_id": "M01",
+      "movement_range": "0:00-0:45",
+      "narrative_function": "HOOK_REVEAL",
+      "tc_in": "0:06",
+      "tc_out": "0:13",
+      "purpose": "ACTION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Generic employer laptop shipping box entering house.",
+      "evidence_refs": [],
+      "asset_key": "generic_shipping_prop",
+      "motion_complexity": "LOW",
+      "audio_cue": "soft package/object SFX",
+      "locked_constraints": "No real employer logo unless later rights-cleared.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V01.3",
+      "movement_id": "M01",
+      "movement_range": "0:00-0:45",
+      "narrative_function": "HOOK_REVEAL",
+      "tc_in": "0:13",
+      "tc_out": "0:21",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Cut from one laptop to shelf with several company-style laptops.",
+      "evidence_refs": [],
+      "asset_key": "laptop_shelf_scene",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "subtle reveal accent",
+      "locked_constraints": "Use fictional/generic labels only; do not invent real victim companies.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V01.4",
+      "movement_id": "M01",
+      "movement_range": "0:00-0:45",
+      "narrative_function": "HOOK_REVEAL",
+      "tc_in": "0:21",
+      "tc_out": "0:31",
+      "purpose": "EXPLANATION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "U.S. map pin visually stays on laptop while human silhouette appears far away.",
+      "evidence_refs": [
+        "C07"
+      ],
+      "asset_key": "map_and_silhouette_graphic",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "M1 curiosity bed",
+      "locked_constraints": "Conceptual only; no operational mechanism detail.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V01.5",
+      "movement_id": "M01",
+      "movement_range": "0:00-0:45",
+      "narrative_function": "HOOK_REVEAL",
+      "tc_in": "0:31",
+      "tc_out": "0:45",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "visual_requirement": "Evidence card: ~187 computer devices; laptops + KVM equipment; October 2026 coordinated actions.",
+      "evidence_refs": [
+        "C01",
+        "C02"
+      ],
+      "asset_key": "official_data_card",
+      "motion_complexity": "LOW",
+      "audio_cue": "brief evidence hit",
+      "locked_constraints": "Must show current-action/legal-status label; must not say all 187 were laptops.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V02.1",
+      "movement_id": "M02",
+      "movement_range": "0:45-1:40",
+      "narrative_function": "PROVEN_CASE_SETUP",
+      "tc_in": "0:45",
+      "tc_out": "0:53",
+      "purpose": "TRANSITION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Map transitions from national view to Nashville, Tennessee.",
+      "evidence_refs": [
+        "C03"
+      ],
+      "asset_key": "map_transition",
+      "motion_complexity": "LOW",
+      "audio_cue": "map transition SFX",
+      "locked_constraints": "Geographic orientation only.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V02.2",
+      "movement_id": "M02",
+      "movement_range": "0:45-1:40",
+      "narrative_function": "PROVEN_CASE_SETUP",
+      "tc_in": "0:53",
+      "tc_out": "1:04",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "visual_requirement": "Matthew Isaac Knoot case card; sentenced/proven case; DOJ source badge.",
+      "evidence_refs": [
+        "C03"
+      ],
+      "asset_key": "case_evidence_card",
+      "motion_complexity": "LOW",
+      "audio_cue": "M1 steady",
+      "locked_constraints": "Do not use mugshot unless later source/rights clearance approves it.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V02.3",
+      "movement_id": "M02",
+      "movement_range": "0:45-1:40",
+      "narrative_function": "PROVEN_CASE_SETUP",
+      "tc_in": "1:04",
+      "tc_out": "1:18",
+      "purpose": "ACTION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Employer -> shipped laptop -> Nashville residence reconstruction.",
+      "evidence_refs": [
+        "C03"
+      ],
+      "asset_key": "device_route_reconstruction",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "package/line reveal SFX",
+      "locked_constraints": "Label as illustrative reconstruction; no fake documentary framing.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V02.4",
+      "movement_id": "M02",
+      "movement_range": "0:45-1:40",
+      "narrative_function": "PROVEN_CASE_SETUP",
+      "tc_in": "1:18",
+      "tc_out": "1:30",
+      "purpose": "EXPLANATION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Laptop remains fixed in Nashville; operator marker appears outside U.S.",
+      "evidence_refs": [
+        "C03"
+      ],
+      "asset_key": "operator_location_diagram",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "M3 explanation bed",
+      "locked_constraints": "No step-by-step remote-access procedure.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V02.5",
+      "movement_id": "M02",
+      "movement_range": "0:45-1:40",
+      "narrative_function": "PROVEN_CASE_SETUP",
+      "tc_in": "1:30",
+      "tc_out": "1:40",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Freeze visual: الجهاز هنا. الإنسان هناك.",
+      "evidence_refs": [
+        "C03"
+      ],
+      "asset_key": "contrast_freeze_frame",
+      "motion_complexity": "LOW",
+      "audio_cue": "brief reveal accent",
+      "locked_constraints": "Keep wording aligned with locked narration.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V03.1",
+      "movement_id": "M03",
+      "movement_range": "1:40-2:25",
+      "narrative_function": "EARLY_PAYOFF",
+      "tc_in": "1:40",
+      "tc_out": "1:50",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Single employee card appears.",
+      "evidence_refs": [
+        "C03",
+        "C07"
+      ],
+      "asset_key": "employee_card",
+      "motion_complexity": "LOW",
+      "audio_cue": "M3 explanation bed",
+      "locked_constraints": "Conceptual model, not source evidence.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V03.2",
+      "movement_id": "M03",
+      "movement_range": "1:40-2:25",
+      "narrative_function": "EARLY_PAYOFF",
+      "tc_in": "1:50",
+      "tc_out": "2:02",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Three trust signals light separately: company device, employee account, device location.",
+      "evidence_refs": [
+        "C07"
+      ],
+      "asset_key": "trust_signal_cards",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "subtle activation SFX",
+      "locked_constraints": "Labels may carry explanation; voice should not duplicate.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V03.3",
+      "movement_id": "M03",
+      "movement_range": "1:40-2:25",
+      "narrative_function": "EARLY_PAYOFF",
+      "tc_in": "2:02",
+      "tc_out": "2:13",
+      "purpose": "EXPLANATION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Location pin visibly attaches to laptop, not person.",
+      "evidence_refs": [
+        "C07"
+      ],
+      "asset_key": "location_pin_demo",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "single pin/lock SFX",
+      "locked_constraints": "Do not imply this is a literal employer UI.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V03.4",
+      "movement_id": "M03",
+      "movement_range": "1:40-2:25",
+      "narrative_function": "EARLY_PAYOFF",
+      "tc_in": "2:13",
+      "tc_out": "2:25",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Large conceptual payoff: اللابتوب = بديل عن الموقع، مو عن الإنسان.",
+      "evidence_refs": [
+        "C07"
+      ],
+      "asset_key": "payoff_title_card",
+      "motion_complexity": "LOW",
+      "audio_cue": "M5 mini reveal",
+      "locked_constraints": "Must remain Studio explanatory synthesis, not FBI quote.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V04.1",
+      "movement_id": "M04",
+      "movement_range": "2:25-3:30",
+      "narrative_function": "SCALE_REVEAL",
+      "tc_in": "2:25",
+      "tc_out": "2:36",
+      "purpose": "TRANSITION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "One home becomes several homes across a U.S. map.",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "asset_key": "distributed_homes_map",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "M2 build",
+      "locked_constraints": "Communicate distribution, not evasion instructions.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V04.2",
+      "movement_id": "M04",
+      "movement_range": "2:25-3:30",
+      "narrative_function": "SCALE_REVEAL",
+      "tc_in": "2:36",
+      "tc_out": "2:48",
+      "purpose": "EXPLANATION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Each home shows only a few device icons.",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "asset_key": "small_farm_icons",
+      "motion_complexity": "LOW",
+      "audio_cue": "continuing build",
+      "locked_constraints": "Abstract scale visualization only.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V04.3",
+      "movement_id": "M04",
+      "movement_range": "2:25-3:30",
+      "narrative_function": "SCALE_REVEAL",
+      "tc_in": "2:48",
+      "tc_out": "3:02",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "visual_requirement": "Three distinct cards: Texas 40+ residences; coordinated ~187 devices; related Ohio 70+ companies.",
+      "evidence_refs": [
+        "C01",
+        "C02"
+      ],
+      "asset_key": "three_source_evidence_cards",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "three restrained hits",
+      "locked_constraints": "Never merge the figures into one defendant/case; separate source/status labels.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V04.4",
+      "movement_id": "M04",
+      "movement_range": "2:25-3:30",
+      "narrative_function": "SCALE_REVEAL",
+      "tc_in": "3:02",
+      "tc_out": "3:18",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Zoom out: devices + homes + facilitators + companies.",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "asset_key": "system_scale_graphic",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "M2 scale rise",
+      "locked_constraints": "No procedural topology or exploitable detail.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V04.5",
+      "movement_id": "M04",
+      "movement_range": "2:25-3:30",
+      "narrative_function": "SCALE_REVEAL",
+      "tc_in": "3:18",
+      "tc_out": "3:30",
+      "purpose": "TRANSITION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Employee silhouette cracks into components leading into M05.",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "asset_key": "employee_fragment_transition",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "fracture transition SFX",
+      "locked_constraints": "Sets up conceptual decomposition only.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V05.1",
+      "movement_id": "M05",
+      "movement_range": "3:30-4:45",
+      "narrative_function": "EMPLOYEE_DECOMPOSITION",
+      "tc_in": "3:30",
+      "tc_out": "3:42",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Fictional composite employee أحمد appears; visibly labeled example, not real person.",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "asset_key": "fictional_employee_card",
+      "motion_complexity": "LOW",
+      "audio_cue": "M3 conversational",
+      "locked_constraints": "Must say مثال توضيحي / مو شخص حقيقي.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V05.2",
+      "movement_id": "M05",
+      "movement_range": "3:30-4:45",
+      "narrative_function": "EMPLOYEE_DECOMPOSITION",
+      "tc_in": "3:42",
+      "tc_out": "3:56",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Employee card splits into identity / application-interview / hosted laptop / actual work / payment-account.",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "asset_key": "employee_component_cards",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "card split SFX",
+      "locked_constraints": "No operational instructions.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V05.3",
+      "movement_id": "M05",
+      "movement_range": "3:30-4:45",
+      "narrative_function": "EMPLOYEE_DECOMPOSITION",
+      "tc_in": "3:56",
+      "tc_out": "4:12",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Different silhouettes attach to different cards.",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "asset_key": "multi_actor_visual",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "M2 light build",
+      "locked_constraints": "Keep actors anonymous and conceptual.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V05.4",
+      "movement_id": "M05",
+      "movement_range": "3:30-4:45",
+      "narrative_function": "EMPLOYEE_DECOMPOSITION",
+      "tc_in": "4:12",
+      "tc_out": "4:28",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "visual_requirement": "FBI observation card: third-party freelancers may apply/interview/perform portions or entire jobs.",
+      "evidence_refs": [
+        "C09"
+      ],
+      "asset_key": "fbi_observation_card",
+      "motion_complexity": "LOW",
+      "audio_cue": "evidence hit",
+      "locked_constraints": "Must state pattern observation; not automatically every case.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V05.5",
+      "movement_id": "M05",
+      "movement_range": "3:30-4:45",
+      "narrative_function": "EMPLOYEE_DECOMPOSITION",
+      "tc_in": "4:28",
+      "tc_out": "4:45",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Cards collapse into one employer-facing employee avatar.",
+      "evidence_refs": [
+        "C05",
+        "C09"
+      ],
+      "asset_key": "recombined_employee_avatar",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "recombine SFX",
+      "locked_constraints": "Visual payoff: one visible name, multiple possible hands.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V06.1",
+      "movement_id": "M06",
+      "movement_range": "4:45-6:05",
+      "narrative_function": "PROVEN_SCALE_AND_CONSEQUENCE",
+      "tc_in": "4:45",
+      "tc_out": "4:57",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "visual_requirement": "Court-established case timeline begins; separate from current October allegations.",
+      "evidence_refs": [
+        "C04",
+        "C08"
+      ],
+      "asset_key": "sentenced_case_timeline",
+      "motion_complexity": "LOW",
+      "audio_cue": "M3->M4",
+      "locked_constraints": "Status label mandatory: sentenced/proven case.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V06.2",
+      "movement_id": "M06",
+      "movement_range": "4:45-6:05",
+      "narrative_function": "PROVEN_SCALE_AND_CONSEQUENCE",
+      "tc_in": "4:57",
+      "tc_out": "5:10",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "visual_requirement": "80+ U.S. identity cards spread across screen.",
+      "evidence_refs": [
+        "C08"
+      ],
+      "asset_key": "identity_scale_card",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "subtle count build",
+      "locked_constraints": "Exact figure must match S7 wording.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V06.3",
+      "movement_id": "M06",
+      "movement_range": "4:45-6:05",
+      "narrative_function": "PROVEN_SCALE_AND_CONSEQUENCE",
+      "tc_in": "5:10",
+      "tc_out": "5:22",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "visual_requirement": "100+ company icons appear behind identities.",
+      "evidence_refs": [
+        "C04",
+        "C08"
+      ],
+      "asset_key": "company_scale_card",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "continuing scale build",
+      "locked_constraints": "Do not imply all companies had same harm.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V06.4",
+      "movement_id": "M06",
+      "movement_range": "4:45-6:05",
+      "narrative_function": "PROVEN_SCALE_AND_CONSEQUENCE",
+      "tc_in": "5:22",
+      "tc_out": "5:34",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "visual_requirement": "Five facilitator nodes, then hundreds of hosted company computers.",
+      "evidence_refs": [
+        "C08"
+      ],
+      "asset_key": "facilitator_device_scale",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "node activation SFX",
+      "locked_constraints": "High-level scale only; no network-operational instructions.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V06.5",
+      "movement_id": "M06",
+      "movement_range": "4:45-6:05",
+      "narrative_function": "PROVEN_SCALE_AND_CONSEQUENCE",
+      "tc_in": "5:34",
+      "tc_out": "5:48",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "DATA_CARD",
+      "visual_requirement": "Separate money figures: >$5M illicit proceeds; nearly $700K facilitators; >=$3M victim costs/damages.",
+      "evidence_refs": [
+        "C08"
+      ],
+      "asset_key": "money_scale_cards",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "restrained numeric hits",
+      "locked_constraints": "Do not animate money-routing mechanics.",
+      "source_rights_status": "OFFICIAL_SOURCE_REFERENCE_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V06.6",
+      "movement_id": "M06",
+      "movement_range": "4:45-6:05",
+      "narrative_function": "PROVEN_SCALE_AND_CONSEQUENCE",
+      "tc_in": "5:48",
+      "tc_out": "6:05",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Move from money to sensitive-data/source-code/defense-contractor symbols; ITAR label.",
+      "evidence_refs": [
+        "C08"
+      ],
+      "asset_key": "access_consequence_graphic",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "M4 tension",
+      "locked_constraints": "Abstract icons only; ITAR wording must remain S7-qualified.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V07.1",
+      "movement_id": "M07",
+      "movement_range": "6:05-7:15",
+      "narrative_function": "INVESTIGATIVE_REVERSAL",
+      "tc_in": "6:05",
+      "tc_out": "6:18",
+      "purpose": "TRANSITION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Reuse opening house/laptop shot to create memory callback.",
+      "evidence_refs": [
+        "C03",
+        "C05"
+      ],
+      "asset_key": "hero_laptop_callback",
+      "motion_complexity": "LOW",
+      "audio_cue": "M4->M5",
+      "locked_constraints": "Must visually match M01 hero object.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V07.2",
+      "movement_id": "M07",
+      "movement_range": "6:05-7:15",
+      "narrative_function": "INVESTIGATIVE_REVERSAL",
+      "tc_in": "6:18",
+      "tc_out": "6:32",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Evidence chain grows: laptop -> shipping address -> residence -> facilitator.",
+      "evidence_refs": [
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "asset_key": "physical_trace_chain",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "line reveal SFX",
+      "locked_constraints": "Investigative synthesis, not quoted government diagram.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V07.3",
+      "movement_id": "M07",
+      "movement_range": "6:05-7:15",
+      "narrative_function": "INVESTIGATIVE_REVERSAL",
+      "tc_in": "6:32",
+      "tc_out": "6:46",
+      "purpose": "EVIDENCE",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Add account/legal/financial-record symbols.",
+      "evidence_refs": [
+        "C04",
+        "C08"
+      ],
+      "asset_key": "records_layer",
+      "motion_complexity": "LOW",
+      "audio_cue": "M5 sustained",
+      "locked_constraints": "Non-procedural; no evasion guidance.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_05_RIGHTS_SOURCE_PRECLEARANCE",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V07.4",
+      "movement_id": "M07",
+      "movement_range": "6:05-7:15",
+      "narrative_function": "INVESTIGATIVE_REVERSAL",
+      "tc_in": "6:46",
+      "tc_out": "7:00",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Reverse earlier map animation: hiding path becomes evidence path.",
+      "evidence_refs": [
+        "C03",
+        "C05"
+      ],
+      "asset_key": "reverse_map_reveal",
+      "motion_complexity": "HIGH",
+      "audio_cue": "reversal accent",
+      "locked_constraints": "Editorial synthesis, clearly illustrative.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_12_ANIMATIC",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V07.5",
+      "movement_id": "M07",
+      "movement_range": "6:05-7:15",
+      "narrative_function": "INVESTIGATIVE_REVERSAL",
+      "tc_in": "7:00",
+      "tc_out": "7:15",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Split screen: DIGITAL IDENTITY / PHYSICAL FOOTPRINT.",
+      "evidence_refs": [
+        "C05",
+        "C08"
+      ],
+      "asset_key": "digital_vs_physical_split",
+      "motion_complexity": "LOW",
+      "audio_cue": "M5 settle",
+      "locked_constraints": "No claim that this phrase is official agency terminology.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V08.1",
+      "movement_id": "M08",
+      "movement_range": "7:15-8:35",
+      "narrative_function": "FINAL_PAYOFF",
+      "tc_in": "7:15",
+      "tc_out": "7:28",
+      "purpose": "TRANSITION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Return to same opening shelf.",
+      "evidence_refs": [
+        "C05",
+        "C07",
+        "C09"
+      ],
+      "asset_key": "opening_shelf_callback",
+      "motion_complexity": "LOW",
+      "audio_cue": "M6 reflection",
+      "locked_constraints": "Visual continuity with M01.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V08.2",
+      "movement_id": "M08",
+      "movement_range": "7:15-8:35",
+      "narrative_function": "FINAL_PAYOFF",
+      "tc_in": "7:28",
+      "tc_out": "7:45",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Employee avatar breaks into six trust signals: name/interview/device/location/account/work.",
+      "evidence_refs": [
+        "C05",
+        "C07",
+        "C09"
+      ],
+      "asset_key": "final_trust_signal_split",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "soft split SFX",
+      "locked_constraints": "Studio conceptual model.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V08.3",
+      "movement_id": "M08",
+      "movement_range": "7:15-8:35",
+      "narrative_function": "FINAL_PAYOFF",
+      "tc_in": "7:45",
+      "tc_out": "7:58",
+      "purpose": "DEMONSTRATION",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Each signal receives green looks-valid check.",
+      "evidence_refs": [
+        "C05",
+        "C07",
+        "C09"
+      ],
+      "asset_key": "trust_checks",
+      "motion_complexity": "LOW",
+      "audio_cue": "minimal check SFX",
+      "locked_constraints": "Do not present as real employer verification UI.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V08.4",
+      "movement_id": "M08",
+      "movement_range": "7:15-8:35",
+      "narrative_function": "FINAL_PAYOFF",
+      "tc_in": "7:58",
+      "tc_out": "8:12",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Checks remain green while human silhouette behind them changes.",
+      "evidence_refs": [
+        "C05",
+        "C07",
+        "C09"
+      ],
+      "asset_key": "wrong_human_reveal",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "M7 reveal",
+      "locked_constraints": "Core message: several valid-looking signals may still point to wrong human.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V08.5",
+      "movement_id": "M08",
+      "movement_range": "7:15-8:35",
+      "narrative_function": "FINAL_PAYOFF",
+      "tc_in": "8:12",
+      "tc_out": "8:28",
+      "purpose": "ATMOSPHERE",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "All clutter disappears; only laptop remains.",
+      "evidence_refs": [],
+      "asset_key": "hero_laptop_final_hold",
+      "motion_complexity": "LOW",
+      "audio_cue": "M7 resolution",
+      "locked_constraints": "Sparse; allow silence.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    },
+    {
+      "shot_id": "V08.6",
+      "movement_id": "M08",
+      "movement_range": "7:15-8:35",
+      "narrative_function": "FINAL_PAYOFF",
+      "tc_in": "8:28",
+      "tc_out": "8:35",
+      "purpose": "REVEAL",
+      "evidence_mode": "ILLUSTRATION",
+      "visual_requirement": "Laptop briefly becomes simple human outline, then returns to laptop.",
+      "evidence_refs": [],
+      "asset_key": "final_identity_metaphor",
+      "motion_complexity": "MEDIUM",
+      "audio_cue": "final resolve accent",
+      "locked_constraints": "Metaphor only; final line must match locked narration meaning.",
+      "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
+      "later_primary_stage": "PREPRODUCTION_06_SHOT_DESIGN",
+      "script_change_allowed": false
+    }
+  ],
+  "asset_groups": [
+    {
+      "id": "A01",
+      "name": "Ordinary American home environment",
+      "type": "ILLUSTRATION/PHOTO_BASE",
+      "used_by": [
+        "V01.1",
+        "V07.1",
+        "V08.1"
+      ],
+      "rights": "original/licensed/generative reference; no implied real crime scene"
+    },
+    {
+      "id": "A02",
+      "name": "Generic employer laptop + shipping box",
+      "type": "HERO_OBJECT",
+      "used_by": [
+        "V01.2",
+        "V01.3",
+        "V02.3",
+        "V03.3",
+        "V07.1",
+        "V08.5",
+        "V08.6"
+      ],
+      "rights": "original/generic; no real company branding"
+    },
+    {
+      "id": "A03",
+      "name": "U.S./Nashville maps",
+      "type": "MAP_GRAPHIC",
+      "used_by": [
+        "V01.4",
+        "V02.1",
+        "V04.1",
+        "V07.4"
+      ],
+      "rights": "original vector/map-safe source"
+    },
+    {
+      "id": "A04",
+      "name": "Official evidence/data cards",
+      "type": "DATA_CARD_SYSTEM",
+      "used_by": [
+        "V01.5",
+        "V02.2",
+        "V04.3",
+        "V05.4",
+        "V06.1",
+        "V06.2",
+        "V06.3",
+        "V06.4",
+        "V06.5"
+      ],
+      "rights": "official-source facts; source labels mandatory"
+    },
+    {
+      "id": "A05",
+      "name": "Human/operator silhouettes",
+      "type": "ILLUSTRATION",
+      "used_by": [
+        "V01.4",
+        "V02.4",
+        "V05.3",
+        "V08.4"
+      ],
+      "rights": "original"
+    },
+    {
+      "id": "A06",
+      "name": "Employee/trust-signal card system",
+      "type": "INFOGRAPHIC_SYSTEM",
+      "used_by": [
+        "V03.1",
+        "V03.2",
+        "V05.1",
+        "V05.2",
+        "V05.5",
+        "V08.2",
+        "V08.3"
+      ],
+      "rights": "original"
+    },
+    {
+      "id": "A07",
+      "name": "Distributed homes/farm scale system",
+      "type": "INFOGRAPHIC_SYSTEM",
+      "used_by": [
+        "V04.1",
+        "V04.2",
+        "V04.4"
+      ],
+      "rights": "original"
+    },
+    {
+      "id": "A08",
+      "name": "Proven-case scale/count system",
+      "type": "INFOGRAPHIC_SYSTEM",
+      "used_by": [
+        "V06.1",
+        "V06.2",
+        "V06.3",
+        "V06.4",
+        "V06.5"
+      ],
+      "rights": "original visuals; sourced numbers"
+    },
+    {
+      "id": "A09",
+      "name": "Sensitive data/source code/defense abstraction",
+      "type": "ILLUSTRATION",
+      "used_by": [
+        "V06.6"
+      ],
+      "rights": "original; no fabricated screenshots"
+    },
+    {
+      "id": "A10",
+      "name": "Physical evidence-chain system",
+      "type": "INFOGRAPHIC_SYSTEM",
+      "used_by": [
+        "V07.2",
+        "V07.3",
+        "V07.4",
+        "V07.5"
+      ],
+      "rights": "original; explanatory synthesis"
+    },
+    {
+      "id": "A11",
+      "name": "Final identity metaphor",
+      "type": "ILLUSTRATION/MOTION_CONCEPT",
+      "used_by": [
+        "V08.4",
+        "V08.6"
+      ],
+      "rights": "original"
+    }
+  ],
+  "global_constraints": [
+    "Do not alter locked narration, title, factual qualifiers, legal status, movement order, or material visual promises.",
+    "No generic hacker B-roll, code rain, fake terminals, or unrelated North Korea military footage.",
+    "Every illustration/reconstruction must be visually distinguishable from real evidence.",
+    "Do not invent victim-company logos or identities.",
+    "Current allegations and proven cases must remain visually separated.",
+    "The 187 title precision qualifier must remain visible/audible in opening minute.",
+    "No visual may add procedural evasion instructions.",
+    "Downstream defects return through formal Return Ticket; no silent repair of Writing."
+  ],
+  "asset_summary": {
+    "unique_asset_groups": 11,
+    "data_card_shots": 9,
+    "illustration_shots": 32,
+    "real_source_shots": 0,
+    "high_motion_complexity_shots": 1,
+    "official_source_reference_required": 9
+  },
+  "exit_gate": {
+    "all_locked_script_movements_covered": true,
+    "all_41_shot_blocks_accounted_for": true,
+    "all_evidence_shots_have_evidence_refs": true,
+    "script_lock_preserved": true,
+    "generic_broll_dependency": false,
+    "ready_for_next_stage": true
+  },
+  "next_stage": "PREPRODUCTION_02_VISUAL_STORY_CASE"
+}
