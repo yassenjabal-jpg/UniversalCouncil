@@ -30,7 +30,6 @@
   - `pilot`: ["7 min: how does the internet actually reach your phone?", "Short: what happens to your bag after the black conveyor belt?", "6 min: journey of an online order from factory to your door"]
   - `scores`: {"moat": 8.8, "monetization": 9, "policy_safety": 9.6, "production": 8, "reach": 7.8}
   - `source_artifact`: 04_Behind_The_System.pdf
-  - `visual_direction`: industrial editorial; technical blue + safety orange; isometric maps, arrows, cross-sections, process icons and large infrastructure
   - `visual_rule`: every diagram must explain movement of material, money, energy or data
 - **Tags:** youtube, channel, behind-the-system, evergreen
 
@@ -49,7 +48,6 @@
   - `pilot`: ["Short 45s: the last store that accepts cash", "Short 60s: an ID card that knows you lied", "4–5 min compilation: first three episodes + linking scene"]
   - `scores`: {"moat": 9.8, "monetization": 6.8, "policy_safety": 8, "production": 5.8, "reach": 8.5}
   - `source_artifact`: 05_City_2099.pdf
-  - `visual_direction`: Neo-Arab futurism; purple/cyan; modern Arab architecture without clichés; Arabic signage; markets, trains, rooftops, night light; stable character silhouette/wardrobe
 - **Tags:** youtube, channel, city2099, ip, microdrama
 
 ## youtube.channel.file_404
@@ -67,7 +65,6 @@
   - `pilot`: ["Short: the account that posts every day at the exact same second", "7 min: how is a digital store identity stolen?", "Short: three signs that reveal fake evidence"]
   - `scores`: {"moat": 8.2, "monetization": 7.6, "policy_safety": 6.9, "production": 7.6, "reach": 9.1}
   - `source_artifact`: 03_File_404.pdf
-  - `visual_direction`: digital dossier; dark blue + teal/coral; limited CRT/glitch; node maps; timestamps; designed system windows rather than stolen screenshots
 - **Tags:** youtube, channel, file404, digital-investigation
 
 ## youtube.channel.inside_the_deal
@@ -85,7 +82,6 @@
   - `pilot`: ["6–8 min: why do some companies sell at a loss?", "Short: where does each IQD 10,000 of a delivery order go?", "7 min: how does free become a business model?"]
   - `scores`: {"moat": 8.2, "monetization": 9.4, "policy_safety": 9.2, "production": 8.1, "reach": 8.4}
   - `source_artifact`: 02_Inside_The_Deal.pdf
-  - `visual_direction`: financial noir; charcoal/black + cash green + paper white; documents, receipts, money-flow maps, cost breakdowns and abstracted buildings
 - **Tags:** youtube, channel, inside-the-deal, business
 
 ## youtube.channel.what_if
@@ -103,7 +99,6 @@
   - `pilot`: ["Short: what if internet stopped in the Middle East for 24 hours?", "6–8 min: what if oil had not been discovered in the Gulf?", "Short/Long hybrid: Baghdad without cars — one day in 2045"]
   - `scores`: {"moat": 8.5, "monetization": 8.3, "policy_safety": 8.5, "production": 7.2, "reach": 9}
   - `source_artifact`: 01_What_If_Arabia.pdf
-  - `visual_direction`: Arabic retro-futurism; cool cyan + desert gold; timelines; contemporary/future Arab cities; reality-vs-possibility split screens
 - **Tags:** youtube, channel, what-if, speculative-documentary
 
 ## youtube.channel_operating_system.current
@@ -201,15 +196,14 @@
 - **Kind:** `preference`
 - **Confidence:** `owner_confirmed`
 - **Updated:** `2026-10-12T19:28:51+03:00`
-- **Summary:** Default documentary voice and visual direction: warm conversational narration mixing Iraqi Arabic and MSA, medium-slow reflective delivery with light humor, user-recorded voice with emotion tags, and editorial documentary visuals rather than a news-like style.
+- **Summary:** Default documentary voice direction: warm conversational narration mixing Iraqi Arabic and MSA, medium-slow reflective delivery with light humor, user-recorded voice with emotion tags. Visual direction is governed exclusively by `youtube.visual_system.current`.
 - **Details:**
   - `avoid`: ["news-like presentation", "postman/mailman motif"]
   - `delivery`: ["warm", "conversational", "medium-slow", "reflective", "slight humor"]
   - `emotion_tags`: true
-  - `historical_visual_reference`: vintage scientific / retro-futurism was explored but later direction became broader editorial documentary
-  - `visual_direction`: editorial documentary
   - `voice_language`: Iraqi Arabic + MSA
   - `voice_source`: owner records own voice
+  - `visual_system_ref`: youtube.visual_system.current
 - **Tags:** youtube, voice, visual-identity, documentary
 
 ## youtube.operating_rules
@@ -286,6 +280,21 @@
   - `scoring_weights`: {"clickability": 25, "cost_efficiency": 5, "policy_safety": 5, "sourceability": 10, "story_strength": 15, "translatability": 10, "universality": 15, "visual_fit": 15}
   - `top_ranked`: من قرر أن اليوم 24 ساعة؟
 - **Tags:** youtube, title-mining, pilot, broad-channel, evidence
+
+## youtube.visual_system.exclusive
+- **Event:** `MEM-20261016-194800-7f3a2c`
+- **Level:** `L4_OWNER_DIRECTIVE`
+- **Kind:** `requirement`
+- **Confidence:** `owner_confirmed`
+- **Updated:** `2026-10-16T19:48:00+03:00`
+- **Summary:** Editorial Renaissance Motion is the sole visual system for the channel and Studio. No alternative, legacy, experimental, or topic-specific visual style is retained as an active Studio memory or permitted as an execution fallback.
+- **Details:**
+  - `sole_visual_system`: Editorial Renaissance Motion
+  - `governing_visual_bible`: docs/operations/media/EDITORIAL_RENAISSANCE_VISUAL_BIBLE.md
+  - `reference_frame_specs`: docs/operations/media/REFERENCE_FRAME_SPECS.md
+  - `alternate_visual_styles_allowed`: false
+  - `style_drift_action`: reject and return to Art Direction
+- **Tags:** youtube, studio, visual-system, exclusive, owner-directive
 
 ## youtube.visual_system.current
 - **Event:** `MEM-20261012-203320-369b9c`
