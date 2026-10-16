@@ -79,16 +79,16 @@ The script cannot start before this gate.
 
 W2 writes for a viewer, not for a reader.
 
-S0 Story Question  
-S1 Research Pack  
-S2 Story Architecture  
-S3 Hook & Retention Map  
-S4 First Script  
-S5 YouTube Editorial Rewrite  
-S6 Visual/Narrative Pass  
-S7 Independent Fact Check  
-S8 Voice/Narration Rewrite  
-S9 Red Team Retention Review  
+S0 Story Question
+S1 Research Pack
+S2 Story Architecture
+S3 Hook & Retention Map
+S4 First Script
+S5 YouTube Editorial Rewrite
+S6 Visual/Narrative Pass
+S7 Independent Fact Check
+S8 Voice/Narration Rewrite
+S9 Red Team Retention Review
 S10 Locked Script
 
 Before Script Lock the episode must prove:
@@ -220,17 +220,17 @@ Runtime verification of application launch does not automatically prove every pr
 
 ## Quality gates
 
-G0 Market Opportunity Gate  
-G1 Owner Title Lock  
-G2 Script Lock  
-G3 Production Ready Lock  
-G4 Narration Handoff  
-G5 Visual Asset Handoff  
-G6 Motion Handoff  
-G7 Picture Lock  
-G8 Sound/Mix + AV Sync Handoff  
-G9 Packaging Handoff  
-G10 Assurance + Export + Owner Publish Gate  
+G0 Market Opportunity Gate
+G1 Owner Title Lock
+G2 Script Lock
+G3 Production Ready Lock
+G4 Narration Handoff
+G5 Visual Asset Handoff
+G6 Motion Handoff
+G7 Picture Lock
+G8 Sound/Mix + AV Sync Handoff
+G9 Packaging Handoff
+G10 Assurance + Export + Owner Publish Gate
 G11 Learning + Archive Closeout
 
 ## Publication
