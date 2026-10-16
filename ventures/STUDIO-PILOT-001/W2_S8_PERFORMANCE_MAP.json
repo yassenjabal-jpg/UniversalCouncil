@@ -112,5 +112,18 @@
     "avoid_pause_after_every_sentence": true,
     "final_line_requires_long_pause": true
   },
-  "next_stage": "S9_RED_TEAM_RETENTION_REVIEW"
+  "next_stage": "S9_RED_TEAM_RETENTION_REVIEW",
+  "measured_arabic_word_tokens": 852,
+  "estimated_voice_seconds": {
+    "wpm115": 445,
+    "wpm120": 426,
+    "wpm125": 409
+  },
+  "picture_runtime_target_seconds": 515,
+  "visual_silence_hold_budget_seconds": {
+    "at_wpm115": 70,
+    "at_wpm120": 89,
+    "at_wpm125": 106
+  },
+  "runtime_policy": "Do not fill planned visual holds with repeated narration. Picture runtime may exceed voice-only runtime when evidence cards, diagrams, maps, and reveals are carrying information."
 }
