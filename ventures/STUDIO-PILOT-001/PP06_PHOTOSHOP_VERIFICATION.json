@@ -1,0 +1,23 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_06_SHOT_DESIGN",
+  "status": "PASS",
+  "verified_on": "2026-10-16",
+  "primary_program": "Adobe Photoshop 2025",
+  "device": "YASSIN",
+  "photoshop_executable": "E:\\Adobe 2025\\Adobe Photoshop 2025\\Photoshop.exe",
+  "photoshop_process_verified": true,
+  "photoshop_pid": 17404,
+  "verification_input": "C:\\Users\\alnaseem\\Desktop\\STUDIO-PILOT-001_ASSETS\\PP06_SHOT_DESIGN_SHEETS\\PP06_M01_SHOT_DESIGN.svg",
+  "shot_design_matrix": "ventures/STUDIO-PILOT-001/PP06_SHOT_DESIGN_MATRIX.json",
+  "visual_sheet_directory": "ventures/STUDIO-PILOT-001/pp06_visuals",
+  "visual_sheet_count": 8,
+  "shots_designed": 41,
+  "movements_covered": 8,
+  "script_mutations": 0,
+  "fact_mutations": 0,
+  "art_direction_lock_preserved": true,
+  "pp04_mapping_correction_commit": "3be3aee4cde00e688decd4a7dc1cfe8b046f6dd9",
+  "next_stage": "PREPRODUCTION_07_STORYBOARD"
+}
