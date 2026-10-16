@@ -21,18 +21,23 @@
   "art_direction_lock_preserved": true,
   "next_stage": null,
   "next_primary_program": "Adobe Photoshop 2025",
-  "execution_revision": "v2_actual_photoshop_keyframes",
+  "execution_revision": "v3_refined_photoshop_keyframes",
   "photoshop_keyframe_dir": "ventures/STUDIO-PILOT-001/pp06_photoshop_keyframes",
   "keyframe_count": 8,
   "keyframes": [
-    "KF01_V01_4_v01",
-    "KF02_V02_5_v01",
-    "KF03_V03_3_v01",
-    "KF04_V04_3_v01",
-    "KF05_V05_2_v01",
-    "KF06_V06_5_v01",
-    "KF07_V07_4_v01",
-    "KF08_V08_4_v01"
+    "KF01_V01_4_v02",
+    "KF02_V02_5_v02",
+    "KF03_V03_3_v02",
+    "KF04_V04_3_v02",
+    "KF05_V05_2_v02",
+    "KF06_V06_5_v02",
+    "KF07_V07_4_v02",
+    "KF08_V08_4_v02"
   ],
-  "storyboard_entry": "BLOCKED_PENDING_OWNER_VISUAL_APPROVAL"
+  "storyboard_entry": "BLOCKED_PENDING_OWNER_VISUAL_APPROVAL",
+  "visual_execution_record": "ventures/STUDIO-PILOT-001/PP06_VISUAL_EXECUTION_V3.json",
+  "studio_rereview": "ventures/STUDIO-PILOT-001/PP06_STUDIO_REREVIEW_2026-10-16.md",
+  "studio_rereview_status": "READY_FOR_OWNER_VISUAL_REVIEW",
+  "review_contact_sheet": "ventures/STUDIO-PILOT-001/pp06_photoshop_keyframes/PP06_V2_CONTACT_SHEET.jpg",
+  "binary_output_commit": "ae4a2f03877fce0b8a78bf122613c0971bfe3387"
 }
