@@ -1,7 +1,7 @@
 # Studio Master Pipeline
 
 Status: CANONICAL MEDIA OPERATIONS
-Version: 1.2
+Version: 1.3
 Date: 2026-10-16
 
 ## Master structure
@@ -133,16 +133,93 @@ After OWNER_TITLE_LOCK:
 Entry requirement:
 **OWNER_TITLE_LOCK**
 
+W2 is a YouTube-native storytelling system, not an article-writing pipeline.
+
 Stages:
 
 S0 — Story Question  
 S1 — Research Pack  
 S2 — Story Architecture  
-S3 — First Script  
-S4 — Editorial Rewrite  
-S5 — Independent Fact Check  
-S6 — Narration Rewrite  
-S7 — Locked Script
+S3 — Hook & Retention Map  
+S4 — First Script  
+S5 — YouTube Editorial Rewrite  
+S6 — Visual/Narrative Pass  
+S7 — Independent Fact Check  
+S8 — Voice/Narration Rewrite  
+S9 — Red Team Retention Review  
+S10 — Locked Script
+
+### Script rules
+
+Before the first full script, S3 must map:
+- the first-30-second hook;
+- the central mystery;
+- the title-payoff bridge;
+- open loops;
+- the reason to continue through every major interval;
+- a visual beat for every retention interval.
+
+Preferred story/visual change:
+**every 30–60 seconds**.
+
+Hard ceiling:
+**no more than 90 seconds without a new reason to continue**.
+
+The opening cannot begin with background exposition before the hook.
+
+Every major beat must declare a narrative function:
+- HOOK
+- SETUP
+- ESCALATION
+- REVEAL
+- PAYOFF
+- RESET
+
+### YouTube Editorial Rewrite
+
+S5 must remove:
+- article-style paragraphs;
+- institutional/report language;
+- redundant context;
+- filler written only to extend runtime;
+- explanations that arrive before the viewer has a reason to care.
+
+The script must be understandable when heard, not merely when read.
+
+### Visual/Narrative Pass
+
+S6 requires every major segment to have a visual purpose.
+
+If a paragraph cannot become:
+- evidence;
+- explanation;
+- action;
+- demonstration;
+- meaningful atmosphere;
+- transition;
+- or a visual reveal,
+
+it must be rewritten or removed.
+
+### Retention clearance
+
+Before Script Lock:
+- First-30-Second Gate = PASS
+- Anti-Article Test = PASS
+- Spoken-Language Test = PASS
+- Visual Beat Map = PASS
+- Open Loop Map = PASS
+- Cold Viewer Test = PASS
+- Independent Fact Check = PASS
+- Red Team Retention Review = PASS
+- filler segments remaining = 0
+- article-like paragraphs remaining = 0
+- unsourced material claims remaining = 0
+
+The Red Team must identify likely drop-off timestamps and require each risk to be resolved before lock.
+
+S10 may create **SCRIPT_LOCK** only after all W2 gates pass.
+
 
 Writing exits only when:
 - OWNER_TITLE_LOCK exists;
