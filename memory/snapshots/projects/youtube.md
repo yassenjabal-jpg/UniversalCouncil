@@ -107,37 +107,37 @@
 - **Tags:** youtube, channel, what-if, speculative-documentary
 
 ## youtube.channel_operating_system.current
-- **Event:** `MEM-20261016-025013-6e5a1f`
+- **Event:** `MEM-20261016-032421-8250cd`
 - **Level:** `L4_OWNER_DIRECTIVE`
 - **Kind:** `architecture`
 - **Confidence:** `owner_confirmed`
-- **Updated:** `2026-10-16T02:50:13+03:00`
-- **Summary:** Channel Operating System v1.8 makes W1 story-first and YouTube-native. Before Owner Title Gate the Studio must present exactly three concrete story premises using three distinct story archetypes, each with a hero anchor, tension or mystery, viewer stakes, key visual, one thumbnail hypothesis and exactly two title variants. Every title must pass Stranger Click and YouTube Title Style checks. Materially degraded native discovery forces HOLD rather than silent substitution with generic news relevance.
+- **Updated:** `2026-10-16T03:24:21+03:00`
+- **Summary:** Channel Operating System v1.9 keeps W1 story-first and upgrades W2 into an 11-pass YouTube-native script system. W2 now requires Hook & Retention Map before the first full script, First-30-Second Gate, Anti-Article, Spoken-Language, Visual/Narrative, Open Loop, Cold Viewer, Independent Fact Check and Red Team Retention review before Script Lock. No interval may exceed 90 seconds without a fresh reason to continue; current long-form Script Lock requires at least eight minutes.
 - **Details:**
-  - `authorized_native_fallback_allowed`: true
-  - `channel_operating_system_version`: 1.8
-  - `concrete_hero_anchor_required`: true
-  - `degraded_discovery_requires_hold`: true
-  - `distinct_story_archetypes_required`: true
+  - `anti_article_test_required`: true
+  - `channel_operating_system_version`: 1.9
+  - `cold_viewer_test_required`: true
+  - `first_30_second_gate_required`: true
   - `governing_config`: company/config/channel_operating_system.json
   - `governing_doc`: docs/operations/media/CHANNEL_OPERATING_SYSTEM.md
-  - `key_visual_required`: true
   - `master_pipeline_doc`: docs/operations/media/STUDIO_MASTER_PIPELINE.md
-  - `master_pipeline_version`: 1.2
-  - `native_youtube_discovery_required`: true
-  - `owner_is_final_title_authority`: true
+  - `master_pipeline_version`: 1.3
+  - `max_seconds_without_new_reason_to_continue`: 90
+  - `minimum_long_form_runtime_seconds`: 480
+  - `open_loop_map_required`: true
   - `packaging_bible_version`: 2
-  - `packaging_doc`: docs/operations/media/PACKAGING_BIBLE.md
-  - `required_story_count`: 3
-  - `required_titles_per_story`: 2
-  - `script_start_before_owner_title_lock_forbidden`: true
-  - `stranger_click_test_required`: true
-  - `tension_or_mystery_required`: true
-  - `thumbnail_hypothesis_required`: true
-  - `viewer_stakes_required`: true
-  - `youtube_title_style_pass_required`: true
-- **Supersedes:** `MEM-20261016-023358-53828d`
-- **Tags:** youtube, studio, W1, story-premise, packaging, thumbnail, owner-title-gate
+  - `preferred_story_visual_change_seconds`: 30-60
+  - `red_team_retention_review_required`: true
+  - `required_script_pass_count`: 11
+  - `required_script_passes`: ["S0 Story Question", "S1 Research Pack", "S2 Story Architecture", "S3 Hook & Retention Map", "S4 First Script", "S5 YouTube Editorial Rewrite", "S6 Visual/Narrative Pass", "S7 Independent Fact Check", "S8 Voice/Narration Rewrite", "S9 Red Team Retention Review", "S10 Locked Script"]
+  - `script_bible`: docs/operations/media/YOUTUBE_SCRIPT_BIBLE.md
+  - `script_development_version`: 2.0
+  - `script_title_must_match_owner_title_lock`: true
+  - `spoken_language_test_required`: true
+  - `visual_beat_map_required`: true
+  - `youtube_script_bible_version`: 1
+- **Supersedes:** `MEM-20261016-025013-6e5a1f`
+- **Tags:** youtube, studio, W2, script, retention, anti-article, cold-viewer, red-team
 
 ## youtube.execution.final_prelaunch_decision
 - **Event:** `MEM-20261012-203304-1de95d`

@@ -31,31 +31,32 @@
 - **Tags:** media, workflow, production
 
 ## media.production_cell.current
-- **Event:** `MEM-20261016-025015-d07917`
+- **Event:** `MEM-20261016-032422-47419c`
 - **Level:** `L4_OWNER_DIRECTIVE`
 - **Kind:** `architecture`
 - **Confidence:** `owner_confirmed`
-- **Updated:** `2026-10-16T02:50:15+03:00`
-- **Summary:** Media Production Cell v1.7 and media venture config v2.0 retain the three-phase serial studio while strengthening W1. Owner-facing candidates must be three distinct YouTube story experiences rather than abstract subjects, with story-archetype diversity, thumbnail hypotheses, Red Team click clearance and native discovery confidence. Degraded discovery blocks the gate.
+- **Updated:** `2026-10-16T03:24:22+03:00`
+- **Summary:** Media Production Cell v1.8 / media venture v2.1 retain the three-phase serial studio and add a fail-closed W2 script gate. Script & Voice Director owns YouTube-native draft craft, Showrunner clears first-30/anti-article/cold-viewer quality, Motion & Picture Editor reviews script visual beats/drop-off risk, Independent Fact Checker remains separate, and Red Team must resolve timestamped drop-off risks before Script Lock.
 - **Details:**
-  - `degraded_discovery_requires_hold`: true
+  - `article_like_paragraphs_remaining_at_lock`: 0
+  - `filler_segments_remaining_at_lock`: 0
   - `governing_config`: company/config/media_venture.json
   - `governing_doc`: docs/operations/media/MEDIA_PRODUCTION_CELL.md
+  - `hook_retention_map_before_first_script`: true
   - `macro_phases`: ["writing", "pre_production", "production"]
-  - `master_pipeline_doc`: docs/operations/media/STUDIO_MASTER_PIPELINE.md
-  - `master_pipeline_version`: 1.2
-  - `media_config_version`: 2.0
-  - `native_discovery_required`: true
-  - `packaging_bible_version`: 2
-  - `production_cell_doc_version`: 1.7
+  - `master_pipeline_version`: 1.3
+  - `max_seconds_without_new_reason_to_continue`: 90
+  - `media_config_version`: 2.1
+  - `minimum_target_runtime_seconds`: 480
+  - `production_cell_doc_version`: 1.8
   - `production_mode`: SERIAL_PRODUCTION_LINE_WITH_FEEDBACK_GATES
-  - `red_team_click_clearance_required`: true
-  - `story_archetype_diversity_required`: true
-  - `thumbnail_hypothesis_required`: true
-  - `w1_story_count`: 3
-  - `w1_titles_per_story`: 2
-- **Supersedes:** `MEM-20261016-023359-511337`
-- **Tags:** media, studio, W1, story-gate, packaging, red-team
+  - `red_team_dropoff_risks_must_be_resolved`: true
+  - `script_bible`: docs/operations/media/YOUTUBE_SCRIPT_BIBLE.md
+  - `script_bible_version`: 1
+  - `unsourced_material_claims_remaining_at_lock`: 0
+  - `w2_required_pass_count`: 11
+- **Supersedes:** `MEM-20261016-025015-d07917`
+- **Tags:** media, studio, W2, script-gate, retention, red-team
 
 ## media.specialized_tool_policy.current
 - **Event:** `MEM-20261012-212638-4d1282`

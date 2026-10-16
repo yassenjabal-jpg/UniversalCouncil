@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-15T23:50:32+00:00",
-  "event_count": 76,
+  "generated_at": "2026-10-16T03:24:25+03:00",
+  "event_count": 78,
   "active_count": 55,
-  "superseded_count": 21,
+  "superseded_count": 23,
   "conflict_count": 0,
-  "latest_event_at": "2026-10-16T02:50:15+03:00",
+  "latest_event_at": "2026-10-16T03:24:22+03:00",
   "scopes": {
     "council": [
       {
@@ -184,12 +184,12 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261016-025015-d07917",
+        "event_id": "MEM-20261016-032422-47419c",
         "subject": "media.production_cell.current",
         "level": "L4_OWNER_DIRECTIVE",
         "kind": "architecture",
-        "summary": "Media Production Cell v1.7 and media venture config v2.0 retain the three-phase serial studio while strengthening W1. Owner-facing candidates must be three distinct YouTube story experiences rather than abstract subjects, with story-archetype diversity, thumbnail hypotheses, Red Team click clearance and native discovery confidence. Degraded discovery blocks the gate.",
-        "created_at": "2026-10-16T02:50:15+03:00",
+        "summary": "Media Production Cell v1.8 / media venture v2.1 retain the three-phase serial studio and add a fail-closed W2 script gate. Script & Voice Director owns YouTube-native draft craft, Showrunner clears first-30/anti-article/cold-viewer quality, Motion & Picture Editor reviews script visual beats/drop-off risk, Independent Fact Checker remains separate, and Red Team must resolve timestamped drop-off risks before Script Lock.",
+        "created_at": "2026-10-16T03:24:22+03:00",
         "confidence": "owner_confirmed"
       },
       {
@@ -413,12 +413,12 @@
         "confidence": "verified"
       },
       {
-        "event_id": "MEM-20261016-025013-6e5a1f",
+        "event_id": "MEM-20261016-032421-8250cd",
         "subject": "youtube.channel_operating_system.current",
         "level": "L4_OWNER_DIRECTIVE",
         "kind": "architecture",
-        "summary": "Channel Operating System v1.8 makes W1 story-first and YouTube-native. Before Owner Title Gate the Studio must present exactly three concrete story premises using three distinct story archetypes, each with a hero anchor, tension or mystery, viewer stakes, key visual, one thumbnail hypothesis and exactly two title variants. Every title must pass Stranger Click and YouTube Title Style checks. Materially degraded native discovery forces HOLD rather than silent substitution with generic news relevance.",
-        "created_at": "2026-10-16T02:50:13+03:00",
+        "summary": "Channel Operating System v1.9 keeps W1 story-first and upgrades W2 into an 11-pass YouTube-native script system. W2 now requires Hook & Retention Map before the first full script, First-30-Second Gate, Anti-Article, Spoken-Language, Visual/Narrative, Open Loop, Cold Viewer, Independent Fact Check and Red Team Retention review before Script Lock. No interval may exceed 90 seconds without a fresh reason to continue; current long-form Script Lock requires at least eight minutes.",
+        "created_at": "2026-10-16T03:24:21+03:00",
         "confidence": "owner_confirmed"
       },
       {

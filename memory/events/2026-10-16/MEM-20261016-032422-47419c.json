@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261016-032422-47419c",
+  "created_at": "2026-10-16T03:24:22+03:00",
+  "scope": "project/media",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "architecture",
+  "subject": "media.production_cell.current",
+  "summary": "Media Production Cell v1.8 / media venture v2.1 retain the three-phase serial studio and add a fail-closed W2 script gate. Script & Voice Director owns YouTube-native draft craft, Showrunner clears first-30/anti-article/cold-viewer quality, Motion & Picture Editor reviews script visual beats/drop-off risk, Independent Fact Checker remains separate, and Red Team must resolve timestamped drop-off risks before Script Lock.",
+  "details": {
+    "production_cell_doc_version": "1.8",
+    "media_config_version": "2.1",
+    "master_pipeline_version": "1.3",
+    "script_bible_version": "1",
+    "macro_phases": [
+      "writing",
+      "pre_production",
+      "production"
+    ],
+    "w2_required_pass_count": 11,
+    "hook_retention_map_before_first_script": true,
+    "red_team_dropoff_risks_must_be_resolved": true,
+    "article_like_paragraphs_remaining_at_lock": 0,
+    "filler_segments_remaining_at_lock": 0,
+    "unsourced_material_claims_remaining_at_lock": 0,
+    "max_seconds_without_new_reason_to_continue": 90,
+    "minimum_target_runtime_seconds": 480,
+    "production_mode": "SERIAL_PRODUCTION_LINE_WITH_FEEDBACK_GATES",
+    "governing_config": "company/config/media_venture.json",
+    "governing_doc": "docs/operations/media/MEDIA_PRODUCTION_CELL.md",
+    "script_bible": "docs/operations/media/YOUTUBE_SCRIPT_BIBLE.md"
+  },
+  "supersedes": [
+    "MEM-20261016-025015-d07917"
+  ],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "media",
+    "studio",
+    "W2",
+    "script-gate",
+    "retention",
+    "red-team"
+  ],
+  "source": {
+    "type": "repository",
+    "ref": "main",
+    "commit": "596dcda338b0180ae2a40949f0d857da985768e2"
+  }
+}
