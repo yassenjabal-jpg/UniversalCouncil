@@ -1,0 +1,32 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "authority": "Studio W2 Script Lock",
+  "status": "SCRIPT_LOCK",
+  "locked_on": "2026-10-16",
+  "locked_title": "لماذا احتاجت كوريا الشمالية 187 لابتوب داخل بيوت أمريكية؟",
+  "canonical_locked_script": "ventures/STUDIO-PILOT-001/W2_S10_LOCKED_SCRIPT.md",
+  "canonical_locked_script_blob_sha": "26769f91cb98eb3f80d0634aae2ab8880f5ecb3a",
+  "source_candidate": "ventures/STUDIO-PILOT-001/W2_S8_VOICE_NARRATION_SCRIPT.md",
+  "source_candidate_blob_sha": "8ccc6513cfed64f57393f5d019cd7233c401a4b5",
+  "gate_matrix": "ventures/STUDIO-PILOT-001/W2_S10_GATE_MATRIX.json",
+  "final_reconciliation": "ventures/STUDIO-PILOT-001/W2_S10_FINAL_RECONCILIATION.json",
+  "gates_passed": 24,
+  "gates_failed": 0,
+  "picture_runtime_seconds": 515,
+  "movement_count": 8,
+  "visual_shot_blocks": 41,
+  "final_open_loops": 6,
+  "final_open_loops_closed": 6,
+  "unresolved_material_claims": 0,
+  "unresolved_red_team_risks": 0,
+  "owner_title_accuracy_treatment": "OWNER_ACCEPTED_QUALIFIED",
+  "preproduction_entry": "ALLOWED",
+  "change_control": {
+    "downstream_silent_script_edits_forbidden": true,
+    "downstream_silent_title_edits_forbidden": true,
+    "downstream_silent_fact_qualifier_edits_forbidden": true,
+    "material_change_requires_return_ticket": true,
+    "material_change_requires_new_script_lock": true,
+    "owner_reapproval_required_for_title_change": true
+  }
+}
