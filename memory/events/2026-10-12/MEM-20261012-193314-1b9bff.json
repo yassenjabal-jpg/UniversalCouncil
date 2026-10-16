@@ -18,7 +18,6 @@
       "policy_safety": 6.9
     },
     "narrative": "weirdest evidence cold open -> one question -> timeline -> narrow hypotheses -> simplified technical explanation -> verdict with confidence",
-    "visual_direction": "digital dossier; dark blue + teal/coral; limited CRT/glitch; node maps; timestamps; designed system windows rather than stolen screenshots",
     "guardrails": [
       "no conspiracy without checkable evidence",
       "avoid explicit violence",
