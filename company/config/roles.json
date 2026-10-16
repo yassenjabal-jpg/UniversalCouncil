@@ -112,7 +112,10 @@
         "script_quality",
         "editorial_pacing",
         "final_cut_editorial_approval",
-        "picture_lock_approval"
+        "picture_lock_approval",
+        "first_30_second_retention_gate",
+        "anti_article_clearance",
+        "cold_viewer_clearance"
       ]
     },
     {
@@ -132,7 +135,6 @@
       "name": "Script & Voice Director",
       "default_status": "ACTIVE_FOR_MEDIA_PILOT",
       "owns": [
-        "five_pass_script_development",
         "scene_aware_script",
         "voice_intent",
         "emotion_direction",
@@ -140,7 +142,12 @@
         "pronunciation_guide",
         "recording_session_direction",
         "pickup_list",
-        "narration_continuity"
+        "narration_continuity",
+        "youtube_native_script_development",
+        "hook_retention_map",
+        "open_loop_map",
+        "spoken_language_pass",
+        "retention_aware_narration"
       ]
     },
     {
@@ -175,7 +182,9 @@
         "picture_edit",
         "transition_execution",
         "picture_lock_conform",
-        "subtitle_picture_integration"
+        "subtitle_picture_integration",
+        "script_visual_beat_review",
+        "script_dropoff_risk_review"
       ]
     },
     {
