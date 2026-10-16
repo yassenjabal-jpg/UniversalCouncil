@@ -3,7 +3,7 @@
   "stage": "PREPRODUCTION_06_SHOT_DESIGN",
   "revision": "v3_refined_photoshop_keyframes",
   "keyframe_revision": "v02",
-  "status": "AWAITING_OWNER_VISUAL_REVIEW",
+  "status": "PASS",
   "studio_rereview_status": "READY_FOR_OWNER_VISUAL_REVIEW",
   "executed_on": "YASSIN",
   "primary_program": "Adobe Photoshop 2025",
@@ -95,7 +95,8 @@
       "jpg": "KF08_V08_4_v02_preview.jpg"
     }
   ],
-  "owner_review_required": true,
-  "visual_lock_granted": false,
-  "storyboard_entry": "BLOCKED_PENDING_OWNER_VISUAL_APPROVAL"
+  "owner_review_required": false,
+  "visual_lock_granted": true,
+  "storyboard_entry": "OPEN",
+  "visual_lock": "ventures/STUDIO-PILOT-001/PP06_VISUAL_LOCK.json"
 }
