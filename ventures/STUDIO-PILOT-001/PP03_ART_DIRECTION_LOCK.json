@@ -1,0 +1,37 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_03_ART_DIRECTION",
+  "status": "ART_DIRECTION_LOCK",
+  "governing_visual_system": "Editorial Renaissance Motion",
+  "exclusive_visual_system": true,
+  "palette_lock": {
+    "dominant": "Paper Ivory / white-light",
+    "structural": [
+      "Cobalt",
+      "Clear Blue",
+      "Sky Blue"
+    ],
+    "accents": [
+      "Brass Gold",
+      "Deep Forest"
+    ],
+    "charcoal_usage": "text/anchor only; not dominant"
+  },
+  "composition_lock": {
+    "aspect_ratio": "16:9",
+    "negative_space": "35-55%",
+    "hero_objects_per_frame": 1,
+    "headline_max": 1,
+    "micro_caption_max": 1
+  },
+  "motifs": [
+    "Laptop as editorial portal",
+    "Cobalt route + brass annotation",
+    "Layered identity paper fragments"
+  ],
+  "unique_transition_motif": "Laptop-edge page turn",
+  "previous_exploratory_frames": "REJECTED_DO_NOT_USE",
+  "drift_action": "RETURN_TO_PP03",
+  "next_stage": "PREPRODUCTION_04_ASSET_PLAN"
+}
