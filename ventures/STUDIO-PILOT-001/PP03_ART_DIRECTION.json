@@ -1,0 +1,179 @@
+{
+  "project_id": "STUDIO-PILOT-001",
+  "phase": "PRE_PRODUCTION",
+  "stage_id": "PREPRODUCTION_03_ART_DIRECTION",
+  "stage_name": "Art Direction",
+  "status": "AWAITING_OWNER_STYLE_FRAME_APPROVAL",
+  "primary_program": "Adobe Photoshop 2025",
+  "governing_visual_system": "Editorial Renaissance Motion",
+  "governing_visual_bible": "docs/operations/media/EDITORIAL_RENAISSANCE_VISUAL_BIBLE.md",
+  "reference_frame_specs": "docs/operations/media/REFERENCE_FRAME_SPECS.md",
+  "exclusive_visual_system": true,
+  "locked_script_ref": "ventures/STUDIO-PILOT-001/W2_S10_LOCKED_SCRIPT.md",
+  "pp01_ref": "ventures/STUDIO-PILOT-001/PP01_SCRIPT_BREAKDOWN.json",
+  "pp02_ref": "ventures/STUDIO-PILOT-001/PP02_VISUAL_STORY_CASE.json",
+  "superseded_exploratory_frames": "REJECTED_DO_NOT_USE",
+  "canvas": {
+    "aspect_ratio": "16:9",
+    "safe_margin_horizontal": "6%",
+    "safe_margin_vertical": "7%",
+    "negative_space_target": "35-55%",
+    "hero_object_per_frame": 1
+  },
+  "palette": {
+    "paper_ivory": "#F6F1E8",
+    "cobalt": "#174FA6",
+    "clear_blue": "#2B73C9",
+    "sky_blue": "#8EACD2",
+    "warm_parchment": "#D9C8B1",
+    "deep_forest": "#173C32",
+    "brass_gold": "#B58A3E",
+    "charcoal": "#151515",
+    "dominance_rule": "Paper Ivory / white-light space must dominate most editorial frames; cobalt/blue acts as structural field, not full-time darkness.",
+    "dark_usage_rule": "Charcoal is text/anchor only, not the dominant field."
+  },
+  "typography": {
+    "arabic_display": "refined editorial Naskh / serif-like Arabic",
+    "arabic_body": "clean contemporary Arabic sans",
+    "latin_display": "high-contrast editorial serif",
+    "latin_body": "neutral modern sans",
+    "text_density": "one headline maximum + one micro-caption maximum"
+  },
+  "texture": {
+    "allowed": [
+      "paper grain",
+      "print imperfections",
+      "engraving hatch",
+      "subtle film grain"
+    ],
+    "avoid": [
+      "heavy glitch",
+      "dark cinematic haze",
+      "generic cyber texture",
+      "fake dossier overload"
+    ]
+  },
+  "episode_specific_motifs": [
+    {
+      "id": "MOTIF-01",
+      "name": "Laptop as editorial portal",
+      "description": "The company laptop is photographed/illustrated as the single hero object and becomes a portal into maps, evidence, identity and the final reflection."
+    },
+    {
+      "id": "MOTIF-02",
+      "name": "Cobalt route + brass annotation",
+      "description": "Spatial and causal relationships use thin cobalt routes with restrained brass/gold highlights over ivory paper."
+    },
+    {
+      "id": "MOTIF-03",
+      "name": "Layered identity paper fragments",
+      "description": "Identity/interview/device/work/account signals appear as editorial paper cards, photo cutouts and printed annotations rather than dashboard UI."
+    }
+  ],
+  "unique_transition_motif": {
+    "name": "Laptop-edge page turn",
+    "description": "The laptop lid/screen edge becomes a page/panel wipe into the next editorial composition; use selectively, not as a repeated preset."
+  },
+  "frame_family_assignments": [
+    {
+      "id": "SF01",
+      "family": "F01 Hero Question",
+      "purpose": "Opening visual identity and title promise",
+      "shot_refs": [
+        "V01.1",
+        "V01.3",
+        "V01.4"
+      ]
+    },
+    {
+      "id": "SF02",
+      "family": "F10 Modern Reality + F08 Object Macro",
+      "purpose": "Ordinary home + hero laptop grounded in reality",
+      "shot_refs": [
+        "V01.1",
+        "V01.2",
+        "V07.1"
+      ]
+    },
+    {
+      "id": "SF03",
+      "family": "F02 Evidence Document",
+      "purpose": "Official evidence presented as paper/document editorial frame",
+      "shot_refs": [
+        "V01.5",
+        "V02.2",
+        "V04.3",
+        "V05.4"
+      ]
+    },
+    {
+      "id": "SF04",
+      "family": "F07 Map / Spatial",
+      "purpose": "Device in U.S. / human elsewhere; route and location contrast",
+      "shot_refs": [
+        "V01.4",
+        "V02.1",
+        "V02.4"
+      ]
+    },
+    {
+      "id": "SF05",
+      "family": "F05 Mechanism Diagram",
+      "purpose": "Trust-signal and employee decomposition system",
+      "shot_refs": [
+        "V03.2",
+        "V05.2",
+        "V05.3"
+      ]
+    },
+    {
+      "id": "SF06",
+      "family": "F06 Number / Scale Reveal",
+      "purpose": "80+ / 100+ / hundreds / money escalation",
+      "shot_refs": [
+        "V06.2",
+        "V06.3",
+        "V06.4",
+        "V06.5"
+      ]
+    },
+    {
+      "id": "SF07",
+      "family": "F11 Breathing Reset",
+      "purpose": "Low-density reset after dense evidence",
+      "shot_refs": [
+        "V06.6",
+        "V08.5"
+      ]
+    },
+    {
+      "id": "SF08",
+      "family": "F12 Ending Reflection",
+      "purpose": "Return to opening laptop with changed meaning",
+      "shot_refs": [
+        "V08.4",
+        "V08.5",
+        "V08.6"
+      ]
+    }
+  ],
+  "generated_trial_frames_required": [
+    "SF01",
+    "SF03",
+    "SF04",
+    "SF05"
+  ],
+  "art_direction_guardrails": [
+    "Ivory/white-light field dominates; black/dark is never the default background.",
+    "No cyberpunk/neon treatment.",
+    "No dashboard/news UI aesthetic.",
+    "No generic AI cinematic composition.",
+    "No decorative architecture that does not serve the story.",
+    "No fabricated documentary evidence.",
+    "Classical/botanical cutouts remain supporting editorial texture, never literal story claims.",
+    "Maps/diagrams look printed/illustrated, not SaaS dashboards.",
+    "Every frame must explain, prove, reveal, orient, or reset."
+  ],
+  "lock_condition": "Owner approves the new Style Frame set; only then may PP03 become ART_DIRECTION_LOCK and PP04 begin.",
+  "next_stage_if_approved": "PREPRODUCTION_04_ASSET_PLAN"
+}
