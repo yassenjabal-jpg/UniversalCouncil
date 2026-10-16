@@ -4,7 +4,7 @@
   "status": "PASS_TO_S7_INDEPENDENT_FACT_CHECK",
   "input_script": "ventures/STUDIO-PILOT-001/W2_S5_EDITORIAL_SCRIPT_V2.md",
   "movement_count": 8,
-  "shot_block_count": 39,
+  "shot_block_count": 41,
   "hero_object": "company laptop inside an ordinary U.S. home",
   "allowed_visual_purposes": [
     "EVIDENCE",
@@ -43,5 +43,7 @@
     "M07 focus only on investigative reversal",
     "M08 sparse final narration with visual trust-signal payoff"
   ],
-  "next_stage": "S7_INDEPENDENT_FACT_CHECK"
+  "next_stage": "S7_INDEPENDENT_FACT_CHECK",
+  "runtime_plan_seconds": 515,
+  "runtime_plan_note": "Narration is intentionally shorter than picture runtime; evidence cards, visual holds, transitions and diagram reveals carry information without repeated voiceover."
 }
