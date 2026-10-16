@@ -137,16 +137,16 @@ W2 is a YouTube-native storytelling system, not an article-writing pipeline.
 
 Stages:
 
-S0 — Story Question  
-S1 — Research Pack  
-S2 — Story Architecture  
-S3 — Hook & Retention Map  
-S4 — First Script  
-S5 — YouTube Editorial Rewrite  
-S6 — Visual/Narrative Pass  
-S7 — Independent Fact Check  
-S8 — Voice/Narration Rewrite  
-S9 — Red Team Retention Review  
+S0 — Story Question
+S1 — Research Pack
+S2 — Story Architecture
+S3 — Hook & Retention Map
+S4 — First Script
+S5 — YouTube Editorial Rewrite
+S6 — Visual/Narrative Pass
+S7 — Independent Fact Check
+S8 — Voice/Narration Rewrite
+S9 — Red Team Retention Review
 S10 — Locked Script
 
 ### Script rules
@@ -404,10 +404,10 @@ Every Handoff Package includes:
 
 Valid results:
 
-**ACCEPTED**  
+**ACCEPTED**
 The next department starts.
 
-**REJECTED_RETURN_TO_SOURCE**  
+**REJECTED_RETURN_TO_SOURCE**
 The project returns to the source department.
 
 The downstream department does **not** silently repair upstream work.
@@ -447,15 +447,15 @@ It cannot:
 
 # Non-negotiable gates
 
-G0 — Market Opportunity Gate  
-G1 — Owner Title Lock  
-G2 — Script Lock  
-G3 — Production Ready Lock  
-G4 — Narration Handoff  
-G5 — Visual Asset Handoff  
-G6 — Motion Handoff  
-G7 — Picture Lock  
-G8 — Sound/Mix + AV Sync Handoff  
-G9 — Packaging Handoff  
-G10 — Assurance + Export + Owner Publish Gate  
+G0 — Market Opportunity Gate
+G1 — Owner Title Lock
+G2 — Script Lock
+G3 — Production Ready Lock
+G4 — Narration Handoff
+G5 — Visual Asset Handoff
+G6 — Motion Handoff
+G7 — Picture Lock
+G8 — Sound/Mix + AV Sync Handoff
+G9 — Packaging Handoff
+G10 — Assurance + Export + Owner Publish Gate
 G11 — Learning + Archive Closeout
