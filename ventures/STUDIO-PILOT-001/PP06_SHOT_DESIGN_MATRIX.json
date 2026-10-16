@@ -2,7 +2,7 @@
   "project_id": "STUDIO-PILOT-001",
   "phase": "PRE_PRODUCTION",
   "stage_id": "PREPRODUCTION_06_SHOT_DESIGN",
-  "status": "SHOT_DESIGN_MATRIX_COMPLETE",
+  "status": "PASS_TO_PREPRODUCTION_07_STORYBOARD",
   "primary_program": "Adobe Photoshop 2025",
   "governing_visual_system": "Editorial Renaissance Motion",
   "input_art_direction_lock": "ventures/STUDIO-PILOT-001/PP03_ART_DIRECTION_LOCK.json",
@@ -1744,10 +1744,33 @@
   ],
   "gate": {
     "all_41_shots_designed": true,
+    "visual_sheets_created": 8,
     "all_shots_preserve_art_direction": true,
     "all_data_cards_have_source_zone": true,
     "critical_reveals_have_multistate_design": true,
-    "script_or_fact_changes": 0
+    "script_or_fact_changes": 0,
+    "photoshop_process_verified": true,
+    "pp04_all_shots_mapped": true
   },
-  "next_stage_if_photoshop_execution_passes": "PREPRODUCTION_07_STORYBOARD"
+  "next_stage_if_photoshop_execution_passes": "PREPRODUCTION_07_STORYBOARD",
+  "visual_sheet_count": 8,
+  "visual_sheets": [
+    "ventures/STUDIO-PILOT-001/pp06_visuals/PP06_M01_SHOT_DESIGN.svg",
+    "ventures/STUDIO-PILOT-001/pp06_visuals/PP06_M02_SHOT_DESIGN.svg",
+    "ventures/STUDIO-PILOT-001/pp06_visuals/PP06_M03_SHOT_DESIGN.svg",
+    "ventures/STUDIO-PILOT-001/pp06_visuals/PP06_M04_SHOT_DESIGN.svg",
+    "ventures/STUDIO-PILOT-001/pp06_visuals/PP06_M05_SHOT_DESIGN.svg",
+    "ventures/STUDIO-PILOT-001/pp06_visuals/PP06_M06_SHOT_DESIGN.svg",
+    "ventures/STUDIO-PILOT-001/pp06_visuals/PP06_M07_SHOT_DESIGN.svg",
+    "ventures/STUDIO-PILOT-001/pp06_visuals/PP06_M08_SHOT_DESIGN.svg"
+  ],
+  "photoshop_execution": {
+    "device": "YASSIN",
+    "executable": "E:\\Adobe 2025\\Adobe Photoshop 2025\\Photoshop.exe",
+    "process_verified": true,
+    "verified_pid": 17404,
+    "verification_input": "C:\\Users\\alnaseem\\Desktop\\STUDIO-PILOT-001_ASSETS\\PP06_SHOT_DESIGN_SHEETS\\PP06_M01_SHOT_DESIGN.svg",
+    "note": "Photoshop 2025 was launched with the M01 shot-design sheet as input; process presence was verified."
+  },
+  "next_stage": "PREPRODUCTION_07_STORYBOARD"
 }
