@@ -411,8 +411,8 @@
     {
       "shot_id": "V02.5",
       "movement_id": "M02",
-      "asset_group_id": null,
-      "collection": "UNMAPPED",
+      "asset_group_id": "A05",
+      "collection": "05_HUMAN_CUTOUTS",
       "evidence_mode": "ILLUSTRATION",
       "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
       "visual_requirement": "Freeze visual: الجهاز هنا. الإنسان هناك.",
@@ -451,8 +451,8 @@
     {
       "shot_id": "V03.4",
       "movement_id": "M03",
-      "asset_group_id": null,
-      "collection": "UNMAPPED",
+      "asset_group_id": "A06",
+      "collection": "06_TRUST_SIGNAL_SYSTEM",
       "evidence_mode": "ILLUSTRATION",
       "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
       "visual_requirement": "Large conceptual payoff: اللابتوب = بديل عن الموقع، مو عن الإنسان.",
@@ -501,8 +501,8 @@
     {
       "shot_id": "V04.5",
       "movement_id": "M04",
-      "asset_group_id": null,
-      "collection": "UNMAPPED",
+      "asset_group_id": "A06",
+      "collection": "06_TRUST_SIGNAL_SYSTEM",
       "evidence_mode": "ILLUSTRATION",
       "source_rights_status": "ORIGINAL_OR_LICENSED_ASSET_REQUIRED",
       "visual_requirement": "Employee silhouette cracks into components leading into M05.",
@@ -785,6 +785,8 @@
     "bridge_opened": true,
     "naming_versioning_defined": true,
     "rights_states_defined": true,
-    "art_direction_lock_preserved": true
-  }
+    "art_direction_lock_preserved": true,
+    "all_41_shots_mapped": true
+  },
+  "correction_note": "PP06 preflight found three previously unmapped transition/payoff shots; V02.5 -> A05, V03.4/V04.5 -> A06. Corrected before Shot Design lock."
 }
