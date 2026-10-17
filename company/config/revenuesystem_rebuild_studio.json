@@ -1,5 +1,5 @@
 {
-  "version": "0.2",
+  "version": "0.3",
   "status": "PROJECT_SCOPED_CANDIDATE",
   "date": "2026-10-17",
   "product": "RevenueSystem / المطابقة",
@@ -195,7 +195,7 @@
   },
   "current_install_request": "NONE",
   "review_status": "DEEP_SOURCE_AUDIT_AND_EXTERNAL_RESEARCH_COMPLETE",
-  "rebuild_strategy": "PARALLEL_PRESENTATION_REBUILD_APPLICATION_FACADE_PROGRESSIVE_BOUNDARY_EXTRACTION",
+  "rebuild_strategy": "DAY_CENTRIC_WORKSPACE_REBUILD_WITH_PROGRESSIVE_APPLICATION_BOUNDARY_EXTRACTION",
   "platform_decision": {
     "wpf_net10": "KEEP",
     "native_fluent": "PROTOTYPE_RECOMMENDED",
@@ -242,5 +242,75 @@
     ],
     "product_db_migration": false,
     "production_lan": false
-  }
+  },
+  "owner_rebuild_authority": {
+    "current_ui_is_behavior_reference_only": true,
+    "may_delete_screens": true,
+    "may_merge_screens": true,
+    "may_split_screens": true,
+    "may_create_new_workspaces": true,
+    "may_replace_navigation": true,
+    "may_remove_low_value_ui_features": true
+  },
+  "product_topology": {
+    "old_top_level_destinations": 8,
+    "new_workspaces": [
+      {
+        "id": "day_console",
+        "label_ar": "اليوم",
+        "name": "Day Console"
+      },
+      {
+        "id": "reconciliation_studio",
+        "label_ar": "المطابقة",
+        "name": "Reconciliation Studio"
+      },
+      {
+        "id": "finance_ledger",
+        "label_ar": "المالية",
+        "name": "Finance Ledger"
+      },
+      {
+        "id": "reports_center",
+        "label_ar": "التقارير",
+        "name": "Reports Center"
+      },
+      {
+        "id": "data_operations",
+        "label_ar": "البيانات",
+        "name": "Data Operations"
+      },
+      {
+        "id": "administration",
+        "label_ar": "الإدارة",
+        "name": "Administration"
+      }
+    ],
+    "session_states": [
+      "login",
+      "lock",
+      "onboarding"
+    ],
+    "shell": "narrow_rtl_command_rail_plus_workspace_tabs_context_bar_workbench_optional_inspector_status_bar",
+    "permanent_wide_sidebar_required": false
+  },
+  "latest_static_ui_audit": {
+    "xaml_screen_classes": 38,
+    "windows": 18,
+    "usercontrols": 20,
+    "xaml_lines": 5053,
+    "view_codebehind_lines": 18339,
+    "view_dbcontext_refs": 58,
+    "view_savechanges_calls": 11,
+    "open_edges": 31,
+    "unreachable_ui_candidates": [
+      "PendingAdvancesView"
+    ],
+    "remove_feature_candidates": [
+      "RevenueScreenCustomizationWindow",
+      "InteractiveLayoutEditor arbitrary-layout mode"
+    ]
+  },
+  "design_doctrine": "docs/operations/software/REVENUESYSTEM_REBUILD_DESIGN_DOCTRINE.md",
+  "radical_review": "docs/research/2026-10-17-revenuesystem-radical-rebuild-review.md"
 }
