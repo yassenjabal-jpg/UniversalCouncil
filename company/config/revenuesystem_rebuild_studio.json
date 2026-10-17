@@ -1,5 +1,5 @@
 {
-  "version": "0.3",
+  "version": "0.4",
   "status": "PROJECT_SCOPED_CANDIDATE",
   "date": "2026-10-17",
   "product": "RevenueSystem / المطابقة",
@@ -312,5 +312,25 @@
     ]
   },
   "design_doctrine": "docs/operations/software/REVENUESYSTEM_REBUILD_DESIGN_DOCTRINE.md",
-  "radical_review": "docs/research/2026-10-17-revenuesystem-radical-rebuild-review.md"
+  "radical_review": "docs/research/2026-10-17-revenuesystem-radical-rebuild-review.md",
+  "motion_prototyping": {
+    "tool": "Cinetic",
+    "integration_doc": "docs/operations/software/CINETIC_MOTION_PROTOTYPE_INTEGRATION.md",
+    "upstream_repo": "Leonxlnx/cinetic",
+    "pinned_commit": "bee5d7807205d5543472c38312507f9bf366cbbf",
+    "role": "PRE_IMPLEMENTATION_INTERACTION_EVIDENCE",
+    "default_engine": "HyperFrames",
+    "remotion_requires_license_check": true,
+    "product_runtime_dependency": false,
+    "wpf_implementation_proof": false,
+    "allowed_after": "STATIC_UX_CONCEPT_AND_WPF_FEASIBILITY_CHECK",
+    "first_pilot": "Day Console -> Open Cashier -> Cashier Workbench -> return",
+    "gates": [
+      "C0_SOURCE_INTEGRITY",
+      "C1_RUNTIME_PREFLIGHT",
+      "C2_FIRST_RENDER",
+      "C3_REVENUESYSTEM_MOTION_PILOT",
+      "C4_COUNCIL_REVIEW"
+    ]
+  }
 }
