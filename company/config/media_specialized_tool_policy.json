@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "policy": "SPECIALIZED_TOOL_FIRST_CODE_LAST_FOR_CRAFT",
   "principles": [
     "Use specialized creative tools for creative craft.",
@@ -106,6 +106,35 @@
       ],
       "status": "CAPABILITY_GAP_FOR_PUBLIC_MASTER",
       "code_role": "checksum/QC/archive only"
+    },
+    "programmatic_motion_prototype_product_demo": {
+      "preferred": [
+        "Cinetic (HyperFrames default)",
+        "Adobe After Effects for artist-led/compositing-heavy cases"
+      ],
+      "status": "SOURCE_PINNED_RUNTIME_PREFLIGHT_IN_PROGRESS",
+      "role": "UI motion prototypes, product walkthroughs, deterministic launch/demo films",
+      "prohibitions": [
+        "not_a_WPF_UI_framework",
+        "not_implementation_proof",
+        "not_financial_runtime_evidence"
+      ],
+      "engine_policy": {
+        "default": "HyperFrames",
+        "remotion": "USE_ONLY_AFTER_LICENSE_APPLICABILITY_CONFIRMED"
+      },
+      "pinned_upstream": {
+        "repository": "Leonxlnx/cinetic",
+        "commit": "bee5d7807205d5543472c38312507f9bf366cbbf"
+      },
+      "yassin": {
+        "source_path": "C:\\Users\\alnaseem\\Desktop\\CouncilVideoStudio\\external\\cinetic",
+        "node": "24.21.0",
+        "python": "3.13.3",
+        "ffmpeg": "9.0.2",
+        "git_bash": true,
+        "wsl2": false
+      }
     }
   },
   "current_verified_environment": {
