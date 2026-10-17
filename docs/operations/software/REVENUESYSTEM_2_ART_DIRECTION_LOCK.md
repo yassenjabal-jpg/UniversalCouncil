@@ -1,10 +1,12 @@
 # RevenueSystem 2.0 — Art Direction Lock
 Version: 1.0
 Date: 2026-10-17
-Status: ART_DIRECTION_LOCK_CANDIDATE
+Status: ART_DIRECTION_LOCK — OWNER APPROVED
 Source identity: Studio — Editorial Renaissance Motion
 
 ## 1. Governing decision
+
+Owner approval recorded: 2026-10-17. This direction is now authoritative for RevenueSystem 2.0 visual work.
 
 RevenueSystem 2.0 uses the **same cultural/visual identity DNA as the Studio**.
 
