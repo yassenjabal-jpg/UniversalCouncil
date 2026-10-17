@@ -1,5 +1,5 @@
 {
-  "version": "0.9",
+  "version": "1.0",
   "status": "OWNER_APPROVED_REBUILD_PLAN",
   "date": "2026-10-17",
   "product": "RevenueSystem / المطابقة",
@@ -194,7 +194,7 @@
     ]
   },
   "current_install_request": "NONE",
-  "review_status": "RRS_P0_SOURCE_FOUNDATION_PASS_GUI_RUNTIME_HOLD",
+  "review_status": "RRS_P0_LOCAL_GO_WITH_CONDITIONS_CI_PENDING",
   "rebuild_strategy": "DAY_CENTRIC_WORKSPACE_REBUILD_WITH_PROGRESSIVE_APPLICATION_BOUNDARY_EXTRACTION",
   "platform_decision": {
     "wpf_net10": "KEEP",
@@ -246,10 +246,10 @@
     "product_db_migration": false,
     "production_lan": false,
     "approval_status": "APPROVED_BY_OWNER_2026-10-17",
-    "execution_status": "SOURCE_FOUNDATION_PASS_GUI_RUNTIME_HOLD",
+    "execution_status": "LOCAL_GO_WITH_CONDITIONS_CI_PENDING",
     "revenue_branch": "rebuild/rs2-p0-foundation",
     "revenue_pr": 79,
-    "revenue_head": "581bc9478e934c4fb60e19a732072941acdcb37a",
+    "revenue_head": "a19e98a82a3a3795912ab353e895cce42e43b5ba",
     "source_evidence": {
       "build": "PASS_0_WARNINGS_0_ERRORS",
       "rrs2_foundation_validator": "34_34_PASS",
@@ -278,7 +278,65 @@
       "true_product_performance_baseline",
       "council_art_ui_qa_workflow_review",
       "p0_go_revise_no_go"
-    ]
+    ],
+    "runtime_evidence": {
+      "source_build": "PASS_0_WARNINGS_0_ERRORS",
+      "source_validator": "36_36_PASS",
+      "strict_ui_matrix": "5_5_PASS",
+      "layout_warnings_each_viewport": 0,
+      "viewports": [
+        "1280x720",
+        "1366x768",
+        "1536x864_dpi125_equivalent",
+        "1600x900",
+        "1920x1080_requested_1920x1032_usable"
+      ],
+      "startup_ready_ms_samples": [
+        1404.941,
+        1387.1157
+      ],
+      "working_set_before_bytes": 163520512,
+      "working_set_after_bytes": 168148992,
+      "working_set_delta_bytes": 4628480,
+      "semantic_workspace_switch": "PASS",
+      "finance_search_focus": "PASS",
+      "command_palette_open_close": "PASS",
+      "physical_ctrl_k_escape": "NOT_PROVEN_BACKGROUND_SESSION_SENDINPUT_BLOCKED",
+      "actual_physical_125_150_dpi": "NOT_PROVEN_LAYOUT_EQUIVALENT_ONLY",
+      "internal_render_visual_run": "9b7e1193866a405fa195e7d3c32edae2",
+      "local_recommendation": "GO_WITH_CONDITIONS"
+    },
+    "visual_review": {
+      "verdict": "PASS_FOUNDATION_REFINEMENT_REQUIRED",
+      "strengths": [
+        "new shell is visually distinct from legacy RevenueSystem",
+        "no architectural imagery",
+        "Studio Paper Ivory/Cobalt/Brass/Forest identity is visible",
+        "financial workstation hierarchy is coherent",
+        "1280x720 remains operational"
+      ],
+      "required_refinements": [
+        "increase command-rail typography clarity at lower viewport",
+        "strengthen editorial rhythm in top context bar",
+        "use Brass annotations more intentionally",
+        "strengthen inspector hierarchy",
+        "lock packaged Arabic display/body font pair",
+        "continue art polish during Finance Ledger pilot"
+      ]
+    },
+    "conditions_before_next_major_gate": [
+      "replace synchronous Finance legacy wrapper with native async adapter before G6",
+      "obtain actual physical 125%/150% DPI evidence before final Design System lock",
+      "verify physical Ctrl+K/Escape on an interactive or CI desktop that permits SendInput",
+      "add in-process workspace performance marker before defining a product threshold",
+      "do not treat current foundation art as final"
+    ],
+    "ci": {
+      "run_number": 413,
+      "run_id": 39061538696,
+      "head_sha": "a19e98a82a3a3795912ab353e895cce42e43b5ba",
+      "status": "IN_PROGRESS"
+    }
   },
   "owner_rebuild_authority": {
     "current_ui_is_behavior_reference_only": true,
@@ -402,8 +460,8 @@
   },
   "detailed_rebuild_plan": "docs/operations/software/REVENUESYSTEM_2_DETAILED_REBUILD_PLAN.md",
   "execution_plan": {
-    "current_phase": "RRS_P0_SOURCE_FOUNDATION_PASS_GUI_RUNTIME_HOLD",
-    "next_packet": "RRS-P0-GUI-RUNTIME-ACCEPTANCE",
+    "current_phase": "RRS_P0_LOCAL_GO_WITH_CONDITIONS_CI_PENDING",
+    "next_packet": "RRS-P0-CI-CLOSURE",
     "product_code_changes_started": true,
     "release_route_changed": false,
     "production_data_access": false,
