@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "status": "OWNER_APPROVED_REBUILD_PLAN",
   "date": "2026-10-17",
   "product": "RevenueSystem / المطابقة",
@@ -194,7 +194,7 @@
     ]
   },
   "current_install_request": "NONE",
-  "review_status": "RRS_P0_LOCAL_GO_WITH_CONDITIONS_CI_PENDING",
+  "review_status": "RRS_P0_GO_WITH_CONDITIONS_CI_PASS",
   "rebuild_strategy": "DAY_CENTRIC_WORKSPACE_REBUILD_WITH_PROGRESSIVE_APPLICATION_BOUNDARY_EXTRACTION",
   "platform_decision": {
     "wpf_net10": "KEEP",
@@ -246,10 +246,10 @@
     "product_db_migration": false,
     "production_lan": false,
     "approval_status": "APPROVED_BY_OWNER_2026-10-17",
-    "execution_status": "LOCAL_GO_WITH_CONDITIONS_CI_PENDING",
+    "execution_status": "GO_WITH_CONDITIONS_CI_PASS",
     "revenue_branch": "rebuild/rs2-p0-foundation",
     "revenue_pr": 79,
-    "revenue_head": "a19e98a82a3a3795912ab353e895cce42e43b5ba",
+    "revenue_head": "840c93903e652848d3ef888b0789989fda1f1711",
     "source_evidence": {
       "build": "PASS_0_WARNINGS_0_ERRORS",
       "rrs2_foundation_validator": "34_34_PASS",
@@ -301,10 +301,11 @@
       "semantic_workspace_switch": "PASS",
       "finance_search_focus": "PASS",
       "command_palette_open_close": "PASS",
-      "physical_ctrl_k_escape": "NOT_PROVEN_BACKGROUND_SESSION_SENDINPUT_BLOCKED",
+      "physical_ctrl_k_escape": "PASS_GITHUB_WINDOWS_CI_414",
       "actual_physical_125_150_dpi": "NOT_PROVEN_LAYOUT_EQUIVALENT_ONLY",
       "internal_render_visual_run": "9b7e1193866a405fa195e7d3c32edae2",
-      "local_recommendation": "GO_WITH_CONDITIONS"
+      "local_recommendation": "GO_WITH_CONDITIONS",
+      "github_compact_viewport": "1024x720_PASS_221_NAMED_0_LAYOUT_WARNINGS"
     },
     "visual_review": {
       "verdict": "PASS_FOUNDATION_REFINEMENT_REQUIRED",
@@ -332,11 +333,34 @@
       "do not treat current foundation art as final"
     ],
     "ci": {
-      "run_number": 413,
-      "run_id": 39061538696,
-      "head_sha": "a19e98a82a3a3795912ab353e895cce42e43b5ba",
-      "status": "IN_PROGRESS"
-    }
+      "run_number": 414,
+      "run_id": 39061930920,
+      "head_sha": "840c93903e652848d3ef888b0789989fda1f1711",
+      "status": "SUCCESS",
+      "runner": "windows-2025-vs2026",
+      "stage10": "PASS",
+      "rrs2_foundation_ui_smoke": "PASS",
+      "rrs2_keyboard_ctrl_k": "PASS",
+      "rrs2_keyboard_escape": "PASS",
+      "rrs2_named_elements": 221,
+      "rrs2_layout_warnings": 0,
+      "artifacts": [
+        {
+          "name": "RevenueSystem-rrs2-ui-840c93903e652848d3ef888b0789989fda1f1711",
+          "id": 12111797697
+        },
+        {
+          "name": "RevenueSystem-ui-evidence-840c93903e652848d3ef888b0789989fda1f1711",
+          "id": 12111757897
+        },
+        {
+          "name": "RevenueSystem-windows-840c93903e652848d3ef888b0789989fda1f1711",
+          "id": 12112190521
+        }
+      ]
+    },
+    "p0_final_verdict": "GO_WITH_CONDITIONS",
+    "p0_closed_date": "2026-10-17"
   },
   "owner_rebuild_authority": {
     "current_ui_is_behavior_reference_only": true,
@@ -460,8 +484,8 @@
   },
   "detailed_rebuild_plan": "docs/operations/software/REVENUESYSTEM_2_DETAILED_REBUILD_PLAN.md",
   "execution_plan": {
-    "current_phase": "RRS_P0_LOCAL_GO_WITH_CONDITIONS_CI_PENDING",
-    "next_packet": "RRS-P0-CI-CLOSURE",
+    "current_phase": "RRS_P0_GO_WITH_CONDITIONS_CI_PASS",
+    "next_packet": "RRS-FINANCE-READ-PILOT",
     "product_code_changes_started": true,
     "release_route_changed": false,
     "production_data_access": false,
