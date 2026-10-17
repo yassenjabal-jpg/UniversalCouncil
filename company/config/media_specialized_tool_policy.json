@@ -112,7 +112,7 @@
         "Cinetic (HyperFrames default)",
         "Adobe After Effects for artist-led/compositing-heavy cases"
       ],
-      "status": "SOURCE_PINNED_RUNTIME_PREFLIGHT_IN_PROGRESS",
+      "status": "SOURCE_TESTS_PASS_RUNTIME_PREFLIGHT_PARTIAL",
       "role": "UI motion prototypes, product walkthroughs, deterministic launch/demo films",
       "prohibitions": [
         "not_a_WPF_UI_framework",
@@ -134,7 +134,8 @@
         "ffmpeg": "9.0.2",
         "git_bash": true,
         "wsl2": false
-      }
+      },
+      "notes": "Pinned source tests pass on YASSIN. Full HyperFrames render is not yet proven; isolated Python dependency setup was incomplete at the last preflight. WSL2 remains an explicit fallback, not an assumed requirement."
     }
   },
   "current_verified_environment": {
