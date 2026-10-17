@@ -1,7 +1,15 @@
 # RevenueSystem 2.0 — Master Rebuild Roadmap
-Version: 2.0
+Version: 2.1
 Date: 2026-10-17
-Status: COUNCIL-ALIGNED WITH RADICAL REBUILD AUTHORITY
+Status: OWNER-APPROVED / DETAILED EXECUTION PLAN LOCKED
+
+## Detailed execution authority
+
+The detailed execution plan is authoritative for implementation sequencing:
+`docs/operations/software/REVENUESYSTEM_2_DETAILED_REBUILD_PLAN.md`
+
+The Art Direction is owner-locked:
+`docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md`
 
 ## Governing premise
 
