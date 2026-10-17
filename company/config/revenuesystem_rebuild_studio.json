@@ -1,0 +1,197 @@
+{
+  "version": "0.1",
+  "status": "PROJECT_SCOPED_CANDIDATE",
+  "date": "2026-10-17",
+  "product": "RevenueSystem / المطابقة",
+  "source_pins": {
+    "universal_council_main": "d807b2a68d88cfe8266145536daefcdc691ca984",
+    "revenuesystem_main": "6886fbb6398b67b366faf3ca446dbae54eb1ce4f"
+  },
+  "mission": "Rebuild RevenueSystem with GUI-primary professional desktop tooling while retaining Council finance/data/security/test governance.",
+  "operating_principles": [
+    "GUI_PRIMARY",
+    "DC_SECONDARY",
+    "SPECIALIZED_TOOL_FIRST",
+    "CODE_FOR_ORCHESTRATION_VALIDATION_AUTOMATION_QC",
+    "UNKNOWN_NEVER_EQUALS_SUCCESS",
+    "VERIFIED_HANDOFFS",
+    "RETURN_DEFECTS_TO_SOURCE",
+    "CAPABILITY_GAP_INSTEAD_OF_LOW_QUALITY_SUBSTITUTE"
+  ],
+  "execution_planes": {
+    "gui_primary": {
+      "apps": [
+        "Visual Studio Community 2026",
+        "Blend for Visual Studio",
+        "RevenueSystem runtime",
+        "Adobe Photoshop 2025 when raster assets are required",
+        "Adobe Illustrator 2025 when vector assets are required"
+      ],
+      "controller": "YASSIN Control Bridge",
+      "hierarchy": [
+        "application_native_automation_when_safe",
+        "winapp_uia_semantic",
+        "visual_or_bounded_physical",
+        "pywinauto_fallback",
+        "raw_coordinates_last_resort"
+      ],
+      "state_change_contract": [
+        "observe",
+        "locate",
+        "act",
+        "observe",
+        "verify",
+        "checkpoint"
+      ]
+    },
+    "dc_secondary": {
+      "target": "YASSIN",
+      "domains": [
+        "git",
+        "filesystem",
+        "restore_build",
+        "tests",
+        "logs",
+        "process_health",
+        "artifact_checks",
+        "diagnostics",
+        "recovery"
+      ],
+      "may_replace_gui_by_default": false
+    }
+  },
+  "verified_yassin_capabilities": {
+    "visual_studio_community_2026": "AVAILABLE",
+    "blend_for_visual_studio": "AVAILABLE",
+    "msbuild": "AVAILABLE",
+    "dotnet_sdk_10": "AVAILABLE",
+    "windows_desktop_runtime": "AVAILABLE",
+    "windows_sdk": "AVAILABLE",
+    "git": "AVAILABLE",
+    "python_3_13": "AVAILABLE",
+    "node_24": "AVAILABLE",
+    "winapp_uia_bridge": "AVAILABLE_AND_PREVIOUSLY_RUNTIME_VERIFIED",
+    "pywinauto_fallback": "AVAILABLE",
+    "adobe_2025_suite": "AVAILABLE",
+    "mandatory_new_install_now": false
+  },
+  "council_authority": {
+    "retained_domains": [
+      "requirements_change_impact",
+      "architecture",
+      "financial_controls",
+      "data_integrity",
+      "security",
+      "test_architecture",
+      "qa_red_team",
+      "release_environment",
+      "ui_ux",
+      "interaction_keyboard",
+      "io_reporting",
+      "performance_observability"
+    ],
+    "studio_patterns_imported": [
+      "producer_control_plane",
+      "stage_gates",
+      "artifact_locks",
+      "handoff_packets",
+      "return_tickets",
+      "execution_recovery",
+      "human_assistance",
+      "specialized_tool_first"
+    ]
+  },
+  "macro_phases": [
+    {
+      "id": "A",
+      "name": "Discovery & Contract",
+      "exit_lock": "BEHAVIOR_INVARIANTS_LOCK",
+      "stages": [
+        "source_environment_pin",
+        "behavior_archaeology",
+        "workflow_inventory",
+        "finance_data_security_invariants",
+        "feature_acceptance_contract",
+        "defect_exclusion_list"
+      ]
+    },
+    {
+      "id": "B",
+      "name": "Design & Prebuild",
+      "exit_lock": "UX_ARCHITECTURE_READY_LOCK",
+      "stages": [
+        "ux_system",
+        "wpf_architecture",
+        "data_reliability_design",
+        "test_architecture",
+        "vertical_slice_plan"
+      ]
+    },
+    {
+      "id": "C",
+      "name": "Production & Verification",
+      "exit_lock": "RELEASE_CANDIDATE_LOCK",
+      "mode": "VERTICAL_SLICES_SERIAL_ARTIFACT_OWNERSHIP",
+      "slice_flow": [
+        "slice_open",
+        "gui_implementation",
+        "local_build",
+        "focused_tests",
+        "runtime_launch",
+        "gui_acceptance",
+        "domain_clearance",
+        "regression",
+        "handoff_lock"
+      ]
+    }
+  ],
+  "gates": [
+    "G0_SOURCE_ENVIRONMENT_LOCK",
+    "G1_BEHAVIOR_INVARIANTS_LOCK",
+    "G2_UX_ARCHITECTURE_READY_LOCK",
+    "G3_VERTICAL_SLICE_READY",
+    "G4_BUILD_TEST_VERIFIED",
+    "G5_RUNTIME_GUI_ACCEPTANCE",
+    "G6_FINANCE_DATA_CLEARANCE",
+    "G7_REGRESSION_PERFORMANCE_CLEARANCE",
+    "G8_RELEASE_CANDIDATE_LOCK",
+    "G9_OWNER_RELEASE_APPROVAL"
+  ],
+  "runtime_profile": {
+    "required": "ISOLATED_LOCAL_RUNTIME",
+    "disposable_data": true,
+    "synthetic_fixtures": true,
+    "production_db_forbidden": true,
+    "production_appdata_inheritance_forbidden": true,
+    "live_lan_server_forbidden": true
+  },
+  "human_assistance": {
+    "mode": "MINIMUM_BOUNDED_ACTION",
+    "triggers": [
+      "credentials_or_login",
+      "physical_access",
+      "missing_tool",
+      "gui_recovery_exhausted",
+      "irreversible_owner_decision",
+      "specialist_judgment"
+    ],
+    "repeated_gap_threshold": 3
+  },
+  "capability_gap": {
+    "install_without_owner": false,
+    "fields": [
+      "missing_capability",
+      "blocked_stage",
+      "current_tools_tried",
+      "why_insufficient",
+      "candidate_tools",
+      "cost_license",
+      "permissions_security",
+      "sandbox_test",
+      "success_metric",
+      "rollback",
+      "owner_decision"
+    ]
+  },
+  "current_install_request": "NONE"
+}
