@@ -1,6 +1,6 @@
 {
-  "version": "0.5",
-  "status": "PROJECT_SCOPED_CANDIDATE",
+  "version": "0.6",
+  "status": "OWNER_APPROVED_REBUILD_PLAN",
   "date": "2026-10-17",
   "product": "RevenueSystem / المطابقة",
   "source_pins": {
@@ -227,21 +227,25 @@
   },
   "first_execution_packet": {
     "id": "RRS-P0",
-    "name": "Architecture & Visual Foundation Spike",
-    "requires_plan_approval": true,
+    "name": "Foundation Build Packet",
+    "requires_plan_approval": false,
     "deliverables": [
-      "isolated_runtime_profile_contract",
-      "native_fluent_shell_prototype",
-      "communitytoolkit_mvvm_pilot_comparison",
-      "optional_wpf_ui_targeted_control_spike",
-      "single_semantic_design_system_prototype",
-      "account_statement_pilot_wireframe",
-      "gui_automation_selector_convention",
-      "baseline_performance_measurements",
-      "go_no_go_architecture_decision"
+      "clean implementation worktree pinned to RevenueSystem main",
+      "isolated runtime contract",
+      "current performance baseline",
+      "new RevenueSystem 2.0 semantic design-system resources",
+      "Studio-aligned Art Direction tokens",
+      "empty new shell with command rail/work-item tabs/context bar/workbench/inspector/status bar",
+      "shared typography and financial-number components",
+      "Finance Ledger read-only pilot",
+      "MVVM/Coordinator pattern decision",
+      "UI automation selector convention",
+      "isolated build/runtime evidence",
+      "Council GO/REVISE/NO-GO foundation decision"
     ],
     "product_db_migration": false,
-    "production_lan": false
+    "production_lan": false,
+    "approval_status": "APPROVED_BY_OWNER_2026-10-17"
   },
   "owner_rebuild_authority": {
     "current_ui_is_behavior_reference_only": true,
@@ -334,7 +338,7 @@
     ]
   },
   "art_direction": {
-    "status": "LOCK_CANDIDATE",
+    "status": "LOCKED_OWNER_APPROVED",
     "identity_source": "STUDIO",
     "governing_visual_system": "Editorial Renaissance Motion",
     "source_files": [
@@ -354,6 +358,22 @@
       "deep_forest": "#173C32",
       "charcoal": "#151515"
     },
-    "adaptation_rule": "inherit palette_typography_materiality_composition_motion_not_video_specific_imagery"
+    "adaptation_rule": "inherit palette_typography_materiality_composition_motion_not_video_specific_imagery",
+    "owner_approved_date": "2026-10-17",
+    "prohibited_visuals": [
+      "architectural imagery as decorative UI identity",
+      "Babylonian or Baghdadi ornament as local flavor",
+      "generic enterprise SaaS styling",
+      "old RevenueSystem layout reproduction"
+    ]
+  },
+  "detailed_rebuild_plan": "docs/operations/software/REVENUESYSTEM_2_DETAILED_REBUILD_PLAN.md",
+  "execution_plan": {
+    "current_phase": "PLAN_LOCKED_READY_FOR_RRS_P0",
+    "next_packet": "RRS-P0",
+    "product_code_changes_started": false,
+    "release_route_changed": false,
+    "production_data_access": false,
+    "production_lan_access": false
   }
 }
