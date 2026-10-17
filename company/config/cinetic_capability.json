@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "capability": "CINETIC_MOTION_PROTOTYPE_AND_PRODUCT_DEMO",
-  "status": "SOURCE_PINNED_NATIVE_WINDOWS_PREFLIGHT_IN_PROGRESS",
+  "status": "SOURCE_TESTS_PASS_RUNTIME_PREFLIGHT_PARTIAL",
   "upstream": {
     "repository": "Leonxlnx/cinetic",
     "pinned_commit": "bee5d7807205d5543472c38312507f9bf366cbbf",
@@ -58,5 +58,19 @@
     "C2_FIRST_RENDER",
     "C3_REVENUESYSTEM_MOTION_PILOT",
     "C4_COUNCIL_REVIEW"
+  ],
+  "validation": {
+    "source_checkout": true,
+    "pinned_sha_verified": true,
+    "lint_film_tests": "PASS",
+    "native_windows_git_bash": "AVAILABLE_BUT_FULL_RENDER_NOT_YET_PROVEN",
+    "python_venv": "CREATED_DEPENDENCY_INSTALL_INCOMPLETE_AT_LAST_CHECK",
+    "first_hyperframes_render": "NOT_RUN",
+    "wsl2": "NOT_INSTALLED"
+  },
+  "current_blockers": [
+    "Complete isolated Python dependency installation and verify imports",
+    "Run the full HyperFrames starter render and QA gates",
+    "If native Git Bash runtime fails for platform reasons, use WSL2 fallback"
   ]
 }
