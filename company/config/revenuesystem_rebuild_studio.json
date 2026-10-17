@@ -1,0 +1,413 @@
+{
+  "version": "0.8",
+  "status": "OWNER_APPROVED_REBUILD_PLAN",
+  "date": "2026-10-17",
+  "product": "RevenueSystem / المطابقة",
+  "source_pins": {
+    "universal_council_main": "d807b2a68d88cfe8266145536daefcdc691ca984",
+    "revenuesystem_main": "6886fbb6398b67b366faf3ca446dbae54eb1ce4f"
+  },
+  "mission": "Rebuild RevenueSystem with GUI-primary professional desktop tooling while retaining Council finance/data/security/test governance.",
+  "operating_principles": [
+    "GUI_PRIMARY",
+    "DC_SECONDARY",
+    "SPECIALIZED_TOOL_FIRST",
+    "CODE_FOR_ORCHESTRATION_VALIDATION_AUTOMATION_QC",
+    "UNKNOWN_NEVER_EQUALS_SUCCESS",
+    "VERIFIED_HANDOFFS",
+    "RETURN_DEFECTS_TO_SOURCE",
+    "CAPABILITY_GAP_INSTEAD_OF_LOW_QUALITY_SUBSTITUTE"
+  ],
+  "execution_planes": {
+    "gui_primary": {
+      "apps": [
+        "Visual Studio Community 2026",
+        "Blend for Visual Studio",
+        "RevenueSystem runtime",
+        "Adobe Photoshop 2025 when raster assets are required",
+        "Adobe Illustrator 2025 when vector assets are required"
+      ],
+      "controller": "YASSIN Control Bridge",
+      "hierarchy": [
+        "application_native_automation_when_safe",
+        "winapp_uia_semantic",
+        "visual_or_bounded_physical",
+        "pywinauto_fallback",
+        "raw_coordinates_last_resort"
+      ],
+      "state_change_contract": [
+        "observe",
+        "locate",
+        "act",
+        "observe",
+        "verify",
+        "checkpoint"
+      ]
+    },
+    "dc_secondary": {
+      "target": "YASSIN",
+      "domains": [
+        "git",
+        "filesystem",
+        "restore_build",
+        "tests",
+        "logs",
+        "process_health",
+        "artifact_checks",
+        "diagnostics",
+        "recovery"
+      ],
+      "may_replace_gui_by_default": false
+    }
+  },
+  "verified_yassin_capabilities": {
+    "visual_studio_community_2026": "AVAILABLE",
+    "blend_for_visual_studio": "AVAILABLE",
+    "msbuild": "AVAILABLE",
+    "dotnet_sdk_10": "AVAILABLE",
+    "windows_desktop_runtime": "AVAILABLE",
+    "windows_sdk": "AVAILABLE",
+    "git": "AVAILABLE",
+    "python_3_13": "AVAILABLE",
+    "node_24": "AVAILABLE",
+    "winapp_uia_bridge": "AVAILABLE_AND_PREVIOUSLY_RUNTIME_VERIFIED",
+    "pywinauto_fallback": "AVAILABLE",
+    "adobe_2025_suite": "AVAILABLE",
+    "mandatory_new_install_now": false
+  },
+  "council_authority": {
+    "retained_domains": [
+      "requirements_change_impact",
+      "architecture",
+      "financial_controls",
+      "data_integrity",
+      "security",
+      "test_architecture",
+      "qa_red_team",
+      "release_environment",
+      "ui_ux",
+      "interaction_keyboard",
+      "io_reporting",
+      "performance_observability"
+    ],
+    "studio_patterns_imported": [
+      "producer_control_plane",
+      "stage_gates",
+      "artifact_locks",
+      "handoff_packets",
+      "return_tickets",
+      "execution_recovery",
+      "human_assistance",
+      "specialized_tool_first"
+    ]
+  },
+  "macro_phases": [
+    {
+      "id": "A",
+      "name": "Discovery & Contract",
+      "exit_lock": "BEHAVIOR_INVARIANTS_LOCK",
+      "stages": [
+        "source_environment_pin",
+        "behavior_archaeology",
+        "workflow_inventory",
+        "finance_data_security_invariants",
+        "feature_acceptance_contract",
+        "defect_exclusion_list"
+      ]
+    },
+    {
+      "id": "B",
+      "name": "Design & Prebuild",
+      "exit_lock": "UX_ARCHITECTURE_READY_LOCK",
+      "stages": [
+        "ux_system",
+        "wpf_architecture",
+        "data_reliability_design",
+        "test_architecture",
+        "vertical_slice_plan"
+      ]
+    },
+    {
+      "id": "C",
+      "name": "Production & Verification",
+      "exit_lock": "RELEASE_CANDIDATE_LOCK",
+      "mode": "VERTICAL_SLICES_SERIAL_ARTIFACT_OWNERSHIP",
+      "slice_flow": [
+        "slice_open",
+        "gui_implementation",
+        "local_build",
+        "focused_tests",
+        "runtime_launch",
+        "gui_acceptance",
+        "domain_clearance",
+        "regression",
+        "handoff_lock"
+      ]
+    }
+  ],
+  "gates": [
+    "G0_SOURCE_ENVIRONMENT_LOCK",
+    "G1_BEHAVIOR_INVARIANTS_LOCK",
+    "G2_UX_ARCHITECTURE_READY_LOCK",
+    "G3_VERTICAL_SLICE_READY",
+    "G4_BUILD_TEST_VERIFIED",
+    "G5_RUNTIME_GUI_ACCEPTANCE",
+    "G6_FINANCE_DATA_CLEARANCE",
+    "G7_REGRESSION_PERFORMANCE_CLEARANCE",
+    "G8_RELEASE_CANDIDATE_LOCK",
+    "G9_OWNER_RELEASE_APPROVAL"
+  ],
+  "runtime_profile": {
+    "required": "ISOLATED_LOCAL_RUNTIME",
+    "disposable_data": true,
+    "synthetic_fixtures": true,
+    "production_db_forbidden": true,
+    "production_appdata_inheritance_forbidden": true,
+    "live_lan_server_forbidden": true
+  },
+  "human_assistance": {
+    "mode": "MINIMUM_BOUNDED_ACTION",
+    "triggers": [
+      "credentials_or_login",
+      "physical_access",
+      "missing_tool",
+      "gui_recovery_exhausted",
+      "irreversible_owner_decision",
+      "specialist_judgment"
+    ],
+    "repeated_gap_threshold": 3
+  },
+  "capability_gap": {
+    "install_without_owner": false,
+    "fields": [
+      "missing_capability",
+      "blocked_stage",
+      "current_tools_tried",
+      "why_insufficient",
+      "candidate_tools",
+      "cost_license",
+      "permissions_security",
+      "sandbox_test",
+      "success_metric",
+      "rollback",
+      "owner_decision"
+    ]
+  },
+  "current_install_request": "NONE",
+  "review_status": "DEEP_SOURCE_AUDIT_AND_EXTERNAL_RESEARCH_COMPLETE",
+  "rebuild_strategy": "DAY_CENTRIC_WORKSPACE_REBUILD_WITH_PROGRESSIVE_APPLICATION_BOUNDARY_EXTRACTION",
+  "platform_decision": {
+    "wpf_net10": "KEEP",
+    "native_fluent": "PROTOTYPE_RECOMMENDED",
+    "communitytoolkit_mvvm": "ARCHITECTURE_SPIKE_RECOMMENDED",
+    "wpf_ui": "OPTIONAL_TARGETED_SPIKE",
+    "material_design_xaml": "NOT_DEFAULT",
+    "mahapps": "NOT_DEFAULT",
+    "commercial_ui_suite": "NO_CURRENT_NEED"
+  },
+  "static_audit": {
+    "product_cs_files": 232,
+    "xaml_files": 50,
+    "view_codebehind_files": 48,
+    "service_files": 110,
+    "viewmodel_files": 0,
+    "ef_dbsets": 32,
+    "ef_migrations": 15,
+    "non_palette_design_dictionary_files": 8,
+    "non_palette_unique_resource_keys": 109,
+    "non_palette_duplicate_resource_keys": 54,
+    "critical_hotspots": [
+      "CashierEntryView.xaml.cs",
+      "ReconciliationView.xaml + .cs",
+      "ReconciliationDetailsWindow.xaml + .cs",
+      "DataManagementView.xaml + .cs",
+      "RevenueEntryView.xaml.cs",
+      "MainWindow.xaml.cs"
+    ]
+  },
+  "first_execution_packet": {
+    "id": "RRS-P0",
+    "name": "Foundation Build Packet",
+    "requires_plan_approval": false,
+    "deliverables": [
+      "clean implementation worktree pinned to RevenueSystem main",
+      "isolated runtime contract",
+      "current performance baseline",
+      "new RevenueSystem 2.0 semantic design-system resources",
+      "Studio-aligned Art Direction tokens",
+      "empty new shell with command rail/work-item tabs/context bar/workbench/inspector/status bar",
+      "shared typography and financial-number components",
+      "Finance Ledger read-only pilot",
+      "MVVM/Coordinator pattern decision",
+      "UI automation selector convention",
+      "isolated build/runtime evidence",
+      "Council GO/REVISE/NO-GO foundation decision"
+    ],
+    "product_db_migration": false,
+    "production_lan": false,
+    "approval_status": "APPROVED_BY_OWNER_2026-10-17"
+  },
+  "owner_rebuild_authority": {
+    "current_ui_is_behavior_reference_only": true,
+    "may_delete_screens": true,
+    "may_merge_screens": true,
+    "may_split_screens": true,
+    "may_create_new_workspaces": true,
+    "may_replace_navigation": true,
+    "may_remove_low_value_ui_features": true
+  },
+  "product_topology": {
+    "old_top_level_destinations": 8,
+    "new_workspaces": [
+      {
+        "id": "day_console",
+        "label_ar": "اليوم",
+        "name": "Day Console"
+      },
+      {
+        "id": "reconciliation_studio",
+        "label_ar": "المطابقة",
+        "name": "Reconciliation Studio"
+      },
+      {
+        "id": "finance_ledger",
+        "label_ar": "المالية",
+        "name": "Finance Ledger"
+      },
+      {
+        "id": "reports_center",
+        "label_ar": "التقارير",
+        "name": "Reports Center"
+      },
+      {
+        "id": "data_operations",
+        "label_ar": "البيانات",
+        "name": "Data Operations"
+      },
+      {
+        "id": "administration",
+        "label_ar": "الإدارة",
+        "name": "Administration"
+      }
+    ],
+    "session_states": [
+      "login",
+      "lock",
+      "onboarding"
+    ],
+    "shell": "narrow_rtl_command_rail_plus_workspace_tabs_context_bar_workbench_optional_inspector_status_bar",
+    "permanent_wide_sidebar_required": false
+  },
+  "latest_static_ui_audit": {
+    "xaml_screen_classes": 38,
+    "windows": 18,
+    "usercontrols": 20,
+    "xaml_lines": 5053,
+    "view_codebehind_lines": 18339,
+    "view_dbcontext_refs": 58,
+    "view_savechanges_calls": 11,
+    "open_edges": 31,
+    "unreachable_ui_candidates": [
+      "PendingAdvancesView"
+    ],
+    "remove_feature_candidates": [
+      "RevenueScreenCustomizationWindow",
+      "InteractiveLayoutEditor arbitrary-layout mode"
+    ]
+  },
+  "design_doctrine": "docs/operations/software/REVENUESYSTEM_REBUILD_DESIGN_DOCTRINE.md",
+  "radical_review": "docs/research/2026-10-17-revenuesystem-radical-rebuild-review.md",
+  "motion_prototyping": {
+    "tool": "Cinetic",
+    "integration_doc": "docs/operations/software/CINETIC_MOTION_PROTOTYPE_INTEGRATION.md",
+    "upstream_repo": "Leonxlnx/cinetic",
+    "pinned_commit": "bee5d7807205d5543472c38312507f9bf366cbbf",
+    "role": "PRE_IMPLEMENTATION_INTERACTION_EVIDENCE",
+    "default_engine": "HyperFrames",
+    "remotion_requires_license_check": true,
+    "product_runtime_dependency": false,
+    "wpf_implementation_proof": false,
+    "allowed_after": "STATIC_UX_CONCEPT_AND_WPF_FEASIBILITY_CHECK",
+    "first_pilot": "Day Console -> Open Cashier -> Cashier Workbench -> return",
+    "gates": [
+      "C0_SOURCE_INTEGRITY",
+      "C1_RUNTIME_PREFLIGHT",
+      "C2_FIRST_RENDER",
+      "C3_REVENUESYSTEM_MOTION_PILOT",
+      "C4_COUNCIL_REVIEW"
+    ]
+  },
+  "art_direction": {
+    "status": "LOCKED_OWNER_APPROVED",
+    "identity_source": "STUDIO",
+    "governing_visual_system": "Editorial Renaissance Motion",
+    "source_files": [
+      "docs/operations/media/EDITORIAL_RENAISSANCE_VISUAL_BIBLE.md",
+      "ventures/STUDIO-PILOT-001/PP03_ART_DIRECTION_LOCK.json",
+      "ventures/STUDIO-PILOT-001/PP06_SHOT_DESIGN_MATRIX.json"
+    ],
+    "revenue_system_lock": "docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md",
+    "independent_baghdad_babylonian_identity": false,
+    "palette": {
+      "paper_ivory": "#F6F1E8",
+      "cobalt": "#174FA6",
+      "clear_blue": "#2B73C9",
+      "sky_blue": "#8EACD2",
+      "warm_parchment": "#D9C8B1",
+      "brass_gold": "#B58A3E",
+      "deep_forest": "#173C32",
+      "charcoal": "#151515"
+    },
+    "adaptation_rule": "inherit palette_typography_materiality_composition_motion_not_video_specific_imagery",
+    "owner_approved_date": "2026-10-17",
+    "prohibited_visuals": [
+      "architectural imagery as decorative UI identity",
+      "Babylonian or Baghdadi ornament as local flavor",
+      "generic enterprise SaaS styling",
+      "old RevenueSystem layout reproduction"
+    ]
+  },
+  "detailed_rebuild_plan": "docs/operations/software/REVENUESYSTEM_2_DETAILED_REBUILD_PLAN.md",
+  "execution_plan": {
+    "current_phase": "ENV_P0_PASS_RRS_P0_READY",
+    "next_packet": "RRS-P0",
+    "product_code_changes_started": false,
+    "release_route_changed": false,
+    "production_data_access": false,
+    "production_lan_access": false
+  },
+  "environment_audit": {
+    "status": "ENV_P0_PASS",
+    "report": "docs/operations/software/REVENUESYSTEM_2_WORK_ENVIRONMENT_AUDIT_2026-10-17.md",
+    "reviewed_date": "2026-10-17",
+    "next_required_gate": "RRS_P0_FOUNDATION_BUILD_PACKET",
+    "immediate_findings": [
+      "C drive free space approximately 20.3 GB while user Temp is approximately 15.9 GB",
+      "YASSIN active power plan is Power saver",
+      "no repository global.json",
+      "no repository .vsconfig",
+      "no Directory.Packages.props or package lock files found",
+      "latest main CI is passing but monolithic and duplicates release-gate validation",
+      "release gate deletes temporary UI evidence even on failure",
+      "control bridge deny list is not enforced by control_bridge.py",
+      "control bridge audit can log full command/stdout/stderr values",
+      "Adobe capability registry has version/status drift from actual YASSIN installation"
+    ],
+    "no_major_new_paid_tool_required": true,
+    "env_p0": {
+      "revenue_branch": "rebuild/rs2-env-p0-hardening",
+      "revenue_pr": 78,
+      "revenue_head": "01a522a9650dfa6f13ace5338af2ebd8f8abdf1b",
+      "local_run_id": "41a3ca439f4c4b8d89a7a1aaa31e9774",
+      "local_release_gate": "PASS",
+      "local_build": "PASS_0_WARNINGS_0_ERRORS",
+      "validation": "94_94_PASS",
+      "integration": "291_291_PASS",
+      "ui_smoke": "PASS_137_NAMED_0_LAYOUT_WARNINGS",
+      "github_ci_run": 411,
+      "github_ci": "SUCCESS",
+      "product_code_rebuild_started": false,
+      "merged_to_main": false
+    }
+  }
+}
