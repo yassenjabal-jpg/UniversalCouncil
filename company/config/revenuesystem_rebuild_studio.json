@@ -1,5 +1,5 @@
 {
-  "version": "0.4",
+  "version": "0.5",
   "status": "PROJECT_SCOPED_CANDIDATE",
   "date": "2026-10-17",
   "product": "RevenueSystem / المطابقة",
@@ -332,5 +332,28 @@
       "C3_REVENUESYSTEM_MOTION_PILOT",
       "C4_COUNCIL_REVIEW"
     ]
+  },
+  "art_direction": {
+    "status": "LOCK_CANDIDATE",
+    "identity_source": "STUDIO",
+    "governing_visual_system": "Editorial Renaissance Motion",
+    "source_files": [
+      "docs/operations/media/EDITORIAL_RENAISSANCE_VISUAL_BIBLE.md",
+      "ventures/STUDIO-PILOT-001/PP03_ART_DIRECTION_LOCK.json",
+      "ventures/STUDIO-PILOT-001/PP06_SHOT_DESIGN_MATRIX.json"
+    ],
+    "revenue_system_lock": "docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md",
+    "independent_baghdad_babylonian_identity": false,
+    "palette": {
+      "paper_ivory": "#F6F1E8",
+      "cobalt": "#174FA6",
+      "clear_blue": "#2B73C9",
+      "sky_blue": "#8EACD2",
+      "warm_parchment": "#D9C8B1",
+      "brass_gold": "#B58A3E",
+      "deep_forest": "#173C32",
+      "charcoal": "#151515"
+    },
+    "adaptation_rule": "inherit palette_typography_materiality_composition_motion_not_video_specific_imagery"
   }
 }
