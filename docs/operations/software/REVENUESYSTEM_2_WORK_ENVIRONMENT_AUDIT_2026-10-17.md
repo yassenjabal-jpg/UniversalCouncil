@@ -901,3 +901,79 @@ The environment should be improved by making it:
 Only after ENV-P0 is closed should RRS-P0 begin product implementation.
 
 This is a work-environment review, not authorization to apply the machine/repository changes automatically.
+
+
+---
+
+# 26. ENV-P0 execution closure — 2026-10-17
+
+Status: **PASS**
+
+RevenueSystem implementation branch:
+`rebuild/rs2-env-p0-hardening`
+
+Draft PR:
+`#78`
+
+Validated head:
+`01a522a9650dfa6f13ace5338af2ebd8f8abdf1b`
+
+## YASSIN environment actions
+
+- Power saver replaced by Balanced for development session.
+- stale user Temp cleanup performed safely.
+- C free space improved to approximately 33 GB.
+- rebuild worktree placed on D:.
+- isolated runtime/cache/artifact roots created on D:.
+- SDK pin and VS config added.
+- environment fingerprint and worktree registry tooling added.
+- YASSIN Control Bridge v2 hardened and smoke-tested.
+
+## Isolation corrections discovered during implementation
+
+The existing test runtime correctly isolated database/settings, but three diagnostic paths still used real LocalAppData:
+- StartupTraceService
+- TechnicalLogService
+- SourceSyncStatusService
+
+They now route through `JsonSettingsStore.Folder`, and validation tests prove the isolation.
+
+A fail-closed `RRS_NO_LAN` guard now prevents isolated runs from adopting SQL/LAN mode.
+
+## Local acceptance evidence
+
+Final run ID:
+`41a3ca439f4c4b8d89a7a1aaa31e9774`
+
+- Build: PASS, 0 warnings, 0 errors
+- Validation: 94/94 PASS
+- Integration: 291/291 PASS
+- Authenticated UI smoke: PASS
+- UI audit: 137 named elements, 0 layout warnings
+- static validators: PASS
+- SQLite simulations: PASS
+- durable tooling: PASS
+- source sync tooling: PASS
+- Stage10 Release Gate: PASS [DEVELOPMENT]
+
+## Independent GitHub evidence
+
+Windows CI run:
+`#411`
+
+Result:
+**SUCCESS**
+
+Runner:
+`windows-2025-vs2026`
+
+The workflow also proved UI evidence upload and build artifact publication.
+
+## Closure
+
+ENV-P0 is complete.
+
+The environment is now cleared for:
+**RRS-P0 — Foundation Build Packet**
+
+PR #78 remains Draft and unmerged. No RevenueSystem 2.0 product UI implementation has started yet.
