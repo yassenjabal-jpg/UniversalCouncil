@@ -1,725 +1,406 @@
-# RevenueSystem / «المطابقة» — Master Rebuild Roadmap
-Version: 1.0
+# RevenueSystem 2.0 — Master Rebuild Roadmap
+Version: 2.0
 Date: 2026-10-17
-Status: COUNCIL-APPROVED PLAN CANDIDATE — NO PRODUCT IMPLEMENTATION YET
+Status: COUNCIL-ALIGNED WITH RADICAL REBUILD AUTHORITY
 
-## Strategy
+## Governing premise
 
-Rebuild the product experience and presentation architecture without blindly rewriting the validated financial/data engine.
+The current RevenueSystem UI is a behavioral reference only.
 
-Method:
-**Parallel Presentation Rebuild + Application Facade + Progressive Boundary Extraction**
+RevenueSystem 2.0 is rebuilt around six workspaces:
+1. Day Console
+2. Reconciliation Studio
+3. Finance Ledger
+4. Reports Center
+5. Data Operations
+6. Administration
 
-The existing program remains the behavior oracle until each migrated vertical slice passes parity.
+Login/lock/onboarding are system states.
+
+The old eight-destination sidebar and legacy screen/window boundaries are not implementation requirements.
 
 ---
 
-# MACRO PHASE A — DISCOVERY & CONTRACT
+# PHASE A — BEHAVIOR CONTRACT
 
-## A0 — Source Freeze
-Primary: GitHub + DC
+## A0 Source lock
+- pin RevenueSystem main;
+- pin governing docs/tests;
+- use clean detached analysis/runtime worktree;
+- no production DB/LAN inheritance.
 
-Deliver:
-- current main SHA;
-- exact worktree;
-- project/test inventory;
-- governing requirements map;
-- historical requirement conflict list.
+Gate: `SOURCE_ENVIRONMENT_LOCK`
 
-Gate:
-**G0 SOURCE_ENVIRONMENT_LOCK**
-
-Current pin:
-`6886fbb6398b67b366faf3ca446dbae54eb1ce4f`
-
-## A1 — Feature Behavior Matrix
-Council owners:
-Requirements + Finance + Data + QA + operator-workflow
-
-For every feature record:
-- input;
-- output;
-- side effects;
-- permission;
+## A1 Capability inventory
+For every legacy screen/function record:
+- business capability;
+- inputs;
+- outputs;
 - persistence;
 - audit;
-- failure behavior;
+- permissions;
+- failure/retry;
 - keyboard;
-- reports affected;
-- restore/retry behavior.
+- report/import dependencies.
 
-Features:
-1. shell/session/day
-2. dashboard
-3. daily revenue
-4. review day
-5. reconciliation
-6. manual reconciliation
-7. electronic payment
-8. account transfer
-9. account statement
-10. advances
-11. imports
-12. reports
-13. data management
-14. users/permissions
-15. DB/network/system
-16. backup/recovery
-17. printing/export
-18. installer/update
+Gate: `CAPABILITY_MAP_LOCK`
 
-## A2 — Golden Synthetic Dataset
-No production data.
-
-Create deterministic fixture containing:
-- 5 branches;
-- representative cashiers/POS/shifts;
-- positive and negative amounts;
+## A2 Golden synthetic data
+Build deterministic isolated fixture representing:
+- multiple branches/cashiers/POS;
 - IQD coarse/change/USD;
-- Rafidain/SWITCH;
-- matched/unmatched/over/under cases;
-- account transfer;
-- advance;
-- closed/open business days;
+- electronic payment;
+- match/difference/unmapped cases;
+- accounts;
+- advances;
+- open/closed business days;
 - permission variants;
-- long Arabic names;
-- large amounts;
-- empty states.
+- Arabic long text and large numeric values.
 
-This dataset becomes the comparison input for old/new behavior.
+Gate: `GOLDEN_FIXTURE_LOCK`
 
-## A3 — Compatibility Contract
-Convert existing tests and requirements into a named parity suite.
+## A3 Executable invariants
+Turn current tests/requirements into compatibility contracts.
 
-No screen can migrate without:
-- inputs defined;
-- expected financial outputs;
-- expected persistence;
-- expected keyboard behavior;
-- expected failure/retry behavior.
-
-Gate:
-**G1 BEHAVIOR_INVARIANTS_LOCK**
+Gate: `BEHAVIOR_INVARIANTS_LOCK`
 
 ---
 
-# MACRO PHASE B — DESIGN & PREBUILD
+# PHASE B — PRODUCT & ARCHITECTURE FOUNDATION
 
-## B0 — Architecture Spike
+## B0 New shell prototype
+Primary GUI: Visual Studio + Blend.
 
-### Candidate architecture
+Prototype:
+- narrow RTL command rail;
+- workspace tabs;
+- business context bar;
+- workbench;
+- optional inspector;
+- status bar;
+- command palette.
 
-```
-WPF View
-  ↓ binding/commands
-Feature ViewModel / Coordinator
-  ↓
-Application Facade / Use Case
-  ↓
-Existing Verified Service Adapter  ← temporary migration seam
-  ↓
-Domain + EF/Data/Import/Report infrastructure
-```
+No financial writes.
 
-New UI must not create DbContext.
+## B1 Presentation architecture spike
+Pilot CommunityToolkit.Mvvm versus minimal hand-written ViewModel pattern.
 
-### Why this seam
-It allows the new program to consume proven behavior before the entire legacy service layer is refactored.
+Target path:
+`View → ViewModel/Coordinator → Application Use Case → Adapter → verified service/data`
 
-## B1 — MVVM Prototype
-Primary GUI: Visual Studio 2026
+No View-owned DbContext/SaveChanges.
 
-Prototype one non-critical feature:
-**Account Statement read-only path**
+## B2 Design system
+Only:
+1. Native Fluent baseline
+2. Semantic Tokens
+3. Shared Components
+4. Feature-local styles
 
-Compare:
-- plain hand-written ViewModel;
-- CommunityToolkit.Mvvm.
+No historical resource dictionary imported wholesale.
 
-Acceptance:
-- clean unit testing;
-- no hidden global messenger dependency;
-- simple async commands;
-- designer works;
-- no measurable startup penalty.
+## B3 Automation contract
+Stable automation identity and focus behavior.
 
-## B2 — Native Fluent Prototype
-Primary GUI: Blend + Visual Studio
-
-Create:
-- light/dark shell;
-- RTL navigation;
-- command bar;
-- financial KPI strip;
-- DataGrid;
-- master-detail;
-- dialog;
-- status badge;
-- focus states.
-
-Use built-in WPF Fluent first.
-
-Optional:
-WPF UI targeted control spike only if native control gap appears.
-
-## B3 — New Design System
-
-Exactly these layers:
-
-### 1. Native
-WPF Fluent baseline.
-
-### 2. Tokens
-- spacing;
-- typography;
-- radii;
-- semantic brushes;
-- financial number styles;
-- focus;
-- density;
-- motion durations.
-
-### 3. Components
-- Button variants;
-- FinancialNumber;
-- CurrencyAmount;
-- StatusBadge;
-- FilterBar;
-- CommandBar;
-- MetricStrip;
-- FinancialDataGrid;
-- EmptyState;
-- LoadingState;
-- InlineValidation;
-- SideDetailPane;
-- ConfirmActionDialog.
-
-### 4. Feature-local
-Only styles that cannot be shared.
-
-No duplicate public keys.
-
-## B4 — Navigation / Shell Contract
-
-Right-side RTL rail:
-- daily operations;
-- matching & finance;
-- analysis;
-- administration.
-
-Top context bar:
-- business date;
-- day state;
-- DB/source state;
-- current user;
-- theme;
-- pending/recovery indicator.
-
-Content shell:
-- page identity;
-- primary action group;
-- optional compact filters;
-- main work surface;
-- contextual details pane.
-
-## B5 — Responsive Matrix
-
-Required:
-- 1280×720 compact
-- 1366×768 compact/default
-- 1600×900
-- 1920×1080
-- 125%/150% DPI
-- light/dark
-- long Arabic text
-
-Use adaptive layout, not only fixed widths.
-
-## B6 — UI Automation Contract
-
-All interactive controls:
-- stable AutomationId or semantic name;
-- keyboard path;
-- expected state property.
-
-YASSIN Control Bridge:
+GUI execution:
 `OBSERVE → LOCATE → ACT → OBSERVE → VERIFY → CHECKPOINT`
 
-Gate:
-**G2 UX_ARCHITECTURE_READY_LOCK**
+Gate: `PRODUCT_FOUNDATION_LOCK`
 
 ---
 
-# MACRO PHASE C — PRODUCTION & VERIFICATION
+# PHASE C — FINANCE PILOT
 
-Each vertical slice:
-1. Slice Contract
-2. Visual design in Blend/Figma reference where useful
-3. GUI implementation in Visual Studio/Blend
-4. application facade/adapters
-5. focused source tests
-6. build
-7. isolated runtime launch
-8. GUI smoke
-9. financial/data clearance
-10. performance/layout check
-11. old-vs-new parity
-12. handoff lock
-
-No downstream slice silently repairs upstream work.
-
----
-
-# C1 — New Shell + Design System
-
-Scope:
-- window chrome;
-- navigation;
-- top context;
-- theme;
-- page host;
-- notifications;
-- standard dialogs;
-- global shortcut routing.
-
-Do not migrate financial logic yet.
-
-Acceptance:
-- 1280/1366/1920;
-- RTL;
-- light/dark;
-- focus;
-- Alt+1..8;
-- no overlapping resource keys;
-- startup baseline.
-
-Gate:
-**SHELL_LOCK**
-
----
-
-# C2 — Account Statement (Pilot Vertical Slice)
-
-Why first:
-- moderate complexity;
-- current view has relatively low direct persistence coupling;
-- exercises list/detail/filter/KPI patterns;
-- financial enough to test formatting but lower risk than reconciliation.
+## C1 Finance Ledger read-only pilot
+Use Accounts as first real slice.
 
 Build:
-- account list;
-- search/filter;
-- account detail;
-- KPI strip;
-- statement grid;
-- date filter;
-- edit/create command routing.
+- account browser;
+- ledger;
+- filters;
+- KPI/summary;
+- inspector;
+- workspace tab behavior.
 
-Goal:
-prove architecture, GUI workflow and test method.
+Why:
+- real financial semantics;
+- lower write risk than revenue/reconciliation;
+- validates data adapters and UI architecture.
 
-Gate:
-**PILOT_SLICE_LOCK**
+Gate: `FINANCE_READONLY_PILOT_LOCK`
 
-If this slice fails, do not scale architecture to other screens.
+## C2 Finance write pilot
+Add controlled create/edit account action behind application use case.
 
----
+Verify permissions/audit/concurrency.
 
-# C3 — Dashboard
+Gate: `FINANCE_WRITE_PILOT_LOCK`
 
-Redesign as operational briefing, not decorative cards.
-
-Show:
-- workday state;
-- unresolved cashiers/branches;
-- reconciliation exceptions;
-- accounts needing attention;
-- import/recovery warnings;
-- recent operational actions.
-
-Use drill-through links, not duplicate business logic.
+If either pilot fails, architecture is revised before scaling.
 
 ---
 
-# C4 — Daily Revenue / Cashier Entry
+# PHASE D — DAY CONSOLE
 
-Highest operator-efficiency slice.
+## D1 Day overview
+Replace standalone Dashboard.
 
-### Layout
-Permanent cashier context header:
-- cashier;
-- branch;
-- POS;
-- shift;
-- workday;
-- save/recovery state.
+Build:
+- day context;
+- attention queue;
+- branch/cashier completion;
+- recovery warnings;
+- deep links.
 
-Main entry matrix:
-- denomination;
-- expression;
-- quantity/result;
-- subtotal.
+## D2 Cashier selector/work items
+Open cashier entry as a work item tab.
 
-Separate:
-- IQD coarse
-- IQD change
-- USD
+## D3 Cashier Workbench
+Rebuild from behavior, not old layout.
 
-Persistent summary:
-- totals;
-- saved state;
-- anomaly hint.
+Preserve:
+- denomination arithmetic;
+- IQD/change/USD separation;
+- save/recovery;
+- keyboard contract.
 
-### Keyboard acceptance
-All preserved shortcuts become explicit tests.
+Remove:
+- arbitrary layout editor.
 
-### Architecture extraction
-Old CashierEntry 1,998-line code-behind is not ported.
-Move:
-- input/navigation state → ViewModel/coordinator;
-- save → application command;
-- calculations → existing calculator/invariant service;
-- draft/recovery → dedicated application service.
+## D4 Review & Exceptions
+Absorb ReviewToday.
 
-Gate:
-**DAILY_REVENUE_LOCK**
+## D5 Close/Reopen
+Explicit readiness and reason/permission flow.
+
+Gate: `DAY_CONSOLE_LOCK`
 
 ---
 
-# C5 — Review Today
+# PHASE E — RECONCILIATION STUDIO
 
-Purpose:
-exception-first operational review.
+## E1 Intake
+- import;
+- date/scope;
+- validation;
+- ambiguity;
+- mapping readiness.
 
-Primary model:
-branch/cashier completion and anomalies.
+## E2 Result set
+Dense cashier reconciliation grid/list.
 
-Do not duplicate revenue-entry UI.
+## E3 Inspector
+Selected cashier:
+- summary;
+- manual;
+- electronic;
+- account transfer;
+- evidence;
+- history.
 
-Actions should deep-link to exact cashier/issue.
+## E4 Exception queue
+Only unresolved:
+- differences;
+- unmapped;
+- invalid;
+- approval-required.
 
----
+## E5 Approval
+Separate state transition with effect summary.
 
-# C6 — Reconciliation Core
+Legacy windows replaced by contextual panes/steps after parity:
+- ReconciliationDetailsWindow
+- AutoLinkPreviewWindow
+- MappingWarningWindow
+- ReconciliationImportScopeWindow
+- CustomerInvoiceTransferWindow portions
+- RevenueSettlementWindow portions
 
-This is the largest migration.
-
-Do not rebuild 1,019-line XAML as another single page.
-
-## Reconciliation layout
-
-### Region 1 — Context & Import
-- selected date/branch/scope
-- source file/import state
-- mapping completeness
-- import/recalculate actions
-
-### Region 2 — Reconciliation Score
-Four persistent figures:
-- Reference
-- Program/Recorded
-- Adjustments
-- Difference
-
-### Region 3 — Results
-Toggle:
-- cards for operational scanning
-- table for dense audit
-
-Filters:
-- search
-- state
-- branch
-- advanced overflow
-
-### Region 4 — Detail Pane
-Open on selected cashier without losing list position.
-
-Tabs/sections:
-- summary
-- manual reconciliation
-- electronic payments
-- account transfer
-- history/evidence
-
-### Region 5 — Approval
-Separate from import and editing.
-Show effect summary before commit.
-
-## Architecture
-Create:
-- ReconciliationWorkspaceViewModel
-- ReconciliationQueryUseCase
-- ReconciliationCommandUseCase
-- detail sub-viewmodels
-- immutable/display DTOs
-
-Existing ReconciliationService remains behind adapter until parity.
-
-Gate:
-**RECONCILIATION_CORE_LOCK**
+Gate: `RECONCILIATION_STUDIO_LOCK`
 
 ---
 
-# C7 — Reconciliation Detail / Manual / Electronic / Transfer
+# PHASE F — FINANCE LEDGER COMPLETE
 
-Decompose the existing 96-control details window.
+## F1 Advances
+Active/pending/settled in one ledger.
 
-Prefer one contextual detail pane.
-Use modal only when:
-- destructive confirmation;
-- reason entry;
-- cross-workspace selection needing isolation.
+## F2 Parties
+Financial parties integrated.
 
-Manual reconciliation equation stays visually persistent.
+## F3 Owners/policies
+Account owners, discounts, credit limits, documents.
 
-Electronic:
-Rafidain/SWITCH breakdown.
+## F4 Cross-workspace links
+Reconciliation transfer opens/pins target account.
 
-Transfer:
-account, invoice/reference, amount, optional fields, effect preview.
-
-Gate:
-**RECONCILIATION_FINANCE_LOCK**
+Gate: `FINANCE_LEDGER_LOCK`
 
 ---
 
-# C8 — Advances
+# PHASE G — REPORTS CENTER
 
-Build a ledger-oriented workspace:
-- active/pending/history;
-- giver/receiver;
-- currency;
-- sequence/reference;
-- status;
-- quick filters.
+Build:
+catalog → filters → preview → export/print.
 
-Do not mix IQD/USD totals.
+Absorb:
+- ReportsView
+- ReportsWorkspaceView
+- PrintDesignerView as advanced capability
+- ReportBranchOrderWindow into options.
 
----
+Verify source fidelity and report layout rules.
 
-# C9 — Reports / Print / Export
-
-Pattern:
-report catalog → dynamic filter bar → preview → output actions.
-
-Separate renderer/export/print from UI.
-
-Performance:
-cancelable background generation with visible state.
-
-Verify:
-- portrait;
-- one-page rules;
-- Arabic;
-- no cents where required;
-- branch totals;
-- source fidelity.
+Gate: `REPORTS_CENTER_LOCK`
 
 ---
 
-# C10 — Data Management / Imports
+# PHASE H — DATA OPERATIONS
 
-Before UI migration:
-extract all direct SaveChanges from View to application commands.
+## H1 Master-data query/edit
+Move all writes behind application commands.
 
-Workspace:
-- branches;
-- cashiers;
-- POS;
-- financial parties;
-- accounts/reference data;
-- import.
+## H2 Import pipeline
+Choose → Preview → Validate → Impact → Confirm → Result.
 
-For destructive/replace import:
-preview → validation → effect summary → confirmation → transaction → result.
+## H3 Protected maintenance
+Replace/reset/destructive operations with permission + impact + transaction + result.
 
-Gate:
-**DATA_MANAGEMENT_LOCK**
+Gate: `DATA_OPERATIONS_LOCK`
 
 ---
 
-# C11 — System / Security / Recovery
+# PHASE I — ADMINISTRATION
 
-Areas:
-- users/permissions;
-- DB/source configuration;
-- backup/restore;
-- theme/printing;
-- audit/diagnostics;
-- recovery state.
+## I1 Users & Roles
+Inspector-based user management.
 
-Never mix routine appearance settings with destructive DB operations.
+## I2 Database & Connection
+Connection/source state.
 
-Sensitive actions get a separate high-risk visual treatment and reason/permission gates.
+## I3 Backup & Recovery
+Protected infrastructure actions.
+
+## I4 Audit & Diagnostics
+Searchable evidence and system health.
+
+## I5 Normal settings
+Appearance, density, output defaults.
+
+Gate: `ADMINISTRATION_LOCK`
 
 ---
 
-# C12 — Performance and Reliability Hardening
+# PHASE J — SESSION & ONBOARDING
+
+Rebuild:
+- LoginWindow
+- FirstRunAdminWindow
+- FirstRunDatabaseChoiceWindow
+- lock/change-password flows
+
+They remain system states, not workspaces.
+
+Gate: `SESSION_ONBOARDING_LOCK`
+
+---
+
+# PHASE K — LEGACY UI RETIREMENT
+
+For each old class mark:
+- migrated;
+- removed intentionally;
+- temporary fallback;
+- onboarding/system-only.
+
+Delete only after:
+- behavior parity;
+- route replacement;
+- tests;
+- isolated runtime evidence.
+
+Priority removal candidates:
+- wrapper-only workspaces;
+- PendingAdvancesView after runtime confirmation;
+- arbitrary revenue layout customization;
+- domain modal windows replaced by inspectors/steps.
+
+Gate: `LEGACY_UI_RETIREMENT_LOCK`
+
+---
+
+# PHASE L — PERFORMANCE & RELEASE
 
 Measure:
 - startup;
-- navigation;
-- first load per workspace;
-- large grid scroll;
-- search/filter latency;
+- workspace switch;
+- cashier open;
+- grid scroll;
+- filter/search;
 - reconciliation import;
 - report generation;
 - save latency;
-- memory after repeated navigation.
+- memory after repeated work-item navigation.
 
-WPF rules:
-- virtualization;
-- recycling;
-- defer hidden detail;
-- avoid nested ScrollViewer around grids;
-- reduce visual-tree depth;
-- no unnecessary shadows/blur on dense surfaces.
-
-Gate:
-**G7 REGRESSION_PERFORMANCE_CLEARANCE**
-
----
-
-# C13 — Migration / Release
-
-The old executable remains available until:
-- every required feature has a locked new slice;
-- parity suite passes;
-- migration schema compatibility passes;
-- backup/restore path validated in isolated profile;
-- installer clean-machine test passes.
-
-Then:
-- release candidate;
-- owner acceptance;
-- versioned migration plan;
-- rollback package.
+Release requirements:
+- full build;
+- focused + integration + validation tests;
+- isolated GUI/runtime acceptance;
+- finance/data clearance;
+- permission/security clearance;
+- recovery/backup validation in isolated profile;
+- installer/rollback evidence.
 
 Gates:
-**G8 RELEASE_CANDIDATE_LOCK**
-**G9 OWNER_RELEASE_APPROVAL**
+- `REGRESSION_PERFORMANCE_CLEARANCE`
+- `RELEASE_CANDIDATE_LOCK`
+- `OWNER_RELEASE_APPROVAL`
 
 ---
 
-# 4. Tool assignment under the new Studio method
+# Studio tool assignment
 
-## Visual Studio Community 2026
-Primary:
-- architecture;
-- C#;
-- ViewModels/use cases;
-- debug;
-- test explorer.
+## GUI primary
+- Visual Studio 2026: implementation/debug/test explorer
+- Blend: WPF layout/templates/states
+- RevenueSystem runtime: operator behavior proof
+- YASSIN Control Bridge: semantic GUI automation and verified actions
 
-## Blend for Visual Studio
-Primary:
-- WPF layout;
-- templates;
-- visual states;
-- sizing/alignment;
-- design-time inspection.
+## DC secondary
+- Git/worktrees
+- files
+- builds/tests
+- logs
+- metrics
+- process control
+- evidence collection
 
-## RevenueSystem old/new runtime
-Primary:
-- behavior comparison;
-- operator smoke;
-- keyboard;
-- layout/focus;
-- failure states.
-
-## Figma
-Optional reference/design exploration.
-Not implementation proof.
-
-## Photoshop / Illustrator
-Only for brand/icon assets.
-Never for functional screen implementation.
-
-## Desktop Commander
-Secondary:
-- Git;
-- files;
-- build/tests;
-- logs;
-- metrics;
-- artifacts;
-- recovery.
-
-## YASSIN Control Bridge
-Primary desktop interaction automation:
-- Visual Studio;
-- Blend;
-- app runtime.
+## Design/reference
+- Figma optional for exploration/reference
+- Photoshop/Illustrator only for actual visual assets/branding
 
 ---
 
-# 5. Council checkpoints per slice
+# Definition of Done per migrated slice
 
-Required voices are activated by impact.
-
-Always:
-- Architecture
-- Requirements/Impact
-- QA
-
-Add:
-- Finance for money
-- Data for persistence
-- Interaction for keyboard
-- UI/UX for visual changes
-- I/O for import/report/export
-- Security for permissions/credentials
-- Performance for large data/latency
-- Release for installer/environment
-
-No ceremonial full-council round when it cannot change the decision.
-
----
-
-# 6. Definition of Done
-
-A rebuilt slice is DONE only with:
+A slice is not complete unless it has:
 - source pin;
-- acceptance contract;
-- visual reference;
+- capability contract;
+- design reference;
+- application boundary;
 - implementation;
-- build PASS;
-- focused tests PASS;
-- isolated integration PASS;
-- runtime launch PASS;
-- GUI automation/smoke PASS;
-- keyboard PASS where relevant;
-- finance/data PASS where relevant;
-- layout matrix PASS;
+- build;
+- tests;
+- isolated integration;
+- runtime GUI verification;
+- keyboard verification where relevant;
+- finance/data verification where relevant;
+- permissions verification;
+- layout/DPI acceptance;
 - logs reviewed;
-- performance budget PASS or recorded;
-- handoff accepted.
+- performance result;
+- migration status for the old UI.
 
-A screenshot alone is never completion.
-A build alone is never completion.
-A council vote alone is never completion.
-
----
-
-# 7. First implementation packet after plan approval
-
-**RRS-P0 — Architecture & Visual Foundation Spike**
-
-Deliverables:
-1. isolated runtime profile contract;
-2. native Fluent shell prototype;
-3. CommunityToolkit.Mvvm pilot comparison;
-4. optional WPF UI targeted control spike;
-5. single non-palette token/component dictionary prototype;
-6. Account Statement pilot wireframe in Blend;
-7. GUI automation selector convention;
-8. baseline performance measurements;
-9. go/no-go decision for architecture.
-
-No database migration.
-No production LAN.
-No replacement of current app.
-No release.
-
-This is the safest first execution step.
+A screenshot is not completion.
+A build is not completion.
+A visual redesign is not completion.
