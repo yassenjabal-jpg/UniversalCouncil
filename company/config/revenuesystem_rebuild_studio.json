@@ -1,5 +1,5 @@
 {
-  "version": "0.1",
+  "version": "0.2",
   "status": "PROJECT_SCOPED_CANDIDATE",
   "date": "2026-10-17",
   "product": "RevenueSystem / المطابقة",
@@ -193,5 +193,54 @@
       "owner_decision"
     ]
   },
-  "current_install_request": "NONE"
+  "current_install_request": "NONE",
+  "review_status": "DEEP_SOURCE_AUDIT_AND_EXTERNAL_RESEARCH_COMPLETE",
+  "rebuild_strategy": "PARALLEL_PRESENTATION_REBUILD_APPLICATION_FACADE_PROGRESSIVE_BOUNDARY_EXTRACTION",
+  "platform_decision": {
+    "wpf_net10": "KEEP",
+    "native_fluent": "PROTOTYPE_RECOMMENDED",
+    "communitytoolkit_mvvm": "ARCHITECTURE_SPIKE_RECOMMENDED",
+    "wpf_ui": "OPTIONAL_TARGETED_SPIKE",
+    "material_design_xaml": "NOT_DEFAULT",
+    "mahapps": "NOT_DEFAULT",
+    "commercial_ui_suite": "NO_CURRENT_NEED"
+  },
+  "static_audit": {
+    "product_cs_files": 232,
+    "xaml_files": 50,
+    "view_codebehind_files": 48,
+    "service_files": 110,
+    "viewmodel_files": 0,
+    "ef_dbsets": 32,
+    "ef_migrations": 15,
+    "non_palette_design_dictionary_files": 8,
+    "non_palette_unique_resource_keys": 109,
+    "non_palette_duplicate_resource_keys": 54,
+    "critical_hotspots": [
+      "CashierEntryView.xaml.cs",
+      "ReconciliationView.xaml + .cs",
+      "ReconciliationDetailsWindow.xaml + .cs",
+      "DataManagementView.xaml + .cs",
+      "RevenueEntryView.xaml.cs",
+      "MainWindow.xaml.cs"
+    ]
+  },
+  "first_execution_packet": {
+    "id": "RRS-P0",
+    "name": "Architecture & Visual Foundation Spike",
+    "requires_plan_approval": true,
+    "deliverables": [
+      "isolated_runtime_profile_contract",
+      "native_fluent_shell_prototype",
+      "communitytoolkit_mvvm_pilot_comparison",
+      "optional_wpf_ui_targeted_control_spike",
+      "single_semantic_design_system_prototype",
+      "account_statement_pilot_wireframe",
+      "gui_automation_selector_convention",
+      "baseline_performance_measurements",
+      "go_no_go_architecture_decision"
+    ],
+    "product_db_migration": false,
+    "production_lan": false
+  }
 }
