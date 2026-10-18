@@ -194,7 +194,7 @@
     ]
   },
   "current_install_request": "NONE",
-  "review_status": "VISUAL_SECTION_1_LOCK_PASS",
+  "review_status": "VISUAL_SECTION_1_ART_FIDELITY_REMEDIATION_OPEN",
   "rebuild_strategy": "DAY_CENTRIC_WORKSPACE_REBUILD_WITH_PROGRESSIVE_APPLICATION_BOUNDARY_EXTRACTION",
   "platform_decision": {
     "wpf_net10": "KEEP",
@@ -578,7 +578,7 @@
       "G9_CASHIER_WORKBENCH_LOCK"
     ],
     "visual_rebase": {
-      "status": "SECTION_1_LOCKED_OWNER_CHECKPOINT",
+      "status": "SECTION_1_REOPENED_ART_FIDELITY_REMEDIATION",
       "reason": "Owner requested bounded execution to prevent long-run interruption and preserve exact restart checkpoints",
       "preserves_completed_functional_gates": true,
       "blocks_final_release_until_visual_reacceptance": true,
@@ -590,7 +590,7 @@
         {
           "id": "VISUAL_SECTION_1_CORE_REBASE_LOCK",
           "name": "Core Design System + Existing Core Surfaces",
-          "status": "LOCKED_PASS",
+          "status": "REOPENED_ART_FIDELITY_REMEDIATION",
           "scope": [
             "Editorial Financial Engraving semantic tokens and vector pattern system",
             "RevenueSystem 2.0 Shell and command rail",
@@ -664,7 +664,18 @@
             "Legacy isolated المطابقة surface remains visually non-compliant and is deferred explicitly to Section 3; it is not grandfathered."
           ],
           "lock_document": "docs/operations/software/REVENUESYSTEM_VISUAL_SECTION_1_LOCK_2026-10-18.md",
-          "locked_date": "2026-10-18"
+          "locked_date": "2026-10-18",
+          "remediation_scope": [
+            "shared authored engraving and seal primitives",
+            "shell/context editorial rhythm",
+            "Day Console readiness as visual hero",
+            "Cashier Workbench numeric-entry dominance and financial-save identity",
+            "Finance Ledger institutional account-dossier hierarchy",
+            "Arabic production-facing hierarchy and removal of prototype/debug visual dominance",
+            "representative synthetic screenshot evidence",
+            "side-by-side reference fidelity gate"
+          ],
+          "behavioral_financial_lock_evidence_preserved": true
         },
         {
           "id": "VISUAL_SECTION_2_RECONCILIATION_REPORTS",
@@ -702,7 +713,10 @@
       "section_1_lock_document": "docs/operations/software/REVENUESYSTEM_VISUAL_SECTION_1_LOCK_2026-10-18.md",
       "section_1_final_review": "docs/operations/software/REVENUESYSTEM_EDITORIAL_FINANCIAL_ENGRAVING_NATIVE_REBASE_REVIEW_2026-10-18.md",
       "next_section": "VISUAL_SECTION_2_RECONCILIATION_REPORTS",
-      "next_section_status": "NOT_OPENED"
+      "next_section_status": "BLOCKED_BY_SECTION_1_ART_FIDELITY_REMEDIATION",
+      "remediation_reason": "Owner directed detailed correction after Council+Studio side-by-side review found reference-fidelity and artistic-authorship gaps despite valid prior technical/behavioral lock evidence.",
+      "previous_section_1_lock_preserved_as_historical_evidence": true,
+      "section_2_blocked_until_section_1_art_fidelity_relock": true
     }
   },
   "environment_audit": {
@@ -931,5 +945,42 @@
       "financial_write_enabled": true,
       "disposition": "PASS_STACKED_PR_HOLD"
     }
+  },
+  "visual_execution_governance": {
+    "status": "OWNER_DIRECTED_ACTIVE_2026-10-19",
+    "trigger_review": "docs/operations/software/REVENUESYSTEM_ART_DIRECTION_REFERENCE_FIDELITY_COUNCIL_STUDIO_REVIEW_2026-10-19.md",
+    "authorities": [
+      "RevenueSystem Visual Art Director",
+      "RevenueSystem WPF Design Systems / Visual Engineering Lead",
+      "RevenueSystem UI/UX Interaction Architect",
+      "Independent Visual QA / Reference Fidelity Reviewer",
+      "Arabic Typography / Localization Specialist (on demand)"
+    ],
+    "mandatory_pipeline": [
+      "reference_slice",
+      "screen_art_brief",
+      "native_wpf_component_plan",
+      "implementation",
+      "representative_synthetic_runtime",
+      "screenshot_matrix",
+      "side_by_side_reference_fidelity_review",
+      "art_director_clearance",
+      "independent_visual_qa_clearance",
+      "council_domain_architecture_security_performance_clearance",
+      "owner_checkpoint_or_lock"
+    ],
+    "mandatory_visual_questions": [
+      "composition_and_visual_massing_matches_reference_intent",
+      "authored_identity_moment_present_where_required",
+      "semantic_seal_usage_is_intentional",
+      "arabic_display_typography_is_production_ready",
+      "engraving_is_spatially_composed_not_generic_wallpaper",
+      "screen_remains_product_specific_without_logo_or_rail",
+      "side_by_side_reads_as_same_design_system",
+      "representative_synthetic_data_is_sufficient_to_judge_hierarchy",
+      "independent_visual_qa_is_separate_from_implementer",
+      "art_never_reduces_financial_long_session_ergonomics"
+    ],
+    "ci_rule": "CI success is implementation-health evidence, never sufficient visual acceptance by itself."
   }
 }
