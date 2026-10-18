@@ -958,14 +958,19 @@
     ],
     "mandatory_pipeline": [
       "reference_slice",
+      "operator_workflow_forensics",
       "ux_simplification_brief",
+      "three_layout_alternatives",
       "ux_authority_preclearance",
+      "cognitive_walkthrough",
       "screen_art_brief",
       "native_wpf_component_plan",
       "implementation",
       "representative_synthetic_runtime",
+      "ux_scorecard_measurement",
       "screenshot_matrix",
       "ux_authority_runtime_review",
+      "proactive_pre_owner_ux_audit",
       "side_by_side_reference_fidelity_review",
       "art_director_clearance",
       "independent_visual_qa_clearance",
@@ -985,7 +990,7 @@
       "art_never_reduces_financial_long_session_ergonomics"
     ],
     "ci_rule": "CI success is implementation-health evidence, never sufficient visual acceptance by itself.",
-    "primary_design_authority": "RevenueSystem Chief UX & Interaction Authority",
+    "primary_design_authority": "RevenueSystem Chief Operator Experience & UX Authority v2",
     "design_decision_precedence": [
       {
         "rank": 1,
@@ -1036,7 +1041,7 @@
         ]
       }
     ],
-    "design_conflict_rule": "UX authority wins any conflict involving layout, density, simplification, hierarchy, navigation, interaction or operator workflow. Art direction may not preserve a decorative or branded element if UX authority determines it wastes space or increases cognitive load. Hard finance/data/security/accessibility/architecture constraints remain non-negotiable. Owner is final arbiter.",
+    "design_conflict_rule": "UX v2 wins conflicts involving layout, density, simplification, hierarchy, navigation, keyboard, focus, interaction, operator speed or cognitive load, but must provide evidence for major structural vetoes. Art direction operates within the UX-approved skeleton. Finance/data/security/accessibility/architecture constraints are non-negotiable. Owner is final arbiter.",
     "ux_mandatory_preclearance": [
       "shell_chrome",
       "workspace_headers",
@@ -1049,6 +1054,34 @@
       "keyboard_flow",
       "long_session_workspaces",
       "dialogs_and_popups"
-    ]
+    ],
+    "ux_authority_version": "2.0",
+    "ux_evidence_obligation": true,
+    "ux_major_screen_three_layout_requirement": true,
+    "ux_scorecard": [
+      "time_to_first_productive_action",
+      "task_completion_time",
+      "required_keystrokes_and_clicks",
+      "input_to_result_distance",
+      "error_rate",
+      "recovery_success_rate",
+      "state_recognition_time",
+      "chrome_ratio",
+      "primary_task_visible_area",
+      "keyboard_completion_rate",
+      "long_session_friction",
+      "learnability"
+    ],
+    "ux_hard_budgets": {
+      "viewport": "1024x720",
+      "persistent_top_app_chrome_max_px": 58,
+      "persistent_bottom_bar_max_px": 24,
+      "duplicate_page_title_strip_allowed": false,
+      "normal_local_hero_max_px": 90,
+      "high_frequency_entry_hero_max_px": 78
+    },
+    "ux_pre_owner_audit_required": true,
+    "ux_debt_ledger_required": true,
+    "ux_legacy_workflow_benchmark_required": true
   }
 }
