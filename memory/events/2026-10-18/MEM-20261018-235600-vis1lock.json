@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261018-235600-vis1lock",
+  "created_at": "2026-10-18T23:56:00+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L3_CANONICAL",
+  "kind": "gate_lock",
+  "subject": "revenuesystem.visual_rebase.section_1",
+  "summary": "RevenueSystem Editorial Financial Engraving Visual Section 1 is locked PASS after exact-head CI #591 attempt 2 and final screenshot review. Section 2 remains unopened.",
+  "details": {
+    "gate": "VISUAL_SECTION_1_LOCK",
+    "status": "PASS_LOCKED",
+    "product_branch": "rebuild/rs2-editorial-financial-engraving",
+    "product_head": "c7d9e05bd6fe253fa0deafdca81469d210b3938d",
+    "draft_pr": 84,
+    "pr_state": "OPEN_DRAFT",
+    "base": "rebuild/rs2-cashier-workbench",
+    "ci_run_number": 591,
+    "ci_run_id": 39164529605,
+    "ci_attempt": 2,
+    "ci_conclusion": "SUCCESS",
+    "council_verdict": "PASS",
+    "studio_verdict": "PASS",
+    "bounded_fix": "compact command-rail FINANCIAL/ENGRAVING footer clipping corrected in native WPF",
+    "final_artifacts": {
+      "cashier": 12150606515,
+      "day": 12150895350,
+      "finance": 12150169095,
+      "isolated_ui_evidence": 12150303287,
+      "windows_build": 12150830734
+    },
+    "retained_warning": "Attempt 1 of CI #591 failed Cashier F5 authoritative-save UI gate; same exact SHA passed attempt 2 with no financial logic change.",
+    "legacy_warning": "Legacy isolated المطابقة surface remains visually non-compliant and is explicitly deferred to Section 3; no grandfathering.",
+    "next_section": "VISUAL_SECTION_2_RECONCILIATION_REPORTS",
+    "next_section_status": "NOT_OPENED",
+    "governance_branch": "feat/revenuesystem-rebuild-studio-20261017",
+    "governance_config_head": "5dcf0affa455c9ae2259ddc15b62d12b70be4a83",
+    "lock_document": "docs/operations/software/REVENUESYSTEM_VISUAL_SECTION_1_LOCK_2026-10-18.md"
+  },
+  "supersedes": [],
+  "confidence": "verified_evidence",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "visual-rebase",
+    "editorial-financial-engraving",
+    "section-1",
+    "gate-lock"
+  ],
+  "source": {
+    "type": "github_ci_and_visual_review",
+    "product_commit": "c7d9e05bd6fe253fa0deafdca81469d210b3938d",
+    "ci_run_id": 39164529605,
+    "governance_commit": "5dcf0affa455c9ae2259ddc15b62d12b70be4a83"
+  }
+}
