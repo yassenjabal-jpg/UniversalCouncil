@@ -82,75 +82,89 @@ Default:
 
 ## Visual rule
 
-The application must visually communicate:
+The sole governing RevenueSystem visual language is:
+
+# **EDITORIAL FINANCIAL ENGRAVING**
+
+Authority:
+`docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md`
+
+RevenueSystem 2.0 must visually communicate:
 - precision;
-- speed;
 - trust;
+- control;
 - density;
 - state;
-- authored visual identity.
+- secure-financial craft;
+- authored desktop identity.
 
-### Studio cultural identity lock
+The visual language is inspired by the craft of secure financial documents:
+- guilloché;
+- engraved linework;
+- ledger rules;
+- registration marks;
+- institutional seals;
+- paper layering;
+- denomination-strip geometry.
 
-RevenueSystem 2.0 must inherit the Studio's governing visual DNA:
-
-**Editorial Renaissance Motion — adapted for desktop financial software.**
+It does **not** use literal pictures of money as identity.
 
 Canonical palette:
-- Paper Ivory `#F6F1E8` — dominant application ground;
-- Cobalt `#174FA6` — primary structural/accent color;
-- Clear Blue `#2B73C9` — active/interactive emphasis;
-- Sky Blue `#8EACD2` — secondary structure and quiet states;
-- Warm Parchment `#D9C8B1` — subtle surface warmth, dividers, inactive editorial material;
-- Brass Gold `#B58A3E` — restrained annotation/high-value accent only;
-- Deep Forest `#173C32` — verified/success/financially healthy states;
-- Charcoal `#151515` — text and visual anchors; never a dominant background.
+- Paper Ivory `#F6F1E8` — dominant work surface;
+- Deep Forest `#173C32` — institutional structure / verified states;
+- Cobalt `#174FA6` — primary interaction/focus;
+- Clear Blue `#2B73C9` — active interaction;
+- Sky Blue `#8EACD2` — quiet interactive support;
+- Warm Parchment `#D9C8B1` — paper/material support;
+- Brass Gold `#B58A3E` — restrained micro-accent only;
+- Charcoal `#151515` — text/anchors;
+- semantic red — difference/risk/destructive only.
 
-Typography adaptation:
-- Arabic display/headings: refined editorial Naskh or Naskh-influenced display treatment where legibility permits;
-- Arabic body/data UI: contemporary sans optimized for dense financial use;
-- Latin display: restrained editorial serif only in non-data identity moments;
-- Latin/data body: neutral modern sans.
+Composition:
+- narrow RTL command rail;
+- work-item tabs;
+- business context bar;
+- one dominant workbench region;
+- optional context inspector;
+- compact status bar;
+- dense operational surfaces stay quiet;
+- artistic expression increases only in shell/context/status/report framing.
 
-Material language:
-- subtle paper/ivory warmth;
-- very light print/paper grain where it does not reduce text/data clarity;
-- cobalt rules and structural lines;
-- brass micro-annotations;
-- layered editorial panels rather than generic SaaS cards;
-- no fake parchment, ornamental historical borders, or decorative classical imagery inside transactional UI.
+Materiality:
+- subtle financial-paper warmth;
+- security-print patterns only in non-data areas;
+- precise ledger borders;
+- one meaningful institutional seal at most;
+- restrained depth through layering, not large shadows.
 
-Composition adaptation:
-- use negative space deliberately in shell, empty states, onboarding and inspector headers;
-- dense tables remain dense where work requires it;
-- one dominant task focal point per workspace;
-- avoid equal visual weight for every panel;
-- hierarchy should feel editorial rather than dashboard-like.
+Typography:
+- refined modern Arabic display treatment for identity/headings;
+- modern Arabic sans for operational controls/data;
+- tabular financial numerals;
+- explicit currency/sign/context.
 
-Motion adaptation:
-- object/panel wipes;
-- page-shift transitions;
-- line-drawing/reveal motion;
-- subtle foreground occlusion;
-- cobalt reset moments where appropriate;
-- motion follows task meaning and state change;
-- never animate every element simultaneously.
+Explicitly forbidden:
+- real dollar portraits or large literal banknotes;
+- real bank logos;
+- national/government emblems;
+- bank buildings or architecture as identity;
+- Babylonian/Baghdadi ornament;
+- Saudi/country-specific visual branding;
+- casino/luxury wealth styling;
+- crypto aesthetics;
+- dark-green-everywhere treatment;
+- gold-everywhere treatment;
+- generic SaaS card walls;
+- glassmorphism;
+- neon/cyberpunk;
+- fake antique paper;
+- huge rounded cards;
+- web-product hero sections;
+- decorative charts with no operational purpose.
 
-The Studio's video-specific imagery (classical figures, botanical/scientific cutouts, archival collage) is **not** copied into routine financial screens. The shared identity comes from palette, composition, typography, materiality, annotation language and motion grammar.
+Concept images created on 2026-10-18 define the approved visual grammar only. Any generated country/currency/architecture drift in those images is explicitly non-authoritative.
 
-Explicitly rejected:
-- Baghdad/Babylonian motifs added merely for local flavor;
-- generic Windows-blue enterprise styling;
-- decorative dashboard cards;
-- excessive rounding;
-- excessive shadows;
-- empty “premium” whitespace;
-- hero sections;
-- web-product patterns without desktop value.
-
----
-
-## Finance rule
+# Finance rule
 
 Money values are first-class visual objects.
 
