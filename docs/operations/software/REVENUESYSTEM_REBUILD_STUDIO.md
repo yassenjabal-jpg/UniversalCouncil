@@ -24,6 +24,22 @@
 8. لا توجد أداة؟ CAPABILITY_GAP، وليس بديلًا منخفض الجودة.
 9. لا install / credentials / purchase / production access بدون authority مناسبة.
 
+## 2.1 Visual Authority
+
+الاتجاه البصري الوحيد المسموح لـRevenueSystem هو:
+
+**EDITORIAL FINANCIAL ENGRAVING**
+
+المرجع الحاكم:
+`docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md`
+
+قواعد التنفيذ:
+- الصور الثماني المولدة بتاريخ 2026-10-18 هي visual grammar reference وليست screenshots يجب نسخها حرفيًا.
+- أي generated drift مثل شعارات/رموز دولة، عملة غير مطلوبة، مبانٍ مصرفية، أو قيم تجريبية لا يدخل المنتج.
+- لا يجوز الرجوع لأي RevenueSystem visual direction سابق.
+- كل شاشة جديدة يجب أن تمر Visual QA against the Art Direction Lock قبل handoff.
+- التنفيذ يكون عبر WPF tokens/components/vector geometry، وليس screenshot skin.
+
 ## 3. Control Plane
 
 ### Rebuild Producer / Chair
