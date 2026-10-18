@@ -1,7 +1,7 @@
 {
-  "version": "1.2",
+  "version": "1.3",
   "status": "OWNER_APPROVED_REBUILD_PLAN",
-  "date": "2026-10-17",
+  "date": "2026-10-18",
   "product": "RevenueSystem / المطابقة",
   "source_pins": {
     "universal_council_main": "d807b2a68d88cfe8266145536daefcdc691ca984",
@@ -194,7 +194,7 @@
     ]
   },
   "current_install_request": "NONE",
-  "review_status": "G8_DAY_CONSOLE_OVERVIEW_IN_PROGRESS",
+  "review_status": "G8_DAY_CONSOLE_OVERVIEW_LOCK_PASS",
   "rebuild_strategy": "DAY_CENTRIC_WORKSPACE_REBUILD_WITH_PROGRESSIVE_APPLICATION_BOUNDARY_EXTRACTION",
   "platform_decision": {
     "wpf_net10": "KEEP",
@@ -484,15 +484,16 @@
   },
   "detailed_rebuild_plan": "docs/operations/software/REVENUESYSTEM_2_DETAILED_REBUILD_PLAN.md",
   "execution_plan": {
-    "current_phase": "PHASE_5_DAY_CONSOLE",
-    "next_packet": "G8_DAY_CONSOLE_OVERVIEW_LOCK",
+    "current_phase": "PHASE_6_CASHIER_WORKBENCH",
+    "next_packet": "G9_CASHIER_WORKBENCH_LOCK",
     "product_code_changes_started": true,
     "release_route_changed": false,
     "production_data_access": false,
     "production_lan_access": false,
     "completed_gates": [
       "G6_FINANCE_READ_PILOT_LOCK",
-      "G7_FINANCE_WRITE_PILOT_LOCK"
+      "G7_FINANCE_WRITE_PILOT_LOCK",
+      "G8_DAY_CONSOLE_OVERVIEW_LOCK"
     ]
   },
   "environment_audit": {
@@ -558,7 +559,7 @@
     "pr": 82,
     "base": "f1855a17498cdbdf2404d47c9073dbe6e989fb12",
     "gate": "G8_DAY_CONSOLE_OVERVIEW_LOCK",
-    "status": "IMPLEMENTATION_AND_CI_IN_PROGRESS",
+    "status": "PASS_STACKED_PR_HOLD",
     "scope": [
       "day overview",
       "branch/cashier completion",
@@ -580,6 +581,46 @@
       "recovery projection does not quarantine/move files",
       "no View-owned AppDbContext or SaveChanges",
       "isolated runtime only"
+    ],
+    "head": "4a9bb49a7bcdf2167c1ae45c9054eb3ff5d150f1",
+    "council_review": "docs/operations/software/REVENUESYSTEM_G8_DAY_CONSOLE_COUNCIL_REVIEW_2026-10-18.md",
+    "local_source_build": "PASS_0_WARNINGS_0_ERRORS",
+    "foundation_validator": "44/44 PASS",
+    "day_validator": "40/40 PASS",
+    "ci_run_number": 497,
+    "ci_run_id": 39114770698,
+    "ci_status": "SUCCESS",
+    "stage10": "PASS",
+    "finance_write_ui_regression": "PASS",
+    "day_ui_smoke": "PASS",
+    "ui_viewport": "1024x720_CI_COMPACT_STRESS",
+    "ui_named_elements": 128,
+    "ui_layout_warnings": 0,
+    "day_ui_artifact_id": 12132420270,
+    "ui_evidence_artifact_id": 12132450256,
+    "finance_ui_artifact_id": 12131694138
+  },
+  "cashier_workbench": {
+    "phase": "PHASE_6_CASHIER_WORKBENCH",
+    "gate": "G9_CASHIER_WORKBENCH_LOCK",
+    "status": "AUTHORIZED_TO_OPEN",
+    "prerequisite_gate": "G8_DAY_CONSOLE_OVERVIEW_LOCK",
+    "source_base": "4a9bb49a7bcdf2167c1ae45c9054eb3ff5d150f1",
+    "preopen_contract": "docs/operations/software/REVENUESYSTEM_PHASE6_CASHIER_WORKBENCH_PREOPEN_2026-10-18.md",
+    "preserved_contracts": [
+      "CashierRevenueEntryService authoritative financial write",
+      "ArithmeticExpressionEvaluator and InlineRevenueCalculator arithmetic",
+      "CashierCrashRecoveryService durability and database-incarnation binding",
+      "latest-edit durability across in-flight save",
+      "cashier branch POS day identity",
+      "coarse IQD change IQD USD cents separation",
+      "keyboard-first operator flow"
+    ],
+    "prohibited_shortcuts": [
+      "no AppDbContext or SaveChanges in RebuildV2 Presentation",
+      "no copied financial save formula in ViewModel",
+      "no arbitrary legacy InteractiveLayoutEditor reproduction",
+      "no production DB LAN or production AppData"
     ]
   }
 }
