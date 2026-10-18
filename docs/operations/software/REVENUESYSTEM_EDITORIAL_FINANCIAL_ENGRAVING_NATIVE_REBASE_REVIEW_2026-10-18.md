@@ -1,6 +1,6 @@
 # RevenueSystem 2.0 — Editorial Financial Engraving Native Rebase Review
 Date: 2026-10-18
-Status: **PENDING FINAL CI / VISUAL ACCEPTANCE**
+Status: **VISUAL_SECTION_1_LOCK — PASS**
 Joint reviewers: RevenueSystem Council + RevenueSystem Rebuild Studio
 
 ## Product candidate
@@ -11,97 +11,179 @@ Branch:
 Base:
 `416196fa60202e75b035deabf805a92e094700d4` — G9 Cashier Workbench lock
 
-Candidate:
-`a15595dfff193ad99037ab6ea7f4d2d1d59525dc`
+Final Section 1 candidate:
+`c7d9e05bd6fe253fa0deafdca81469d210b3938d`
 
 Draft PR:
-**#84**
+**#84 — OPEN / DRAFT / no merge authorized**
 
 ## Owner directive
 
-Implement the owner-locked **Editorial Financial Engraving** system natively inside WPF, without depending on external design applications or screenshot skins.
+The owner-locked **Editorial Financial Engraving** system is implemented natively in WPF. Existing functional/financial evidence is preserved, while visual acceptance is re-run under the current constitution. No previous or legacy UI is visually grandfathered.
 
-This visual system applies to all RevenueSystem presentation surfaces. Existing functional/financial evidence remains valid, but no previously completed UI is visually grandfathered.
+## Section 1 implementation
 
-## Native implementation
-
-Implemented entirely in source:
-
-- semantic palette rebalance;
+Implemented through native source resources/components:
+- semantic palette;
+- Paper Ivory operational surfaces;
 - Deep Forest institutional structure;
 - Cobalt interaction/focus;
-- Paper Ivory / document surfaces;
-- Brass micro-annotation only;
-- semantic amber/red/recovery brushes;
-- restrained 4/6/10 px radii;
-- financial tabular numeral token;
-- native guilloché field via `DrawingBrush` / vector geometry;
-- native registration field;
-- native command-rail engraving;
-- ledger-panel hierarchy;
+- restrained Brass annotation;
+- native guilloché / registration / rail engraving;
+- ledger rulework;
 - verified/review/risk/recovery surfaces;
-- original abstract seal primitives;
-- denomination-strip primitives;
-- dense DataGrid financial header treatment;
-- keyboard-focus treatment;
-- responsive 72/82 px command rail.
+- abstract RevenueSystem seal primitives;
+- denomination-strip treatment;
+- financial number typography;
+- dense grid treatment;
+- keyboard focus treatment;
+- compact 72/82 px command rail.
 
-No PNG/JPG/WebP skin is introduced.
+No PNG/JPG/WebP screenshot skin is used.
 
-## Current surfaces rebased
+Section 1 surfaces:
+- RevenueSystem 2.0 Shell;
+- Day Console;
+- Cashier Workbench;
+- Finance Ledger;
+- placeholder/unbuilt workspace state;
+- shared components and financial visual primitives.
 
-- RevenueSystem 2.0 Shell
-- Day Console
-- Cashier Workbench
-- Finance Ledger
-- placeholder/unbuilt workspace state so it no longer shows an older visual language
+## Final visual defect and bounded correction
 
-Future workspaces inherit the same source-level design system.
+CI #590 was technically successful, but direct screenshot inspection found that the compact 72 px command rail clipped the `FINANCIAL / ENGRAVING` footer.
 
-## Architecture Boundary Audit — source-only
+A bounded presentation-only correction was committed:
 
-Candidate delta is confined to Presentation/Themes + one static validator.
+`c7d9e05bd6fe253fa0deafdca81469d210b3938d`
 
-The only C# presentation change is the responsive command-rail width in `Rrs2ShellWindow.xaml.cs`.
+Only:
+`RevenueSystem/RebuildV2/Presentation/Shell/Rrs2ShellWindow.xaml`
+
+was changed relative to the previous candidate.
+
+The correction reduces footer spacing and uses native WPF down-only Viewbox fitting. It does not increase the rail width and does not alter financial/data layout.
+
+## Architecture boundary
+
+The rebase remains presentation-only.
 
 Confirmed:
-- no `AppDbContext` introduced;
-- no `SaveChanges` introduced;
-- no domain/application/service dependency introduced;
-- no financial rule changed;
-- no ViewModel changed;
-- no schema or migration changed;
-- no production DB/LAN/AppData access;
-- shell code-behind remains within the existing presentation-only line budget.
+- no `AppDbContext` introduced into RRS2 views;
+- no `SaveChanges` introduced into RRS2 views;
+- no ViewModel/application/domain/service change in the final correction;
+- no financial calculation or save rule changed;
+- no schema/migration change;
+- no production DB/AppData/LAN access;
+- no raster skin dependency.
 
-Verdict:
-**PASS CANDIDATE — pending exact-head CI and GUI evidence.**
+## Exact-head final CI
 
-## Static design-system evidence
+Workflow: **RevenueSystem Windows CI**
 
-- 4 RRS2 theme dictionaries
-- 111 unique public resource keys
-- 0 duplicate resource keys
-- theme dependency chain:
-  `SemanticTokens → FinancialEngraving → SharedComponents → Feature`
-- external raster-skin dependency: forbidden by validator
-- legacy RevenueSystem art-direction strings: forbidden in RebuildV2 Presentation
+Run:
+**#591**
 
-## Exact-head gates required
+Run ID:
+`39164529605`
 
-Before locking the visual rebase:
-- solution build PASS;
-- C# validation PASS;
-- RRS2 static validation PASS;
-- existing SQLite/integration regression PASS;
-- Stage10 PASS;
-- Finance UI regression PASS;
-- Day Console UI regression PASS;
-- Cashier Stage 3 financial UI regression PASS;
-- strict compact visual audit PASS;
-- artifact/screenshot inspection;
-- zero material layout regression.
+Head:
+`c7d9e05bd6fe253fa0deafdca81469d210b3938d`
+
+Final attempt:
+**2**
+
+Conclusion:
+**SUCCESS**
+
+Final-attempt PASS:
+- Build solution;
+- C# validation;
+- static validation;
+- durable tooling validation;
+- source-sync validation;
+- SQLite simulations;
+- RRS2 Finance parity integration;
+- Stage10 release gate;
+- controlled Finance write UI smoke;
+- Day Console UI smoke;
+- Cashier Workbench Stage 3 financial UI gate;
+- UI/build artifact publication.
+
+### Attempt 1 evidence retained
+
+Attempt 1 failed the Cashier Stage 3 UI gate with:
+
+`F5 did not complete authoritative financial save. state=فشل الحفظ • F5 لإعادة المحاولة`
+
+The product source was **not** modified to hide or bypass the failure. Because the final visual delta contained no financial/write code, the same exact SHA was rerun. Attempt 2 passed the Cashier financial gate and the entire workflow.
+
+## Final screenshot / artifact evidence
+
+| Surface | Artifact ID | Digest | Compact evidence |
+|---|---:|---|---|
+| Cashier Workbench | `12150606515` | `sha256:53c0670cf47e92971382f87fb740e65da913a44abd0788c21ff7924e4b3b5a28` | 126 named / 0 warnings |
+| Day Console | `12150895350` | `sha256:005a9a88532c3d153502d4735b3afdeaa7e3b2aec17ea218d3a6ed9caea74147` | 131 named / 0 warnings |
+| Finance / RRS2 UI | `12150169095` | `sha256:35cce8315ec76ffd8b8d3b55d1ba1d9c5218924f466879843ec2f9a0de164db9` | 118 named / 0 warnings |
+| Isolated UI evidence | `12150303287` | `sha256:cab87354b3a368a20328892b0f4922dd4732bfd416a7a97e2f32e64d4a722fc6` | 134 named / 0 warnings |
+| Windows build | `12150830734` | `sha256:1ec9e6fde675eb6a043fd4aacc281bba6023eea8164e85f5e0f244246da31227` | build artifact |
+
+All reviewed RRS2 screenshots are 1024×720 compact-stress evidence.
+
+## Council + Studio visual review
+
+### Visual Constitution verdict: PASS for Section 1 scope
+
+- hierarchy: PASS;
+- dominant task clarity: PASS;
+- engraving density: PASS;
+- readability: PASS;
+- command-rail clarity: PASS after final correction;
+- Brass restraint: PASS;
+- Deep Forest restraint: PASS;
+- no generic SaaS/card-wall drift: PASS;
+- visual-fatigue control: PASS;
+- data remains visual hero: PASS;
+- semantic state clarity: PASS;
+- IQD coarse/change/USD separation in Cashier: PASS;
+- native-WPF credibility: PASS;
+- no real banknote/bank/government/country imitation: PASS;
+- compact 1024×720 layout warnings: **0** on reviewed RRS2 surfaces.
+
+Council verdict:
+**PASS**
+
+Studio verdict:
+**PASS**
+
+Combined:
+**VISUAL_SECTION_1_LOCK**
+
+Canonical lock record:
+`docs/operations/software/REVENUESYSTEM_VISUAL_SECTION_1_LOCK_2026-10-18.md`
+
+## Explicit remaining visual debt — not grandfathered
+
+The isolated Stage10 evidence still reaches the legacy `المطابقة` surface with the older visual language.
+
+That surface is **not accepted** by this Section 1 lock and is not grandfathered.
+
+It remains an explicit Section 3 obligation:
+1. migrate it to Editorial Financial Engraving; or
+2. classify it as an approved temporary compatibility surface with a retirement plan.
+
+Whole-product final visual acceptance therefore remains blocked until Sections 2 and 3 are complete, including the final DPI/accessibility/reachable-legacy audit.
+
+## Section control
+
+- `VISUAL_SECTION_1_CORE_REBASE_LOCK` → **LOCKED / PASS**
+- `VISUAL_SECTION_2_RECONCILIATION_REPORTS` → **NOT OPENED**
+- `VISUAL_SECTION_3_SYSTEM_COMPLETION` → **NOT OPENED**
 
 ## Release rule
 
-This PR remains draft and stacked. No merge to main is authorized by this review.
+PR #84 remains draft and stacked.
+
+No merge to `main` is authorized.
+
+Stop at the owner checkpoint. Do not open Section 2 automatically.
