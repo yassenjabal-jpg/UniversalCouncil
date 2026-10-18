@@ -7,7 +7,7 @@ Gate: `G8_DAY_CONSOLE_OVERVIEW_LOCK`
 ## Source pin
 
 RevenueSystem branch: `rebuild/rs2-day-console-overview`  
-RevenueSystem candidate: `1561e2a839949c3106d67467f7370e819c36d985`  
+RevenueSystem candidate: `4a9bb49a7bcdf2167c1ae45c9054eb3ff5d150f1`  
 Stacked base: `rebuild/rs2-finance-write-pilot @ f1855a17498cdbdf2404d47c9073dbe6e989fb12`  
 PR: RevenueSystem5 #82
 
@@ -150,14 +150,15 @@ Material dissent was preserved and resolved rather than averaged away:
 1. six-workspace validator double-counted conditional Day construction — validator corrected.
 2. NeedsReview was visually counted as completed — semantics corrected and regression-locked.
 3. Finance write surface appeared during read mode in Day smoke — fail-closed visibility and truthful capability copy added.
-4. proposal to make reconciliation/credit alerts close blockers was rejected after comparison with the authoritative `BusinessDayWorkflowService`; doing so would have changed domain semantics without authority.
+4. strict audit reported single-digit attention badges as 7px text bounds — the Day count TextBlocks now reserve a 16px readable slot; the strict audit remains unchanged.
+5. proposal to make reconciliation/credit alerts close blockers was rejected after comparison with the authoritative `BusinessDayWorkflowService`; doing so would have changed domain semantics without authority.
 
 ## Pending evidence
 
 GitHub Windows CI on exact candidate:
-- run number: **496**
-- run id: **39114230627**
-- head: `1561e2a839949c3106d67467f7370e819c36d985`
+- run number: **497**
+- run id: **39114770698**
+- head: `4a9bb49a7bcdf2167c1ae45c9054eb3ff5d150f1`
 - status at packet creation: **IN PROGRESS**
 
 Required before lock:
