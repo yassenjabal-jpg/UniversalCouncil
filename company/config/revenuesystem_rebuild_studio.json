@@ -958,11 +958,14 @@
     ],
     "mandatory_pipeline": [
       "reference_slice",
+      "ux_simplification_brief",
+      "ux_authority_preclearance",
       "screen_art_brief",
       "native_wpf_component_plan",
       "implementation",
       "representative_synthetic_runtime",
       "screenshot_matrix",
+      "ux_authority_runtime_review",
       "side_by_side_reference_fidelity_review",
       "art_director_clearance",
       "independent_visual_qa_clearance",
@@ -981,6 +984,71 @@
       "independent_visual_qa_is_separate_from_implementer",
       "art_never_reduces_financial_long_session_ergonomics"
     ],
-    "ci_rule": "CI success is implementation-health evidence, never sufficient visual acceptance by itself."
+    "ci_rule": "CI success is implementation-health evidence, never sufficient visual acceptance by itself.",
+    "primary_design_authority": "RevenueSystem Chief UX & Interaction Authority",
+    "design_decision_precedence": [
+      {
+        "rank": 1,
+        "role": "RevenueSystem Chief UX & Interaction Authority",
+        "decides": [
+          "usability",
+          "simplification",
+          "layout",
+          "density",
+          "screen_space",
+          "chrome_and_title_bars",
+          "workflow",
+          "navigation",
+          "keyboard",
+          "focus",
+          "operator_speed",
+          "cognitive_load"
+        ]
+      },
+      {
+        "rank": 2,
+        "role": "RevenueSystem Visual Art Director",
+        "decides": [
+          "art_direction_expression",
+          "composition_style",
+          "engraving_language",
+          "seal_language",
+          "typography_expression",
+          "visual_character"
+        ],
+        "constraint": "Must operate inside UX-approved hierarchy, density and workflow."
+      },
+      {
+        "rank": 3,
+        "role": "RevenueSystem WPF Design Systems / Visual Engineering Lead",
+        "decides": [
+          "native_wpf_translation",
+          "shared_component_implementation",
+          "rendering_performance",
+          "dpi_behavior"
+        ]
+      },
+      {
+        "rank": 4,
+        "role": "Independent Visual QA / Reference Fidelity Reviewer",
+        "decides": [
+          "independent_accept_revise_verdict"
+        ]
+      }
+    ],
+    "design_conflict_rule": "UX authority wins any conflict involving layout, density, simplification, hierarchy, navigation, interaction or operator workflow. Art direction may not preserve a decorative or branded element if UX authority determines it wastes space or increases cognitive load. Hard finance/data/security/accessibility/architecture constraints remain non-negotiable. Owner is final arbiter.",
+    "ux_mandatory_preclearance": [
+      "shell_chrome",
+      "workspace_headers",
+      "title_bars",
+      "hero_bands",
+      "sidebars",
+      "inspectors",
+      "navigation",
+      "input_density",
+      "keyboard_flow",
+      "long_session_workspaces",
+      "dialogs_and_popups"
+    ]
   }
 }
