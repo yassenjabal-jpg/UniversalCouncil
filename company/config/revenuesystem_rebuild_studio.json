@@ -194,7 +194,7 @@
     ]
   },
   "current_install_request": "NONE",
-  "review_status": "G9_CASHIER_WORKBENCH_LOCK_PASS",
+  "review_status": "VISUAL_SECTION_1_LOCK_PASS",
   "rebuild_strategy": "DAY_CENTRIC_WORKSPACE_REBUILD_WITH_PROGRESSIVE_APPLICATION_BOUNDARY_EXTRACTION",
   "platform_decision": {
     "wpf_net10": "KEEP",
@@ -578,19 +578,19 @@
       "G9_CASHIER_WORKBENCH_LOCK"
     ],
     "visual_rebase": {
-      "status": "THREE_SECTION_EXECUTION_ADOPTED",
+      "status": "SECTION_1_LOCKED_OWNER_CHECKPOINT",
       "reason": "Owner requested bounded execution to prevent long-run interruption and preserve exact restart checkpoints",
       "preserves_completed_functional_gates": true,
       "blocks_final_release_until_visual_reacceptance": true,
       "execution_rule": "OPEN_ONE_SECTION_ONLY_CLOSE_WITH_SHA_CI_ARTIFACTS_COUNCIL_STUDIO_VERDICT_BEFORE_NEXT",
       "product_branch": "rebuild/rs2-editorial-financial-engraving",
       "draft_pr": 84,
-      "current_product_head": "95d76d37d799953552b30147de789a88cb41cec2",
+      "current_product_head": "c7d9e05bd6fe253fa0deafdca81469d210b3938d",
       "sections": [
         {
           "id": "VISUAL_SECTION_1_CORE_REBASE_LOCK",
           "name": "Core Design System + Existing Core Surfaces",
-          "status": "IN_PROGRESS_NEAR_CLOSE",
+          "status": "LOCKED_PASS",
           "scope": [
             "Editorial Financial Engraving semantic tokens and vector pattern system",
             "RevenueSystem 2.0 Shell and command rail",
@@ -614,12 +614,57 @@
             "compact_viewport": "1024x720 PASS",
             "layout_warnings": 0
           },
-          "remaining_before_lock": [
-            "inspect final screenshot artifacts against owner-locked visual constitution",
-            "Council + Studio visual verdict",
-            "record Section 1 lock document/status"
+          "remaining_before_lock": [],
+          "exit_lock": "VISUAL_SECTION_1_LOCK",
+          "final_product_head": "c7d9e05bd6fe253fa0deafdca81469d210b3938d",
+          "final_ci": {
+            "run_number": 591,
+            "run_id": 39164529605,
+            "run_attempt": 2,
+            "conclusion": "SUCCESS",
+            "head_sha": "c7d9e05bd6fe253fa0deafdca81469d210b3938d",
+            "stage10": "PASS",
+            "finance_ui": "PASS",
+            "day_ui": "PASS",
+            "cashier_stage3_financial_ui": "PASS",
+            "compact_viewport": "1024x720 PASS",
+            "layout_warnings": 0
+          },
+          "final_artifacts": [
+            {
+              "surface": "cashier",
+              "id": 12150606515,
+              "digest": "sha256:53c0670cf47e92971382f87fb740e65da913a44abd0788c21ff7924e4b3b5a28"
+            },
+            {
+              "surface": "day",
+              "id": 12150895350,
+              "digest": "sha256:005a9a88532c3d153502d4735b3afdeaa7e3b2aec17ea218d3a6ed9caea74147"
+            },
+            {
+              "surface": "finance",
+              "id": 12150169095,
+              "digest": "sha256:35cce8315ec76ffd8b8d3b55d1ba1d9c5218924f466879843ec2f9a0de164db9"
+            },
+            {
+              "surface": "isolated_ui_evidence",
+              "id": 12150303287,
+              "digest": "sha256:cab87354b3a368a20328892b0f4922dd4732bfd416a7a97e2f32e64d4a722fc6"
+            },
+            {
+              "surface": "windows_build",
+              "id": 12150830734,
+              "digest": "sha256:1ec9e6fde675eb6a043fd4aacc281bba6023eea8164e85f5e0f244246da31227"
+            }
           ],
-          "exit_lock": "VISUAL_SECTION_1_LOCK"
+          "council_verdict": "PASS",
+          "studio_verdict": "PASS",
+          "warnings": [
+            "CI #591 attempt 1 had a Cashier F5 authoritative-save UI-gate failure; exact-head attempt 2 passed without product-source changes to financial logic.",
+            "Legacy isolated المطابقة surface remains visually non-compliant and is deferred explicitly to Section 3; it is not grandfathered."
+          ],
+          "lock_document": "docs/operations/software/REVENUESYSTEM_VISUAL_SECTION_1_LOCK_2026-10-18.md",
+          "locked_date": "2026-10-18"
         },
         {
           "id": "VISUAL_SECTION_2_RECONCILIATION_REPORTS",
@@ -653,7 +698,11 @@
           ],
           "exit_lock": "VISUAL_SECTION_3_FINAL_LOCK"
         }
-      ]
+      ],
+      "section_1_lock_document": "docs/operations/software/REVENUESYSTEM_VISUAL_SECTION_1_LOCK_2026-10-18.md",
+      "section_1_final_review": "docs/operations/software/REVENUESYSTEM_EDITORIAL_FINANCIAL_ENGRAVING_NATIVE_REBASE_REVIEW_2026-10-18.md",
+      "next_section": "VISUAL_SECTION_2_RECONCILIATION_REPORTS",
+      "next_section_status": "NOT_OPENED"
     }
   },
   "environment_audit": {
