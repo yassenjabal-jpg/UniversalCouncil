@@ -1,0 +1,76 @@
+{
+  "version": "1.0",
+  "capability": "CINETIC_MOTION_PROTOTYPE_AND_PRODUCT_DEMO",
+  "status": "SOURCE_TESTS_PASS_RUNTIME_PREFLIGHT_PARTIAL",
+  "upstream": {
+    "repository": "Leonxlnx/cinetic",
+    "pinned_commit": "bee5d7807205d5543472c38312507f9bf366cbbf",
+    "license": "MIT"
+  },
+  "purposes": [
+    "RevenueSystem interaction motion prototypes",
+    "product walkthroughs",
+    "deterministic product demos",
+    "Studio launch films and feature loops"
+  ],
+  "non_purposes": [
+    "WPF UI implementation",
+    "financial runtime evidence",
+    "database or business logic",
+    "replacement for Blend/Visual Studio"
+  ],
+  "engine_policy": {
+    "default": "HyperFrames",
+    "reason": "Apache-2.0 and avoids unresolved Remotion licensing applicability",
+    "remotion": {
+      "allowed": true,
+      "prerequisite": "LICENSE_APPLICABILITY_CONFIRMED"
+    }
+  },
+  "yassin": {
+    "source_path": "C:\\Users\\alnaseem\\Desktop\\CouncilVideoStudio\\external\\cinetic",
+    "python_venv": "C:\\Users\\alnaseem\\Desktop\\CouncilVideoStudio\\external\\cinetic-venv",
+    "node": "24.21.0",
+    "python": "3.13.3",
+    "ffmpeg": "9.0.2",
+    "ffprobe": "9.0.2",
+    "git_bash": "5.3.15",
+    "edge_chromium": true,
+    "wsl2": false
+  },
+  "platform_strategy": [
+    "attempt isolated native Windows + Git Bash smoke test",
+    "never infer support from partial tests",
+    "if native smoke fails for platform reasons, declare CAPABILITY_GAP_CINETIC_WINDOWS_RUNTIME",
+    "use WSL2 only as explicit compatibility fallback"
+  ],
+  "revenue_system_flow": [
+    "STATIC_UX_CONCEPT_LOCK",
+    "WPF_FEASIBILITY_CHECK",
+    "CINETIC_MOTION_PROTOTYPE",
+    "INTERACTION_COUNCIL_REVIEW",
+    "WPF_IMPLEMENTATION"
+  ],
+  "first_revenue_system_pilot": "Day Console -> Open Cashier -> Cashier Workbench -> return",
+  "gates": [
+    "C0_SOURCE_INTEGRITY",
+    "C1_RUNTIME_PREFLIGHT",
+    "C2_FIRST_RENDER",
+    "C3_REVENUESYSTEM_MOTION_PILOT",
+    "C4_COUNCIL_REVIEW"
+  ],
+  "validation": {
+    "source_checkout": true,
+    "pinned_sha_verified": true,
+    "lint_film_tests": "PASS",
+    "native_windows_git_bash": "AVAILABLE_BUT_FULL_RENDER_NOT_YET_PROVEN",
+    "python_venv": "CREATED_DEPENDENCY_INSTALL_INCOMPLETE_AT_LAST_CHECK",
+    "first_hyperframes_render": "NOT_RUN",
+    "wsl2": "NOT_INSTALLED"
+  },
+  "current_blockers": [
+    "Complete isolated Python dependency installation and verify imports",
+    "Run the full HyperFrames starter render and QA gates",
+    "If native Git Bash runtime fails for platform reasons, use WSL2 fallback"
+  ]
+}

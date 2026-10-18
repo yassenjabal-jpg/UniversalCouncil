@@ -1,0 +1,1124 @@
+{
+  "version": "1.3",
+  "status": "OWNER_APPROVED_REBUILD_PLAN",
+  "date": "2026-10-18",
+  "product": "RevenueSystem / المطابقة",
+  "source_pins": {
+    "universal_council_main": "d807b2a68d88cfe8266145536daefcdc691ca984",
+    "revenuesystem_main": "6886fbb6398b67b366faf3ca446dbae54eb1ce4f"
+  },
+  "mission": "Rebuild RevenueSystem with GUI-primary professional desktop tooling while retaining Council finance/data/security/test governance.",
+  "operating_principles": [
+    "GUI_PRIMARY",
+    "DC_SECONDARY",
+    "SPECIALIZED_TOOL_FIRST",
+    "CODE_FOR_ORCHESTRATION_VALIDATION_AUTOMATION_QC",
+    "UNKNOWN_NEVER_EQUALS_SUCCESS",
+    "VERIFIED_HANDOFFS",
+    "RETURN_DEFECTS_TO_SOURCE",
+    "CAPABILITY_GAP_INSTEAD_OF_LOW_QUALITY_SUBSTITUTE"
+  ],
+  "execution_planes": {
+    "gui_primary": {
+      "apps": [
+        "Visual Studio Community 2026",
+        "Blend for Visual Studio",
+        "RevenueSystem runtime",
+        "Adobe Photoshop 2025 when raster assets are required",
+        "Adobe Illustrator 2025 when vector assets are required"
+      ],
+      "controller": "YASSIN Control Bridge",
+      "hierarchy": [
+        "application_native_automation_when_safe",
+        "winapp_uia_semantic",
+        "visual_or_bounded_physical",
+        "pywinauto_fallback",
+        "raw_coordinates_last_resort"
+      ],
+      "state_change_contract": [
+        "observe",
+        "locate",
+        "act",
+        "observe",
+        "verify",
+        "checkpoint"
+      ]
+    },
+    "dc_secondary": {
+      "target": "YASSIN",
+      "domains": [
+        "git",
+        "filesystem",
+        "restore_build",
+        "tests",
+        "logs",
+        "process_health",
+        "artifact_checks",
+        "diagnostics",
+        "recovery"
+      ],
+      "may_replace_gui_by_default": false
+    }
+  },
+  "verified_yassin_capabilities": {
+    "visual_studio_community_2026": "AVAILABLE",
+    "blend_for_visual_studio": "AVAILABLE",
+    "msbuild": "AVAILABLE",
+    "dotnet_sdk_10": "AVAILABLE",
+    "windows_desktop_runtime": "AVAILABLE",
+    "windows_sdk": "AVAILABLE",
+    "git": "AVAILABLE",
+    "python_3_13": "AVAILABLE",
+    "node_24": "AVAILABLE",
+    "winapp_uia_bridge": "AVAILABLE_AND_PREVIOUSLY_RUNTIME_VERIFIED",
+    "pywinauto_fallback": "AVAILABLE",
+    "adobe_2025_suite": "AVAILABLE",
+    "mandatory_new_install_now": false
+  },
+  "council_authority": {
+    "retained_domains": [
+      "requirements_change_impact",
+      "architecture",
+      "financial_controls",
+      "data_integrity",
+      "security",
+      "test_architecture",
+      "qa_red_team",
+      "release_environment",
+      "ui_ux",
+      "interaction_keyboard",
+      "io_reporting",
+      "performance_observability"
+    ],
+    "studio_patterns_imported": [
+      "producer_control_plane",
+      "stage_gates",
+      "artifact_locks",
+      "handoff_packets",
+      "return_tickets",
+      "execution_recovery",
+      "human_assistance",
+      "specialized_tool_first"
+    ]
+  },
+  "macro_phases": [
+    {
+      "id": "A",
+      "name": "Discovery & Contract",
+      "exit_lock": "BEHAVIOR_INVARIANTS_LOCK",
+      "stages": [
+        "source_environment_pin",
+        "behavior_archaeology",
+        "workflow_inventory",
+        "finance_data_security_invariants",
+        "feature_acceptance_contract",
+        "defect_exclusion_list"
+      ]
+    },
+    {
+      "id": "B",
+      "name": "Design & Prebuild",
+      "exit_lock": "UX_ARCHITECTURE_READY_LOCK",
+      "stages": [
+        "ux_system",
+        "wpf_architecture",
+        "data_reliability_design",
+        "test_architecture",
+        "vertical_slice_plan"
+      ]
+    },
+    {
+      "id": "C",
+      "name": "Production & Verification",
+      "exit_lock": "RELEASE_CANDIDATE_LOCK",
+      "mode": "VERTICAL_SLICES_SERIAL_ARTIFACT_OWNERSHIP",
+      "slice_flow": [
+        "slice_open",
+        "gui_implementation",
+        "local_build",
+        "focused_tests",
+        "runtime_launch",
+        "gui_acceptance",
+        "domain_clearance",
+        "regression",
+        "handoff_lock"
+      ]
+    }
+  ],
+  "gates": [
+    "G0_SOURCE_ENVIRONMENT_LOCK",
+    "G1_BEHAVIOR_INVARIANTS_LOCK",
+    "G2_UX_ARCHITECTURE_READY_LOCK",
+    "G3_VERTICAL_SLICE_READY",
+    "G4_BUILD_TEST_VERIFIED",
+    "G5_RUNTIME_GUI_ACCEPTANCE",
+    "G6_FINANCE_DATA_CLEARANCE",
+    "G7_REGRESSION_PERFORMANCE_CLEARANCE",
+    "G8_RELEASE_CANDIDATE_LOCK",
+    "G9_OWNER_RELEASE_APPROVAL"
+  ],
+  "runtime_profile": {
+    "required": "ISOLATED_LOCAL_RUNTIME",
+    "disposable_data": true,
+    "synthetic_fixtures": true,
+    "production_db_forbidden": true,
+    "production_appdata_inheritance_forbidden": true,
+    "live_lan_server_forbidden": true
+  },
+  "human_assistance": {
+    "mode": "MINIMUM_BOUNDED_ACTION",
+    "triggers": [
+      "credentials_or_login",
+      "physical_access",
+      "missing_tool",
+      "gui_recovery_exhausted",
+      "irreversible_owner_decision",
+      "specialist_judgment"
+    ],
+    "repeated_gap_threshold": 3
+  },
+  "capability_gap": {
+    "install_without_owner": false,
+    "fields": [
+      "missing_capability",
+      "blocked_stage",
+      "current_tools_tried",
+      "why_insufficient",
+      "candidate_tools",
+      "cost_license",
+      "permissions_security",
+      "sandbox_test",
+      "success_metric",
+      "rollback",
+      "owner_decision"
+    ]
+  },
+  "current_install_request": "NONE",
+  "review_status": "VISUAL_SECTION_1_ART_FIDELITY_REMEDIATION_OPEN",
+  "rebuild_strategy": "DAY_CENTRIC_WORKSPACE_REBUILD_WITH_PROGRESSIVE_APPLICATION_BOUNDARY_EXTRACTION",
+  "platform_decision": {
+    "wpf_net10": "KEEP",
+    "native_fluent": "PROTOTYPE_RECOMMENDED",
+    "communitytoolkit_mvvm": "ARCHITECTURE_SPIKE_RECOMMENDED",
+    "wpf_ui": "OPTIONAL_TARGETED_SPIKE",
+    "material_design_xaml": "NOT_DEFAULT",
+    "mahapps": "NOT_DEFAULT",
+    "commercial_ui_suite": "NO_CURRENT_NEED"
+  },
+  "static_audit": {
+    "product_cs_files": 232,
+    "xaml_files": 50,
+    "view_codebehind_files": 48,
+    "service_files": 110,
+    "viewmodel_files": 0,
+    "ef_dbsets": 32,
+    "ef_migrations": 15,
+    "non_palette_design_dictionary_files": 8,
+    "non_palette_unique_resource_keys": 109,
+    "non_palette_duplicate_resource_keys": 54,
+    "critical_hotspots": [
+      "CashierEntryView.xaml.cs",
+      "ReconciliationView.xaml + .cs",
+      "ReconciliationDetailsWindow.xaml + .cs",
+      "DataManagementView.xaml + .cs",
+      "RevenueEntryView.xaml.cs",
+      "MainWindow.xaml.cs"
+    ]
+  },
+  "first_execution_packet": {
+    "id": "RRS-P0",
+    "name": "Foundation Build Packet",
+    "requires_plan_approval": false,
+    "deliverables": [
+      "clean implementation worktree pinned to RevenueSystem main",
+      "isolated runtime contract",
+      "current performance baseline",
+      "new RevenueSystem 2.0 semantic design-system resources",
+      "Studio-aligned Art Direction tokens",
+      "empty new shell with command rail/work-item tabs/context bar/workbench/inspector/status bar",
+      "shared typography and financial-number components",
+      "Finance Ledger read-only pilot",
+      "MVVM/Coordinator pattern decision",
+      "UI automation selector convention",
+      "isolated build/runtime evidence",
+      "Council GO/REVISE/NO-GO foundation decision"
+    ],
+    "product_db_migration": false,
+    "production_lan": false,
+    "approval_status": "APPROVED_BY_OWNER_2026-10-17",
+    "execution_status": "GO_WITH_CONDITIONS_CI_PASS",
+    "revenue_branch": "rebuild/rs2-p0-foundation",
+    "revenue_pr": 79,
+    "revenue_head": "840c93903e652848d3ef888b0789989fda1f1711",
+    "source_evidence": {
+      "build": "PASS_0_WARNINGS_0_ERRORS",
+      "rrs2_foundation_validator": "34_34_PASS",
+      "architecture_boundary_audit": "ACCEPT_WITH_DEFERRED_ASYNC_ADAPTER_DEBT",
+      "new_presentation_dbcontext_refs": 0,
+      "new_presentation_savechanges_calls": 0,
+      "rrs2_public_resource_key_duplicates": 0,
+      "automation_namespace": "PASS",
+      "six_workspace_topology": "PASS",
+      "art_lock_palette_source": "PASS",
+      "datagrid_virtualization": "PASS"
+    },
+    "gui_evidence": {
+      "visual_studio_2026": "USED_AND_PRIMARY_INSTANCE_HEALTHY",
+      "blend_for_visual_studio": "USED_AND_HEALTHY",
+      "blend_xaml_load": "PASS",
+      "rendered_artboard": "NOT_ACCEPTED",
+      "project_context_designer": "BUILD_REQUIRED_THEN_SECONDARY_VS_EXITED",
+      "verdict": "GUI_RENDER_ACCEPTANCE_HOLD"
+    },
+    "remaining_gates": [
+      "rendered_visual_acceptance",
+      "isolated_prototype_runtime",
+      "keyboard_focus_acceptance",
+      "resolution_dpi_matrix",
+      "true_product_performance_baseline",
+      "council_art_ui_qa_workflow_review",
+      "p0_go_revise_no_go"
+    ],
+    "runtime_evidence": {
+      "source_build": "PASS_0_WARNINGS_0_ERRORS",
+      "source_validator": "36_36_PASS",
+      "strict_ui_matrix": "5_5_PASS",
+      "layout_warnings_each_viewport": 0,
+      "viewports": [
+        "1280x720",
+        "1366x768",
+        "1536x864_dpi125_equivalent",
+        "1600x900",
+        "1920x1080_requested_1920x1032_usable"
+      ],
+      "startup_ready_ms_samples": [
+        1404.941,
+        1387.1157
+      ],
+      "working_set_before_bytes": 163520512,
+      "working_set_after_bytes": 168148992,
+      "working_set_delta_bytes": 4628480,
+      "semantic_workspace_switch": "PASS",
+      "finance_search_focus": "PASS",
+      "command_palette_open_close": "PASS",
+      "physical_ctrl_k_escape": "PASS_GITHUB_WINDOWS_CI_414",
+      "actual_physical_125_150_dpi": "NOT_PROVEN_LAYOUT_EQUIVALENT_ONLY",
+      "internal_render_visual_run": "9b7e1193866a405fa195e7d3c32edae2",
+      "local_recommendation": "GO_WITH_CONDITIONS",
+      "github_compact_viewport": "1024x720_PASS_221_NAMED_0_LAYOUT_WARNINGS"
+    },
+    "visual_review": {
+      "verdict": "PASS_FOUNDATION_REFINEMENT_REQUIRED",
+      "strengths": [
+        "new shell is visually distinct from legacy RevenueSystem",
+        "no architectural imagery",
+        "Studio Paper Ivory/Cobalt/Brass/Forest identity is visible",
+        "financial workstation hierarchy is coherent",
+        "1280x720 remains operational"
+      ],
+      "required_refinements": [
+        "increase command-rail typography clarity at lower viewport",
+        "strengthen editorial rhythm in top context bar",
+        "use Brass annotations more intentionally",
+        "strengthen inspector hierarchy",
+        "lock packaged Arabic display/body font pair",
+        "continue art polish during Finance Ledger pilot"
+      ]
+    },
+    "conditions_before_next_major_gate": [
+      "replace synchronous Finance legacy wrapper with native async adapter before G6",
+      "obtain actual physical 125%/150% DPI evidence before final Design System lock",
+      "verify physical Ctrl+K/Escape on an interactive or CI desktop that permits SendInput",
+      "add in-process workspace performance marker before defining a product threshold",
+      "do not treat current foundation art as final"
+    ],
+    "ci": {
+      "run_number": 414,
+      "run_id": 39061930920,
+      "head_sha": "840c93903e652848d3ef888b0789989fda1f1711",
+      "status": "SUCCESS",
+      "runner": "windows-2025-vs2026",
+      "stage10": "PASS",
+      "rrs2_foundation_ui_smoke": "PASS",
+      "rrs2_keyboard_ctrl_k": "PASS",
+      "rrs2_keyboard_escape": "PASS",
+      "rrs2_named_elements": 221,
+      "rrs2_layout_warnings": 0,
+      "artifacts": [
+        {
+          "name": "RevenueSystem-rrs2-ui-840c93903e652848d3ef888b0789989fda1f1711",
+          "id": 12111797697
+        },
+        {
+          "name": "RevenueSystem-ui-evidence-840c93903e652848d3ef888b0789989fda1f1711",
+          "id": 12111757897
+        },
+        {
+          "name": "RevenueSystem-windows-840c93903e652848d3ef888b0789989fda1f1711",
+          "id": 12112190521
+        }
+      ]
+    },
+    "p0_final_verdict": "GO_WITH_CONDITIONS",
+    "p0_closed_date": "2026-10-17"
+  },
+  "owner_rebuild_authority": {
+    "current_ui_is_behavior_reference_only": true,
+    "may_delete_screens": true,
+    "may_merge_screens": true,
+    "may_split_screens": true,
+    "may_create_new_workspaces": true,
+    "may_replace_navigation": true,
+    "may_remove_low_value_ui_features": true
+  },
+  "product_topology": {
+    "old_top_level_destinations": 8,
+    "new_workspaces": [
+      {
+        "id": "day_console",
+        "label_ar": "اليوم",
+        "name": "Day Console"
+      },
+      {
+        "id": "reconciliation_studio",
+        "label_ar": "المطابقة",
+        "name": "Reconciliation Studio"
+      },
+      {
+        "id": "finance_ledger",
+        "label_ar": "المالية",
+        "name": "Finance Ledger"
+      },
+      {
+        "id": "reports_center",
+        "label_ar": "التقارير",
+        "name": "Reports Center"
+      },
+      {
+        "id": "data_operations",
+        "label_ar": "البيانات",
+        "name": "Data Operations"
+      },
+      {
+        "id": "administration",
+        "label_ar": "الإدارة",
+        "name": "Administration"
+      }
+    ],
+    "session_states": [
+      "login",
+      "lock",
+      "onboarding"
+    ],
+    "shell": "narrow_rtl_command_rail_plus_workspace_tabs_context_bar_workbench_optional_inspector_status_bar",
+    "permanent_wide_sidebar_required": false
+  },
+  "latest_static_ui_audit": {
+    "xaml_screen_classes": 38,
+    "windows": 18,
+    "usercontrols": 20,
+    "xaml_lines": 5053,
+    "view_codebehind_lines": 18339,
+    "view_dbcontext_refs": 58,
+    "view_savechanges_calls": 11,
+    "open_edges": 31,
+    "unreachable_ui_candidates": [
+      "PendingAdvancesView"
+    ],
+    "remove_feature_candidates": [
+      "RevenueScreenCustomizationWindow",
+      "InteractiveLayoutEditor arbitrary-layout mode"
+    ]
+  },
+  "design_doctrine": "docs/operations/software/REVENUESYSTEM_REBUILD_DESIGN_DOCTRINE.md",
+  "radical_review": "docs/research/2026-10-17-revenuesystem-radical-rebuild-review.md",
+  "motion_prototyping": {
+    "tool": "Cinetic",
+    "integration_doc": "docs/operations/software/CINETIC_MOTION_PROTOTYPE_INTEGRATION.md",
+    "upstream_repo": "Leonxlnx/cinetic",
+    "pinned_commit": "bee5d7807205d5543472c38312507f9bf366cbbf",
+    "role": "PRE_IMPLEMENTATION_INTERACTION_EVIDENCE",
+    "default_engine": "HyperFrames",
+    "remotion_requires_license_check": true,
+    "product_runtime_dependency": false,
+    "wpf_implementation_proof": false,
+    "allowed_after": "STATIC_UX_CONCEPT_AND_WPF_FEASIBILITY_CHECK",
+    "first_pilot": "Day Console -> Open Cashier -> Cashier Workbench -> return",
+    "gates": [
+      "C0_SOURCE_INTEGRITY",
+      "C1_RUNTIME_PREFLIGHT",
+      "C2_FIRST_RENDER",
+      "C3_REVENUESYSTEM_MOTION_PILOT",
+      "C4_COUNCIL_REVIEW"
+    ]
+  },
+  "art_direction": {
+    "status": "LOCKED_OWNER_APPROVED_2026_10_18",
+    "identity_source": "REVENUESYSTEM_COUNCIL_PLUS_REBUILD_STUDIO",
+    "governing_visual_system": "Editorial Financial Engraving",
+    "sole_revenuesystem_visual_authority": true,
+    "previous_revenuesystem_directions_active": false,
+    "governing_lock": "docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md",
+    "design_doctrine": "docs/operations/software/REVENUESYSTEM_REBUILD_DESIGN_DOCTRINE.md",
+    "concept_reference_set": {
+      "date": "2026-10-18",
+      "status": "APPROVED_VISUAL_GRAMMAR_NOT_LITERAL_PRODUCT_DATA",
+      "screens": [
+        "Day Console",
+        "Cashier Workbench",
+        "Reconciliation Studio",
+        "Finance Ledger",
+        "Reports Center",
+        "Data Operations",
+        "Administration",
+        "Login / Lock"
+      ],
+      "accepted": [
+        "paper-ivory operational field",
+        "deep-forest RTL command rail",
+        "cobalt interaction and focus",
+        "subtle guilloche/security linework",
+        "institutional financial seals",
+        "ledger/document composition",
+        "quiet dense grids and inputs",
+        "Arabic financial hierarchy"
+      ],
+      "reject_generation_drift": [
+        "Saudi national emblems or country branding",
+        "Saudi Riyal examples unless demanded by actual domain data",
+        "bank/government architecture as visual identity",
+        "palm/country imagery",
+        "literal real banknotes or currency portraits",
+        "fake concept values as product truth",
+        "left-side window controls"
+      ]
+    },
+    "palette": {
+      "paper_ivory": "#F6F1E8",
+      "deep_forest": "#173C32",
+      "cobalt": "#174FA6",
+      "clear_blue": "#2B73C9",
+      "sky_blue": "#8EACD2",
+      "warm_parchment": "#D9C8B1",
+      "brass_gold": "#B58A3E",
+      "charcoal": "#151515",
+      "semantic_red": "RISK_DIFFERENCE_DESTRUCTIVE_ONLY",
+      "semantic_amber": "REVIEW_ATTENTION_ONLY"
+    },
+    "target_weighting": {
+      "paper_ivory": "45-60%",
+      "deep_forest": "15-25%",
+      "cobalt_clear_sky_combined": "8-15%",
+      "warm_parchment": "5-10%",
+      "brass_gold": "3-7% maximum decorative emphasis"
+    },
+    "core_vocabulary": [
+      "guilloche security patterns",
+      "micro-line engraving",
+      "ledger rulework",
+      "registration marks",
+      "original institutional seals",
+      "paper layering",
+      "denomination-strip geometry",
+      "precise tabular numerals"
+    ],
+    "composition_rule": "right-side narrow command rail + work-item tabs + business context bar + one dominant workbench + optional inspector + compact status bar",
+    "material_rule": "quiet data surfaces; engraving and texture live primarily in shell, context, status, empty space and document framing",
+    "typography_rule": "refined contemporary Arabic display for identity/headings; modern Arabic sans for operations; tabular financial numerals",
+    "seal_rule": "original RevenueSystem abstract seal only; no national, governmental, bank or currency imitation",
+    "wpf_rule": "tokens/components/vector geometry; no screenshot skins; no heavy raster textures behind data; virtualization preserved",
+    "owner_approved_date": "2026-10-18",
+    "prohibited_visuals": [
+      "all previous RevenueSystem visual directions as active authority",
+      "architectural imagery as decorative UI identity",
+      "Babylonian or Baghdadi ornament",
+      "real banknotes or real currency portraits",
+      "real bank logos",
+      "national or government emblems",
+      "country-specific visual branding",
+      "casino or luxury wealth styling",
+      "crypto aesthetics",
+      "generic enterprise SaaS styling",
+      "old RevenueSystem layout reproduction",
+      "green-and-gold everywhere",
+      "glassmorphism",
+      "neon cyberpunk",
+      "fake antique paper",
+      "giant rounded card walls"
+    ],
+    "scope": "ALL_REVENUESYSTEM_UI_EXISTING_PREVIOUS_LEGACY_REBUILT_CURRENT_AND_FUTURE",
+    "no_grandfather_clause": true,
+    "completed_surfaces_require_visual_rebase": true,
+    "functional_gate_evidence_preserved": true,
+    "visual_reacceptance_required_before_release": true,
+    "visual_rebase_targets": [
+      "Foundation Shell",
+      "Finance Ledger read/write pilot surfaces",
+      "Day Console",
+      "Cashier Workbench",
+      "all remaining legacy reachable screens",
+      "all future workspaces and system states",
+      "dialogs popups inspectors side-sheets command palette",
+      "reports preview print export surfaces",
+      "loading empty recovery conflict error confirm states"
+    ]
+  },
+  "detailed_rebuild_plan": "docs/operations/software/REVENUESYSTEM_2_DETAILED_REBUILD_PLAN.md",
+  "execution_plan": {
+    "current_phase": "PHASE_6_CASHIER_WORKBENCH_COMPLETE",
+    "next_packet": "POST_G9_NEXT_PHASE_NOT_OPENED",
+    "product_code_changes_started": true,
+    "release_route_changed": false,
+    "production_data_access": false,
+    "production_lan_access": false,
+    "completed_gates": [
+      "G6_FINANCE_READ_PILOT_LOCK",
+      "G7_FINANCE_WRITE_PILOT_LOCK",
+      "G8_DAY_CONSOLE_OVERVIEW_LOCK",
+      "G9_CASHIER_WORKBENCH_LOCK"
+    ],
+    "visual_rebase": {
+      "status": "SECTION_1_REOPENED_ART_FIDELITY_REMEDIATION",
+      "reason": "Owner requested bounded execution to prevent long-run interruption and preserve exact restart checkpoints",
+      "preserves_completed_functional_gates": true,
+      "blocks_final_release_until_visual_reacceptance": true,
+      "execution_rule": "OPEN_ONE_SECTION_ONLY_CLOSE_WITH_SHA_CI_ARTIFACTS_COUNCIL_STUDIO_VERDICT_BEFORE_NEXT",
+      "product_branch": "rebuild/rs2-editorial-financial-engraving",
+      "draft_pr": 84,
+      "current_product_head": "c7d9e05bd6fe253fa0deafdca81469d210b3938d",
+      "sections": [
+        {
+          "id": "VISUAL_SECTION_1_CORE_REBASE_LOCK",
+          "name": "Core Design System + Existing Core Surfaces",
+          "status": "REOPENED_ART_FIDELITY_REMEDIATION",
+          "scope": [
+            "Editorial Financial Engraving semantic tokens and vector pattern system",
+            "RevenueSystem 2.0 Shell and command rail",
+            "Day Console",
+            "Cashier Workbench",
+            "Finance Ledger",
+            "placeholder/unbuilt workspace state",
+            "compact 1024x720 behavior",
+            "shared components, grids, focus, seals, denomination treatment"
+          ],
+          "already_verified": {
+            "ci_run_number": 590,
+            "ci_run_id": 39152730705,
+            "ci_status": "SUCCESS",
+            "build": "PASS",
+            "static_validation": "PASS",
+            "stage10": "PASS",
+            "finance_regression": "PASS",
+            "day_regression": "PASS",
+            "cashier_stage3_regression": "PASS",
+            "compact_viewport": "1024x720 PASS",
+            "layout_warnings": 0
+          },
+          "remaining_before_lock": [],
+          "exit_lock": "VISUAL_SECTION_1_LOCK",
+          "final_product_head": "c7d9e05bd6fe253fa0deafdca81469d210b3938d",
+          "final_ci": {
+            "run_number": 591,
+            "run_id": 39164529605,
+            "run_attempt": 2,
+            "conclusion": "SUCCESS",
+            "head_sha": "c7d9e05bd6fe253fa0deafdca81469d210b3938d",
+            "stage10": "PASS",
+            "finance_ui": "PASS",
+            "day_ui": "PASS",
+            "cashier_stage3_financial_ui": "PASS",
+            "compact_viewport": "1024x720 PASS",
+            "layout_warnings": 0
+          },
+          "final_artifacts": [
+            {
+              "surface": "cashier",
+              "id": 12150606515,
+              "digest": "sha256:53c0670cf47e92971382f87fb740e65da913a44abd0788c21ff7924e4b3b5a28"
+            },
+            {
+              "surface": "day",
+              "id": 12150895350,
+              "digest": "sha256:005a9a88532c3d153502d4735b3afdeaa7e3b2aec17ea218d3a6ed9caea74147"
+            },
+            {
+              "surface": "finance",
+              "id": 12150169095,
+              "digest": "sha256:35cce8315ec76ffd8b8d3b55d1ba1d9c5218924f466879843ec2f9a0de164db9"
+            },
+            {
+              "surface": "isolated_ui_evidence",
+              "id": 12150303287,
+              "digest": "sha256:cab87354b3a368a20328892b0f4922dd4732bfd416a7a97e2f32e64d4a722fc6"
+            },
+            {
+              "surface": "windows_build",
+              "id": 12150830734,
+              "digest": "sha256:1ec9e6fde675eb6a043fd4aacc281bba6023eea8164e85f5e0f244246da31227"
+            }
+          ],
+          "council_verdict": "PASS",
+          "studio_verdict": "PASS",
+          "warnings": [
+            "CI #591 attempt 1 had a Cashier F5 authoritative-save UI-gate failure; exact-head attempt 2 passed without product-source changes to financial logic.",
+            "Legacy isolated المطابقة surface remains visually non-compliant and is deferred explicitly to Section 3; it is not grandfathered."
+          ],
+          "lock_document": "docs/operations/software/REVENUESYSTEM_VISUAL_SECTION_1_LOCK_2026-10-18.md",
+          "locked_date": "2026-10-18",
+          "remediation_scope": [
+            "shared authored engraving and seal primitives",
+            "shell/context editorial rhythm",
+            "Day Console readiness as visual hero",
+            "Cashier Workbench numeric-entry dominance and financial-save identity",
+            "Finance Ledger institutional account-dossier hierarchy",
+            "Arabic production-facing hierarchy and removal of prototype/debug visual dominance",
+            "representative synthetic screenshot evidence",
+            "side-by-side reference fidelity gate"
+          ],
+          "behavioral_financial_lock_evidence_preserved": true
+        },
+        {
+          "id": "VISUAL_SECTION_2_RECONCILIATION_REPORTS",
+          "name": "Reconciliation Studio + Reports Center",
+          "status": "NOT_OPENED",
+          "scope": [
+            "Reconciliation Studio full visual/interaction composition",
+            "difference/matched hero states",
+            "cash/electronic/adjustment/account/evidence dossier flow",
+            "Reports Center catalog, filters, preview, print/export presentation",
+            "shared dossier/report components added only when reusable",
+            "isolated functional regressions for affected flows"
+          ],
+          "exit_lock": "VISUAL_SECTION_2_LOCK"
+        },
+        {
+          "id": "VISUAL_SECTION_3_SYSTEM_COMPLETION",
+          "name": "Data + Administration + Session + Remaining Reachable UI + Final Visual Reacceptance",
+          "status": "NOT_OPENED",
+          "scope": [
+            "Data Operations",
+            "Administration",
+            "Login / Lock / onboarding / database-selection states",
+            "remaining reachable dialogs, popups, inspectors and side sheets",
+            "recovery, conflict, error, confirmation, loading and empty states",
+            "report print/export configuration surfaces not completed in Section 2",
+            "legacy reachable surfaces: migrate or explicitly classify for retirement",
+            "whole-product consistency audit",
+            "DPI/compact matrix and full visual reacceptance",
+            "final Council + Studio visual lock"
+          ],
+          "exit_lock": "VISUAL_SECTION_3_FINAL_LOCK"
+        }
+      ],
+      "section_1_lock_document": "docs/operations/software/REVENUESYSTEM_VISUAL_SECTION_1_LOCK_2026-10-18.md",
+      "section_1_final_review": "docs/operations/software/REVENUESYSTEM_EDITORIAL_FINANCIAL_ENGRAVING_NATIVE_REBASE_REVIEW_2026-10-18.md",
+      "next_section": "VISUAL_SECTION_2_RECONCILIATION_REPORTS",
+      "next_section_status": "BLOCKED_BY_SECTION_1_ART_FIDELITY_REMEDIATION",
+      "remediation_reason": "Owner directed detailed correction after Council+Studio side-by-side review found reference-fidelity and artistic-authorship gaps despite valid prior technical/behavioral lock evidence.",
+      "previous_section_1_lock_preserved_as_historical_evidence": true,
+      "section_2_blocked_until_section_1_art_fidelity_relock": true
+    }
+  },
+  "environment_audit": {
+    "status": "ENV_P0_PASS",
+    "report": "docs/operations/software/REVENUESYSTEM_2_WORK_ENVIRONMENT_AUDIT_2026-10-17.md",
+    "reviewed_date": "2026-10-17",
+    "next_required_gate": "RRS_P0_FOUNDATION_BUILD_PACKET",
+    "immediate_findings": [
+      "C drive free space approximately 20.3 GB while user Temp is approximately 15.9 GB",
+      "YASSIN active power plan is Power saver",
+      "no repository global.json",
+      "no repository .vsconfig",
+      "no Directory.Packages.props or package lock files found",
+      "latest main CI is passing but monolithic and duplicates release-gate validation",
+      "release gate deletes temporary UI evidence even on failure",
+      "control bridge deny list is not enforced by control_bridge.py",
+      "control bridge audit can log full command/stdout/stderr values",
+      "Adobe capability registry has version/status drift from actual YASSIN installation"
+    ],
+    "no_major_new_paid_tool_required": true,
+    "env_p0": {
+      "revenue_branch": "rebuild/rs2-env-p0-hardening",
+      "revenue_pr": 78,
+      "revenue_head": "01a522a9650dfa6f13ace5338af2ebd8f8abdf1b",
+      "local_run_id": "41a3ca439f4c4b8d89a7a1aaa31e9774",
+      "local_release_gate": "PASS",
+      "local_build": "PASS_0_WARNINGS_0_ERRORS",
+      "validation": "94_94_PASS",
+      "integration": "291_291_PASS",
+      "ui_smoke": "PASS_137_NAMED_0_LAYOUT_WARNINGS",
+      "github_ci_run": 411,
+      "github_ci": "SUCCESS",
+      "product_code_rebuild_started": false,
+      "merged_to_main": false
+    }
+  },
+  "finance_pilot": {
+    "read": {
+      "branch": "rebuild/rs2-finance-read-pilot",
+      "pr": 80,
+      "head": "6c5ddcc7c88d9da32beb467ca19848aa95e91006",
+      "gate": "G6_FINANCE_READ_PILOT_LOCK",
+      "status": "PASS",
+      "ci_run_number": 438,
+      "ci_run_id": 39076189895,
+      "ci_status": "SUCCESS"
+    },
+    "write": {
+      "branch": "rebuild/rs2-finance-write-pilot",
+      "pr": 81,
+      "head": "f1855a17498cdbdf2404d47c9073dbe6e989fb12",
+      "gate": "G7_FINANCE_WRITE_PILOT_LOCK",
+      "status": "PASS_STACKED_PR_HOLD",
+      "ci_run_number": 467,
+      "ci_run_id": 39079748665,
+      "ci_status": "SUCCESS",
+      "integration": "315/315 PASS",
+      "ui_layout_warnings": 0
+    }
+  },
+  "day_console": {
+    "branch": "rebuild/rs2-day-console-overview",
+    "pr": 82,
+    "base": "f1855a17498cdbdf2404d47c9073dbe6e989fb12",
+    "gate": "G8_DAY_CONSOLE_OVERVIEW_LOCK",
+    "status": "PASS_STACKED_PR_HOLD",
+    "scope": [
+      "day overview",
+      "branch/cashier completion",
+      "attention queue",
+      "read-only readiness",
+      "recovery draft indicator",
+      "deep links to implemented workspaces"
+    ],
+    "architecture": [
+      "DayConsoleWorkspace",
+      "DayConsoleViewModel",
+      "IDayConsoleReadUseCase",
+      "DayConsoleReadAdapter",
+      "EF Core async"
+    ],
+    "safety": [
+      "does not call BusinessDayWorkflowService.CheckClose or EnsureDay to render",
+      "does not capture missing roster during read",
+      "recovery projection does not quarantine/move files",
+      "no View-owned AppDbContext or SaveChanges",
+      "isolated runtime only"
+    ],
+    "head": "4a9bb49a7bcdf2167c1ae45c9054eb3ff5d150f1",
+    "council_review": "docs/operations/software/REVENUESYSTEM_G8_DAY_CONSOLE_COUNCIL_REVIEW_2026-10-18.md",
+    "local_source_build": "PASS_0_WARNINGS_0_ERRORS",
+    "foundation_validator": "44/44 PASS",
+    "day_validator": "40/40 PASS",
+    "ci_run_number": 497,
+    "ci_run_id": 39114770698,
+    "ci_status": "SUCCESS",
+    "stage10": "PASS",
+    "finance_write_ui_regression": "PASS",
+    "day_ui_smoke": "PASS",
+    "ui_viewport": "1024x720_CI_COMPACT_STRESS",
+    "ui_named_elements": 128,
+    "ui_layout_warnings": 0,
+    "day_ui_artifact_id": 12132420270,
+    "ui_evidence_artifact_id": 12132450256,
+    "finance_ui_artifact_id": 12131694138
+  },
+  "cashier_workbench": {
+    "phase": "PHASE_6_CASHIER_WORKBENCH",
+    "gate": "G9_CASHIER_WORKBENCH_LOCK",
+    "status": "PASS_STACKED_PR_HOLD",
+    "prerequisite_gate": "G8_DAY_CONSOLE_OVERVIEW_LOCK",
+    "source_base": "4a9bb49a7bcdf2167c1ae45c9054eb3ff5d150f1",
+    "preopen_contract": "docs/operations/software/REVENUESYSTEM_PHASE6_CASHIER_WORKBENCH_PREOPEN_2026-10-18.md",
+    "preserved_contracts": [
+      "CashierRevenueEntryService authoritative financial write",
+      "ArithmeticExpressionEvaluator and InlineRevenueCalculator arithmetic",
+      "CashierCrashRecoveryService durability and database-incarnation binding",
+      "latest-edit durability across in-flight save",
+      "cashier branch POS day identity",
+      "coarse IQD change IQD USD cents separation",
+      "keyboard-first operator flow"
+    ],
+    "prohibited_shortcuts": [
+      "no AppDbContext or SaveChanges in RebuildV2 Presentation",
+      "no copied financial save formula in ViewModel",
+      "no arbitrary legacy InteractiveLayoutEditor reproduction",
+      "no production DB LAN or production AppData"
+    ],
+    "branch": "rebuild/rs2-cashier-workbench",
+    "pr": 83,
+    "three_stage_execution": [
+      {
+        "id": "STAGE_1_READ_ONLY",
+        "status": "PASS",
+        "scope": [
+          "application contracts",
+          "native async read adapter",
+          "frozen roster provenance",
+          "read-only Cashier Workbench inside Day",
+          "Day open/return loop",
+          "build validators strict GUI smoke"
+        ],
+        "financial_write": false
+      },
+      {
+        "id": "STAGE_2_EDITING_KEYBOARD_RECOVERY",
+        "status": "PASS",
+        "scope": [
+          "local editing state",
+          "expressions",
+          "keyboard contract",
+          "dirty revision",
+          "durable recovery",
+          "navigation handoff"
+        ],
+        "financial_write": false
+      },
+      {
+        "id": "STAGE_3_FINANCIAL_SAVE_G9_LOCK",
+        "status": "PASS",
+        "scope": [
+          "authoritative financial save",
+          "permissions",
+          "concurrency",
+          "autosave durability",
+          "full regression",
+          "council final clearance",
+          "G9 lock"
+        ],
+        "financial_write": true
+      }
+    ],
+    "stage1": {
+      "status": "PASS",
+      "head": "90476f0186f1e44739d5545271621fc8d0f622f9",
+      "ci_run_number": 525,
+      "ci_run_id": 39121903519,
+      "ci_status": "SUCCESS",
+      "local_build": "PASS_0_WARNINGS_0_ERRORS",
+      "foundation_validator": "45/45 PASS",
+      "day_validator": "40/40 PASS",
+      "cashier_validator": "41/41 PASS",
+      "strict_ui_viewport": "1024x720",
+      "strict_ui_named_elements": 140,
+      "strict_ui_layout_warnings": 0,
+      "ui_artifact_id": 12135071354,
+      "ui_artifact_digest": "sha256:55b98b43533b6a5a404b4a1bd9a0cfc899e91dc94babf5d2d046ffe381d4b0b7",
+      "financial_write_enabled": false
+    },
+    "stage2": {
+      "status": "PASS",
+      "head": "88d7eb8ed41b803c10c26dc6e9c70b752aceb77f",
+      "ci_run_number": 546,
+      "ci_run_id": 39124422760,
+      "ci_status": "SUCCESS",
+      "build": "PASS",
+      "static_validation": "PASS",
+      "stage10": "PASS",
+      "finance_regression": "PASS",
+      "day_regression": "PASS",
+      "cashier_stage2_ui_smoke": "PASS",
+      "strict_ui_viewport": "1024x720",
+      "strict_ui_named_elements": 122,
+      "strict_ui_layout_warnings": 0,
+      "ui_artifact_id": 12134978933,
+      "ui_artifact_digest": "sha256:f501a2ca5b40f208b30a756e26456ea3f975486742c6bae9c8506c8bc361e6ad",
+      "financial_write_enabled": false,
+      "architecture_condition_for_stage3": "Authoritative financial save must enter through an Application write contract/coordinator and Infrastructure adapter; do not add financial save logic directly to CashierWorkbenchViewModel."
+    },
+    "stage3": {
+      "status": "PASS",
+      "head": "416196fa60202e75b035deabf805a92e094700d4",
+      "ci_run_number": 572,
+      "ci_run_id": 39126844406,
+      "ci_status": "SUCCESS",
+      "stage10": "PASS",
+      "finance_regression": "PASS",
+      "day_regression": "PASS",
+      "cashier_stage3_financial_ui_gate": "PASS",
+      "deterministic_latest_edit_race": "PASS",
+      "strict_ui_viewport": "1024x720",
+      "strict_ui_named_elements": 125,
+      "strict_ui_layout_warnings": 0,
+      "ui_artifact_id": 12136229066,
+      "ui_artifact_digest": "sha256:80076f0c648b6698691967e62eb3175d7269529fa27318214915c47d2a34ab0b",
+      "financial_write_enabled": true,
+      "disposition": "PASS_STACKED_PR_HOLD"
+    }
+  },
+  "visual_execution_governance": {
+    "status": "OWNER_DIRECTED_ACTIVE_2026-10-19",
+    "trigger_review": "docs/operations/software/REVENUESYSTEM_ART_DIRECTION_REFERENCE_FIDELITY_COUNCIL_STUDIO_REVIEW_2026-10-19.md",
+    "authorities": [
+      "RevenueSystem Visual Art Director",
+      "RevenueSystem WPF Design Systems / Visual Engineering Lead",
+      "RevenueSystem UI/UX Interaction Architect",
+      "Independent Visual QA / Reference Fidelity Reviewer",
+      "Arabic Typography / Localization Specialist (on demand)"
+    ],
+    "mandatory_pipeline": [
+      "reference_slice",
+      "operator_workflow_forensics",
+      "ux_simplification_brief",
+      "three_layout_alternatives",
+      "ux_authority_preclearance",
+      "cognitive_walkthrough",
+      "screen_art_brief",
+      "native_wpf_component_plan",
+      "implementation",
+      "representative_synthetic_runtime",
+      "ux_scorecard_measurement",
+      "screenshot_matrix",
+      "ux_authority_runtime_review",
+      "proactive_pre_owner_ux_audit",
+      "side_by_side_reference_fidelity_review",
+      "art_director_clearance",
+      "independent_visual_qa_clearance",
+      "council_domain_architecture_security_performance_clearance",
+      "owner_checkpoint_or_lock"
+    ],
+    "mandatory_visual_questions": [
+      "composition_and_visual_massing_matches_reference_intent",
+      "authored_identity_moment_present_where_required",
+      "semantic_seal_usage_is_intentional",
+      "arabic_display_typography_is_production_ready",
+      "engraving_is_spatially_composed_not_generic_wallpaper",
+      "screen_remains_product_specific_without_logo_or_rail",
+      "side_by_side_reads_as_same_design_system",
+      "representative_synthetic_data_is_sufficient_to_judge_hierarchy",
+      "independent_visual_qa_is_separate_from_implementer",
+      "art_never_reduces_financial_long_session_ergonomics"
+    ],
+    "ci_rule": "CI success is implementation-health evidence, never sufficient visual acceptance by itself.",
+    "primary_design_authority": "RevenueSystem Chief Operator Experience & UX Authority v2",
+    "design_decision_precedence": [
+      {
+        "rank": 1,
+        "role": "RevenueSystem Chief UX & Interaction Authority",
+        "decides": [
+          "usability",
+          "simplification",
+          "layout",
+          "density",
+          "screen_space",
+          "chrome_and_title_bars",
+          "workflow",
+          "navigation",
+          "keyboard",
+          "focus",
+          "operator_speed",
+          "cognitive_load"
+        ]
+      },
+      {
+        "rank": 2,
+        "role": "RevenueSystem Visual Art Director",
+        "decides": [
+          "art_direction_expression",
+          "composition_style",
+          "engraving_language",
+          "seal_language",
+          "typography_expression",
+          "visual_character"
+        ],
+        "constraint": "Must operate inside UX-approved hierarchy, density and workflow."
+      },
+      {
+        "rank": 3,
+        "role": "RevenueSystem WPF Design Systems / Visual Engineering Lead",
+        "decides": [
+          "native_wpf_translation",
+          "shared_component_implementation",
+          "rendering_performance",
+          "dpi_behavior"
+        ]
+      },
+      {
+        "rank": 4,
+        "role": "Independent Visual QA / Reference Fidelity Reviewer",
+        "decides": [
+          "independent_accept_revise_verdict"
+        ]
+      }
+    ],
+    "design_conflict_rule": "UX v2 wins conflicts involving layout, density, simplification, hierarchy, navigation, keyboard, focus, interaction, operator speed or cognitive load, but must provide evidence for major structural vetoes. Art direction operates within the UX-approved skeleton. Finance/data/security/accessibility/architecture constraints are non-negotiable. Owner is final arbiter.",
+    "ux_mandatory_preclearance": [
+      "shell_chrome",
+      "workspace_headers",
+      "title_bars",
+      "hero_bands",
+      "sidebars",
+      "inspectors",
+      "navigation",
+      "input_density",
+      "keyboard_flow",
+      "long_session_workspaces",
+      "dialogs_and_popups"
+    ],
+    "ux_authority_version": "2.0",
+    "ux_evidence_obligation": true,
+    "ux_major_screen_three_layout_requirement": true,
+    "ux_scorecard": [
+      "time_to_first_productive_action",
+      "task_completion_time",
+      "required_keystrokes_and_clicks",
+      "input_to_result_distance",
+      "error_rate",
+      "recovery_success_rate",
+      "state_recognition_time",
+      "chrome_ratio",
+      "primary_task_visible_area",
+      "keyboard_completion_rate",
+      "long_session_friction",
+      "learnability"
+    ],
+    "ux_hard_budgets": {
+      "viewport": "1024x720",
+      "persistent_top_app_chrome_max_px": 58,
+      "persistent_bottom_bar_max_px": 24,
+      "duplicate_page_title_strip_allowed": false,
+      "normal_local_hero_max_px": 90,
+      "high_frequency_entry_hero_max_px": 78
+    },
+    "ux_pre_owner_audit_required": true,
+    "ux_debt_ledger_required": true,
+    "ux_legacy_workflow_benchmark_required": true,
+    "ux_v2_approved_direction": {
+      "name": "BALANCED_CONTENT_FIRST",
+      "owner_approved_date": "2026-10-19",
+      "identity_system": "EDITORIAL_FINANCIAL_ENGRAVING",
+      "identity_rebuild_required": false,
+      "composition_rebase_required": true,
+      "principles": [
+        "single_compact_shell_context",
+        "content_begins_immediately_after_context",
+        "one_dominant_operational_state_per_screen",
+        "cashier_most_compact_high_frequency_surface",
+        "day_readiness_is_hero_not_page_title",
+        "finance_account_identity_and_kpis_compose_as_one_compact_block",
+        "art_moves_into_typography_guilloche_rules_seals_and_spacing_not_extra_bars",
+        "reclaimed_vertical_space_returns_to_financial_task"
+      ],
+      "prohibited": [
+        "full_visual_identity_restart",
+        "new_unrelated_theme",
+        "architecture_branding",
+        "bank_like_ornament",
+        "large_repeated_headers",
+        "duplicate_page_title_strip",
+        "decorative_space_replacing_task_space"
+      ]
+    },
+    "current_required_correction": "SECTION_1_COMPOSITION_REBASE_BALANCED_CONTENT_FIRST",
+    "section1_relock_requires": [
+      "single_context_ribbon",
+      "cashier_compact_identity_and_financial_totals_priority",
+      "day_readiness_first_hierarchy",
+      "finance_compact_account_dossier_plus_ledger_priority",
+      "ux_v2_scorecard_pass",
+      "art_director_pass",
+      "independent_visual_qa_pass",
+      "council_domain_architecture_security_performance_pass"
+    ]
+  }
+}
