@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261018-233500-vis3sct",
+  "created_at": "2026-10-18T23:35:00+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "revenuesystem.visual_rebase.execution_partition",
+  "summary": "Owner required the Editorial Financial Engraving rebase to be executed in exactly three bounded sections to avoid long-run interruption. Only one section may be open at a time; each section must close with exact SHA, CI, artifacts/screenshots, and Council+Studio verdict before the next opens.",
+  "details": {
+    "execution_rule": "OPEN_ONE_SECTION_ONLY_CLOSE_WITH_SHA_CI_ARTIFACTS_COUNCIL_STUDIO_VERDICT_BEFORE_NEXT",
+    "sections": [
+      {
+        "id": "VISUAL_SECTION_1_CORE_REBASE_LOCK",
+        "scope": "Design system, Shell, Day Console, Cashier Workbench, Finance Ledger, shared components and compact behavior"
+      },
+      {
+        "id": "VISUAL_SECTION_2_RECONCILIATION_REPORTS",
+        "scope": "Reconciliation Studio and Reports Center"
+      },
+      {
+        "id": "VISUAL_SECTION_3_SYSTEM_COMPLETION",
+        "scope": "Data Operations, Administration, Login/Lock/onboarding, remaining reachable dialogs/states/legacy surfaces, final whole-product visual reacceptance"
+      }
+    ],
+    "current_product_branch": "rebuild/rs2-editorial-financial-engraving",
+    "current_product_head": "95d76d37d799953552b30147de789a88cb41cec2",
+    "latest_successful_ci_run": 590,
+    "universal_council_config_commit": "2b0d0b5958c3f2de5a933618ee7d6915c89d5eae"
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "visual-rebase",
+    "editorial-financial-engraving",
+    "three-sections",
+    "execution-control"
+  ],
+  "source": {
+    "type": "owner_directive",
+    "commit": "2b0d0b5958c3f2de5a933618ee7d6915c89d5eae"
+  }
+}
