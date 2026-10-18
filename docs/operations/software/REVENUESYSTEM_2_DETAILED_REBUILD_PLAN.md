@@ -30,13 +30,22 @@ The current application is **not authoritative** for:
 - visual language;
 - information architecture.
 
-The approved visual direction is:
+The approved and sole visual direction is:
 
-**Editorial Renaissance Motion — adapted into a professional financial desktop workstation.**
+**EDITORIAL FINANCIAL ENGRAVING**
+
+Authority:
+`docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md`
+
+It translates secure-financial craft into a modern desktop workstation through guilloché, engraved linework, ledger rules, institutional seals, paper materiality and exact hierarchy—without literal currency/bank/government imitation.
 
 Explicitly rejected:
-- architectural imagery as UI decoration;
-- Babylonian/Baghdadi ornament added for cultural flavor;
+- any previous RevenueSystem visual direction;
+- architectural imagery as UI identity;
+- Babylonian/Baghdadi ornament;
+- real banknote/bank/government imitation;
+- country-specific visual branding;
+- casino/luxury/crypto aesthetics;
 - generic Fluent/SaaS enterprise styling;
 - card-heavy dashboards;
 - recreating the old RevenueSystem layout;
@@ -248,75 +257,148 @@ It never bypasses permissions.
 
 # 4. Art direction — implementation rules
 
-Source identity:
-**Studio / Editorial Renaissance Motion**
+Governing system:
+**EDITORIAL FINANCIAL ENGRAVING**
 
-## 4.1 Palette
+Full authority:
+`docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md`
 
-- Paper Ivory `#F6F1E8` — dominant
-- Cobalt `#174FA6` — structural
-- Clear Blue `#2B73C9` — active/interactions
-- Sky Blue `#8EACD2` — quiet secondary
-- Warm Parchment `#D9C8B1` — warm support
-- Brass Gold `#B58A3E` — annotation/value accent
-- Deep Forest `#173C32` — matched/verified/healthy
+## 4.1 Visual premise
+
+RevenueSystem should feel like a precision financial instrument whose identity comes from secure-document craft, not from literal money imagery.
+
+Accepted vocabulary:
+- Paper Ivory operational field;
+- Deep Forest institutional structure;
+- Cobalt interaction/focus;
+- guilloché/security-print lines;
+- ledger rulework;
+- original institutional seals;
+- subtle paper layering;
+- denomination-strip geometry;
+- quiet dense tables and inputs.
+
+## 4.2 Palette
+
+- Paper Ivory `#F6F1E8` — 45–60%, dominant work surface
+- Deep Forest `#173C32` — 15–25%, rail/verified/structure
+- Cobalt `#174FA6` — primary focus/action
+- Clear Blue `#2B73C9` — active interaction
+- Sky Blue `#8EACD2` — quiet support
+- Warm Parchment `#D9C8B1` — document/material support
+- Brass Gold `#B58A3E` — 3–7% maximum, micro-accent only
 - Charcoal `#151515` — text/anchors
-- Semantic Red — difference/risk/destructive only
+- semantic red — financial difference/risk/destructive only
+- semantic amber — review/attention only
 
-## 4.2 Typography
+## 4.3 Texture/material
 
-Identity/display:
-- refined Arabic Naskh influence where legibility permits.
+Allowed:
+- subtle paper warmth;
+- guilloché in shell/header/empty/status spaces;
+- registration marks in process flows;
+- fine ledger lines;
+- original RevenueSystem seals;
+- minimal layered-paper depth.
+
+Forbidden:
+- texture behind editable numbers or dense grids;
+- architecture as decoration;
+- literal real banknotes;
+- national/government symbols;
+- real bank branding;
+- glass/neon;
+- casino/luxury styling;
+- giant shadows/rounding;
+- fake antique material.
+
+## 4.4 Typography
+
+Display:
+- refined contemporary Arabic Naskh influence for major identity/state headings only.
 
 Operational:
 - modern Arabic sans;
 - compact;
-- high contrast;
-- stable numeric metrics.
+- high-legibility.
 
 Numbers:
 - tabular;
 - currency-aware;
-- signs explicit;
-- no ornamental numeral styling.
+- sign explicit;
+- stable baseline.
 
-## 4.3 Material
+## 4.5 Geometry
 
-Allowed:
-- ivory/paper warmth;
-- subtle texture only in non-data surfaces;
-- cobalt rules;
-- brass micro-annotation;
-- layered editorial surfaces;
-- small controlled depth.
+- 4–8 px default radii;
+- 1 px hairline ledger borders;
+- square/lightly-rounded desktop controls;
+- 4/8/12/16/24/32 spacing scale;
+- shadows mostly absent;
+- dense rows stay dense.
 
-Forbidden:
-- architecture/photos as decorative shell art;
-- faux historical ornament;
-- botanical/classical cutouts in routine transaction UI;
-- heavy texture behind tables;
-- glass;
-- neon;
-- gradient-heavy decoration;
-- generic SaaS cards.
+## 4.6 Shell
 
-## 4.4 Motion
+- right-side narrow Deep Forest command rail;
+- active destination uses Cobalt/Clear Blue;
+- top-right Windows controls;
+- ivory business context bar;
+- work-item tabs;
+- main workbench;
+- optional inspector;
+- compact status bar.
 
-Cinetic may prototype.
+## 4.7 Art-density rule
+
+Decoration reduces before functional density reduces.
+
+Highest allowed expression:
+- Login identity;
+- report framing;
+- shell/context headers;
+- verified/matched status.
+
+Lowest allowed expression:
+- Cashier numeric entry;
+- DataGrid;
+- account ledger rows;
+- reconciliation numeric comparisons.
+
+## 4.8 Motion
+
 Blend/WPF is implementation authority.
 
 Timing:
-- micro state: 120–220 ms;
-- inspector/panel: 180–320 ms;
-- major workspace change: only as needed.
+- focus/hover: 80–140 ms;
+- control state: 100–180 ms;
+- panel/inspector: 160–240 ms;
+- workspace transition: 180–300 ms.
 
-Motion must:
-- explain state;
-- preserve focus;
-- never delay typing;
-- respect reduced-motion preference if implemented.
+Allowed:
+- ledger/page shifts;
+- line builds;
+- focus trace;
+- verification seal resolve;
+- restrained panel reveals.
 
----
+Forbidden:
+- continuous animated patterns;
+- animated coins/money;
+- motion that delays typing or steals focus.
+
+## 4.9 Concept-image corrections
+
+The generated eight-screen set is a visual reference, not product truth.
+
+Do not copy:
+- Saudi national emblem/imagery;
+- Saudi Riyal examples unless real domain data requires them;
+- bank-building artwork;
+- palm/country imagery;
+- generated fake dates/names/amounts;
+- left-side window controls.
+
+Repository/domain contracts own real content.
 
 # 5. Target application boundaries
 
@@ -378,7 +460,7 @@ Owns:
 
 ## WS-B Art / UI System
 Owns:
-- Studio-aligned visual system;
+- Editorial Financial Engraving visual system;
 - tokens;
 - typography;
 - components;
