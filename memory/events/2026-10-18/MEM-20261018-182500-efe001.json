@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261018-182500-efe001",
+  "created_at": "2026-10-18T18:25:00+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "decision",
+  "subject": "revenuesystem.art_direction.current",
+  "summary": "RevenueSystem 2.0 visual direction is now owner-locked exclusively as Editorial Financial Engraving, derived from the eight approved concept screens. All prior RevenueSystem visual directions are inactive; historical mentions remain audit evidence only.",
+  "details": {
+    "governing_system": "Editorial Financial Engraving",
+    "governing_lock": "docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md",
+    "joint_authorship": "RevenueSystem Council + RevenueSystem Rebuild Studio",
+    "concept_reference_date": "2026-10-18",
+    "concept_screens": [
+      "Day Console",
+      "Cashier Workbench",
+      "Reconciliation Studio",
+      "Finance Ledger",
+      "Reports Center",
+      "Data Operations",
+      "Administration",
+      "Login / Lock"
+    ],
+    "core_identity": [
+      "paper-ivory operational field",
+      "deep-forest institutional structure",
+      "cobalt interaction and focus",
+      "guilloche/security-print linework",
+      "ledger precision",
+      "original abstract institutional seals",
+      "quiet dense data surfaces"
+    ],
+    "previous_revenuesystem_directions_active": false,
+    "generated_image_drift_rejected": [
+      "national/government emblems",
+      "country-specific branding",
+      "unrequired foreign currency examples",
+      "bank architecture",
+      "literal real banknotes/currency portraits",
+      "fake concept data as product truth"
+    ],
+    "implementation_rule": "WPF semantic tokens/components/vector geometry; no screenshot skin",
+    "branch_commit": "fc09a520b4b5385a69396ea9d2503261ed63f1d3"
+  },
+  "supersedes": [
+    "MEM-20261018-180800-bnkrev"
+  ],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "art-direction",
+    "editorial-financial-engraving",
+    "owner-lock",
+    "council",
+    "studio"
+  ],
+  "source": {
+    "type": "owner_directive",
+    "commit": "fc09a520b4b5385a69396ea9d2503261ed63f1d3"
+  }
+}
