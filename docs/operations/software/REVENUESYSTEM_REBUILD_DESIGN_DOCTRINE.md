@@ -164,6 +164,19 @@ Explicitly forbidden:
 
 Concept images created on 2026-10-18 define the approved visual grammar only. Any generated country/currency/architecture drift in those images is explicitly non-authoritative.
 
+### Universal application rule
+
+Editorial Financial Engraving applies to **all RevenueSystem presentation surfaces: past, present and future**.
+
+There is no grandfather clause for:
+- previously implemented RevenueSystem 2.0 screens;
+- legacy screens still reachable;
+- previously accepted visual prototypes;
+- dialogs/popups/system states;
+- shared controls.
+
+Previously passed finance/data/architecture/behavior gates retain their evidence, but visual acceptance must be rerun after each existing surface is migrated to the current visual constitution.
+
 # Finance rule
 
 Money values are first-class visual objects.
