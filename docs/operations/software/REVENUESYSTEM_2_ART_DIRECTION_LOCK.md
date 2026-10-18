@@ -18,9 +18,35 @@ From this date, RevenueSystem 2.0 has one visual authority only:
 
 Previous RevenueSystem directions, adaptations, candidate identities, palette interpretations, and design-language references are not active design authority.
 
-Historical review/test documents may still mention earlier directions because they record what was tested at that time. Those references are **historical evidence only** and must never be used to design new RevenueSystem UI.
+Historical review/test documents may still mention earlier directions because they record what was tested at that time. Those references are **historical evidence only** and must never be used as visual authority for any RevenueSystem interface.
 
-This lock does not change the Media/YouTube Studio visual identity. It applies only to RevenueSystem.
+## Universal scope — no grandfathered UI
+
+This lock applies to **every visible RevenueSystem surface without exception**:
+
+- interfaces already implemented before this lock;
+- RevenueSystem 2.0 workspaces already completed or functionally gate-passed;
+- legacy screens that remain temporarily reachable;
+- screens currently under rebuild;
+- all future screens;
+- windows, dialogs and popups;
+- inspectors and side sheets;
+- command palette and navigation chrome;
+- login, lock, onboarding and database-selection states;
+- report preview/print configuration surfaces;
+- empty, loading, recovery, conflict, error and confirmation states;
+- administration, diagnostics, backup/restore and system-health surfaces;
+- every shared component and control template.
+
+**No existing screen is grandfathered into an older visual direction.**
+
+Functional/financial/test gates already passed remain valid as behavioral evidence, but they do **not** exempt those surfaces from visual migration. Every previously implemented RevenueSystem 2.0 surface must be visually rebased to Editorial Financial Engraving and pass the current Visual QA Gate before final release.
+
+Legacy UI that will be retired does not need cosmetic preservation merely to extend its life; however, any legacy surface kept reachable in the release path must either:
+1. be migrated to this visual system, or
+2. be explicitly classified as a temporary compatibility surface with an approved retirement deadline.
+
+This lock does not change the Media/YouTube Studio visual identity. It applies to all RevenueSystem UI only.
 
 ---
 
@@ -1222,7 +1248,7 @@ Visual source priority for RevenueSystem:
 5. current implementation evidence;
 6. historical visual documents only as non-governing history.
 
-No Media/YouTube art bible, old RevenueSystem visual direction, chat recollection, or generated screenshot can override this lock.
+No Media/YouTube art bible, old RevenueSystem visual direction, prior implemented screen, prior visual gate, chat recollection, or generated screenshot can override this lock.
 
 ---
 
