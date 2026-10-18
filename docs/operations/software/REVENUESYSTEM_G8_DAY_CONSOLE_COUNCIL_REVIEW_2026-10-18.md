@@ -1,7 +1,7 @@
 # RevenueSystem 2.0 — G8 Day Console Council Review Packet
 
 Date: 2026-10-18  
-Status: **PENDING_FINAL_CI**  
+Status: **PASS / G8 LOCKED**  
 Gate: `G8_DAY_CONSOLE_OVERVIEW_LOCK`
 
 ## Source pin
@@ -34,7 +34,7 @@ The gate remains open until the final GitHub Windows CI run on the exact candida
 
 ## Architecture Boundary Audit
 
-Verdict: **PASS SOURCE BOUNDARY / FINAL RUNTIME HOLD**
+Verdict: **PASS**
 
 Evidence:
 - RebuildV2 Presentation contains no `AppDbContext`.
@@ -72,7 +72,7 @@ Credit exposure attention continues to use `FinancialInvariantService.CalculateA
 
 ## UI/UX & Human Error Review
 
-Verdict: **PASS AFTER RETURN TICKETS / FINAL GUI HOLD**
+Verdict: **PASS AFTER RETURN TICKETS**
 
 Two misleading presentation defects were detected during review and returned to their source owners:
 
@@ -103,7 +103,7 @@ The strict layout audit is not weakened or bypassed.
 
 ## QA / Red Team
 
-Verdict: **SOURCE PASS / FINAL CI HOLD**
+Verdict: **PASS**
 
 Local source-only evidence on YASSIN at candidate SHA:
 - solution Build: PASS
@@ -153,31 +153,61 @@ Material dissent was preserved and resolved rather than averaged away:
 4. strict audit reported single-digit attention badges as 7px text bounds — the Day count TextBlocks now reserve a 16px readable slot; the strict audit remains unchanged.
 5. proposal to make reconciliation/credit alerts close blockers was rejected after comparison with the authoritative `BusinessDayWorkflowService`; doing so would have changed domain semantics without authority.
 
-## Pending evidence
+## Final CI evidence
 
-GitHub Windows CI on exact candidate:
+GitHub Windows CI on the exact candidate:
 - run number: **497**
 - run id: **39114770698**
 - head: `4a9bb49a7bcdf2167c1ae45c9054eb3ff5d150f1`
-- status at packet creation: **IN PROGRESS**
+- conclusion: **SUCCESS**
+- Build: PASS
+- C# validation: PASS
+- static validation: PASS
+- durable development tooling: PASS
+- source-sync tooling: PASS
+- SQLite simulations: PASS
+- Finance parity integration: PASS
+- Stage10 release gate: PASS
+- controlled Finance write UI smoke: PASS
+- Day Console UI smoke: PASS
 
-Required before lock:
-- full CI success;
-- controlled Finance write UI smoke pass;
-- Day Console strict UI smoke pass;
-- zero strict layout warnings for final Day capture;
-- evidence artifact upload.
+Final Day Console GUI evidence:
+- viewport: **1024×720 CI compact stress**
+- named visible elements: **128**
+- strict layout warnings: **0**
+- final screen title: `RevenueSystem 2.0 — Day Console`
+- Day evidence artifact: `RevenueSystem-rrs2-day-ui-4a9bb49a7bcdf2167c1ae45c9054eb3ff5d150f1`
+- artifact id: **12132420270**
+- UI evidence artifact id: **12132450256**
+- RRS2 Finance UI artifact id: **12131694138**
+- isolated startup-ready sample: **3010.0522 ms** on the hosted CI environment; no product threshold is inferred from this single CI sample.
+
+## Art / UI final review
+
+Verdict: **PASS G8 / CONTINUE REFINEMENT**
+
+The final actual-WPF capture:
+- is materially distinct from the legacy RevenueSystem;
+- uses the locked Paper Ivory / Cobalt / Brass / Forest visual language;
+- preserves a narrow command rail and dominant Day workbench;
+- keeps attention as an operational queue rather than decorative dashboard analytics;
+- exposes separate coarse IQD, change and USD summary regions;
+- remains legible at the compact 1024×720 CI stress viewport;
+- contains no strict clipping/overlap/tiny-text warning.
+
+This is G8 acceptance, not a claim that the entire RevenueSystem 2.0 art system is final.
 
 ## Gate decision
 
-**PENDING_FINAL_CI**
+**G8_DAY_CONSOLE_OVERVIEW_LOCK = PASS**
 
-No transition to Phase 6 is authorized by this packet until the pending evidence is green.
+Disposition:
+**PASS_STACKED_PR_HOLD**
 
-When the required evidence succeeds, this packet may be promoted to:
+The Day Console branch remains a stacked migration branch; this gate does not merge it to `main`, replace the legacy release route, or authorize production DB/LAN access.
 
-`G8_DAY_CONSOLE_OVERVIEW_LOCK = PASS`
-
-and the next authorized slice becomes:
+Next authorized slice:
 
 `PHASE_6_CASHIER_WORKBENCH / G9_CASHIER_WORKBENCH_LOCK`.
+
+The Phase 6 pre-open contract may now be promoted into an active slice-open packet.
