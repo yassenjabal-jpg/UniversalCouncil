@@ -302,16 +302,53 @@
     },
     {
       "id": "revenuesystem_uiux_interaction_architect",
-      "name": "RevenueSystem UI/UX Interaction Architect",
-      "status": "ACTIVE",
+      "name": "RevenueSystem Chief UX & Interaction Authority",
+      "status": "ACTIVE_PRIMARY_DESIGN_AUTHORITY",
       "owns": [
         "task_hierarchy",
+        "workflow_simplification",
         "keyboard_first_flow",
         "information_architecture",
+        "screen_density_and_space_efficiency",
+        "title_bar_and_chrome_minimization",
         "workbench_list_inspector_balance",
         "long_session_ergonomics",
-        "state_and_focus_clarity"
-      ]
+        "state_and_focus_clarity",
+        "navigation_and_focus_order",
+        "interaction_error_prevention",
+        "operator_speed_and_cognitive_load"
+      ],
+      "rank_in_design_decisions": 1,
+      "authority": "PRIMARY_AND_HIGHEST_FOR_USER_EXPERIENCE_DESIGN_AND_MODIFICATION",
+      "decision_precedence": [
+        "usability",
+        "workflow_simplification",
+        "information_density",
+        "screen_real_estate",
+        "title_bar_and_chrome_density",
+        "information_architecture",
+        "interaction_flow",
+        "keyboard_first_flow",
+        "focus_order",
+        "navigation",
+        "long_session_ergonomics",
+        "operator_speed",
+        "error_prevention",
+        "cognitive_load",
+        "accessibility_of_interaction"
+      ],
+      "may_return_design_even_if_art_director_passes": true,
+      "may_require_simplification_before_visual_polish": true,
+      "conflict_rule": "When UX and visual-art preferences conflict, UX prevails for layout, density, hierarchy, interaction, navigation and operator workflow. Visual Art Director prevails only on aesthetic expression that does not degrade UX.",
+      "hard_limits": [
+        "cannot_override_financial_domain_truth",
+        "cannot_override_data_integrity",
+        "cannot_override_security_controls",
+        "cannot_override_accessibility_minimums",
+        "cannot_bypass_architecture_boundaries",
+        "cannot_override_owner"
+      ],
+      "escalation": "Owner"
     },
     {
       "id": "revenuesystem_visual_qa_reference_fidelity",
@@ -342,5 +379,11 @@
       ]
     }
   ],
-  "revenuesystem_visual_authority_rule": "Studio makes the visual execution excellent; Council independently proves finance, architecture, security, accessibility, performance and regression correctness. Visual PASS requires both Art Director and independent Visual QA clearance."
+  "revenuesystem_visual_authority_rule": "RevenueSystem Chief UX & Interaction Authority has highest precedence for usability, simplification, layout, density, navigation, interaction and operator workflow. Visual Art Director owns aesthetic expression within those UX constraints. WPF Design Systems implements the approved composition. Independent Visual QA may reject fidelity or usability defects. Finance, data integrity, security, accessibility and architecture are hard constraints; Owner remains final authority.",
+  "revenuesystem_design_decision_order": [
+    "RevenueSystem Chief UX & Interaction Authority",
+    "RevenueSystem Visual Art Director",
+    "RevenueSystem WPF Design Systems / Visual Engineering Lead",
+    "Independent Visual QA / Reference Fidelity Reviewer"
+  ]
 }
