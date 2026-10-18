@@ -578,10 +578,82 @@
       "G9_CASHIER_WORKBENCH_LOCK"
     ],
     "visual_rebase": {
-      "status": "REQUIRED",
-      "reason": "Owner clarified Editorial Financial Engraving applies to all previous/current/future RevenueSystem interfaces",
+      "status": "THREE_SECTION_EXECUTION_ADOPTED",
+      "reason": "Owner requested bounded execution to prevent long-run interruption and preserve exact restart checkpoints",
       "preserves_completed_functional_gates": true,
-      "blocks_final_release_until_visual_reacceptance": true
+      "blocks_final_release_until_visual_reacceptance": true,
+      "execution_rule": "OPEN_ONE_SECTION_ONLY_CLOSE_WITH_SHA_CI_ARTIFACTS_COUNCIL_STUDIO_VERDICT_BEFORE_NEXT",
+      "product_branch": "rebuild/rs2-editorial-financial-engraving",
+      "draft_pr": 84,
+      "current_product_head": "95d76d37d799953552b30147de789a88cb41cec2",
+      "sections": [
+        {
+          "id": "VISUAL_SECTION_1_CORE_REBASE_LOCK",
+          "name": "Core Design System + Existing Core Surfaces",
+          "status": "IN_PROGRESS_NEAR_CLOSE",
+          "scope": [
+            "Editorial Financial Engraving semantic tokens and vector pattern system",
+            "RevenueSystem 2.0 Shell and command rail",
+            "Day Console",
+            "Cashier Workbench",
+            "Finance Ledger",
+            "placeholder/unbuilt workspace state",
+            "compact 1024x720 behavior",
+            "shared components, grids, focus, seals, denomination treatment"
+          ],
+          "already_verified": {
+            "ci_run_number": 590,
+            "ci_run_id": 39152730705,
+            "ci_status": "SUCCESS",
+            "build": "PASS",
+            "static_validation": "PASS",
+            "stage10": "PASS",
+            "finance_regression": "PASS",
+            "day_regression": "PASS",
+            "cashier_stage3_regression": "PASS",
+            "compact_viewport": "1024x720 PASS",
+            "layout_warnings": 0
+          },
+          "remaining_before_lock": [
+            "inspect final screenshot artifacts against owner-locked visual constitution",
+            "Council + Studio visual verdict",
+            "record Section 1 lock document/status"
+          ],
+          "exit_lock": "VISUAL_SECTION_1_LOCK"
+        },
+        {
+          "id": "VISUAL_SECTION_2_RECONCILIATION_REPORTS",
+          "name": "Reconciliation Studio + Reports Center",
+          "status": "NOT_OPENED",
+          "scope": [
+            "Reconciliation Studio full visual/interaction composition",
+            "difference/matched hero states",
+            "cash/electronic/adjustment/account/evidence dossier flow",
+            "Reports Center catalog, filters, preview, print/export presentation",
+            "shared dossier/report components added only when reusable",
+            "isolated functional regressions for affected flows"
+          ],
+          "exit_lock": "VISUAL_SECTION_2_LOCK"
+        },
+        {
+          "id": "VISUAL_SECTION_3_SYSTEM_COMPLETION",
+          "name": "Data + Administration + Session + Remaining Reachable UI + Final Visual Reacceptance",
+          "status": "NOT_OPENED",
+          "scope": [
+            "Data Operations",
+            "Administration",
+            "Login / Lock / onboarding / database-selection states",
+            "remaining reachable dialogs, popups, inspectors and side sheets",
+            "recovery, conflict, error, confirmation, loading and empty states",
+            "report print/export configuration surfaces not completed in Section 2",
+            "legacy reachable surfaces: migrate or explicitly classify for retirement",
+            "whole-product consistency audit",
+            "DPI/compact matrix and full visual reacceptance",
+            "final Council + Studio visual lock"
+          ],
+          "exit_lock": "VISUAL_SECTION_3_FINAL_LOCK"
+        }
+      ]
     }
   },
   "environment_audit": {
