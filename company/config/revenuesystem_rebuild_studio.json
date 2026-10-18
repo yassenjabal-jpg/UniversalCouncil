@@ -603,7 +603,7 @@
   "cashier_workbench": {
     "phase": "PHASE_6_CASHIER_WORKBENCH",
     "gate": "G9_CASHIER_WORKBENCH_LOCK",
-    "status": "AUTHORIZED_TO_OPEN",
+    "status": "STAGE_1_IN_PROGRESS",
     "prerequisite_gate": "G8_DAY_CONSOLE_OVERVIEW_LOCK",
     "source_base": "4a9bb49a7bcdf2167c1ae45c9054eb3ff5d150f1",
     "preopen_contract": "docs/operations/software/REVENUESYSTEM_PHASE6_CASHIER_WORKBENCH_PREOPEN_2026-10-18.md",
@@ -621,6 +621,50 @@
       "no copied financial save formula in ViewModel",
       "no arbitrary legacy InteractiveLayoutEditor reproduction",
       "no production DB LAN or production AppData"
+    ],
+    "branch": "rebuild/rs2-cashier-workbench",
+    "pr": 83,
+    "three_stage_execution": [
+      {
+        "id": "STAGE_1_READ_ONLY",
+        "status": "IN_PROGRESS",
+        "scope": [
+          "application contracts",
+          "native async read adapter",
+          "frozen roster provenance",
+          "read-only Cashier Workbench inside Day",
+          "Day open/return loop",
+          "build validators strict GUI smoke"
+        ],
+        "financial_write": false
+      },
+      {
+        "id": "STAGE_2_EDITING_KEYBOARD_RECOVERY",
+        "status": "BLOCKED_BY_STAGE_1",
+        "scope": [
+          "local editing state",
+          "expressions",
+          "keyboard contract",
+          "dirty revision",
+          "durable recovery",
+          "navigation handoff"
+        ],
+        "financial_write": false
+      },
+      {
+        "id": "STAGE_3_FINANCIAL_SAVE_G9_LOCK",
+        "status": "BLOCKED_BY_STAGE_2",
+        "scope": [
+          "authoritative financial save",
+          "permissions",
+          "concurrency",
+          "autosave durability",
+          "full regression",
+          "council final clearance",
+          "G9 lock"
+        ],
+        "financial_write": true
+      }
     ]
   }
 }
