@@ -8,8 +8,10 @@ Status: OWNER-APPROVED / DETAILED EXECUTION PLAN LOCKED
 The detailed execution plan is authoritative for implementation sequencing:
 `docs/operations/software/REVENUESYSTEM_2_DETAILED_REBUILD_PLAN.md`
 
-The Art Direction is owner-locked:
+The Art Direction is owner-locked as **EDITORIAL FINANCIAL ENGRAVING**:
 `docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md`
+
+No previous RevenueSystem visual direction is active authority.
 
 ## Governing premise
 
