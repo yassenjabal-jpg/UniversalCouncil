@@ -2,13 +2,24 @@
 
 Date: 2026-10-18  
 Stage: `STAGE_3_FINANCIAL_SAVE_G9_LOCK`  
-Status: **PENDING_FINAL_CI / COUNCIL LOCK**  
+Status: **PASS / G9 LOCKED / STACKED PR HOLD**  
 Product branch: `rebuild/rs2-cashier-workbench`  
-Stage 2 baseline: `88d7eb8ed41b803c10c26dc6e9c70b752aceb77f`
+Final product head: `416196fa60202e75b035deabf805a92e094700d4`  
+Stage 2 baseline: `88d7eb8ed41b803c10c26dc6e9c70b752aceb77f`  
+PR: #83 — draft, base `rebuild/rs2-day-console-overview`, mergeable/clean  
+Main remains: `6886fbb6398b67b366faf3ca446dbae54eb1ce4f`
+
+## Final gate
+
+`G9_CASHIER_WORKBENCH_LOCK = PASS`
+
+Disposition: **PASS_STACKED_PR_HOLD**
+
+No merge to main is authorized by this review.
 
 ## Authority chain
 
-Financial commit path is now:
+Financial commit path:
 
 `CashierWorkbenchWorkspace → CashierWorkbenchViewModel → ICashierWorkbenchCommitCoordinator → ICashierWorkbenchWriteUseCase → CashierWorkbenchWriteAdapter → CashierRevenueEntryService`
 
@@ -16,75 +27,170 @@ The existing `CashierRevenueEntryService` remains authoritative for:
 - EnterRevenue permission enforcement;
 - business-day writable guard;
 - serializable financial transaction;
-- optimistic version/stale-row checks;
+- optimistic stale/version checks;
 - historical cashier/branch/POS snapshots;
 - denomination persistence;
-- audit context and accounting persistence.
+- audit/accounting persistence.
 
-No duplicate financial save implementation was introduced.
+No duplicate accounting-save formula was introduced.
 
-## Stage 3 guarantees under review
+## Architecture Boundary Audit — PASS
 
-- F5 performs authoritative financial save.
-- valid edits autosave after recovery durability.
-- invalid partial expressions remain recovery-only and never enter accounting.
-- accounting save is serialized.
-- synchronous authoritative transaction executes off the WPF dispatcher.
-- cancellation is honored before admission, not during the admitted transaction.
-- failed financial writes are not blindly retried by subsequent typing.
-- stale writes surface an explicit conflict and preserve the durable local draft.
-- reload after conflict reads the current baseline and exposes the saved draft as a conflict recovery decision.
-- if a newer edit appears while an older revision is saving, Application coordinator rebases the latest durable draft onto the newly committed version and saves it next.
-- recovery is deleted only after the latest known revision commits.
-- recovery cleanup re-checks for a newer edit so cleanup cannot erase the latest journal.
-- coarse IQD / change IQD / USD cents remain separate.
+Confirmed on final delta:
+- no `AppDbContext` or `SaveChanges` in RebuildV2 Presentation;
+- no direct `CashierRevenueEntryService` dependency in Presentation;
+- Application write contracts contain no WPF/EF/service dependency;
+- Application coordinator owns commit serialization, latest-revision detection, rebase, recovery cleanup and cleanup-race protection;
+- Infrastructure adapter is the only new seam to the authoritative legacy write service;
+- synchronous authoritative transaction runs off the WPF dispatcher;
+- cancellation is accepted before write admission and never interrupts the admitted accounting transaction;
+- WPF code-behind remains presentation-thin;
+- no schema, migration, LAN or production configuration change;
+- Cashier remains a Day work item; six-workspace topology is unchanged.
 
-## Architecture Boundary Audit
+Non-blocking debt:
+- Cashier Workbench presentation state is now substantial. Future slices must extract additional responsibilities rather than adding new accounting policy to the ViewModel.
 
-Current direction: **PASS CANDIDATE**
+## Finance / Data — PASS
 
-Confirmed design intent:
-- Application write contracts contain no WPF or EF dependency.
-- Application coordinator owns financial sequencing/rebase.
-- Infrastructure adapter owns the legacy authoritative service seam.
-- Presentation contains no `AppDbContext`, `SaveChanges`, or direct `CashierRevenueEntryService`.
-- WPF code-behind stays presentation-thin.
-- no schema/migration change.
-- no production DB/LAN/AppData access.
+Verified:
+- F5 commits real `RevenueEntry` values through the authoritative service;
+- valid edits autosave financially without F5;
+- coarse IQD, change IQD and USD cents remain separate;
+- denomination counts continue through the established restricted arithmetic path;
+- frozen business-day roster identity remains authoritative for the day context;
+- stale saves do not overwrite a newer accounting row;
+- explicit reload + recovery rebases the operator draft onto the current accounting baseline;
+- invalid partial expressions remain recovery-only and are never forced into accounting.
 
-## Deterministic latest-edit acceptance
+## Latest-edit durability — PASS
 
-A protected validation test deliberately pauses revision 1 while revision 2 is staged. It requires:
-- save order = r1 then r2;
-- max concurrent financial writes = 1;
-- r2 baseline version = result version from r1;
+A deterministic protected test pauses revision 1 while revision 2 is staged.
+
+Required and observed:
+- financial save order = r1 then r2;
+- maximum concurrent financial writes = 1;
+- r2 receives r1's committed version as its new baseline;
 - rebased r2 is durably re-journaled;
-- recovery cleanup occurs only after latest commit.
+- recovery cleanup occurs only after the latest known revision commits.
 
-File:
-`RevenueSystem.ValidationTests/CashierWorkbenchStage3Validation.cs`
+CI evidence:
+`PASS | RRS2 Cashier Stage 3 latest edit survives in-flight save`
 
-## GUI acceptance contract
+## Failure / retry / concurrency — PASS
 
-The isolated Cashier Stage 3 UI smoke must prove:
-- FINANCIAL SAVE capability badge;
-- F5 updates the accounting row;
-- autosave updates a later valid edit without F5;
-- forced external Version bump causes stale-write conflict;
-- stale write does not overwrite external data;
-- reload exposes baseline-conflict recovery;
-- explicit restore/retry commits preserved latest draft;
-- invalid partial work survives PageUp/PageDown but is not forced into accounting;
-- Enter / Shift+Enter / PageUp / PageDown / Home / End / Insert / F5 / Delete / Ctrl+Delete / Escape / Ctrl+Z remain valid;
-- final strict 1024×720 layout audit has zero warnings;
-- Finance and Day regressions remain green.
+Observed in isolated GUI:
+- an externally bumped RevenueEntry version caused a real stale-write rejection;
+- the stale write did not overwrite newer accounting data;
+- conflict state exposed explicit reload;
+- durable local draft survived the conflict;
+- reload surfaced baseline-conflict recovery;
+- explicit restore + retry committed the preserved latest draft;
+- financial failures are blocked from blind retry-by-typing until explicit user action.
 
-## Pending
+## Keyboard / operator flow — PASS
 
-Final exact SHA, Windows CI run, artifact IDs, strict UI metrics, delta review and final Council verdict will be appended only after the candidate is green.
+Preserved:
+- Enter → next field;
+- Shift+Enter → previous field;
+- PageUp/PageDown → previous/next cashier;
+- Home/End → branch navigation outside text editing;
+- Home/End remain native caret behavior inside TextBox;
+- Insert → direct/denomination mode;
+- F5 → authoritative financial save;
+- Delete → reset focused numeric field;
+- Ctrl+Delete → two-step clear;
+- Escape → field revert;
+- Ctrl+Z/Ctrl+Y → native text editing.
 
-## Gate
+Invalid partial work is durably journaled before navigation and never forced into accounting.
 
-`G9_CASHIER_WORKBENCH_LOCK = PENDING`
+## Security / Audit — PASS
 
-No merge to main is authorized by this document.
+- authoritative save service still owns permission enforcement;
+- no Presentation-side bypass was added;
+- no production DB/LAN/AppData was used by G9 evidence;
+- test runtime used isolated local fixtures;
+- business-day and concurrency guards remain at the financial commit boundary.
+
+## Performance / responsiveness — PASS WITH NON-BLOCKING NOTE
+
+Evidence confirms:
+- cashier autosave and explicit save keep financial writes off the UI thread;
+- Application coordinator serializes financial commits.
+
+Non-blocking note:
+- serialization is intentionally conservative. If later production telemetry shows save queue latency, optimize inside the Application/Infrastructure boundary without weakening ordering/durability.
+
+## QA / Red Team — PASS
+
+Final exact candidate:
+
+`416196fa60202e75b035deabf805a92e094700d4`
+
+GitHub Windows CI:
+- run: **#572**
+- run id: **39126844406**
+- conclusion: **SUCCESS**
+
+Passed:
+- Build solution
+- C# validation executable
+- current static validation
+- durable development tooling
+- source sync tooling
+- SQLite simulations
+- RRS2 Finance parity integration
+- Stage10 release gate
+- controlled Finance write UI regression
+- Day Console UI regression
+- Cashier Workbench Stage 3 financial UI gate
+- artifact publication
+
+Cashier Stage 3 GUI assertions:
+- F5 authoritative accounting commit: PASS
+- valid financial autosave: PASS
+- stale-write rejection without overwrite: PASS
+- conflict reload + recovery retry: PASS
+- latest invalid edit durable before navigation: PASS
+- prior-session recovery explicit: PASS
+- keyboard/two-step clear regression: PASS
+- full Stage 3 financial/autosave/concurrency/recovery contract: PASS
+
+## Strict GUI evidence
+
+Final window:
+`RevenueSystem 2.0 — Cashier Workbench`
+
+Viewport:
+**1024×720**
+
+Named UI elements:
+**125**
+
+Layout warnings:
+**0**
+
+Cashier artifact:
+- id: **12136229066**
+- name: `RevenueSystem-rrs2-cashier-ui-416196fa60202e75b035deabf805a92e094700d4`
+- digest: `sha256:80076f0c648b6698691967e62eb3175d7269529fa27318214915c47d2a34ab0b`
+
+Other final artifacts:
+- Day UI: **12136970186**
+- Finance UI: **12136014867**
+- isolated UI evidence: **12136885509**
+- Windows build: **12136477971**
+
+## Final Council verdict
+
+Architecture: **PASS**  
+Finance / Data: **PASS**  
+Security / Audit: **PASS**  
+UI / UX: **PASS**  
+QA / Red Team: **PASS**  
+Performance: **PASS — serialized-save latency remains telemetry debt only**
+
+**G9 Cashier Workbench is locked.**
+
+The product branch remains stacked and PR #83 remains draft. Main is unchanged.
