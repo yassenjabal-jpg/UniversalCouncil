@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261018-180800-bnkrev",
+  "created_at": "2026-10-18T18:08:00+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L3_CANONICAL",
+  "kind": "proposal",
+  "subject": "revenuesystem.art_direction.banking_money_candidate",
+  "summary": "Council + Studio joint review recommends refining the banking/money concept into Editorial Financial Engraving: abstract banknote-security craft, institutional finance materiality and restrained vault/ledger motifs, while rejecting literal dollar dominance, decorative bank architecture and excessive gold. Current owner-approved Editorial Renaissance Motion art lock remains authoritative until explicit owner adoption.",
+  "details": {
+    "review_document": "docs/operations/software/REVENUESYSTEM_2_BANKING_MONEY_ART_DIRECTION_JOINT_REVIEW_2026-10-18.md",
+    "verdict": "REVISE_BEFORE_OWNER_ADOPTION",
+    "working_name": "Editorial Financial Engraving",
+    "preserve": [
+      "Paper Ivory",
+      "Deep Forest",
+      "Brass Gold",
+      "Cobalt interaction/focus",
+      "editorial typography",
+      "clean dense financial surfaces"
+    ],
+    "add": [
+      "guilloche lines",
+      "engraved hatching",
+      "security-print micro-lines",
+      "abstract ledger seals",
+      "restrained vault geometry",
+      "cash-band motifs"
+    ],
+    "reject": [
+      "real dollar portrait as product identity",
+      "decorative bank architecture",
+      "real bank logos",
+      "casino/luxury wealth styling",
+      "gold on every component",
+      "texture behind dense data"
+    ],
+    "implementation_status": "proposal_only_no_product_code_or_art_lock_change"
+  },
+  "supersedes": [],
+  "confidence": "evidence_backed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "art-direction",
+    "council",
+    "studio",
+    "banking",
+    "financial-engraving"
+  ],
+  "source": {
+    "type": "github_review",
+    "commit": "3a8c83025eea9c3edc5a74933fd95cfb8a2019f3"
+  }
+}
