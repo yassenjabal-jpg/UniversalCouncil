@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261018-204100-efeall",
+  "created_at": "2026-10-18T20:41:00+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "revenuesystem.art_direction.scope",
+  "summary": "Editorial Financial Engraving applies to every RevenueSystem interface without exception: previously implemented, current, legacy-but-reachable, rebuilt, system-state, dialog/popup and all future UI. No screen is visually grandfathered under an older direction.",
+  "details": {
+    "governing_system": "Editorial Financial Engraving",
+    "scope": "ALL_REVENUESYSTEM_UI_EXISTING_PREVIOUS_LEGACY_REBUILT_CURRENT_AND_FUTURE",
+    "no_grandfather_clause": true,
+    "previously_completed_slices_require_visual_rebase": true,
+    "completed_functional_financial_architecture_evidence_remains_valid": true,
+    "final_release_requires_visual_reacceptance_under_current_lock": true,
+    "includes": [
+      "Foundation shell",
+      "Finance Ledger pilot surfaces",
+      "Day Console",
+      "Cashier Workbench",
+      "legacy reachable screens",
+      "future workspaces",
+      "login lock onboarding database selection",
+      "dialogs popups inspectors side sheets",
+      "command palette navigation chrome",
+      "report preview print export",
+      "loading empty recovery conflict error confirmation states",
+      "shared controls and templates"
+    ],
+    "governing_lock": "docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md",
+    "branch_commit": "4583da65d315a486c114694daf843f95396f5b4a"
+  },
+  "supersedes": [
+    "MEM-20261018-182500-efe001"
+  ],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "art-direction",
+    "scope",
+    "all-ui",
+    "no-grandfather",
+    "owner-directive"
+  ],
+  "source": {
+    "type": "owner_directive",
+    "commit": "4583da65d315a486c114694daf843f95396f5b4a"
+  }
+}
