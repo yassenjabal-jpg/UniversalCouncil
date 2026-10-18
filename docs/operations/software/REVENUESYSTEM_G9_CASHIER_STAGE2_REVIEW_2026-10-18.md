@@ -2,7 +2,7 @@
 
 Date: 2026-10-18  
 Stage: `STAGE_2_EDITING_KEYBOARD_RECOVERY`  
-Status: **PENDING_FINAL_CI**  
+Status: **PASS / STAGE 2 LOCKED**  
 Product branch: `rebuild/rs2-cashier-workbench`  
 Candidate: `88d7eb8ed41b803c10c26dc6e9c70b752aceb77f`  
 Stage 1 baseline: `90476f0186f1e44739d5545271621fc8d0f622f9`  
@@ -111,20 +111,51 @@ Stage 1 → Stage 2 changes are confined to:
 
 No schema, migration, production configuration or financial write service is changed.
 
-## Pending evidence
+## Final CI evidence
 
 GitHub Windows CI on exact candidate:
 - run: **#546**
 - run id: **39124422760**
-- required conclusion: SUCCESS;
-- required Stage10: PASS;
-- required Finance regression: PASS;
-- required Day regression: PASS;
-- required Cashier Stage 2 UI smoke: PASS;
-- required strict final Cashier capture: zero layout warnings.
+- candidate: `88d7eb8ed41b803c10c26dc6e9c70b752aceb77f`
+- conclusion: **SUCCESS**
+- Build: PASS
+- C# validation: PASS
+- static validation: PASS
+- durable development tooling: PASS
+- source sync tooling: PASS
+- SQLite simulations: PASS
+- Finance parity integration: PASS
+- Stage10 release gate: PASS
+- controlled Finance write UI regression: PASS
+- Day Console UI regression: PASS
+- Cashier Workbench Stage 2 UI smoke: PASS
+
+Cashier Stage 2 GUI evidence:
+- viewport: **1024×720**
+- final window: `RevenueSystem 2.0 — Cashier Workbench`
+- named elements: **122**
+- layout warnings: **0**
+- artifact: `RevenueSystem-rrs2-cashier-ui-88d7eb8ed41b803c10c26dc6e9c70b752aceb77f`
+- artifact id: **12134978933**
+- artifact digest: `sha256:f501a2ca5b40f208b30a756e26456ea3f975486742c6bae9c8506c8bc361e6ad`
+
+Observed GUI assertions:
+- Insert toggled entry mode;
+- denomination/change/USD calculations matched;
+- F5 persisted recovery only and left accounting data unchanged;
+- PageUp/PageDown restored the latest durable same-session draft;
+- Enter/Shift+Enter followed field order;
+- Home/End remained native inside text fields and navigated branches outside them;
+- prior-session recovery required explicit restore;
+- Escape/Delete performed field-level revert/reset;
+- Ctrl+Z remained native;
+- Ctrl+Delete used two-step safety and journaled the cleared draft.
 
 ## Gate decision
 
-**PENDING_FINAL_CI**
+**STAGE_2_EDITING_KEYBOARD_RECOVERY = PASS**
 
-Stage 3 remains blocked.
+Stage 3 is now authorized to open, but is not opened by this review.
+
+Required Stage 3 architecture condition:
+authoritative financial save must enter through an Application write contract/coordinator and Infrastructure adapter; it must not be added directly to the existing Cashier Workbench ViewModel.
