@@ -545,6 +545,22 @@
       "neon cyberpunk",
       "fake antique paper",
       "giant rounded card walls"
+    ],
+    "scope": "ALL_REVENUESYSTEM_UI_EXISTING_PREVIOUS_LEGACY_REBUILT_CURRENT_AND_FUTURE",
+    "no_grandfather_clause": true,
+    "completed_surfaces_require_visual_rebase": true,
+    "functional_gate_evidence_preserved": true,
+    "visual_reacceptance_required_before_release": true,
+    "visual_rebase_targets": [
+      "Foundation Shell",
+      "Finance Ledger read/write pilot surfaces",
+      "Day Console",
+      "Cashier Workbench",
+      "all remaining legacy reachable screens",
+      "all future workspaces and system states",
+      "dialogs popups inspectors side-sheets command palette",
+      "reports preview print export surfaces",
+      "loading empty recovery conflict error confirm states"
     ]
   },
   "detailed_rebuild_plan": "docs/operations/software/REVENUESYSTEM_2_DETAILED_REBUILD_PLAN.md",
@@ -560,7 +576,13 @@
       "G7_FINANCE_WRITE_PILOT_LOCK",
       "G8_DAY_CONSOLE_OVERVIEW_LOCK",
       "G9_CASHIER_WORKBENCH_LOCK"
-    ]
+    ],
+    "visual_rebase": {
+      "status": "REQUIRED",
+      "reason": "Owner clarified Editorial Financial Engraving applies to all previous/current/future RevenueSystem interfaces",
+      "preserves_completed_functional_gates": true,
+      "blocks_final_release_until_visual_reacceptance": true
+    }
   },
   "environment_audit": {
     "status": "ENV_P0_PASS",
