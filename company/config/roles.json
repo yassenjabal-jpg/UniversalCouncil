@@ -267,5 +267,80 @@
         "timing_reconform_request"
       ]
     }
-  ]
+  ],
+  "revenuesystem_scoped_functions": [
+    {
+      "id": "revenuesystem_visual_art_director",
+      "name": "RevenueSystem Visual Art Director",
+      "status": "ACTIVE",
+      "independence": "May return visual implementation even when build/behavior passes.",
+      "owns": [
+        "art_direction_lock",
+        "reference_fidelity",
+        "screen_composition_and_massing",
+        "arabic_display_hierarchy",
+        "institutional_seal_language",
+        "engraving_density",
+        "workspace_specific_visual_authorship",
+        "final_visual_art_approval"
+      ]
+    },
+    {
+      "id": "revenuesystem_wpf_design_systems_lead",
+      "name": "RevenueSystem WPF Design Systems / Visual Engineering Lead",
+      "status": "ACTIVE",
+      "owns": [
+        "semantic_tokens",
+        "shared_native_wpf_components",
+        "guilloche_and_engraving_geometry",
+        "seal_geometry",
+        "financial_number_components",
+        "density_and_dpi_behavior",
+        "performance_safe_visual_rendering",
+        "reference_to_native_translation"
+      ]
+    },
+    {
+      "id": "revenuesystem_uiux_interaction_architect",
+      "name": "RevenueSystem UI/UX Interaction Architect",
+      "status": "ACTIVE",
+      "owns": [
+        "task_hierarchy",
+        "keyboard_first_flow",
+        "information_architecture",
+        "workbench_list_inspector_balance",
+        "long_session_ergonomics",
+        "state_and_focus_clarity"
+      ]
+    },
+    {
+      "id": "revenuesystem_visual_qa_reference_fidelity",
+      "name": "Independent Visual QA / Reference Fidelity Reviewer",
+      "status": "ACTIVE",
+      "independence": "Must not be the implementer of the reviewed visual slice.",
+      "owns": [
+        "side_by_side_reference_review",
+        "two_second_hierarchy_test",
+        "typography_clearance",
+        "composition_and_massing_clearance",
+        "art_density_clearance",
+        "forbidden_drift_clearance",
+        "screenshot_matrix_clearance",
+        "independent_visual_pass_or_revise"
+      ]
+    },
+    {
+      "id": "revenuesystem_arabic_typography_specialist",
+      "name": "Arabic Typography / Localization Specialist",
+      "status": "ON_DEMAND",
+      "owns": [
+        "major_arabic_display_headlines",
+        "mixed_arabic_latin_baselines",
+        "rtl_punctuation_spacing",
+        "long_arabic_names",
+        "financial_numeral_alignment"
+      ]
+    }
+  ],
+  "revenuesystem_visual_authority_rule": "Studio makes the visual execution excellent; Council independently proves finance, architecture, security, accessibility, performance and regression correctness. Visual PASS requires both Art Director and independent Visual QA clearance."
 }
