@@ -194,7 +194,7 @@
     ]
   },
   "current_install_request": "NONE",
-  "review_status": "G8_DAY_CONSOLE_OVERVIEW_LOCK_PASS",
+  "review_status": "G9_CASHIER_STAGE2_PASS",
   "rebuild_strategy": "DAY_CENTRIC_WORKSPACE_REBUILD_WITH_PROGRESSIVE_APPLICATION_BOUNDARY_EXTRACTION",
   "platform_decision": {
     "wpf_net10": "KEEP",
@@ -484,8 +484,8 @@
   },
   "detailed_rebuild_plan": "docs/operations/software/REVENUESYSTEM_2_DETAILED_REBUILD_PLAN.md",
   "execution_plan": {
-    "current_phase": "PHASE_6_CASHIER_WORKBENCH_STAGE_2_READY",
-    "next_packet": "STAGE_2_EDITING_KEYBOARD_RECOVERY",
+    "current_phase": "PHASE_6_CASHIER_WORKBENCH_STAGE_3_READY",
+    "next_packet": "STAGE_3_FINANCIAL_SAVE_G9_LOCK",
     "product_code_changes_started": true,
     "release_route_changed": false,
     "production_data_access": false,
@@ -603,7 +603,7 @@
   "cashier_workbench": {
     "phase": "PHASE_6_CASHIER_WORKBENCH",
     "gate": "G9_CASHIER_WORKBENCH_LOCK",
-    "status": "STAGE_1_PASS_STAGE_2_READY",
+    "status": "STAGE_2_PASS_STAGE_3_READY",
     "prerequisite_gate": "G8_DAY_CONSOLE_OVERVIEW_LOCK",
     "source_base": "4a9bb49a7bcdf2167c1ae45c9054eb3ff5d150f1",
     "preopen_contract": "docs/operations/software/REVENUESYSTEM_PHASE6_CASHIER_WORKBENCH_PREOPEN_2026-10-18.md",
@@ -640,7 +640,7 @@
       },
       {
         "id": "STAGE_2_EDITING_KEYBOARD_RECOVERY",
-        "status": "READY_TO_OPEN",
+        "status": "PASS",
         "scope": [
           "local editing state",
           "expressions",
@@ -653,7 +653,7 @@
       },
       {
         "id": "STAGE_3_FINANCIAL_SAVE_G9_LOCK",
-        "status": "BLOCKED_BY_STAGE_2",
+        "status": "READY_TO_OPEN",
         "scope": [
           "authoritative financial save",
           "permissions",
@@ -682,6 +682,26 @@
       "ui_artifact_id": 12135071354,
       "ui_artifact_digest": "sha256:55b98b43533b6a5a404b4a1bd9a0cfc899e91dc94babf5d2d046ffe381d4b0b7",
       "financial_write_enabled": false
+    },
+    "stage2": {
+      "status": "PASS",
+      "head": "88d7eb8ed41b803c10c26dc6e9c70b752aceb77f",
+      "ci_run_number": 546,
+      "ci_run_id": 39124422760,
+      "ci_status": "SUCCESS",
+      "build": "PASS",
+      "static_validation": "PASS",
+      "stage10": "PASS",
+      "finance_regression": "PASS",
+      "day_regression": "PASS",
+      "cashier_stage2_ui_smoke": "PASS",
+      "strict_ui_viewport": "1024x720",
+      "strict_ui_named_elements": 122,
+      "strict_ui_layout_warnings": 0,
+      "ui_artifact_id": 12134978933,
+      "ui_artifact_digest": "sha256:f501a2ca5b40f208b30a756e26456ea3f975486742c6bae9c8506c8bc361e6ad",
+      "financial_write_enabled": false,
+      "architecture_condition_for_stage3": "Authoritative financial save must enter through an Application write contract/coordinator and Infrastructure adapter; do not add financial save logic directly to CashierWorkbenchViewModel."
     }
   }
 }
