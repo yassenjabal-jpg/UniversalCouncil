@@ -1082,6 +1082,43 @@
     },
     "ux_pre_owner_audit_required": true,
     "ux_debt_ledger_required": true,
-    "ux_legacy_workflow_benchmark_required": true
+    "ux_legacy_workflow_benchmark_required": true,
+    "ux_v2_approved_direction": {
+      "name": "BALANCED_CONTENT_FIRST",
+      "owner_approved_date": "2026-10-19",
+      "identity_system": "EDITORIAL_FINANCIAL_ENGRAVING",
+      "identity_rebuild_required": false,
+      "composition_rebase_required": true,
+      "principles": [
+        "single_compact_shell_context",
+        "content_begins_immediately_after_context",
+        "one_dominant_operational_state_per_screen",
+        "cashier_most_compact_high_frequency_surface",
+        "day_readiness_is_hero_not_page_title",
+        "finance_account_identity_and_kpis_compose_as_one_compact_block",
+        "art_moves_into_typography_guilloche_rules_seals_and_spacing_not_extra_bars",
+        "reclaimed_vertical_space_returns_to_financial_task"
+      ],
+      "prohibited": [
+        "full_visual_identity_restart",
+        "new_unrelated_theme",
+        "architecture_branding",
+        "bank_like_ornament",
+        "large_repeated_headers",
+        "duplicate_page_title_strip",
+        "decorative_space_replacing_task_space"
+      ]
+    },
+    "current_required_correction": "SECTION_1_COMPOSITION_REBASE_BALANCED_CONTENT_FIRST",
+    "section1_relock_requires": [
+      "single_context_ribbon",
+      "cashier_compact_identity_and_financial_totals_priority",
+      "day_readiness_first_hierarchy",
+      "finance_compact_account_dossier_plus_ledger_priority",
+      "ux_v2_scorecard_pass",
+      "art_director_pass",
+      "independent_visual_qa_pass",
+      "council_domain_architecture_security_performance_pass"
+    ]
   }
 }
