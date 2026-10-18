@@ -30,7 +30,7 @@ The current application is **not authoritative** for:
 - visual language;
 - information architecture.
 
-The approved and sole visual direction is:
+The approved and sole visual direction for **every RevenueSystem interface—already built, currently reachable, under migration, or future—is:**
 
 **EDITORIAL FINANCIAL ENGRAVING**
 
@@ -661,6 +661,8 @@ Gates:
 - `G3_BEHAVIOR_INVARIANTS_LOCK`
 
 No new high-risk write workflow begins before G3.
+
+Visual migration is universal: previously completed RevenueSystem 2.0 slices retain their behavioral/financial evidence but must be visually rebased to the current Art Direction Lock. No G6/G7/G8/G9 screen is exempt merely because it previously passed a visual smoke gate.
 
 ---
 
