@@ -484,8 +484,8 @@
   },
   "detailed_rebuild_plan": "docs/operations/software/REVENUESYSTEM_2_DETAILED_REBUILD_PLAN.md",
   "execution_plan": {
-    "current_phase": "PHASE_6_CASHIER_WORKBENCH",
-    "next_packet": "G9_CASHIER_WORKBENCH_LOCK",
+    "current_phase": "PHASE_6_CASHIER_WORKBENCH_STAGE_2_READY",
+    "next_packet": "STAGE_2_EDITING_KEYBOARD_RECOVERY",
     "product_code_changes_started": true,
     "release_route_changed": false,
     "production_data_access": false,
@@ -603,7 +603,7 @@
   "cashier_workbench": {
     "phase": "PHASE_6_CASHIER_WORKBENCH",
     "gate": "G9_CASHIER_WORKBENCH_LOCK",
-    "status": "STAGE_1_IN_PROGRESS",
+    "status": "STAGE_1_PASS_STAGE_2_READY",
     "prerequisite_gate": "G8_DAY_CONSOLE_OVERVIEW_LOCK",
     "source_base": "4a9bb49a7bcdf2167c1ae45c9054eb3ff5d150f1",
     "preopen_contract": "docs/operations/software/REVENUESYSTEM_PHASE6_CASHIER_WORKBENCH_PREOPEN_2026-10-18.md",
@@ -627,7 +627,7 @@
     "three_stage_execution": [
       {
         "id": "STAGE_1_READ_ONLY",
-        "status": "IN_PROGRESS",
+        "status": "PASS",
         "scope": [
           "application contracts",
           "native async read adapter",
@@ -640,7 +640,7 @@
       },
       {
         "id": "STAGE_2_EDITING_KEYBOARD_RECOVERY",
-        "status": "BLOCKED_BY_STAGE_1",
+        "status": "READY_TO_OPEN",
         "scope": [
           "local editing state",
           "expressions",
@@ -665,6 +665,23 @@
         ],
         "financial_write": true
       }
-    ]
+    ],
+    "stage1": {
+      "status": "PASS",
+      "head": "90476f0186f1e44739d5545271621fc8d0f622f9",
+      "ci_run_number": 525,
+      "ci_run_id": 39121903519,
+      "ci_status": "SUCCESS",
+      "local_build": "PASS_0_WARNINGS_0_ERRORS",
+      "foundation_validator": "45/45 PASS",
+      "day_validator": "40/40 PASS",
+      "cashier_validator": "41/41 PASS",
+      "strict_ui_viewport": "1024x720",
+      "strict_ui_named_elements": 140,
+      "strict_ui_layout_warnings": 0,
+      "ui_artifact_id": 12135071354,
+      "ui_artifact_digest": "sha256:55b98b43533b6a5a404b4a1bd9a0cfc899e91dc94babf5d2d046ffe381d4b0b7",
+      "financial_write_enabled": false
+    }
   }
 }
