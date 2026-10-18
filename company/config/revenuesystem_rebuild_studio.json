@@ -453,33 +453,98 @@
     ]
   },
   "art_direction": {
-    "status": "LOCKED_OWNER_APPROVED",
-    "identity_source": "STUDIO",
-    "governing_visual_system": "Editorial Renaissance Motion",
-    "source_files": [
-      "docs/operations/media/EDITORIAL_RENAISSANCE_VISUAL_BIBLE.md",
-      "ventures/STUDIO-PILOT-001/PP03_ART_DIRECTION_LOCK.json",
-      "ventures/STUDIO-PILOT-001/PP06_SHOT_DESIGN_MATRIX.json"
-    ],
-    "revenue_system_lock": "docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md",
-    "independent_baghdad_babylonian_identity": false,
+    "status": "LOCKED_OWNER_APPROVED_2026_10_18",
+    "identity_source": "REVENUESYSTEM_COUNCIL_PLUS_REBUILD_STUDIO",
+    "governing_visual_system": "Editorial Financial Engraving",
+    "sole_revenuesystem_visual_authority": true,
+    "previous_revenuesystem_directions_active": false,
+    "governing_lock": "docs/operations/software/REVENUESYSTEM_2_ART_DIRECTION_LOCK.md",
+    "design_doctrine": "docs/operations/software/REVENUESYSTEM_REBUILD_DESIGN_DOCTRINE.md",
+    "concept_reference_set": {
+      "date": "2026-10-18",
+      "status": "APPROVED_VISUAL_GRAMMAR_NOT_LITERAL_PRODUCT_DATA",
+      "screens": [
+        "Day Console",
+        "Cashier Workbench",
+        "Reconciliation Studio",
+        "Finance Ledger",
+        "Reports Center",
+        "Data Operations",
+        "Administration",
+        "Login / Lock"
+      ],
+      "accepted": [
+        "paper-ivory operational field",
+        "deep-forest RTL command rail",
+        "cobalt interaction and focus",
+        "subtle guilloche/security linework",
+        "institutional financial seals",
+        "ledger/document composition",
+        "quiet dense grids and inputs",
+        "Arabic financial hierarchy"
+      ],
+      "reject_generation_drift": [
+        "Saudi national emblems or country branding",
+        "Saudi Riyal examples unless demanded by actual domain data",
+        "bank/government architecture as visual identity",
+        "palm/country imagery",
+        "literal real banknotes or currency portraits",
+        "fake concept values as product truth",
+        "left-side window controls"
+      ]
+    },
     "palette": {
       "paper_ivory": "#F6F1E8",
+      "deep_forest": "#173C32",
       "cobalt": "#174FA6",
       "clear_blue": "#2B73C9",
       "sky_blue": "#8EACD2",
       "warm_parchment": "#D9C8B1",
       "brass_gold": "#B58A3E",
-      "deep_forest": "#173C32",
-      "charcoal": "#151515"
+      "charcoal": "#151515",
+      "semantic_red": "RISK_DIFFERENCE_DESTRUCTIVE_ONLY",
+      "semantic_amber": "REVIEW_ATTENTION_ONLY"
     },
-    "adaptation_rule": "inherit palette_typography_materiality_composition_motion_not_video_specific_imagery",
-    "owner_approved_date": "2026-10-17",
+    "target_weighting": {
+      "paper_ivory": "45-60%",
+      "deep_forest": "15-25%",
+      "cobalt_clear_sky_combined": "8-15%",
+      "warm_parchment": "5-10%",
+      "brass_gold": "3-7% maximum decorative emphasis"
+    },
+    "core_vocabulary": [
+      "guilloche security patterns",
+      "micro-line engraving",
+      "ledger rulework",
+      "registration marks",
+      "original institutional seals",
+      "paper layering",
+      "denomination-strip geometry",
+      "precise tabular numerals"
+    ],
+    "composition_rule": "right-side narrow command rail + work-item tabs + business context bar + one dominant workbench + optional inspector + compact status bar",
+    "material_rule": "quiet data surfaces; engraving and texture live primarily in shell, context, status, empty space and document framing",
+    "typography_rule": "refined contemporary Arabic display for identity/headings; modern Arabic sans for operations; tabular financial numerals",
+    "seal_rule": "original RevenueSystem abstract seal only; no national, governmental, bank or currency imitation",
+    "wpf_rule": "tokens/components/vector geometry; no screenshot skins; no heavy raster textures behind data; virtualization preserved",
+    "owner_approved_date": "2026-10-18",
     "prohibited_visuals": [
+      "all previous RevenueSystem visual directions as active authority",
       "architectural imagery as decorative UI identity",
-      "Babylonian or Baghdadi ornament as local flavor",
+      "Babylonian or Baghdadi ornament",
+      "real banknotes or real currency portraits",
+      "real bank logos",
+      "national or government emblems",
+      "country-specific visual branding",
+      "casino or luxury wealth styling",
+      "crypto aesthetics",
       "generic enterprise SaaS styling",
-      "old RevenueSystem layout reproduction"
+      "old RevenueSystem layout reproduction",
+      "green-and-gold everywhere",
+      "glassmorphism",
+      "neon cyberpunk",
+      "fake antique paper",
+      "giant rounded card walls"
     ]
   },
   "detailed_rebuild_plan": "docs/operations/software/REVENUESYSTEM_2_DETAILED_REBUILD_PLAN.md",
