@@ -13,6 +13,8 @@ The Art Direction is owner-locked as **EDITORIAL FINANCIAL ENGRAVING**:
 
 No previous RevenueSystem visual direction is active authority.
 
+**Scope:** this visual lock applies retroactively and prospectively to every RevenueSystem interface. Existing G6/G7/G8/G9 implementation surfaces are not visually grandfathered. Their functional gate evidence remains valid, but their UI must be rebased to Editorial Financial Engraving and visually re-accepted before release.
+
 ## Governing premise
 
 The current RevenueSystem UI is a behavioral reference only.
