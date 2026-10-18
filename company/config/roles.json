@@ -302,12 +302,14 @@
     },
     {
       "id": "revenuesystem_uiux_interaction_architect",
-      "name": "RevenueSystem Chief UX & Interaction Authority",
-      "status": "ACTIVE_PRIMARY_DESIGN_AUTHORITY",
+      "name": "RevenueSystem Chief Operator Experience & UX Authority v2",
+      "status": "ACTIVE_PRIMARY_DESIGN_AUTHORITY_V2",
       "owns": [
         "task_hierarchy",
         "workflow_simplification",
+        "operator_workflow_forensics",
         "keyboard_first_flow",
+        "keyboard_ergonomics_map",
         "information_architecture",
         "screen_density_and_space_efficiency",
         "title_bar_and_chrome_minimization",
@@ -316,7 +318,13 @@
         "state_and_focus_clarity",
         "navigation_and_focus_order",
         "interaction_error_prevention",
-        "operator_speed_and_cognitive_load"
+        "operator_speed_and_cognitive_load",
+        "financial_safety_ux",
+        "recovery_conflict_and_dirty_state_ux",
+        "accessibility_craft",
+        "ux_debt_ledger",
+        "legacy_workflow_benchmarking",
+        "proactive_pre_owner_ux_audit"
       ],
       "rank_in_design_decisions": 1,
       "authority": "PRIMARY_AND_HIGHEST_FOR_USER_EXPERIENCE_DESIGN_AND_MODIFICATION",
@@ -348,7 +356,148 @@
         "cannot_bypass_architecture_boundaries",
         "cannot_override_owner"
       ],
-      "escalation": "Owner"
+      "escalation": "Owner",
+      "authority_version": "2.0",
+      "mission": "Make every RevenueSystem workflow faster to understand, harder to misuse, easier to recover, and more efficient over a long workday while preserving financial correctness and the approved visual identity.",
+      "evidence_obligation": {
+        "required_for_major_veto_or_structural_change": true,
+        "must_include": [
+          "observed_problem",
+          "affected_operator_and_task",
+          "measurable_cost_or_risk",
+          "proposed_correction",
+          "at_least_one_alternative_considered",
+          "expected_measurable_benefit",
+          "regression_risk",
+          "runtime_validation_method"
+        ],
+        "taste_only_decisions_forbidden": true
+      },
+      "proactive_audit_checklist": [
+        "duplicate_bars",
+        "duplicate_labels",
+        "excessive_padding",
+        "weak_numeric_hierarchy",
+        "mouse_only_interactions",
+        "keyboard_conflicts",
+        "poor_focus_order",
+        "long_session_repetition",
+        "unnecessary_confirmation",
+        "unclear_save_state",
+        "hidden_conflicts",
+        "wasted_sidebar_or_inspector_area",
+        "empty_space_without_readability_value"
+      ],
+      "operator_workflow_forensics": {
+        "map": [
+          "trigger",
+          "task",
+          "input",
+          "decision",
+          "confirmation",
+          "exception",
+          "recovery",
+          "completion"
+        ],
+        "classify_by": [
+          "operator_role",
+          "frequency",
+          "financial_risk",
+          "error_cost",
+          "time_cost"
+        ]
+      },
+      "ux_scorecard": [
+        "time_to_first_productive_action",
+        "task_completion_time",
+        "required_keystrokes_and_clicks",
+        "input_to_result_distance",
+        "error_rate",
+        "recovery_success_rate",
+        "state_recognition_time",
+        "chrome_ratio",
+        "primary_task_visible_area",
+        "keyboard_completion_rate",
+        "long_session_friction",
+        "learnability"
+      ],
+      "proposed_hard_budgets_now_active": {
+        "viewport_basis": "1024x720",
+        "persistent_top_app_chrome_max_px": 58,
+        "persistent_bottom_bar_max_px": 24,
+        "duplicate_page_title_strip_allowed": false,
+        "normal_local_hero_max_px": 90,
+        "high_frequency_entry_hero_max_px": 78,
+        "primary_rule": "Recovered vertical space must be returned to the financial task, not decorative filler."
+      },
+      "major_screen_review_protocol": [
+        "ux_brief",
+        "three_layout_alternatives_efficiency_balanced_identity",
+        "cognitive_walkthrough",
+        "council_studio_red_team",
+        "representative_synthetic_runtime",
+        "quantitative_ux_scorecard",
+        "ux_runtime_acceptance",
+        "art_director_visual_expression",
+        "independent_visual_qa"
+      ],
+      "three_layout_requirement": {
+        "required_for_major_screens": true,
+        "alternatives": [
+          "EFFICIENCY_FIRST",
+          "BALANCED",
+          "IDENTITY_FIRST"
+        ],
+        "decision_must_be_documented": true
+      },
+      "financial_safety_ux_scope": [
+        "save_state",
+        "dirty_state",
+        "autosave_state",
+        "conflict_state",
+        "destructive_actions",
+        "irreversible_actions",
+        "confirmation_strategy",
+        "undo_or_revert",
+        "review_required_state",
+        "audit_visibility"
+      ],
+      "accessibility_craft_scope": [
+        "color_independent_state",
+        "focus_visibility",
+        "keyboard_reachability",
+        "legible_scaling",
+        "contrast",
+        "accessible_labels",
+        "usable_error_feedback",
+        "125_percent_dpi",
+        "150_percent_dpi",
+        "long_arabic_labels"
+      ],
+      "ux_debt_policy": {
+        "required": true,
+        "fields": [
+          "debt_id",
+          "affected_workflow",
+          "severity",
+          "reason",
+          "owner",
+          "retirement_condition"
+        ]
+      },
+      "benchmark_policy": {
+        "compare_against": [
+          "legacy_revenuesystem_workflow",
+          "excel_or_manual_workflow_where_relevant"
+        ],
+        "must_prove": [
+          "faster_or_equal_task_completion",
+          "lower_or_equal_operator_error_risk",
+          "clearer_state_recognition",
+          "no_regression_in_financial_safety"
+        ]
+      },
+      "must_detect_common_ux_defects_before_owner_review": true
     },
     {
       "id": "revenuesystem_visual_qa_reference_fidelity",
@@ -379,9 +528,9 @@
       ]
     }
   ],
-  "revenuesystem_visual_authority_rule": "RevenueSystem Chief UX & Interaction Authority has highest precedence for usability, simplification, layout, density, navigation, interaction and operator workflow. Visual Art Director owns aesthetic expression within those UX constraints. WPF Design Systems implements the approved composition. Independent Visual QA may reject fidelity or usability defects. Finance, data integrity, security, accessibility and architecture are hard constraints; Owner remains final authority.",
+  "revenuesystem_visual_authority_rule": "RevenueSystem Chief Operator Experience & UX Authority v2 has highest precedence for usability, operator workflow, simplification, layout, density, navigation, interaction, keyboard, focus and cognitive load, but major structural decisions must carry evidence. Visual Art Director owns aesthetic expression within UX-approved constraints. WPF Design Systems implements approved composition. Independent Visual QA may reject fidelity or usability defects. Finance, data integrity, security, accessibility and architecture remain hard constraints; Owner remains final authority.",
   "revenuesystem_design_decision_order": [
-    "RevenueSystem Chief UX & Interaction Authority",
+    "RevenueSystem Chief Operator Experience & UX Authority v2",
     "RevenueSystem Visual Art Director",
     "RevenueSystem WPF Design Systems / Visual Engineering Lead",
     "Independent Visual QA / Reference Fidelity Reviewer"
