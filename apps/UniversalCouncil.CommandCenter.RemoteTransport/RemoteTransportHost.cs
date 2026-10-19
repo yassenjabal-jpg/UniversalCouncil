@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using HttpBadRequestException = Microsoft.AspNetCore.Http.HttpBadRequestException;
 using UniversalCouncil.CommandCenter.Application;
 using UniversalCouncil.CommandCenter.Core;
 using UniversalCouncil.CommandCenter.Infrastructure;
@@ -125,7 +126,7 @@ public static class RemoteTransportHost
                 utcNow());
 
             var envelope = await request.ReadFromJsonAsync<RemoteCommandEnvelope>()
-                ?? throw new BadHttpRequestException(
+                ?? throw new HttpBadRequestException(
                     "Remote command body is required.",
                     StatusCodes.Status400BadRequest);
 
@@ -145,7 +146,7 @@ public static class RemoteTransportHost
                 utcNow());
 
             var approval = await request.ReadFromJsonAsync<RemoteApprovalRequest>()
-                ?? throw new BadHttpRequestException(
+                ?? throw new HttpBadRequestException(
                     "Approval body is required.",
                     StatusCodes.Status400BadRequest);
 
@@ -171,7 +172,7 @@ public static class RemoteTransportHost
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = exception switch
                 {
-                    BadHttpRequestException bad => bad.StatusCode,
+                    HttpBadRequestException bad => bad.StatusCode,
                     RemoteOwnerGatewayException =>
                         StatusCodes.Status401Unauthorized,
                     JsonException =>
@@ -235,7 +236,7 @@ public static class RemoteTransportHost
         if (request.ContentLength is > 0 &&
             request.ContentLength > maxRequestBodyBytes)
         {
-            throw new BadHttpRequestException(
+            throw new HttpBadRequestException(
                 "Request body exceeds Stage 6 maximum.",
                 StatusCodes.Status413PayloadTooLarge);
         }
@@ -245,7 +246,7 @@ public static class RemoteTransportHost
                 "application/json",
                 StringComparison.OrdinalIgnoreCase))
         {
-            throw new BadHttpRequestException(
+            throw new HttpBadRequestException(
                 "Stage 6 POST endpoints require application/json.",
                 StatusCodes.Status415UnsupportedMediaType);
         }
