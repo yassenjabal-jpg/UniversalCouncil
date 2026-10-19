@@ -7,11 +7,13 @@ internal sealed class MainWindowViewModel
     public MainWindowViewModel(
         ICommandCenterSnapshotProvider snapshotProvider,
         IOperationalStateProvider operationalStateProvider,
-        IOrchestrationCatalogProvider orchestrationProvider)
+        IOrchestrationCatalogProvider orchestrationProvider,
+        IExecutionFabricProvider executionFabricProvider)
     {
         Snapshot = snapshotProvider.GetSnapshot();
         Operational = operationalStateProvider.GetOperationalState();
         Orchestration = orchestrationProvider.GetCatalog();
+        ExecutionFabric = executionFabricProvider.GetFabric();
     }
 
     public CommandCenterSnapshot Snapshot { get; }
@@ -19,6 +21,8 @@ internal sealed class MainWindowViewModel
     public OperationalStateProjection Operational { get; }
 
     public OrchestrationCatalogProjection Orchestration { get; }
+
+    public ExecutionFabricProjection ExecutionFabric { get; }
 
     public string CouncilCountLabel =>
         $"{Orchestration.Council.CoreRoles.Count} أساسي + {Orchestration.Council.SpecialistRoles.Count} اختصاصي";
@@ -44,4 +48,15 @@ internal sealed class MainWindowViewModel
 
     public string ReturnTicketFieldCountLabel =>
         $"{Orchestration.Studio.ReturnTicketRequiredFields.Count} حقول إلزامية";
+
+    public string ExecutionServiceLabel =>
+        $"{ExecutionFabric.ServiceMode} / {ExecutionFabric.TargetHost}";
+
+    public string Phase0SummaryLabel =>
+        string.Join(
+            "  |  ",
+            ExecutionFabric.Phase0Gates.Select(item => $"{item.Id}:{item.Status}"));
+
+    public string ProviderSummaryLabel =>
+        $"{ExecutionFabric.Providers.Count} providers / live dispatch disabled";
 }
