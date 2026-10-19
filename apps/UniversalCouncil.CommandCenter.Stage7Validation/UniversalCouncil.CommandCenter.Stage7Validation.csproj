@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyName>UniversalCouncil.CommandCenter.Stage7Validation</AssemblyName>
+    <RootNamespace>UniversalCouncil.CommandCenter.Stage7Validation</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalCouncil.CommandCenter.Core\UniversalCouncil.CommandCenter.Core.csproj" />
+    <ProjectReference Include="..\UniversalCouncil.CommandCenter.Application\UniversalCouncil.CommandCenter.Application.csproj" />
+    <ProjectReference Include="..\UniversalCouncil.CommandCenter.Infrastructure\UniversalCouncil.CommandCenter.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\state\command-center\owner-device-tailnet.json"
+             Link="state\owner-device-tailnet.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>
