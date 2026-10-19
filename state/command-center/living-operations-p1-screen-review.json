@@ -7,11 +7,13 @@
   "screens": [
     {
       "id": "home_owner_workspace",
-      "state": "FIDELITY_BLUEPRINT_REPAIRED_REVIEW_REQUIRED",
+      "state": "PRODUCTION_PROTOCOL_LOCKED_ARTIFACT_PENDING",
       "murtakaz_decision": "PENDING",
       "blueprint": "docs/operations/command-center/living-operations/20_HOME_OWNER_WORKSPACE_FIDELITY_BLUEPRINT.md",
-      "visual_job_id": "P1-HOME-ARTIFACT-001",
-      "repair_audit": "docs/operations/command-center/living-operations/21_MEMBER_SIGIL_REFERENCE_GAP_AUDIT.md"
+      "visual_job_id": "P1-HOME-ARTIFACT-002",
+      "repair_audit": "docs/operations/command-center/living-operations/21_MEMBER_SIGIL_REFERENCE_GAP_AUDIT.md",
+      "invalidated_visual_job_id": "P1-HOME-ARTIFACT-001",
+      "production_protocol": "state/command-center/living-operations-visual-production-protocol.json"
     },
     {
       "id": "living_project_workspace",
