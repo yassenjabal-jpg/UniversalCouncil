@@ -33,8 +33,21 @@ KINDS = {
     "policy",
     "architecture",
 }
+COMPAT_KINDS = {"gate_lock"}
 CONFIDENCE = {"owner_confirmed", "verified", "evidence_backed", "proposal"}
+COMPAT_CONFIDENCE = {"verified_evidence"}
 SENSITIVITY = {"normal", "private_non_sensitive"}
+SOURCE_TYPES = {"chat", "council", "repository", "tool", "migration"}
+COMPAT_SOURCE_TYPES = {"github_ci_and_visual_review"}
+BASE_SOURCE_FIELDS = {"type", "ref", "commit"}
+VISUAL_REVIEW_SOURCE_FIELDS = {
+    "type",
+    "ref",
+    "commit",
+    "product_commit",
+    "ci_run_id",
+    "governance_commit",
+}
 SECRET_KEYS = {
     "password",
     "passwd",
@@ -155,7 +168,7 @@ def validate_event(event: dict[str, Any], cfg: dict[str, Any] | None = None) -> 
         raise MemoryFabricError("invalid memory scope")
     if event["level"] not in LEVELS:
         raise MemoryFabricError("invalid memory level")
-    if event["kind"] not in KINDS:
+    if event["kind"] not in KINDS | COMPAT_KINDS:
         raise MemoryFabricError("invalid memory kind")
     if not isinstance(event["subject"], str) or not event["subject"].strip():
         raise MemoryFabricError("memory subject is required")
@@ -182,7 +195,7 @@ def validate_event(event: dict[str, Any], cfg: dict[str, Any] | None = None) -> 
         raise MemoryFabricError("invalid supersedes event id")
     if event["event_id"] in supersedes:
         raise MemoryFabricError("event cannot supersede itself")
-    if event["confidence"] not in CONFIDENCE:
+    if event["confidence"] not in CONFIDENCE | COMPAT_CONFIDENCE:
         raise MemoryFabricError("invalid memory confidence")
     if event["level"] == "L4_OWNER_DIRECTIVE" and event["confidence"] != "owner_confirmed":
         raise MemoryFabricError("L4 owner directives require owner_confirmed confidence")
@@ -193,15 +206,18 @@ def validate_event(event: dict[str, Any], cfg: dict[str, Any] | None = None) -> 
     if any(not isinstance(tag, str) or not tag.strip() for tag in event["tags"]):
         raise MemoryFabricError("invalid tag")
     source = event["source"]
-    if not isinstance(source, dict) or source.get("type") not in {
-        "chat",
-        "council",
-        "repository",
-        "tool",
-        "migration",
-    }:
+    if not isinstance(source, dict):
         raise MemoryFabricError("invalid memory source")
-    if set(source) - {"type", "ref", "commit"}:
+
+    source_type = source.get("type")
+    if source_type in SOURCE_TYPES:
+        allowed_source_fields = BASE_SOURCE_FIELDS
+    elif source_type in COMPAT_SOURCE_TYPES:
+        allowed_source_fields = VISUAL_REVIEW_SOURCE_FIELDS
+    else:
+        raise MemoryFabricError("invalid memory source")
+
+    if set(source) - allowed_source_fields:
         raise MemoryFabricError("unsupported source fields")
     return True
 
