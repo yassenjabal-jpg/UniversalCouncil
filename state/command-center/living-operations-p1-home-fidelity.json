@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "contract_id": "living-operations-p1-home-fidelity",
   "screen_id": "home_owner_workspace",
-  "status": "FIDELITY_BLUEPRINT_APPROVED_VISUAL_ARTIFACT_PENDING",
+  "status": "FIDELITY_BLUEPRINT_REPAIRED_REVIEW_REQUIRED",
   "canonical_parent": {
     "role": "home_owner_workspace",
     "path": "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
@@ -11,7 +11,7 @@
   "source_of_truth": "CANONICAL_REFERENCE_IMAGE",
   "blueprint": "docs/operations/command-center/living-operations/20_HOME_OWNER_WORKSPACE_FIDELITY_BLUEPRINT.md",
   "visual_job_id": "P1-HOME-ARTIFACT-001",
-  "allowed_delta": "Implementation cleanup only; preserve canonical Home identity, five-zone composition, composer hierarchy, Council Pulse, three Active Work cards, lower three-panel summary, right navigation rail and bottom tool dock.",
+  "allowed_delta": "Implementation cleanup only; preserve canonical Home identity, five-zone composition, full eight-member Council Pulse identity/interaction system, composer hierarchy, Council Pulse routing paths, three Active Work cards with participant medallions, lower three-panel summary, right navigation rail and bottom tool dock.",
   "required_proof": [
     "REFERENCE_ATTACHED_TO_VISUAL_TOOL",
     "PARENT_SHA256_VERIFIED",
@@ -21,8 +21,33 @@
     "WORKSHOP_REVIEW"
   ],
   "screen_final_approval": false,
-  "murtakaz_decision": "PENDING_RENDERED_ARTIFACT",
+  "murtakaz_decision": "REVIEW_REQUIRED_AFTER_MEMBER_FIDELITY_REPAIR",
   "p1_complete": false,
   "stage8_opened": false,
-  "runtime_authority": false
+  "runtime_authority": false,
+  "member_identity_requirements": {
+    "exact_home_sequence": [
+      "المالك",
+      "الاستراتيجية",
+      "البحث",
+      "التحقق",
+      "التنفيذ",
+      "الإبداع",
+      "البيانات",
+      "التعلم"
+    ],
+    "required_layers": [
+      "glyph",
+      "identity_tint",
+      "role_label",
+      "functional_subtitle",
+      "state_ring_or_badge",
+      "reasoning_rings_when_supported",
+      "routing_path",
+      "interactive_destination"
+    ],
+    "generic_icon_substitution_forbidden": true,
+    "unsupported_member_invention_forbidden": true
+  },
+  "rejected_generation_id": "79110079-3684-437e-9c29-825ac3f6cb4d"
 }
