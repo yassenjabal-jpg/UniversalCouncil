@@ -14,6 +14,7 @@ STAGE_MAP = PROJECT / "stage-phase-map.json"
 APPROVAL_POLICY = PROJECT / "al-murtakaz-approval-policy.json"
 VISUAL_PHASE = STATE / "living-operations-p1-visual-phase.json"
 SCREEN_REVIEW = STATE / "living-operations-p1-screen-review.json"
+REFERENCE_MANIFEST = STATE / "living-operations-reference-manifest.json"
 VISUAL_APPROVAL = PROJECT / "approvals" / "2026-10-19-visual-direction-continuation.json"
 TAILNET_POLICY = STATE / "owner-device-tailnet-policy.json"
 TAILNET_PROJECTION = STATE / "owner-device-tailnet.json"
@@ -47,6 +48,7 @@ for required in (
     APPROVAL_POLICY,
     VISUAL_PHASE,
     SCREEN_REVIEW,
+    REFERENCE_MANIFEST,
     VISUAL_APPROVAL,
     TAILNET_POLICY,
     TAILNET_PROJECTION,
@@ -123,6 +125,20 @@ if screen_review["phase_complete"] is not False:
     raise SystemExit("P1 screen review fabricated phase completion")
 if any(item["murtakaz_decision"] != "PENDING" for item in screen_review["screens"]):
     raise SystemExit("P1 screen state may not claim approval before visual artifacts are reviewed")
+
+reference_manifest = load(REFERENCE_MANIFEST)
+if reference_manifest["status"] != "OWNER_ADOPTED_MURTAKAZ_ENFORCED":
+    raise SystemExit("Living Operations visual reference lock is not active")
+if reference_manifest["source_of_truth"] != "APPROVED_REFERENCE_IMAGES_ONLY":
+    raise SystemExit("Visual source of truth drifted away from approved reference images")
+if len(reference_manifest["references"]) != 8:
+    raise SystemExit("Canonical visual reference set must contain exactly eight approved images")
+if reference_manifest["rejected_classification"] != "REJECTED_VISUAL_DRIFT":
+    raise SystemExit("Rejected visual drift classification changed")
+if not reference_manifest["rules"]["reference_first"]:
+    raise SystemExit("Reference-first visual rule must remain active")
+if not reference_manifest["rules"]["delta_only_generation"]:
+    raise SystemExit("New visual generation must remain delta-only")
 
 visual_approval = load(VISUAL_APPROVAL)
 if visual_approval["decision"] != "APPROVE_TO_IMPLEMENT":
