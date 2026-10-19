@@ -6,7 +6,9 @@ namespace UniversalCouncil.CommandCenter.Host;
 
 public sealed record CommandCenterHostServices(
     ICommandCenterSnapshotProvider Shell,
-    IOperationalStateProvider Operational);
+    IOperationalStateProvider Operational,
+    IOrchestrationCatalogProvider Orchestration,
+    ICouncilPlanner CouncilPlanner);
 
 public static class CommandCenterComposition
 {
@@ -17,9 +19,21 @@ public static class CommandCenterComposition
             "state",
             "command-center-state.json");
 
-        var reader = new JsonOperationalStateReader(statePath);
-        var service = new OperationalStateService(reader);
+        var orchestrationPath = Path.Combine(
+            baseDirectory,
+            "state",
+            "orchestration-catalog.json");
 
-        return new CommandCenterHostServices(service, service);
+        var stateReader = new JsonOperationalStateReader(statePath);
+        var stateService = new OperationalStateService(stateReader);
+
+        var orchestrationReader = new JsonOrchestrationCatalogReader(orchestrationPath);
+        var orchestrationService = new OrchestrationService(orchestrationReader);
+
+        return new CommandCenterHostServices(
+            stateService,
+            stateService,
+            orchestrationService,
+            orchestrationService);
     }
 }

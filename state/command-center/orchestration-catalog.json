@@ -1,0 +1,558 @@
+{
+  "schema_version": "1.0",
+  "source_type": "repository_projection",
+  "source_files": [
+    {
+      "path": "config/roles.json",
+      "blob_sha": "0504c911a43f8b0c5d7de89db9a49bbe1ee5fc89"
+    },
+    {
+      "path": "company/config/council_role_contracts.json",
+      "blob_sha": "0b4cd4cab11112fe3617efdc76efb1c75d87358c"
+    },
+    {
+      "path": "company/config/council_routing_candidate.json",
+      "blob_sha": "b0c25fd0b08cefed90316df7cb0dce8d95af2620"
+    },
+    {
+      "path": "company/config/channel_operating_system.json",
+      "blob_sha": "597dc5e54d1d98d0ebced37b888ebe2815e4a033"
+    },
+    {
+      "path": "company/config/media_venture.json",
+      "blob_sha": "e40604a78a7c4c570e0ce3b966cdb79031529ac6"
+    }
+  ],
+  "council": {
+    "governing_version": "0.3.0",
+    "contracts_version": "0.1-shadow",
+    "contracts_status": "CANDIDATE_SHADOW_ONLY",
+    "routing_version": "0.1-shadow",
+    "routing_status": "CANDIDATE_SHADOW_ONLY",
+    "objective": "smallest_useful_set_of_voices",
+    "free_text_keyword_routing": false,
+    "core_roles": [
+      {
+        "id": "chair",
+        "name": "Chair / Decision Controller",
+        "activation_model": "coordination_capability",
+        "blocker_type": "function_bounded",
+        "blocker_domain": "process_integrity",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "none_by_role_contract"
+        ]
+      },
+      {
+        "id": "evidence",
+        "name": "Evidence & Research Lead",
+        "activation_model": "callable_capability",
+        "blocker_type": "function_bounded",
+        "blocker_domain": "evidence_integrity",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_research_tools"
+        ]
+      },
+      {
+        "id": "redteam",
+        "name": "Red Team / Devil's Advocate",
+        "activation_model": "callable_capability",
+        "blocker_type": "function_bounded",
+        "blocker_domain": "falsification",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "none_by_role_contract"
+        ]
+      },
+      {
+        "id": "execution",
+        "name": "Practicality & Execution Reviewer",
+        "activation_model": "callable_capability",
+        "blocker_type": "function_bounded",
+        "blocker_domain": "feasibility",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "none_by_role_contract"
+        ]
+      },
+      {
+        "id": "risk",
+        "name": "Risk & Consequence Analyst",
+        "activation_model": "callable_capability",
+        "blocker_type": "function_bounded",
+        "blocker_domain": "risk",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "none_by_role_contract"
+        ]
+      },
+      {
+        "id": "human",
+        "name": "Human / User Advocate",
+        "activation_model": "callable_capability",
+        "blocker_type": "function_bounded",
+        "blocker_domain": "human_impact",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "none_by_role_contract"
+        ]
+      },
+      {
+        "id": "value",
+        "name": "Cost-Benefit & Value Analyst",
+        "activation_model": "callable_capability",
+        "blocker_type": "function_bounded",
+        "blocker_domain": "value",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "none_by_role_contract"
+        ]
+      },
+      {
+        "id": "synthesis",
+        "name": "Synthesis & Alternatives Designer",
+        "activation_model": "protocol_stage",
+        "blocker_type": "none",
+        "blocker_domain": "none",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "none_by_role_contract"
+        ]
+      }
+    ],
+    "specialist_roles": [
+      {
+        "id": "health",
+        "name": "Health & Medicine Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "health",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "software",
+        "name": "Software & Systems Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "software",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "security",
+        "name": "Cybersecurity & Privacy Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "security",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "finance",
+        "name": "Finance & Accounting Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "finance",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "business",
+        "name": "Business & Operations Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "business",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "product",
+        "name": "Product & Purchasing Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "product",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "science",
+        "name": "Science & Research Methods Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "science",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "legal",
+        "name": "Legal & Regulatory Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "legal",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "education",
+        "name": "Education & Learning Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "education",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "media",
+        "name": "Media & Content Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "media",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "design",
+        "name": "Design & UX Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "design",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "travel",
+        "name": "Travel & Local Planning Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "travel",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "data",
+        "name": "Data & Statistics Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "data",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "career",
+        "name": "Career & Work Specialist",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "career",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "customer_skeptic",
+        "name": "Customer Skeptic",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "customer_skeptic",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      },
+      {
+        "id": "moat_auditor",
+        "name": "Commoditization & Moat Auditor",
+        "activation_model": "on_demand_specialist",
+        "blocker_type": "domain_bounded",
+        "blocker_domain": "moat_auditor",
+        "may_execute_tools": false,
+        "may_mutate_authority": false,
+        "may_self_approve": false,
+        "tools": [
+          "approved_read_only_tools_when_needed"
+        ]
+      }
+    ],
+    "domain_specialists": {
+      "health": "health",
+      "software": "software",
+      "security": "security",
+      "finance": "finance",
+      "business": "business",
+      "product": "product",
+      "science": "science",
+      "legal": "legal",
+      "education": "education",
+      "media": "media",
+      "design": "design",
+      "travel": "travel",
+      "data": "data",
+      "career": "career"
+    },
+    "commercial_mandatory_specialists": [
+      "customer_skeptic",
+      "moat_auditor"
+    ],
+    "activation_rules": {
+      "evidence": {
+        "uncertainty_at_least": "HIGH",
+        "freshness_at_least": "HIGH"
+      },
+      "redteam": {
+        "materiality_at_least": "MATERIAL",
+        "uncertainty_at_least": "MEDIUM"
+      },
+      "risk": {
+        "risk_at_least": "MEDIUM"
+      }
+    }
+  },
+  "studio": {
+    "visual_system": "Editorial Renaissance Motion",
+    "primary_language": "Arabic",
+    "publication_authority": "GATED",
+    "operating_mode": "THREE_PHASE_STUDIO_WITH_SERIAL_PRODUCTION",
+    "macro_phases": [
+      "writing",
+      "pre_production",
+      "production"
+    ],
+    "control_plane_functions": [
+      "media_producer"
+    ],
+    "mandatory_clearance_functions": [
+      "independent_fact_checker"
+    ],
+    "departments": [
+      {
+        "id": "D01_strategy_research",
+        "name": "Strategy & Research",
+        "functions": [
+          "audience_growth_strategist",
+          "Evidence & Research Lead"
+        ]
+      },
+      {
+        "id": "D02_editorial_script",
+        "name": "Editorial & Script",
+        "functions": [
+          "editorial_director",
+          "script_voice_director"
+        ]
+      },
+      {
+        "id": "D03_verification_clearance",
+        "name": "Independent Verification & Clearance",
+        "functions": [
+          "independent_fact_checker"
+        ]
+      },
+      {
+        "id": "D04_voice_narration",
+        "name": "Voice & Narration",
+        "functions": [
+          "script_voice_director",
+          "dialogue_mix_engineer"
+        ]
+      },
+      {
+        "id": "D05_visual_art",
+        "name": "Visual Art",
+        "functions": [
+          "visual_art_director"
+        ]
+      },
+      {
+        "id": "D06_cinematography_previs",
+        "name": "Cinematography & Previsualization",
+        "functions": [
+          "cinematography_shot_designer"
+        ]
+      },
+      {
+        "id": "D07_motion_compositing",
+        "name": "Motion & Compositing",
+        "functions": [
+          "motion_picture_editor"
+        ]
+      },
+      {
+        "id": "D08_picture_edit",
+        "name": "Picture Editing",
+        "functions": [
+          "motion_picture_editor",
+          "editorial_director"
+        ]
+      },
+      {
+        "id": "D09_sound_mix",
+        "name": "Sound Design & Mix",
+        "functions": [
+          "music_sound_supervisor",
+          "dialogue_mix_engineer"
+        ]
+      },
+      {
+        "id": "D10_packaging",
+        "name": "Packaging & Thumbnail",
+        "functions": [
+          "thumbnail_packaging_designer"
+        ]
+      },
+      {
+        "id": "D11_assurance_delivery",
+        "name": "Assurance & Delivery",
+        "functions": [
+          "Technical Operator",
+          "Assurance Reviewer",
+          "independent_fact_checker"
+        ]
+      },
+      {
+        "id": "D12_learning_archive",
+        "name": "Learning & Archive",
+        "functions": [
+          "audience_growth_strategist",
+          "media_producer"
+        ]
+      }
+    ],
+    "handoff_contract": {
+      "acceptance_required_before_next_department": true,
+      "downstream_direct_repair_forbidden": true,
+      "rejection_action": "RETURN_TICKET_TO_SOURCE_DEPARTMENT"
+    },
+    "stage_execution_contract": {
+      "exactly_one_primary_program": true,
+      "simultaneous_secondary_craft_program_forbidden": true,
+      "program_switch_requires_new_stage": true,
+      "checkpoint_before_stage_exit": true,
+      "output_verification_required": true
+    },
+    "master_pipeline_contract": {
+      "phase_sequence": [
+        "writing",
+        "pre_production",
+        "production"
+      ],
+      "writing_exit_requires": [
+        "OWNER_TITLE_LOCK",
+        "SCRIPT_LOCK"
+      ],
+      "preproduction_entry_requires": "SCRIPT_LOCK",
+      "preproduction_exit_requires": "PRODUCTION_READY_LOCK",
+      "production_entry_requires": "PRODUCTION_READY_LOCK",
+      "feedback_mode": "FORMAL_RETURN_TICKET",
+      "phase_skip_forbidden": true
+    },
+    "human_assistance": {
+      "enabled": true,
+      "mode": "ON_DEMAND_BOUNDED_ASSISTANCE",
+      "coordinator": "media_producer"
+    },
+    "return_ticket_required_fields": [
+      "return_ticket_id",
+      "source_department",
+      "detecting_department",
+      "artifact_ref",
+      "defect",
+      "reason_for_rejection",
+      "requested_correction",
+      "do_not_change",
+      "resume_handoff"
+    ]
+  },
+  "model_control": {
+    "role_model_separation": true,
+    "owner_controlled_selection": true,
+    "silent_fallback_allowed": false,
+    "provider_calls_connected": false,
+    "selection_precedence": [
+      "TASK_OVERRIDE",
+      "ROLE_OVERRIDE",
+      "PROJECT_DEFAULT",
+      "GLOBAL_DEFAULT"
+    ]
+  },
+  "runtime": {
+    "task_state": "NO_LIVE_TASK",
+    "active_council_roles": [],
+    "active_studio_department": null,
+    "active_model": null,
+    "provider_call_in_flight": false
+  }
+}

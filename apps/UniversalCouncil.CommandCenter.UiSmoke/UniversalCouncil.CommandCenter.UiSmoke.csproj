@@ -19,5 +19,9 @@
              Link="state\command-center-state.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\state\command-center\orchestration-catalog.json"
+             Link="state\orchestration-catalog.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
