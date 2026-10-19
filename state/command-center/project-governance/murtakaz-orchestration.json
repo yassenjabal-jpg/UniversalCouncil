@@ -5,7 +5,7 @@
   "source_files": [
     {
       "path": "state/command-center/project-governance/al-murtakaz.json",
-      "blob_sha": "ee59b29b96d802ceb63df0184511f90d3545ab4b"
+      "blob_sha": "ea1e10acfd6719f56a6cc5c9de4b34f16d6fc2ce"
     },
     {
       "path": "state/command-center/project-governance/inheritance-lock.json",
@@ -18,6 +18,10 @@
     {
       "path": "state/command-center/project-governance/product-studio.json",
       "blob_sha": "64fdc22f0bd140925f249956600fc04f53a4b75a"
+    },
+    {
+      "path": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
+      "blob_sha": "6b54343313b8cb3080712ba5744888e83a53e458"
     }
   ],
   "identity": {
@@ -402,6 +406,19 @@
       "reduced_motion_required": true,
       "no_fake_activity": true
     }
+  },
+  "mandatory_approval": {
+    "policy_id": "al-murtakaz-mandatory-approval",
+    "status": "OWNER_DIRECTIVE_ACTIVE",
+    "rule": "NO_CHANGE_ADOPTION_COMPLETION_MERGE_RELEASE_OR_STAGE_TRANSITION_WITHOUT_EXPLICIT_AL_MURTAKAZ_APPROVAL",
+    "implementation_requires": "APPROVE_TO_IMPLEMENT",
+    "adoption_requires": "APPROVED_BY_AL_MURTAKAZ",
+    "completion_requires": "APPROVED_BY_AL_MURTAKAZ",
+    "merge_requires": "APPROVED_BY_AL_MURTAKAZ",
+    "release_requires": "APPROVED_BY_AL_MURTAKAZ",
+    "next_phase_requires": "APPROVED_BY_AL_MURTAKAZ",
+    "implicit_approval_forbidden": true,
+    "material_change_invalidates_prior_approval": true
   },
   "model_control": {
     "role_model_separation": true,
