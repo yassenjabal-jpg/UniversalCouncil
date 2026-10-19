@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "profile_id": "command-center-product-studio",
+  "profile_id": "al-murtakaz-workshop",
   "project_id": "universal-council-command-center",
   "profile_kind": "PROJECT_LOCAL_PRODUCT_STUDIO",
   "status": "ACTIVE_FOR_PROJECT_DESIGN",
@@ -104,25 +104,70 @@
     }
   ],
   "phases": [
-    {"id":"PS0","name":"Project Audit","gate":"PROJECT_CONTEXT_LOCK"},
-    {"id":"PS1","name":"Experience Architecture","gate":"EXPERIENCE_ARCHITECTURE_LOCK"},
-    {"id":"PS2","name":"Living Visual + Motion System","gate":"VISUAL_MOTION_LOCK"},
-    {"id":"PS3","name":"Component System","gate":"COMPONENT_SYSTEM_LOCK"},
-    {"id":"PS4","name":"Windows Vertical Slice","gate":"WINDOWS_PROTOTYPE_ACCEPTED"},
-    {"id":"PS5","name":"Android Companion Vertical Slice","gate":"ANDROID_PROTOTYPE_ACCEPTED"},
-    {"id":"PS6","name":"Cross-Platform Semantics","gate":"CLIENT_SEMANTIC_PARITY_ACCEPTED"},
-    {"id":"PS7","name":"Accessibility + Performance + Fidelity","gate":"DESIGN_ASSURANCE_ACCEPTED"},
-    {"id":"PS8","name":"Engineering Handoff","gate":"IMPLEMENTATION_READY"}
+    {
+      "id": "PS0",
+      "name": "Project Audit",
+      "gate": "PROJECT_CONTEXT_LOCK"
+    },
+    {
+      "id": "PS1",
+      "name": "Experience Architecture",
+      "gate": "EXPERIENCE_ARCHITECTURE_LOCK"
+    },
+    {
+      "id": "PS2",
+      "name": "Living Visual + Motion System",
+      "gate": "VISUAL_MOTION_LOCK"
+    },
+    {
+      "id": "PS3",
+      "name": "Component System",
+      "gate": "COMPONENT_SYSTEM_LOCK"
+    },
+    {
+      "id": "PS4",
+      "name": "Windows Vertical Slice",
+      "gate": "WINDOWS_PROTOTYPE_ACCEPTED"
+    },
+    {
+      "id": "PS5",
+      "name": "Android Companion Vertical Slice",
+      "gate": "ANDROID_PROTOTYPE_ACCEPTED"
+    },
+    {
+      "id": "PS6",
+      "name": "Cross-Platform Semantics",
+      "gate": "CLIENT_SEMANTIC_PARITY_ACCEPTED"
+    },
+    {
+      "id": "PS7",
+      "name": "Accessibility + Performance + Fidelity",
+      "gate": "DESIGN_ASSURANCE_ACCEPTED"
+    },
+    {
+      "id": "PS8",
+      "name": "Engineering Handoff",
+      "gate": "IMPLEMENTATION_READY"
+    }
   ],
   "mandatory_clearance": [
     "cc_accessibility_clearance",
     "cc_visual_qa"
   ],
   "council_clearance_required_for": {
-    "truth_bearing_surface": ["cc_product_truth"],
-    "remote_authority_surface": ["cc_security_remote_trust"],
-    "autopilot_recovery_surface": ["cc_durable_autopilot", "cc_product_truth"],
-    "architecture_sensitive_surface": ["cc_architecture_execution"]
+    "truth_bearing_surface": [
+      "cc_product_truth"
+    ],
+    "remote_authority_surface": [
+      "cc_security_remote_trust"
+    ],
+    "autopilot_recovery_surface": [
+      "cc_durable_autopilot",
+      "cc_product_truth"
+    ],
+    "architecture_sensitive_surface": [
+      "cc_architecture_execution"
+    ]
   },
   "handoff": {
     "acceptance_required": true,
@@ -138,5 +183,9 @@
     "motion_must_have_semantic_purpose": true,
     "reduced_motion_required": true,
     "no_fake_activity": true
-  }
+  },
+  "umbrella_id": "al-murtakaz",
+  "umbrella_name_ar": "المرتكز",
+  "display_name_ar": "مشغل المرتكز",
+  "display_name_en": "Al-Murtakaz Product Workshop"
 }
