@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "policy_id": "LIVING_OPERATIONS_VISUAL_SYSTEM",
+  "status": "OWNER_ADOPTED_DESIGN_DIRECTION",
+  "stage8_opened": false,
+  "execution_authority_changed": false,
+  "identity": {
+    "principles": [
+      "Alive",
+      "Intelligent",
+      "Evidence-Driven",
+      "Interactive",
+      "Distinctly UniversalCouncil"
+    ],
+    "studio_supervised": true,
+    "reference_is_inspiration_only": true
+  },
+  "laws": {
+    "project_first": true,
+    "no_dead_surface": true,
+    "interactive_semantic_objects": true,
+    "motion_must_have_meaning": true,
+    "unknown_is_never_success": true,
+    "context_preserving_navigation": true,
+    "reduced_motion_required": true,
+    "desktop_android_share_semantics_not_layout": true
+  },
+  "semantic_states": {
+    "active": "blue",
+    "verified": "green",
+    "owner_attention": "gold",
+    "blocker": "coral",
+    "reasoning_unknown": "violet",
+    "tool_connection": "cyan"
+  },
+  "motion_ms": {
+    "micro": [120, 180],
+    "component": [200, 300],
+    "workflow": [350, 600],
+    "project_event": [500, 800]
+  },
+  "interactive_objects": [
+    "role_sigil",
+    "reasoning_rings",
+    "artifact",
+    "filmstrip_frame",
+    "checkpoint",
+    "branch",
+    "autopilot_current",
+    "tool_icon",
+    "pulse",
+    "decision_card",
+    "truth_badge",
+    "workflow_stage",
+    "notification"
+  ],
+  "desktop_surfaces": [
+    "home",
+    "today",
+    "projects",
+    "living_project_workspace",
+    "software_project",
+    "studio_video_project",
+    "council_decision_mode",
+    "checkpoint_recovery_fork",
+    "pulse_project_story",
+    "council",
+    "studio",
+    "waiting_for_you",
+    "results",
+    "system"
+  ],
+  "android_surfaces": [
+    "home",
+    "pulse",
+    "project",
+    "decision_inbox",
+    "media_review",
+    "autopilot_detail",
+    "evidence",
+    "more_system"
+  ],
+  "acceptance_gates": [
+    "visual",
+    "interaction",
+    "motion",
+    "truth",
+    "evidence",
+    "accessibility",
+    "performance",
+    "cross_platform_semantics",
+    "security_authority"
+  ]
+}
