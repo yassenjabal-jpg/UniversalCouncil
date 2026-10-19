@@ -20,51 +20,78 @@
     {
       "id": "MRTKZ-001",
       "title": "Project orchestration still projects Universal Council + Media Studio",
-      "blocks": ["P1_GOVERNANCE_SURFACES"]
+      "blocks": [
+        "P1_GOVERNANCE_SURFACES"
+      ]
     },
     {
       "id": "MRTKZ-002",
       "title": "Current WPF rail is intentionally noninteractive and cannot satisfy No Dead Surface",
-      "blocks": ["P1_UI_REUSE"]
+      "blocks": [
+        "P1_UI_REUSE"
+      ]
     },
     {
       "id": "MRTKZ-003",
       "title": "Stage/Phase taxonomy drift",
-      "blocks": ["NEW_STAGE_OPENING"]
+      "blocks": [
+        "NEW_STAGE_OPENING"
+      ]
     },
     {
       "id": "MRTKZ-004",
       "title": "Stage 7 CI projection is stale relative to verified exact-head CI",
-      "blocks": ["TRUTH_LOCK"]
+      "blocks": [
+        "TRUTH_LOCK"
+      ]
     },
     {
       "id": "MRTKZ-005",
       "title": "Canonical durable Project Store not implemented",
-      "blocks": ["REAL_AUTOPILOT"]
+      "blocks": [
+        "REAL_AUTOPILOT"
+      ]
     },
     {
       "id": "MRTKZ-006",
       "title": "Durable Autopilot runtime not implemented",
-      "blocks": ["REAL_AUTOPILOT"]
+      "blocks": [
+        "REAL_AUTOPILOT"
+      ]
     },
     {
       "id": "MRTKZ-007",
       "title": "Windows/Android shared event protocol is design-only",
-      "blocks": ["REAL_ANDROID_LIVE_STATE"]
+      "blocks": [
+        "REAL_ANDROID_LIVE_STATE"
+      ]
     }
   ],
   "pre_prototype_gate": {
-    "decision": "CONDITIONAL_GO",
-    "required": [
-      "MP-02_MURTAKAZ_ORCHESTRATION_PROJECTION",
-      "MP-03_CANONICAL_STAGE_PHASE_MAP",
-      "MP-04_STAGE7_PROJECTION_TRUTH_SEMANTICS"
-    ],
+    "decision": "GO_FOR_NON_AUTHORITATIVE_P1",
+    "required": [],
     "already_satisfied": [
       "MP-01_IDENTITY",
       "MP-05_FIXTURE_ISOLATION_SPEC",
       "MP-06_NO_DEAD_SURFACE_SPEC"
     ],
-    "exit_label": "AL_MURTAKAZ_P1_ALIGNMENT_LOCK"
+    "exit_label": "AL_MURTAKAZ_P1_ALIGNMENT_LOCK",
+    "completed": [
+      "MP-02_MURTAKAZ_ORCHESTRATION_PROJECTION",
+      "MP-03_CANONICAL_STAGE_PHASE_MAP",
+      "MP-04_STAGE7_PROJECTION_TRUTH_SEMANTICS"
+    ]
+  },
+  "alignment_followup": {
+    "status": "PASS",
+    "decision": "GO_FOR_NON_AUTHORITATIVE_P1",
+    "lock": "AL_MURTAKAZ_P1_ALIGNMENT_LOCK",
+    "completed": [
+      "MP-02_MURTAKAZ_ORCHESTRATION_PROJECTION",
+      "MP-03_CANONICAL_STAGE_PHASE_MAP",
+      "MP-04_STAGE7_PROJECTION_TRUTH_SEMANTICS"
+    ],
+    "execution_authority_changed": false,
+    "stage8_opened": false
   }
 }
