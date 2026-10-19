@@ -135,7 +135,7 @@ static string ValidJson(bool executionEnabled) => $$"""
     "note": "not connected"
   },
   "execution_manifest": {
-    "state": "NO_EXECUTION_AUTHORIZED",
+    "state": "NO EXECUTION AUTHORIZED",
     "gate": "Phase 0",
     "last_manifest_id": null,
     "note": "locked"
