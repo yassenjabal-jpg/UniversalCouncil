@@ -178,11 +178,27 @@ Every material review records:
   - RETURN_TO_STUDIO
   - OWNER_DECISION_REQUIRED
 
+## Mandatory Murtakaz gate
+
+Every product change enters through the المرتكز.
+
+Before material modification:
+- change scope is registered;
+- relevant هيئة المرتكز reviewers are selected;
+- relevant مشغل المرتكز craft owners are selected;
+- a pre-change decision is recorded.
+
+After implementation:
+- evidence is reviewed;
+- the final acceptance state is recorded.
+
+No artifact can become ADOPTED, COMPLETED, MERGED, RELEASED or NEXT_PHASE without `APPROVED_BY_AL_MURTAKAZ`.
+
 ## Anti-bureaucracy
 
-Do not activate the full هيئة المرتكز for every visual change.
+The mandatory gate does not mean activating every role for every change.
 
 Use the smallest set capable of changing the decision.
 
-Studio may batch small visual polish items into one review.
+مشغل المرتكز may batch small visual polish items into one review package, but the package still requires a Murtakaz decision before adoption.
 
