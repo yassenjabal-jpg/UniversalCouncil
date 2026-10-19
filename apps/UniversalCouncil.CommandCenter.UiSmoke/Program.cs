@@ -34,12 +34,18 @@ internal static class Program
             "state",
             "execution-fabric.json");
 
+        var remoteOwnerPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "state",
+            "remote-owner-gateway.json");
+
         if (!File.Exists(statePath) ||
             !File.Exists(orchestrationPath) ||
-            !File.Exists(executionFabricPath))
+            !File.Exists(executionFabricPath) ||
+            !File.Exists(remoteOwnerPath))
         {
             throw new InvalidOperationException(
-                "Stage 4 UI evidence requires operational state + orchestration catalog + execution fabric.");
+                "Stage 5 UI evidence requires operational state + orchestration + execution fabric + remote owner gateway.");
         }
 
         var stateBytes = File.ReadAllBytes(statePath);
@@ -50,6 +56,9 @@ internal static class Program
         var executionFabricBytes = File.ReadAllBytes(executionFabricPath);
         var executionFabricSha256 = Convert.ToHexString(
             SHA256.HashData(executionFabricBytes)).ToLowerInvariant();
+        var remoteOwnerBytes = File.ReadAllBytes(remoteOwnerPath);
+        var remoteOwnerSha256 = Convert.ToHexString(
+            SHA256.HashData(remoteOwnerBytes)).ToLowerInvariant();
 
         var app = new App
         {
@@ -59,8 +68,8 @@ internal static class Program
 
         var evidence = new[]
         {
-            Render(output, 1440, 900, "command-center-stage4-1440x900.png"),
-            Render(output, 1180, 720, "command-center-stage4-1180x720.png"),
+            Render(output, 1440, 900, "command-center-stage5-1440x900.png"),
+            Render(output, 1180, 720, "command-center-stage5-1180x720.png"),
         };
 
         var manifestPath = Path.Combine(output, "ui-evidence-manifest.json");
@@ -70,17 +79,18 @@ internal static class Program
                 new
                 {
                     schema_version = "1.0",
-                    stage = "COMMAND_CENTER_STAGE4_EXECUTION_FABRIC",
+                    stage = "COMMAND_CENTER_STAGE5_REMOTE_OWNER_GATEWAY",
                     generated_at_utc = DateTimeOffset.UtcNow,
                     render_mode = "OFFSCREEN_WPF_CONTENT",
                     operational_state_sha256 = stateSha256,
                     orchestration_catalog_sha256 = orchestrationSha256,
                     execution_fabric_sha256 = executionFabricSha256,
+                    remote_owner_gateway_sha256 = remoteOwnerSha256,
                     evidence,
                 },
                 new JsonSerializerOptions { WriteIndented = true }));
 
-        Console.WriteLine($"Command Center Stage 4 UI smoke: PASS ({output})");
+        Console.WriteLine($"Command Center Stage 5 UI smoke: PASS ({output})");
         return 0;
     }
 
