@@ -87,20 +87,13 @@ class VisualReferenceIntegrityTests(unittest.TestCase):
             validate(self.root, self.manifest)
 
     def test_governing_visual_direction_has_no_rejected_theme_vocabulary(self):
-        manifest_path = (
-            ROOT
-            / "state"
-            / "command-center"
-            / "living-operations-reference-manifest.json"
-        )
+        manifest_path = ROOT / "state" / "command-center" / "living-operations-reference-manifest.json"
         manifest = json.loads(manifest_path.read_text())
         self.assertTrue(manifest["rules"]["unapproved_decorative_theme_forbidden"])
         self.assertTrue(manifest["rules"]["reference_observed_visual_language_only"])
         self.assertNotIn("architecture_decorative_theme_forbidden", manifest["rules"])
 
-        visual_root = (
-            ROOT / "docs" / "operations" / "command-center" / "living-operations"
-        )
+        visual_root = ROOT / "docs" / "operations" / "command-center" / "living-operations"
         visual_files = (
             visual_root / "01_VISUAL_BIBLE.md",
             visual_root / "15_P1_VISUAL_DIRECTION_LOCK.md",
