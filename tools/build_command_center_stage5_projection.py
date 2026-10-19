@@ -58,10 +58,7 @@ def main() -> int:
     projection = {
         "schema_version": "1.0",
         "source_type": "repository_projection",
-        "source_files": [
-            {"path": path, "blob_sha": blob_sha(path)}
-            for path in SOURCES
-        ],
+        "source_files": [{"path": path, "blob_sha": blob_sha(path)} for path in SOURCES],
         "phase0_remote_command_source": PHASE0_SOURCE,
         "gateway": {
             "mode": policy["mode"],
