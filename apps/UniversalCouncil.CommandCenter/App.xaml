@@ -50,9 +50,12 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" CornerRadius="4">
-                            <ContentPresenter Margin="{TemplateBinding Padding}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="Center" />
+                            <TextBlock Text="{TemplateBinding Content}"
+                                       Margin="{TemplateBinding Padding}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
