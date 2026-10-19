@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyName>UniversalCouncil.CommandCenter.Host</AssemblyName>
+    <RootNamespace>UniversalCouncil.CommandCenter.Host</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalCouncil.CommandCenter.Core\UniversalCouncil.CommandCenter.Core.csproj" />
+    <ProjectReference Include="..\UniversalCouncil.CommandCenter.Application\UniversalCouncil.CommandCenter.Application.csproj" />
+    <ProjectReference Include="..\UniversalCouncil.CommandCenter.Infrastructure\UniversalCouncil.CommandCenter.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>
