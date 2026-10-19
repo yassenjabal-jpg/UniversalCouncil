@@ -1,4 +1,5 @@
 using System.Windows;
+using UniversalCouncil.CommandCenter.Host;
 
 namespace UniversalCouncil.CommandCenter;
 
@@ -7,6 +8,10 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        DataContext = new MainWindowViewModel(new PrototypeCommandCenterSnapshotProvider());
+
+        var services = CommandCenterComposition.Create(AppContext.BaseDirectory);
+        DataContext = new MainWindowViewModel(
+            services.Shell,
+            services.Operational);
     }
 }
