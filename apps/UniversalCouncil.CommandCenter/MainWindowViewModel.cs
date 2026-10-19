@@ -117,7 +117,9 @@ internal sealed class MainWindowViewModel
         $"{OwnerTailnet.Mode} / {OwnerTailnet.TargetHost}";
 
     public string Stage7HostAccessLabel =>
-        OwnerTailnet.HostControlState;
+        OwnerTailnet.HostControlState == "PAIRED_ONLINE_BUT_TOOL_QUOTA_BLOCKED"
+            ? "ONLINE / COMMAND QUOTA BLOCKED"
+            : OwnerTailnet.HostControlState;
 
     public string Stage7TailscaleLabel =>
         $"INSTALL:{OwnerTailnet.TailscaleInstallationState} / CONNECT:{OwnerTailnet.TailscaleConnectionState}";
