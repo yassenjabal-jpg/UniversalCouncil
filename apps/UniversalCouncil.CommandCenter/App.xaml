@@ -4,15 +4,18 @@
              StartupUri="MainWindow.xaml"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
-        <Color x:Key="CanvasColor">#10151D</Color>
+        <Color x:Key="CanvasColor">#EDEAE2</Color>
         <Color x:Key="RailColor">#171D27</Color>
-        <Color x:Key="SurfaceColor">#1E2632</Color>
-        <Color x:Key="SurfaceRaisedColor">#252E3B</Color>
-        <Color x:Key="TextPrimaryColor">#F2F0EA</Color>
-        <Color x:Key="TextMutedColor">#A9B1BE</Color>
-        <Color x:Key="AccentColor">#C7A86B</Color>
-        <Color x:Key="WarningColor">#E1B85B</Color>
-        <Color x:Key="BorderColor">#344050</Color>
+        <Color x:Key="SurfaceColor">#F8F5ED</Color>
+        <Color x:Key="SurfaceRaisedColor">#ECE7DC</Color>
+        <Color x:Key="TextPrimaryColor">#191D23</Color>
+        <Color x:Key="TextMutedColor">#646D78</Color>
+        <Color x:Key="RailTextColor">#F4F1E9</Color>
+        <Color x:Key="RailMutedColor">#ADB5C1</Color>
+        <Color x:Key="AccentColor">#A97925</Color>
+        <Color x:Key="WarningColor">#B77610</Color>
+        <Color x:Key="BorderColor">#D1CABD</Color>
+        <Color x:Key="RailBorderColor">#303A49</Color>
 
         <SolidColorBrush x:Key="CanvasBrush" Color="{StaticResource CanvasColor}" />
         <SolidColorBrush x:Key="RailBrush" Color="{StaticResource RailColor}" />
@@ -20,9 +23,12 @@
         <SolidColorBrush x:Key="SurfaceRaisedBrush" Color="{StaticResource SurfaceRaisedColor}" />
         <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
         <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMutedColor}" />
+        <SolidColorBrush x:Key="RailTextBrush" Color="{StaticResource RailTextColor}" />
+        <SolidColorBrush x:Key="RailMutedBrush" Color="{StaticResource RailMutedColor}" />
         <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
         <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}" />
         <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+        <SolidColorBrush x:Key="RailBorderBrush" Color="{StaticResource RailBorderColor}" />
 
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe UI, Segoe UI Variable" />
@@ -30,12 +36,12 @@
         </Style>
 
         <Style x:Key="RailButtonStyle" TargetType="Button">
-            <Setter Property="Height" Value="46" />
-            <Setter Property="Margin" Value="0,3" />
+            <Setter Property="Height" Value="44" />
+            <Setter Property="Margin" Value="0,2" />
             <Setter Property="Padding" Value="14,0" />
             <Setter Property="HorizontalContentAlignment" Value="Right" />
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource RailMutedBrush}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Cursor" Value="Arrow" />
@@ -43,7 +49,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="8">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4">
                             <ContentPresenter Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="Center" />
