@@ -126,6 +126,10 @@ if screen_review["phase_complete"] is not False:
 if any(item["murtakaz_decision"] != "PENDING" for item in screen_review["screens"]):
     raise SystemExit("P1 screen state may not claim approval before visual artifacts are reviewed")
 
+subprocess.run(
+    [__import__("sys").executable, str(ROOT / "tools" / "command_center_visual_reference_validate.py")], check=True
+)
+
 reference_manifest = load(REFERENCE_MANIFEST)
 if reference_manifest["status"] != "OWNER_ADOPTED_MURTAKAZ_ENFORCED":
     raise SystemExit("Living Operations visual reference lock is not active")

@@ -44,12 +44,12 @@ Primary:
 
 Command Composer is the highest visual priority.
 
-Secondary sequence:
-- Since You Were Away.
-- Needs Your Decision.
-- Pulse Strip.
-- Active Work.
-- Recent Results.
+Reference sequence below Composer:
+- Council Pulse strip.
+- Active Work cards.
+- Bottom row: Since You Were Away / Needs Your Decision / Recent Results.
+
+Preserve the right navigation rail, left status/context rail, top search bar and bottom tool dock.
 
 When no Owner action is needed:
 Autopilot يعمل — لا يوجد شيء مطلوب منك الآن.
@@ -78,7 +78,7 @@ Only active/relevant objects receive strong emphasis.
 
 ## Role Sigils
 
-P1 uses abstract Sigils, not people/mascots.
+P1 preserves the reference colored circular medallions and their glyphs, including the generic user pictogram. No photographic human role portraits or invented mascots.
 
 Every Sigil is interactive.
 

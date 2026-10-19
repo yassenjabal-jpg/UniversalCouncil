@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-VISUAL-FIDELITY-REPAIR-PRE",
+  "change_id": "VISUAL-FIDELITY-REPAIR-002",
+  "scope": "Reference asset persistence, prose reconciliation, integrity validation and regression tests only",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "review_mode": "ROLE_BASED_ASSISTANT_REVIEW_NOT_PRODUCT_RUNTIME_COUNCIL",
+  "review_agent": "/root/murtakaz_review",
+  "governance_reviewers": [
+    "product truth / governance scoped review"
+  ],
+  "workshop_reviewers": [
+    "visual fidelity scoped review"
+  ],
+  "artifact_refs": [
+    "docs/operations/command-center/living-operations",
+    "state/command-center/living-operations-reference-manifest.json",
+    "tools/command_center_visual_reference_validate.py",
+    "tools/command_center_murtakaz_validate.py",
+    "company/tests/test_visual_reference_integrity.py"
+  ],
+  "evidence_refs": [
+    "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+    "docs/operations/command-center/living-operations/references/02-living_project_workspace.png",
+    "docs/operations/command-center/living-operations/references/03-software_autopilot_project.png",
+    "docs/operations/command-center/living-operations/references/04-studio_project.png",
+    "docs/operations/command-center/living-operations/references/05-owner_decision_mode.png",
+    "docs/operations/command-center/living-operations/references/06-checkpoint_recovery_fork.png",
+    "docs/operations/command-center/living-operations/references/07-pulse_visual_project_story.png",
+    "docs/operations/command-center/living-operations/references/08-project_complete_work_receipt.png"
+  ],
+  "approved_revision": "164beff7f3a2d105d0aa97aec1a5539855b2dbb7 + bounded correction described in scope",
+  "timestamp": "2026-10-19T20:34:41.046148+00:00",
+  "reopen_triggers": [
+    "Any scope or visual identity change"
+  ],
+  "final_adoption_granted": false,
+  "stage8_opened": false,
+  "execution_authority_changed": false
+}

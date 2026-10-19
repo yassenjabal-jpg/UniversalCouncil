@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "manifest_id": "living-operations-reference-only-visual-lock",
   "status": "OWNER_ADOPTED_MURTAKAZ_ENFORCED",
   "source_of_truth": "APPROVED_REFERENCE_IMAGES_ONLY",
@@ -7,42 +7,82 @@
     {
       "order": 1,
       "role": "home_owner_workspace",
-      "conversation_file_id": "file_00000000c2108210b73352f1e25dc070"
+      "conversation_file_id": "file_00000000c2108210b73352f1e25dc070",
+      "path": "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+      "sha256": "7cb7d12f8819576ad4992158f6f0eb098ae3350a3684118ffc43192ea56749eb",
+      "uploaded_name": "1000062326.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
     },
     {
       "order": 2,
       "role": "living_project_workspace",
-      "conversation_file_id": "file_000000004288820abd9e66e799daf2d8"
+      "conversation_file_id": "file_000000004288820abd9e66e799daf2d8",
+      "path": "docs/operations/command-center/living-operations/references/02-living_project_workspace.png",
+      "sha256": "6f412a1f11e9e9f32df810194dbd4df1c42b973be9dcfb80354f10fb1cf3b799",
+      "uploaded_name": "1000062324.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
     },
     {
       "order": 3,
       "role": "software_autopilot_project",
-      "conversation_file_id": "file_00000000cab081f5aadc27ca952849f1"
+      "conversation_file_id": "file_00000000cab081f5aadc27ca952849f1",
+      "path": "docs/operations/command-center/living-operations/references/03-software_autopilot_project.png",
+      "sha256": "cb2c26d0d54a0a0c6aef3d03cc65737d3a27084fe8228112b719379d7ab966ec",
+      "uploaded_name": "1000062328.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
     },
     {
       "order": 4,
       "role": "studio_project",
-      "conversation_file_id": "file_000000004e988246a3a00c53239c2aef"
+      "conversation_file_id": "file_000000004e988246a3a00c53239c2aef",
+      "path": "docs/operations/command-center/living-operations/references/04-studio_project.png",
+      "sha256": "e2f012f6207006a5068152027ccbef8cd55f866b25e60899a113937ebe523664",
+      "uploaded_name": "1000062329.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
     },
     {
       "order": 5,
       "role": "owner_decision_mode",
-      "conversation_file_id": "file_00000000e98c820a89eddc854f40afd6"
+      "conversation_file_id": "file_00000000e98c820a89eddc854f40afd6",
+      "path": "docs/operations/command-center/living-operations/references/05-owner_decision_mode.png",
+      "sha256": "6351f755874fd9cec7cad4d8136d6c84eb8c3e8111a1d9ba219054f6d2488eeb",
+      "uploaded_name": "1000062331.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
     },
     {
       "order": 6,
       "role": "checkpoint_recovery_fork",
-      "conversation_file_id": "file_00000000780c820ab6814221ca74c81e"
+      "conversation_file_id": "file_00000000780c820ab6814221ca74c81e",
+      "path": "docs/operations/command-center/living-operations/references/06-checkpoint_recovery_fork.png",
+      "sha256": "7b1ceb447bebb3e9d488749e1beb4f82bf03fb078e58a2035c3ed2a58fe69076",
+      "uploaded_name": "1000062327.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
     },
     {
       "order": 7,
       "role": "pulse_visual_project_story",
-      "conversation_file_id": "file_00000000bf8c8243874eb0e778b5b1f1"
+      "conversation_file_id": "file_00000000bf8c8243874eb0e778b5b1f1",
+      "path": "docs/operations/command-center/living-operations/references/07-pulse_visual_project_story.png",
+      "sha256": "f92ff13312e11ac6e52914a8cb595e0c870027f45ea8161aadaf72217cb483ed",
+      "uploaded_name": "1000062325.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
     },
     {
       "order": 8,
       "role": "project_complete_work_receipt",
-      "conversation_file_id": "file_00000000d8c081f4b2695601a6fcc56c"
+      "conversation_file_id": "file_00000000d8c081f4b2695601a6fcc56c",
+      "path": "docs/operations/command-center/living-operations/references/08-project_complete_work_receipt.png",
+      "sha256": "f8db7163bc4e5396cd2d58563cf2d513504cef7863da299851142ce554e22b7f",
+      "uploaded_name": "1000062330.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
     }
   ],
   "rules": {
@@ -54,7 +94,10 @@
     "dark_neon_cyberpunk_forbidden": true,
     "architecture_decorative_theme_forbidden": true,
     "generic_saas_dashboard_drift_forbidden": true,
-    "generated_output_requires_murtakaz_review": true
+    "generated_output_requires_murtakaz_review": true,
+    "local_reference_bytes_required": true,
+    "sha256_verification_required": true,
+    "missing_reference_blocks_visual_work": true
   },
   "rejected_recent_generations": [
     "f75c9844-03fb-4c7b-857b-95babf3e4269",
@@ -71,5 +114,24 @@
     "directive": "DO_NOT_ADOPT_ANY_RECENT_GENERATED_DESIGNS_AFTER_THE_EIGHT_CANONICAL_REFERENCES",
     "status": "ACTIVE",
     "effect": "ALL_RECENT_GENERATED_DESIGNS_ARE_REJECTED_VISUAL_DRIFT_AND_MUST_NOT_BE_USED_AS_REFERENCE"
+  },
+  "visual_jobs": [],
+  "visual_job_contract": {
+    "required_fields": [
+      "job_id",
+      "parent_role",
+      "parent_sha256",
+      "reference_attached",
+      "allowed_delta",
+      "output_path",
+      "output_sha256",
+      "comparison_evidence",
+      "review_status"
+    ],
+    "approval_requires": [
+      "governance_review",
+      "workshop_review"
+    ],
+    "meaning": "Artifact integrity is not aesthetic approval. No visual jobs have been produced in this repair."
   }
 }
