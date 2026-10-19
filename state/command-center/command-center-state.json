@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "source_type": "repository_projection",
-  "source_label": "Bundled read-only repository projection",
+  "source_label": "إسقاط مستودع مضمّن للقراءة فقط",
   "baseline_revision": "0d3b89e81c001fe0ccfc23f502bb17ae9e114a9f",
   "project_id": "universalcouncil-command-center",
   "project_label": "UniversalCouncil Command Center",
@@ -14,11 +14,11 @@
     {
       "id": "EVD-STAGE1-LOCK",
       "category": "GOVERNANCE",
-      "title": "Stage 1 Shell Lock",
+      "title": "قفل Stage 1 — Shell",
       "result": "PASS",
       "reference": "COMMAND_CENTER_STAGE1_SHELL_LOCK",
       "digest": null,
-      "occurred_at": "2026-10-19T09:48:00+03:00"
+      "occurred_at": "2026-10-19T00:49:27Z"
     },
     {
       "id": "EVD-STAGE1-CI",
@@ -27,7 +27,7 @@
       "result": "SUCCESS",
       "reference": "run:39182243867",
       "digest": "sha256:1e0be9805d6c26cd7b7ec9403251c76f5775d7f6ba374ef76a5669bf1a8d6bb5",
-      "occurred_at": "2026-10-19T09:47:27+03:00"
+      "occurred_at": "2026-10-19T00:47:27Z"
     },
     {
       "id": "EVD-STAGE1-CODEQL",
@@ -36,7 +36,7 @@
       "result": "SUCCESS",
       "reference": "run:39182243818",
       "digest": null,
-      "occurred_at": "2026-10-19T09:47:00+03:00"
+      "occurred_at": "2026-10-19T00:46:45Z"
     }
   ],
   "approvals": [
@@ -44,7 +44,7 @@
       "id": "APR-STAGE2-OPEN",
       "title": "فتح Stage 2",
       "state": "APPROVED",
-      "scope": "Operational State / Evidence / Owner Desk only",
+      "scope": "الحالة التشغيلية والأدلة ومكتب المالك فقط",
       "evidence_reference": "owner-directive:2026-10-19-continue-work"
     },
     {
@@ -57,7 +57,7 @@
   ],
   "usage": {
     "state": "NOT_CONNECTED",
-    "provider": "No model usage provider connected in Stage 2",
+    "provider": "لا يوجد مزود لاستخدام النماذج موصول في Stage 2",
     "recorded_model_calls": null,
     "recorded_cost_usd": null,
     "note": "لا تعرض الواجهة تكلفة صفرية؛ مصدر الاستخدام والتكلفة لم يُوصل بعد."
