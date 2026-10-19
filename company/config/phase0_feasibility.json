@@ -1,0 +1,62 @@
+{
+  "version": "0.1",
+  "status": "PHASE0_ACTIVE",
+  "owner_controlled_model_selection": true,
+  "no_silent_model_fallback": true,
+  "secure_agent_boundary": {
+    "untrusted_classes": [
+      "WEB",
+      "FILE",
+      "EMAIL",
+      "GITHUB_TEXT",
+      "MCP_OUTPUT",
+      "TOOL_OUTPUT",
+      "SCREENSHOT",
+      "VISION_TEXT",
+      "PROJECT_METADATA",
+      "MODEL_OUTPUT"
+    ],
+    "untrusted_may_mutate_authority": false,
+    "untrusted_may_mutate_routing": false,
+    "untrusted_may_write_durable_memory_directly": false,
+    "memory_promotion_requires_trusted_review": true,
+    "nested_authority_keys_must_be_rejected": true
+  },
+  "remote_command": {
+    "owner_authorization_required": true,
+    "expiry_required": true,
+    "nonce_required": true,
+    "idempotency_key_required": true,
+    "target_scope_required": true,
+    "effect_scope_required": true,
+    "replay_policy": "FAIL_CLOSED",
+    "authorization_context_must_be_out_of_band": true,
+    "persistent_replay_ledger_required": true
+  },
+  "gui_reality": {
+    "interactive_session_required": true,
+    "locked_desktop_allowed": false,
+    "secure_desktop_or_uac_allowed": false,
+    "single_controller_required": true,
+    "postcondition_verification_required": true,
+    "unknown_is_never_success": true
+  },
+  "model_failure_states": [
+    "RATE_LIMITED",
+    "QUOTA_EXHAUSTED",
+    "PROVIDER_OVERLOADED",
+    "BILLING_BLOCKED",
+    "MODEL_UNAVAILABLE",
+    "NETWORK_UNAVAILABLE",
+    "AUTH_FAILED"
+  ],
+  "product_build_gate": {
+    "required_phase0_gates": [
+      "SECURE_AGENT_BOUNDARY",
+      "UNATTENDED_GUI_REALITY",
+      "REMOTE_COMMAND_TRUST",
+      "MODEL_PROVIDER_FAILURE"
+    ],
+    "all_must_pass_unless_owner_accepts_documented_residual_risk": true
+  }
+}
