@@ -63,7 +63,7 @@
     "note": "لا تعرض الواجهة تكلفة صفرية؛ مصدر الاستخدام والتكلفة لم يُوصل بعد."
   },
   "execution_manifest": {
-    "state": "NO_EXECUTION_AUTHORIZED",
+    "state": "NO EXECUTION AUTHORIZED",
     "gate": "Phase 0",
     "last_manifest_id": null,
     "note": "Stage 2 يقرأ الحالة فقط ولا ينشئ Execution Manifest."
