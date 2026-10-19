@@ -63,6 +63,20 @@ def validate(root: Path, manifest: dict) -> None:
         raise ValueError("Visual production protocol must enforce one job per screen")
     if protocol.get("actual_reference_bytes_required") is not True:
         raise ValueError("Visual production protocol must require actual reference bytes")
+
+    home_geometry_path = manifest.get("home_geometry_lock_path")
+    if not home_geometry_path:
+        raise ValueError("Missing Home geometry lock")
+    artifact(home_geometry_path)
+    home_geometry = json.loads((root / home_geometry_path).read_text())
+    if (
+        home_geometry.get("screen_id") != "home_owner_workspace"
+        or home_geometry.get("parent_sha256") != parents["home_owner_workspace"]["sha256"]
+        or home_geometry.get("council_pulse", {}).get("topology") != "HORIZONTAL_STRIP"
+        or home_geometry.get("council_pulse", {}).get("exact_member_count") != 8
+        or home_geometry.get("creativity_budget") != "MICRO_ONLY"
+    ):
+        raise ValueError("Home geometry/composition lock drifted")
     for job in manifest.get("visual_jobs", []):
         state = job.get("state")
         if state not in contract["allowed_states"]:
@@ -87,6 +101,15 @@ def validate(root: Path, manifest: dict) -> None:
             raise ValueError("Visual job screen inventory does not match parent role")
         if job["parent_role"] not in screen_inventories:
             raise ValueError("Visual job has no canonical screen object inventory")
+
+        conditional = contract.get("conditional_requirements", {}).get(job["parent_role"], {})
+        for field in conditional.get("preflight_required_fields", []):
+            if field not in job or job[field] in ("", None):
+                raise ValueError(f"Missing conditional visual preflight evidence: {field}")
+
+        if job["parent_role"] == "home_owner_workspace":
+            if job.get("geometry_lock_id") != home_geometry["lock_id"]:
+                raise ValueError("Home visual job geometry lock does not match canonical lock")
 
         member_set = screen_inventories[job["parent_role"]].get("member_set", [])
         if member_set and job["member_inventory_verified"] is not True:
@@ -131,8 +154,25 @@ def validate(root: Path, manifest: dict) -> None:
         for field in contract["rendered_required_fields"]:
             if field not in job or job[field] in ("", None):
                 raise ValueError(f"Missing rendered visual evidence: {field}")
+        for field in conditional.get("rendered_required_fields", []):
+            if field not in job or job[field] in ("", None):
+                raise ValueError(f"Missing conditional rendered visual evidence: {field}")
         if job["render_started_after_preflight"] is not True:
             raise ValueError("Rendered output did not prove preflight ancestry")
+
+        if job["parent_role"] == "home_owner_workspace":
+            review_path = job["structural_review_evidence"]
+            artifact(review_path)
+            structural = json.loads((root / review_path).read_text())
+            if (
+                structural.get("decision") != "STRUCTURE_PASS"
+                or structural.get("job_id") != job["job_id"]
+                or structural.get("parent_sha256") != job["parent_sha256"]
+                or structural.get("output_sha256") != job["output_sha256"]
+                or structural.get("geometry_lock_id") != home_geometry["lock_id"]
+                or structural.get("reviewed_before_aesthetic_review") is not True
+            ):
+                raise ValueError("Home structural review did not pass canonical geometry lock")
         if job["output_path"] in {ref["path"] for ref in refs}:
             raise ValueError("Visual output cannot overwrite a canonical reference")
 
