@@ -10,7 +10,8 @@ internal sealed class MainWindowViewModel
         IOrchestrationCatalogProvider orchestrationProvider,
         IExecutionFabricProvider executionFabricProvider,
         IRemoteOwnerGatewayProvider remoteOwnerGatewayProvider,
-        IRemoteTransportProjectionProvider remoteTransportProvider)
+        IRemoteTransportProjectionProvider remoteTransportProvider,
+        IOwnerTailnetProjectionProvider ownerTailnetProvider)
     {
         Snapshot = snapshotProvider.GetSnapshot();
         Operational = operationalStateProvider.GetOperationalState();
@@ -18,6 +19,7 @@ internal sealed class MainWindowViewModel
         ExecutionFabric = executionFabricProvider.GetFabric();
         RemoteOwner = remoteOwnerGatewayProvider.GetGateway();
         RemoteTransport = remoteTransportProvider.GetTransport();
+        OwnerTailnet = ownerTailnetProvider.GetTailnet();
     }
 
     public CommandCenterSnapshot Snapshot { get; }
@@ -31,6 +33,8 @@ internal sealed class MainWindowViewModel
     public RemoteOwnerGatewayProjection RemoteOwner { get; }
 
     public RemoteTransportProjection RemoteTransport { get; }
+
+    public OwnerTailnetProjection OwnerTailnet { get; }
 
     public string CouncilCountLabel =>
         $"{Orchestration.Council.CoreRoles.Count} أساسي + {Orchestration.Council.SpecialistRoles.Count} اختصاصي";
@@ -108,4 +112,36 @@ internal sealed class MainWindowViewModel
 
     public string RemoteTransportExecutionLabel =>
         $"{RemoteTransport.ExecutionState} / live execution disabled";
+
+    public string Stage7ModeLabel =>
+        $"{OwnerTailnet.Mode} / {OwnerTailnet.TargetHost}";
+
+    public string Stage7HostAccessLabel =>
+        OwnerTailnet.HostControlState == "PAIRED_ONLINE_BUT_TOOL_QUOTA_BLOCKED"
+            ? "ONLINE / COMMAND QUOTA BLOCKED"
+            : OwnerTailnet.HostControlState;
+
+    public string Stage7TailscaleLabel =>
+        $"INSTALL:{OwnerTailnet.TailscaleInstallationState} / CONNECT:{OwnerTailnet.TailscaleConnectionState}";
+
+    public string Stage7ServeLabel =>
+        $"SERVE:{OwnerTailnet.TailscaleServeConfigurationState}";
+
+    public string Stage7EnrollmentLabel =>
+        OwnerTailnet.OwnerDeviceEnrolled
+            ? "OWNER DEVICE ENROLLED"
+            : "OWNER DEVICE NOT YET ENROLLED";
+
+    public string Stage7SessionLabel =>
+        OwnerTailnet.ActiveSessionIssued
+            ? "ACTIVE OWNER SESSION"
+            : "NO ACTIVE OWNER SESSION";
+
+    public string Stage7PhoneLabel =>
+        OwnerTailnet.PhoneRoundTripProven
+            ? "REAL PHONE ROUNDTRIP PROVEN"
+            : "REAL PHONE ROUNDTRIP PENDING";
+
+    public string Stage7ExecutionLabel =>
+        $"{OwnerTailnet.ExecutionState} / execution remains locked";
 }

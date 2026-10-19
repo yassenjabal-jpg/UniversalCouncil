@@ -35,5 +35,9 @@
              Link="state\remote-transport.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\state\command-center\owner-device-tailnet.json"
+             Link="state\owner-device-tailnet.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
