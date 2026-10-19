@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "project_id": "universal-council-command-center",
+  "profile_kind": "PROJECT_LOCAL_DERIVATIVE_LOCK",
+  "parent_sources": {
+    "governance": {
+      "path": "GOVERNANCE.md"
+    },
+    "roles": {
+      "path": "config/roles.json",
+      "version": "0.3.0"
+    },
+    "role_contracts": {
+      "path": "company/config/council_role_contracts.json",
+      "version": "0.1-shadow",
+      "status": "CANDIDATE_SHADOW_ONLY"
+    },
+    "media_studio": {
+      "path": "company/config/media_venture.json",
+      "version": "2.1"
+    }
+  },
+  "parent_files_read_only": [
+    "GOVERNANCE.md",
+    "config/roles.json",
+    "config/domain-routing.json",
+    "config/modes.json",
+    "config/pulse.json",
+    "company/config/council_role_contracts.json",
+    "company/config/council_routing_candidate.json",
+    "company/config/media_venture.json",
+    "docs/operations/media/MEDIA_PRODUCTION_CELL.md",
+    "docs/operations/media/STUDIO_MASTER_PIPELINE.md"
+  ],
+  "project_write_roots": [
+    "docs/operations/command-center/project-governance/",
+    "state/command-center/project-governance/"
+  ],
+  "rules": {
+    "allow_parent_mutation": false,
+    "allow_parent_replacement": false,
+    "allow_authority_expansion": false,
+    "allow_stage8_open": false,
+    "allow_execution_authority": false,
+    "owner_final_authority": true,
+    "unknown_is_never_success": true,
+    "claim_independent_agents_only_with_runtime_evidence": true
+  },
+  "rebase_policy": {
+    "parent_change_requires_review": true,
+    "automatic_parent_overwrite_forbidden": true,
+    "project_profile_may_be_rebased": true
+  }
+}
