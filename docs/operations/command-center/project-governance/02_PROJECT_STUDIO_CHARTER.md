@@ -1,7 +1,7 @@
-# Command Center Product Studio
+# مشغل المرتكز — التصميم والتفاعل
 
 Version: 1.0  
-Status: PROJECT-LOCAL PRODUCT DESIGN STUDIO  
+Status: PROJECT-LOCAL PRODUCT DESIGN UNIT / مشغل المرتكز  
 Parent inspiration: Media Production Cell 2.1 principles  
 Scope: Windows Command Center + Android Owner Companion
 
@@ -9,9 +9,9 @@ Scope: Windows Command Center + Android Owner Companion
 
 Design, prototype, review and hand off the Living Operations experience as a coherent product system.
 
-This Studio is **not** the media production Studio.
+مشغل المرتكز **ليس** Media Studio الأصلي.
 
-It is a project-local Product Design & Interaction Studio created specifically for Command Center.
+هو وحدة Product Design & Interaction محلية للمشروع ضمن منظومة «المرتكز»، ومخصصة لـCommand Center فقط.
 
 ## Inherited Studio principles
 
@@ -55,7 +55,7 @@ Other functions may review in parallel, but may not silently edit the owner's lo
 
 ## Functions
 
-### CC-ST-01 — Product Studio Producer
+### CC-ST-01 — مشغل المرتكز Producer
 
 Status:
 CONTROL_PLANE_ALWAYS_ACTIVE
@@ -388,9 +388,9 @@ Do not force:
 
 ## Relationship to parent Studio
 
-The Command Center Product Studio does not alter `company/config/media_venture.json`.
+The Command Center مشغل المرتكز does not alter `company/config/media_venture.json`.
 
 The media Studio remains available for media projects.
 
-This Product Studio may borrow operating principles but owns a separate role registry, pipeline and review gates.
+This مشغل المرتكز may borrow operating principles but owns a separate role registry, pipeline and review gates.
 
