@@ -34,5 +34,18 @@
       "reason": "Visual production path did not prove actual canonical reference bytes were bound to the rendering tool; result drifted and was rejected."
     }
   ],
-  "next_home_job_id": "P1-HOME-ARTIFACT-002"
+  "next_home_job_id": "P1-HOME-ARTIFACT-002",
+  "job_state_machine": {
+    "states": [
+      "PREFLIGHT_REGISTERED",
+      "RENDERED_REVIEW_REQUIRED",
+      "RETURNED_FOR_CHANGES",
+      "REJECTED_VISUAL_DRIFT",
+      "APPROVED_BY_AL_MURTAKAZ"
+    ],
+    "preflight_required_before_render": true,
+    "rendered_state_requires_preflight_ancestry": true
+  },
+  "reference_binding_receipt_phase": "PRE_RENDER",
+  "reference_binding_receipt_must_assert_render_not_started": true
 }
