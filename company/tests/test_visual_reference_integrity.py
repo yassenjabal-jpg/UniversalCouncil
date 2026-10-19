@@ -15,9 +15,7 @@ class VisualReferenceIntegrityTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        manifest_path = (
-            ROOT / "state" / "command-center" / "living-operations-reference-manifest.json"
-        )
+        manifest_path = ROOT / "state" / "command-center" / "living-operations-reference-manifest.json"
         self.manifest = json.loads(manifest_path.read_text())
 
         for ref in self.manifest["references"]:
@@ -190,9 +188,7 @@ class VisualReferenceIntegrityTests(unittest.TestCase):
         self.assertTrue(rules["fail_closed_when_reference_capable_tool_unavailable"])
 
     def test_governing_visual_direction_has_no_rejected_theme_vocabulary(self):
-        manifest_path = (
-            ROOT / "state" / "command-center" / "living-operations-reference-manifest.json"
-        )
+        manifest_path = ROOT / "state" / "command-center" / "living-operations-reference-manifest.json"
         manifest = json.loads(manifest_path.read_text())
         self.assertTrue(manifest["rules"]["unapproved_decorative_theme_forbidden"])
         self.assertTrue(manifest["rules"]["reference_observed_visual_language_only"])
