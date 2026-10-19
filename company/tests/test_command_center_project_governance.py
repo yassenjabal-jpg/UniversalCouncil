@@ -21,6 +21,8 @@ class CommandCenterProjectGovernanceTests(unittest.TestCase):
         self.parent_roles = load_json(ROOT / "config" / "roles.json")
         self.parent_contracts = load_json(ROOT / "company" / "config" / "council_role_contracts.json")
         self.parent_media = load_json(ROOT / "company" / "config" / "media_venture.json")
+        self.identity = load_json(PROJECT_STATE / "al-murtakaz.json")
+        self.review = load_json(PROJECT_STATE / "al-murtakaz-review.json")
 
     def test_parent_versions_are_explicit_and_read_only(self) -> None:
         parents = self.lock["parent_sources"]
@@ -79,6 +81,31 @@ class CommandCenterProjectGovernanceTests(unittest.TestCase):
         self.assertTrue(handoff["acceptance_required"])
         self.assertTrue(handoff["return_ticket_required_on_rejection"])
         self.assertTrue(handoff["downstream_direct_repair_forbidden"])
+
+    def test_al_murtakaz_identity_is_canonical_and_project_local(self) -> None:
+        self.assertEqual(self.identity["id"], "al-murtakaz")
+        self.assertEqual(self.identity["name_ar"], "المرتكز")
+        self.assertEqual(self.identity["units"]["governance"]["name_ar"], "هيئة المرتكز")
+        self.assertEqual(self.identity["units"]["workshop"]["name_ar"], "مشغل المرتكز")
+        self.assertFalse(self.identity["authority"]["execution_authority"])
+        self.assertFalse(self.identity["authority"]["may_open_stage8"])
+        self.assertFalse(self.identity["authority"]["may_modify_parent_systems"])
+
+    def test_full_review_keeps_p1_conditional_and_stage8_closed(self) -> None:
+        self.assertEqual(
+            self.review["verdict"],
+            "STRONG_FOUNDATION_CONDITIONAL_GO_FOR_NON_AUTHORITATIVE_P1",
+        )
+        self.assertFalse(self.review["stage8_opened"])
+        self.assertFalse(self.review["execution_authority_changed"])
+        self.assertEqual(
+            self.review["pre_prototype_gate"]["decision"],
+            "CONDITIONAL_GO",
+        )
+        self.assertIn(
+            "MP-02_MURTAKAZ_ORCHESTRATION_PROJECTION",
+            self.review["pre_prototype_gate"]["required"],
+        )
 
     def test_project_write_roots_do_not_include_parent_paths(self) -> None:
         roots = self.lock["project_write_roots"]
