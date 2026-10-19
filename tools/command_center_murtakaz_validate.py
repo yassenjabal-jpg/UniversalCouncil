@@ -11,6 +11,9 @@ STATE = ROOT / "state" / "command-center"
 PROJECT = STATE / "project-governance"
 PROJECTION = PROJECT / "murtakaz-orchestration.json"
 STAGE_MAP = PROJECT / "stage-phase-map.json"
+APPROVAL_POLICY = PROJECT / "al-murtakaz-approval-policy.json"
+VISUAL_PHASE = STATE / "living-operations-p1-visual-phase.json"
+VISUAL_APPROVAL = PROJECT / "approvals" / "2026-10-19-visual-direction-continuation.json"
 TAILNET_POLICY = STATE / "owner-device-tailnet-policy.json"
 TAILNET_PROJECTION = STATE / "owner-device-tailnet.json"
 BUILDER = ROOT / "tools" / "build_command_center_murtakaz_projection.py"
@@ -40,6 +43,9 @@ def blob_sha(relative: str) -> str:
 for required in (
     PROJECTION,
     STAGE_MAP,
+    APPROVAL_POLICY,
+    VISUAL_PHASE,
+    VISUAL_APPROVAL,
     TAILNET_POLICY,
     TAILNET_PROJECTION,
     BUILDER,
@@ -81,6 +87,36 @@ if (
 model = projection["model_control"]
 if not model["role_model_separation"] or not model["owner_controlled_selection"] or model["silent_fallback_allowed"]:
     raise SystemExit("Murtakaz model-control policy drifted")
+
+approval = load(APPROVAL_POLICY)
+if approval["status"] != "OWNER_DIRECTIVE_ACTIVE":
+    raise SystemExit("Murtakaz mandatory approval policy is not active")
+if approval["implicit_approval_forbidden"] is not True:
+    raise SystemExit("Murtakaz implicit approval must remain forbidden")
+for required_gate in (
+    "implementation_requires",
+    "adoption_requires",
+    "completion_requires",
+    "merge_requires",
+    "release_requires",
+    "next_phase_requires",
+):
+    if not approval.get(required_gate):
+        raise SystemExit(f"Murtakaz approval gate missing: {required_gate}")
+
+visual_phase = load(VISUAL_PHASE)
+if visual_phase["status"] != "IN_PROGRESS":
+    raise SystemExit("P1 visual phase must remain IN_PROGRESS until final Murtakaz approval")
+if visual_phase["exit_requires"] != "APPROVED_BY_AL_MURTAKAZ":
+    raise SystemExit("P1 visual phase exit is not Murtakaz-gated")
+if visual_phase["runtime_authority"] is not False or visual_phase["stage8_opened"] is not False:
+    raise SystemExit("Visual phase may not grant runtime authority or open Stage 8")
+
+visual_approval = load(VISUAL_APPROVAL)
+if visual_approval["decision"] != "APPROVE_TO_IMPLEMENT":
+    raise SystemExit("Visual continuation is missing pre-change Murtakaz approval")
+if visual_approval["final_adoption_granted"] is not False:
+    raise SystemExit("Visual continuation receipt may not pre-approve final adoption")
 
 stage_map = load(STAGE_MAP)
 if stage_map["status"] != "CANONICAL":
