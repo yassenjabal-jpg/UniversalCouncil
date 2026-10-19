@@ -107,16 +107,18 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="22" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="22" />
+                    <RowDefinition Height="Auto" />
 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0">
-                    <TextBlock Text="مركز النقل الآمن"
+                    <TextBlock Text="ربط جهاز المالك والـTailnet"
                                FontSize="31"
                                FontWeight="SemiBold" />
                     <StackPanel Margin="0,7,0,0"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right">
-                        <TextBlock Text="COMMAND CENTER / STAGE 6"
+                        <TextBlock Text="COMMAND CENTER / STAGE 7"
                                    FlowDirection="LeftToRight"
                                    FontSize="10"
                                    FontWeight="SemiBold"
@@ -140,7 +142,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
-                            <TextBlock Text="قناة HTTP مصادق عليها مبنية على loopback فقط — الهاتف وTailscale غير متصلين"
+                            <TextBlock Text="Stage 7 مفتوحة — YASSIN شوهد Online لكن أوامر المضيف محجوبة بحصة Desktop Commander؛ لا يوجد ادعاء Tailscale أو هاتف"
                                        FontSize="15"
                                        FontWeight="SemiBold" />
                             <TextBlock Text="{Binding Snapshot.PhaseGateLabel}"
@@ -160,7 +162,7 @@
                     </Grid>
                 </Border>
 
-                <Grid Grid.Row="12">
+                <Grid Grid.Row="14">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.08*" />
                         <ColumnDefinition Width="20" />
@@ -388,7 +390,7 @@
                     </Border>
                 </Grid>
 
-                <Grid Grid.Row="10">
+                <Grid Grid.Row="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.15*" />
                         <ColumnDefinition Width="20" />
@@ -538,7 +540,161 @@
                     </Border>
                 </Grid>
 
-                                                <Border Grid.Row="4"
+                                                                <Border Grid.Row="4"
+                        Padding="20"
+                        Background="{StaticResource SurfaceBrush}"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="1">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Owner Device + Private Tailnet"
+                                           FlowDirection="LeftToRight"
+                                           FontSize="19"
+                                           FontWeight="SemiBold" />
+                                <TextBlock Text="الربط الحقيقي لم يُثبت بعد؛ هذه الشاشة تعرض الأدلة المتاحة بلا افتراضات"
+                                           Margin="0,5,0,0"
+                                           FontSize="11"
+                                           Foreground="{StaticResource TextMutedBrush}" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding Stage7ModeLabel}"
+                                       Margin="18,0,0,0"
+                                       FlowDirection="LeftToRight"
+                                       FontSize="9"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource AccentBrush}"
+                                       VerticalAlignment="Center" />
+                        </Grid>
+
+                        <UniformGrid Columns="4"
+                                     Margin="0,14,0,12">
+                            <Border Margin="0,0,8,0"
+                                    Padding="11"
+                                    Background="#FFF4D9"
+                                    BorderBrush="{StaticResource WarningBrush}"
+                                    BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="YASSIN HOST ACCESS"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource TextMutedBrush}" />
+                                    <TextBlock Text="{Binding Stage7HostAccessLabel}"
+                                               Margin="0,5,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="9"
+                                               FontWeight="SemiBold"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Text="ONLINE OBSERVED / HOST COMMANDS BLOCKED"
+                                               Margin="0,3,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource WarningBrush}"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Margin="8,0"
+                                    Padding="11"
+                                    Background="{StaticResource SurfaceRaisedBrush}"
+                                    BorderBrush="{StaticResource BorderBrush}"
+                                    BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="TAILSCALE"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource TextMutedBrush}" />
+                                    <TextBlock Text="{Binding Stage7TailscaleLabel}"
+                                               Margin="0,5,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="9"
+                                               FontWeight="SemiBold"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding Stage7ServeLabel}"
+                                               Margin="0,3,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource TextMutedBrush}" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Margin="8,0"
+                                    Padding="11"
+                                    Background="{StaticResource SurfaceRaisedBrush}"
+                                    BorderBrush="{StaticResource BorderBrush}"
+                                    BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="OWNER DEVICE"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource TextMutedBrush}" />
+                                    <TextBlock Text="{Binding Stage7EnrollmentLabel}"
+                                               Margin="0,5,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="9"
+                                               FontWeight="SemiBold"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding Stage7SessionLabel}"
+                                               Margin="0,3,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource TextMutedBrush}" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Margin="8,0,0,0"
+                                    Padding="11"
+                                    Background="#FFF4D9"
+                                    BorderBrush="{StaticResource WarningBrush}"
+                                    BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="PHONE / AUTHORITY"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource TextMutedBrush}" />
+                                    <TextBlock Text="{Binding Stage7PhoneLabel}"
+                                               Margin="0,5,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="9"
+                                               FontWeight="SemiBold"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding Stage7ExecutionLabel}"
+                                               Margin="0,3,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource WarningBrush}"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                        </UniformGrid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="Owner phone → tailnet → Tailscale Serve → 127.0.0.1:47721 → bearer + device/session auth → trust gate"
+                                       FlowDirection="LeftToRight"
+                                       FontSize="9"
+                                       Foreground="{StaticResource TextMutedBrush}"
+                                       TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="1"
+                                       Text="FUNNEL / PUBLIC BIND: FORBIDDEN"
+                                       Margin="16,0,0,0"
+                                       FlowDirection="LeftToRight"
+                                       FontSize="9"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource WarningBrush}" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+<Border Grid.Row="6"
                         Padding="20"
                         Background="{StaticResource SurfaceBrush}"
                         BorderBrush="{StaticResource BorderBrush}"
@@ -683,7 +839,7 @@
                     </StackPanel>
                 </Border>
 
-<Border Grid.Row="6"
+<Border Grid.Row="8"
                         Padding="20"
                         Background="{StaticResource SurfaceBrush}"
                         BorderBrush="{StaticResource BorderBrush}"
@@ -828,7 +984,7 @@
                     </StackPanel>
                 </Border>
 
-<Border Grid.Row="8"
+<Border Grid.Row="10"
                         Padding="20"
                         Background="{StaticResource SurfaceBrush}"
                         BorderBrush="{StaticResource BorderBrush}"
@@ -941,7 +1097,7 @@
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Row="14"
+                <Border Grid.Row="16"
                         Padding="20"
                         Background="{StaticResource SurfaceBrush}"
                         BorderBrush="{StaticResource BorderBrush}"
@@ -1011,7 +1167,7 @@
                     </StackPanel>
                 </Border>
 
-                <Grid Grid.Row="16">
+                <Grid Grid.Row="18">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="20" />
@@ -1050,12 +1206,12 @@
                             <TextBlock Text="المرحلة التالية"
                                        FontSize="14"
                                        FontWeight="SemiBold" />
-                            <TextBlock Text="Stage 7 — Owner Device Enrollment + Tailnet Round Trip"
+                            <TextBlock Text="Stage 8 — Not opened"
                                        Margin="0,6,0,0"
                                        FlowDirection="LeftToRight"
                                        FontSize="10"
                                        Foreground="{StaticResource TextMutedBrush}" />
-                            <TextBlock Text="LOCKED UNTIL STAGE 6 DUAL REVIEW; REAL PHONE/TAILSCALE AND EXECUTION REQUIRE SEPARATE OWNER GATES"
+                            <TextBlock Text="LOCKED UNTIL REAL STAGE 7 YASSIN + PRIVATE TAILNET + PHONE + REVOCATION EVIDENCE; EXECUTION REMAINS SEPARATELY GATED"
                                        Margin="0,6,0,0"
                                        FlowDirection="LeftToRight"
                                        FontSize="9"
