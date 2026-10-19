@@ -29,10 +29,17 @@ internal static class Program
             "state",
             "orchestration-catalog.json");
 
-        if (!File.Exists(statePath) || !File.Exists(orchestrationPath))
+        var executionFabricPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "state",
+            "execution-fabric.json");
+
+        if (!File.Exists(statePath) ||
+            !File.Exists(orchestrationPath) ||
+            !File.Exists(executionFabricPath))
         {
             throw new InvalidOperationException(
-                $"Stage 3 UI evidence requires operational state + orchestration catalog.");
+                "Stage 4 UI evidence requires operational state + orchestration catalog + execution fabric.");
         }
 
         var stateBytes = File.ReadAllBytes(statePath);
@@ -40,6 +47,9 @@ internal static class Program
         var orchestrationBytes = File.ReadAllBytes(orchestrationPath);
         var orchestrationSha256 = Convert.ToHexString(
             SHA256.HashData(orchestrationBytes)).ToLowerInvariant();
+        var executionFabricBytes = File.ReadAllBytes(executionFabricPath);
+        var executionFabricSha256 = Convert.ToHexString(
+            SHA256.HashData(executionFabricBytes)).ToLowerInvariant();
 
         var app = new App
         {
@@ -49,8 +59,8 @@ internal static class Program
 
         var evidence = new[]
         {
-            Render(output, 1440, 900, "command-center-stage3-1440x900.png"),
-            Render(output, 1180, 720, "command-center-stage3-1180x720.png"),
+            Render(output, 1440, 900, "command-center-stage4-1440x900.png"),
+            Render(output, 1180, 720, "command-center-stage4-1180x720.png"),
         };
 
         var manifestPath = Path.Combine(output, "ui-evidence-manifest.json");
@@ -60,16 +70,17 @@ internal static class Program
                 new
                 {
                     schema_version = "1.0",
-                    stage = "COMMAND_CENTER_STAGE3_ORCHESTRATION",
+                    stage = "COMMAND_CENTER_STAGE4_EXECUTION_FABRIC",
                     generated_at_utc = DateTimeOffset.UtcNow,
                     render_mode = "OFFSCREEN_WPF_CONTENT",
                     operational_state_sha256 = stateSha256,
                     orchestration_catalog_sha256 = orchestrationSha256,
+                    execution_fabric_sha256 = executionFabricSha256,
                     evidence,
                 },
                 new JsonSerializerOptions { WriteIndented = true }));
 
-        Console.WriteLine($"Command Center Stage 3 UI smoke: PASS ({output})");
+        Console.WriteLine($"Command Center Stage 4 UI smoke: PASS ({output})");
         return 0;
     }
 
