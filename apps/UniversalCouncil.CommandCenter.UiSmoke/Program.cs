@@ -44,14 +44,20 @@ internal static class Program
             "state",
             "remote-transport.json");
 
+        var ownerTailnetPath = Path.Combine(
+            AppContext.BaseDirectory,
+            "state",
+            "owner-device-tailnet.json");
+
         if (!File.Exists(statePath) ||
             !File.Exists(orchestrationPath) ||
             !File.Exists(executionFabricPath) ||
             !File.Exists(remoteOwnerPath) ||
-            !File.Exists(remoteTransportPath))
+            !File.Exists(remoteTransportPath) ||
+            !File.Exists(ownerTailnetPath))
         {
             throw new InvalidOperationException(
-                "Stage 6 UI evidence requires operational + orchestration + execution + remote owner + transport state.");
+                "Stage 7 UI evidence requires operational + orchestration + execution + remote owner + transport + owner-tailnet state.");
         }
 
         var stateBytes = File.ReadAllBytes(statePath);
@@ -68,6 +74,9 @@ internal static class Program
         var remoteTransportBytes = File.ReadAllBytes(remoteTransportPath);
         var remoteTransportSha256 = Convert.ToHexString(
             SHA256.HashData(remoteTransportBytes)).ToLowerInvariant();
+        var ownerTailnetBytes = File.ReadAllBytes(ownerTailnetPath);
+        var ownerTailnetSha256 = Convert.ToHexString(
+            SHA256.HashData(ownerTailnetBytes)).ToLowerInvariant();
 
         var app = new App
         {
@@ -77,8 +86,8 @@ internal static class Program
 
         var evidence = new[]
         {
-            Render(output, 1440, 900, "command-center-stage6-1440x900.png"),
-            Render(output, 1180, 720, "command-center-stage6-1180x720.png"),
+            Render(output, 1440, 900, "command-center-stage7-1440x900.png"),
+            Render(output, 1180, 720, "command-center-stage7-1180x720.png"),
         };
 
         var manifestPath = Path.Combine(output, "ui-evidence-manifest.json");
@@ -88,7 +97,7 @@ internal static class Program
                 new
                 {
                     schema_version = "1.0",
-                    stage = "COMMAND_CENTER_STAGE6_AUTHENTICATED_TRANSPORT_PILOT",
+                    stage = "COMMAND_CENTER_STAGE7_OWNER_DEVICE_TAILNET",
                     generated_at_utc = DateTimeOffset.UtcNow,
                     render_mode = "OFFSCREEN_WPF_CONTENT",
                     operational_state_sha256 = stateSha256,
@@ -96,11 +105,12 @@ internal static class Program
                     execution_fabric_sha256 = executionFabricSha256,
                     remote_owner_gateway_sha256 = remoteOwnerSha256,
                     remote_transport_sha256 = remoteTransportSha256,
+                    owner_device_tailnet_sha256 = ownerTailnetSha256,
                     evidence,
                 },
                 new JsonSerializerOptions { WriteIndented = true }));
 
-        Console.WriteLine($"Command Center Stage 6 UI smoke: PASS ({output})");
+        Console.WriteLine($"Command Center Stage 7 UI smoke: PASS ({output})");
         return 0;
     }
 
