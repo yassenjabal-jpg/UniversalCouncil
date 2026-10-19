@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -21,8 +20,12 @@ def load(relative: str) -> dict[str, Any]:
     return json.loads((ROOT / relative).read_text(encoding="utf-8"))
 
 
-def sha256(relative: str) -> str:
-    return hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
+def git_blob_sha(relative: str) -> str:
+    import hashlib
+
+    data = (ROOT / relative).read_bytes()
+    header = ("blob " + str(len(data)) + "\0").encode("ascii")
+    return hashlib.sha1(header + data).hexdigest()
 
 
 def find_first(value: Any, key: str) -> Any:
@@ -93,7 +96,7 @@ def build() -> dict[str, Any]:
         "schema_version": "1.0",
         "source_type": "repository_projection",
         "source_files": [
-            {"path": path, "sha256": sha256(path)}
+            {"path": path, "blob_sha": git_blob_sha(path)}
             for path in SOURCES
         ],
         "council": {
