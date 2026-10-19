@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "manifest_id": "living-operations-reference-only-visual-lock",
   "status": "OWNER_ADOPTED_MURTAKAZ_ENFORCED",
   "source_of_truth": "APPROVED_REFERENCE_IMAGES_ONLY",
@@ -92,12 +92,13 @@
     "new_palette_without_review_forbidden": true,
     "human_role_avatars_forbidden": true,
     "dark_neon_cyberpunk_forbidden": true,
-    "architecture_decorative_theme_forbidden": true,
     "generic_saas_dashboard_drift_forbidden": true,
     "generated_output_requires_murtakaz_review": true,
     "local_reference_bytes_required": true,
     "sha256_verification_required": true,
-    "missing_reference_blocks_visual_work": true
+    "missing_reference_blocks_visual_work": true,
+    "unapproved_decorative_theme_forbidden": true,
+    "reference_observed_visual_language_only": true
   },
   "rejected_recent_generations": [
     "f75c9844-03fb-4c7b-857b-95babf3e4269",
