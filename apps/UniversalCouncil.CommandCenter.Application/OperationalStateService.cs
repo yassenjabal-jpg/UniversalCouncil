@@ -118,7 +118,7 @@ public sealed class OperationalStateService :
                 new(
                     "projects",
                     "المشاريع",
-                    "موصولة إلى Operational State read model.",
+                    "موصولة بمصدر Operational State الحقيقي للقراءة.",
                     ModuleState.ReadOnly,
                     "قراءة حقيقية"),
                 new(
@@ -136,25 +136,25 @@ public sealed class OperationalStateService :
                 new(
                     "council",
                     "المجلس",
-                    "Council orchestration is not connected until Stage 3.",
+                    "تنسيق المجلس غير موصول حتى Stage 3.",
                     ModuleState.NotConnected,
                     "غير متصل"),
                 new(
                     "studio",
                     "الاستوديو",
-                    "Studio orchestration is not connected until Stage 3.",
+                    "تنسيق الاستوديو غير موصول حتى Stage 3.",
                     ModuleState.NotConnected,
                     "غير متصل"),
                 new(
                     "execution",
                     "التنفيذ على YASSIN",
-                    "Execution remains outside Stage 2 authority.",
+                    "التنفيذ خارج صلاحية Stage 2 ويبقى مقفولًا.",
                     ModuleState.Locked,
                     "مقفول"),
                 new(
                     "capabilities",
                     "القدرات والأدوات",
-                    "Capability Hub remains a later stage.",
+                    "Capability Hub محفوظ لمرحلة لاحقة.",
                     ModuleState.Locked,
                     "مرحلة لاحقة")
             ]);
