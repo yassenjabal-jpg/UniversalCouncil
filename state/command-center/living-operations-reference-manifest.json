@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "manifest_id": "living-operations-reference-only-visual-lock",
   "status": "OWNER_ADOPTED_MURTAKAZ_ENFORCED",
   "source_of_truth": "APPROVED_REFERENCE_IMAGES_ONLY",
@@ -100,7 +100,14 @@
     "unapproved_decorative_theme_forbidden": true,
     "reference_observed_visual_language_only": true,
     "screen_object_inventory_required_before_generation": true,
-    "member_sigil_interaction_inventory_required": true
+    "member_sigil_interaction_inventory_required": true,
+    "freeform_text_to_image_for_canonical_ui_forbidden": true,
+    "multi_screen_composite_forbidden": true,
+    "generated_image_parent_forbidden": true,
+    "preflight_visual_job_registration_required": true,
+    "actual_reference_binding_receipt_required": true,
+    "eligible_tool_must_consume_reference_bytes": true,
+    "fail_closed_when_reference_capable_tool_unavailable": true
   },
   "rejected_recent_generations": [
     "f75c9844-03fb-4c7b-857b-95babf3e4269",
@@ -132,13 +139,49 @@
       "comparison_evidence",
       "review_status",
       "screen_inventory_id",
-      "member_inventory_verified"
+      "member_inventory_verified",
+      "production_mode",
+      "tool_name",
+      "single_screen_only",
+      "preflight_registered",
+      "reference_binding_evidence"
     ],
     "approval_requires": [
       "governance_review",
       "workshop_review"
     ],
-    "meaning": "Artifact integrity is not aesthetic approval. No visual jobs have been produced in this repair."
+    "meaning": "Artifact integrity is not aesthetic approval. No visual jobs have been produced in this repair.",
+    "allowed_production_modes": [
+      "REFERENCE_EDIT",
+      "LAYER_RECONSTRUCTION",
+      "PIXEL_PRESERVING_REFINEMENT"
+    ],
+    "forbidden_source_types": [
+      "TEXT_TO_IMAGE",
+      "TEXT_ONLY_RECONSTRUCTION",
+      "STYLE_TRANSFER",
+      "GENERATED_IMAGE_DERIVATIVE",
+      "MULTI_SCREEN_COMPOSITE",
+      "MOODBOARD_DERIVATION",
+      "FREEFORM_REDESIGN"
+    ],
+    "preflight_must_precede_render": true,
+    "one_job_one_screen": true,
+    "reference_binding_receipt_schema": {
+      "required_fields": [
+        "job_id",
+        "parent_role",
+        "parent_path",
+        "parent_sha256",
+        "tool_name",
+        "production_mode",
+        "tool_received_reference_bytes",
+        "single_screen",
+        "render_started_after_preflight",
+        "screen_inventory_id",
+        "member_inventory_verified"
+      ]
+    }
   },
   "latest_rejected_generation": {
     "generation_id": "79110079-3684-437e-9c29-825ac3f6cb4d",
@@ -151,5 +194,6 @@
     "screen_inventory_must_match_parent_role": true,
     "member_inventory_verified_required_when_screen_has_members": true,
     "purpose": "Prevent semantic compression and omission of reference-observed objects."
-  }
+  },
+  "production_protocol_path": "state/command-center/living-operations-visual-production-protocol.json"
 }
