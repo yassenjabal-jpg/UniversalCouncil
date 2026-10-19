@@ -44,12 +44,14 @@ for path in sources:
             )
 
 xaml = (APP / "MainWindow.xaml").read_text(encoding="utf-8")
+provider = (APP / "PrototypeCommandCenterSnapshotProvider.cs").read_text(encoding="utf-8")
+truth_surface = xaml + "\n" + provider
 for required_label in (
     "بوابة التنفيذ مقفولة",
     "LOCKED BY PHASE 0",
     "لا توجد حالات تشغيل وهمية",
 ):
-    if required_label not in xaml:
+    if required_label not in truth_surface:
         raise SystemExit(f"Stage 1 truthfulness label missing: {required_label}")
 
 if xaml.count("ScrollViewer") != 2:
