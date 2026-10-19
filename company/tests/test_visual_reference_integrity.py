@@ -87,21 +87,28 @@ class VisualReferenceIntegrityTests(unittest.TestCase):
             validate(self.root, self.manifest)
 
     def test_governing_visual_direction_has_no_rejected_theme_vocabulary(self):
-        manifest = json.loads(
-            (ROOT / "state/command-center/living-operations-reference-manifest.json").read_text()
+        manifest_path = (
+            ROOT
+            / "state"
+            / "command-center"
+            / "living-operations-reference-manifest.json"
         )
+        manifest = json.loads(manifest_path.read_text())
         self.assertTrue(manifest["rules"]["unapproved_decorative_theme_forbidden"])
         self.assertTrue(manifest["rules"]["reference_observed_visual_language_only"])
         self.assertNotIn("architecture_decorative_theme_forbidden", manifest["rules"])
 
+        visual_root = (
+            ROOT / "docs" / "operations" / "command-center" / "living-operations"
+        )
         visual_files = (
-            "docs/operations/command-center/living-operations/01_VISUAL_BIBLE.md",
-            "docs/operations/command-center/living-operations/15_P1_VISUAL_DIRECTION_LOCK.md",
-            "docs/operations/command-center/living-operations/18_REFERENCE_ONLY_VISUAL_LOCK.md",
-            "docs/operations/command-center/living-operations/19_REFERENCE_FIDELITY_AUDIT_AND_CONTRACT.md",
+            visual_root / "01_VISUAL_BIBLE.md",
+            visual_root / "15_P1_VISUAL_DIRECTION_LOCK.md",
+            visual_root / "18_REFERENCE_ONLY_VISUAL_LOCK.md",
+            visual_root / "19_REFERENCE_FIDELITY_AUDIT_AND_CONTRACT.md",
         )
         forbidden = ("architecture", "architectural", "عمارة", "معمار")
-        for relative in visual_files:
-            content = (ROOT / relative).read_text(encoding="utf-8").casefold()
+        for visual_file in visual_files:
+            content = visual_file.read_text(encoding="utf-8").casefold()
             for term in forbidden:
-                self.assertNotIn(term.casefold(), content, relative)
+                self.assertNotIn(term.casefold(), content, str(visual_file))
