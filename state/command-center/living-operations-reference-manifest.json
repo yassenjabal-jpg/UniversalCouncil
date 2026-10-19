@@ -107,7 +107,11 @@
     "preflight_visual_job_registration_required": true,
     "actual_reference_binding_receipt_required": true,
     "eligible_tool_must_consume_reference_bytes": true,
-    "fail_closed_when_reference_capable_tool_unavailable": true
+    "fail_closed_when_reference_capable_tool_unavailable": true,
+    "home_geometry_lock_required": true,
+    "structural_review_before_aesthetic_review": true,
+    "radial_home_reinterpretation_forbidden": true,
+    "product_brand_renaming_forbidden": true
   },
   "rejected_recent_generations": [
     "f75c9844-03fb-4c7b-857b-95babf3e4269",
@@ -116,7 +120,8 @@
     "b3607b06-5137-4d4b-8126-43b9a4e64f68",
     "bd25818f-6f59-4407-bec0-af476378df58",
     "0289c00b-59de-422f-9532-5ed20d7b817a",
-    "79110079-3684-437e-9c29-825ac3f6cb4d"
+    "79110079-3684-437e-9c29-825ac3f6cb4d",
+    "1d4d3194-a0ec-4f1e-8fc3-1db2b125d1af"
   ],
   "rejected_classification": "REJECTED_VISUAL_DRIFT",
   "final_visual_phase_state": "IN_PROGRESS",
@@ -147,13 +152,15 @@
       "screen_inventory_id",
       "member_inventory_verified",
       "allowed_delta",
-      "reference_binding_evidence"
+      "reference_binding_evidence",
+      "geometry_lock_id"
     ],
     "rendered_required_fields": [
       "output_path",
       "output_sha256",
       "comparison_evidence",
-      "render_started_after_preflight"
+      "render_started_after_preflight",
+      "structural_review_evidence"
     ],
     "approval_requires": [
       "governance_review",
@@ -196,9 +203,9 @@
     "meaning": "A canonical UI job is registered and reference-bound before render; rendered output cannot exist as an approved/reviewable job without preflight evidence."
   },
   "latest_rejected_generation": {
-    "generation_id": "79110079-3684-437e-9c29-825ac3f6cb4d",
+    "generation_id": "1d4d3194-a0ec-4f1e-8fc3-1db2b125d1af",
     "classification": "REJECTED_VISUAL_DRIFT",
-    "reason": "Simplified canonical member/Sigil system and screen composition; introduced unsupported member label; cannot be reused as source."
+    "reason": "Improved member identity but re-authored canonical Home into a radial/glass dashboard, lost owner-composer hierarchy, changed rails/modules, renamed visible product identity and invented runtime-style facts."
   },
   "object_inventory_path": "state/command-center/living-operations-reference-object-inventory.json",
   "object_inventory_contract": {
@@ -207,5 +214,6 @@
     "member_inventory_verified_required_when_screen_has_members": true,
     "purpose": "Prevent semantic compression and omission of reference-observed objects."
   },
-  "production_protocol_path": "state/command-center/living-operations-visual-production-protocol.json"
+  "production_protocol_path": "state/command-center/living-operations-visual-production-protocol.json",
+  "home_geometry_lock_path": "state/command-center/living-operations-home-geometry-lock.json"
 }
