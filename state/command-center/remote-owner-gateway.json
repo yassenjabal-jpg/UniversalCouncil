@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "source_type": "repository_projection",
+  "source_files": [
+    {
+      "path": "state/command-center/remote-owner-policy.json",
+      "blob_sha": "892295afd2a7eda726deb427de996e3a275e89e3"
+    },
+    {
+      "path": "state/command-center/execution-fabric.json",
+      "blob_sha": "b958aef5db38da1daf45b32d5fff7e23281c57f7"
+    }
+  ],
+  "phase0_remote_command_source": {
+    "branch": "phase0/feasibility-adversarial-prototype",
+    "head_sha": "63a4a446bc1e87f5352915f1e86c463de82e9b81",
+    "files": [
+      {
+        "path": "company/runtime/phase0_guardrails.py",
+        "blob_sha": "56d76a96c0ab5d74e703f69a53b2cd51d0d2843c"
+      },
+      {
+        "path": "company/config/phase0_feasibility.json",
+        "blob_sha": "57b26c4d8fc65c9e866ddefd826784f7826c7f24"
+      },
+      {
+        "path": "company/tests/test_phase0_feasibility.py",
+        "blob_sha": "f0ac55efd4e3462e0a1a56b376140db07fd20739"
+      }
+    ]
+  },
+  "gateway": {
+    "mode": "LOCAL_TRUST_GATE_ONLY",
+    "owner_principal": "OWNER",
+    "target_host": "YASSIN",
+    "authentication_backend_connected": false,
+    "live_network_listener_enabled": false,
+    "local_cli_ingress_enabled": true,
+    "tailscale_compatible_architecture": true,
+    "public_internet_exposure_allowed": false,
+    "router_port_forwarding_allowed": false,
+    "github_queue_transport_enabled": false,
+    "chat_transport_enabled": false,
+    "phase0_remote_trust_status": "IN_TEST",
+    "live_execution_authorized": false
+  },
+  "trust_contract": {
+    "owner_authorization_required": true,
+    "authorization_context_must_be_out_of_band": true,
+    "device_id_required": true,
+    "session_id_required": true,
+    "nonce_required": true,
+    "idempotency_key_required": true,
+    "issued_at_required": true,
+    "expiry_required": true,
+    "target_scope_required": true,
+    "effect_scope_required": true,
+    "approval_intent_required": true,
+    "persistent_replay_ledger_required": true,
+    "replay_policy": "FAIL_CLOSED",
+    "max_clock_skew_seconds": 120,
+    "max_command_ttl_seconds": 900
+  },
+  "approval_contract": {
+    "display_record_is_authority": false,
+    "owner_approval_must_be_out_of_band": true,
+    "approval_id_required_for_high_impact": true,
+    "approval_expiry_required": true,
+    "approval_scope_must_cover_command": true
+  },
+  "device_session_contract": {
+    "registration_required": true,
+    "unregistered_device_fails_closed": true,
+    "unregistered_session_fails_closed": true,
+    "revoked_device_fails_closed": true,
+    "revoked_session_fails_closed": true
+  },
+  "queue_contract": {
+    "append_only": true,
+    "accepted_state": "QUEUED_TRUSTED",
+    "duplicate_state": "DUPLICATE_SAME_COMMAND",
+    "execution_state": "BLOCKED_PHASE0",
+    "live_dispatch_allowed": false,
+    "unknown_is_never_success": true
+  },
+  "service": {
+    "allowed_cli_commands": [
+      "status",
+      "validate-envelope",
+      "enqueue-synthetic",
+      "inspect-queue",
+      "validate-approval"
+    ],
+    "forbidden_cli_commands": [
+      "listen",
+      "serve",
+      "execute",
+      "dispatch",
+      "run-shell",
+      "click",
+      "type",
+      "invoke-provider",
+      "send-model-request"
+    ]
+  },
+  "runtime_truth": {
+    "registered_devices": 0,
+    "registered_sessions": 0,
+    "queue_depth": 0,
+    "phone_connected": false,
+    "tailscale_connected": false,
+    "github_transport_connected": false,
+    "chat_transport_connected": false
+  }
+}
