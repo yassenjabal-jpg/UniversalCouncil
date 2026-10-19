@@ -19,7 +19,10 @@ internal static class Program
 
         Directory.CreateDirectory(output);
 
-        var app = new App();
+        var app = new App
+        {
+            ShutdownMode = ShutdownMode.OnExplicitShutdown,
+        };
         app.InitializeComponent();
 
         var evidence = new[]
@@ -37,6 +40,7 @@ internal static class Program
                     schema_version = "1.0",
                     stage = "COMMAND_CENTER_STAGE1_SHELL",
                     generated_at_utc = DateTimeOffset.UtcNow,
+                    render_mode = "OFFSCREEN_WPF_CONTENT",
                     evidence,
                 },
                 new JsonSerializerOptions { WriteIndented = true }));
@@ -47,37 +51,33 @@ internal static class Program
 
     private static object Render(string output, int width, int height, string fileName)
     {
-        var window = new MainWindow
+        var window = new MainWindow();
+
+        if (window.Content is not FrameworkElement root)
         {
-            Width = width,
-            Height = height,
-            WindowStartupLocation = WindowStartupLocation.Manual,
-            Left = 0,
-            Top = 0,
-            ShowInTaskbar = false,
-        };
+            throw new InvalidOperationException("MainWindow root content is not a FrameworkElement.");
+        }
 
-        window.Show();
-        window.UpdateLayout();
+        root.Width = width;
+        root.Height = height;
+        root.Measure(new Size(width, height));
+        root.Arrange(new Rect(0, 0, width, height));
+        root.UpdateLayout();
 
-        var dpi = VisualTreeHelper.GetDpi(window);
-        var pixelWidth = Math.Max(1, (int)Math.Round(window.ActualWidth * dpi.DpiScaleX));
-        var pixelHeight = Math.Max(1, (int)Math.Round(window.ActualHeight * dpi.DpiScaleY));
-
-        if (pixelWidth < 100 || pixelHeight < 100)
+        if (root.ActualWidth < width - 1 || root.ActualHeight < height - 1)
         {
             throw new InvalidOperationException(
-                $"UI evidence has implausible dimensions: {pixelWidth}x{pixelHeight}");
+                $"Off-screen layout did not reach requested size: {root.ActualWidth}x{root.ActualHeight}");
         }
 
         var bitmap = new RenderTargetBitmap(
-            pixelWidth,
-            pixelHeight,
-            96 * dpi.DpiScaleX,
-            96 * dpi.DpiScaleY,
+            width,
+            height,
+            96,
+            96,
             PixelFormats.Pbgra32);
 
-        bitmap.Render(window);
+        bitmap.Render(root);
 
         var encoder = new PngBitmapEncoder();
         encoder.Frames.Add(BitmapFrame.Create(bitmap));
@@ -98,17 +98,15 @@ internal static class Program
         var sha256 = Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant();
 
         Console.WriteLine(
-            $"Rendered {fileName}: {pixelWidth}x{pixelHeight}, {bytes.Length} bytes, sha256:{sha256}");
-
-        window.Close();
+            $"Rendered {fileName}: {width}x{height}, {bytes.Length} bytes, sha256:{sha256}");
 
         return new
         {
             file = fileName,
             requested_width = width,
             requested_height = height,
-            pixel_width = pixelWidth,
-            pixel_height = pixelHeight,
+            pixel_width = bitmap.PixelWidth,
+            pixel_height = bitmap.PixelHeight,
             bytes = bytes.Length,
             sha256,
         };
