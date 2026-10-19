@@ -29,7 +29,7 @@ Common chrome: narrow right global navigation, wider left status/context column,
 
 - Stable multicolor role identity is separate from state badges. Preserve reference user/database/crown/shield/lock/branch glyphs; do not invent replacement prisms or use photographic role avatars.
 - Static halos and pastel gradients are part of the reference. Continuous activity animation requires real or explicitly isolated prototype events. Still images cannot establish timings/easing; motion and Reduced Motion need separate review.
-- Architecture and people inside project video/photo evidence are allowed. They must not become the chrome, decorative page background or human role portraits.
+- Project video/photo evidence may contain ordinary real-world subjects. Such media never authorizes a separate decorative theme for UI chrome/backgrounds or human role portraits.
 - Screenshot model names, dates, green activity, VERIFIED labels and costs are example content, not runtime facts or hard-coded model requirements.
 - References establish layout, not current authorization. Preserve disabled/reason states when execution is unavailable.
 - Responsive, accessibility and Android changes need bounded deltas and review; these desktop images do not prove mobile layout or interaction success.
