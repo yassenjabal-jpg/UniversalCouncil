@@ -68,10 +68,14 @@ def promote_memory_candidate(
     reviewer_trust: TrustClass,
     fact: dict[str, Any],
 ) -> dict[str, Any]:
-    if evidence.trust == TrustClass.UNTRUSTED and reviewer_trust not in {
-        TrustClass.TRUSTED_REVIEW,
-        TrustClass.OWNER,
-    }:
+    if (
+        evidence.trust == TrustClass.UNTRUSTED
+        and reviewer_trust
+        not in {
+            TrustClass.TRUSTED_REVIEW,
+            TrustClass.OWNER,
+        }
+    ):
         raise Phase0GuardError(
             "untrusted evidence requires trusted review before memory promotion"
         )
