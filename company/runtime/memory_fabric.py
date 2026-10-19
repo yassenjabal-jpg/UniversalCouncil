@@ -290,7 +290,10 @@ def load_events(memory_root: Path, cfg: dict[str, Any] | None = None) -> list[di
             raise MemoryFabricError(f"invalid event file {path}: {exc}") from exc
         if not isinstance(event, dict):
             raise MemoryFabricError(f"event root must be object: {path}")
-        validate_event(event, cfg)
+        try:
+            validate_event(event, cfg)
+        except MemoryFabricError as exc:
+            raise MemoryFabricError(f"invalid event file {path}: {exc}") from exc
         if event["event_id"] in seen:
             raise MemoryFabricError(f"duplicate memory event id: {event['event_id']}")
         seen.add(event["event_id"])
