@@ -152,15 +152,13 @@
       "screen_inventory_id",
       "member_inventory_verified",
       "allowed_delta",
-      "reference_binding_evidence",
-      "geometry_lock_id"
+      "reference_binding_evidence"
     ],
     "rendered_required_fields": [
       "output_path",
       "output_sha256",
       "comparison_evidence",
-      "render_started_after_preflight",
-      "structural_review_evidence"
+      "render_started_after_preflight"
     ],
     "approval_requires": [
       "governance_review",
@@ -200,7 +198,19 @@
     },
     "preflight_must_precede_render": true,
     "one_job_one_screen": true,
-    "meaning": "A canonical UI job is registered and reference-bound before render; rendered output cannot exist as an approved/reviewable job without preflight evidence."
+    "meaning": "A canonical UI job is registered and reference-bound before render; rendered output cannot exist as an approved/reviewable job without preflight evidence.",
+    "conditional_requirements": {
+      "home_owner_workspace": {
+        "preflight_required_fields": [
+          "geometry_lock_id"
+        ],
+        "rendered_required_fields": [
+          "structural_review_evidence"
+        ],
+        "geometry_lock_path": "state/command-center/living-operations-home-geometry-lock.json",
+        "structural_review_must_pass_before_aesthetic_review": true
+      }
+    }
   },
   "latest_rejected_generation": {
     "generation_id": "1d4d3194-a0ec-4f1e-8fc3-1db2b125d1af",
