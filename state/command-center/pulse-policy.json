@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0",
+  "feature_id": "universal-council-pulse",
+  "feature_label": "UniversalCouncil Pulse",
+  "status": "OWNER_ADOPTED_DESIGN_CONTRACT",
+  "adopted_at": "2026-10-19",
+  "base_stage": "stage7-owner-device-tailnet",
+  "base_stage_head": "7dcf0e7a17040cc70ad07ad87c9ca2709641cd83",
+  "stage8_opened": false,
+  "execution_authority_changed": false,
+  "purpose": "Provide a fast visual communication layer over real work without replacing tasks, approvals, evidence, decisions, or execution gates.",
+  "truth_invariants": [
+    "PULSE_IS_COMMUNICATION_NOT_AUTHORITY",
+    "UNKNOWN_NEVER_BECOMES_SUCCESS",
+    "NO_SYSTEM_DRAFT_MAY_SELF_PUBLISH",
+    "NO_COMPLETION_CLAIM_WITHOUT_REAL_EVIDENCE_WHEN_THE_CLAIM_IS_MATERIAL",
+    "ROLE_IS_NOT_A_HUMAN_OR_INDEPENDENT_PROCESS_UNLESS_RUNTIME_PROVES_IT",
+    "PULSE_PROMOTION_CREATES_A_SEPARATE_DURABLE_ARTIFACT"
+  ],
+  "pulse_types": [
+    "achievement",
+    "suggestion",
+    "blocker",
+    "question",
+    "unknown",
+    "handoff",
+    "before_after",
+    "wildcard"
+  ],
+  "origins": [
+    "manual_role_update",
+    "owner_update",
+    "system_draft",
+    "evidence_derived_draft",
+    "tool_artifact_draft"
+  ],
+  "default_lifetime_hours": 24,
+  "persistent_when": [
+    "pinned",
+    "promoted_to_task",
+    "promoted_to_approval",
+    "promoted_to_evidence",
+    "promoted_to_decision",
+    "promoted_to_return_ticket",
+    "promoted_to_project_memory"
+  ],
+  "conversion_targets": [
+    "task",
+    "approval",
+    "blocker",
+    "decision",
+    "evidence",
+    "return_ticket",
+    "project_memory",
+    "research_question"
+  ],
+  "featured_patterns": {
+    "verified_auto_story": {
+      "enabled": true,
+      "rule": "System may draft from trusted activity/evidence but a material claim must preserve provenance and publication remains explicit."
+    },
+    "story_collision": {
+      "enabled": true,
+      "rule": "Cross-role synthesis may propose an unexpected connection between two pulses; it is always labeled as a proposal/inference."
+    },
+    "story_to_action": {
+      "enabled": true,
+      "rule": "Promotion never mutates the original pulse into authority; it creates a typed durable artifact with its own controls."
+    },
+    "before_after_story": {
+      "enabled": true,
+      "rule": "Show paired artifact states only when both references are available."
+    },
+    "story_baton": {
+      "enabled": true,
+      "rule": "Visualizes accepted/rejected studio handoffs without bypassing canonical handoff and return-ticket contracts."
+    },
+    "unknown_story": {
+      "enabled": true,
+      "rule": "Unknowns remain explicit and may be promoted to research tasks."
+    },
+    "time_capsule": {
+      "enabled": true,
+      "rule": "Deferred ideas may reappear on a bounded review date with old and new context."
+    },
+    "wildcard_story": {
+      "enabled": true,
+      "rule": "Rotating optional prompt for one role to propose an unrequested improvement; never an activity quota."
+    },
+    "work_reality_prompt": {
+      "enabled": true,
+      "rule": "Optional bounded authenticity prompt; never used for performance scoring and never captures sensitive screens by default."
+    }
+  },
+  "anti_noise": {
+    "posting_quota_required": false,
+    "daily_post_required": false,
+    "likes_followers_leaderboards": false,
+    "silent_low_value_updates": true,
+    "digest_preferred": true,
+    "duplicate_suppression": true
+  },
+  "privacy": {
+    "screen_capture_default": "OFF",
+    "automatic_publish_default": "OFF",
+    "local_capture_requires_opt_in": true,
+    "exclusion_list_required_before_capture": true,
+    "redaction_required_for_sensitive_fields": true,
+    "credentials_and_tokens_forbidden": true
+  },
+  "owner_experience": {
+    "home_surface": [
+      "command_composer",
+      "since_last_visit",
+      "pulse_strip",
+      "attention_queue",
+      "active_work"
+    ],
+    "project_surface": [
+      "project_stage",
+      "pulse_timeline",
+      "artifacts",
+      "approvals",
+      "tools_and_additions",
+      "model_and_provider_controls",
+      "evidence_and_operational_truth"
+    ],
+    "pulse_filters": [
+      "all",
+      "needs_owner",
+      "achievement",
+      "suggestion",
+      "blocker",
+      "unknown",
+      "handoff"
+    ]
+  }
+}
