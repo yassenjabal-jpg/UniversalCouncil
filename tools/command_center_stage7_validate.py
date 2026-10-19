@@ -174,9 +174,7 @@ for pending_gate in (
     "session_revocation_round_trip_passed",
 ):
     if gates[pending_gate] is not False:
-        raise SystemExit(
-            f"Stage 7 repository projection fabricated real-host/device success: {pending_gate}"
-        )
+        raise SystemExit(f"Stage 7 repository projection fabricated real-host/device success: {pending_gate}")
 if gates["live_execution_authorized"] is not False:
     raise SystemExit("Stage 7 repository projection may not authorize live execution")
 
