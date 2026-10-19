@@ -19,7 +19,8 @@ public partial class App : System.Windows.Application
         var viewModel = new MainWindowViewModel(
             services.Shell,
             services.Operational,
-            services.Orchestration);
+            services.Orchestration,
+            services.ExecutionFabric);
 
         return new MainWindow(viewModel);
     }
