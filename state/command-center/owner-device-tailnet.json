@@ -4,7 +4,7 @@
   "source_files": [
     {
       "path": "state/command-center/owner-device-tailnet-policy.json",
-      "blob_sha": "0a8d160ee9a6f5c8b9c8b1ad4f823df0cfedef28"
+      "blob_sha": "78240bed0278cd714865a409499b587ef072ec2c"
     },
     {
       "path": "state/command-center/remote-transport.json",
@@ -54,7 +54,7 @@
     "serve_running_on_yassin": false
   },
   "gates": {
-    "stage7_ci_foundation_passed": false,
+    "stage7_ci_foundation_passed": true,
     "yassin_host_probe_passed": false,
     "owner_device_enrollment_passed": false,
     "tailscale_private_serve_passed": false,
