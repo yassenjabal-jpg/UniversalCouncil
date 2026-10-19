@@ -41,8 +41,8 @@ internal static class Program
 
         var evidence = new[]
         {
-            Render(output, 1440, 900, "command-center-stage1-1440x900.png"),
-            Render(output, 1180, 720, "command-center-stage1-1180x720.png"),
+            Render(output, 1440, 900, "command-center-stage2-1440x900.png"),
+            Render(output, 1180, 720, "command-center-stage2-1180x720.png"),
         };
 
         var manifestPath = Path.Combine(output, "ui-evidence-manifest.json");
@@ -52,7 +52,7 @@ internal static class Program
                 new
                 {
                     schema_version = "1.0",
-                    stage = "COMMAND_CENTER_STAGE1_SHELL",
+                    stage = "COMMAND_CENTER_STAGE2_OPERATIONAL_STATE",
                     generated_at_utc = DateTimeOffset.UtcNow,
                     render_mode = "OFFSCREEN_WPF_CONTENT",
                     operational_state_sha256 = stateSha256,
@@ -60,7 +60,7 @@ internal static class Program
                 },
                 new JsonSerializerOptions { WriteIndented = true }));
 
-        Console.WriteLine($"Command Center Stage 1 UI smoke: PASS ({output})");
+        Console.WriteLine($"Command Center Stage 2 UI smoke: PASS ({output})");
         return 0;
     }
 
