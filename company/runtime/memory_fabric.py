@@ -19,7 +19,7 @@ class MemoryFabricError(ValueError):
     pass
 
 
-EVENT_ID_RE = re.compile(r"^MEM-[0-9]{8}-[0-9]{6}-[a-z0-9]{6}$")
+EVENT_ID_RE = re.compile(r"^MEM-[0-9]{8}-[0-9]{6}-[a-z0-9]{6,8}$")
 LEVELS = {"L2_PROJECT", "L3_CANONICAL", "L4_OWNER_DIRECTIVE"}
 KINDS = {
     "decision",
@@ -225,22 +225,16 @@ def validate_event(event: dict[str, Any], cfg: dict[str, Any] | None = None) -> 
         event["level"] != "L4_OWNER_DIRECTIVE"
         or event["confidence"] != "owner_confirmed"
     ):
-        raise MemoryFabricError(
-            "owner_directive sources require L4 owner-confirmed events"
-        )
+        raise MemoryFabricError("owner_directive sources require L4 owner-confirmed events")
 
     if event["kind"] == "gate_lock" and source_type != "github_ci_and_visual_review":
-        raise MemoryFabricError(
-            "gate_lock compatibility is restricted to github_ci_and_visual_review"
-        )
+        raise MemoryFabricError("gate_lock compatibility is restricted to github_ci_and_visual_review")
 
     if (
         event["confidence"] == "verified_evidence"
         and source_type != "github_ci_and_visual_review"
     ):
-        raise MemoryFabricError(
-            "verified_evidence compatibility is restricted to github_ci_and_visual_review"
-        )
+        raise MemoryFabricError("verified_evidence compatibility is restricted to github_ci_and_visual_review")
     return True
 
 
