@@ -281,7 +281,7 @@ Do not reuse visual elements from these simply because they are polished.
 
 Examples of rejected drift:
 - gold/blue luxury dashboard restyling;
-- landscape/architecture decorative backgrounds;
+- decorative scenic backgrounds or theme overlays not present in the canonical references;
 - human portrait avatars replacing abstract Sigils;
 - generic SaaS/dashboard composition;
 - new visual identity invented from textual prompts;
@@ -544,9 +544,9 @@ Recommended first target:
 # 16. DO NOT DO
 
 - Do not adopt any recent generated design.
-- Do not use the recent gold/blue/landscape dashboard.
+- Do not reuse any recent restyled dashboard that diverges from the canonical references.
 - Do not create a new visual identity.
-- Do not use architecture/landscape decorative art.
+- Do not introduce decorative art, scenic motifs or background themes that are not directly observable in the canonical references.
 - Do not use human role avatars instead of Sigils.
 - Do not treat polished output as approved output.
 - Do not claim a screen is final before Murtakaz approval.
