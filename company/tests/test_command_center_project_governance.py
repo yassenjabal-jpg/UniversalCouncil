@@ -91,7 +91,7 @@ class CommandCenterProjectGovernanceTests(unittest.TestCase):
         self.assertFalse(self.identity["authority"]["may_open_stage8"])
         self.assertFalse(self.identity["authority"]["may_modify_parent_systems"])
 
-    def test_full_review_keeps_p1_conditional_and_stage8_closed(self) -> None:
+    def test_full_review_allows_non_authoritative_p1_and_keeps_stage8_closed(self) -> None:
         self.assertEqual(
             self.review["verdict"],
             "STRONG_FOUNDATION_CONDITIONAL_GO_FOR_NON_AUTHORITATIVE_P1",
@@ -100,12 +100,15 @@ class CommandCenterProjectGovernanceTests(unittest.TestCase):
         self.assertFalse(self.review["execution_authority_changed"])
         self.assertEqual(
             self.review["pre_prototype_gate"]["decision"],
-            "CONDITIONAL_GO",
+            "GO_FOR_NON_AUTHORITATIVE_P1",
         )
+        self.assertEqual(self.review["pre_prototype_gate"]["required"], [])
         self.assertIn(
             "MP-02_MURTAKAZ_ORCHESTRATION_PROJECTION",
-            self.review["pre_prototype_gate"]["required"],
+            self.review["pre_prototype_gate"]["completed"],
         )
+        self.assertFalse(self.review["alignment_followup"]["stage8_opened"])
+        self.assertFalse(self.review["alignment_followup"]["execution_authority_changed"])
 
     def test_project_write_roots_do_not_include_parent_paths(self) -> None:
         roots = self.lock["project_write_roots"]
