@@ -67,8 +67,7 @@ service_forbidden = {
     "physical_click": "Stage 4 service may not dispatch physical input",
 }
 
-service_text = "
-".join(
+service_text = "\n".join(
     path.read_text(encoding="utf-8")
     for path in SERVICE.rglob("*.cs")
 )
