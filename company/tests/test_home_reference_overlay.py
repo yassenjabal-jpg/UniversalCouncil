@@ -3,15 +3,9 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-BASE = (
-    ROOT
-    / "docs"
-    / "operations"
-    / "command-center"
-    / "living-operations"
-    / "prototypes"
-    / "home-reference-overlay"
-)
+LIVING = ROOT / "docs" / "operations" / "command-center" / "living-operations"
+STATE = ROOT / "state" / "command-center"
+BASE = LIVING / "prototypes" / "home-reference-overlay"
 
 
 class HomeReferenceOverlayTests(unittest.TestCase):
@@ -39,12 +33,7 @@ class HomeReferenceOverlayTests(unittest.TestCase):
         self.assertEqual(html.count('data-kind="reasoning"'), 8)
 
     def test_overlay_state_never_claims_visual_or_runtime_authority(self):
-        state_path = (
-            ROOT
-            / "state"
-            / "command-center"
-            / "living-operations-p1-home-interaction-overlay.json"
-        )
+        state_path = STATE / "living-operations-p1-home-interaction-overlay.json"
         state = json.loads(state_path.read_text(encoding="utf-8"))
         self.assertFalse(state["visual_authority"])
         self.assertIn("visual_artifact_approved", state["forbidden_claims"])
