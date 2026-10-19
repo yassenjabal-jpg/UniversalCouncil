@@ -95,6 +95,10 @@ class MemoryFabricTests(unittest.TestCase):
                 with self.assertRaises(MemoryFabricError):
                     validate_config(cfg)
 
+    def test_all_published_memory_events_validate_under_current_contract(self):
+        events = load_events(ROOT / "memory", BASE_CFG)
+        self.assertGreater(len(events), 0)
+
     def test_event_validation_happy_path_and_owner_directive(self):
         event = make_event()
         self.assertTrue(validate_event(event, BASE_CFG))
@@ -131,6 +135,25 @@ class MemoryFabricTests(unittest.TestCase):
         )
         with self.assertRaises(MemoryFabricError):
             validate_event(owner, BASE_CFG)
+
+        owner_source = make_event(
+            "MEM-20261012-120003-abc126",
+            level="L3_CANONICAL",
+            confidence="owner_confirmed",
+        )
+        owner_source["source"] = {"type": "owner_directive", "commit": "abc123"}
+        with self.assertRaises(MemoryFabricError):
+            validate_event(owner_source, BASE_CFG)
+
+        gate_lock = make_event("MEM-20261012-120004-abc127")
+        gate_lock["kind"] = "gate_lock"
+        with self.assertRaises(MemoryFabricError):
+            validate_event(gate_lock, BASE_CFG)
+
+        verified_evidence = make_event("MEM-20261012-120005-abc128")
+        verified_evidence["confidence"] = "verified_evidence"
+        with self.assertRaises(MemoryFabricError):
+            validate_event(verified_evidence, BASE_CFG)
 
     def test_event_validation_rejects_bad_shapes(self):
         base = make_event()
