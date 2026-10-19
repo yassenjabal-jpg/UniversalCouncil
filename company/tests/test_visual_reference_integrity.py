@@ -22,6 +22,10 @@ class VisualReferenceIntegrityTests(unittest.TestCase):
             path = self.root / ref["path"]
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes((ROOT / ref["path"]).read_bytes())
+        inventory_path = self.manifest["object_inventory_path"]
+        target_inventory = self.root / inventory_path
+        target_inventory.parent.mkdir(parents=True, exist_ok=True)
+        target_inventory.write_bytes((ROOT / inventory_path).read_bytes())
         (self.root / "output.png").write_bytes(b"fixture output")
         (self.root / "comparison.md").write_text("fixture comparison")
         parent = self.manifest["references"][0]
@@ -35,6 +39,8 @@ class VisualReferenceIntegrityTests(unittest.TestCase):
             output_sha256=hashlib.sha256(b"fixture output").hexdigest(),
             comparison_evidence="comparison.md",
             review_status="MURTAKAZ_REVIEW_REQUIRED",
+            screen_inventory_id=parent["role"],
+            member_inventory_verified=True,
         )
         self.manifest["visual_jobs"] = [self.job]
 
@@ -59,6 +65,8 @@ class VisualReferenceIntegrityTests(unittest.TestCase):
             ("output_sha256", "bad"),
             ("review_status", "APPROVED_BY_AL_MURTAKAZ"),
             ("source_generation_id", self.manifest["rejected_recent_generations"][0]),
+            ("screen_inventory_id", "wrong-screen"),
+            ("member_inventory_verified", False),
         ]
         for field, value in mutations:
             with self.subTest(field=field):
