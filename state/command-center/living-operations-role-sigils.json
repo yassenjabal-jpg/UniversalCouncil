@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "family": "UniversalCouncilRoleSigils",
+  "rules": {
+    "abstract_not_mascot": true,
+    "semantic_destination_required": true,
+    "color_not_sole_identifier": true,
+    "runtime_independence_must_not_be_implied": true,
+    "reasoning_rings_only_when_known": true
+  },
+  "states": [
+    "IDLE",
+    "ACTIVATED",
+    "WORKING",
+    "REVIEWING",
+    "WAITING",
+    "BLOCKED",
+    "COMPLETED",
+    "UNKNOWN"
+  ],
+  "reasoning_levels": {
+    "Fast": 1,
+    "Standard": 2,
+    "Deep": 3,
+    "Max": 4
+  },
+  "roles": [
+    {"id":"chair","concept":"central_directional_aperture","destination":"decision_orchestration_context"},
+    {"id":"evidence","concept":"layered_verification_lens","destination":"evidence_role_context"},
+    {"id":"red_team","concept":"split_opposing_prism","destination":"dissent_challenge_context"},
+    {"id":"practicality","concept":"vector_through_bounded_gate","destination":"execution_feasibility_context"},
+    {"id":"risk","concept":"contained_impact_wave","destination":"risk_context"},
+    {"id":"human_advocate","concept":"human_centered_orbit","destination":"user_impact_context"},
+    {"id":"value","concept":"balanced_value_delta","destination":"value_context"},
+    {"id":"synthesis","concept":"converging_paths","destination":"alternatives_synthesis_context"},
+    {"id":"studio_producer","concept":"bounded_pipeline_gates","destination":"studio_control_context"},
+    {"id":"writing","concept":"structured_script_frame","destination":"writing_stage_context"},
+    {"id":"preproduction","concept":"shot_grid_sequence","destination":"preproduction_context"},
+    {"id":"visual_assets","concept":"layer_stack_frame","destination":"asset_production_context"},
+    {"id":"motion","concept":"keyframe_path","destination":"motion_stage_context"},
+    {"id":"picture_edit","concept":"timeline_splice","destination":"edit_stage_context"},
+    {"id":"sound","concept":"waveform_envelope","destination":"audio_stage_context"},
+    {"id":"packaging","concept":"framed_focus_point","destination":"packaging_context"},
+    {"id":"delivery","concept":"verified_output_seal","destination":"delivery_qc_context"}
+  ]
+}

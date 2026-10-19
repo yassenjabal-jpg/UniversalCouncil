@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "components": {
+    "autopilot": [
+      "OFF",
+      "READY",
+      "RUNNING",
+      "WAITING_OWNER",
+      "BLOCKED",
+      "RECOVERING",
+      "SUSPENDED_RESOURCE_WAIT",
+      "PAUSED",
+      "COMPLETE"
+    ],
+    "role_sigil": [
+      "IDLE",
+      "ACTIVATED",
+      "WORKING",
+      "REVIEWING",
+      "WAITING",
+      "BLOCKED",
+      "COMPLETED",
+      "UNKNOWN"
+    ],
+    "artifact": [
+      "DRAFT",
+      "CURRENT",
+      "IN_HANDOFF",
+      "RETURNED",
+      "VERIFIED",
+      "REJECTED",
+      "UNKNOWN"
+    ],
+    "decision": [
+      "NOT_REQUIRED",
+      "REQUIRED",
+      "UNDER_REVIEW",
+      "APPROVED",
+      "CHANGES_REQUESTED",
+      "REJECTED",
+      "EXPIRED_STALE"
+    ],
+    "checkpoint": [
+      "CREATED",
+      "VERIFIED",
+      "SELECTED",
+      "RESTORING",
+      "RESTORED",
+      "INVALID_INCOMPATIBLE"
+    ],
+    "branch": [
+      "PROPOSED",
+      "CREATING",
+      "ACTIVE",
+      "COMPARED",
+      "SELECTED",
+      "REJECTED",
+      "UNKNOWN"
+    ],
+    "tool": [
+      "CONNECTED_READY",
+      "ACTIVE",
+      "WAITING",
+      "BLOCKED",
+      "UNKNOWN",
+      "DISCONNECTED"
+    ]
+  },
+  "truth_states": [
+    "VERIFIED",
+    "EVIDENCE_BACKED",
+    "PROPOSAL",
+    "UNKNOWN",
+    "OWNER_DIRECTIVE"
+  ],
+  "rules": {
+    "unknown_never_success": true,
+    "completion_requires_backing_truth": true,
+    "animation_cannot_change_authoritative_state": true,
+    "disabled_must_explain_reason": true
+  }
+}
