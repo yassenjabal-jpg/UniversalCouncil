@@ -1,8 +1,8 @@
-# Command Center Review Routing Matrix
+# المرتكز — مصفوفة توجيه المراجعات
 
 Status: PROJECT-LOCAL ROUTING CONTRACT
 
-| Change / Question | Required Project Council | Required Product Studio | Mode |
+| Change / Question | هيئة المرتكز المطلوبة | مشغل المرتكز المطلوب | Mode |
 |---|---|---|---|
 | Copy / spacing / local polish | none unless truth changes | Visual / UX owner | LIGHT |
 | Navigation hierarchy | Owner Experience, Architecture | Experience Architect, Interaction | COUNCIL |
@@ -30,13 +30,13 @@ Status: PROJECT-LOCAL ROUTING CONTRACT
 | Eval/tracing UI | AI Runtime, Product Truth | Experience, Design System | COUNCIL |
 | New top-level screen | UX, Architecture, Product Truth | Experience Architect, Visual | COUNCIL |
 | Art direction replacement | full relevant Council + Red Team | full Studio | ARENA + Owner |
-| Stage 8 / execution authority | parent governance + relevant Project Council | none as authority | ARENA + Owner |
+| Stage 8 / execution authority | parent governance + relevant هيئة المرتكز | none as authority | ARENA + Owner |
 
 ## Default principle
 
 If a change touches both craft and authoritative truth, route to both systems.
 
-If it is purely craft and reversible, keep it inside Product Studio.
+If it is purely craft and reversible, keep it inside مشغل المرتكز.
 
 If it changes project/cross-project governance, escalate beyond the project-local Council.
 
