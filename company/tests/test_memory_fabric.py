@@ -106,10 +106,7 @@ class MemoryFabricTests(unittest.TestCase):
         self.assertTrue(validate_event(owner, BASE_CFG))
 
     def test_visual_review_compatibility_event_is_valid_without_mutation(self):
-        event_path = (
-            ROOT
-            / "memory/events/2026-10-18/MEM-20261018-235600-vis1lock.json"
-        )
+        event_path = ROOT / "memory/events/2026-10-18/MEM-20261018-235600-vis1lock.json"
         event = json.loads(event_path.read_text(encoding="utf-8"))
 
         self.assertEqual(event["kind"], "gate_lock")
