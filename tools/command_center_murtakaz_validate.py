@@ -79,11 +79,7 @@ if (
     raise SystemExit("Murtakaz projection fabricated live activity")
 
 model = projection["model_control"]
-if (
-    not model["role_model_separation"]
-    or not model["owner_controlled_selection"]
-    or model["silent_fallback_allowed"]
-):
+if not model["role_model_separation"] or not model["owner_controlled_selection"] or model["silent_fallback_allowed"]:
     raise SystemExit("Murtakaz model-control policy drifted")
 
 stage_map = load(STAGE_MAP)
