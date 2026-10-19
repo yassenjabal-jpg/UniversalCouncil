@@ -25,7 +25,7 @@
     },
     "event_id": {
       "type": "string",
-      "pattern": "^MEM-[0-9]{8}-[0-9]{6}-[a-z0-9]{6}$"
+      "pattern": "^MEM-[0-9]{8}-[0-9]{6}-[a-z0-9]{6,8}$"
     },
     "created_at": {
       "type": "string",
