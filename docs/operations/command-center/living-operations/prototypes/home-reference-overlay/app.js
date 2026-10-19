@@ -183,11 +183,9 @@ document.querySelectorAll(".hotspot").forEach((button) => {
   });
 });
 
-body.addEventListener?.("click", () => {});
+const bodyElement = document.body;
 
-body = document.body;
-
-body.addEventListener("click", (event) => {
+bodyElement.addEventListener("click", (event) => {
   const action = event.target.closest("[data-demo-action]");
   if (!action) return;
   const name = action.dataset.demoAction;
