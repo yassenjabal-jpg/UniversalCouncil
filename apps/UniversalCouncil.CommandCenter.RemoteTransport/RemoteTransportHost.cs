@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using HttpBadRequestException = Microsoft.AspNetCore.Http.HttpBadRequestException;
+using HttpBadRequestException = Microsoft.AspNetCore.Http.BadHttpRequestException;
 using UniversalCouncil.CommandCenter.Application;
 using UniversalCouncil.CommandCenter.Core;
 using UniversalCouncil.CommandCenter.Infrastructure;
