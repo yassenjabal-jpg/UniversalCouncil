@@ -29,5 +29,16 @@
   "truth": {
     "unknown_is_never_success": true,
     "independent_agent_claim_requires_runtime_evidence": true
+  },
+  "mandatory_approval": {
+    "policy": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
+    "required_for_all_product_change": true,
+    "required_before_material_implementation": true,
+    "required_before_adoption": true,
+    "required_before_completion": true,
+    "required_before_merge": true,
+    "required_before_release": true,
+    "required_before_next_phase": true,
+    "material_change_reopens_review": true
   }
 }
