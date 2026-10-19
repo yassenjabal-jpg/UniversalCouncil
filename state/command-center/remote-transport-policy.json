@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "stage": "COMMAND_CENTER_STAGE6_AUTHENTICATED_TRANSPORT_PILOT",
+  "mode": "LOOPBACK_AUTHENTICATED_PILOT",
+  "target_host": "YASSIN",
+  "transport": {
+    "listener_enabled": true,
+    "listener_scope": "LOOPBACK_ONLY",
+    "allowed_bind_addresses": ["127.0.0.1", "::1"],
+    "public_bind_allowed": false,
+    "router_port_forwarding_allowed": false,
+    "tailscale_serve_compatible": true,
+    "tailscale_connected": false,
+    "tailscale_serve_configured": false,
+    "tailscale_funnel_allowed": false,
+    "github_transport_connected": false,
+    "chat_transport_connected": false,
+    "phone_connected": false
+  },
+  "authentication": {
+    "backend": "LOCAL_HASHED_SESSION_TOKEN",
+    "bearer_token_required": true,
+    "device_header_required": true,
+    "session_header_required": true,
+    "token_plaintext_persisted": false,
+    "minimum_token_entropy_bytes": 32,
+    "short_lived_sessions_required": true,
+    "max_session_ttl_minutes": 60,
+    "revocation_required": true
+  },
+  "http": {
+    "max_request_body_bytes": 32768,
+    "command_endpoint": "/v1/commands",
+    "approval_endpoint": "/v1/approvals/validate",
+    "status_endpoint": "/v1/status",
+    "health_endpoint": "/healthz",
+    "cors_enabled": false,
+    "anonymous_command_allowed": false,
+    "anonymous_approval_allowed": false
+  },
+  "round_trip": {
+    "real_loopback_http_required": true,
+    "synthetic_identity_fixture_allowed": true,
+    "real_phone_required_for_stage6_lock": false,
+    "real_tailscale_required_for_stage6_lock": false,
+    "success_state": "TRANSPORT_ACCEPTED_EXECUTION_BLOCKED"
+  },
+  "authority": {
+    "command_queue_acceptance_grants_execution": false,
+    "approval_transport_grants_execution": false,
+    "phase0_bypass_allowed": false,
+    "live_execution_authorized": false,
+    "execution_state_after_transport_acceptance": "BLOCKED_PHASE0"
+  }
+}
