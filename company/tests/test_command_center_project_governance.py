@@ -43,10 +43,7 @@ class CommandCenterProjectGovernanceTests(unittest.TestCase):
         self.assertFalse(self.studio["authority"]["live_publish_authority"])
 
     def test_project_council_uses_local_ids_and_inherits_known_parent_capabilities(self) -> None:
-        known_parent = {
-            item["id"]
-            for item in self.parent_roles["core_roles"] + self.parent_roles["specialist_roles"]
-        }
+        known_parent = {item["id"] for item in self.parent_roles["core_roles"] + self.parent_roles["specialist_roles"]}
         local_ids = {role["id"] for role in self.council["core_roles"]}
         self.assertTrue(all(role_id.startswith("cc_") for role_id in local_ids))
 
