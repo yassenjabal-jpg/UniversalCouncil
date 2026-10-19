@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UniversalCouncil — Home Reference Overlay Prototype</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="prototype-shell">
+    <header class="prototype-toolbar" aria-label="Prototype controls">
+      <div>
+        <strong>Home Reference Overlay</strong>
+        <span class="truth-badge">REFERENCE PIXELS UNCHANGED</span>
+      </div>
+      <div class="toolbar-actions">
+        <button id="toggle-debug" type="button" aria-pressed="false">إظهار مناطق التفاعل</button>
+        <span class="sha">7cb7d12f8819…</span>
+      </div>
+    </header>
+
+    <section class="reference-stage" id="reference-stage" aria-label="Canonical Home reference with semantic interaction overlay">
+      <img
+        class="canonical-reference"
+        src="../../references/01-home_owner_workspace.png"
+        alt="Canonical Home / Owner Workspace reference"
+        draggable="false"
+      >
+
+      <div class="hotspot-layer" aria-label="Interactive semantic overlay">
+        <button class="hotspot region-hotspot" style="--x:1.0;--y:6.1;--w:14.2;--h:15.2"
+          data-kind="region" data-id="autopilot" aria-label="Autopilot status">Autopilot</button>
+
+        <button class="hotspot route-hotspot" style="--x:16.1;--y:16.0;--w:8.1;--h:13.2"
+          data-kind="route" data-id="council-route" aria-label="مسار المجلس">المجلس</button>
+        <button class="hotspot route-hotspot" style="--x:24.3;--y:16.0;--w:7.5;--h:13.2"
+          data-kind="route" data-id="studio-route" aria-label="مسار الاستوديو">الاستوديو</button>
+        <button class="hotspot route-hotspot" style="--x:31.9;--y:16.0;--w:7.3;--h:13.2"
+          data-kind="route" data-id="auto-route" aria-label="مسار التنفيذ التلقائي">التنفيذ التلقائي</button>
+        <button class="hotspot action-hotspot" style="--x:83.0;--y:22.3;--w:11.3;--h:5.5"
+          data-kind="action" data-id="start" aria-label="ابدأ التنفيذ">ابدأ التنفيذ</button>
+
+        <button class="hotspot member-hotspot" style="--x:20.8;--y:34.1;--w:7.0;--h:9.8"
+          data-kind="member" data-id="owner" aria-label="المالك — تحديد الاتجاه"></button>
+        <button class="hotspot reasoning-hotspot" style="--x:24.8;--y:33.7;--w:2.2;--h:2.8"
+          data-kind="reasoning" data-id="owner" aria-label="استدلال المالك"></button>
+
+        <button class="hotspot member-hotspot" style="--x:29.3;--y:34.1;--w:7.0;--h:9.8"
+          data-kind="member" data-id="strategy" aria-label="الاستراتيجية — تحليل وفرص"></button>
+        <button class="hotspot reasoning-hotspot" style="--x:33.2;--y:33.7;--w:2.2;--h:2.8"
+          data-kind="reasoning" data-id="strategy" aria-label="استدلال الاستراتيجية"></button>
+
+        <button class="hotspot member-hotspot" style="--x:37.8;--y:34.1;--w:7.0;--h:9.8"
+          data-kind="member" data-id="research" aria-label="البحث — جمع الأدلة"></button>
+        <button class="hotspot reasoning-hotspot" style="--x:41.8;--y:33.7;--w:2.2;--h:2.8"
+          data-kind="reasoning" data-id="research" aria-label="استدلال البحث"></button>
+
+        <button class="hotspot member-hotspot" style="--x:46.2;--y:34.1;--w:7.0;--h:9.8"
+          data-kind="member" data-id="verification" aria-label="التحقق — مراجعة الحقائق"></button>
+        <button class="hotspot reasoning-hotspot" style="--x:50.2;--y:33.7;--w:2.2;--h:2.8"
+          data-kind="reasoning" data-id="verification" aria-label="استدلال التحقق"></button>
+
+        <button class="hotspot member-hotspot" style="--x:54.6;--y:34.1;--w:7.0;--h:9.8"
+          data-kind="member" data-id="execution" aria-label="التنفيذ — تحويل إلى عمل"></button>
+        <button class="hotspot reasoning-hotspot" style="--x:58.6;--y:33.7;--w:2.2;--h:2.8"
+          data-kind="reasoning" data-id="execution" aria-label="استدلال التنفيذ"></button>
+
+        <button class="hotspot member-hotspot" style="--x:63.0;--y:34.1;--w:7.0;--h:9.8"
+          data-kind="member" data-id="creative" aria-label="الإبداع — تصميم وإنتاج"></button>
+        <button class="hotspot reasoning-hotspot" style="--x:67.0;--y:33.7;--w:2.2;--h:2.8"
+          data-kind="reasoning" data-id="creative" aria-label="استدلال الإبداع"></button>
+
+        <button class="hotspot member-hotspot" style="--x:71.5;--y:34.1;--w:7.0;--h:9.8"
+          data-kind="member" data-id="data" aria-label="البيانات — تحليل وقياس"></button>
+        <button class="hotspot reasoning-hotspot" style="--x:75.5;--y:33.7;--w:2.2;--h:2.8"
+          data-kind="reasoning" data-id="data" aria-label="استدلال البيانات"></button>
+
+        <button class="hotspot member-hotspot" style="--x:79.9;--y:34.1;--w:7.0;--h:9.8"
+          data-kind="member" data-id="learning" aria-label="التعلم — تطوير مستمر"></button>
+        <button class="hotspot reasoning-hotspot" style="--x:83.9;--y:33.7;--w:2.2;--h:2.8"
+          data-kind="reasoning" data-id="learning" aria-label="استدلال التعلم"></button>
+
+        <button class="hotspot project-hotspot" style="--x:16.0;--y:47.3;--w:26.1;--h:21.0"
+          data-kind="project" data-id="smart-secretary" aria-label="فتح مشروع Smart Secretary V2"></button>
+        <button class="hotspot project-hotspot" style="--x:42.6;--y:47.3;--w:25.8;--h:21.0"
+          data-kind="project" data-id="privacy" aria-label="فتح مشروع M2-A Privacy"></button>
+        <button class="hotspot project-hotspot" style="--x:68.8;--y:47.3;--w:25.7;--h:21.0"
+          data-kind="project" data-id="erasure" aria-label="فتح مشروع Erasure Contract"></button>
+
+        <button class="hotspot panel-hotspot" style="--x:16.0;--y:69.0;--w:16.6;--h:19.0"
+          data-kind="panel" data-id="since-away" aria-label="منذ آخر زيارة"></button>
+        <button class="hotspot panel-hotspot" style="--x:33.0;--y:69.0;--w:32.7;--h:19.0"
+          data-kind="panel" data-id="needs-decision" aria-label="يحتاج قرارك"></button>
+        <button class="hotspot panel-hotspot" style="--x:66.0;--y:69.0;--w:28.6;--h:19.0"
+          data-kind="panel" data-id="recent-results" aria-label="النتائج الأخيرة"></button>
+
+        <button class="hotspot region-hotspot" style="--x:0.6;--y:89.1;--w:98.8;--h:9.8"
+          data-kind="region" data-id="tool-dock" aria-label="Tool Dock"></button>
+
+        <button class="hotspot nav-hotspot" style="--x:95.2;--y:6.0;--w:4.5;--h:83.0"
+          data-kind="region" data-id="global-nav" aria-label="التنقل العام"></button>
+      </div>
+    </section>
+  </main>
+
+  <aside class="inspector" id="inspector" aria-hidden="true" aria-label="Semantic context inspector">
+    <div class="inspector-header">
+      <div>
+        <span class="eyebrow" id="inspector-kind">ROLE CONTEXT</span>
+        <h2 id="inspector-title">السياق</h2>
+      </div>
+      <button type="button" id="close-inspector" aria-label="إغلاق">×</button>
+    </div>
+    <div class="inspector-body" id="inspector-body"></div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
