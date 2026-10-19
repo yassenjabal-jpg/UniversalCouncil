@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "id": "al-murtakaz",
+  "name_ar": "المرتكز",
+  "scope": "UniversalCouncil Command Center + UniversalCouncil Owner Android",
+  "status": "OWNER_ADOPTED_PROJECT_LOCAL_SYSTEM",
+  "units": {
+    "governance": {
+      "id": "al-murtakaz-governance",
+      "name_ar": "هيئة المرتكز",
+      "profile": "state/command-center/project-governance/project-council.json"
+    },
+    "workshop": {
+      "id": "al-murtakaz-workshop",
+      "name_ar": "مشغل المرتكز",
+      "profile": "state/command-center/project-governance/product-studio.json"
+    }
+  },
+  "parent_systems": {
+    "universal_council": "READ_ONLY_PARENT",
+    "media_studio": "READ_ONLY_PARENT"
+  },
+  "authority": {
+    "execution_authority": false,
+    "may_open_stage8": false,
+    "may_modify_parent_systems": false,
+    "owner_final_authority": true
+  },
+  "truth": {
+    "unknown_is_never_success": true,
+    "independent_agent_claim_requires_runtime_evidence": true
+  }
+}
