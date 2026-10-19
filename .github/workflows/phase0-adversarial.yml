@@ -1,0 +1,32 @@
+name: Phase 0 Adversarial Prototype
+
+on:
+  pull_request:
+    paths:
+      - "company/runtime/phase0_guardrails.py"
+      - "company/tests/test_phase0_feasibility.py"
+      - "company/config/phase0_feasibility.json"
+      - "docs/superpowers/specs/2026-10-19-phase0-feasibility-adversarial-prototype.md"
+      - "docs/operations/PHASE0_YASSIN_REALITY_RUNBOOK_2026-10-19.md"
+      - "docs/operations/PHASE0_STATUS_2026-10-19.md"
+      - ".github/workflows/phase0-adversarial.yml"
+
+jobs:
+  phase0:
+    name: Phase 0 Guardrail Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.13"
+      - name: Install pinned quality tools
+        run: python -c "import subprocess,sys,tomllib; d=tomllib.load(open('pyproject.toml','rb'))['project']['optional-dependencies']['dev']; subprocess.check_call([sys.executable,'-m','pip','install',*d])"
+      - name: Ruff lint
+        run: python -m ruff check company/runtime/phase0_guardrails.py company/tests/test_phase0_feasibility.py
+      - name: Ruff format
+        run: python -m ruff format --check company/runtime/phase0_guardrails.py company/tests/test_phase0_feasibility.py
+      - name: Compile
+        run: python -m py_compile company/runtime/phase0_guardrails.py company/tests/test_phase0_feasibility.py
+      - name: Phase 0 deterministic tests
+        run: python -m unittest company.tests.test_phase0_feasibility -v
