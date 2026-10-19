@@ -105,6 +105,36 @@ class MemoryFabricTests(unittest.TestCase):
         )
         self.assertTrue(validate_event(owner, BASE_CFG))
 
+    def test_visual_review_compatibility_event_is_valid_without_mutation(self):
+        event_path = (
+            ROOT
+            / "memory/events/2026-10-18/MEM-20261018-235600-vis1lock.json"
+        )
+        event = json.loads(event_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(event["kind"], "gate_lock")
+        self.assertEqual(event["confidence"], "verified_evidence")
+        self.assertEqual(event["source"]["type"], "github_ci_and_visual_review")
+        self.assertTrue(validate_event(event, BASE_CFG))
+
+        ordinary = make_event()
+        ordinary["source"]["product_commit"] = "abc123"
+        with self.assertRaises(MemoryFabricError):
+            validate_event(ordinary, BASE_CFG)
+
+        unsupported = make_event()
+        unsupported["source"] = {"type": "future_unapproved_source"}
+        with self.assertRaises(MemoryFabricError):
+            validate_event(unsupported, BASE_CFG)
+
+        owner = make_event(
+            "MEM-20261012-120002-abc125",
+            level="L4_OWNER_DIRECTIVE",
+            confidence="verified_evidence",
+        )
+        with self.assertRaises(MemoryFabricError):
+            validate_event(owner, BASE_CFG)
+
     def test_event_validation_rejects_bad_shapes(self):
         base = make_event()
         variants = []
