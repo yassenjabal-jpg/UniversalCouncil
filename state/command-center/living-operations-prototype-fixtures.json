@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "fixture_class": "PROTOTYPE_FIXTURE",
+  "must_not_be_promoted_to_runtime_truth": true,
+  "project": {
+    "id": "proto-smart-secretary-v2",
+    "title": "Smart Secretary V2",
+    "type": "software",
+    "state": "ACTIVE",
+    "current_stage": "privacy_ux_revision",
+    "autopilot_state": "RUNNING",
+    "reasoning_default": "Standard"
+  },
+  "roles": [
+    {"id":"evidence","state":"WORKING","reasoning":"Deep"},
+    {"id":"human_advocate","state":"REVIEWING","reasoning":"Standard"},
+    {"id":"red_team","state":"ACTIVATED","reasoning":"Deep"}
+  ],
+  "tools": [
+    {"id":"github","state":"ACTIVE"},
+    {"id":"models","state":"CONNECTED_READY"},
+    {"id":"evidence","state":"CONNECTED_READY"},
+    {"id":"yassin","state":"UNKNOWN"}
+  ],
+  "filmstrip": [
+    {"id":"v0","label":"Before","truth":"EVIDENCE_BACKED"},
+    {"id":"v1","label":"UX Revision","truth":"PROPOSAL"},
+    {"id":"v2","label":"Red Team Return","truth":"EVIDENCE_BACKED"},
+    {"id":"v3","label":"Revision 2","truth":"VERIFIED"}
+  ],
+  "checkpoints": [
+    {"id":"cp-01","label":"Baseline","state":"VERIFIED"},
+    {"id":"cp-02","label":"Privacy revision","state":"VERIFIED"}
+  ],
+  "decision": {
+    "id":"dec-01",
+    "state":"REQUIRED",
+    "question":"هل نعتمد مسار الخصوصية قبل توسيع الأتمتة؟",
+    "truth":"PROPOSAL"
+  },
+  "branches": [
+    {"id":"branch-a","label":"Privacy First","state":"ACTIVE","truth":"VERIFIED"},
+    {"id":"branch-b","label":"Automation Rich","state":"COMPARED","truth":"PROPOSAL"}
+  ]
+}
