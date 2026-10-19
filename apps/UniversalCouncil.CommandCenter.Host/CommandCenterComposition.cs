@@ -12,7 +12,8 @@ public sealed record CommandCenterHostServices(
     IExecutionFabricProvider ExecutionFabric,
     IExecutionManifestValidator ExecutionManifestValidator,
     IRemoteOwnerGatewayProvider RemoteOwnerGateway,
-    IRemoteTransportProjectionProvider RemoteTransport);
+    IRemoteTransportProjectionProvider RemoteTransport,
+    IOwnerTailnetProjectionProvider OwnerTailnet);
 
 public static class CommandCenterComposition
 {
@@ -58,6 +59,14 @@ public static class CommandCenterComposition
         var remoteTransportReader = new JsonRemoteTransportReader(remoteTransportPath);
         var remoteTransportService = new RemoteTransportProjectionService(remoteTransportReader);
 
+        var ownerTailnetPath = Path.Combine(
+            baseDirectory,
+            "state",
+            "owner-device-tailnet.json");
+
+        var ownerTailnetReader = new JsonOwnerTailnetReader(ownerTailnetPath);
+        var ownerTailnetService = new OwnerTailnetProjectionService(ownerTailnetReader);
+
         return new CommandCenterHostServices(
             stateService,
             stateService,
@@ -66,6 +75,7 @@ public static class CommandCenterComposition
             executionService,
             executionService,
             remoteOwnerService,
-            remoteTransportService);
+            remoteTransportService,
+            ownerTailnetService);
     }
 }
