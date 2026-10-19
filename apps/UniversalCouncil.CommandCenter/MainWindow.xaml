@@ -144,7 +144,8 @@
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="Stage 7 مفتوحة — YASSIN شوهد Online لكن أوامر المضيف محجوبة بحصة Desktop Commander؛ لا يوجد ادعاء Tailscale أو هاتف"
                                        FontSize="15"
-                                       FontWeight="SemiBold" />
+                                       FontWeight="SemiBold"
+                                       TextWrapping="Wrap" />
                             <TextBlock Text="{Binding Snapshot.PhaseGateLabel}"
                                        Margin="0,4,0,0"
                                        FontSize="12"
