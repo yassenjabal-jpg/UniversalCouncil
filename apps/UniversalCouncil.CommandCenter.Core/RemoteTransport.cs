@@ -48,6 +48,7 @@ public sealed record RemoteTransportProjection(
             false,
             false,
             false,
+            false,
             "BLOCKED");
 }
 
