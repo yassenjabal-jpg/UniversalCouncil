@@ -84,13 +84,18 @@ Do not ask a model to produce Home + Project + Decision + Recovery + Receipt in 
 
 Cross-screen consistency is reviewed from separate artifacts after each screen passes fidelity review.
 
-## Preflight registration
+## Two-phase visual job state machine
 
-A visual job must exist in the manifest **before rendering begins**.
+A visual job must first exist in the manifest as:
+
+`PREFLIGHT_REGISTERED`
+
+This phase happens **before rendering begins** and does not require an output file yet.
 
 Required preflight fields:
 
 - job_id;
+- state = PREFLIGHT_REGISTERED;
 - parent_role;
 - parent_sha256;
 - production_mode;
@@ -102,7 +107,18 @@ Required preflight fields:
 - allowed_delta;
 - reference_binding_evidence path.
 
-If any field is missing, rendering is blocked.
+After rendering, the same job may advance to:
+
+`RENDERED_REVIEW_REQUIRED`
+
+Only then are these required:
+
+- output_path;
+- output_sha256;
+- comparison_evidence;
+- render_started_after_preflight = true.
+
+A rendered job that has no valid preflight ancestry is rejected.
 
 ## Reference-binding evidence
 
@@ -118,11 +134,13 @@ Required receipt fields:
 - production_mode;
 - tool_received_reference_bytes = true;
 - single_screen = true;
-- render_started_after_preflight = true;
+- phase = PRE_RENDER;
+- render_not_started = true;
+- tool_reference_locator;
 - screen_inventory_id;
 - member_inventory_verified.
 
-The validator verifies the receipt against the manifest.
+The validator verifies the receipt against the manifest. The receipt is created while the canonical reference is already loaded/bound in the production tool but before rendering begins.
 
 A checkbox or prose claim is not enough.
 
