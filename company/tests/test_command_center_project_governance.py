@@ -23,6 +23,13 @@ class CommandCenterProjectGovernanceTests(unittest.TestCase):
         self.parent_media = load_json(ROOT / "company" / "config" / "media_venture.json")
         self.identity = load_json(PROJECT_STATE / "al-murtakaz.json")
         self.review = load_json(PROJECT_STATE / "al-murtakaz-review.json")
+        self.approval_policy = load_json(PROJECT_STATE / "al-murtakaz-approval-policy.json")
+        self.visual_phase = load_json(
+            ROOT / "state" / "command-center" / "living-operations-p1-visual-phase.json"
+        )
+        self.visual_approval = load_json(
+            PROJECT_STATE / "approvals" / "2026-10-19-visual-direction-continuation.json"
+        )
 
     def test_parent_versions_are_explicit_and_read_only(self) -> None:
         parents = self.lock["parent_sources"]
@@ -109,6 +116,45 @@ class CommandCenterProjectGovernanceTests(unittest.TestCase):
         )
         self.assertFalse(self.review["alignment_followup"]["stage8_opened"])
         self.assertFalse(self.review["alignment_followup"]["execution_authority_changed"])
+
+    def test_murtakaz_approval_is_required_for_all_product_change(self) -> None:
+        policy = self.approval_policy
+        self.assertEqual(policy["status"], "OWNER_DIRECTIVE_ACTIVE")
+        self.assertTrue(policy["implicit_approval_forbidden"])
+        self.assertTrue(policy["material_change_invalidates_prior_approval"])
+
+        for key in (
+            "implementation_requires",
+            "adoption_requires",
+            "completion_requires",
+            "merge_requires",
+            "release_requires",
+            "next_phase_requires",
+        ):
+            self.assertTrue(policy[key])
+
+        mandatory = self.identity["mandatory_approval"]
+        self.assertTrue(mandatory["required_for_all_product_change"])
+        self.assertTrue(mandatory["required_before_material_implementation"])
+        self.assertTrue(mandatory["required_before_adoption"])
+        self.assertTrue(mandatory["required_before_completion"])
+        self.assertTrue(mandatory["required_before_merge"])
+        self.assertTrue(mandatory["required_before_release"])
+        self.assertTrue(mandatory["required_before_next_phase"])
+
+    def test_visual_phase_is_in_progress_and_not_final_without_murtakaz(self) -> None:
+        self.assertEqual(self.visual_phase["status"], "IN_PROGRESS")
+        self.assertEqual(
+            self.visual_phase["exit_requires"],
+            "APPROVED_BY_AL_MURTAKAZ",
+        )
+        self.assertFalse(self.visual_phase["runtime_authority"])
+        self.assertFalse(self.visual_phase["stage8_opened"])
+        self.assertEqual(
+            self.visual_approval["decision"],
+            "APPROVE_TO_IMPLEMENT",
+        )
+        self.assertFalse(self.visual_approval["final_adoption_granted"])
 
     def test_project_write_roots_do_not_include_parent_paths(self) -> None:
         roots = self.lock["project_write_roots"]
