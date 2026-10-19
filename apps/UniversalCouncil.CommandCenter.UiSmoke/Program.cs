@@ -75,7 +75,7 @@ internal static class Program
 
     private static object Render(string output, int width, int height, string fileName)
     {
-        var window = new MainWindow();
+        var window = App.CreateMainWindow(AppContext.BaseDirectory);
 
         if (window.Content is not FrameworkElement root)
         {
