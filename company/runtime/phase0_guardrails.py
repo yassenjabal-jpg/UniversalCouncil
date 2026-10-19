@@ -68,17 +68,11 @@ def promote_memory_candidate(
     reviewer_trust: TrustClass,
     fact: dict[str, Any],
 ) -> dict[str, Any]:
-    if (
-        evidence.trust == TrustClass.UNTRUSTED
-        and reviewer_trust
-        not in {
-            TrustClass.TRUSTED_REVIEW,
-            TrustClass.OWNER,
-        }
-    ):
-        raise Phase0GuardError(
-            "untrusted evidence requires trusted review before memory promotion"
-        )
+    if evidence.trust == TrustClass.UNTRUSTED and reviewer_trust not in {
+        TrustClass.TRUSTED_REVIEW,
+        TrustClass.OWNER,
+    }:
+        raise Phase0GuardError("untrusted evidence requires trusted review before memory promotion")
 
     forbidden = {
         "authority",
@@ -91,9 +85,7 @@ def promote_memory_candidate(
         "tool_policy",
     }
     if any(str(k).lower() in forbidden for k in fact):
-        raise Phase0GuardError(
-            "memory candidate may not promote authority/security policy fields"
-        )
+        raise Phase0GuardError("memory candidate may not promote authority/security policy fields")
 
     return {
         "source_id": evidence.source_id,
@@ -140,9 +132,7 @@ class ReplayGuard:
         if not cmd.owner_authorized:
             raise Phase0GuardError("remote command requires owner authorization")
         if not cmd.command_id or not cmd.nonce or not cmd.idempotency_key:
-            raise Phase0GuardError(
-                "remote command requires command_id, nonce and idempotency_key"
-            )
+            raise Phase0GuardError("remote command requires command_id, nonce and idempotency_key")
         if not cmd.target or not cmd.effects:
             raise Phase0GuardError("remote command requires bounded target and effects")
 
@@ -158,9 +148,7 @@ class ReplayGuard:
         existing = self._idempotency.get(cmd.idempotency_key)
         if existing is not None:
             if existing != digest:
-                raise Phase0GuardError(
-                    "idempotency key reused with different command"
-                )
+                raise Phase0GuardError("idempotency key reused with different command")
             return "DUPLICATE_SAME_COMMAND"
 
         if cmd.nonce in self._nonces:
@@ -229,9 +217,7 @@ def resolve_model_failure(
     if not policy.auto_fallback_enabled or not requested_fallback:
         return result
 
-    if (policy.selected_model, requested_fallback) not in set(
-        policy.approved_fallbacks
-    ):
+    if (policy.selected_model, requested_fallback) not in set(policy.approved_fallbacks):
         raise Phase0GuardError("requested fallback is not owner-approved")
 
     result["action"] = "USE_APPROVED_FALLBACK"
