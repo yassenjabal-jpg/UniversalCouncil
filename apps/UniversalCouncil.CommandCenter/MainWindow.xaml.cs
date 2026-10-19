@@ -12,6 +12,7 @@ public partial class MainWindow : Window
         var services = CommandCenterComposition.Create(AppContext.BaseDirectory);
         DataContext = new MainWindowViewModel(
             services.Shell,
-            services.Operational);
+            services.Operational,
+            services.Orchestration);
     }
 }
