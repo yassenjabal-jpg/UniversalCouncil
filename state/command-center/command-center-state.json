@@ -2,12 +2,12 @@
   "schema_version": "1.0",
   "source_type": "repository_projection",
   "source_label": "إسقاط مستودع مضمّن للقراءة فقط",
-  "baseline_revision": "e6769d1b6e4a061503deeb7ac94c18bbd36c7f47",
+  "baseline_revision": "3cc4df9b2fdd861fd903705a4206a2d6d3de69e9",
   "project_id": "universalcouncil-command-center",
   "project_label": "UniversalCouncil Command Center",
-  "stage_id": "stage6-authenticated-transport",
-  "stage_label": "المرحلة 6 — Authenticated Local / Tailscale Transport Pilot",
-  "stage_state": "OPEN / LOOPBACK AUTHENTICATED PILOT",
+  "stage_id": "stage7-owner-device-tailnet",
+  "stage_label": "المرحلة 7 — Owner Device Enrollment + Tailnet Round Trip",
+  "stage_state": "OPEN / REAL HOST EVIDENCE PENDING",
   "execution_enabled": false,
   "phase_gate_label": "Phase 0 غير مكتملة — التنفيذ الحقيقي مقفول",
   "evidence": [
@@ -41,25 +41,25 @@
   ],
   "approvals": [
     {
-      "id": "APR-STAGE6-OPEN",
-      "title": "فتح Stage 6",
+      "id": "APR-STAGE7-OPEN",
+      "title": "فتح Stage 7",
       "state": "APPROVED",
-      "scope": "Authenticated loopback transport and synthetic identity round-trip only",
+      "scope": "Owner device enrollment + private tailnet pilot",
       "evidence_reference": "owner-directive:2026-10-19-do-it"
     },
     {
       "id": "APR-TAILSCALE-LIVE",
-      "title": "تفعيل Tailscale Serve فعليًا على YASSIN",
-      "state": "BLOCKED",
-      "scope": "Host-level tailnet exposure",
-      "evidence_reference": "SEPARATE_HOST_EVIDENCE_AND_OWNER_GATE_REQUIRED"
+      "title": "تفعيل Tailscale Serve الخاص على YASSIN",
+      "state": "APPROVED_PENDING_HOST_EVIDENCE",
+      "scope": "Private tailnet Serve -> 127.0.0.1:47721 only; no Funnel/public bind",
+      "evidence_reference": "owner-directive:2026-10-19-do-it"
     },
     {
       "id": "APR-PHONE-ENROLLMENT",
       "title": "ربط هاتف المالك فعليًا",
-      "state": "BLOCKED",
-      "scope": "Real device enrollment and phone session",
-      "evidence_reference": "SEPARATE_DEVICE_ENROLLMENT_GATE_REQUIRED"
+      "state": "APPROVED_PENDING_DEVICE_EVIDENCE",
+      "scope": "Owner phone enrollment + short-lived bearer session",
+      "evidence_reference": "owner-directive:2026-10-19-do-it"
     },
     {
       "id": "APR-LIVE-EXECUTION",
