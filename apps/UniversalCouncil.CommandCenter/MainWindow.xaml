@@ -155,7 +155,7 @@
                     </Grid>
                 </Border>
 
-                <Grid Grid.Row="4">
+                <Grid Grid.Row="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.08*" />
                         <ColumnDefinition Width="20" />
@@ -533,7 +533,7 @@
                     </Border>
                 </Grid>
 
-                <Border Grid.Row="8"
+                <Border Grid.Row="4"
                         Padding="20"
                         Background="{StaticResource SurfaceBrush}"
                         BorderBrush="{StaticResource BorderBrush}"
