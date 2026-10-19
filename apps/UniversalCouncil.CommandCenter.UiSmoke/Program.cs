@@ -19,6 +19,20 @@ internal static class Program
 
         Directory.CreateDirectory(output);
 
+        var statePath = Path.Combine(
+            AppContext.BaseDirectory,
+            "state",
+            "command-center-state.json");
+
+        if (!File.Exists(statePath))
+        {
+            throw new InvalidOperationException(
+                $"Stage 2 UI evidence requires operational state source: {statePath}");
+        }
+
+        var stateBytes = File.ReadAllBytes(statePath);
+        var stateSha256 = Convert.ToHexString(SHA256.HashData(stateBytes)).ToLowerInvariant();
+
         var app = new App
         {
             ShutdownMode = ShutdownMode.OnExplicitShutdown,
@@ -41,6 +55,7 @@ internal static class Program
                     stage = "COMMAND_CENTER_STAGE1_SHELL",
                     generated_at_utc = DateTimeOffset.UtcNow,
                     render_mode = "OFFSCREEN_WPF_CONTENT",
+                    operational_state_sha256 = stateSha256,
                     evidence,
                 },
                 new JsonSerializerOptions { WriteIndented = true }));
