@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sqlite3
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import StrEnum
+from pathlib import Path
 from typing import Any
 
 
@@ -29,6 +31,18 @@ class ModelFailure(StrEnum):
     AUTH_FAILED = "AUTH_FAILED"
 
 
+_FORBIDDEN_MEMORY_KEYS = {
+    "authority",
+    "permissions",
+    "credentials",
+    "api_key",
+    "access_token",
+    "routing_policy",
+    "model_policy",
+    "tool_policy",
+}
+
+
 @dataclass(frozen=True)
 class EvidenceEnvelope:
     source_id: str
@@ -48,18 +62,23 @@ class EvidenceEnvelope:
         return {
             "source_id": self.source_id,
             "trust": self.trust.value,
-            "authority_mutation_allowed": self.trust
-            in {
-                TrustClass.OWNER,
-                TrustClass.GOVERNING_CONFIG,
-            },
-            "routing_mutation_allowed": self.trust
-            in {
-                TrustClass.OWNER,
-                TrustClass.GOVERNING_CONFIG,
-            },
+            "authority_mutation_allowed": self.trust in {TrustClass.OWNER, TrustClass.GOVERNING_CONFIG},
+            "routing_mutation_allowed": self.trust in {TrustClass.OWNER, TrustClass.GOVERNING_CONFIG},
             "credential_mutation_allowed": False,
         }
+
+
+def _contains_forbidden_memory_key(value: Any) -> bool:
+    if isinstance(value, dict):
+        for key, nested in value.items():
+            if str(key).lower() in _FORBIDDEN_MEMORY_KEYS:
+                return True
+            if _contains_forbidden_memory_key(nested):
+                return True
+        return False
+    if isinstance(value, (list, tuple)):
+        return any(_contains_forbidden_memory_key(item) for item in value)
+    return False
 
 
 def promote_memory_candidate(
@@ -74,17 +93,7 @@ def promote_memory_candidate(
     }:
         raise Phase0GuardError("untrusted evidence requires trusted review before memory promotion")
 
-    forbidden = {
-        "authority",
-        "permissions",
-        "credentials",
-        "api_key",
-        "access_token",
-        "routing_policy",
-        "model_policy",
-        "tool_policy",
-    }
-    if any(str(k).lower() in forbidden for k in fact):
+    if _contains_forbidden_memory_key(fact):
         raise Phase0GuardError("memory candidate may not promote authority/security policy fields")
 
     return {
@@ -93,6 +102,15 @@ def promote_memory_candidate(
         "reviewer_trust": reviewer_trust.value,
         "fact": dict(fact),
     }
+
+
+@dataclass(frozen=True)
+class AuthorizationContext:
+    principal: str
+    authenticated: bool
+    source: str
+    allowed_targets: tuple[str, ...]
+    allowed_effects: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -105,7 +123,6 @@ class RemoteCommand:
     target: str
     effects: tuple[str, ...]
     instruction: str
-    owner_authorized: bool
 
     def stable_hash(self) -> str:
         data = {
@@ -117,10 +134,37 @@ class RemoteCommand:
             "target": self.target,
             "effects": list(self.effects),
             "instruction": self.instruction,
-            "owner_authorized": self.owner_authorized,
         }
         raw = json.dumps(data, sort_keys=True, ensure_ascii=False).encode("utf-8")
         return hashlib.sha256(raw).hexdigest()
+
+
+def _validate_remote_command(
+    cmd: RemoteCommand,
+    *,
+    authorization: AuthorizationContext,
+    now: datetime,
+) -> str:
+    if not authorization.authenticated or authorization.principal != "OWNER":
+        raise Phase0GuardError("remote command requires authenticated owner context")
+    if not authorization.source:
+        raise Phase0GuardError("authorization source is required")
+    if not cmd.command_id or not cmd.nonce or not cmd.idempotency_key:
+        raise Phase0GuardError("remote command requires command_id, nonce and idempotency_key")
+    if not cmd.target or not cmd.effects:
+        raise Phase0GuardError("remote command requires bounded target and effects")
+    if cmd.target not in set(authorization.allowed_targets):
+        raise Phase0GuardError("remote command target exceeds authenticated owner scope")
+    if not set(cmd.effects).issubset(set(authorization.allowed_effects)):
+        raise Phase0GuardError("remote command effects exceed authenticated owner scope")
+
+    expires = _parse_time(cmd.expires_at)
+    issued = _parse_time(cmd.issued_at)
+    if expires <= issued:
+        raise Phase0GuardError("remote command expiry must be after issue time")
+    if now > expires:
+        raise Phase0GuardError("remote command expired")
+    return cmd.stable_hash()
 
 
 class ReplayGuard:
@@ -128,23 +172,16 @@ class ReplayGuard:
         self._nonces: set[str] = set()
         self._idempotency: dict[str, str] = {}
 
-    def accept(self, cmd: RemoteCommand, *, now: datetime | None = None) -> str:
-        if not cmd.owner_authorized:
-            raise Phase0GuardError("remote command requires owner authorization")
-        if not cmd.command_id or not cmd.nonce or not cmd.idempotency_key:
-            raise Phase0GuardError("remote command requires command_id, nonce and idempotency_key")
-        if not cmd.target or not cmd.effects:
-            raise Phase0GuardError("remote command requires bounded target and effects")
-
+    def accept(
+        self,
+        cmd: RemoteCommand,
+        *,
+        authorization: AuthorizationContext,
+        now: datetime | None = None,
+    ) -> str:
         now = now or datetime.now(timezone.utc)
-        expires = _parse_time(cmd.expires_at)
-        issued = _parse_time(cmd.issued_at)
-        if expires <= issued:
-            raise Phase0GuardError("remote command expiry must be after issue time")
-        if now > expires:
-            raise Phase0GuardError("remote command expired")
+        digest = _validate_remote_command(cmd, authorization=authorization, now=now)
 
-        digest = cmd.stable_hash()
         existing = self._idempotency.get(cmd.idempotency_key)
         if existing is not None:
             if existing != digest:
@@ -156,6 +193,66 @@ class ReplayGuard:
 
         self._nonces.add(cmd.nonce)
         self._idempotency[cmd.idempotency_key] = digest
+        return "ACCEPTED"
+
+
+class PersistentReplayGuard:
+    def __init__(self, path: str | Path) -> None:
+        self.path = Path(path)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        with sqlite3.connect(self.path) as db:
+            db.execute(
+                """
+                CREATE TABLE IF NOT EXISTS remote_command_receipts (
+                    idempotency_key TEXT PRIMARY KEY,
+                    nonce TEXT NOT NULL UNIQUE,
+                    digest TEXT NOT NULL,
+                    accepted_at TEXT NOT NULL
+                )
+                """
+            )
+
+    def accept(
+        self,
+        cmd: RemoteCommand,
+        *,
+        authorization: AuthorizationContext,
+        now: datetime | None = None,
+    ) -> str:
+        now = now or datetime.now(timezone.utc)
+        digest = _validate_remote_command(cmd, authorization=authorization, now=now)
+
+        with sqlite3.connect(self.path) as db:
+            db.execute("BEGIN IMMEDIATE")
+            row = db.execute(
+                "SELECT digest FROM remote_command_receipts WHERE idempotency_key=?",
+                (cmd.idempotency_key,),
+            ).fetchone()
+            if row is not None:
+                if row[0] != digest:
+                    raise Phase0GuardError("idempotency key reused with different command")
+                return "DUPLICATE_SAME_COMMAND"
+
+            nonce = db.execute(
+                "SELECT idempotency_key FROM remote_command_receipts WHERE nonce=?",
+                (cmd.nonce,),
+            ).fetchone()
+            if nonce is not None:
+                raise Phase0GuardError("remote command nonce replay detected")
+
+            db.execute(
+                """
+                INSERT INTO remote_command_receipts
+                (idempotency_key, nonce, digest, accepted_at)
+                VALUES (?, ?, ?, ?)
+                """,
+                (
+                    cmd.idempotency_key,
+                    cmd.nonce,
+                    digest,
+                    now.astimezone(timezone.utc).isoformat(),
+                ),
+            )
         return "ACCEPTED"
 
 
