@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0",
+  "inventory_id": "living-operations-canonical-screen-object-inventory",
+  "status": "REFERENCE_DERIVED_MURTAKAZ_GATED",
+  "source_of_truth": "EIGHT_PINNED_CANONICAL_IMAGES",
+  "screens": {
+    "home_owner_workspace": {
+      "reference": "01-home_owner_workspace.png",
+      "required_regions": [
+        "top_bar",
+        "right_global_nav",
+        "left_status_rail",
+        "owner_hero",
+        "command_composer",
+        "council_pulse",
+        "active_work_three_cards",
+        "bottom_owner_three_panel_row",
+        "bottom_tool_dock"
+      ],
+      "member_set": [
+        "المالك",
+        "الاستراتيجية",
+        "البحث",
+        "التحقق",
+        "التنفيذ",
+        "الإبداع",
+        "البيانات",
+        "التعلم"
+      ],
+      "member_layers": [
+        "glyph",
+        "identity_tint",
+        "label",
+        "subtitle",
+        "state",
+        "reasoning_when_supported",
+        "routing_path",
+        "interaction_destination"
+      ]
+    },
+    "living_project_workspace": {
+      "reference": "02-living_project_workspace.png",
+      "required_regions": [
+        "project_header",
+        "left_project_context",
+        "autopilot_past_current_future_rail",
+        "active_council_graph",
+        "project_filmstrip",
+        "decision_stack",
+        "active_tools",
+        "execution_info",
+        "bottom_tool_dock"
+      ],
+      "member_set": [
+        "Evidence",
+        "UX",
+        "Red Team",
+        "Studio",
+        "Security",
+        "Synthesis"
+      ]
+    },
+    "software_autopilot_project": {
+      "reference": "03-software_autopilot_project.png",
+      "required_regions": [
+        "project_header",
+        "active_model_branch_status",
+        "checkpoint_branch_timeline",
+        "recovery_control",
+        "diff_compare",
+        "branch_a_scorecard",
+        "branch_b_scorecard",
+        "owner_branch_choice",
+        "history_filmstrip",
+        "bottom_tool_dock"
+      ]
+    },
+    "studio_project": {
+      "reference": "04-studio_project.png",
+      "required_regions": [
+        "project_header",
+        "five_stage_pipeline",
+        "project_info",
+        "central_player",
+        "current_output",
+        "main_tool",
+        "ai_model_info",
+        "versions",
+        "qc",
+        "timeline_waveform",
+        "review_ticket",
+        "department_handoff",
+        "active_team_members",
+        "next_handoff",
+        "bottom_tool_dock"
+      ]
+    },
+    "owner_decision_mode": {
+      "reference": "05-owner_decision_mode.png",
+      "required_regions": [
+        "deemphasized_project_context",
+        "central_decision_surface",
+        "recommendation",
+        "why_now",
+        "strongest_dissent",
+        "evidence_summary",
+        "approve_impact",
+        "reject_impact",
+        "evidence_peek",
+        "five_owner_actions",
+        "surrounding_member_ring"
+      ],
+      "member_set": [
+        "الأدلة",
+        "الفريق المعارض",
+        "المركزي",
+        "تجربة المستخدم",
+        "الأمن والخصوصية"
+      ]
+    },
+    "checkpoint_recovery_fork": {
+      "reference": "06-checkpoint_recovery_fork.png",
+      "required_regions": [
+        "header",
+        "checkpoint_timeline",
+        "selected_checkpoint",
+        "branch_a_path",
+        "branch_b_path",
+        "checkpoint_details",
+        "branch_a_details",
+        "branch_b_details",
+        "branch_comparison",
+        "event_log",
+        "evidence_extracts",
+        "available_actions"
+      ]
+    },
+    "pulse_visual_project_story": {
+      "reference": "07-pulse_visual_project_story.png",
+      "required_regions": [
+        "header_project_selector",
+        "story_timeline",
+        "before_story",
+        "central_video_story",
+        "after_story",
+        "five_evidence_story_cards",
+        "truth_badges",
+        "per_card_actions",
+        "persistent_rails"
+      ]
+    },
+    "project_complete_work_receipt": {
+      "reference": "08-project_complete_work_receipt.png",
+      "required_regions": [
+        "completion_hero",
+        "project_receipt_header",
+        "seven_stage_rail",
+        "business_receipt",
+        "four_final_outputs",
+        "evidence_list",
+        "usage_summary",
+        "issues_recovered",
+        "fallbacks",
+        "checkpoints",
+        "council_decisions",
+        "next_recommended_action",
+        "bottom_tool_dock"
+      ]
+    }
+  },
+  "job_requirements": {
+    "canonical_parent_attached": true,
+    "matching_screen_inventory_required": true,
+    "member_inventory_required_when_present": true,
+    "rejected_generations_forbidden": true,
+    "side_by_side_comparison_required": true
+  }
+}
