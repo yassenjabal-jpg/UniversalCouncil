@@ -124,13 +124,13 @@ public sealed class OperationalStateService :
                 new(
                     "evidence",
                     "الأدلة",
-                    $"{state.Evidence.Count} receipt(s) loaded from the runtime state source.",
+                    $"{state.Evidence.Count} إيصال دليل محمّل من مصدر الحالة.",
                     ModuleState.ReadOnly,
                     "قراءة حقيقية"),
                 new(
                     "approvals",
                     "مكتب المالك",
-                    $"{state.Approvals.Count} approval record(s) loaded; write actions remain disabled.",
+                    $"{state.Approvals.Count} سجل موافقة محمّل؛ إجراءات الكتابة معطلة.",
                     ModuleState.ReadOnly,
                     "قراءة فقط"),
                 new(
