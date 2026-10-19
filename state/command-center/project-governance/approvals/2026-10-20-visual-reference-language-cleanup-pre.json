@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-VISUAL-REFERENCE-LANGUAGE-CLEANUP-PRE",
+  "change_id": "VISUAL-REFERENCE-LANGUAGE-CLEANUP-003",
+  "scope": "Remove the rejected decorative-theme concept from governing visual-direction language, keep the eight pinned references as the only visual source of truth, and add regression protection. No visual asset replacement, no P1 completion, no Stage 8 or execution-authority change.",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "review_mode": "ROLE_BASED_ASSISTANT_REVIEW_NOT_PRODUCT_RUNTIME_COUNCIL",
+  "review_agent": "/root/murtakaz_review",
+  "governance_reviewers": [
+    "product truth / governance scoped review"
+  ],
+  "workshop_reviewers": [
+    "visual fidelity scoped review"
+  ],
+  "artifact_refs": [
+    "docs/operations/command-center/living-operations/01_VISUAL_BIBLE.md",
+    "docs/operations/command-center/living-operations/15_P1_VISUAL_DIRECTION_LOCK.md",
+    "docs/operations/command-center/living-operations/18_REFERENCE_ONLY_VISUAL_LOCK.md",
+    "docs/operations/command-center/living-operations/19_REFERENCE_FIDELITY_AUDIT_AND_CONTRACT.md",
+    "state/command-center/living-operations-reference-manifest.json",
+    "tools/command_center_murtakaz_validate.py",
+    "company/tests/test_visual_reference_integrity.py"
+  ],
+  "evidence_refs": [
+    "owner directive in current conversation: complete the pending visual-direction cleanup",
+    "eight pinned canonical reference images under docs/operations/command-center/living-operations/references/"
+  ],
+  "approved_revision": "79bc607376748da2ac3411938f059ad4b6bdafb1 + bounded cleanup described in scope",
+  "timestamp": "2026-10-19T21:05:12+00:00",
+  "reopen_triggers": [
+    "Any expansion beyond reference-locked visual-language cleanup",
+    "Any replacement or reinterpretation of canonical reference images"
+  ],
+  "final_adoption_granted": false,
+  "stage8_opened": false,
+  "execution_authority_changed": false
+}
