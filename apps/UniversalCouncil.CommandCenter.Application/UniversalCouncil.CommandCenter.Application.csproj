@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyName>UniversalCouncil.CommandCenter.Application</AssemblyName>
+    <RootNamespace>UniversalCouncil.CommandCenter.Application</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalCouncil.CommandCenter.Core\UniversalCouncil.CommandCenter.Core.csproj" />
+  </ItemGroup>
+</Project>
