@@ -19,7 +19,7 @@ class MemoryFabricError(ValueError):
     pass
 
 
-EVENT_ID_RE = re.compile(r"^MEM-[0-9]{8}-[0-9]{6}-[a-z0-9]{6}$")
+EVENT_ID_RE = re.compile(r"^MEM-[0-9]{8}-[0-9]{6}-[a-z0-9]{6,8}$")
 LEVELS = {"L2_PROJECT", "L3_CANONICAL", "L4_OWNER_DIRECTIVE"}
 KINDS = {
     "decision",
@@ -33,8 +33,22 @@ KINDS = {
     "policy",
     "architecture",
 }
+COMPAT_KINDS = {"gate_lock"}
 CONFIDENCE = {"owner_confirmed", "verified", "evidence_backed", "proposal"}
+COMPAT_CONFIDENCE = {"verified_evidence"}
 SENSITIVITY = {"normal", "private_non_sensitive"}
+SOURCE_TYPES = {"chat", "council", "repository", "tool", "migration"}
+COMPAT_BASE_SOURCE_TYPES = {"github_review", "owner_directive"}
+COMPAT_SOURCE_TYPES = {"github_ci_and_visual_review"}
+BASE_SOURCE_FIELDS = {"type", "ref", "commit"}
+VISUAL_REVIEW_SOURCE_FIELDS = {
+    "type",
+    "ref",
+    "commit",
+    "product_commit",
+    "ci_run_id",
+    "governance_commit",
+}
 SECRET_KEYS = {
     "password",
     "passwd",
@@ -155,7 +169,7 @@ def validate_event(event: dict[str, Any], cfg: dict[str, Any] | None = None) -> 
         raise MemoryFabricError("invalid memory scope")
     if event["level"] not in LEVELS:
         raise MemoryFabricError("invalid memory level")
-    if event["kind"] not in KINDS:
+    if event["kind"] not in KINDS | COMPAT_KINDS:
         raise MemoryFabricError("invalid memory kind")
     if not isinstance(event["subject"], str) or not event["subject"].strip():
         raise MemoryFabricError("memory subject is required")
@@ -182,7 +196,7 @@ def validate_event(event: dict[str, Any], cfg: dict[str, Any] | None = None) -> 
         raise MemoryFabricError("invalid supersedes event id")
     if event["event_id"] in supersedes:
         raise MemoryFabricError("event cannot supersede itself")
-    if event["confidence"] not in CONFIDENCE:
+    if event["confidence"] not in CONFIDENCE | COMPAT_CONFIDENCE:
         raise MemoryFabricError("invalid memory confidence")
     if event["level"] == "L4_OWNER_DIRECTIVE" and event["confidence"] != "owner_confirmed":
         raise MemoryFabricError("L4 owner directives require owner_confirmed confidence")
@@ -193,16 +207,30 @@ def validate_event(event: dict[str, Any], cfg: dict[str, Any] | None = None) -> 
     if any(not isinstance(tag, str) or not tag.strip() for tag in event["tags"]):
         raise MemoryFabricError("invalid tag")
     source = event["source"]
-    if not isinstance(source, dict) or source.get("type") not in {
-        "chat",
-        "council",
-        "repository",
-        "tool",
-        "migration",
-    }:
+    if not isinstance(source, dict):
         raise MemoryFabricError("invalid memory source")
-    if set(source) - {"type", "ref", "commit"}:
+
+    source_type = source.get("type")
+    if source_type in SOURCE_TYPES | COMPAT_BASE_SOURCE_TYPES:
+        allowed_source_fields = BASE_SOURCE_FIELDS
+    elif source_type in COMPAT_SOURCE_TYPES:
+        allowed_source_fields = VISUAL_REVIEW_SOURCE_FIELDS
+    else:
+        raise MemoryFabricError("invalid memory source")
+
+    if set(source) - allowed_source_fields:
         raise MemoryFabricError("unsupported source fields")
+
+    if source_type == "owner_directive" and (
+        event["level"] != "L4_OWNER_DIRECTIVE" or event["confidence"] != "owner_confirmed"
+    ):
+        raise MemoryFabricError("owner_directive sources require L4 owner-confirmed events")
+
+    if event["kind"] == "gate_lock" and source_type != "github_ci_and_visual_review":
+        raise MemoryFabricError("gate_lock compatibility is restricted to github_ci_and_visual_review")
+
+    if event["confidence"] == "verified_evidence" and source_type != "github_ci_and_visual_review":
+        raise MemoryFabricError("verified_evidence compatibility is restricted to github_ci_and_visual_review")
     return True
 
 
@@ -274,7 +302,10 @@ def load_events(memory_root: Path, cfg: dict[str, Any] | None = None) -> list[di
             raise MemoryFabricError(f"invalid event file {path}: {exc}") from exc
         if not isinstance(event, dict):
             raise MemoryFabricError(f"event root must be object: {path}")
-        validate_event(event, cfg)
+        try:
+            validate_event(event, cfg)
+        except MemoryFabricError as exc:
+            raise MemoryFabricError(f"invalid event file {path}: {exc}") from exc
         if event["event_id"] in seen:
             raise MemoryFabricError(f"duplicate memory event id: {event['event_id']}")
         seen.add(event["event_id"])

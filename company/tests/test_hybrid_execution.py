@@ -2,6 +2,7 @@ import copy
 import json
 import tempfile
 import unittest
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import patch
 
@@ -60,14 +61,24 @@ def execution_test_registry():
             "audit_logging",
         ],
     }
-    for operation, verified_scope in scopes.items():
+    now = datetime.now(timezone.utc)
+    metadata = {
+        "expires_at": (now + timedelta(days=1)).isoformat(),
+        "test_fixture": True,
+    }
+    current_operations = set(scopes) | {
+        "github.read",
+        "remote_shell.read",
+        "remote_shell.execute",
+    }
+    for operation in current_operations:
         record = next(item for item in registry["capabilities"] if item["operation"] == operation)
-        metadata = {"expires_at": "2026-10-20T00:00:00+00:00", "test_fixture": True}
         record["evidence_state"] = "CURRENT_VERIFIED"
         record["historical_capability"] = dict(metadata)
         record["current_verified_capability"] = dict(metadata)
-        record["verified_scope"] = verified_scope
-        record["last_verified_at"] = "2026-10-13"
+        if operation in scopes:
+            record["verified_scope"] = scopes[operation]
+        record["last_verified_at"] = now.date().isoformat()
     return registry
 
 
