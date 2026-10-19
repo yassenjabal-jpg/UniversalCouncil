@@ -72,7 +72,7 @@ It must preserve, where applicable:
 
 Reject automatically:
 - dark neon/cyberpunk restyling;
-- architecture/landscape decorative themes;
+- decorative themes or scenic motifs not directly observable in the eight canonical references;
 - human portrait role avatars replacing Sigils;
 - generic enterprise/SaaS dashboard grids;
 - gold luxury dashboard restyling;
@@ -138,4 +138,4 @@ All eight canonical images are now stored under `references/` with SHA-256 in th
 
 Each visual job must record its parent role/hash, actual reference attachment, bounded delta, output/hash, side-by-side comparison evidence and review status in manifest `visual_jobs`. Approval additionally requires governance and workshop review records. A boolean or a passing integrity test is not visual approval. New outputs cannot modify the canonical set automatically.
 
-Static reference halos, pastel gradients and role identity colors are permitted and must be preserved. Media thumbnails may contain people/architecture; the prohibition concerns UI chrome and human role portraits. Static images establish no animation duration or easing: motion remains a separately reviewed interaction contract.
+Static reference halos, pastel gradients and role identity colors are permitted and must be preserved. Media thumbnails may contain ordinary project evidence, but they do not authorize importing a separate decorative theme into UI chrome or replacing role sigils with human portraits. Static images establish no animation duration or easing: motion remains a separately reviewed interaction contract.
