@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "name": "LivingOperationsDesignTokens",
+  "theme": "light_primary",
+  "colors": {
+    "canvas": "#F7F6F2",
+    "workspace": "#FBFAF7",
+    "surface": "#FFFFFF",
+    "surface_muted": "#F2F2EF",
+    "ink_primary": "#14213D",
+    "ink_secondary": "#5F6878",
+    "border": "#DCE1E8",
+    "border_strong": "#BFC8D6",
+    "active": "#2F6BFF",
+    "verified": "#16A36E",
+    "owner_attention": "#D79A18",
+    "blocker": "#E35C66",
+    "reasoning_unknown": "#7857E6",
+    "tool_connection": "#24AFC9"
+  },
+  "spacing_px": {
+    "micro": 4,
+    "base": 8,
+    "s": 12,
+    "m": 16,
+    "l": 24,
+    "xl": 32
+  },
+  "corner_radius_px": {
+    "chip": 8,
+    "control": 10,
+    "card": 14,
+    "focus_surface": 18
+  },
+  "border_width_px": {
+    "normal": 1,
+    "focus": 2
+  },
+  "motion_ms": {
+    "micro_min": 120,
+    "micro_max": 180,
+    "component_min": 200,
+    "component_max": 300,
+    "workflow_min": 350,
+    "workflow_max": 600,
+    "project_event_min": 500,
+    "project_event_max": 800
+  },
+  "density": {
+    "desktop_navigation": "compact",
+    "project_workspace": "information_rich",
+    "decision_mode": "low_density_focus",
+    "android": "progressive_disclosure"
+  },
+  "accessibility": {
+    "color_is_not_sole_carrier": true,
+    "reduced_motion_required": true,
+    "desktop_keyboard_required": true,
+    "android_min_touch_target_dp": 48
+  }
+}
