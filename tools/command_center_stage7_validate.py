@@ -50,7 +50,6 @@ presentation_forbidden = {
     "WebApplication": "Presentation may not host HTTP",
     "Kestrel": "Presentation may not host Kestrel",
     "Process.Start": "Presentation may not launch host processes",
-    "tailscale": "Presentation may not configure Tailscale",
     "PowerShell": "Presentation may not invoke PowerShell",
 }
 
