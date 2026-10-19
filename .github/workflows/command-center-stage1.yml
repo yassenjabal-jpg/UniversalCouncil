@@ -8,6 +8,7 @@ on:
       - 'apps/UniversalCouncil.CommandCenter/**'
       - 'apps/UniversalCouncil.CommandCenter.Core/**'
       - 'apps/UniversalCouncil.CommandCenter.Validation/**'
+      - 'apps/UniversalCouncil.CommandCenter.UiSmoke/**'
       - 'tools/command_center_stage1_validate.py'
       - 'docs/operations/command-center/**'
       - '.github/workflows/command-center-stage1.yml'
@@ -16,6 +17,7 @@ on:
       - 'apps/UniversalCouncil.CommandCenter/**'
       - 'apps/UniversalCouncil.CommandCenter.Core/**'
       - 'apps/UniversalCouncil.CommandCenter.Validation/**'
+      - 'apps/UniversalCouncil.CommandCenter.UiSmoke/**'
       - 'tools/command_center_stage1_validate.py'
       - 'docs/operations/command-center/**'
       - '.github/workflows/command-center-stage1.yml'
@@ -61,6 +63,7 @@ jobs:
         run: |
           dotnet restore apps/UniversalCouncil.CommandCenter/UniversalCouncil.CommandCenter.csproj
           dotnet restore apps/UniversalCouncil.CommandCenter.Validation/UniversalCouncil.CommandCenter.Validation.csproj
+          dotnet restore apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj
 
       - name: Build WPF shell
         shell: pwsh
@@ -69,6 +72,18 @@ jobs:
       - name: Run Stage 1 validation executable
         shell: pwsh
         run: dotnet run --project apps/UniversalCouncil.CommandCenter.Validation/UniversalCouncil.CommandCenter.Validation.csproj --configuration Release
+
+      - name: Render exact-head UI evidence
+        shell: pwsh
+        run: dotnet run --project apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release -- artifacts/command-center-stage1-ui
+
+      - name: Upload UI evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: UniversalCouncil-CommandCenter-Stage1-UI-${{ github.sha }}
+          path: artifacts/command-center-stage1-ui/
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Publish shell artifact
         shell: pwsh
