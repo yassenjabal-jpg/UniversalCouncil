@@ -2,49 +2,49 @@
   "schema_version": "1.0",
   "source_type": "repository_projection",
   "source_label": "إسقاط مستودع مضمّن للقراءة فقط",
-  "baseline_revision": "0d3b89e81c001fe0ccfc23f502bb17ae9e114a9f",
+  "baseline_revision": "448c5b7ce8bff6b9ec3875106922528036695b6c",
   "project_id": "universalcouncil-command-center",
   "project_label": "UniversalCouncil Command Center",
-  "stage_id": "stage2-operational-state",
-  "stage_label": "المرحلة 2 — Operational State + Evidence + Owner Desk",
+  "stage_id": "stage3-orchestration",
+  "stage_label": "المرحلة 3 — Council + Studio Orchestration",
   "stage_state": "OPEN / OWNER AUTHORIZED",
   "execution_enabled": false,
   "phase_gate_label": "Phase 0 غير مكتملة — التنفيذ الحقيقي مقفول",
   "evidence": [
     {
-      "id": "EVD-STAGE1-LOCK",
+      "id": "EVD-STAGE2-LOCK",
       "category": "GOVERNANCE",
-      "title": "قفل Stage 1 — Shell",
+      "title": "قفل Stage 2 — Operational State",
       "result": "PASS",
-      "reference": "COMMAND_CENTER_STAGE1_SHELL_LOCK",
+      "reference": "COMMAND_CENTER_STAGE2_STATE_LOCK",
       "digest": null,
-      "occurred_at": "2026-10-19T00:49:27Z"
+      "occurred_at": "2026-10-19T07:12:30Z"
     },
     {
-      "id": "EVD-STAGE1-CI",
+      "id": "EVD-STAGE2-CI",
       "category": "CI",
-      "title": "Command Center Stage 1 exact-head workflow",
+      "title": "Command Center Stage 2 exact-head workflow",
       "result": "SUCCESS",
-      "reference": "run:39182243867",
-      "digest": "sha256:1e0be9805d6c26cd7b7ec9403251c76f5775d7f6ba374ef76a5669bf1a8d6bb5",
-      "occurred_at": "2026-10-19T00:47:27Z"
+      "reference": "run:39214159964",
+      "digest": "sha256:083007cf4f7f58b75009545df102935ff558f5b9b5b06b9bbbda56a1c3ebdee5",
+      "occurred_at": "2026-10-19T07:10:43Z"
     },
     {
-      "id": "EVD-STAGE1-CODEQL",
+      "id": "EVD-STAGE2-CODEQL",
       "category": "SECURITY",
-      "title": "Stage 1 CodeQL",
+      "title": "Stage 2 CodeQL",
       "result": "SUCCESS",
-      "reference": "run:39182243818",
+      "reference": "run:39214159961",
       "digest": null,
-      "occurred_at": "2026-10-19T00:46:45Z"
+      "occurred_at": "2026-10-19T07:10:00Z"
     }
   ],
   "approvals": [
     {
-      "id": "APR-STAGE2-OPEN",
-      "title": "فتح Stage 2",
+      "id": "APR-STAGE3-OPEN",
+      "title": "فتح Stage 3",
       "state": "APPROVED",
-      "scope": "الحالة التشغيلية والأدلة ومكتب المالك فقط",
+      "scope": "Council / Studio orchestration planning only",
       "evidence_reference": "owner-directive:2026-10-19-continue-work"
     },
     {
