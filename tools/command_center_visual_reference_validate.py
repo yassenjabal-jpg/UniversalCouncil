@@ -36,6 +36,16 @@ def validate(root: Path, manifest: dict) -> None:
     for ref in refs:
         artifact(ref["path"], ref["sha256"])
     parents = {ref["role"]: ref for ref in refs}
+    inventory_path = manifest.get("object_inventory_path")
+    if not inventory_path:
+        raise ValueError("Missing canonical screen object inventory")
+    artifact(inventory_path)
+    inventory = json.loads((root / inventory_path).read_text())
+    if inventory.get("source_of_truth") != "EIGHT_PINNED_CANONICAL_IMAGES":
+        raise ValueError("Screen object inventory source of truth drifted")
+    screen_inventories = inventory.get("screens", {})
+    if set(screen_inventories) != set(ROLES):
+        raise ValueError("Screen object inventory roles do not match canonical references")
     for job in manifest.get("visual_jobs", []):
         for field in manifest["visual_job_contract"]["required_fields"]:
             if not job.get(field):
@@ -43,6 +53,13 @@ def validate(root: Path, manifest: dict) -> None:
         parent = parents[job["parent_role"]]
         if job["parent_sha256"] != parent["sha256"] or job["reference_attached"] is not True:
             raise ValueError("Visual job parent/attachment mismatch")
+        if job["screen_inventory_id"] != job["parent_role"]:
+            raise ValueError("Visual job screen inventory does not match parent role")
+        if job["parent_role"] not in screen_inventories:
+            raise ValueError("Visual job has no canonical screen object inventory")
+        member_set = screen_inventories[job["parent_role"]].get("member_set", [])
+        if member_set and job["member_inventory_verified"] is not True:
+            raise ValueError("Visual job member inventory was not verified")
         if job.get("source_generation_id") in manifest["rejected_recent_generations"]:
             raise ValueError("Rejected visual generation reused")
         if job["output_path"] in {ref["path"] for ref in refs}:
