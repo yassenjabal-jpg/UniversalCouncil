@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "source_type": "repository_projection",
+  "source_label": "Bundled read-only repository projection",
+  "baseline_revision": "0d3b89e81c001fe0ccfc23f502bb17ae9e114a9f",
+  "project_id": "universalcouncil-command-center",
+  "project_label": "UniversalCouncil Command Center",
+  "stage_id": "stage2-operational-state",
+  "stage_label": "المرحلة 2 — Operational State + Evidence + Owner Desk",
+  "stage_state": "OPEN / OWNER AUTHORIZED",
+  "execution_enabled": false,
+  "phase_gate_label": "Phase 0 غير مكتملة — التنفيذ الحقيقي مقفول",
+  "evidence": [
+    {
+      "id": "EVD-STAGE1-LOCK",
+      "category": "GOVERNANCE",
+      "title": "Stage 1 Shell Lock",
+      "result": "PASS",
+      "reference": "COMMAND_CENTER_STAGE1_SHELL_LOCK",
+      "digest": null,
+      "occurred_at": "2026-10-19T09:48:00+03:00"
+    },
+    {
+      "id": "EVD-STAGE1-CI",
+      "category": "CI",
+      "title": "Command Center Stage 1 exact-head workflow",
+      "result": "SUCCESS",
+      "reference": "run:39182243867",
+      "digest": "sha256:1e0be9805d6c26cd7b7ec9403251c76f5775d7f6ba374ef76a5669bf1a8d6bb5",
+      "occurred_at": "2026-10-19T09:47:27+03:00"
+    },
+    {
+      "id": "EVD-STAGE1-CODEQL",
+      "category": "SECURITY",
+      "title": "Stage 1 CodeQL",
+      "result": "SUCCESS",
+      "reference": "run:39182243818",
+      "digest": null,
+      "occurred_at": "2026-10-19T09:47:00+03:00"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "APR-STAGE2-OPEN",
+      "title": "فتح Stage 2",
+      "state": "APPROVED",
+      "scope": "Operational State / Evidence / Owner Desk only",
+      "evidence_reference": "owner-directive:2026-10-19-continue-work"
+    },
+    {
+      "id": "APR-LIVE-EXECUTION",
+      "title": "السماح بالتنفيذ الحقيقي على YASSIN",
+      "state": "BLOCKED",
+      "scope": "Shell / GUI / Remote / Provider execution",
+      "evidence_reference": "PHASE0_REQUIRED"
+    }
+  ],
+  "usage": {
+    "state": "NOT_CONNECTED",
+    "provider": "No model usage provider connected in Stage 2",
+    "recorded_model_calls": null,
+    "recorded_cost_usd": null,
+    "note": "لا تعرض الواجهة تكلفة صفرية؛ مصدر الاستخدام والتكلفة لم يُوصل بعد."
+  },
+  "execution_manifest": {
+    "state": "NO_EXECUTION_AUTHORIZED",
+    "gate": "Phase 0",
+    "last_manifest_id": null,
+    "note": "Stage 2 يقرأ الحالة فقط ولا ينشئ Execution Manifest."
+  }
+}
