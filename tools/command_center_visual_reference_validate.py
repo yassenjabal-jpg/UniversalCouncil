@@ -46,36 +46,101 @@ def validate(root: Path, manifest: dict) -> None:
     screen_inventories = inventory.get("screens", {})
     if set(screen_inventories) != set(ROLES):
         raise ValueError("Screen object inventory roles do not match canonical references")
+
+    protocol_path = manifest.get("production_protocol_path")
+    if not protocol_path:
+        raise ValueError("Missing fail-closed visual production protocol")
+    artifact(protocol_path)
+    protocol = json.loads((root / protocol_path).read_text())
+    if protocol.get("status") != "FAIL_CLOSED":
+        raise ValueError("Visual production protocol is not fail-closed")
+
+    contract = manifest["visual_job_contract"]
+    allowed_modes = set(contract["allowed_production_modes"])
+    if allowed_modes != set(protocol["allowed_production_modes"]):
+        raise ValueError("Visual production mode allow-list drifted")
+    if protocol.get("one_job_one_screen") is not True:
+        raise ValueError("Visual production protocol must enforce one job per screen")
+    if protocol.get("actual_reference_bytes_required") is not True:
+        raise ValueError("Visual production protocol must require actual reference bytes")
     for job in manifest.get("visual_jobs", []):
-        for field in manifest["visual_job_contract"]["required_fields"]:
-            if not job.get(field):
-                raise ValueError(f"Missing visual job evidence: {field}")
-        parent = parents[job["parent_role"]]
-        if job["parent_sha256"] != parent["sha256"] or job["reference_attached"] is not True:
-            raise ValueError("Visual job parent/attachment mismatch")
+        state = job.get("state")
+        if state not in contract["allowed_states"]:
+            raise ValueError("Invalid visual job state")
+
+        for field in contract["preflight_required_fields"]:
+            if field not in job or job[field] in ("", None):
+                raise ValueError(f"Missing visual preflight evidence: {field}")
+
+        parent = parents.get(job["parent_role"])
+        if parent is None:
+            raise ValueError("Unknown visual job parent role")
+        if job["parent_sha256"] != parent["sha256"]:
+            raise ValueError("Visual job parent hash mismatch")
+        if job["production_mode"] not in allowed_modes:
+            raise ValueError("Forbidden visual production mode")
+        if job["single_screen_only"] is not True:
+            raise ValueError("Canonical visual jobs must be single-screen")
+        if job["preflight_registered"] is not True:
+            raise ValueError("Visual job was not registered before render")
         if job["screen_inventory_id"] != job["parent_role"]:
             raise ValueError("Visual job screen inventory does not match parent role")
         if job["parent_role"] not in screen_inventories:
             raise ValueError("Visual job has no canonical screen object inventory")
+
         member_set = screen_inventories[job["parent_role"]].get("member_set", [])
         if member_set and job["member_inventory_verified"] is not True:
             raise ValueError("Visual job member inventory was not verified")
-        if job.get("source_generation_id") in manifest["rejected_recent_generations"]:
-            raise ValueError("Rejected visual generation reused")
+
+        if job.get("source_generation_id"):
+            raise ValueError("Generated images may not be canonical UI parents or sources")
+
+        binding_path = job["reference_binding_evidence"]
+        artifact(binding_path)
+        binding = json.loads((root / binding_path).read_text())
+        for field in contract["reference_binding_receipt_schema"]["required_fields"]:
+            if field not in binding or binding[field] in ("", None):
+                raise ValueError(f"Missing reference-binding evidence: {field}")
+
+        if (
+            binding["job_id"] != job["job_id"]
+            or binding["parent_role"] != job["parent_role"]
+            or binding["parent_path"] != parent["path"]
+            or binding["parent_sha256"] != job["parent_sha256"]
+            or binding["tool_name"] != job["tool_name"]
+            or binding["production_mode"] != job["production_mode"]
+            or binding["screen_inventory_id"] != job["screen_inventory_id"]
+            or binding["member_inventory_verified"] != job["member_inventory_verified"]
+        ):
+            raise ValueError("Reference-binding receipt does not match visual job")
+
+        if binding["tool_received_reference_bytes"] is not True:
+            raise ValueError("Production tool did not receive canonical reference bytes")
+        if binding["single_screen"] is not True:
+            raise ValueError("Reference-binding receipt is not single-screen")
+        if binding["phase"] != contract["reference_binding_receipt_schema"]["phase"]:
+            raise ValueError("Reference-binding receipt is not PRE_RENDER")
+        if binding["render_not_started"] is not True:
+            raise ValueError("Reference-binding receipt was not captured before render")
+
+        if state == "PREFLIGHT_REGISTERED":
+            if any(field in job for field in contract["rendered_required_fields"]):
+                raise ValueError("Preflight visual job already claims rendered output")
+            continue
+
+        for field in contract["rendered_required_fields"]:
+            if field not in job or job[field] in ("", None):
+                raise ValueError(f"Missing rendered visual evidence: {field}")
+        if job["render_started_after_preflight"] is not True:
+            raise ValueError("Rendered output did not prove preflight ancestry")
         if job["output_path"] in {ref["path"] for ref in refs}:
             raise ValueError("Visual output cannot overwrite a canonical reference")
+
         artifact(job["output_path"], job["output_sha256"])
         artifact(job["comparison_evidence"])
-        status = job["review_status"]
-        if status not in (
-            "MURTAKAZ_REVIEW_REQUIRED",
-            "RETURNED_FOR_CHANGES",
-            "REJECTED_VISUAL_DRIFT",
-            "APPROVED_BY_AL_MURTAKAZ",
-        ):
-            raise ValueError("Invalid visual review status")
-        if status == "APPROVED_BY_AL_MURTAKAZ":
-            for field in manifest["visual_job_contract"]["approval_requires"]:
+
+        if state == "APPROVED_BY_AL_MURTAKAZ":
+            for field in contract["approval_requires"]:
                 receipt_path = job.get(field, "")
                 artifact(receipt_path)
                 receipt = json.loads((root / receipt_path).read_text())
@@ -89,6 +154,7 @@ def validate(root: Path, manifest: dict) -> None:
                     or not receipt.get("review_mode")
                 ):
                     raise ValueError("Approval scope/hash/reviewer mismatch")
+
 
 
 if __name__ == "__main__":
