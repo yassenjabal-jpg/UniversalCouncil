@@ -1,10 +1,10 @@
-# Command Center Project Council <-> Product Studio Collaboration
+# المرتكز — عقد التعاون بين هيئة المرتكز ومشغل المرتكز
 
 Status: PROJECT-LOCAL COLLABORATION CONTRACT
 
 ## Separation of responsibility
 
-### Project Council
+### هيئة المرتكز
 Owns:
 - decision quality;
 - truth/evidence;
@@ -16,7 +16,7 @@ Owns:
 - model/memory policy review;
 - blockers and alternatives.
 
-### Product Studio
+### مشغل المرتكز
 Owns:
 - UX architecture;
 - interaction choreography;
@@ -40,11 +40,11 @@ Owns:
 ## Working loop
 
 `Requirement/Problem`
--> Project Council frame
+-> هيئة المرتكز frame
 -> Studio brief
 -> Studio craft
 -> Studio internal review
--> Project Council domain clearances
+-> هيئة المرتكز domain clearances
 -> Studio revision if needed
 -> Owner gate where required
 -> accepted artifact
@@ -180,7 +180,7 @@ Every material review records:
 
 ## Anti-bureaucracy
 
-Do not activate the full Project Council for every visual change.
+Do not activate the full هيئة المرتكز for every visual change.
 
 Use the smallest set capable of changing the decision.
 
