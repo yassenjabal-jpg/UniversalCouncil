@@ -163,6 +163,23 @@ if (
 ):
     raise SystemExit("Stage 7 repository projection fabricated tailnet evidence")
 
+gates = projection["gates"]
+if gates["stage7_ci_foundation_passed"] is not True:
+    raise SystemExit("Stage 7 exact-head CI foundation must remain verified")
+for pending_gate in (
+    "yassin_host_probe_passed",
+    "owner_device_enrollment_passed",
+    "tailscale_private_serve_passed",
+    "real_owner_phone_round_trip_passed",
+    "session_revocation_round_trip_passed",
+):
+    if gates[pending_gate] is not False:
+        raise SystemExit(
+            f"Stage 7 repository projection fabricated real-host/device success: {pending_gate}"
+        )
+if gates["live_execution_authorized"] is not False:
+    raise SystemExit("Stage 7 repository projection may not authorize live execution")
+
 host = projection["host_evidence"]
 if (
     host["yassin_remote_agent_seen_online"] is not True
