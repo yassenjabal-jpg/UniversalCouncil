@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "profile_id": "command-center-project-council",
+  "project_id": "universal-council-command-center",
+  "profile_kind": "PROJECT_LOCAL_COUNCIL_OVERLAY",
+  "status": "ACTIVE_FOR_PROJECT_REVIEW",
+  "parent": {
+    "roles_path": "config/roles.json",
+    "roles_version": "0.3.0",
+    "governance_path": "GOVERNANCE.md",
+    "role_contracts_path": "company/config/council_role_contracts.json",
+    "inheritance_mode": "READ_ONLY_INHERITANCE"
+  },
+  "authority": {
+    "may_modify_parent": false,
+    "may_mutate_authority": false,
+    "may_execute_tools_by_role_definition": false,
+    "may_open_stage8": false,
+    "owner_final_authority": true
+  },
+  "core_roles": [
+    {
+      "id": "cc_project_chair",
+      "name": "Project Chair / Product Decision Controller",
+      "inherits_from": ["chair"],
+      "owns": ["project_framing", "activation", "decision_rights", "review_expiry"]
+    },
+    {
+      "id": "cc_product_truth",
+      "name": "Product Truth & Evidence Lead",
+      "inherits_from": ["evidence"],
+      "owns": ["truth_state", "evidence_provenance", "fixture_isolation", "completion_claims"]
+    },
+    {
+      "id": "cc_red_team",
+      "name": "Product Red Team",
+      "inherits_from": ["redteam"],
+      "owns": ["falsification", "dead_surface_challenge", "failure_modes", "recovery_theater"]
+    },
+    {
+      "id": "cc_architecture_execution",
+      "name": "Architecture & Execution Reviewer",
+      "inherits_from": ["execution", "software"],
+      "owns": ["feasibility", "architecture_boundaries", "reversibility", "implementation_sequence"]
+    },
+    {
+      "id": "cc_security_remote_trust",
+      "name": "Security, Privacy & Remote Trust Reviewer",
+      "inherits_from": ["risk", "security"],
+      "owns": ["remote_trust", "privacy", "secrets", "authority_boundaries", "destructive_effects"]
+    },
+    {
+      "id": "cc_owner_experience",
+      "name": "Owner Experience & Human Factors Reviewer",
+      "inherits_from": ["human", "design"],
+      "owns": ["usability", "cognitive_load", "rtl", "accessibility_burden", "no_dead_surface"]
+    },
+    {
+      "id": "cc_durable_autopilot",
+      "name": "Durable Autopilot & Recovery Reviewer",
+      "inherits_from": ["execution", "risk", "software"],
+      "owns": ["checkpoint", "recovery", "fork", "replay", "retry", "suspend_resume", "loop_detection"]
+    },
+    {
+      "id": "cc_cross_platform",
+      "name": "Cross-Platform Client Semantics Reviewer",
+      "inherits_from": ["software", "design"],
+      "owns": ["object_identity", "event_ordering", "snapshot_delta", "windows_android_semantic_parity"]
+    },
+    {
+      "id": "cc_ai_runtime",
+      "name": "AI Runtime, Model, Memory & Eval Reviewer",
+      "inherits_from": ["software", "data", "evidence"],
+      "owns": ["model_routing", "reasoning_effort", "fallback", "memory_scope", "evals", "tracing"]
+    },
+    {
+      "id": "cc_synthesis",
+      "name": "Project Synthesis & Alternatives",
+      "inherits_from": ["synthesis"],
+      "owns": ["alternatives", "tradeoffs", "hybrids", "minority_preservation"]
+    }
+  ],
+  "on_demand_specialists": [
+    "windows_wpf",
+    "android_compose",
+    "motion_interaction",
+    "accessibility",
+    "performance",
+    "commercial_value"
+  ],
+  "mandatory_routes": {
+    "autopilot_recovery": ["cc_durable_autopilot", "cc_product_truth", "cc_architecture_execution"],
+    "remote_owner": ["cc_security_remote_trust", "cc_cross_platform", "cc_product_truth"],
+    "model_reasoning_fallback": ["cc_ai_runtime", "cc_owner_experience", "cc_product_truth"],
+    "major_ux": ["cc_owner_experience", "cc_product_truth", "cc_red_team"],
+    "cross_platform_state": ["cc_cross_platform", "cc_product_truth"],
+    "architecture_boundary": ["cc_architecture_execution", "cc_red_team"]
+  },
+  "default_modes": {
+    "minor_reversible_craft": "LIGHT",
+    "material_product_change": "COUNCIL",
+    "authority_security_durability_governance": "ARENA"
+  },
+  "blockers": [
+    "TRUTH_BLOCKER",
+    "SECURITY_BLOCKER",
+    "AUTHORITY_BLOCKER",
+    "DURABILITY_BLOCKER",
+    "ACCESSIBILITY_BLOCKER",
+    "ARCHITECTURE_BOUNDARY_BLOCKER",
+    "CROSS_PLATFORM_TRUTH_BLOCKER"
+  ],
+  "owner_gates": [
+    "locked_art_direction_change",
+    "authority_expansion",
+    "destructive_or_irreversible_behavior",
+    "public_external_effect",
+    "credentials_spend_subscription",
+    "material_privacy_tradeoff",
+    "no_silent_fallback_policy_change",
+    "project_governance_replacement"
+  ],
+  "truth_rules": {
+    "unknown_is_never_success": true,
+    "recommendation_is_not_authority": true,
+    "role_is_not_independent_agent_without_runtime_evidence": true
+  }
+}
