@@ -20,6 +20,14 @@ TAILNET_POLICY = STATE / "owner-device-tailnet-policy.json"
 TAILNET_PROJECTION = STATE / "owner-device-tailnet.json"
 BUILDER = ROOT / "tools" / "build_command_center_murtakaz_projection.py"
 
+VISUAL_DIRECTION_FILES = (
+    ROOT / "docs" / "operations" / "command-center" / "living-operations" / "01_VISUAL_BIBLE.md",
+    ROOT / "docs" / "operations" / "command-center" / "living-operations" / "15_P1_VISUAL_DIRECTION_LOCK.md",
+    ROOT / "docs" / "operations" / "command-center" / "living-operations" / "18_REFERENCE_ONLY_VISUAL_LOCK.md",
+    ROOT / "docs" / "operations" / "command-center" / "living-operations" / "19_REFERENCE_FIDELITY_AUDIT_AND_CONTRACT.md",
+)
+FORBIDDEN_VISUAL_THEME_TERMS = ("architecture", "architectural", "عمارة", "معمار")
+
 
 def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -130,6 +138,14 @@ subprocess.run(
     [__import__("sys").executable, str(ROOT / "tools" / "command_center_visual_reference_validate.py")], check=True
 )
 
+for visual_file in VISUAL_DIRECTION_FILES:
+    text = visual_file.read_text(encoding="utf-8").casefold()
+    for term in FORBIDDEN_VISUAL_THEME_TERMS:
+        if term.casefold() in text:
+            raise SystemExit(
+                f"Rejected decorative-theme vocabulary returned to governing visual direction: {visual_file.relative_to(ROOT)}"
+            )
+
 reference_manifest = load(REFERENCE_MANIFEST)
 if reference_manifest["status"] != "OWNER_ADOPTED_MURTAKAZ_ENFORCED":
     raise SystemExit("Living Operations visual reference lock is not active")
@@ -143,6 +159,12 @@ if not reference_manifest["rules"]["reference_first"]:
     raise SystemExit("Reference-first visual rule must remain active")
 if not reference_manifest["rules"]["delta_only_generation"]:
     raise SystemExit("New visual generation must remain delta-only")
+if not reference_manifest["rules"].get("unapproved_decorative_theme_forbidden"):
+    raise SystemExit("Unapproved decorative themes must remain forbidden")
+if not reference_manifest["rules"].get("reference_observed_visual_language_only"):
+    raise SystemExit("Visual language must remain restricted to observed reference properties")
+if "architecture_decorative_theme_forbidden" in reference_manifest["rules"]:
+    raise SystemExit("Legacy rejected-theme rule name returned to the visual manifest")
 
 visual_approval = load(VISUAL_APPROVAL)
 if visual_approval["decision"] != "APPROVE_TO_IMPLEMENT":
