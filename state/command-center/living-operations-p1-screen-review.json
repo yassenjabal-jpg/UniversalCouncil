@@ -7,8 +7,10 @@
   "screens": [
     {
       "id": "home_owner_workspace",
-      "state": "VISUAL_ARTIFACT_PENDING",
-      "murtakaz_decision": "PENDING"
+      "state": "FIDELITY_BLUEPRINT_APPROVED_VISUAL_ARTIFACT_PENDING",
+      "murtakaz_decision": "PENDING",
+      "blueprint": "docs/operations/command-center/living-operations/20_HOME_OWNER_WORKSPACE_FIDELITY_BLUEPRINT.md",
+      "visual_job_id": "P1-HOME-ARTIFACT-001"
     },
     {
       "id": "living_project_workspace",
