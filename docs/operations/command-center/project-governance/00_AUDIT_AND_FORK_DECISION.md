@@ -1,4 +1,4 @@
-# Command Center — Council + Studio Project Audit and Fork Decision
+# المرتكز — تدقيق المجلس والاستوديو وقرار إنشاء النسخة الخاصة بالمشروع
 
 Date: 2026-10-19  
 Status: PROJECT-LOCAL GOVERNANCE AUDIT / OWNER-DIRECTED  
@@ -248,19 +248,19 @@ Project-local files live under:
 
 ## Final audit recommendation
 
-Create:
+Create the project-local system under the canonical Arabic identity **المرتكز**:
 
-1. **Command Center Project Council**
+1. **هيئة المرتكز**
    - product/runtime/security/UX decision review;
    - project-specific specialist routing;
    - Owner remains final authority.
 
-2. **Command Center Product Studio**
+2. **مشغل المرتكز**
    - product design, interaction, motion and prototype craft;
    - Studio supervises Living Operations fidelity;
    - no execution authority.
 
-3. **Council–Studio Collaboration Contract**
+3. **عقد تعاون هيئة المرتكز ↔ مشغل المرتكز**
    - Studio produces/iterates craft;
    - Council challenges/clears risk/truth/architecture;
    - neither silently edits the other's locked responsibility;
