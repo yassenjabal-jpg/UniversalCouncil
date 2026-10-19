@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "living-operations-p1-home-fidelity",
+  "screen_id": "home_owner_workspace",
+  "status": "FIDELITY_BLUEPRINT_APPROVED_VISUAL_ARTIFACT_PENDING",
+  "canonical_parent": {
+    "role": "home_owner_workspace",
+    "path": "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+    "sha256": "7cb7d12f8819576ad4992158f6f0eb098ae3350a3684118ffc43192ea56749eb"
+  },
+  "source_of_truth": "CANONICAL_REFERENCE_IMAGE",
+  "blueprint": "docs/operations/command-center/living-operations/20_HOME_OWNER_WORKSPACE_FIDELITY_BLUEPRINT.md",
+  "visual_job_id": "P1-HOME-ARTIFACT-001",
+  "allowed_delta": "Implementation cleanup only; preserve canonical Home identity, five-zone composition, composer hierarchy, Council Pulse, three Active Work cards, lower three-panel summary, right navigation rail and bottom tool dock.",
+  "required_proof": [
+    "REFERENCE_ATTACHED_TO_VISUAL_TOOL",
+    "PARENT_SHA256_VERIFIED",
+    "OUTPUT_SHA256_RECORDED",
+    "SIDE_BY_SIDE_COMPARISON",
+    "GOVERNANCE_REVIEW",
+    "WORKSHOP_REVIEW"
+  ],
+  "screen_final_approval": false,
+  "murtakaz_decision": "PENDING_RENDERED_ARTIFACT",
+  "p1_complete": false,
+  "stage8_opened": false,
+  "runtime_authority": false
+}
