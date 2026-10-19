@@ -130,7 +130,9 @@
       "output_path",
       "output_sha256",
       "comparison_evidence",
-      "review_status"
+      "review_status",
+      "screen_inventory_id",
+      "member_inventory_verified"
     ],
     "approval_requires": [
       "governance_review",
@@ -142,5 +144,12 @@
     "generation_id": "79110079-3684-437e-9c29-825ac3f6cb4d",
     "classification": "REJECTED_VISUAL_DRIFT",
     "reason": "Simplified canonical member/Sigil system and screen composition; introduced unsupported member label; cannot be reused as source."
+  },
+  "object_inventory_path": "state/command-center/living-operations-reference-object-inventory.json",
+  "object_inventory_contract": {
+    "status": "REQUIRED_BEFORE_VISUAL_GENERATION",
+    "screen_inventory_must_match_parent_role": true,
+    "member_inventory_verified_required_when_screen_has_members": true,
+    "purpose": "Prevent semantic compression and omission of reference-observed objects."
   }
 }
