@@ -115,7 +115,9 @@
                 "council",
                 "repository",
                 "tool",
-                "migration"
+                "migration",
+                "github_review",
+                "owner_directive"
               ]
             },
             "ref": {
