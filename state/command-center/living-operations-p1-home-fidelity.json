@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "contract_id": "living-operations-p1-home-fidelity",
   "screen_id": "home_owner_workspace",
-  "status": "PRODUCTION_PROTOCOL_LOCKED_ARTIFACT_PENDING",
+  "status": "GEOMETRY_LOCK_ADDED_VISUAL_ARTIFACT_PENDING",
   "canonical_parent": {
     "role": "home_owner_workspace",
     "path": "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
@@ -77,6 +77,16 @@
     "LOAD_HOME_OBJECT_INVENTORY",
     "VERIFY_MEMBER_SIGIL_INVENTORY",
     "SINGLE_SCREEN_ONLY",
-    "CREATE_REFERENCE_BINDING_RECEIPT_BEFORE_RENDER"
+    "CREATE_REFERENCE_BINDING_RECEIPT_BEFORE_RENDER",
+    "LOAD_HOME_GEOMETRY_LOCK",
+    "LOCK_COUNCIL_PULSE_TO_HORIZONTAL_STRIP",
+    "LOCK_OWNER_HERO_AND_COMMAND_COMPOSER_AS_PRIMARY",
+    "LOCK_PRODUCT_IDENTITY",
+    "STRUCTURAL_REVIEW_BEFORE_AESTHETIC_REVIEW"
+  ],
+  "geometry_lock": "state/command-center/living-operations-home-geometry-lock.json",
+  "fifth_generation_review": "docs/operations/command-center/living-operations/25_FIFTH_GENERATION_MURTAKAZ_STUDIO_REVIEW.md",
+  "rejected_generation_ids": [
+    "1d4d3194-a0ec-4f1e-8fc3-1db2b125d1af"
   ]
 }
