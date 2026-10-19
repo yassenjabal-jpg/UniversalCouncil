@@ -8,7 +8,7 @@
     {
       "id": "home_owner_workspace",
       "state": "FIDELITY_BLUEPRINT_REPAIRED_REVIEW_REQUIRED",
-      "murtakaz_decision": "PENDING_REPAIR_REVIEW",
+      "murtakaz_decision": "PENDING",
       "blueprint": "docs/operations/command-center/living-operations/20_HOME_OWNER_WORKSPACE_FIDELITY_BLUEPRINT.md",
       "visual_job_id": "P1-HOME-ARTIFACT-001",
       "repair_audit": "docs/operations/command-center/living-operations/21_MEMBER_SIGIL_REFERENCE_GAP_AUDIT.md"
