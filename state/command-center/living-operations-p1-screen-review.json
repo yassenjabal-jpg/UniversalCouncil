@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "review_id": "living-operations-p1-screen-review",
+  "status": "IN_PROGRESS",
+  "approval_system": "al-murtakaz",
+  "final_state_requires": "APPROVED_BY_AL_MURTAKAZ",
+  "screens": [
+    {
+      "id": "home_owner_workspace",
+      "state": "VISUAL_ARTIFACT_PENDING",
+      "murtakaz_decision": "PENDING"
+    },
+    {
+      "id": "living_project_workspace",
+      "state": "VISUAL_ARTIFACT_PENDING",
+      "murtakaz_decision": "PENDING"
+    },
+    {
+      "id": "owner_decision_mode",
+      "state": "VISUAL_ARTIFACT_PENDING",
+      "murtakaz_decision": "PENDING"
+    },
+    {
+      "id": "recovery_checkpoint_fork",
+      "state": "VISUAL_ARTIFACT_PENDING",
+      "murtakaz_decision": "PENDING"
+    },
+    {
+      "id": "project_complete_work_receipt",
+      "state": "VISUAL_ARTIFACT_PENDING",
+      "murtakaz_decision": "PENDING"
+    }
+  ],
+  "shared_motion": {
+    "state": "STORYBOARD_DEFINED_ARTIFACT_PENDING",
+    "murtakaz_decision": "PENDING"
+  },
+  "android_semantic_pair": {
+    "state": "DIRECTION_DEFINED_ARTIFACT_PENDING",
+    "murtakaz_decision": "PENDING"
+  },
+  "phase_complete": false
+}
