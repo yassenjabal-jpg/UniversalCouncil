@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-P1-HOME-FIDELITY-BLUEPRINT-FINAL",
+  "change_id": "P1-HOME-FIDELITY-BLUEPRINT-001",
+  "scope": "Final adoption of the Home / Owner Workspace reference-derived execution blueprint only. This approves production of visual job P1-HOME-ARTIFACT-001; it does not approve the rendered Home screen, P1 completion, Stage 8, or execution authority.",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "review_mode": "ROLE_BASED_ASSISTANT_REVIEW_NOT_PRODUCT_RUNTIME_COUNCIL",
+  "review_agent": "/root/murtakaz_review",
+  "governance_reviewers": [
+    "cc_owner_experience",
+    "cc_product_truth",
+    "cc_red_team"
+  ],
+  "workshop_reviewers": [
+    "cc_experience_architect",
+    "cc_visual_systems",
+    "cc_interaction_director"
+  ],
+  "artifact_refs": [
+    "docs/operations/command-center/living-operations/20_HOME_OWNER_WORKSPACE_FIDELITY_BLUEPRINT.md",
+    "state/command-center/living-operations-p1-home-fidelity.json",
+    "state/command-center/living-operations-p1-screen-review.json"
+  ],
+  "evidence_refs": [
+    "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+    "state/command-center/living-operations-reference-manifest.json",
+    "Company Stage 0 run 39326214851: SUCCESS",
+    "CodeQL run 39326214871: SUCCESS"
+  ],
+  "approved_revision": {
+    "docs/operations/command-center/living-operations/20_HOME_OWNER_WORKSPACE_FIDELITY_BLUEPRINT.md": "a2f8cd8379ea620dfaaff9f9caf97903774755d9",
+    "state/command-center/living-operations-p1-home-fidelity.json": "2c4c7b52c49a3a188477da278b6754a28c643ecd",
+    "state/command-center/living-operations-p1-screen-review.json": "72382dd9a162ad809424165a8ce94c50546c0cfb"
+  },
+  "timestamp": "2026-10-19T21:18:40+00:00",
+  "reopen_triggers": [
+    "Any material change to the Home blueprint or Home fidelity state",
+    "Any change to the canonical Home reference",
+    "Any rendered artifact whose parent hash, composition family or allowed delta differs from the approved contract"
+  ],
+  "final_adoption_granted": true,
+  "rendered_home_approved": false,
+  "p1_visual_phase_complete": false,
+  "stage8_opened": false,
+  "execution_authority_changed": false,
+  "next_authorized_step": "PRODUCE_P1_HOME_ARTIFACT_001_WITH_CANONICAL_REFERENCE_ATTACHED"
+}
