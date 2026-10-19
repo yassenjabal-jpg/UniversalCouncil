@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "stage": "COMMAND_CENTER_STAGE5_REMOTE_OWNER_GATEWAY",
+  "mode": "LOCAL_TRUST_GATE_ONLY",
+  "owner_principal": "OWNER",
+  "target_host": "YASSIN",
+  "transport": {
+    "live_network_listener_enabled": false,
+    "public_internet_exposure_allowed": false,
+    "router_port_forwarding_allowed": false,
+    "local_cli_ingress_enabled": true,
+    "tailscale_compatible_architecture": true,
+    "github_queue_transport_enabled": false,
+    "chat_transport_enabled": false
+  },
+  "remote_command": {
+    "owner_authorization_required": true,
+    "authorization_context_must_be_out_of_band": true,
+    "device_id_required": true,
+    "session_id_required": true,
+    "nonce_required": true,
+    "idempotency_key_required": true,
+    "issued_at_required": true,
+    "expiry_required": true,
+    "target_scope_required": true,
+    "effect_scope_required": true,
+    "approval_intent_required": true,
+    "persistent_replay_ledger_required": true,
+    "replay_policy": "FAIL_CLOSED",
+    "max_clock_skew_seconds": 120,
+    "max_command_ttl_seconds": 900
+  },
+  "queue": {
+    "append_only": true,
+    "accepted_state": "QUEUED_TRUSTED",
+    "duplicate_state": "DUPLICATE_SAME_COMMAND",
+    "execution_state": "BLOCKED_PHASE0",
+    "live_dispatch_allowed": false,
+    "unknown_is_never_success": true
+  },
+  "approval": {
+    "display_record_is_authority": false,
+    "owner_approval_must_be_out_of_band": true,
+    "approval_id_required_for_high_impact": true,
+    "approval_expiry_required": true,
+    "approval_scope_must_cover_command": true
+  },
+  "device_session": {
+    "registration_required": true,
+    "unregistered_device_fails_closed": true,
+    "unregistered_session_fails_closed": true,
+    "revoked_device_fails_closed": true,
+    "revoked_session_fails_closed": true
+  },
+  "live_execution_authorized": false,
+  "phase0_required_gate": "REMOTE_COMMAND_TRUST",
+  "phase0_current_status": "IN_TEST"
+}
