@@ -222,18 +222,14 @@ def validate_event(event: dict[str, Any], cfg: dict[str, Any] | None = None) -> 
         raise MemoryFabricError("unsupported source fields")
 
     if source_type == "owner_directive" and (
-        event["level"] != "L4_OWNER_DIRECTIVE"
-        or event["confidence"] != "owner_confirmed"
+        event["level"] != "L4_OWNER_DIRECTIVE" or event["confidence"] != "owner_confirmed"
     ):
         raise MemoryFabricError("owner_directive sources require L4 owner-confirmed events")
 
     if event["kind"] == "gate_lock" and source_type != "github_ci_and_visual_review":
         raise MemoryFabricError("gate_lock compatibility is restricted to github_ci_and_visual_review")
 
-    if (
-        event["confidence"] == "verified_evidence"
-        and source_type != "github_ci_and_visual_review"
-    ):
+    if event["confidence"] == "verified_evidence" and source_type != "github_ci_and_visual_review":
         raise MemoryFabricError("verified_evidence compatibility is restricted to github_ci_and_visual_review")
     return True
 
