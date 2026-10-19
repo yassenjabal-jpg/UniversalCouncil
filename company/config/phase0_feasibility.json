@@ -19,7 +19,8 @@
     "untrusted_may_mutate_authority": false,
     "untrusted_may_mutate_routing": false,
     "untrusted_may_write_durable_memory_directly": false,
-    "memory_promotion_requires_trusted_review": true
+    "memory_promotion_requires_trusted_review": true,
+    "nested_authority_keys_must_be_rejected": true
   },
   "remote_command": {
     "owner_authorization_required": true,
@@ -28,7 +29,9 @@
     "idempotency_key_required": true,
     "target_scope_required": true,
     "effect_scope_required": true,
-    "replay_policy": "FAIL_CLOSED"
+    "replay_policy": "FAIL_CLOSED",
+    "authorization_context_must_be_out_of_band": true,
+    "persistent_replay_ledger_required": true
   },
   "gui_reality": {
     "interactive_session_required": true,
