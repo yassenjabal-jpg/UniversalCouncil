@@ -27,5 +27,9 @@
              Link="state\execution-fabric.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\state\command-center\remote-owner-gateway.json"
+             Link="state\remote-owner-gateway.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
