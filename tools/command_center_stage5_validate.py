@@ -242,7 +242,7 @@ xaml = (APP / "MainWindow.xaml").read_text(encoding="utf-8")
 for label in (
     "COMMAND CENTER / STAGE 5",
     "Remote Owner / Secure Command Gateway",
-    "NO LIVE REMOTE TRANSPORT",
+    'Text="{Binding RemoteOwnerConnectionLabel}"',
     "AUTH BACKEND: NOT CONNECTED",
     "NETWORK LISTENER: OFF",
     "EXECUTION: BLOCKED_PHASE0",
