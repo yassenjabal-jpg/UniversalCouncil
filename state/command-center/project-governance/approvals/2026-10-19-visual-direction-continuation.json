@@ -4,10 +4,19 @@
   "change_id": "P1-VISUAL-CONTINUATION-001",
   "scope": "CONTINUE_LIVING_OPERATIONS_VISUAL_DIRECTION_AND_ESTABLISH_MANDATORY_APPROVAL_LAW",
   "artifact_refs": [
+    "docs/operations/command-center/project-governance/10_AL_MURTAKAZ_MANDATORY_APPROVAL_RULE.md",
+    "state/command-center/project-governance/al-murtakaz-approval-policy.json",
+    "docs/operations/command-center/living-operations/14_P1_VERTICAL_SLICE_SPEC.md",
     "docs/operations/command-center/living-operations/15_P1_VISUAL_DIRECTION_LOCK.md",
     "docs/operations/command-center/living-operations/16_P1_INTERACTION_MOTION_STORYBOARD.md",
+    "docs/operations/command-center/living-operations/17_P1_SCREEN_REVIEW_MATRIX.md",
     "state/command-center/living-operations-p1-visual-phase.json",
-    "state/command-center/project-governance/al-murtakaz-approval-policy.json"
+    "state/command-center/living-operations-p1-screen-review.json",
+    "state/command-center/project-governance/al-murtakaz.json",
+    "state/command-center/project-governance/murtakaz-orchestration.json",
+    "tools/build_command_center_murtakaz_projection.py",
+    "tools/command_center_murtakaz_validate.py",
+    "company/tests/test_command_center_project_governance.py"
   ],
   "decision": "APPROVE_TO_IMPLEMENT",
   "governance_reviewers": [
