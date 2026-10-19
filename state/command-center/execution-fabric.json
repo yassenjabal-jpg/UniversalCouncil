@@ -1,0 +1,221 @@
+{
+  "schema_version": "1.0",
+  "source_type": "repository_projection",
+  "source_files": [
+    {
+      "path": "company/config/hybrid_execution.json",
+      "blob_sha": "6f736f0274c342d0dd01edc40425a4f82e5167d8"
+    },
+    {
+      "path": "company/config/tool_authority.json",
+      "blob_sha": "7420020f11fd729257c1b56647d1875856938966"
+    },
+    {
+      "path": "company/config/execution_contract.json",
+      "blob_sha": "03bc58cfbdffd7cb1924dbb9fd8fcad5a7f87b9e"
+    },
+    {
+      "path": "company/config/task_aware_router.json",
+      "blob_sha": "71e7224a2a1453b6052dca6826c70f3d70eeacdb"
+    },
+    {
+      "path": "state/command-center/phase0-execution-gates.json",
+      "blob_sha": "6ca3d2827026d712933cabd11c8816967ae163af"
+    }
+  ],
+  "phase0": {
+    "schema_version": "1.0",
+    "source_branch": "phase0/feasibility-adversarial-prototype",
+    "source_head_sha": "63a4a446bc1e87f5352915f1e86c463de82e9b81",
+    "status_document": "docs/operations/PHASE0_STATUS_2026-10-19.md",
+    "status_blob_sha": "454f07f73a631627eae2eff2f8c229c8eb270ee1",
+    "gates": {
+      "G0-A": {
+        "name": "Secure Agent Boundary",
+        "status": "IN_TEST"
+      },
+      "G0-B": {
+        "name": "Unattended GUI Reality",
+        "status": "BLOCKED_BY_PROVIDER_LIMIT"
+      },
+      "G0-C": {
+        "name": "Remote Command Trust",
+        "status": "IN_TEST"
+      },
+      "G0-D": {
+        "name": "Model / Provider Failure",
+        "status": "IN_TEST"
+      }
+    },
+    "live_execution_authorized": false,
+    "reason": "Phase 0 has not reached PASS on all required live-execution gates."
+  },
+  "service": {
+    "mode": "SAFE_DISABLED",
+    "target_host": "YASSIN",
+    "live_dispatch_enabled": false,
+    "allowed_cli_commands": [
+      "status",
+      "validate-manifest",
+      "inspect-provider-registry",
+      "validate-receipt"
+    ],
+    "forbidden_cli_commands": [
+      "execute",
+      "run-shell",
+      "click",
+      "type",
+      "invoke-provider",
+      "send-model-request"
+    ]
+  },
+  "execution_contract": {
+    "version": "0.1-shadow",
+    "status": "CANDIDATE_SHADOW_ONLY",
+    "council_owns": [
+      "what",
+      "why",
+      "constraints",
+      "authority",
+      "blocking_conditions",
+      "verification_target"
+    ],
+    "orchestrator_owns": [
+      "how",
+      "where",
+      "tool",
+      "route",
+      "recovery",
+      "verification_method"
+    ],
+    "orchestrator_is_voting_member": false
+  },
+  "router": {
+    "version": "0.1-shadow",
+    "status": "CANDIDATE_SHADOW_ONLY",
+    "task_classes": {
+      "visual_interaction": {
+        "order": [
+          "semantic_uia",
+          "visual_grounding",
+          "bounded_physical_input"
+        ]
+      },
+      "structured_application": {
+        "order": [
+          "native_api",
+          "script_or_com",
+          "semantic_uia",
+          "visual_grounding"
+        ]
+      },
+      "host_work": {
+        "order": [
+          "dc_control_plane",
+          "native_host_tooling"
+        ]
+      },
+      "external_service": {
+        "order": [
+          "authorized_connector_api",
+          "gui_semantic_uia",
+          "gui_visual"
+        ]
+      },
+      "recovery": {
+        "order": [
+          "approved_alternate_path"
+        ]
+      }
+    },
+    "fallback_restrictions": [
+      "no_authority_expansion",
+      "alternate_route_must_be_authorized",
+      "physical_input_must_be_explicitly_bounded"
+    ],
+    "recovery_requires": [
+      "Inspect",
+      "Diagnose",
+      "Approved alternate path"
+    ],
+    "hybrid_primary_plane": "GUI",
+    "hybrid_secondary_plane": "DC"
+  },
+  "providers": [
+    {
+      "id": "native_host_tooling",
+      "display_name": "UniversalCouncil Native Host Tooling",
+      "role": "PREFERRED_HOST_PROVIDER",
+      "state": "DESIGN_ONLY",
+      "can_observe": false,
+      "can_execute": false,
+      "source": "company/config/task_aware_router.json",
+      "note": "Stage 4 defines the boundary only; no native host dispatcher exists yet."
+    },
+    {
+      "id": "semantic_uia_bridge",
+      "display_name": "YASSIN Semantic UIA Bridge",
+      "role": "PREFERRED_GUI_PROVIDER",
+      "state": "OBSERVE_ONLY_CURRENT",
+      "can_observe": true,
+      "can_execute": false,
+      "source": "company/config/tool_authority.json",
+      "note": "Control evidence is historical only; Stage 4 dispatch remains disabled."
+    },
+    {
+      "id": "visual_grounding",
+      "display_name": "Visual Grounding",
+      "role": "GUI_FALLBACK_PROVIDER",
+      "state": "NOT_CONNECTED",
+      "can_observe": false,
+      "can_execute": false,
+      "source": "company/config/task_aware_router.json",
+      "note": "Reserved fallback; no active provider in Stage 4."
+    },
+    {
+      "id": "bounded_physical_input",
+      "display_name": "Bounded Physical Input",
+      "role": "LAST_RESORT_GUI_PROVIDER",
+      "state": "BLOCKED_UNVERIFIED",
+      "can_observe": false,
+      "can_execute": false,
+      "source": "company/config/task_aware_router.json",
+      "note": "Physical input requires explicit bounded verification and Phase 0 PASS."
+    },
+    {
+      "id": "dc_control_plane",
+      "display_name": "Remote Desktop Commander",
+      "role": "LEGACY_REFERENCE_PROVIDER",
+      "state": "BLOCKED_BY_PROVIDER_LIMIT",
+      "can_observe": false,
+      "can_execute": false,
+      "source": "company/config/tool_authority.json",
+      "note": "Remote Desktop Commander / Remote Desktop Commander retained as legacy reference only; not the permanent Command Center execution backbone."
+    },
+    {
+      "id": "native_api_or_connector",
+      "display_name": "Authorized Native API / Connector",
+      "role": "EXTERNAL_SERVICE_PROVIDER",
+      "state": "POLICY_GATED",
+      "can_observe": true,
+      "can_execute": false,
+      "source": "company/config/task_aware_router.json",
+      "note": "External connector authority remains provider-specific and outside YASSIN host dispatch."
+    }
+  ],
+  "recovery": {
+    "unknown_is_never_success": true,
+    "stop_on_unknown": true,
+    "unknown_requires_reconciliation": true,
+    "replay_completed_action_default": false,
+    "single_physical_controller": true
+  },
+  "receipt_states": [
+    "PLANNED",
+    "VALIDATED",
+    "BLOCKED",
+    "UNKNOWN",
+    "FAILED",
+    "POSTCONDITION_VERIFIED"
+  ]
+}
