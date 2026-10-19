@@ -13,6 +13,7 @@ PROJECTION = PROJECT / "murtakaz-orchestration.json"
 STAGE_MAP = PROJECT / "stage-phase-map.json"
 APPROVAL_POLICY = PROJECT / "al-murtakaz-approval-policy.json"
 VISUAL_PHASE = STATE / "living-operations-p1-visual-phase.json"
+SCREEN_REVIEW = STATE / "living-operations-p1-screen-review.json"
 VISUAL_APPROVAL = PROJECT / "approvals" / "2026-10-19-visual-direction-continuation.json"
 TAILNET_POLICY = STATE / "owner-device-tailnet-policy.json"
 TAILNET_PROJECTION = STATE / "owner-device-tailnet.json"
@@ -45,6 +46,7 @@ for required in (
     STAGE_MAP,
     APPROVAL_POLICY,
     VISUAL_PHASE,
+    SCREEN_REVIEW,
     VISUAL_APPROVAL,
     TAILNET_POLICY,
     TAILNET_PROJECTION,
@@ -111,6 +113,16 @@ if visual_phase["exit_requires"] != "APPROVED_BY_AL_MURTAKAZ":
     raise SystemExit("P1 visual phase exit is not Murtakaz-gated")
 if visual_phase["runtime_authority"] is not False or visual_phase["stage8_opened"] is not False:
     raise SystemExit("Visual phase may not grant runtime authority or open Stage 8")
+
+screen_review = load(SCREEN_REVIEW)
+if screen_review["status"] != "IN_PROGRESS":
+    raise SystemExit("P1 screen review may not be marked complete before Murtakaz approval")
+if screen_review["final_state_requires"] != "APPROVED_BY_AL_MURTAKAZ":
+    raise SystemExit("P1 screen review exit is not Murtakaz-gated")
+if screen_review["phase_complete"] is not False:
+    raise SystemExit("P1 screen review fabricated phase completion")
+if any(item["murtakaz_decision"] != "PENDING" for item in screen_review["screens"]):
+    raise SystemExit("P1 screen state may not claim approval before visual artifacts are reviewed")
 
 visual_approval = load(VISUAL_APPROVAL)
 if visual_approval["decision"] != "APPROVE_TO_IMPLEMENT":
