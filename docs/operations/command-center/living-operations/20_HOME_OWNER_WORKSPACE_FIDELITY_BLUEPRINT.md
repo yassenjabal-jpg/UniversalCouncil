@@ -103,26 +103,57 @@ Prototype truth rules:
 - zero-count cards remain visually quieter than active alerts;
 - do not add infrastructure diagnostics here.
 
-## 6. Council Pulse
+## 6. Council Pulse — member identities and interaction
 
-Council Pulse is the first major section beneath the composer.
+Council Pulse is the first major section beneath the composer and is a signature product surface.
 
-Preserve:
+Preserve the exact reference-observed member sequence:
 
-- one wide horizontal rounded surface;
-- section title and compact health/state indicator;
-- distinct colored circular role medallions;
-- a fine connecting route/path language between medallions;
-- concise role labels beneath/near each medallion.
+1. **المالك** — تحديد الاتجاه.
+2. **الاستراتيجية** — تحليل وفرص.
+3. **البحث** — جمع الأدلة.
+4. **التحقق** — مراجعة الحقائق.
+5. **التنفيذ** — تحويل إلى عمل.
+6. **الإبداع** — تصميم وإنتاج.
+7. **البيانات** — تحليل وقياس.
+8. **التعلم** — تطوير مستمر.
 
-The medallions are identity objects, not avatars.
+Each member must preserve all of these layers where applicable:
 
-Every medallion must be interactive:
+- distinct canonical glyph;
+- distinct restrained identity tint;
+- circular medallion;
+- role label;
+- short functional subtitle;
+- operational state ring/badge;
+- reasoning rings when the backing task/model supports them;
+- fine curved/dotted routing path;
+- hover/focus state;
+- click/keyboard semantic destination.
 
-- click -> Role Context;
-- reasoning/state affordance -> Model/Reasoning inspector where applicable.
+The members must be recognizable as persistent Council identities, not interchangeable generic icons.
 
-Static color identifies the role. State badges/animation communicate activity separately.
+Interaction:
+
+- hover -> member/function tooltip;
+- click / Enter / Space -> Role Context;
+- reasoning rings -> Model & Reasoning Inspector;
+- Council activity control -> activity/routing context.
+
+Role Context must be able to show:
+
+- why this member is active;
+- current assignment;
+- current state;
+- findings;
+- strongest dissent where relevant;
+- linked evidence;
+- model/reasoning state;
+- recent project contributions.
+
+Static identity color does not prove activity. State ring/badge and event-backed motion communicate activity separately.
+
+Do not invent substitute Home members or rename the observed set without a reviewed delta.
 
 ## 7. Active Work
 
@@ -304,6 +335,11 @@ A rendered Home candidate is eligible for Murtakaz review only if all are true:
 - three Active Work cards remain a major row;
 - lower three-panel owner summary remains visible;
 - role medallions match the reference language;
+- all eight Home Council Pulse members are present in the observed order;
+- each member retains glyph + label + subtitle + identity tint;
+- member routing paths remain visible and meaningful;
+- member hover/click/keyboard destinations are specified;
+- reasoning/state layers are not removed or fabricated;
 - right rail and bottom tool dock remain present;
 - no generic SaaS/KPI-grid drift;
 - no fake runtime success;
