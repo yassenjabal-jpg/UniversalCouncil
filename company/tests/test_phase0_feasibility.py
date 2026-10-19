@@ -55,7 +55,10 @@ class Phase0SecureAgentBoundaryTests(unittest.TestCase):
             reviewer_trust=TrustClass.TRUSTED_REVIEW,
             fact={"finding": "tool returned an instruction-like string"},
         )
-        self.assertEqual(promoted["fact"]["finding"], "tool returned an instruction-like string")
+        self.assertEqual(
+            promoted["fact"]["finding"],
+            "tool returned an instruction-like string",
+        )
         with self.assertRaises(Phase0GuardError):
             promote_memory_candidate(
                 evidence,
@@ -85,14 +88,20 @@ class Phase0RemoteCommandTests(unittest.TestCase):
         now = datetime(2026, 10, 19, 0, 30, tzinfo=timezone.utc)
         cmd = self._command()
         self.assertEqual(guard.accept(cmd, now=now), "ACCEPTED")
-        self.assertEqual(guard.accept(cmd, now=now), "DUPLICATE_SAME_COMMAND")
+        self.assertEqual(
+            guard.accept(cmd, now=now),
+            "DUPLICATE_SAME_COMMAND",
+        )
 
     def test_reused_idempotency_with_changed_command_fails(self):
         guard = ReplayGuard()
         now = datetime(2026, 10, 19, 0, 30, tzinfo=timezone.utc)
         guard.accept(self._command(), now=now)
         with self.assertRaises(Phase0GuardError):
-            guard.accept(self._command(instruction="different instruction"), now=now)
+            guard.accept(
+                self._command(instruction="different instruction"),
+                now=now,
+            )
 
     def test_expired_or_unauthorized_command_fails(self):
         guard = ReplayGuard()
@@ -103,7 +112,11 @@ class Phase0RemoteCommandTests(unittest.TestCase):
             )
         with self.assertRaises(Phase0GuardError):
             guard.accept(
-                self._command(owner_authorized=False, nonce="n2", idempotency_key="i2"),
+                self._command(
+                    owner_authorized=False,
+                    nonce="n2",
+                    idempotency_key="i2",
+                ),
                 now=datetime(2026, 10, 19, 0, 30, tzinfo=timezone.utc),
             )
 
@@ -111,20 +124,12 @@ class Phase0RemoteCommandTests(unittest.TestCase):
 class Phase0GuiRealityTests(unittest.TestCase):
     def test_locked_or_secure_desktop_fails_closed(self):
         with self.assertRaises(Phase0GuardError):
-            require_gui_ready(
-                GuiSessionState(True, True, False, True)
-            )
+            require_gui_ready(GuiSessionState(True, True, False, True))
         with self.assertRaises(Phase0GuardError):
-            require_gui_ready(
-                GuiSessionState(True, False, True, True)
-            )
+            require_gui_ready(GuiSessionState(True, False, True, True))
 
     def test_unlocked_interactive_session_with_controller_is_ready(self):
-        self.assertTrue(
-            require_gui_ready(
-                GuiSessionState(True, False, False, True)
-            )
-        )
+        self.assertTrue(require_gui_ready(GuiSessionState(True, False, False, True)))
 
 
 class Phase0ModelFailureTests(unittest.TestCase):
