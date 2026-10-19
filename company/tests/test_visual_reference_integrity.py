@@ -23,7 +23,7 @@ class VisualReferenceIntegrityTests(unittest.TestCase):
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes((ROOT / ref["path"]).read_bytes())
 
-        for key in ("object_inventory_path", "production_protocol_path"):
+        for key in ("object_inventory_path", "production_protocol_path", "home_geometry_lock_path"):
             source_path = self.manifest[key]
             target = self.root / source_path
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -64,17 +64,29 @@ class VisualReferenceIntegrityTests(unittest.TestCase):
             "member_inventory_verified": True,
             "allowed_delta": "fixture",
             "reference_binding_evidence": "reference-binding.json",
+            "geometry_lock_id": "home-owner-workspace-geometry-v1",
         }
         self.manifest["visual_jobs"] = [self.preflight_job]
 
     def rendered_job(self, state="RENDERED_REVIEW_REQUIRED"):
         job = copy.deepcopy(self.preflight_job)
+        output_sha = hashlib.sha256(b"fixture output").hexdigest()
+        structural = {
+            "decision": "STRUCTURE_PASS",
+            "job_id": "test",
+            "parent_sha256": job["parent_sha256"],
+            "output_sha256": output_sha,
+            "geometry_lock_id": "home-owner-workspace-geometry-v1",
+            "reviewed_before_aesthetic_review": True,
+        }
+        (self.root / "structural-review.json").write_text(json.dumps(structural))
         job.update(
             state=state,
             output_path="output.png",
-            output_sha256=hashlib.sha256(b"fixture output").hexdigest(),
+            output_sha256=output_sha,
             comparison_evidence="comparison.md",
             render_started_after_preflight=True,
+            structural_review_evidence="structural-review.json",
         )
         return job
 
@@ -105,6 +117,7 @@ class VisualReferenceIntegrityTests(unittest.TestCase):
             ("member_inventory_verified", False),
             ("reference_binding_evidence", "missing.json"),
             ("source_generation_id", "generated-parent"),
+            ("geometry_lock_id", "wrong-geometry-lock"),
         ]
         for field, value in mutations:
             with self.subTest(field=field):
@@ -149,6 +162,7 @@ class VisualReferenceIntegrityTests(unittest.TestCase):
             ("output_sha256", "bad"),
             ("comparison_evidence", "missing.md"),
             ("render_started_after_preflight", False),
+            ("structural_review_evidence", "missing-structure.json"),
         ]
         for field, value in mutations:
             with self.subTest(field=field):
