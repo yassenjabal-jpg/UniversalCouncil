@@ -85,3 +85,23 @@ class VisualReferenceIntegrityTests(unittest.TestCase):
         self.job["allowed_delta"] = "different scope"
         with self.assertRaises(ValueError):
             validate(self.root, self.manifest)
+
+    def test_governing_visual_direction_has_no_rejected_theme_vocabulary(self):
+        manifest = json.loads(
+            (ROOT / "state/command-center/living-operations-reference-manifest.json").read_text()
+        )
+        self.assertTrue(manifest["rules"]["unapproved_decorative_theme_forbidden"])
+        self.assertTrue(manifest["rules"]["reference_observed_visual_language_only"])
+        self.assertNotIn("architecture_decorative_theme_forbidden", manifest["rules"])
+
+        visual_files = (
+            "docs/operations/command-center/living-operations/01_VISUAL_BIBLE.md",
+            "docs/operations/command-center/living-operations/15_P1_VISUAL_DIRECTION_LOCK.md",
+            "docs/operations/command-center/living-operations/18_REFERENCE_ONLY_VISUAL_LOCK.md",
+            "docs/operations/command-center/living-operations/19_REFERENCE_FIDELITY_AUDIT_AND_CONTRACT.md",
+        )
+        forbidden = ("architecture", "architectural", "عمارة", "معمار")
+        for relative in visual_files:
+            content = (ROOT / relative).read_text(encoding="utf-8").casefold()
+            for term in forbidden:
+                self.assertNotIn(term.casefold(), content, relative)
