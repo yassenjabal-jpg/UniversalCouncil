@@ -213,7 +213,7 @@ Do not hide truth state behind color alone.
 
 Reject:
 - neon cyberpunk;
-- architecture as UI chrome/background theme; project media may contain buildings or people;
+- any decorative theme, scenic motif or background language not directly observable in the eight pinned references;
 - cartoon room scenes;
 - mascot-heavy UI;
 - generic KPI tile dashboard;
