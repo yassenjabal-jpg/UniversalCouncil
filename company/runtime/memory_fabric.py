@@ -38,6 +38,7 @@ CONFIDENCE = {"owner_confirmed", "verified", "evidence_backed", "proposal"}
 COMPAT_CONFIDENCE = {"verified_evidence"}
 SENSITIVITY = {"normal", "private_non_sensitive"}
 SOURCE_TYPES = {"chat", "council", "repository", "tool", "migration"}
+COMPAT_BASE_SOURCE_TYPES = {"github_review", "owner_directive"}
 COMPAT_SOURCE_TYPES = {"github_ci_and_visual_review"}
 BASE_SOURCE_FIELDS = {"type", "ref", "commit"}
 VISUAL_REVIEW_SOURCE_FIELDS = {
@@ -210,7 +211,7 @@ def validate_event(event: dict[str, Any], cfg: dict[str, Any] | None = None) -> 
         raise MemoryFabricError("invalid memory source")
 
     source_type = source.get("type")
-    if source_type in SOURCE_TYPES:
+    if source_type in SOURCE_TYPES | COMPAT_BASE_SOURCE_TYPES:
         allowed_source_fields = BASE_SOURCE_FIELDS
     elif source_type in COMPAT_SOURCE_TYPES:
         allowed_source_fields = VISUAL_REVIEW_SOURCE_FIELDS
@@ -219,6 +220,27 @@ def validate_event(event: dict[str, Any], cfg: dict[str, Any] | None = None) -> 
 
     if set(source) - allowed_source_fields:
         raise MemoryFabricError("unsupported source fields")
+
+    if source_type == "owner_directive" and (
+        event["level"] != "L4_OWNER_DIRECTIVE"
+        or event["confidence"] != "owner_confirmed"
+    ):
+        raise MemoryFabricError(
+            "owner_directive sources require L4 owner-confirmed events"
+        )
+
+    if event["kind"] == "gate_lock" and source_type != "github_ci_and_visual_review":
+        raise MemoryFabricError(
+            "gate_lock compatibility is restricted to github_ci_and_visual_review"
+        )
+
+    if (
+        event["confidence"] == "verified_evidence"
+        and source_type != "github_ci_and_visual_review"
+    ):
+        raise MemoryFabricError(
+            "verified_evidence compatibility is restricted to github_ci_and_visual_review"
+        )
     return True
 
 
