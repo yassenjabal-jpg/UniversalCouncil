@@ -132,7 +132,15 @@ public interface IRemoteCommandTrustService
         RemoteCommandEnvelope envelope,
         OwnerAuthorizationContext authorization);
 
+    RemoteCommandReceipt EnqueueAuthenticatedTransport(
+        RemoteCommandEnvelope envelope,
+        OwnerAuthorizationContext authorization);
+
     void ValidateApproval(RemoteApprovalRecord approval);
+
+    RemoteApprovalRecord BuildAndValidateApproval(
+        RemoteApprovalRequest request,
+        OwnerAuthorizationContext authorization);
 }
 
 public interface IRemoteReplayLedger
