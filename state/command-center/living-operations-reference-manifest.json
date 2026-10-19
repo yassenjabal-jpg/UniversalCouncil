@@ -98,7 +98,9 @@
     "sha256_verification_required": true,
     "missing_reference_blocks_visual_work": true,
     "unapproved_decorative_theme_forbidden": true,
-    "reference_observed_visual_language_only": true
+    "reference_observed_visual_language_only": true,
+    "screen_object_inventory_required_before_generation": true,
+    "member_sigil_interaction_inventory_required": true
   },
   "rejected_recent_generations": [
     "f75c9844-03fb-4c7b-857b-95babf3e4269",
@@ -106,7 +108,8 @@
     "7a9017af-197a-4fed-8665-57ea317f2bd9",
     "b3607b06-5137-4d4b-8126-43b9a4e64f68",
     "bd25818f-6f59-4407-bec0-af476378df58",
-    "0289c00b-59de-422f-9532-5ed20d7b817a"
+    "0289c00b-59de-422f-9532-5ed20d7b817a",
+    "79110079-3684-437e-9c29-825ac3f6cb4d"
   ],
   "rejected_classification": "REJECTED_VISUAL_DRIFT",
   "final_visual_phase_state": "IN_PROGRESS",
@@ -134,5 +137,10 @@
       "workshop_review"
     ],
     "meaning": "Artifact integrity is not aesthetic approval. No visual jobs have been produced in this repair."
+  },
+  "latest_rejected_generation": {
+    "generation_id": "79110079-3684-437e-9c29-825ac3f6cb4d",
+    "classification": "REJECTED_VISUAL_DRIFT",
+    "reason": "Simplified canonical member/Sigil system and screen composition; introduced unsupported member label; cannot be reused as source."
   }
 }
