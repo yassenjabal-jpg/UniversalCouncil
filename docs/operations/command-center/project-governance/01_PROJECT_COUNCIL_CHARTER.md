@@ -1,7 +1,7 @@
-# Command Center Project Council
+# هيئة المرتكز — الحوكمة والتدقيق
 
 Version: 1.0  
-Status: PROJECT-LOCAL COUNCIL PROFILE  
+Status: PROJECT-LOCAL GOVERNANCE UNIT / هيئة المرتكز  
 Parent Council: Universal Council 0.3.0  
 Scope: UniversalCouncil Command Center / Android Owner Companion
 
@@ -9,7 +9,7 @@ Scope: UniversalCouncil Command Center / Android Owner Companion
 
 Provide decision-quality review for the Command Center product without turning the universal Council into a project-specific organization.
 
-The Project Council focuses on:
+هيئة المرتكز هي وحدة الحوكمة والتدقيق داخل منظومة «المرتكز». وهي تركز على:
 - product architecture;
 - durable orchestration;
 - Windows/Android client semantics;
@@ -33,7 +33,7 @@ Inherited unchanged:
 - no authority expansion by role;
 - no claim of independent agents without runtime evidence.
 
-The Project Council may specialize the mission of inherited capabilities but may not weaken them.
+هيئة المرتكز may specialize the mission of inherited capabilities but may not weaken them.
 
 ## Core project roles
 
@@ -355,7 +355,7 @@ Material reviews produce:
 
 ## Relationship to parent Council
 
-The Project Council does not replace the Universal Council.
+هيئة المرتكز does not replace the Universal Council.
 
 Escalate to the parent Council when:
 - the issue materially exceeds this project's domain;
