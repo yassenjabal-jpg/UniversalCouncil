@@ -114,7 +114,18 @@ Both clients consume the same object/event semantics, but each uses platform-app
 6. `06_ANDROID_OWNER_SCREEN_MAP.md` — mobile companion architecture and mobile-only interaction rules.
 7. `07_STUDIO_SUPERVISION_CHARTER.md` — Studio authority, review cycle and change-control process.
 8. `08_ACCEPTANCE_AND_REVIEW_GATES.md` — visual, interaction, motion, truth, accessibility and performance gates.
-9. `state/command-center/living-operations-implementation-policy.json` — compact machine-readable policy.
+9. `09_ROLE_SIGIL_SYSTEM.md` — abstract identity family, states, reasoning rings and semantic destinations.
+10. `10_STATE_MOTION_MATRIX.md` — authoritative product state to visual/motion mapping.
+11. `11_EVENT_ANIMATION_MAPPING.md` — shared runtime event semantics for Windows and Android.
+12. `12_NAVIGATION_INTERACTION_FLOW_MAPS.md` — end-to-end interaction and context-preserving navigation flows.
+13. `13_STUDIO_PROTOTYPE_READINESS_REVIEW.md` — Studio + Council pre-prototype review and verdict.
+14. `14_P1_VERTICAL_SLICE_SPEC.md` — first interactive vertical slice specification.
+15. `state/command-center/living-operations-implementation-policy.json` — compact machine-readable policy.
+16. `state/command-center/living-operations-role-sigils.json` — machine-readable Sigil registry.
+17. `state/command-center/living-operations-event-map.json` — machine-readable event/render mapping.
+18. `state/command-center/living-operations-design-tokens.json` — shared semantic design tokens.
+19. `state/command-center/living-operations-component-states.json` — component/truth state contracts.
+20. `state/command-center/living-operations-prototype-fixtures.json` — explicitly non-authoritative P1 fixture data.
 
 ## Implementation sequence
 
