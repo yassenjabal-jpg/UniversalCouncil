@@ -30,7 +30,7 @@ Sources:
 - company/config/channel_operating_system.json
 - company/config/media_venture.json
 
-The generated catalog records SHA-256 for every source. CI regenerates the catalog and fails on drift.
+The generated catalog records the Git blob SHA for every source. CI regenerates the catalog and fails on drift.
 
 ## Role != Model
 
@@ -112,7 +112,7 @@ Presentation may not:
 
 Stage 3 locks only when:
 1. catalog regeneration is deterministic and drift-checked;
-2. source digests are recorded;
+2. source Git blob digests are recorded;
 3. Council planner passes adversarial role/authority tests;
 4. model policy rejects silent fallback;
 5. malformed or authority-inflated catalogs fail closed;
