@@ -24,12 +24,8 @@ class CommandCenterProjectGovernanceTests(unittest.TestCase):
         self.identity = load_json(PROJECT_STATE / "al-murtakaz.json")
         self.review = load_json(PROJECT_STATE / "al-murtakaz-review.json")
         self.approval_policy = load_json(PROJECT_STATE / "al-murtakaz-approval-policy.json")
-        self.visual_phase = load_json(
-            ROOT / "state" / "command-center" / "living-operations-p1-visual-phase.json"
-        )
-        self.visual_approval = load_json(
-            PROJECT_STATE / "approvals" / "2026-10-19-visual-direction-continuation.json"
-        )
+        self.visual_phase = load_json(ROOT / "state" / "command-center" / "living-operations-p1-visual-phase.json")
+        self.visual_approval = load_json(PROJECT_STATE / "approvals" / "2026-10-19-visual-direction-continuation.json")
 
     def test_parent_versions_are_explicit_and_read_only(self) -> None:
         parents = self.lock["parent_sources"]
