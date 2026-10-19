@@ -8,10 +8,10 @@ Base SHA: `3aa9af7c0e79c5601636b395f4ae9ca5cd9ca560`
 
 | Gate | Status | Evidence / blocker |
 |---|---|---|
-| G0-A Secure Agent Boundary | IN_TEST | Deterministic guardrails + tests committed; dedicated CI pending |
+| G0-A Secure Agent Boundary | IN_TEST | Deterministic boundary tests PASS in Phase 0 CI; live web/file/MCP integration probe still required before final PASS |
 | G0-B Unattended GUI Reality | BLOCKED_BY_PROVIDER_LIMIT | YASSIN is online, but Desktop Commander remote calls are paused because the account reached its monthly usage limit; no GUI claim is made |
-| G0-C Remote Command Trust | IN_TEST | nonce/idempotency/expiry/owner-authorization prototype + tests committed |
-| G0-D Model / Provider Failure | IN_TEST | explicit failure states and no-silent-fallback prototype + tests committed |
+| G0-C Remote Command Trust | IN_TEST | nonce/idempotency/expiry/owner-authorization tests PASS; real transport/dispatch round trip still required before final PASS |
+| G0-D Model / Provider Failure | IN_TEST | no-silent-fallback and explicit approved-fallback tests PASS; live provider failure injection still required before final PASS |
 
 ## Baseline repository blocker discovered
 
@@ -34,6 +34,20 @@ The current Memory Fabric validator accepts only:
 - `migration`
 
 This defect predates the Phase 0 branch and is treated as a baseline governance/invariant blocker. Phase 0 must not silently rewrite an immutable published memory event to make CI green.
+
+## Phase 0 CI evidence
+
+Dedicated workflow:
+- name: `Phase 0 Adversarial Prototype`
+- run: #3
+- commit: `984f4d4ff9090852e2243d2ac0916bc590023856`
+- conclusion: **SUCCESS**
+
+Passed:
+- Ruff lint
+- Ruff format
+- Python compile
+- deterministic Phase 0 unittest suite
 
 ## CI strategy
 
