@@ -25,6 +25,10 @@ Design synthesis:
 
 Playful Intelligence + Editorial Clarity + Professional Operational UI + Living Motion Language
 
+Reference boundary:
+
+The eight pinned images are the only visual source of truth. Do not name, import or preserve any decorative theme, scenic motif or stylistic concept that is not directly observable in those references. Project media content does not redefine the product's UI identity.
+
 ## P1 focus
 
 P1 must visually and interactively resolve five flagship moments:
