@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-VISUAL-REFERENCE-LANGUAGE-CLEANUP-FINAL",
+  "change_id": "VISUAL-REFERENCE-LANGUAGE-CLEANUP-003",
+  "scope": "Final adoption of the bounded reference-language cleanup only: canonical visual direction now names no rejected decorative-theme concept, the eight pinned reference images remain the sole visual source of truth, and regression guards enforce that boundary. This does not approve P1 screen artifacts or visual phase completion.",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "review_mode": "ROLE_BASED_ASSISTANT_REVIEW_NOT_PRODUCT_RUNTIME_COUNCIL",
+  "review_agent": "/root/murtakaz_review",
+  "governance_reviewers": [
+    "product truth / governance scoped review"
+  ],
+  "workshop_reviewers": [
+    "visual fidelity scoped review"
+  ],
+  "artifact_refs": [
+    "docs/operations/command-center/living-operations/01_VISUAL_BIBLE.md",
+    "docs/operations/command-center/living-operations/15_P1_VISUAL_DIRECTION_LOCK.md",
+    "docs/operations/command-center/living-operations/18_REFERENCE_ONLY_VISUAL_LOCK.md",
+    "docs/operations/command-center/living-operations/19_REFERENCE_FIDELITY_AUDIT_AND_CONTRACT.md",
+    "state/command-center/living-operations-reference-manifest.json",
+    "tools/command_center_murtakaz_validate.py",
+    "company/tests/test_visual_reference_integrity.py",
+    "docs/operations/command-center/HANDOFF_2026-10-19_AL_MURTAKAZ_VISUAL_REFERENCE_LOCK.md"
+  ],
+  "evidence_refs": [
+    "PR #53 head 5a4eb552bf45b742ccba6576b89cc1c7940dda92",
+    "Company Stage 0 run 39325365340: SUCCESS",
+    "CodeQL run 39325365305: SUCCESS",
+    "eight pinned canonical reference images under docs/operations/command-center/living-operations/references/"
+  ],
+  "approved_revision": {
+    "head_sha": "5a4eb552bf45b742ccba6576b89cc1c7940dda92",
+    "docs/operations/command-center/living-operations/01_VISUAL_BIBLE.md": "762c28fc4f56a53dea6252f6e42543ed4498a6a1",
+    "docs/operations/command-center/living-operations/15_P1_VISUAL_DIRECTION_LOCK.md": "6975eee4aa2062eba484cfe4bb5d67dcdb82457f",
+    "docs/operations/command-center/living-operations/18_REFERENCE_ONLY_VISUAL_LOCK.md": "94246b786f6d85b67f2062a1572b33e2d9cca2f8",
+    "docs/operations/command-center/living-operations/19_REFERENCE_FIDELITY_AUDIT_AND_CONTRACT.md": "a99287d3c1c333b770982d9441d0658be857f2b6",
+    "state/command-center/living-operations-reference-manifest.json": "131d012a1c6f4bc6ff8b4cb3d0a8c0c7d65316fd",
+    "tools/command_center_murtakaz_validate.py": "2d9eb793ae17fbd68d8cf3914a0ca3ce5736a7f2",
+    "company/tests/test_visual_reference_integrity.py": "1cc054646ab631419accf24fe2e3fa688ca9f584",
+    "docs/operations/command-center/HANDOFF_2026-10-19_AL_MURTAKAZ_VISUAL_REFERENCE_LOCK.md": "497d4ea15269eb3ea8e8107533fe726fc177b2d9"
+  },
+  "timestamp": "2026-10-19T21:11:31+00:00",
+  "reopen_triggers": [
+    "Any change to the canonical eight reference images",
+    "Any attempt to introduce a named decorative theme or scenic identity not directly observable in those references",
+    "Any material change to the governing visual-direction files"
+  ],
+  "final_adoption_granted": true,
+  "p1_visual_phase_complete": false,
+  "stage8_opened": false,
+  "execution_authority_changed": false,
+  "validation": [
+    "Company Stage 0 run 39325365340 SUCCESS",
+    "Quality Gate SUCCESS including Ruff lint/format, compile, Al-Murtakaz validation and Stage 0 behavior tests",
+    "Python 3.12 Compatibility SUCCESS",
+    "CodeQL run 39325365305 SUCCESS"
+  ]
+}
