@@ -53,10 +53,7 @@ for path in list(APP.rglob("*.cs")) + list(APP.rglob("*.xaml")):
                 f"Stage 6 presentation boundary violation in {path.relative_to(ROOT)}: {token!r} — {reason}"
             )
 
-transport_text = "\n".join(
-    path.read_text(encoding="utf-8")
-    for path in TRANSPORT_APP.rglob("*.cs")
-)
+transport_text = "\n".join(path.read_text(encoding="utf-8") for path in TRANSPORT_APP.rglob("*.cs"))
 transport_forbidden = {
     "IPAddress.Any": "public wildcard bind is forbidden",
     "IPAddress.IPv6Any": "IPv6 wildcard bind is forbidden",
@@ -85,13 +82,10 @@ if "IPAddress.Loopback" not in transport_text:
     raise SystemExit("Stage 6 transport must bind explicitly to IPAddress.Loopback")
 
 transport_project = ET.fromstring(
-    (TRANSPORT_APP / "UniversalCouncil.CommandCenter.RemoteTransport.csproj").read_text(
-        encoding="utf-8"
-    )
+    (TRANSPORT_APP / "UniversalCouncil.CommandCenter.RemoteTransport.csproj").read_text(encoding="utf-8")
 )
 project_refs = {
-    item.attrib.get("Include", "").replace("\\", "/")
-    for item in transport_project.iter("ProjectReference")
+    item.attrib.get("Include", "").replace("\\", "/") for item in transport_project.iter("ProjectReference")
 }
 expected_refs = {
     "../UniversalCouncil.CommandCenter.Core/UniversalCouncil.CommandCenter.Core.csproj",
@@ -103,20 +97,12 @@ if project_refs != expected_refs:
         f"RemoteTransport project references drifted. expected={sorted(expected_refs)} actual={sorted(project_refs)}"
     )
 
-framework_refs = {
-    item.attrib.get("Include", "")
-    for item in transport_project.iter("FrameworkReference")
-}
+framework_refs = {item.attrib.get("Include", "") for item in transport_project.iter("FrameworkReference")}
 if framework_refs != {"Microsoft.AspNetCore.App"}:
     raise SystemExit("RemoteTransport must use only Microsoft.AspNetCore.App framework reference")
 
-app_project = ET.fromstring(
-    (APP / "UniversalCouncil.CommandCenter.csproj").read_text(encoding="utf-8")
-)
-app_refs = {
-    item.attrib.get("Include", "").replace("\\", "/")
-    for item in app_project.iter("ProjectReference")
-}
+app_project = ET.fromstring((APP / "UniversalCouncil.CommandCenter.csproj").read_text(encoding="utf-8"))
+app_refs = {item.attrib.get("Include", "").replace("\\", "/") for item in app_project.iter("ProjectReference")}
 if app_refs != {
     "../UniversalCouncil.CommandCenter.Core/UniversalCouncil.CommandCenter.Core.csproj",
     "../UniversalCouncil.CommandCenter.Host/UniversalCouncil.CommandCenter.Host.csproj",
@@ -142,9 +128,7 @@ def blob_sha(relative: str) -> str:
 for source in projection["source_files"]:
     actual = blob_sha(source["path"])
     if actual != source["blob_sha"]:
-        raise SystemExit(
-            f"Stage 6 source drift: {source['path']} expected={source['blob_sha']} actual={actual}"
-        )
+        raise SystemExit(f"Stage 6 source drift: {source['path']} expected={source['blob_sha']} actual={actual}")
 
 transport = projection["transport"]
 if (
