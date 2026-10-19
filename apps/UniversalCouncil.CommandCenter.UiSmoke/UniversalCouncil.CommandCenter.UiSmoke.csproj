@@ -31,5 +31,9 @@
              Link="state\remote-owner-gateway.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\state\command-center\remote-transport.json"
+             Link="state\remote-transport.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

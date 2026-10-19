@@ -58,7 +58,7 @@
                     <Button Style="{StaticResource RailButtonStyle}" Content="الموافقات" />
                     <Button Style="{StaticResource RailButtonStyle}" Content="المالك البعيد" />
                     <Button Style="{StaticResource RailButtonStyle}" Content="الأدلة" />
-                    <Button Style="{StaticResource RailButtonStyle}" Content="النقل الآمن — Stage 6" />
+                    <Button Style="{StaticResource RailButtonStyle}" Content="النقل الآمن" />
                 </StackPanel>
 
                 <Border Grid.Row="3"
@@ -105,16 +105,18 @@
                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="22" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="22" />
+                    <RowDefinition Height="Auto" />
 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0">
-                    <TextBlock Text="مركز المالك البعيد"
+                    <TextBlock Text="مركز النقل الآمن"
                                FontSize="31"
                                FontWeight="SemiBold" />
                     <StackPanel Margin="0,7,0,0"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right">
-                        <TextBlock Text="COMMAND CENTER / STAGE 5"
+                        <TextBlock Text="COMMAND CENTER / STAGE 6"
                                    FlowDirection="LeftToRight"
                                    FontSize="10"
                                    FontWeight="SemiBold"
@@ -138,7 +140,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
-                            <TextBlock Text="بوابة الثقة للأوامر جاهزة محليًا — لا يوجد اتصال هاتف أو شبكة حي"
+                            <TextBlock Text="قناة HTTP مصادق عليها مبنية على loopback فقط — الهاتف وTailscale غير متصلين"
                                        FontSize="15"
                                        FontWeight="SemiBold" />
                             <TextBlock Text="{Binding Snapshot.PhaseGateLabel}"
@@ -158,7 +160,7 @@
                     </Grid>
                 </Border>
 
-                <Grid Grid.Row="10">
+                <Grid Grid.Row="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.08*" />
                         <ColumnDefinition Width="20" />
@@ -386,7 +388,7 @@
                     </Border>
                 </Grid>
 
-                <Grid Grid.Row="8">
+                <Grid Grid.Row="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.15*" />
                         <ColumnDefinition Width="20" />
@@ -536,7 +538,152 @@
                     </Border>
                 </Grid>
 
-                                <Border Grid.Row="4"
+                                                <Border Grid.Row="4"
+                        Padding="20"
+                        Background="{StaticResource SurfaceBrush}"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="1">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Authenticated Local Transport"
+                                           FlowDirection="LeftToRight"
+                                           FontSize="19"
+                                           FontWeight="SemiBold" />
+                                <TextBlock Text="HTTP round-trip حقيقي داخل الاختبارات، لكن لا يوجد هاتف أو Tailnet حي"
+                                           Margin="0,5,0,0"
+                                           FontSize="11"
+                                           Foreground="{StaticResource TextMutedBrush}" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding RemoteTransportRuntimeLabel}"
+                                       Margin="18,0,0,0"
+                                       FlowDirection="LeftToRight"
+                                       FontSize="10"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource WarningBrush}"
+                                       VerticalAlignment="Center" />
+                        </Grid>
+
+                        <UniformGrid Columns="4"
+                                     Margin="0,14,0,12">
+                            <Border Margin="0,0,8,0"
+                                    Padding="11"
+                                    Background="{StaticResource SurfaceRaisedBrush}"
+                                    BorderBrush="{StaticResource BorderBrush}"
+                                    BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="LISTENER"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource TextMutedBrush}" />
+                                    <TextBlock Text="{Binding RemoteTransportModeLabel}"
+                                               Margin="0,5,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="10"
+                                               FontWeight="SemiBold"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Text="127.0.0.1 / ::1 ONLY"
+                                               Margin="0,3,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource TextMutedBrush}" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Margin="8,0"
+                                    Padding="11"
+                                    Background="{StaticResource SurfaceRaisedBrush}"
+                                    BorderBrush="{StaticResource BorderBrush}"
+                                    BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="AUTHENTICATION"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource TextMutedBrush}" />
+                                    <TextBlock Text="{Binding RemoteTransportAuthLabel}"
+                                               Margin="0,5,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="9"
+                                               FontWeight="SemiBold"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Text="TOKEN HASH ONLY / SHORT-LIVED"
+                                               Margin="0,3,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource TextMutedBrush}" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Margin="8,0"
+                                    Padding="11"
+                                    Background="#FFF4D9"
+                                    BorderBrush="{StaticResource WarningBrush}"
+                                    BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="TAILNET / PHONE"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource TextMutedBrush}" />
+                                    <TextBlock Text="{Binding RemoteTransportTailnetLabel}"
+                                               Margin="0,5,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="9"
+                                               FontWeight="SemiBold" />
+                                    <TextBlock Text="{Binding RemoteTransportPhoneLabel}"
+                                               Margin="0,3,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="9" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Margin="8,0,0,0"
+                                    Padding="11"
+                                    Background="#FFF4D9"
+                                    BorderBrush="{StaticResource WarningBrush}"
+                                    BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="AUTHORITY"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="8"
+                                               Foreground="{StaticResource TextMutedBrush}" />
+                                    <TextBlock Text="{Binding RemoteTransportExecutionLabel}"
+                                               Margin="0,5,0,0"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="9"
+                                               FontWeight="SemiBold"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                        </UniformGrid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="Client → Bearer + Device/Session → Trust Gate → Replay Guard → Trusted Queue"
+                                       FlowDirection="LeftToRight"
+                                       FontSize="9"
+                                       Foreground="{StaticResource TextMutedBrush}"
+                                       TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="1"
+                                       Text="PUBLIC BIND: FORBIDDEN"
+                                       Margin="16,0,0,0"
+                                       FlowDirection="LeftToRight"
+                                       FontSize="9"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource WarningBrush}" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+<Border Grid.Row="6"
                         Padding="20"
                         Background="{StaticResource SurfaceBrush}"
                         BorderBrush="{StaticResource BorderBrush}"
@@ -681,7 +828,7 @@
                     </StackPanel>
                 </Border>
 
-<Border Grid.Row="6"
+<Border Grid.Row="8"
                         Padding="20"
                         Background="{StaticResource SurfaceBrush}"
                         BorderBrush="{StaticResource BorderBrush}"
@@ -794,7 +941,7 @@
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Row="12"
+                <Border Grid.Row="14"
                         Padding="20"
                         Background="{StaticResource SurfaceBrush}"
                         BorderBrush="{StaticResource BorderBrush}"
@@ -864,7 +1011,7 @@
                     </StackPanel>
                 </Border>
 
-                <Grid Grid.Row="14">
+                <Grid Grid.Row="16">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="20" />
@@ -903,12 +1050,12 @@
                             <TextBlock Text="المرحلة التالية"
                                        FontSize="14"
                                        FontWeight="SemiBold" />
-                            <TextBlock Text="Stage 6 — Authenticated Local / Tailscale Transport Pilot"
+                            <TextBlock Text="Stage 7 — Owner Device Enrollment + Tailnet Round Trip"
                                        Margin="0,6,0,0"
                                        FlowDirection="LeftToRight"
                                        FontSize="10"
                                        Foreground="{StaticResource TextMutedBrush}" />
-                            <TextBlock Text="LOCKED UNTIL STAGE 5 DUAL REVIEW + G0-C REAL ROUNDTRIP; EXECUTION STILL REQUIRES PHASE 0 PASS"
+                            <TextBlock Text="LOCKED UNTIL STAGE 6 DUAL REVIEW; REAL PHONE/TAILSCALE AND EXECUTION REQUIRE SEPARATE OWNER GATES"
                                        Margin="0,6,0,0"
                                        FlowDirection="LeftToRight"
                                        FontSize="9"

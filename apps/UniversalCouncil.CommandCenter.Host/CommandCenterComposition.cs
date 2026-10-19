@@ -11,7 +11,8 @@ public sealed record CommandCenterHostServices(
     ICouncilPlanner CouncilPlanner,
     IExecutionFabricProvider ExecutionFabric,
     IExecutionManifestValidator ExecutionManifestValidator,
-    IRemoteOwnerGatewayProvider RemoteOwnerGateway);
+    IRemoteOwnerGatewayProvider RemoteOwnerGateway,
+    IRemoteTransportProjectionProvider RemoteTransport);
 
 public static class CommandCenterComposition
 {
@@ -49,6 +50,14 @@ public static class CommandCenterComposition
         var remoteOwnerReader = new JsonRemoteOwnerGatewayReader(remoteOwnerPath);
         var remoteOwnerService = new RemoteOwnerProjectionService(remoteOwnerReader);
 
+        var remoteTransportPath = Path.Combine(
+            baseDirectory,
+            "state",
+            "remote-transport.json");
+
+        var remoteTransportReader = new JsonRemoteTransportReader(remoteTransportPath);
+        var remoteTransportService = new RemoteTransportProjectionService(remoteTransportReader);
+
         return new CommandCenterHostServices(
             stateService,
             stateService,
@@ -56,6 +65,7 @@ public static class CommandCenterComposition
             orchestrationService,
             executionService,
             executionService,
-            remoteOwnerService);
+            remoteOwnerService,
+            remoteTransportService);
     }
 }

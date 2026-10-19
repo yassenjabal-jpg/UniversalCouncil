@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -6,7 +7,7 @@ using UniversalCouncil.CommandCenter.Core;
 
 namespace UniversalCouncil.CommandCenter.Infrastructure;
 
-public sealed class JsonDeviceSessionRegistry : IDeviceSessionRegistry
+public sealed class JsonDeviceSessionRegistry : IDeviceSessionRegistry, IRemoteTransportAuthenticator
 {
     private readonly string path;
 
@@ -47,6 +48,128 @@ public sealed class JsonDeviceSessionRegistry : IDeviceSessionRegistry
             throw new RemoteOwnerGatewayException(
                 "Owner session is unregistered, revoked or expired.");
         }
+    }
+
+    public OwnerAuthorizationContext Authenticate(
+        string bearerToken,
+        string deviceId,
+        string sessionId,
+        DateTimeOffset now)
+    {
+        if (string.IsNullOrWhiteSpace(bearerToken) ||
+            string.IsNullOrWhiteSpace(deviceId) ||
+            string.IsNullOrWhiteSpace(sessionId))
+        {
+            throw new RemoteOwnerGatewayException(
+                "Bearer token, device ID and session ID are required.");
+        }
+
+        byte[] tokenBytes;
+        try
+        {
+            tokenBytes = DecodeBase64Url(bearerToken);
+        }
+        catch (FormatException exc)
+        {
+            throw new RemoteOwnerGatewayException(
+                "Bearer token format is invalid.",
+                exc);
+        }
+
+        if (tokenBytes.Length < 32)
+        {
+            throw new RemoteOwnerGatewayException(
+                "Bearer token does not meet the Stage 6 entropy floor.");
+        }
+
+        var document = Read();
+        var session = document.Sessions.SingleOrDefault(item =>
+            item.DeviceId == deviceId &&
+            item.SessionId == sessionId);
+
+        if (session is null ||
+            session.Revoked ||
+            session.ValidFrom > now ||
+            session.ExpiresAt <= now)
+        {
+            throw new RemoteOwnerGatewayException(
+                "Remote transport session is unknown, revoked or expired.");
+        }
+
+        if (session.ExpiresAt - session.ValidFrom > TimeSpan.FromMinutes(60))
+        {
+            throw new RemoteOwnerGatewayException(
+                "Remote transport session exceeds the Stage 6 TTL.");
+        }
+
+        if (string.IsNullOrWhiteSpace(session.TokenSha256) ||
+            session.AllowedTargets is null ||
+            session.AllowedTargets.Count == 0 ||
+            session.AllowedEffects is null ||
+            session.AllowedEffects.Count == 0)
+        {
+            throw new RemoteOwnerGatewayException(
+                "Remote transport session lacks authentication material or scope.");
+        }
+
+        byte[] expected;
+        try
+        {
+            expected = Convert.FromHexString(session.TokenSha256);
+        }
+        catch (FormatException exc)
+        {
+            throw new RemoteOwnerGatewayException(
+                "Stored transport token hash is invalid.",
+                exc);
+        }
+
+        var actual = SHA256.HashData(tokenBytes);
+        if (expected.Length != actual.Length ||
+            !CryptographicOperations.FixedTimeEquals(expected, actual))
+        {
+            throw new RemoteOwnerGatewayException(
+                "Remote transport authentication failed.");
+        }
+
+        var device = document.Devices.SingleOrDefault(item =>
+            item.OwnerId == session.OwnerId &&
+            item.DeviceId == session.DeviceId);
+
+        if (device is null ||
+            device.Revoked ||
+            device.ValidFrom > now ||
+            device.ExpiresAt <= now)
+        {
+            throw new RemoteOwnerGatewayException(
+                "Owner device is unregistered, revoked or expired.");
+        }
+
+        return new OwnerAuthorizationContext(
+            "OWNER",
+            true,
+            "stage6-local-session-token",
+            session.OwnerId,
+            session.DeviceId,
+            session.SessionId,
+            session.AllowedTargets.ToArray(),
+            session.AllowedEffects.ToArray(),
+            session.ValidFrom,
+            session.ExpiresAt,
+            false);
+    }
+
+    private static byte[] DecodeBase64Url(string value)
+    {
+        var normalized = value.Replace('-', '+').Replace('_', '/');
+        normalized += (normalized.Length % 4) switch
+        {
+            0 => string.Empty,
+            2 => "==",
+            3 => "=",
+            _ => throw new FormatException("Invalid base64url length.")
+        };
+        return Convert.FromBase64String(normalized);
     }
 
     private DeviceSessionRegistryDocument Read()
@@ -113,7 +236,10 @@ public sealed class JsonDeviceSessionRegistry : IDeviceSessionRegistry
         string SessionId,
         DateTimeOffset ValidFrom,
         DateTimeOffset ExpiresAt,
-        bool Revoked);
+        bool Revoked,
+        string? TokenSha256 = null,
+        IReadOnlyList<string>? AllowedTargets = null,
+        IReadOnlyList<string>? AllowedEffects = null);
 }
 
 public sealed class FileRemoteReplayLedger : IRemoteReplayLedger

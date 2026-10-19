@@ -9,13 +9,15 @@ internal sealed class MainWindowViewModel
         IOperationalStateProvider operationalStateProvider,
         IOrchestrationCatalogProvider orchestrationProvider,
         IExecutionFabricProvider executionFabricProvider,
-        IRemoteOwnerGatewayProvider remoteOwnerGatewayProvider)
+        IRemoteOwnerGatewayProvider remoteOwnerGatewayProvider,
+        IRemoteTransportProjectionProvider remoteTransportProvider)
     {
         Snapshot = snapshotProvider.GetSnapshot();
         Operational = operationalStateProvider.GetOperationalState();
         Orchestration = orchestrationProvider.GetCatalog();
         ExecutionFabric = executionFabricProvider.GetFabric();
         RemoteOwner = remoteOwnerGatewayProvider.GetGateway();
+        RemoteTransport = remoteTransportProvider.GetTransport();
     }
 
     public CommandCenterSnapshot Snapshot { get; }
@@ -27,6 +29,8 @@ internal sealed class MainWindowViewModel
     public ExecutionFabricProjection ExecutionFabric { get; }
 
     public RemoteOwnerGatewayProjection RemoteOwner { get; }
+
+    public RemoteTransportProjection RemoteTransport { get; }
 
     public string CouncilCountLabel =>
         $"{Orchestration.Council.CoreRoles.Count} أساسي + {Orchestration.Council.SpecialistRoles.Count} اختصاصي";
@@ -80,4 +84,28 @@ internal sealed class MainWindowViewModel
 
     public string RemoteOwnerQueueLabel =>
         $"{RemoteOwner.QueueDepth} queued / execution blocked";
+
+    public string RemoteTransportModeLabel =>
+        $"{RemoteTransport.Mode} / {RemoteTransport.ListenerScope}";
+
+    public string RemoteTransportAuthLabel =>
+        $"{RemoteTransport.AuthenticationBackend} / bearer required";
+
+    public string RemoteTransportRuntimeLabel =>
+        RemoteTransport.RuntimeListenerActive
+            ? "LISTENER ACTIVE"
+            : "LISTENER CONFIGURED / NOT RUNNING";
+
+    public string RemoteTransportTailnetLabel =>
+        RemoteTransport.TailscaleConnected
+            ? "TAILSCALE CONNECTED"
+            : "TAILSCALE NOT CONNECTED";
+
+    public string RemoteTransportPhoneLabel =>
+        RemoteTransport.PhoneConnected
+            ? "PHONE CONNECTED"
+            : "PHONE NOT CONNECTED";
+
+    public string RemoteTransportExecutionLabel =>
+        $"{RemoteTransport.ExecutionState} / live execution disabled";
 }

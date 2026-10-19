@@ -188,7 +188,24 @@ public sealed class RemoteCommandTrustService : IRemoteCommandTrustService
 
     public RemoteCommandReceipt EnqueueSynthetic(
         RemoteCommandEnvelope envelope,
-        OwnerAuthorizationContext authorization)
+        OwnerAuthorizationContext authorization) =>
+        Enqueue(
+            envelope,
+            authorization,
+            "LOCAL_SYNTHETIC_INGRESS_ONLY / PHASE0_REMOTE_COMMAND_TRUST_IN_TEST");
+
+    public RemoteCommandReceipt EnqueueAuthenticatedTransport(
+        RemoteCommandEnvelope envelope,
+        OwnerAuthorizationContext authorization) =>
+        Enqueue(
+            envelope,
+            authorization,
+            "AUTHENTICATED_LOOPBACK_TRANSPORT / EXECUTION_BLOCKED_PHASE0");
+
+    private RemoteCommandReceipt Enqueue(
+        RemoteCommandEnvelope envelope,
+        OwnerAuthorizationContext authorization,
+        string reason)
     {
         Validate(envelope, authorization);
 
@@ -227,7 +244,7 @@ public sealed class RemoteCommandTrustService : IRemoteCommandTrustService
             digest,
             trustState,
             "BLOCKED_PHASE0",
-            "LOCAL_SYNTHETIC_INGRESS_ONLY / PHASE0_REMOTE_COMMAND_TRUST_IN_TEST",
+            reason,
             now);
     }
 
@@ -279,6 +296,55 @@ public sealed class RemoteCommandTrustService : IRemoteCommandTrustService
                 approval.ExpiresAt,
                 false),
             now);
+    }
+
+    public RemoteApprovalRecord BuildAndValidateApproval(
+        RemoteApprovalRequest request,
+        OwnerAuthorizationContext authorization)
+    {
+        if (!authorization.Authenticated ||
+            authorization.Revoked ||
+            authorization.ExpiresAt <= utcNow())
+        {
+            throw new RemoteOwnerGatewayException(
+                "Authenticated Owner session is required for transported approval.");
+        }
+
+        var targetScope = new HashSet<string>(
+            authorization.AllowedTargets,
+            StringComparer.Ordinal);
+        if (request.AllowedTargets.Count == 0 ||
+            !request.AllowedTargets.All(targetScope.Contains))
+        {
+            throw new RemoteOwnerGatewayException(
+                "Approval target scope exceeds authenticated session.");
+        }
+
+        var effectScope = new HashSet<string>(
+            authorization.AllowedEffects,
+            StringComparer.Ordinal);
+        if (request.AllowedEffects.Count == 0 ||
+            !request.AllowedEffects.All(effectScope.Contains))
+        {
+            throw new RemoteOwnerGatewayException(
+                "Approval effect scope exceeds authenticated session.");
+        }
+
+        var approval = new RemoteApprovalRecord(
+            request.ApprovalId,
+            authorization.OwnerId,
+            authorization.DeviceId,
+            authorization.SessionId,
+            request.AllowedTargets.ToArray(),
+            request.AllowedEffects.ToArray(),
+            request.IssuedAt,
+            request.ExpiresAt,
+            true,
+            authorization.AuthenticationSource,
+            false);
+
+        ValidateApproval(approval);
+        return approval;
     }
 
     public static string StableDigest(RemoteCommandEnvelope envelope)
