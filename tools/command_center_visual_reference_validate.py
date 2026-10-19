@@ -156,8 +156,8 @@ def validate(root: Path, manifest: dict) -> None:
                     raise ValueError("Approval scope/hash/reviewer mismatch")
 
 
-
 if __name__ == "__main__":
     root = Path(__file__).resolve().parents[1]
-    validate(root, json.loads((root / "state/command-center/living-operations-reference-manifest.json").read_text()))
+    manifest_path = root / "state" / "command-center" / "living-operations-reference-manifest.json"
+    validate(root, json.loads(manifest_path.read_text()))
     print("Visual reference integrity: PASS (not aesthetic approval)")
