@@ -51,10 +51,7 @@ def build() -> dict[str, Any]:
         "schema_version": "1.0",
         "source_type": "project_local_repository_projection",
         "project_id": council["project_id"],
-        "source_files": [
-            {"path": path, "blob_sha": git_blob_sha(path)}
-            for path in SOURCES
-        ],
+        "source_files": [{"path": path, "blob_sha": git_blob_sha(path)} for path in SOURCES],
         "identity": {
             "id": identity["id"],
             "name_ar": identity["name_ar"],
