@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import hashlib
+import subprocess
 import json
 from pathlib import Path
 import xml.etree.ElementTree as ET
@@ -69,16 +69,18 @@ catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
 if catalog.get("schema_version") != "1.0" or catalog.get("source_type") != "repository_projection":
     raise SystemExit("Stage 3 catalog schema/source mismatch")
 
-def git_blob_sha(path: Path) -> str:
-    data = path.read_bytes()
-    header = ("blob " + str(len(data)) + "\0").encode("ascii")
-    return hashlib.sha1(header + data).hexdigest()
+def git_blob_sha(relative: str) -> str:
+    return subprocess.check_output(
+        ["git", "rev-parse", f"HEAD:{relative}"],
+        cwd=ROOT,
+        text=True,
+    ).strip()
 
 for source in catalog["source_files"]:
     source_path = ROOT / source["path"]
     if not source_path.exists():
         raise SystemExit(f"catalog source missing: {source['path']}")
-    actual = git_blob_sha(source_path)
+    actual = git_blob_sha(source["path"])
     if actual != source["blob_sha"]:
         raise SystemExit(
             f"catalog source digest drift: {source['path']} expected={source['blob_sha']} actual={actual}"
