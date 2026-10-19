@@ -4,7 +4,7 @@ import json
 import subprocess
 import tempfile
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from company.runtime.evidence_sync import (
@@ -54,6 +54,9 @@ class EvidenceSyncTests(unittest.TestCase):
             capture_output=True,
         ).stdout
         digest = hashlib.sha256(committed_bytes).hexdigest()
+        now = datetime.now(timezone.utc)
+        observed_at = now - timedelta(hours=1)
+        expires_at = now + timedelta(days=6)
         receipt = {
             "schema_version": "1.1",
             "receipt_id": "test-desktop",
@@ -64,8 +67,8 @@ class EvidenceSyncTests(unittest.TestCase):
             "component_version": source_commit,
             "host": "YASSIN",
             "session_id": "evidence-test-session",
-            "observed_at": "2026-10-12T12:00:00+03:00",
-            "expires_at": "2026-10-18T12:00:00+03:00",
+            "observed_at": observed_at.isoformat(),
+            "expires_at": expires_at.isoformat(),
             "verifier": "UniversalCouncil.test",
             "verifier_version": "1.0",
             "capability_id": "desktop_computer_use",
