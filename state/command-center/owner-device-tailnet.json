@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "source_type": "repository_projection",
+  "source_files": [
+    {
+      "path": "state/command-center/owner-device-tailnet-policy.json",
+      "blob_sha": "0a8d160ee9a6f5c8b9c8b1ad4f823df0cfedef28"
+    },
+    {
+      "path": "state/command-center/remote-transport.json",
+      "blob_sha": "44a9c9467e148aafcc0a1fef967892ef5b421aaf"
+    }
+  ],
+  "runtime": {
+    "mode": "OWNER_DEVICE_ENROLLMENT_TAILNET_PILOT",
+    "target_host": "YASSIN",
+    "required_stage6_mode": "LOOPBACK_AUTHENTICATED_PILOT",
+    "required_local_bind": "127.0.0.1",
+    "required_local_port": 47721,
+    "public_bind_allowed": false,
+    "router_port_forwarding_allowed": false,
+    "cors_allowed": false,
+    "tailscale_funnel_allowed": false,
+    "execution_authorized": false,
+    "execution_state": "BLOCKED_PHASE0"
+  },
+  "owner_device": {
+    "device_enrollment_required": true,
+    "device_enrolled": false,
+    "active_session_issued": false,
+    "session_plaintext_persisted": false,
+    "session_token_minimum_entropy_bytes": 32,
+    "session_ttl_max_minutes": 60,
+    "revocation_required": true,
+    "phone_round_trip_proven": false
+  },
+  "tailscale": {
+    "installation_state": "UNKNOWN",
+    "connection_state": "UNKNOWN",
+    "serve_configuration_state": "NOT_CONFIGURED",
+    "expected_backend": "http://127.0.0.1:47721",
+    "serve_private_tailnet_only": true,
+    "funnel_forbidden": true,
+    "magicdns_required_for_https_serve": true,
+    "host_probe_proven": false,
+    "tailnet_round_trip_proven": false
+  },
+  "host_evidence": {
+    "yassin_remote_agent_seen_online": true,
+    "remote_command_channel_state": "PAIRED_ONLINE_BUT_TOOL_QUOTA_BLOCKED",
+    "tailscale_status_observed": false,
+    "remote_transport_deployed_to_yassin": false,
+    "remote_transport_running_on_yassin": false,
+    "serve_running_on_yassin": false
+  },
+  "gates": {
+    "stage7_ci_foundation_passed": false,
+    "yassin_host_probe_passed": false,
+    "owner_device_enrollment_passed": false,
+    "tailscale_private_serve_passed": false,
+    "real_owner_phone_round_trip_passed": false,
+    "session_revocation_round_trip_passed": false,
+    "live_execution_authorized": false
+  }
+}
