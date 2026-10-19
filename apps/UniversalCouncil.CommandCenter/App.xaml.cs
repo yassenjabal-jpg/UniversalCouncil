@@ -20,7 +20,8 @@ public partial class App : System.Windows.Application
             services.Shell,
             services.Operational,
             services.Orchestration,
-            services.ExecutionFabric);
+            services.ExecutionFabric,
+            services.RemoteOwnerGateway);
 
         return new MainWindow(viewModel);
     }
