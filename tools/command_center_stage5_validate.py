@@ -53,8 +53,7 @@ for path in list(APP.rglob("*.cs")) + list(APP.rglob("*.xaml")):
     for token, reason in presentation_forbidden.items():
         if token.lower() in text.lower():
             raise SystemExit(
-                f"Stage 5 presentation boundary violation in {path.relative_to(ROOT)}: "
-                f"{token!r} — {reason}"
+                f"Stage 5 presentation boundary violation in {path.relative_to(ROOT)}: {token!r} — {reason}"
             )
 
 gateway_forbidden = {
@@ -74,18 +73,13 @@ gateway_forbidden = {
     "remote_shell.execute": "Stage 5 gateway may not dispatch shell authority",
 }
 
-gateway_text = "\n".join(
-    path.read_text(encoding="utf-8")
-    for path in GATEWAY_APP.rglob("*.cs")
-)
+gateway_text = "\n".join(path.read_text(encoding="utf-8") for path in GATEWAY_APP.rglob("*.cs"))
 for token, reason in gateway_forbidden.items():
     if token.lower() in gateway_text.lower():
         raise SystemExit(f"Stage 5 gateway violation: {token!r} — {reason}")
 
 actual_cases = {
-    line.split('"')[1]
-    for line in gateway_text.splitlines()
-    if line.strip().startswith('case "') and '"' in line
+    line.split('"')[1] for line in gateway_text.splitlines() if line.strip().startswith('case "') and '"' in line
 }
 expected_cases = {
     "status",
@@ -95,25 +89,16 @@ expected_cases = {
     "validate-approval",
 }
 if actual_cases != expected_cases:
-    raise SystemExit(
-        f"RemoteGateway CLI drifted. expected={sorted(expected_cases)} actual={sorted(actual_cases)}"
-    )
+    raise SystemExit(f"RemoteGateway CLI drifted. expected={sorted(expected_cases)} actual={sorted(actual_cases)}")
 
-project = ET.fromstring(
-    (APP / "UniversalCouncil.CommandCenter.csproj").read_text(encoding="utf-8")
-)
-refs = {
-    item.attrib.get("Include", "").replace("\\", "/")
-    for item in project.iter("ProjectReference")
-}
+project = ET.fromstring((APP / "UniversalCouncil.CommandCenter.csproj").read_text(encoding="utf-8"))
+refs = {item.attrib.get("Include", "").replace("\\", "/") for item in project.iter("ProjectReference")}
 expected_refs = {
     "../UniversalCouncil.CommandCenter.Core/UniversalCouncil.CommandCenter.Core.csproj",
     "../UniversalCouncil.CommandCenter.Host/UniversalCouncil.CommandCenter.Host.csproj",
 }
 if refs != expected_refs:
-    raise SystemExit(
-        f"Presentation references drifted. expected={sorted(expected_refs)} actual={sorted(refs)}"
-    )
+    raise SystemExit(f"Presentation references drifted. expected={sorted(expected_refs)} actual={sorted(refs)}")
 
 projection = json.loads(PROJECTION.read_text(encoding="utf-8"))
 policy = json.loads(POLICY.read_text(encoding="utf-8"))
@@ -122,6 +107,7 @@ state = json.loads(STATE.read_text(encoding="utf-8"))
 if projection.get("schema_version") != "1.0" or projection.get("source_type") != "repository_projection":
     raise SystemExit("Stage 5 projection schema/source mismatch")
 
+
 def blob_sha(relative: str) -> str:
     return subprocess.check_output(
         ["git", "rev-parse", f"HEAD:{relative}"],
@@ -129,15 +115,14 @@ def blob_sha(relative: str) -> str:
         text=True,
     ).strip()
 
+
 for source in projection["source_files"]:
     path = ROOT / source["path"]
     if not path.exists():
         raise SystemExit(f"Stage 5 source missing: {source['path']}")
     actual = blob_sha(source["path"])
     if actual != source["blob_sha"]:
-        raise SystemExit(
-            f"Stage 5 source drift: {source['path']} expected={source['blob_sha']} actual={actual}"
-        )
+        raise SystemExit(f"Stage 5 source drift: {source['path']} expected={source['blob_sha']} actual={actual}")
 
 phase0 = projection["phase0_remote_command_source"]
 if phase0["branch"] != "phase0/feasibility-adversarial-prototype":
@@ -150,10 +135,7 @@ expected_phase0_blobs = {
     "company/config/phase0_feasibility.json": "57b26c4d8fc65c9e866ddefd826784f7826c7f24",
     "company/tests/test_phase0_feasibility.py": "f0ac55efd4e3462e0a1a56b376140db07fd20739",
 }
-actual_phase0_blobs = {
-    item["path"]: item["blob_sha"]
-    for item in phase0["files"]
-}
+actual_phase0_blobs = {item["path"]: item["blob_sha"] for item in phase0["files"]}
 if actual_phase0_blobs != expected_phase0_blobs:
     raise SystemExit("Stage 5 Phase 0 source blob pins drifted")
 
@@ -178,15 +160,17 @@ if gateway["phase0_remote_trust_status"] != "IN_TEST":
     raise SystemExit("Stage 5 G0-C truth drifted")
 
 runtime = projection["runtime_truth"]
-if any((
-    runtime["registered_devices"] != 0,
-    runtime["registered_sessions"] != 0,
-    runtime["queue_depth"] != 0,
-    runtime["phone_connected"],
-    runtime["tailscale_connected"],
-    runtime["github_transport_connected"],
-    runtime["chat_transport_connected"],
-)):
+if any(
+    (
+        runtime["registered_devices"] != 0,
+        runtime["registered_sessions"] != 0,
+        runtime["queue_depth"] != 0,
+        runtime["phone_connected"],
+        runtime["tailscale_connected"],
+        runtime["github_transport_connected"],
+        runtime["chat_transport_connected"],
+    )
+):
     raise SystemExit("Stage 5 repository projection fabricates live remote runtime state")
 
 service = projection["service"]
