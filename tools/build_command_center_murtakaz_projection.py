@@ -13,6 +13,7 @@ SOURCES = [
     "state/command-center/project-governance/inheritance-lock.json",
     "state/command-center/project-governance/project-council.json",
     "state/command-center/project-governance/product-studio.json",
+    "state/command-center/project-governance/al-murtakaz-approval-policy.json",
 ]
 
 
@@ -33,6 +34,7 @@ def build() -> dict[str, Any]:
     lock = load(SOURCES[1])
     council = load(SOURCES[2])
     studio = load(SOURCES[3])
+    approval = load(SOURCES[4])
 
     if identity["id"] != "al-murtakaz":
         raise SystemExit("Murtakaz identity drifted")
@@ -46,6 +48,10 @@ def build() -> dict[str, Any]:
         raise SystemExit("Murtakaz workshop may not gain execution authority")
     if studio["authority"]["live_publish_authority"]:
         raise SystemExit("Murtakaz workshop may not gain live-publish authority")
+    if approval["status"] != "OWNER_DIRECTIVE_ACTIVE":
+        raise SystemExit("Murtakaz mandatory approval policy must remain active")
+    if not approval["implicit_approval_forbidden"]:
+        raise SystemExit("Murtakaz approval may not become implicit")
 
     return {
         "schema_version": "1.0",
@@ -80,6 +86,19 @@ def build() -> dict[str, Any]:
             "handoff": studio["handoff"],
             "prototype_rules": studio["prototype_rules"],
             "motion_rules": studio["motion_rules"],
+        },
+        "mandatory_approval": {
+            "policy_id": approval["policy_id"],
+            "status": approval["status"],
+            "rule": approval["rule"],
+            "implementation_requires": approval["implementation_requires"],
+            "adoption_requires": approval["adoption_requires"],
+            "completion_requires": approval["completion_requires"],
+            "merge_requires": approval["merge_requires"],
+            "release_requires": approval["release_requires"],
+            "next_phase_requires": approval["next_phase_requires"],
+            "implicit_approval_forbidden": approval["implicit_approval_forbidden"],
+            "material_change_invalidates_prior_approval": approval["material_change_invalidates_prior_approval"],
         },
         "model_control": {
             "role_model_separation": True,
