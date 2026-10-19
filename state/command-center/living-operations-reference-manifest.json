@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "manifest_id": "living-operations-reference-only-visual-lock",
+  "status": "OWNER_ADOPTED_MURTAKAZ_ENFORCED",
+  "source_of_truth": "APPROVED_REFERENCE_IMAGES_ONLY",
+  "references": [
+    {
+      "order": 1,
+      "role": "home_owner_workspace",
+      "conversation_file_id": "file_00000000c2108210b73352f1e25dc070"
+    },
+    {
+      "order": 2,
+      "role": "living_project_workspace",
+      "conversation_file_id": "file_000000004288820abd9e66e799daf2d8"
+    },
+    {
+      "order": 3,
+      "role": "software_autopilot_project",
+      "conversation_file_id": "file_00000000cab081f5aadc27ca952849f1"
+    },
+    {
+      "order": 4,
+      "role": "studio_project",
+      "conversation_file_id": "file_000000004e988246a3a00c53239c2aef"
+    },
+    {
+      "order": 5,
+      "role": "owner_decision_mode",
+      "conversation_file_id": "file_00000000e98c820a89eddc854f40afd6"
+    },
+    {
+      "order": 6,
+      "role": "checkpoint_recovery_fork",
+      "conversation_file_id": "file_00000000780c820ab6814221ca74c81e"
+    },
+    {
+      "order": 7,
+      "role": "pulse_visual_project_story",
+      "conversation_file_id": "file_00000000bf8c8243874eb0e778b5b1f1"
+    },
+    {
+      "order": 8,
+      "role": "project_complete_work_receipt",
+      "conversation_file_id": "file_00000000d8c081f4b2695601a6fcc56c"
+    }
+  ],
+  "rules": {
+    "reference_first": true,
+    "delta_only_generation": true,
+    "text_only_reinvention_forbidden": true,
+    "new_palette_without_review_forbidden": true,
+    "human_role_avatars_forbidden": true,
+    "dark_neon_cyberpunk_forbidden": true,
+    "architecture_decorative_theme_forbidden": true,
+    "generic_saas_dashboard_drift_forbidden": true,
+    "generated_output_requires_murtakaz_review": true
+  },
+  "rejected_recent_generations": [
+    "f75c9844-03fb-4c7b-857b-95babf3e4269",
+    "176cb805-72ec-4b9f-b8f8-1f311f7d54ab",
+    "7a9017af-197a-4fed-8665-57ea317f2bd9"
+  ],
+  "rejected_classification": "REJECTED_VISUAL_DRIFT",
+  "final_visual_phase_state": "IN_PROGRESS",
+  "final_approval_requires": "APPROVED_BY_AL_MURTAKAZ"
+}
