@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "phase_id": "living-operations-p1-visual-direction",
+  "status": "IN_PROGRESS",
+  "scope": "VISUAL_INTERACTION_MOTION_ONLY",
+  "runtime_authority": false,
+  "stage8_opened": false,
+  "governance": {
+    "system": "al-murtakaz",
+    "mandatory_approval_policy": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
+    "final_approval_required": true,
+    "current_decision": "APPROVE_TO_CONTINUE_VISUAL_DIRECTION"
+  },
+  "required_flagship_surfaces": [
+    "home_owner_workspace",
+    "living_project_workspace",
+    "owner_decision_mode",
+    "fork_recovery",
+    "project_complete_work_receipt"
+  ],
+  "required_systems": [
+    "role_sigils",
+    "motion_language",
+    "interactive_semantic_objects",
+    "filmstrip",
+    "autopilot_visual_current",
+    "evidence_peek",
+    "tool_dock",
+    "reduced_motion"
+  ],
+  "android": {
+    "semantic_parity_required": true,
+    "desktop_layout_copy_forbidden": true
+  },
+  "exit_requires": "APPROVED_BY_AL_MURTAKAZ",
+  "material_change_reopens_review": true
+}
