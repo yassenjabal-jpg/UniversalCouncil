@@ -21,11 +21,13 @@ def load(relative: str) -> dict[str, Any]:
 
 
 def git_blob_sha(relative: str) -> str:
-    import hashlib
+    import subprocess
 
-    data = (ROOT / relative).read_bytes()
-    header = ("blob " + str(len(data)) + "\0").encode("ascii")
-    return hashlib.sha1(header + data).hexdigest()
+    return subprocess.check_output(
+        ["git", "rev-parse", f"HEAD:{relative}"],
+        cwd=ROOT,
+        text=True,
+    ).strip()
 
 
 def find_first(value: Any, key: str) -> Any:
