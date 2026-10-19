@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "prototype_id": "p1-home-reference-overlay",
+  "status": "INTERACTION_HARNESS_ACTIVE",
+  "visual_authority": false,
+  "canonical_parent": {
+    "role": "home_owner_workspace",
+    "path": "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+    "sha256": "7cb7d12f8819576ad4992158f6f0eb098ae3350a3684118ffc43192ea56749eb"
+  },
+  "prototype_paths": {
+    "html": "docs/operations/command-center/living-operations/prototypes/home-reference-overlay/index.html",
+    "css": "docs/operations/command-center/living-operations/prototypes/home-reference-overlay/styles.css",
+    "js": "docs/operations/command-center/living-operations/prototypes/home-reference-overlay/app.js"
+  },
+  "council_members": [
+    "المالك",
+    "الاستراتيجية",
+    "البحث",
+    "التحقق",
+    "التنفيذ",
+    "الإبداع",
+    "البيانات",
+    "التعلم"
+  ],
+  "supported_interactions": [
+    "role_context",
+    "model_reasoning_inspector",
+    "composer_routing_context",
+    "project_context",
+    "owner_panel_context",
+    "autopilot_context",
+    "tool_dock_context",
+    "global_navigation_context",
+    "keyboard_focus",
+    "debug_hotspot_overlay"
+  ],
+  "forbidden_claims": [
+    "visual_artifact_approved",
+    "runtime_execution_enabled",
+    "stage8_opened",
+    "p1_complete"
+  ],
+  "next_visual_job": "P1-HOME-ARTIFACT-002",
+  "reusable_after_desktop_tooling_returns": true
+}
