@@ -2,12 +2,12 @@
   "schema_version": "1.0",
   "source_type": "repository_projection",
   "source_label": "إسقاط مستودع مضمّن للقراءة فقط",
-  "baseline_revision": "2073b0ff5800156e6d908efc43493715c83f22bc",
+  "baseline_revision": "d43d2a6ef5a971c9049ca0ae314eafe48f00db1f",
   "project_id": "universalcouncil-command-center",
   "project_label": "UniversalCouncil Command Center",
-  "stage_id": "stage4-execution-fabric",
-  "stage_label": "المرحلة 4 — YASSIN Execution Service + Provider Fabric",
-  "stage_state": "OPEN / SAFE DISABLED",
+  "stage_id": "stage5-remote-owner-gateway",
+  "stage_label": "المرحلة 5 — Remote Owner + Secure Command Gateway",
+  "stage_state": "OPEN / LOCAL TRUST GATE ONLY",
   "execution_enabled": false,
   "phase_gate_label": "Phase 0 غير مكتملة — التنفيذ الحقيقي مقفول",
   "evidence": [
@@ -41,17 +41,24 @@
   ],
   "approvals": [
     {
-      "id": "APR-STAGE4-OPEN",
-      "title": "فتح Stage 4",
+      "id": "APR-STAGE5-OPEN",
+      "title": "فتح Stage 5",
       "state": "APPROVED",
-      "scope": "Execution Service contracts / provider fabric / synthetic validation only",
-      "evidence_reference": "owner-directive:2026-10-19-continue-work"
+      "scope": "Remote command trust / synthetic local queue / device-session contracts only",
+      "evidence_reference": "owner-directive:2026-10-19-do-it"
+    },
+    {
+      "id": "APR-REMOTE-LIVE-TRANSPORT",
+      "title": "تفعيل اتصال الهاتف أو Tailscale أو GitHub/Chat transport",
+      "state": "BLOCKED",
+      "scope": "Any live remote ingress",
+      "evidence_reference": "PHASE0_G0-C_REAL_ROUNDTRIP_REQUIRED"
     },
     {
       "id": "APR-LIVE-EXECUTION",
       "title": "السماح بالتنفيذ الحقيقي على YASSIN",
       "state": "BLOCKED",
-      "scope": "Shell / GUI / Remote / Provider dispatch",
+      "scope": "Shell / GUI / Provider dispatch",
       "evidence_reference": "PHASE0_ALL_GATES_PASS_REQUIRED"
     }
   ],
