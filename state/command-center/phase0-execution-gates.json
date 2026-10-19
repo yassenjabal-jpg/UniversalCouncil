@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "source_branch": "phase0/feasibility-adversarial-prototype",
+  "source_head_sha": "63a4a446bc1e87f5352915f1e86c463de82e9b81",
+  "status_document": "docs/operations/PHASE0_STATUS_2026-10-19.md",
+  "status_blob_sha": "454f07f73a631627eae2eff2f8c229c8eb270ee1",
+  "gates": {
+    "G0-A": {
+      "name": "Secure Agent Boundary",
+      "status": "IN_TEST"
+    },
+    "G0-B": {
+      "name": "Unattended GUI Reality",
+      "status": "BLOCKED_BY_PROVIDER_LIMIT"
+    },
+    "G0-C": {
+      "name": "Remote Command Trust",
+      "status": "IN_TEST"
+    },
+    "G0-D": {
+      "name": "Model / Provider Failure",
+      "status": "IN_TEST"
+    }
+  },
+  "live_execution_authorized": false,
+  "reason": "Phase 0 has not reached PASS on all required live-execution gates."
+}
