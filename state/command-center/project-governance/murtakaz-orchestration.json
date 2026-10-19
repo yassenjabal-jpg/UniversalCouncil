@@ -1,0 +1,430 @@
+{
+  "schema_version": "1.0",
+  "source_type": "project_local_repository_projection",
+  "project_id": "universal-council-command-center",
+  "source_files": [
+    {
+      "path": "state/command-center/project-governance/al-murtakaz.json",
+      "blob_sha": "ee59b29b96d802ceb63df0184511f90d3545ab4b"
+    },
+    {
+      "path": "state/command-center/project-governance/inheritance-lock.json",
+      "blob_sha": "8de3c39d9ce1bfdb247203133e2916248bd7aa7b"
+    },
+    {
+      "path": "state/command-center/project-governance/project-council.json",
+      "blob_sha": "fb9331c176cf7532f90307a0dad556eca382fc5c"
+    },
+    {
+      "path": "state/command-center/project-governance/product-studio.json",
+      "blob_sha": "64fdc22f0bd140925f249956600fc04f53a4b75a"
+    }
+  ],
+  "identity": {
+    "id": "al-murtakaz",
+    "name_ar": "المرتكز",
+    "governance_name_ar": "هيئة المرتكز",
+    "workshop_name_ar": "مشغل المرتكز"
+  },
+  "governance": {
+    "profile_id": "al-murtakaz-governance",
+    "status": "ACTIVE_FOR_PROJECT_REVIEW",
+    "core_roles": [
+      {
+        "id": "cc_project_chair",
+        "name": "Project Chair / Product Decision Controller",
+        "inherits_from": [
+          "chair"
+        ],
+        "owns": [
+          "project_framing",
+          "activation",
+          "decision_rights",
+          "review_expiry"
+        ]
+      },
+      {
+        "id": "cc_product_truth",
+        "name": "Product Truth & Evidence Lead",
+        "inherits_from": [
+          "evidence"
+        ],
+        "owns": [
+          "truth_state",
+          "evidence_provenance",
+          "fixture_isolation",
+          "completion_claims"
+        ]
+      },
+      {
+        "id": "cc_red_team",
+        "name": "Product Red Team",
+        "inherits_from": [
+          "redteam"
+        ],
+        "owns": [
+          "falsification",
+          "dead_surface_challenge",
+          "failure_modes",
+          "recovery_theater"
+        ]
+      },
+      {
+        "id": "cc_architecture_execution",
+        "name": "Architecture & Execution Reviewer",
+        "inherits_from": [
+          "execution",
+          "software"
+        ],
+        "owns": [
+          "feasibility",
+          "architecture_boundaries",
+          "reversibility",
+          "implementation_sequence"
+        ]
+      },
+      {
+        "id": "cc_security_remote_trust",
+        "name": "Security, Privacy & Remote Trust Reviewer",
+        "inherits_from": [
+          "risk",
+          "security"
+        ],
+        "owns": [
+          "remote_trust",
+          "privacy",
+          "secrets",
+          "authority_boundaries",
+          "destructive_effects"
+        ]
+      },
+      {
+        "id": "cc_owner_experience",
+        "name": "Owner Experience & Human Factors Reviewer",
+        "inherits_from": [
+          "human",
+          "design"
+        ],
+        "owns": [
+          "usability",
+          "cognitive_load",
+          "rtl",
+          "accessibility_burden",
+          "no_dead_surface"
+        ]
+      },
+      {
+        "id": "cc_durable_autopilot",
+        "name": "Durable Autopilot & Recovery Reviewer",
+        "inherits_from": [
+          "execution",
+          "risk",
+          "software"
+        ],
+        "owns": [
+          "checkpoint",
+          "recovery",
+          "fork",
+          "replay",
+          "retry",
+          "suspend_resume",
+          "loop_detection"
+        ]
+      },
+      {
+        "id": "cc_cross_platform",
+        "name": "Cross-Platform Client Semantics Reviewer",
+        "inherits_from": [
+          "software",
+          "design"
+        ],
+        "owns": [
+          "object_identity",
+          "event_ordering",
+          "snapshot_delta",
+          "windows_android_semantic_parity"
+        ]
+      },
+      {
+        "id": "cc_ai_runtime",
+        "name": "AI Runtime, Model, Memory & Eval Reviewer",
+        "inherits_from": [
+          "software",
+          "data",
+          "evidence"
+        ],
+        "owns": [
+          "model_routing",
+          "reasoning_effort",
+          "fallback",
+          "memory_scope",
+          "evals",
+          "tracing"
+        ]
+      },
+      {
+        "id": "cc_synthesis",
+        "name": "Project Synthesis & Alternatives",
+        "inherits_from": [
+          "synthesis"
+        ],
+        "owns": [
+          "alternatives",
+          "tradeoffs",
+          "hybrids",
+          "minority_preservation"
+        ]
+      }
+    ],
+    "on_demand_specialists": [
+      "windows_wpf",
+      "android_compose",
+      "motion_interaction",
+      "accessibility",
+      "performance",
+      "commercial_value"
+    ],
+    "mandatory_routes": {
+      "autopilot_recovery": [
+        "cc_durable_autopilot",
+        "cc_product_truth",
+        "cc_architecture_execution"
+      ],
+      "remote_owner": [
+        "cc_security_remote_trust",
+        "cc_cross_platform",
+        "cc_product_truth"
+      ],
+      "model_reasoning_fallback": [
+        "cc_ai_runtime",
+        "cc_owner_experience",
+        "cc_product_truth"
+      ],
+      "major_ux": [
+        "cc_owner_experience",
+        "cc_product_truth",
+        "cc_red_team"
+      ],
+      "cross_platform_state": [
+        "cc_cross_platform",
+        "cc_product_truth"
+      ],
+      "architecture_boundary": [
+        "cc_architecture_execution",
+        "cc_red_team"
+      ]
+    },
+    "default_modes": {
+      "minor_reversible_craft": "LIGHT",
+      "material_product_change": "COUNCIL",
+      "authority_security_durability_governance": "ARENA"
+    },
+    "blockers": [
+      "TRUTH_BLOCKER",
+      "SECURITY_BLOCKER",
+      "AUTHORITY_BLOCKER",
+      "DURABILITY_BLOCKER",
+      "ACCESSIBILITY_BLOCKER",
+      "ARCHITECTURE_BOUNDARY_BLOCKER",
+      "CROSS_PLATFORM_TRUTH_BLOCKER"
+    ],
+    "owner_gates": [
+      "locked_art_direction_change",
+      "authority_expansion",
+      "destructive_or_irreversible_behavior",
+      "public_external_effect",
+      "credentials_spend_subscription",
+      "material_privacy_tradeoff",
+      "no_silent_fallback_policy_change",
+      "project_governance_replacement"
+    ],
+    "truth_rules": {
+      "unknown_is_never_success": true,
+      "recommendation_is_not_authority": true,
+      "role_is_not_independent_agent_without_runtime_evidence": true
+    }
+  },
+  "workshop": {
+    "profile_id": "al-murtakaz-workshop",
+    "status": "ACTIVE_FOR_PROJECT_DESIGN",
+    "operating_model": {
+      "mode": "PRODUCT_DESIGN_STUDIO_WITH_GATED_VERTICAL_SLICES",
+      "principle": "audit_then_experience_then_visual_motion_then_components_then_vertical_slices_then_assurance_then_handoff",
+      "one_authoritative_craft_owner_per_artifact": true,
+      "parallel_read_only_review_allowed": true,
+      "silent_cross_edit_forbidden": true
+    },
+    "functions": [
+      {
+        "id": "cc_studio_producer",
+        "name": "Product Studio Producer",
+        "status": "CONTROL_PLANE_ALWAYS_ACTIVE"
+      },
+      {
+        "id": "cc_experience_architect",
+        "name": "Experience Architect",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_interaction_director",
+        "name": "Interaction Choreography Director",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_visual_systems",
+        "name": "Visual Systems Director",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_motion_systems",
+        "name": "Motion Systems Director",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_sigil_iconography",
+        "name": "Role Sigil & Iconography Designer",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_design_systems_engineer",
+        "name": "Design Systems Engineer",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_windows_experience",
+        "name": "Windows Experience Lead",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_android_experience",
+        "name": "Android Experience Lead",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_prototype_engineer",
+        "name": "Prototype & Interaction Engineer",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_accessibility_clearance",
+        "name": "Accessibility Reviewer",
+        "status": "MANDATORY_CLEARANCE"
+      },
+      {
+        "id": "cc_visual_qa",
+        "name": "Visual Fidelity & QA Reviewer",
+        "status": "MANDATORY_CLEARANCE"
+      },
+      {
+        "id": "cc_human_assistance",
+        "name": "Human Assistance Pool",
+        "status": "ON_DEMAND_ASSISTANCE"
+      }
+    ],
+    "phases": [
+      {
+        "id": "PS0",
+        "name": "Project Audit",
+        "gate": "PROJECT_CONTEXT_LOCK"
+      },
+      {
+        "id": "PS1",
+        "name": "Experience Architecture",
+        "gate": "EXPERIENCE_ARCHITECTURE_LOCK"
+      },
+      {
+        "id": "PS2",
+        "name": "Living Visual + Motion System",
+        "gate": "VISUAL_MOTION_LOCK"
+      },
+      {
+        "id": "PS3",
+        "name": "Component System",
+        "gate": "COMPONENT_SYSTEM_LOCK"
+      },
+      {
+        "id": "PS4",
+        "name": "Windows Vertical Slice",
+        "gate": "WINDOWS_PROTOTYPE_ACCEPTED"
+      },
+      {
+        "id": "PS5",
+        "name": "Android Companion Vertical Slice",
+        "gate": "ANDROID_PROTOTYPE_ACCEPTED"
+      },
+      {
+        "id": "PS6",
+        "name": "Cross-Platform Semantics",
+        "gate": "CLIENT_SEMANTIC_PARITY_ACCEPTED"
+      },
+      {
+        "id": "PS7",
+        "name": "Accessibility + Performance + Fidelity",
+        "gate": "DESIGN_ASSURANCE_ACCEPTED"
+      },
+      {
+        "id": "PS8",
+        "name": "Engineering Handoff",
+        "gate": "IMPLEMENTATION_READY"
+      }
+    ],
+    "mandatory_clearance": [
+      "cc_accessibility_clearance",
+      "cc_visual_qa"
+    ],
+    "council_clearance_required_for": {
+      "truth_bearing_surface": [
+        "cc_product_truth"
+      ],
+      "remote_authority_surface": [
+        "cc_security_remote_trust"
+      ],
+      "autopilot_recovery_surface": [
+        "cc_durable_autopilot",
+        "cc_product_truth"
+      ],
+      "architecture_sensitive_surface": [
+        "cc_architecture_execution"
+      ]
+    },
+    "handoff": {
+      "acceptance_required": true,
+      "return_ticket_required_on_rejection": true,
+      "downstream_direct_repair_forbidden": true
+    },
+    "prototype_rules": {
+      "fixtures_must_be_labeled": true,
+      "fixtures_must_not_enter_runtime_truth": true,
+      "fixtures_must_not_enter_evidence_truth": true
+    },
+    "motion_rules": {
+      "motion_must_have_semantic_purpose": true,
+      "reduced_motion_required": true,
+      "no_fake_activity": true
+    }
+  },
+  "model_control": {
+    "role_model_separation": true,
+    "owner_controlled_selection": true,
+    "silent_fallback_allowed": false,
+    "selection_precedence": [
+      "TASK_OVERRIDE",
+      "ROLE_OVERRIDE",
+      "PROJECT_DEFAULT",
+      "GLOBAL_DEFAULT"
+    ]
+  },
+  "authority": {
+    "execution_authority": false,
+    "stage8_opened": false,
+    "parent_mutation_allowed": false,
+    "owner_final_authority": true
+  },
+  "runtime": {
+    "task_state": "NO_LIVE_TASK",
+    "active_governance_roles": [],
+    "active_workshop_function": null,
+    "active_model": null,
+    "provider_call_in_flight": false
+  }
+}
