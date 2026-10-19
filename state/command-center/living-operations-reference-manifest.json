@@ -59,9 +59,17 @@
   "rejected_recent_generations": [
     "f75c9844-03fb-4c7b-857b-95babf3e4269",
     "176cb805-72ec-4b9f-b8f8-1f311f7d54ab",
-    "7a9017af-197a-4fed-8665-57ea317f2bd9"
+    "7a9017af-197a-4fed-8665-57ea317f2bd9",
+    "b3607b06-5137-4d4b-8126-43b9a4e64f68",
+    "bd25818f-6f59-4407-bec0-af476378df58",
+    "0289c00b-59de-422f-9532-5ed20d7b817a"
   ],
   "rejected_classification": "REJECTED_VISUAL_DRIFT",
   "final_visual_phase_state": "IN_PROGRESS",
-  "final_approval_requires": "APPROVED_BY_AL_MURTAKAZ"
+  "final_approval_requires": "APPROVED_BY_AL_MURTAKAZ",
+  "owner_directive_2026_10_19": {
+    "directive": "DO_NOT_ADOPT_ANY_RECENT_GENERATED_DESIGNS_AFTER_THE_EIGHT_CANONICAL_REFERENCES",
+    "status": "ACTIVE",
+    "effect": "ALL_RECENT_GENERATED_DESIGNS_ARE_REJECTED_VISUAL_DRIFT_AND_MUST_NOT_BE_USED_AS_REFERENCE"
+  }
 }
