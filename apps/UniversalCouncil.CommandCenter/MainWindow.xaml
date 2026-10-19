@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource CanvasBrush}"
         FlowDirection="RightToLeft">
-    <Grid>
+    <Grid Background="{StaticResource CanvasBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="232" />
             <ColumnDefinition Width="*" />
