@@ -3,7 +3,7 @@ name: Command Center Stage 1
 on:
   push:
     branches:
-      - 'command-center/**'
+      - 'command-center/stage1-*'
     paths:
       - 'apps/UniversalCouncil.CommandCenter/**'
       - 'apps/UniversalCouncil.CommandCenter.Core/**'
@@ -13,6 +13,8 @@ on:
       - 'docs/operations/command-center/**'
       - '.github/workflows/command-center-stage1.yml'
   pull_request:
+    branches:
+      - 'phase0/**'
     paths:
       - 'apps/UniversalCouncil.CommandCenter/**'
       - 'apps/UniversalCouncil.CommandCenter.Core/**'

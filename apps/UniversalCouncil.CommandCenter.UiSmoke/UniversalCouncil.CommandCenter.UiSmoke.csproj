@@ -13,4 +13,11 @@
   <ItemGroup>
     <ProjectReference Include="..\UniversalCouncil.CommandCenter\UniversalCouncil.CommandCenter.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\state\command-center\command-center-state.json"
+             Link="state\command-center-state.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
