@@ -8,12 +8,14 @@ internal sealed class MainWindowViewModel
         ICommandCenterSnapshotProvider snapshotProvider,
         IOperationalStateProvider operationalStateProvider,
         IOrchestrationCatalogProvider orchestrationProvider,
-        IExecutionFabricProvider executionFabricProvider)
+        IExecutionFabricProvider executionFabricProvider,
+        IRemoteOwnerGatewayProvider remoteOwnerGatewayProvider)
     {
         Snapshot = snapshotProvider.GetSnapshot();
         Operational = operationalStateProvider.GetOperationalState();
         Orchestration = orchestrationProvider.GetCatalog();
         ExecutionFabric = executionFabricProvider.GetFabric();
+        RemoteOwner = remoteOwnerGatewayProvider.GetGateway();
     }
 
     public CommandCenterSnapshot Snapshot { get; }
@@ -23,6 +25,8 @@ internal sealed class MainWindowViewModel
     public OrchestrationCatalogProjection Orchestration { get; }
 
     public ExecutionFabricProjection ExecutionFabric { get; }
+
+    public RemoteOwnerGatewayProjection RemoteOwner { get; }
 
     public string CouncilCountLabel =>
         $"{Orchestration.Council.CoreRoles.Count} أساسي + {Orchestration.Council.SpecialistRoles.Count} اختصاصي";
@@ -59,4 +63,21 @@ internal sealed class MainWindowViewModel
 
     public string ProviderSummaryLabel =>
         $"{ExecutionFabric.Providers.Count} providers / live dispatch disabled";
+
+    public string RemoteOwnerModeLabel =>
+        $"{RemoteOwner.Mode} / {RemoteOwner.TargetHost}";
+
+    public string RemoteOwnerTrustLabel =>
+        $"G0-C: {RemoteOwner.Phase0RemoteTrustStatus}";
+
+    public string RemoteOwnerConnectionLabel =>
+        RemoteOwner.PhoneConnected || RemoteOwner.TailscaleConnected
+            ? "REMOTE TRANSPORT CONNECTED"
+            : "NO LIVE REMOTE TRANSPORT";
+
+    public string RemoteOwnerRegistryLabel =>
+        $"{RemoteOwner.RegisteredDevices} devices / {RemoteOwner.RegisteredSessions} sessions";
+
+    public string RemoteOwnerQueueLabel =>
+        $"{RemoteOwner.QueueDepth} queued / execution blocked";
 }
