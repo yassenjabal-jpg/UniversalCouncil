@@ -128,29 +128,37 @@
   },
   "visual_jobs": [],
   "visual_job_contract": {
-    "required_fields": [
+    "allowed_states": [
+      "PREFLIGHT_REGISTERED",
+      "RENDERED_REVIEW_REQUIRED",
+      "RETURNED_FOR_CHANGES",
+      "REJECTED_VISUAL_DRIFT",
+      "APPROVED_BY_AL_MURTAKAZ"
+    ],
+    "preflight_required_fields": [
       "job_id",
+      "state",
       "parent_role",
       "parent_sha256",
-      "reference_attached",
-      "allowed_delta",
-      "output_path",
-      "output_sha256",
-      "comparison_evidence",
-      "review_status",
-      "screen_inventory_id",
-      "member_inventory_verified",
       "production_mode",
       "tool_name",
       "single_screen_only",
       "preflight_registered",
+      "screen_inventory_id",
+      "member_inventory_verified",
+      "allowed_delta",
       "reference_binding_evidence"
+    ],
+    "rendered_required_fields": [
+      "output_path",
+      "output_sha256",
+      "comparison_evidence",
+      "render_started_after_preflight"
     ],
     "approval_requires": [
       "governance_review",
       "workshop_review"
     ],
-    "meaning": "Artifact integrity is not aesthetic approval. No visual jobs have been produced in this repair.",
     "allowed_production_modes": [
       "REFERENCE_EDIT",
       "LAYER_RECONSTRUCTION",
@@ -165,8 +173,6 @@
       "MOODBOARD_DERIVATION",
       "FREEFORM_REDESIGN"
     ],
-    "preflight_must_precede_render": true,
-    "one_job_one_screen": true,
     "reference_binding_receipt_schema": {
       "required_fields": [
         "job_id",
@@ -177,11 +183,17 @@
         "production_mode",
         "tool_received_reference_bytes",
         "single_screen",
-        "render_started_after_preflight",
+        "phase",
+        "render_not_started",
+        "tool_reference_locator",
         "screen_inventory_id",
         "member_inventory_verified"
-      ]
-    }
+      ],
+      "phase": "PRE_RENDER"
+    },
+    "preflight_must_precede_render": true,
+    "one_job_one_screen": true,
+    "meaning": "A canonical UI job is registered and reference-bound before render; rendered output cannot exist as an approved/reviewable job without preflight evidence."
   },
   "latest_rejected_generation": {
     "generation_id": "79110079-3684-437e-9c29-825ac3f6cb4d",
