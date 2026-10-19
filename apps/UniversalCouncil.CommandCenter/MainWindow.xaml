@@ -187,19 +187,25 @@
                                        Margin="0,5,0,0"
                                        FontSize="11"
                                        Foreground="{StaticResource TextMutedBrush}" />
-                            <StackPanel Margin="0,12,0,16"
-                                        Orientation="Horizontal"
-                                        HorizontalAlignment="Right">
-                                <TextBlock Text="BASELINE  "
-                                           FlowDirection="LeftToRight"
+                            <Grid Margin="0,12,0,16"
+                                  HorizontalAlignment="Right"
+                                  FlowDirection="LeftToRight">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0"
+                                           Text="BASELINE"
                                            FontSize="9"
-                                           Foreground="{StaticResource TextMutedBrush}" />
-                                <TextBlock Text="{Binding Operational.BaselineRevision}"
-                                           FlowDirection="LeftToRight"
+                                           Foreground="{StaticResource TextMutedBrush}"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="2"
+                                           Text="{Binding Operational.BaselineRevision}"
                                            FontSize="10"
                                            FontFamily="Consolas"
                                            Foreground="{StaticResource TextPrimaryBrush}" />
-                            </StackPanel>
+                            </Grid>
 
                             <Border Height="1"
                                     Background="{StaticResource BorderBrush}"
@@ -303,8 +309,18 @@
                                                                Text="{Binding StateLabel}"
                                                                FlowDirection="LeftToRight"
                                                                FontSize="9"
-                                                               FontWeight="SemiBold"
-                                                               Foreground="{StaticResource WarningBrush}" />
+                                                               FontWeight="SemiBold">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Foreground" Value="{StaticResource WarningBrush}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding StateLabel}" Value="APPROVED">
+                                                                        <Setter Property="Foreground" Value="{StaticResource SuccessBrush}" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
                                                 </Grid>
                                                 <TextBlock Text="{Binding ScopeLabel}"
                                                            Margin="0,4,0,0"
@@ -394,7 +410,21 @@
                                                        HorizontalAlignment="Center"
                                                        FlowDirection="LeftToRight"
                                                        FontSize="10"
-                                                       FontWeight="SemiBold" />
+                                                       FontWeight="SemiBold">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ResultLabel}" Value="PASS">
+                                                                <Setter Property="Foreground" Value="{StaticResource SuccessBrush}" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding ResultLabel}" Value="SUCCESS">
+                                                                <Setter Property="Foreground" Value="{StaticResource SuccessBrush}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
                                         </Border>
                                     </Grid>
                                 </DataTemplate>
