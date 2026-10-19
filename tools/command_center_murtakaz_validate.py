@@ -20,11 +20,14 @@ TAILNET_POLICY = STATE / "owner-device-tailnet-policy.json"
 TAILNET_PROJECTION = STATE / "owner-device-tailnet.json"
 BUILDER = ROOT / "tools" / "build_command_center_murtakaz_projection.py"
 
+VISUAL_DIRECTION_ROOT = (
+    ROOT / "docs" / "operations" / "command-center" / "living-operations"
+)
 VISUAL_DIRECTION_FILES = (
-    ROOT / "docs" / "operations" / "command-center" / "living-operations" / "01_VISUAL_BIBLE.md",
-    ROOT / "docs" / "operations" / "command-center" / "living-operations" / "15_P1_VISUAL_DIRECTION_LOCK.md",
-    ROOT / "docs" / "operations" / "command-center" / "living-operations" / "18_REFERENCE_ONLY_VISUAL_LOCK.md",
-    ROOT / "docs" / "operations" / "command-center" / "living-operations" / "19_REFERENCE_FIDELITY_AUDIT_AND_CONTRACT.md",
+    VISUAL_DIRECTION_ROOT / "01_VISUAL_BIBLE.md",
+    VISUAL_DIRECTION_ROOT / "15_P1_VISUAL_DIRECTION_LOCK.md",
+    VISUAL_DIRECTION_ROOT / "18_REFERENCE_ONLY_VISUAL_LOCK.md",
+    VISUAL_DIRECTION_ROOT / "19_REFERENCE_FIDELITY_AUDIT_AND_CONTRACT.md",
 )
 FORBIDDEN_VISUAL_THEME_TERMS = ("architecture", "architectural", "عمارة", "معمار")
 
