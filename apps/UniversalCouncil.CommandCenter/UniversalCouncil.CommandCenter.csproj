@@ -12,5 +12,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UniversalCouncil.CommandCenter.Core\UniversalCouncil.CommandCenter.Core.csproj" />
+    <ProjectReference Include="..\UniversalCouncil.CommandCenter.Host\UniversalCouncil.CommandCenter.Host.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\state\command-center\command-center-state.json"
+             Link="state\command-center-state.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 </Project>
