@@ -8,12 +8,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 APP = ROOT / "apps" / "UniversalCouncil.CommandCenter"
 ENROLLMENT_APP = ROOT / "apps" / "UniversalCouncil.CommandCenter.OwnerEnrollment"
-ENROLLMENT_INFRA = (
-    ROOT
-    / "apps"
-    / "UniversalCouncil.CommandCenter.Infrastructure"
-    / "JsonOwnerEnrollmentRegistry.cs"
-)
+ENROLLMENT_INFRA = ROOT / "apps" / "UniversalCouncil.CommandCenter.Infrastructure" / "JsonOwnerEnrollmentRegistry.cs"
 POLICY = ROOT / "state" / "command-center" / "owner-device-tailnet-policy.json"
 PROJECTION = ROOT / "state" / "command-center" / "owner-device-tailnet.json"
 REMOTE_TRANSPORT = ROOT / "state" / "command-center" / "remote-transport.json"
@@ -96,15 +91,9 @@ if "127.0.0.1" not in starter:
     raise SystemExit("Stage 7 starter must verify loopback health")
 
 owner_project = ET.fromstring(
-    (
-        ENROLLMENT_APP
-        / "UniversalCouncil.CommandCenter.OwnerEnrollment.csproj"
-    ).read_text(encoding="utf-8")
+    (ENROLLMENT_APP / "UniversalCouncil.CommandCenter.OwnerEnrollment.csproj").read_text(encoding="utf-8")
 )
-owner_refs = {
-    item.attrib.get("Include", "").replace("\\", "/")
-    for item in owner_project.iter("ProjectReference")
-}
+owner_refs = {item.attrib.get("Include", "").replace("\\", "/") for item in owner_project.iter("ProjectReference")}
 expected_owner_refs = {
     "../UniversalCouncil.CommandCenter.Core/UniversalCouncil.CommandCenter.Core.csproj",
     "../UniversalCouncil.CommandCenter.Application/UniversalCouncil.CommandCenter.Application.csproj",
@@ -133,9 +122,7 @@ def blob_sha(relative: str) -> str:
 for source in projection["source_files"]:
     actual = blob_sha(source["path"])
     if actual != source["blob_sha"]:
-        raise SystemExit(
-            f"Stage 7 source drift: {source['path']} expected={source['blob_sha']} actual={actual}"
-        )
+        raise SystemExit(f"Stage 7 source drift: {source['path']} expected={source['blob_sha']} actual={actual}")
 
 runtime = projection["runtime"]
 if (
