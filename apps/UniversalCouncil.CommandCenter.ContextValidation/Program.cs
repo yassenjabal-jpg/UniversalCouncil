@@ -89,7 +89,8 @@ var conflictDocument = document with
             "Two governing context sources disagree.",
             ["agentic-os-policy", "context-capsule-contract"],
             ["context"],
-            RequiresOwnerDecision: true)
+            RequiresOwnerDecision: true,
+            ChangeOfTruthRequired: true)
     ]
 };
 
@@ -100,6 +101,7 @@ Require(
     conflict.State == ContextResolutionState.ContextConflict,
     "Governing source conflict must return CONTEXT_CONFLICT");
 Require(conflict.Conflicts.Count == 1, "Conflict provenance must be preserved");
+Require(conflict.ChangeOfTruthRequired, "Change-of-Truth conflict flag must be preserved");
 
 var conflictCompilation = compiler.Compile(conflict, compileRequest);
 Require(
