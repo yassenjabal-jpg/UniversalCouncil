@@ -193,3 +193,13 @@ def test_home_owner_summary_panels_are_native_and_interactive():
     assert xaml.count('AutomationProperties.Name="منذ آخر زيارة"') >= 1
     assert xaml.count('AutomationProperties.Name="يحتاج قرارك"') >= 1
     assert xaml.count('AutomationProperties.Name="النتائج الأخيرة"') >= 1
+
+
+def test_native_summary_panels_cover_full_reference_height():
+    xaml = XAML.read_text(encoding="utf-8")
+    marker = 'x:Name="NativeHomeOwnerSummaryLayer"'
+    start = xaml.index(marker)
+    fragment = xaml[start : start + 22000]
+    assert 'Width="257" Height="215"' in fragment
+    assert 'Width="503" Height="215"' in fragment
+    assert 'Width="439" Height="215"' in fragment
