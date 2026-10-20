@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "contract_id": "living-operations-ux-state-contract",
-  "status": "POST_REVIEW_PENDING",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
   "visual_direction_change": false,
   "source_agentic_policy": "state/command-center/project-governance/agentic-os-policy.json",
   "primary_state_rule": "EXACTLY_ONE_PRIMARY_JOB_STATE",
@@ -307,5 +307,6 @@
     "canonical_source_ids",
     "conflict_provenance",
     "change_of_truth_flag"
-  ]
+  ],
+  "murtakaz_post_approval": "state/command-center/project-governance/approvals/2026-10-21-ux-impact-state-contract-post.json"
 }
