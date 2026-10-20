@@ -1,1228 +1,505 @@
 <Window x:Class="UniversalCouncil.CommandCenter.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:automation="clr-namespace:System.Windows.Automation;assembly=PresentationCore"
         Title="UniversalCouncil Command Center"
         Width="1440"
         Height="900"
         MinWidth="1180"
         MinHeight="720"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource CanvasBrush}"
-        FlowDirection="RightToLeft">
-    <Grid Background="{StaticResource CanvasBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="232" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        Background="#EEF2F8"
+        FlowDirection="RightToLeft"
+        PreviewKeyDown="Window_PreviewKeyDown">
 
-        <Border Grid.Column="0"
-                Background="{StaticResource RailBrush}"
-                BorderBrush="{StaticResource RailBorderBrush}"
-                BorderThickness="1,0,0,0">
-            <Grid Margin="18,22,18,18">
+    <Window.Resources>
+        <SolidColorBrush x:Key="ReferenceBlue" Color="#2F6BFF" />
+        <SolidColorBrush x:Key="ReferenceInk" Color="#14213D" />
+        <SolidColorBrush x:Key="ReferenceMuted" Color="#5F6878" />
+        <SolidColorBrush x:Key="ReferenceBorder" Color="#DCE1E8" />
+        <SolidColorBrush x:Key="ReferencePanel" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="ReferenceViolet" Color="#7857E6" />
+
+        <Style x:Key="HotspotButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="HotspotBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="14">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="HotspotBorder" Property="Background" Value="#0F2F6BFF" />
+                                <Setter TargetName="HotspotBorder" Property="BorderBrush" Value="#662F6BFF" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="HotspotBorder" Property="Background" Value="#142F6BFF" />
+                                <Setter TargetName="HotspotBorder" Property="BorderBrush" Value="#FF2F6BFF" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="HotspotBorder" Property="Background" Value="#202F6BFF" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ReasoningHotspotStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource HotspotButtonStyle}">
+            <Setter Property="BorderThickness" Value="1.5" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ReasoningBorder"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="20">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ReasoningBorder" Property="Background" Value="#147857E6" />
+                                <Setter TargetName="ReasoningBorder" Property="BorderBrush" Value="#997857E6" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="ReasoningBorder" Property="Background" Value="#1F7857E6" />
+                                <Setter TargetName="ReasoningBorder" Property="BorderBrush" Value="#FF7857E6" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DrawerActionStyle" TargetType="Button">
+            <Setter Property="Height" Value="42" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+            <Setter Property="Padding" Value="14,0" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="Foreground" Value="{StaticResource ReferenceBlue}" />
+            <Setter Property="BorderBrush" Value="#CBD7EC" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+
+        <Style x:Key="DrawerLabelStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource ReferenceMuted}" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Margin" Value="0,0,0,3" />
+        </Style>
+
+        <Style x:Key="DrawerValueStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource ReferenceInk}" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Margin" Value="0,0,0,14" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid x:Name="ReferenceHost"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch">
+            <Viewbox Stretch="Uniform"
+                     StretchDirection="Both"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center">
+                <Grid Width="1536" Height="1024" Background="#F7F6F2">
+                    <Image Source="/UniversalCouncil.CommandCenter;component/Assets/VisualReferences/01-home_owner_workspace.png"
+                           Stretch="Fill"
+                           SnapsToDevicePixels="True"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           automation:AutomationProperties.Name="مرجع Home / Owner Workspace المعتمد" />
+
+                    <Canvas x:Name="InteractionCanvas"
+                            Width="1536"
+                            Height="1024"
+                            Background="Transparent">
+
+                        <!-- Operational rail / composer routing -->
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="15" Canvas.Top="62"
+                                Width="218" Height="156"
+                                Tag="autopilot"
+                                Click="Region_Click"
+                                ToolTip="Autopilot — الحالة التشغيلية"
+                                automation:AutomationProperties.Name="Autopilot status" />
+
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="247" Canvas.Top="164"
+                                Width="124" Height="135"
+                                Tag="council-route"
+                                Click="Route_Click"
+                                ToolTip="المجلس"
+                                automation:AutomationProperties.Name="توجيه إلى المجلس" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="373" Canvas.Top="164"
+                                Width="115" Height="135"
+                                Tag="studio-route"
+                                Click="Route_Click"
+                                ToolTip="الاستوديو"
+                                automation:AutomationProperties.Name="توجيه إلى الاستوديو" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="490" Canvas.Top="164"
+                                Width="112" Height="135"
+                                Tag="auto-route"
+                                Click="Route_Click"
+                                ToolTip="التنفيذ التلقائي"
+                                automation:AutomationProperties.Name="توجيه إلى التنفيذ التلقائي" />
+
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="1275" Canvas.Top="228"
+                                Width="174" Height="56"
+                                Tag="start"
+                                Click="Start_Click"
+                                ToolTip="ابدأ التنفيذ"
+                                automation:AutomationProperties.Name="ابدأ التنفيذ" />
+
+                        <!-- Council Pulse: exact eight member identities -->
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="319" Canvas.Top="349"
+                                Width="108" Height="100"
+                                Tag="owner"
+                                Click="Role_Click"
+                                ToolTip="المالك — تحديد الاتجاه"
+                                automation:AutomationProperties.Name="المالك — تحديد الاتجاه" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="450" Canvas.Top="349"
+                                Width="108" Height="100"
+                                Tag="strategy"
+                                Click="Role_Click"
+                                ToolTip="الاستراتيجية — تحليل وفرص"
+                                automation:AutomationProperties.Name="الاستراتيجية — تحليل وفرص" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="581" Canvas.Top="349"
+                                Width="108" Height="100"
+                                Tag="research"
+                                Click="Role_Click"
+                                ToolTip="البحث — جمع الأدلة"
+                                automation:AutomationProperties.Name="البحث — جمع الأدلة" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="710" Canvas.Top="349"
+                                Width="108" Height="100"
+                                Tag="verification"
+                                Click="Role_Click"
+                                ToolTip="التحقق — مراجعة الحقائق"
+                                automation:AutomationProperties.Name="التحقق — مراجعة الحقائق" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="839" Canvas.Top="349"
+                                Width="108" Height="100"
+                                Tag="execution"
+                                Click="Role_Click"
+                                ToolTip="التنفيذ — تحويل إلى عمل"
+                                automation:AutomationProperties.Name="التنفيذ — تحويل إلى عمل" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="968" Canvas.Top="349"
+                                Width="108" Height="100"
+                                Tag="creative"
+                                Click="Role_Click"
+                                ToolTip="الإبداع — تصميم وإنتاج"
+                                automation:AutomationProperties.Name="الإبداع — تصميم وإنتاج" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="1098" Canvas.Top="349"
+                                Width="108" Height="100"
+                                Tag="data"
+                                Click="Role_Click"
+                                ToolTip="البيانات — تحليل وقياس"
+                                automation:AutomationProperties.Name="البيانات — تحليل وقياس" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="1227" Canvas.Top="349"
+                                Width="108" Height="100"
+                                Tag="learning"
+                                Click="Role_Click"
+                                ToolTip="التعلم — تطوير مستمر"
+                                automation:AutomationProperties.Name="التعلم — تطوير مستمر" />
+
+                        <!-- Reasoning ring targets. They deliberately remain smaller than member targets. -->
+                        <Button Style="{StaticResource ReasoningHotspotStyle}"
+                                Canvas.Left="381" Canvas.Top="345"
+                                Width="30" Height="30"
+                                Tag="owner"
+                                Click="Reasoning_Click"
+                                ToolTip="Model & Reasoning — المالك"
+                                automation:AutomationProperties.Name="استدلال المالك" />
+                        <Button Style="{StaticResource ReasoningHotspotStyle}"
+                                Canvas.Left="512" Canvas.Top="345"
+                                Width="30" Height="30"
+                                Tag="strategy"
+                                Click="Reasoning_Click"
+                                ToolTip="Model & Reasoning — الاستراتيجية"
+                                automation:AutomationProperties.Name="استدلال الاستراتيجية" />
+                        <Button Style="{StaticResource ReasoningHotspotStyle}"
+                                Canvas.Left="643" Canvas.Top="345"
+                                Width="30" Height="30"
+                                Tag="research"
+                                Click="Reasoning_Click"
+                                ToolTip="Model & Reasoning — البحث"
+                                automation:AutomationProperties.Name="استدلال البحث" />
+                        <Button Style="{StaticResource ReasoningHotspotStyle}"
+                                Canvas.Left="772" Canvas.Top="345"
+                                Width="30" Height="30"
+                                Tag="verification"
+                                Click="Reasoning_Click"
+                                ToolTip="Model & Reasoning — التحقق"
+                                automation:AutomationProperties.Name="استدلال التحقق" />
+                        <Button Style="{StaticResource ReasoningHotspotStyle}"
+                                Canvas.Left="901" Canvas.Top="345"
+                                Width="30" Height="30"
+                                Tag="execution"
+                                Click="Reasoning_Click"
+                                ToolTip="Model & Reasoning — التنفيذ"
+                                automation:AutomationProperties.Name="استدلال التنفيذ" />
+                        <Button Style="{StaticResource ReasoningHotspotStyle}"
+                                Canvas.Left="1030" Canvas.Top="345"
+                                Width="30" Height="30"
+                                Tag="creative"
+                                Click="Reasoning_Click"
+                                ToolTip="Model & Reasoning — الإبداع"
+                                automation:AutomationProperties.Name="استدلال الإبداع" />
+                        <Button Style="{StaticResource ReasoningHotspotStyle}"
+                                Canvas.Left="1160" Canvas.Top="345"
+                                Width="30" Height="30"
+                                Tag="data"
+                                Click="Reasoning_Click"
+                                ToolTip="Model & Reasoning — البيانات"
+                                automation:AutomationProperties.Name="استدلال البيانات" />
+                        <Button Style="{StaticResource ReasoningHotspotStyle}"
+                                Canvas.Left="1289" Canvas.Top="345"
+                                Width="30" Height="30"
+                                Tag="learning"
+                                Click="Reasoning_Click"
+                                ToolTip="Model & Reasoning — التعلم"
+                                automation:AutomationProperties.Name="استدلال التعلم" />
+
+                        <!-- Active Work -->
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="246" Canvas.Top="484"
+                                Width="401" Height="215"
+                                Tag="smart-secretary"
+                                Click="Project_Click"
+                                ToolTip="فتح المشروع الأول"
+                                automation:AutomationProperties.Name="فتح مشروع Smart Secretary V2" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="654" Canvas.Top="484"
+                                Width="396" Height="215"
+                                Tag="privacy"
+                                Click="Project_Click"
+                                ToolTip="فتح المشروع الثاني"
+                                automation:AutomationProperties.Name="فتح مشروع Privacy" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="1057" Canvas.Top="484"
+                                Width="395" Height="215"
+                                Tag="erasure"
+                                Click="Project_Click"
+                                ToolTip="فتح المشروع الثالث"
+                                automation:AutomationProperties.Name="فتح مشروع Erasure Contract" />
+
+                        <!-- Owner summary row -->
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="246" Canvas.Top="707"
+                                Width="255" Height="194"
+                                Tag="since-away"
+                                Click="Region_Click"
+                                ToolTip="منذ آخر زيارة"
+                                automation:AutomationProperties.Name="منذ آخر زيارة" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="507" Canvas.Top="707"
+                                Width="502" Height="194"
+                                Tag="needs-decision"
+                                Click="Region_Click"
+                                ToolTip="يحتاج قرارك"
+                                automation:AutomationProperties.Name="يحتاج قرارك" />
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="1014" Canvas.Top="707"
+                                Width="439" Height="194"
+                                Tag="recent-results"
+                                Click="Region_Click"
+                                ToolTip="النتائج الأخيرة"
+                                automation:AutomationProperties.Name="النتائج الأخيرة" />
+
+                        <!-- Persistent chrome -->
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="9" Canvas.Top="912"
+                                Width="1518" Height="100"
+                                Tag="tool-dock"
+                                Click="Region_Click"
+                                ToolTip="Tool Dock"
+                                automation:AutomationProperties.Name="Tool Dock" />
+
+                        <Button Style="{StaticResource HotspotButtonStyle}"
+                                Canvas.Left="1462" Canvas.Top="61"
+                                Width="69" Height="850"
+                                Tag="global-nav"
+                                Click="Region_Click"
+                                ToolTip="التنقل العام"
+                                automation:AutomationProperties.Name="التنقل العام" />
+
+                        <!-- Interaction emphasis: one bounded activation ring, event-driven only. -->
+                        <Ellipse x:Name="RoleActivationRing"
+                                 Width="118"
+                                 Height="110"
+                                 Visibility="Collapsed"
+                                 Stroke="#B82F6BFF"
+                                 StrokeThickness="3"
+                                 Fill="Transparent"
+                                 IsHitTestVisible="False"
+                                 Opacity="0" />
+                    </Canvas>
+                </Grid>
+            </Viewbox>
+        </Grid>
+
+        <!-- Truthful non-authoritative interaction drawer layered over the canonical visual shell. -->
+        <Border x:Name="ContextDrawer"
+                Width="430"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Stretch"
+                Background="#FCFFFFFF"
+                BorderBrush="{StaticResource ReferenceBorder}"
+                BorderThickness="1,0,0,0"
+                Visibility="Collapsed"
+                Opacity="0"
+                Panel.ZIndex="50"
+                automation:AutomationProperties.Name="لوحة السياق">
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="DrawerTransform" X="430" />
+            </Border.RenderTransform>
+            <Grid Margin="22,20,22,24">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="28" />
+                    <RowDefinition Height="14" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0">
-                    <TextBlock Text="UNIVERSAL COUNCIL"
-                               FlowDirection="LeftToRight"
-                               FontSize="10"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource AccentBrush}"
-                               HorizontalAlignment="Right" />
-                    <TextBlock Text="مركز القيادة"
-                               Margin="0,6,0,0"
-                               FontSize="23"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource RailTextBrush}" />
-                    <TextBlock Text="Control / Governance Plane"
-                               Margin="0,5,0,0"
-                               FlowDirection="LeftToRight"
-                               FontSize="11"
-                               Foreground="{StaticResource RailMutedBrush}"
-                               HorizontalAlignment="Right" />
-                </StackPanel>
-
-                <StackPanel Grid.Row="2">
-                    <Button Style="{StaticResource RailButtonStyle}"
-                            Background="#252E3C"
-                            Foreground="{StaticResource RailTextBrush}"
-                            Content="نظرة عامة" />
-                    <Button Style="{StaticResource RailButtonStyle}" Content="المجلس" />
-                    <Button Style="{StaticResource RailButtonStyle}" Content="الاستوديو" />
-                    <Button Style="{StaticResource RailButtonStyle}" Content="المشاريع" />
-                    <Button Style="{StaticResource RailButtonStyle}" Content="الموافقات" />
-                    <Button Style="{StaticResource RailButtonStyle}" Content="المالك البعيد" />
-                    <Button Style="{StaticResource RailButtonStyle}" Content="الأدلة" />
-                    <Button Style="{StaticResource RailButtonStyle}" Content="النقل الآمن" />
-                </StackPanel>
-
-                <Border Grid.Row="3"
-                        Padding="12"
-                        Background="#1E2632"
-                        BorderBrush="{StaticResource RailBorderBrush}"
-                        BorderThickness="1"
-                        CornerRadius="5">
-                    <StackPanel>
-                        <TextBlock Text="EXECUTION"
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock x:Name="DrawerEyebrow"
+                                   Text="ROLE CONTEXT"
                                    FlowDirection="LeftToRight"
-                                   FontSize="9"
-                                   Foreground="{StaticResource RailMutedBrush}"
+                                   FontSize="10"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource ReferenceViolet}"
                                    HorizontalAlignment="Right" />
-                        <TextBlock Text="{Binding Snapshot.ExecutionStateLabel}"
-                                   Margin="0,4,0,0"
-                                   FlowDirection="LeftToRight"
-                                   FontSize="11"
+                        <TextBlock x:Name="DrawerTitle"
+                                   Text="السياق"
+                                   Margin="0,5,0,0"
+                                   FontSize="24"
                                    FontWeight="SemiBold"
-                                   Foreground="#E5B84E"
-                                   HorizontalAlignment="Right" />
+                                   Foreground="{StaticResource ReferenceInk}" />
+                        <TextBlock x:Name="DrawerSubtitle"
+                                   Text=""
+                                   Margin="0,4,0,0"
+                                   FontSize="12"
+                                   Foreground="{StaticResource ReferenceMuted}" />
                     </StackPanel>
-                </Border>
+
+                    <Button Grid.Column="1"
+                            x:Name="CloseDrawerButton"
+                            Width="36"
+                            Height="36"
+                            Margin="14,0,0,0"
+                            Content="×"
+                            FontSize="22"
+                            Background="#F6F8FC"
+                            BorderBrush="{StaticResource ReferenceBorder}"
+                            BorderThickness="1"
+                            Foreground="{StaticResource ReferenceInk}"
+                            Cursor="Hand"
+                            Click="CloseDrawer_Click"
+                            automation:AutomationProperties.Name="إغلاق لوحة السياق" />
+                </Grid>
+
+                <ScrollViewer Grid.Row="2"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource DrawerLabelStyle}" Text="لماذا يظهر / لماذا فُعّل" />
+                        <TextBlock x:Name="DrawerWhy" Style="{StaticResource DrawerValueStyle}" />
+
+                        <TextBlock Style="{StaticResource DrawerLabelStyle}" Text="المهمة الحالية" />
+                        <TextBlock x:Name="DrawerTask" Style="{StaticResource DrawerValueStyle}" />
+
+                        <TextBlock Style="{StaticResource DrawerLabelStyle}" Text="الحالة" />
+                        <TextBlock x:Name="DrawerState" Style="{StaticResource DrawerValueStyle}" />
+
+                        <TextBlock Style="{StaticResource DrawerLabelStyle}" Text="النتائج / السياق" />
+                        <TextBlock x:Name="DrawerFindings" Style="{StaticResource DrawerValueStyle}" />
+
+                        <TextBlock Style="{StaticResource DrawerLabelStyle}" Text="أقوى اعتراض" />
+                        <TextBlock x:Name="DrawerDissent" Style="{StaticResource DrawerValueStyle}" />
+
+                        <TextBlock Style="{StaticResource DrawerLabelStyle}" Text="الأدلة" />
+                        <TextBlock x:Name="DrawerEvidence" Style="{StaticResource DrawerValueStyle}" />
+
+                        <TextBlock Style="{StaticResource DrawerLabelStyle}" Text="النموذج / الاستدلال" />
+                        <TextBlock x:Name="DrawerReasoning" Style="{StaticResource DrawerValueStyle}" />
+
+                        <Border Height="1"
+                                Background="{StaticResource ReferenceBorder}"
+                                Margin="0,2,0,14" />
+
+                        <Button Style="{StaticResource DrawerActionStyle}"
+                                Content="اسأل عن نتيجة هذا العنصر"
+                                Click="AskThis_Click" />
+                        <Button Style="{StaticResource DrawerActionStyle}"
+                                Content="فتح الأدلة"
+                                Click="OpenEvidence_Click" />
+                        <Button Style="{StaticResource DrawerActionStyle}"
+                                Content="Model &amp; Reasoning Inspector"
+                                Click="ReasoningInspector_Click" />
+                        <Button Style="{StaticResource DrawerActionStyle}"
+                                Content="مساهمات العنصر في المشروع"
+                                Click="ContributionHistory_Click" />
+
+                        <Border Margin="0,10,0,0"
+                                Padding="12"
+                                Background="#F5F7FB"
+                                BorderBrush="{StaticResource ReferenceBorder}"
+                                BorderThickness="1">
+                            <TextBlock Text="هذه الطبقة تفاعلية حقيقية فوق المرجع البصري المعتمد. لا تمنح صلاحية تنفيذ حي ولا تختلق حالة تشغيل غير متوفرة."
+                                       FontSize="11"
+                                       Foreground="{StaticResource ReferenceMuted}"
+                                       TextWrapping="Wrap" />
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
         </Border>
 
-        <ScrollViewer Grid.Column="1"
-                      VerticalScrollBarVisibility="Auto"
-                      HorizontalScrollBarVisibility="Disabled">
-            <Grid Margin="38,28,38,34">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="16" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="22" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="22" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="22" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="22" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="22" />
-                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="22" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="22" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="22" />
-                    <RowDefinition Height="Auto" />
-</Grid.RowDefinitions>
-
-                <StackPanel Grid.Row="0">
-                    <TextBlock Text="ربط جهاز المالك والـTailnet"
-                               FontSize="31"
-                               FontWeight="SemiBold" />
-                    <StackPanel Margin="0,7,0,0"
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Right">
-                        <TextBlock Text="COMMAND CENTER / STAGE 7"
-                                   FlowDirection="LeftToRight"
-                                   FontSize="10"
-                                   FontWeight="SemiBold"
-                                   Foreground="{StaticResource AccentBrush}" />
-                        <TextBlock Text="  —  "
-                                   Foreground="{StaticResource TextMutedBrush}" />
-                        <TextBlock Text="{Binding Snapshot.StageLabel}"
-                                   FontSize="12"
-                                   Foreground="{StaticResource TextMutedBrush}" />
-                    </StackPanel>
-                </StackPanel>
-
-                <Border Grid.Row="2"
-                        Padding="18,14"
-                        Background="#FFF4D9"
-                        BorderBrush="{StaticResource WarningBrush}"
-                        BorderThickness="0,0,4,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <TextBlock Text="Stage 7 مفتوحة — YASSIN شوهد Online لكن أوامر المضيف محجوبة بحصة Desktop Commander؛ لا يوجد ادعاء Tailscale أو هاتف"
-                                       FontSize="15"
-                                       FontWeight="SemiBold"
-                                       TextWrapping="Wrap" />
-                            <TextBlock Text="{Binding Snapshot.PhaseGateLabel}"
-                                       Margin="0,4,0,0"
-                                       FontSize="12"
-                                       Foreground="{StaticResource TextMutedBrush}"
-                                       TextWrapping="Wrap" />
-                        </StackPanel>
-                        <TextBlock Grid.Column="1"
-                                   Text="{Binding ExecutionServiceLabel}"
-                                   Margin="18,0,0,0"
-                                   FlowDirection="LeftToRight"
-                                   FontSize="10"
-                                   FontWeight="SemiBold"
-                                   Foreground="{StaticResource WarningBrush}"
-                                   VerticalAlignment="Center" />
-                    </Grid>
-                </Border>
-
-                <Grid Grid.Row="14">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.08*" />
-                        <ColumnDefinition Width="20" />
-                        <ColumnDefinition Width="0.92*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Border Grid.Column="0"
-                            Padding="20"
-                            Background="{StaticResource SurfaceBrush}"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="1">
-                        <StackPanel>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock Text="المجلس"
-                                               FontSize="20"
-                                               FontWeight="SemiBold" />
-                                    <TextBlock Text="{Binding CouncilCountLabel}"
-                                               Margin="0,4,0,0"
-                                               FontSize="11"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            HorizontalAlignment="Left">
-                                    <TextBlock Text="ROLE REGISTRY"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               FontWeight="SemiBold"
-                                               Foreground="{StaticResource AccentBrush}" />
-                                    <TextBlock Text="{Binding Orchestration.Council.ContractsStatus}"
-                                               Margin="0,4,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                </StackPanel>
-                            </Grid>
-
-                            <Border Margin="0,13,0,12"
-                                    Height="1"
-                                    Background="{StaticResource BorderBrush}" />
-
-                            <TextBlock Text="الأدوار الأساسية"
-                                       FontSize="12"
-                                       FontWeight="SemiBold"
-                                       Margin="0,0,0,8" />
-
-                            <ItemsControl ItemsSource="{Binding Orchestration.Council.CoreRoles}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Width="190"
-                                                Margin="0,0,10,9"
-                                                Padding="10,8"
-                                                Background="{StaticResource SurfaceRaisedBrush}"
-                                                BorderBrush="{StaticResource BorderBrush}"
-                                                BorderThickness="1">
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding Name}"
-                                                           FontSize="11"
-                                                           FontWeight="SemiBold"
-                                                           TextWrapping="Wrap" />
-                                                <TextBlock Text="{Binding BlockerDomain}"
-                                                           Margin="0,4,0,0"
-                                                           FlowDirection="LeftToRight"
-                                                           FontSize="9"
-                                                           Foreground="{StaticResource TextMutedBrush}" />
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-
-                            <Border Margin="0,4,0,10"
-                                    Height="1"
-                                    Background="{StaticResource BorderBrush}" />
-
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock Text="سياسة التوجيه"
-                                               FontSize="12"
-                                               FontWeight="SemiBold" />
-                                    <TextBlock Text="{Binding Orchestration.Council.Objective}"
-                                               Margin="0,4,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="18,0,0,0">
-                                    <TextBlock Text="FREE-TEXT AUTHORITY"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="DISABLED"
-                                               Margin="0,4,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="10"
-                                               FontWeight="SemiBold"
-                                               Foreground="{StaticResource SuccessBrush}" />
-                                </StackPanel>
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-
-                    <Border Grid.Column="2"
-                            Padding="20"
-                            Background="{StaticResource SurfaceBrush}"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="1">
-                        <StackPanel>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock Text="الاستوديو"
-                                               FontSize="20"
-                                               FontWeight="SemiBold" />
-                                    <TextBlock Text="{Binding StudioDepartmentCountLabel}"
-                                               Margin="0,4,0,0"
-                                               FontSize="11"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                </StackPanel>
-                                <TextBlock Grid.Column="1"
-                                           Text="SERIAL PRODUCTION"
-                                           FlowDirection="LeftToRight"
-                                           FontSize="9"
-                                           FontWeight="SemiBold"
-                                           Foreground="{StaticResource AccentBrush}"
-                                           VerticalAlignment="Top" />
-                            </Grid>
-
-                            <Border Margin="0,13,0,12"
-                                    Height="1"
-                                    Background="{StaticResource BorderBrush}" />
-
-                            <TextBlock Text="{Binding MacroPhasesLabel}"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="10"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource AccentBrush}"
-                                       Margin="0,0,0,12" />
-
-                            <ItemsControl ItemsSource="{Binding Orchestration.Studio.Departments}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Width="190"
-                                                Margin="0,0,10,8"
-                                                Padding="9,7"
-                                                BorderBrush="{StaticResource BorderBrush}"
-                                                BorderThickness="0,0,0,1">
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding Name}"
-                                                           FontSize="10"
-                                                           FontWeight="SemiBold"
-                                                           TextWrapping="Wrap" />
-                                                <TextBlock Text="{Binding Id}"
-                                                           Margin="0,3,0,0"
-                                                           FlowDirection="LeftToRight"
-                                                           FontSize="8"
-                                                           Foreground="{StaticResource TextMutedBrush}" />
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-
-                            <Border Margin="0,4,0,10"
-                                    Height="1"
-                                    Background="{StaticResource BorderBrush}" />
-
-                            <Grid FlowDirection="LeftToRight">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="20" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0"
-                                            FlowDirection="RightToLeft">
-                                    <TextBlock Text="Human Assistance"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="11"
-                                               FontWeight="SemiBold"
-                                               HorizontalAlignment="Left" />
-                                    <TextBlock Text="{Binding Orchestration.Studio.HumanAssistanceMode}"
-                                               Margin="0,3,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               Foreground="{StaticResource TextMutedBrush}"
-                                               HorizontalAlignment="Left" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="2"
-                                            FlowDirection="RightToLeft">
-                                    <TextBlock Text="RETURN TICKET"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}"
-                                               HorizontalAlignment="Right" />
-                                    <TextBlock Text="{Binding ReturnTicketFieldCountLabel}"
-                                               Margin="0,4,0,0"
-                                               FontSize="10"
-                                               FontWeight="SemiBold"
-                                               HorizontalAlignment="Right" />
-                                </StackPanel>
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-                <Grid Grid.Row="12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.15*" />
-                        <ColumnDefinition Width="20" />
-                        <ColumnDefinition Width="0.85*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Border Grid.Column="0"
-                            Padding="18"
-                            Background="{StaticResource SurfaceBrush}"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="1">
-                        <StackPanel>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0"
-                                           Text="Model Control"
-                                           FlowDirection="LeftToRight"
-                                           FontSize="17"
-                                           FontWeight="SemiBold" />
-                                <Border Grid.Column="1"
-                                        Margin="20,0,0,0"
-                                        Padding="8,4"
-                                        Background="{StaticResource SurfaceRaisedBrush}"
-                                        BorderBrush="{StaticResource BorderBrush}"
-                                        BorderThickness="1"
-                                        VerticalAlignment="Center">
-                                    <TextBlock Text="ROLE ≠ MODEL"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               FontWeight="SemiBold"
-                                               Foreground="{StaticResource AccentBrush}" />
-                                </Border>
-                            </Grid>
-
-                            <Grid Margin="0,14,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock Text="اختيار النموذج"
-                                               FontSize="11"
-                                               FontWeight="SemiBold" />
-                                    <TextBlock Text="Owner-controlled"
-                                               Margin="0,4,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="10"
-                                               Foreground="{StaticResource SuccessBrush}" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="Fallback"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="11"
-                                               FontWeight="SemiBold" />
-                                    <TextBlock Text="{Binding ModelFallbackLabel}"
-                                               Margin="0,4,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="10"
-                                               Foreground="{StaticResource WarningBrush}" />
-                                </StackPanel>
-                            </Grid>
-
-                            <Border Margin="0,13,0,11"
-                                    Height="1"
-                                    Background="{StaticResource BorderBrush}" />
-
-                            <TextBlock Text="{Binding SelectionPrecedenceLabel}"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="9"
-                                       FontFamily="Consolas"
-                                       Foreground="{StaticResource TextMutedBrush}"
-                                       TextWrapping="Wrap" />
-                            <TextBlock Text="{Binding ProviderConnectionLabel}"
-                                       Margin="0,9,0,0"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="10"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource WarningBrush}" />
-                        </StackPanel>
-                    </Border>
-
-                    <Border Grid.Column="2"
-                            Padding="18"
-                            Background="{StaticResource SurfaceBrush}"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="1">
-                        <StackPanel>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0"
-                                           Text="مكتب المالك"
-                                           FontSize="17"
-                                           FontWeight="SemiBold" />
-                                <TextBlock Grid.Column="1"
-                                           Text="READ ONLY"
-                                           FlowDirection="LeftToRight"
-                                           FontSize="9"
-                                           FontWeight="SemiBold"
-                                           Foreground="{StaticResource AccentBrush}" />
-                            </Grid>
-                            <TextBlock Text="{Binding Snapshot.OwnerApprovalLabel}"
-                                       Margin="0,8,0,11"
-                                       FontSize="10"
-                                       Foreground="{StaticResource TextMutedBrush}"
-                                       TextWrapping="Wrap" />
-                            <ItemsControl ItemsSource="{Binding Operational.Approvals}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Margin="0,0,0,7">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{Binding Title}"
-                                                       FontSize="11"
-                                                       FontWeight="SemiBold"
-                                                       TextWrapping="Wrap" />
-                                            <TextBlock Grid.Column="1"
-                                                       Text="{Binding StateLabel}"
-                                                       Margin="12,0,0,0"
-                                                       FlowDirection="LeftToRight"
-                                                       FontSize="9"
-                                                       FontWeight="SemiBold">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="Foreground" Value="{StaticResource WarningBrush}" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding StateLabel}" Value="APPROVED">
-                                                                <Setter Property="Foreground" Value="{StaticResource SuccessBrush}" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-                                                                <Border Grid.Row="4"
-                        Padding="20"
-                        Background="{StaticResource SurfaceBrush}"
-                        BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="1">
-                    <StackPanel>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="Owner Device + Private Tailnet"
-                                           FlowDirection="LeftToRight"
-                                           FontSize="19"
-                                           FontWeight="SemiBold" />
-                                <TextBlock Text="الربط الحقيقي لم يُثبت بعد؛ هذه الشاشة تعرض الأدلة المتاحة بلا افتراضات"
-                                           Margin="0,5,0,0"
-                                           FontSize="11"
-                                           Foreground="{StaticResource TextMutedBrush}" />
-                            </StackPanel>
-                            <TextBlock Grid.Column="1"
-                                       Text="{Binding Stage7ModeLabel}"
-                                       Margin="18,0,0,0"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="9"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource AccentBrush}"
-                                       VerticalAlignment="Center" />
-                        </Grid>
-
-                        <UniformGrid Columns="4"
-                                     Margin="0,14,0,12">
-                            <Border Margin="0,0,8,0"
-                                    Padding="11"
-                                    Background="#FFF4D9"
-                                    BorderBrush="{StaticResource WarningBrush}"
-                                    BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="YASSIN HOST ACCESS"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="{Binding Stage7HostAccessLabel}"
-                                               Margin="0,5,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               FontWeight="SemiBold"
-                                               TextWrapping="Wrap" />
-                                    <TextBlock Text="ONLINE OBSERVED / HOST COMMANDS BLOCKED"
-                                               Margin="0,3,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource WarningBrush}"
-                                               TextWrapping="Wrap" />
-                                </StackPanel>
-                            </Border>
-
-                            <Border Margin="8,0"
-                                    Padding="11"
-                                    Background="{StaticResource SurfaceRaisedBrush}"
-                                    BorderBrush="{StaticResource BorderBrush}"
-                                    BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="TAILSCALE"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="{Binding Stage7TailscaleLabel}"
-                                               Margin="0,5,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               FontWeight="SemiBold"
-                                               TextWrapping="Wrap" />
-                                    <TextBlock Text="{Binding Stage7ServeLabel}"
-                                               Margin="0,3,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                </StackPanel>
-                            </Border>
-
-                            <Border Margin="8,0"
-                                    Padding="11"
-                                    Background="{StaticResource SurfaceRaisedBrush}"
-                                    BorderBrush="{StaticResource BorderBrush}"
-                                    BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="OWNER DEVICE"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="{Binding Stage7EnrollmentLabel}"
-                                               Margin="0,5,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               FontWeight="SemiBold"
-                                               TextWrapping="Wrap" />
-                                    <TextBlock Text="{Binding Stage7SessionLabel}"
-                                               Margin="0,3,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                </StackPanel>
-                            </Border>
-
-                            <Border Margin="8,0,0,0"
-                                    Padding="11"
-                                    Background="#FFF4D9"
-                                    BorderBrush="{StaticResource WarningBrush}"
-                                    BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="PHONE / AUTHORITY"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="{Binding Stage7PhoneLabel}"
-                                               Margin="0,5,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               FontWeight="SemiBold"
-                                               TextWrapping="Wrap" />
-                                    <TextBlock Text="{Binding Stage7ExecutionLabel}"
-                                               Margin="0,3,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource WarningBrush}"
-                                               TextWrapping="Wrap" />
-                                </StackPanel>
-                            </Border>
-                        </UniformGrid>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0"
-                                       Text="Owner phone → tailnet → Tailscale Serve → 127.0.0.1:47721 → bearer + device/session auth → trust gate"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="9"
-                                       Foreground="{StaticResource TextMutedBrush}"
-                                       TextWrapping="Wrap" />
-                            <TextBlock Grid.Column="1"
-                                       Text="FUNNEL / PUBLIC BIND: FORBIDDEN"
-                                       Margin="16,0,0,0"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="9"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource WarningBrush}" />
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-<Border Grid.Row="6"
-                        Padding="20"
-                        Background="{StaticResource SurfaceBrush}"
-                        BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="1">
-                    <StackPanel>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="Authenticated Local Transport"
-                                           FlowDirection="LeftToRight"
-                                           FontSize="19"
-                                           FontWeight="SemiBold" />
-                                <TextBlock Text="HTTP round-trip حقيقي داخل الاختبارات، لكن لا يوجد هاتف أو Tailnet حي"
-                                           Margin="0,5,0,0"
-                                           FontSize="11"
-                                           Foreground="{StaticResource TextMutedBrush}" />
-                            </StackPanel>
-                            <TextBlock Grid.Column="1"
-                                       Text="{Binding RemoteTransportRuntimeLabel}"
-                                       Margin="18,0,0,0"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="10"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource WarningBrush}"
-                                       VerticalAlignment="Center" />
-                        </Grid>
-
-                        <UniformGrid Columns="4"
-                                     Margin="0,14,0,12">
-                            <Border Margin="0,0,8,0"
-                                    Padding="11"
-                                    Background="{StaticResource SurfaceRaisedBrush}"
-                                    BorderBrush="{StaticResource BorderBrush}"
-                                    BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="LISTENER"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="{Binding RemoteTransportModeLabel}"
-                                               Margin="0,5,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="10"
-                                               FontWeight="SemiBold"
-                                               TextWrapping="Wrap" />
-                                    <TextBlock Text="127.0.0.1 / ::1 ONLY"
-                                               Margin="0,3,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                </StackPanel>
-                            </Border>
-
-                            <Border Margin="8,0"
-                                    Padding="11"
-                                    Background="{StaticResource SurfaceRaisedBrush}"
-                                    BorderBrush="{StaticResource BorderBrush}"
-                                    BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="AUTHENTICATION"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="{Binding RemoteTransportAuthLabel}"
-                                               Margin="0,5,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               FontWeight="SemiBold"
-                                               TextWrapping="Wrap" />
-                                    <TextBlock Text="TOKEN HASH ONLY / SHORT-LIVED"
-                                               Margin="0,3,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                </StackPanel>
-                            </Border>
-
-                            <Border Margin="8,0"
-                                    Padding="11"
-                                    Background="#FFF4D9"
-                                    BorderBrush="{StaticResource WarningBrush}"
-                                    BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="TAILNET / PHONE"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="{Binding RemoteTransportTailnetLabel}"
-                                               Margin="0,5,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               FontWeight="SemiBold" />
-                                    <TextBlock Text="{Binding RemoteTransportPhoneLabel}"
-                                               Margin="0,3,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9" />
-                                </StackPanel>
-                            </Border>
-
-                            <Border Margin="8,0,0,0"
-                                    Padding="11"
-                                    Background="#FFF4D9"
-                                    BorderBrush="{StaticResource WarningBrush}"
-                                    BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="AUTHORITY"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="{Binding RemoteTransportExecutionLabel}"
-                                               Margin="0,5,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               FontWeight="SemiBold"
-                                               TextWrapping="Wrap" />
-                                </StackPanel>
-                            </Border>
-                        </UniformGrid>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0"
-                                       Text="Client → Bearer + Device/Session → Trust Gate → Replay Guard → Trusted Queue"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="9"
-                                       Foreground="{StaticResource TextMutedBrush}"
-                                       TextWrapping="Wrap" />
-                            <TextBlock Grid.Column="1"
-                                       Text="PUBLIC BIND: FORBIDDEN"
-                                       Margin="16,0,0,0"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="9"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource WarningBrush}" />
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-<Border Grid.Row="8"
-                        Padding="20"
-                        Background="{StaticResource SurfaceBrush}"
-                        BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="1">
-                    <StackPanel>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="Remote Owner / Secure Command Gateway"
-                                           FlowDirection="LeftToRight"
-                                           FontSize="19"
-                                           FontWeight="SemiBold" />
-                                <TextBlock Text="قبول الأمر في الطابور لا يمنح صلاحية التنفيذ"
-                                           Margin="0,5,0,0"
-                                           FontSize="11"
-                                           Foreground="{StaticResource TextMutedBrush}" />
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="1"
-                                        Margin="18,0,0,0">
-                                <TextBlock Text="{Binding RemoteOwnerConnectionLabel}"
-                                           FlowDirection="LeftToRight"
-                                           FontSize="10"
-                                           FontWeight="SemiBold"
-                                           Foreground="{StaticResource WarningBrush}"
-                                           HorizontalAlignment="Left" />
-                                <TextBlock Text="{Binding RemoteOwnerTrustLabel}"
-                                           Margin="0,4,0,0"
-                                           FlowDirection="LeftToRight"
-                                           FontSize="9"
-                                           Foreground="{StaticResource TextMutedBrush}"
-                                           HorizontalAlignment="Left" />
-                            </StackPanel>
-                        </Grid>
-
-                        <UniformGrid Columns="4"
-                                     Margin="0,14,0,12">
-                            <Border Margin="0,0,8,0"
-                                    Padding="11"
-                                    Background="{StaticResource SurfaceRaisedBrush}"
-                                    BorderBrush="{StaticResource BorderBrush}"
-                                    BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="GATEWAY MODE"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="{Binding RemoteOwnerModeLabel}"
-                                               Margin="0,5,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="10"
-                                               FontWeight="SemiBold"
-                                               TextWrapping="Wrap" />
-                                </StackPanel>
-                            </Border>
-
-                            <Border Margin="8,0"
-                                    Padding="11"
-                                    Background="{StaticResource SurfaceRaisedBrush}"
-                                    BorderBrush="{StaticResource BorderBrush}"
-                                    BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="IDENTITY REGISTRY"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="{Binding RemoteOwnerRegistryLabel}"
-                                               Margin="0,5,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="10"
-                                               FontWeight="SemiBold" />
-                                </StackPanel>
-                            </Border>
-
-                            <Border Margin="8,0"
-                                    Padding="11"
-                                    Background="{StaticResource SurfaceRaisedBrush}"
-                                    BorderBrush="{StaticResource BorderBrush}"
-                                    BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="TRUSTED QUEUE"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="{Binding RemoteOwnerQueueLabel}"
-                                               Margin="0,5,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="10"
-                                               FontWeight="SemiBold" />
-                                </StackPanel>
-                            </Border>
-
-                            <Border Margin="8,0,0,0"
-                                    Padding="11"
-                                    Background="#FFF4D9"
-                                    BorderBrush="{StaticResource WarningBrush}"
-                                    BorderThickness="1">
-                                <StackPanel>
-                                    <TextBlock Text="TRANSPORT"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="8"
-                                               Foreground="{StaticResource TextMutedBrush}" />
-                                    <TextBlock Text="AUTH BACKEND: NOT CONNECTED"
-                                               Margin="0,5,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9"
-                                               FontWeight="SemiBold" />
-                                    <TextBlock Text="NETWORK LISTENER: OFF"
-                                               Margin="0,3,0,0"
-                                               FlowDirection="LeftToRight"
-                                               FontSize="9" />
-                                </StackPanel>
-                            </Border>
-                        </UniformGrid>
-
-                        <Border Height="1"
-                                Background="{StaticResource BorderBrush}" />
-
-                        <Grid Margin="0,12,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0"
-                                       Text="Phone / ChatGPT / GitHub / Tailscale: NOT CONNECTED  →  Trust Gate  →  Replay Guard  →  Trusted Queue"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="9"
-                                       Foreground="{StaticResource TextMutedBrush}"
-                                       TextWrapping="Wrap" />
-                            <TextBlock Grid.Column="1"
-                                       Text="EXECUTION: BLOCKED_PHASE0"
-                                       Margin="16,0,0,0"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="10"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource WarningBrush}" />
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-<Border Grid.Row="10"
-                        Padding="20"
-                        Background="{StaticResource SurfaceBrush}"
-                        BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="1">
-                    <StackPanel>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="Execution Fabric"
-                                           FlowDirection="LeftToRight"
-                                           FontSize="19"
-                                           FontWeight="SemiBold" />
-                                <TextBlock Text="{Binding Phase0SummaryLabel}"
-                                           Margin="0,5,0,0"
-                                           FlowDirection="LeftToRight"
-                                           FontSize="9"
-                                           Foreground="{StaticResource TextMutedBrush}"
-                                           TextWrapping="Wrap" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="1"
-                                        Margin="18,0,0,0">
-                                <TextBlock Text="{Binding ExecutionServiceLabel}"
-                                           FlowDirection="LeftToRight"
-                                           FontSize="10"
-                                           FontWeight="SemiBold"
-                                           Foreground="{StaticResource WarningBrush}"
-                                           HorizontalAlignment="Left" />
-                                <TextBlock Text="{Binding ProviderSummaryLabel}"
-                                           Margin="0,4,0,0"
-                                           FlowDirection="LeftToRight"
-                                           FontSize="9"
-                                           Foreground="{StaticResource TextMutedBrush}"
-                                           HorizontalAlignment="Left" />
-                            </StackPanel>
-                        </Grid>
-
-                        <Border Margin="0,13,0,11"
-                                Height="1"
-                                Background="{StaticResource BorderBrush}" />
-
-                        <ItemsControl ItemsSource="{Binding ExecutionFabric.Providers}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Margin="0,0,0,9">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="175" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="180" />
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <TextBlock Text="{Binding DisplayName}"
-                                                       FontSize="11"
-                                                       FontWeight="SemiBold"
-                                                       TextWrapping="Wrap" />
-                                            <TextBlock Text="{Binding Role}"
-                                                       Margin="0,3,0,0"
-                                                       FlowDirection="LeftToRight"
-                                                       FontSize="8"
-                                                       Foreground="{StaticResource TextMutedBrush}" />
-                                        </StackPanel>
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{Binding Note}"
-                                                   Margin="12,0"
-                                                   FontSize="9"
-                                                   Foreground="{StaticResource TextMutedBrush}"
-                                                   TextWrapping="Wrap"
-                                                   VerticalAlignment="Center" />
-                                        <Border Grid.Column="2"
-                                                Padding="8,5"
-                                                BorderBrush="{StaticResource BorderBrush}"
-                                                BorderThickness="1"
-                                                Background="{StaticResource SurfaceRaisedBrush}"
-                                                VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding State}"
-                                                       FlowDirection="LeftToRight"
-                                                       HorizontalAlignment="Center"
-                                                       FontSize="9"
-                                                       FontWeight="SemiBold" />
-                                        </Border>
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-
-                        <Border Margin="0,5,0,9"
-                                Height="1"
-                                Background="{StaticResource BorderBrush}" />
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0"
-                                       Text="Desktop Commander محفوظ كمرجع قديم فقط؛ الهدف الدائم هو Native Host Tooling + Semantic UIA."
-                                       FontSize="10"
-                                       Foreground="{StaticResource TextMutedBrush}"
-                                       TextWrapping="Wrap" />
-                            <TextBlock Grid.Column="1"
-                                       Text="LIVE DISPATCH: DISABLED"
-                                       Margin="16,0,0,0"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="10"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource WarningBrush}" />
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <Border Grid.Row="16"
-                        Padding="20"
-                        Background="{StaticResource SurfaceBrush}"
-                        BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="1">
-                    <StackPanel>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="الحالة والأدلة الموروثة"
-                                           FontSize="16"
-                                           FontWeight="SemiBold" />
-                                <TextBlock Text="{Binding Operational.SourceLabel}"
-                                           Margin="0,4,0,0"
-                                           FontSize="10"
-                                           Foreground="{StaticResource TextMutedBrush}" />
-                            </StackPanel>
-                            <TextBlock Grid.Column="1"
-                                       Text="{Binding Operational.StageStateLabel}"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="9"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource AccentBrush}"
-                                       VerticalAlignment="Center" />
-                        </Grid>
-
-                        <ItemsControl ItemsSource="{Binding Operational.Evidence}"
-                                      Margin="0,14,0,0">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Margin="0,0,0,8">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="120" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0"
-                                                   Text="{Binding Category}"
-                                                   FlowDirection="LeftToRight"
-                                                   FontSize="9"
-                                                   FontWeight="SemiBold"
-                                                   Foreground="{StaticResource AccentBrush}" />
-                                        <StackPanel Grid.Column="1">
-                                            <TextBlock Text="{Binding Title}"
-                                                       FontSize="11"
-                                                       FontWeight="SemiBold" />
-                                            <TextBlock Text="{Binding Reference}"
-                                                       Margin="0,3,0,0"
-                                                       FlowDirection="LeftToRight"
-                                                       FontFamily="Consolas"
-                                                       FontSize="9"
-                                                       Foreground="{StaticResource TextMutedBrush}" />
-                                        </StackPanel>
-                                        <TextBlock Grid.Column="2"
-                                                   Text="{Binding ResultLabel}"
-                                                   FlowDirection="LeftToRight"
-                                                   FontSize="9"
-                                                   FontWeight="SemiBold"
-                                                   Foreground="{StaticResource SuccessBrush}"
-                                                   HorizontalAlignment="Center" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Border>
-
-                <Grid Grid.Row="18">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="20" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Border Grid.Column="0"
-                            Padding="16,12"
-                            Background="{StaticResource SurfaceBrush}"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="1">
-                        <StackPanel>
-                            <TextBlock Text="الاستخدام والتكلفة"
-                                       FontSize="14"
-                                       FontWeight="SemiBold" />
-                            <TextBlock Text="{Binding Operational.Usage.StateLabel}"
-                                       Margin="0,6,0,0"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="9"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource WarningBrush}" />
-                            <TextBlock Text="{Binding Operational.Usage.Note}"
-                                       Margin="0,5,0,0"
-                                       FontSize="10"
-                                       Foreground="{StaticResource TextMutedBrush}"
-                                       TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Border>
-
-                    <Border Grid.Column="2"
-                            Padding="16,12"
-                            Background="{StaticResource SurfaceBrush}"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="1">
-                        <StackPanel>
-                            <TextBlock Text="المرحلة التالية"
-                                       FontSize="14"
-                                       FontWeight="SemiBold" />
-                            <TextBlock Text="Stage 8 — Not opened"
-                                       Margin="0,6,0,0"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="10"
-                                       Foreground="{StaticResource TextMutedBrush}" />
-                            <TextBlock Text="LOCKED UNTIL REAL STAGE 7 YASSIN + PRIVATE TAILNET + PHONE + REVOCATION EVIDENCE; EXECUTION REMAINS SEPARATELY GATED"
-                                       Margin="0,6,0,0"
-                                       FlowDirection="LeftToRight"
-                                       FontSize="9"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource WarningBrush}"
-                                       TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Border>
-                </Grid>
-            </Grid>
-        </ScrollViewer>
+        <Border x:Name="PrototypeNotice"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Margin="18"
+                Padding="12,8"
+                Background="#E914213D"
+                CornerRadius="8"
+                Visibility="Collapsed"
+                Panel.ZIndex="60">
+            <TextBlock x:Name="PrototypeNoticeText"
+                       Foreground="White"
+                       FontSize="12"
+                       TextWrapping="Wrap"
+                       MaxWidth="520" />
+        </Border>
     </Grid>
 </Window>
