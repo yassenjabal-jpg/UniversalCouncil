@@ -5,6 +5,7 @@ XAML = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "MainWindow.xaml"
 CODE = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "MainWindow.xaml.cs"
 APP_ROOT = ROOT / "apps" / "UniversalCouncil.CommandCenter"
 CSPROJ = APP_ROOT / "UniversalCouncil.CommandCenter.csproj"
+UISMOKE = APP_ROOT.parent / "UniversalCouncil.CommandCenter.UiSmoke" / "Program.cs"
 
 
 def test_home_uses_canonical_reference_as_visual_shell():
@@ -128,3 +129,12 @@ def test_native_home_canvas_uses_ltr_coordinates_inside_rtl_window():
     start = xaml.index(marker)
     fragment = xaml[start : start + 260]
     assert 'FlowDirection="LeftToRight"' in fragment
+
+
+def test_ui_smoke_emits_reference_native_and_blend_evidence():
+    smoke = UISMOKE.read_text(encoding="utf-8")
+    assert "home-reference-only-1440x900.png" in smoke
+    assert "home-native-overlay-1440x900.png" in smoke
+    assert 'case "reference"' in smoke
+    assert 'case "blend"' in smoke
+    assert "nativeHomeLayer.Opacity = 0.46" in smoke
