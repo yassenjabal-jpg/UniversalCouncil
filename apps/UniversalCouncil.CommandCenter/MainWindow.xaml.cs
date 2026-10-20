@@ -353,6 +353,12 @@ public partial class MainWindow : Window
         NavigateTo(ScreenKind.ProjectWorkspace);
     }
 
+    private void ShowAllProjects_Click(object sender, RoutedEventArgs e)
+    {
+        _lastInteractionTarget = sender as FrameworkElement;
+        NavigateTo(ScreenKind.ProjectWorkspace);
+    }
+
     private void Region_Click(object sender, RoutedEventArgs e)
     {
         if (sender is not Button button || button.Tag is not string regionId)
