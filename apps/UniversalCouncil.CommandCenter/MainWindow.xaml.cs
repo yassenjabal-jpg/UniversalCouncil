@@ -15,6 +15,7 @@ public partial class MainWindow : Window
     private string? _activeRoleId;
     private ScreenKind _currentScreen = ScreenKind.Home;
     private bool _nativeReferenceBlendEnabled;
+    private const string OwnerPromptPlaceholder = "صف ما تريد إنجازه...";
 
     private static readonly IReadOnlyDictionary<ScreenKind, string> ScreenImages =
         new Dictionary<ScreenKind, string>
@@ -249,6 +250,69 @@ public partial class MainWindow : Window
             "REFERENCE FIXTURE / NATIVE RECONSTRUCTION SLICE");
     }
 
+    private void OwnerPromptBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+    {
+        if (sender is not TextBox textBox || textBox.Text != OwnerPromptPlaceholder)
+        {
+            return;
+        }
+
+        textBox.Text = string.Empty;
+        textBox.Foreground = (Brush)FindResource("ReferenceInk");
+    }
+
+    private void OwnerPromptBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+    {
+        if (sender is not TextBox textBox || !string.IsNullOrWhiteSpace(textBox.Text))
+        {
+            return;
+        }
+
+        textBox.Text = OwnerPromptPlaceholder;
+        textBox.Foreground = (Brush)FindResource("ReferenceMuted");
+    }
+
+    private void ComposerControl_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button button || button.Tag is not string control)
+        {
+            return;
+        }
+
+        _lastInteractionTarget = button;
+
+        switch (control)
+        {
+            case "attach":
+                ShowNotice("الإرفاق واجهة Native جاهزة؛ لم يتم فتح منتقي ملفات أو إرسال ملف.");
+                break;
+            case "tools":
+                OpenToolInspector("composer-tools");
+                break;
+            case "web":
+                OpenGenericRegion(
+                    "بحث في الويب",
+                    "Composer routing preference",
+                    "هذا التحكم يحدد تفضيل البحث فقط عند توصيل execution/runtime؛ لا يبدأ بحثًا من الواجهة الحالية.",
+                    "UI INTERACTION LAYER");
+                break;
+            case "model":
+                OpenGenericRegion(
+                    "اختيار النموذج",
+                    "Owner-controlled model selection",
+                    "الموديل الظاهر في المرجع Fixture بصري. الاختيار الفعلي يبقى تحت تحكم المالك ولا يُفترض من الصورة.",
+                    _viewModel.ProviderConnectionLabel);
+                break;
+            case "reasoning":
+                OpenGenericRegion(
+                    "مستوى التفكير",
+                    "Reasoning control",
+                    "المستوى الظاهر في المرجع Fixture بصري، ولا يعني أن effort فعليًا مفعّل حتى يصل state موثوق.",
+                    "UNKNOWN / OWNER CONTROLLED");
+                break;
+        }
+    }
+
     private void Route_Click(object sender, RoutedEventArgs e)
     {
         if (sender is not Button button || button.Tag is not string route)
@@ -423,8 +487,8 @@ public partial class MainWindow : Window
 
         var isHome = screen == ScreenKind.Home;
         InteractionCanvas.Visibility = isHome ? Visibility.Visible : Visibility.Collapsed;
-        NativeHomeLayer.Visibility = isHome ? Visibility.Visible : Visibility.Collapsed;
-        NativeHomeLayer.Opacity = _nativeReferenceBlendEnabled && isHome ? 0.46 : 1;
+        NativeHomeReconstructionRoot.Visibility = isHome ? Visibility.Visible : Visibility.Collapsed;
+        NativeHomeReconstructionRoot.Opacity = _nativeReferenceBlendEnabled && isHome ? 0.46 : 1;
         RoleActivationRing.Visibility = Visibility.Collapsed;
         SecondaryInteractionCanvas.Visibility = isHome ? Visibility.Collapsed : Visibility.Visible;
         SecondaryInteractionCanvas.Children.Clear();
@@ -727,7 +791,7 @@ public partial class MainWindow : Window
             _currentScreen == ScreenKind.Home)
         {
             _nativeReferenceBlendEnabled = !_nativeReferenceBlendEnabled;
-            NativeHomeLayer.Opacity = _nativeReferenceBlendEnabled ? 0.46 : 1;
+            NativeHomeReconstructionRoot.Opacity = _nativeReferenceBlendEnabled ? 0.46 : 1;
             ShowNotice(
                 _nativeReferenceBlendEnabled
                     ? "وضع مقارنة Overlay مفعّل: المرجع الأصلي ظاهر تحت Council Pulse الـNative."
