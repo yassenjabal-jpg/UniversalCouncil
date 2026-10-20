@@ -95,14 +95,8 @@ public sealed class ProjectContextResolver : IProjectContextResolver
                     "No context sources matched the requested domains/scopes.");
             }
 
-            var candidateIds = candidates
-                .Select(item => item.Id)
-                .ToHashSet(StringComparer.Ordinal);
-
             var conflicts = document.Conflicts
-                .Where(item =>
-                    Overlaps(item.Domains, request.Domains) &&
-                    item.SourceIds.Any(candidateIds.Contains))
+                .Where(item => Overlaps(item.Domains, request.Domains))
                 .OrderBy(item => item.Id, StringComparer.Ordinal)
                 .ToArray();
 
@@ -113,8 +107,10 @@ public sealed class ProjectContextResolver : IProjectContextResolver
                     .Concat(requiredIds)
                     .ToHashSet(StringComparer.Ordinal);
 
-                var conflictSources = candidates
+                var conflictSources = document.Sources
                     .Where(item => conflictSourceIds.Contains(item.Id))
+                    .OrderBy(item => AuthorityRank[item.AuthorityClass])
+                    .ThenBy(item => item.Id, StringComparer.Ordinal)
                     .Select(ProjectSource)
                     .ToArray();
 
