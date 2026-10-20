@@ -196,6 +196,27 @@ internal static class Program
                 "recovery-fork-blend-1440x900.png",
                 "blend",
                 "RecoveryFork"),
+            Render(
+                output,
+                1440,
+                900,
+                "pulse-story-reference-1440x900.png",
+                "reference",
+                "PulseStory"),
+            Render(
+                output,
+                1440,
+                900,
+                "pulse-story-native-1440x900.png",
+                "native",
+                "PulseStory"),
+            Render(
+                output,
+                1440,
+                900,
+                "pulse-story-blend-1440x900.png",
+                "blend",
+                "PulseStory"),
         };
 
         var manifestPath = Path.Combine(output, "ui-evidence-manifest.json");
