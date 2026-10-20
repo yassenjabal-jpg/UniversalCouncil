@@ -85,7 +85,7 @@
   "native_reconstruction": {
     "strategy": "SLICE_BY_SLICE_WITH_REFERENCE_UNDERLAY_AND_OVERLAY_COMPARISON",
     "current_slice": "owner_decision_native",
-    "current_slice_state": "STARTED_NATIVE_RECONSTRUCTION",
+    "current_slice_state": "IMPLEMENTED_CI_VALIDATION_PENDING",
     "reference_underlay_retained": true,
     "comparison_shortcut": "Ctrl+Shift+O",
     "completed_slices": [
@@ -181,7 +181,7 @@
       }
     ],
     "pending_slices": [
-      "owner_decision_native_reconstruction",
+      "owner_decision_native_validation",
       "recovery_fork_native_reconstruction",
       "pulse_story_native_reconstruction",
       "work_receipt_native_reconstruction",
