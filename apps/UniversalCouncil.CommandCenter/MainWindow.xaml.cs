@@ -189,7 +189,7 @@ public partial class MainWindow : Window
             subtitle,
             explanation,
             "بانتظار أمر مالك صريح وسياق مشروع صالح.",
-            _viewModel.ExecutionFabric.ExecutionState,
+            _viewModel.ExecutionFabric.LiveDispatchEnabled ? "LIVE DISPATCH ENABLED" : "LIVE DISPATCH DISABLED",
             "يعرض المسار المقترح فقط؛ لا توجد خطوة نفذت من هذا الاختيار.",
             "أي blocker أو authority gate يجب أن يظهر قبل البدء.",
             "لا توجد أدلة تشغيلية مرتبطة بالاختيار بعد.",
@@ -240,7 +240,7 @@ public partial class MainWindow : Window
                 "Autopilot",
                 "الحالة التشغيلية",
                 "يفتح Live Execution Detail عندما توجد حالة تشغيل حقيقية.",
-                _viewModel.ExecutionFabric.ExecutionState),
+                _viewModel.ExecutionFabric.LiveDispatchEnabled ? "LIVE DISPATCH ENABLED" : "LIVE DISPATCH DISABLED"),
             "since-away" => new RegionContext(
                 "منذ آخر زيارة",
                 "التحديثات ذات القيمة",
@@ -260,7 +260,7 @@ public partial class MainWindow : Window
                 "Tool Dock",
                 "الأدوات",
                 "يفرق بين READY / ACTIVE / BLOCKED / UNKNOWN ويفتح Tool Inspector.",
-                _viewModel.ExecutionFabric.ExecutionState),
+                _viewModel.ExecutionFabric.LiveDispatchEnabled ? "LIVE DISPATCH ENABLED" : "LIVE DISPATCH DISABLED"),
             _ => new RegionContext(
                 "التنقل العام",
                 "Command Center Navigation",
