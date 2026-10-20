@@ -1177,6 +1177,10 @@ public partial class MainWindow : Window
         {
             BuildNativeSoftwareAutopilot();
         }
+        else if (screen == ScreenKind.StudioProject)
+        {
+            BuildNativeStudioProject();
+        }
     }
 
     private void BuildNativeProjectWorkspaceCore()
@@ -2985,6 +2989,789 @@ public partial class MainWindow : Window
             894,
             155,
             19);
+    }
+
+    private void BuildNativeStudioProject()
+    {
+        BuildNativeStudioHeaderAndPipeline();
+        BuildNativeStudioPlayerAndContext();
+        BuildNativeStudioTimeline();
+        BuildNativeStudioLowerWorkflow();
+    }
+
+    private Image CreateReferenceCrop(
+        string imageName,
+        Int32Rect sourceRect,
+        Stretch stretch = Stretch.UniformToFill)
+    {
+        var uri = new Uri(
+            $"/UniversalCouncil.CommandCenter;component/Assets/VisualReferences/{imageName}",
+            UriKind.Relative);
+        var source = new BitmapImage(uri);
+        var cropped = new CroppedBitmap(source, sourceRect);
+        return new Image
+        {
+            Source = cropped,
+            Stretch = stretch,
+            SnapsToDevicePixels = true,
+            IsHitTestVisible = false,
+        };
+    }
+
+    private void BuildNativeStudioHeaderAndPipeline()
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#FFFDFBF8", "#F0EBE4", 0, new Thickness(0)),
+            238,
+            49,
+            1232,
+            66);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("‹   مشاريع الفيديو", 11, "#6D7786", FontWeights.SemiBold),
+            250,
+            62,
+            145,
+            24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("إطلاق هوية المجلس الجديدة", 27, "#101A2C", FontWeights.Bold),
+            398,
+            52,
+            390,
+            45);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✦", 29, "#2F8DFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            790,
+            55,
+            35,
+            38);
+
+        AddTagChipToCanvas(SecondaryNativeLayer, 833, 59, 116, "حملة متكاملة", "#F2EEFF", "#7555D0");
+        AddTagChipToCanvas(SecondaryNativeLayer, 958, 59, 105, "فيديو رئيسي", "#F5F6F8", "#657083");
+
+        var subtitle = ChromeText(
+            "فيلم تعريفي يجسد رؤية المجلس\nلمستقبل أكثر ذكاءً وترابطاً",
+            10.5,
+            "#3E495A",
+            FontWeights.SemiBold);
+        subtitle.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, subtitle, 1170, 56, 235, 42);
+
+        var pipeline = ChromePanel("#FFFCFBF8", "#E4E0DB", 13);
+        Place(SecondaryNativeLayer, pipeline, 244, 116, 1200, 143);
+
+        var connector = new Path
+        {
+            Data = Geometry.Parse("M 362,166 C 485,138 590,197 710,163 S 950,140 1070,165 S 1255,190 1360,165"),
+            Stroke = Brush("#9C75EF"),
+            StrokeThickness = 2.2,
+            Opacity = 0.72,
+            IsHitTestVisible = false,
+        };
+        SecondaryNativeLayer.Children.Add(connector);
+
+        AddStudioStage(332, 135, "1", "✎", "الكتابة", "السيناريو والنصوص", false);
+        AddStudioStage(552, 135, "2", "▧", "ما قبل الإنتاج", "الستوري بورد والتخطيط", false);
+        AddStudioStage(812, 126, "3", "▣", "الإنتاج", "التصوير والمونتاج", true);
+        AddStudioStage(1032, 135, "4", "✓", "المراجعة والجودة", "المعاينة والملاحظات", false);
+        AddStudioStage(1272, 135, "5", "➤", "التسليم والنشر", "التصدير والتوزيع", false);
+    }
+
+    private void AddTagChipToCanvas(
+        Canvas canvas,
+        double left,
+        double top,
+        double width,
+        string text,
+        string background,
+        string foreground)
+    {
+        var chip = ChromePanel(background, "#E4E2DF", 9);
+        Place(canvas, chip, left, top, width, 27);
+        Place(
+            canvas,
+            ChromeText(text, 9.5, foreground, FontWeights.SemiBold),
+            left + 10,
+            top + 4,
+            width - 20,
+            19);
+    }
+
+    private void AddStudioStage(
+        double left,
+        double top,
+        string number,
+        string glyph,
+        string title,
+        string subtitle,
+        bool active)
+    {
+        var ringSize = active ? 72 : 54;
+        var ringLeft = left + (active ? -9 : 0);
+        var ringTop = top + (active ? -9 : 0);
+
+        if (active)
+        {
+            Place(
+                SecondaryNativeLayer,
+                new Ellipse
+                {
+                    Fill = Brush("#F4EAFF"),
+                    Stroke = Brush("#BD92F7"),
+                    StrokeThickness = 1,
+                    IsHitTestVisible = false,
+                },
+                ringLeft - 8,
+                ringTop - 8,
+                ringSize + 16,
+                ringSize + 16);
+        }
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush(active ? "#8A4DE7" : "#F8F8F7"),
+                Stroke = Brush(active ? "#8A4DE7" : "#D9D6D1"),
+                StrokeThickness = active ? 2.5 : 1.5,
+                IsHitTestVisible = false,
+            },
+            ringLeft,
+            ringTop,
+            ringSize,
+            ringSize);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, active ? 28 : 21, active ? "#FFFFFF" : "#7D8490", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            ringLeft + (active ? 21 : 15),
+            ringTop + (active ? 16 : 12),
+            32,
+            32);
+
+        var numberBadge = ChromePanel(active ? "#E4CCFF" : "#F0F0EE", active ? "#E4CCFF" : "#F0F0EE", 10);
+        Place(SecondaryNativeLayer, numberBadge, left - 7, top + 58, 24, 24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(number, 9.5, active ? "#7041C7" : "#737B88", FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 1,
+            top + 61,
+            10,
+            16);
+
+        var titleText = ChromeText(title, 12.5, active ? "#7A45D1" : "#495566", active ? FontWeights.Bold : FontWeights.SemiBold);
+        titleText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, titleText, left - 38, top + 78, 130, 24);
+
+        var subtitleText = ChromeText(subtitle, 9, active ? "#9A62DE" : "#7C8591");
+        subtitleText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, subtitleText, left - 53, top + 102, 160, 21);
+
+        if (active)
+        {
+            var current = ChromePanel("#8A4DE7", "#8A4DE7", 8);
+            Place(SecondaryNativeLayer, current, left - 6, top + 124, 88, 25);
+            Place(
+                SecondaryNativeLayer,
+                ChromeText("القسم الحالي", 9, "#FFFFFF", FontWeights.SemiBold),
+                left + 7,
+                top + 128,
+                63,
+                17);
+        }
+    }
+
+    private void BuildNativeStudioPlayerAndContext()
+    {
+        var projectInfo = ChromePanel("#FFFCFBF8", "#E5E0D8", 11);
+        Place(SecondaryNativeLayer, projectInfo, 244, 270, 202, 310);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("معلومات المشروع", 15.5, "#273247", FontWeights.SemiBold),
+            260,
+            280,
+            150,
+            28);
+        AddStudioInfoRow(316, "كود المشروع", "UC-VID-2025-0043");
+        AddStudioInfoRow(348, "العميل", "المجلس");
+        AddStudioInfoRow(380, "النوع", "فيلم تعريفي");
+        AddStudioInfoRow(412, "المدة المستهدفة", "90 ثانية");
+        AddStudioInfoRow(444, "الحالة", "قيد الإنتاج");
+        AddStudioInfoRow(476, "تاريخ التسليم", "30 أبريل 2025");
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("هوية   ذكاء اصطناعي   مستقبل", 9, "#5E6878", FontWeights.SemiBold),
+            260,
+            515,
+            165,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الإنجاز العام", 9.5, "#697383"),
+            260,
+            545,
+            75,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("68%", 12, "#2C374A", FontWeights.Bold, FlowDirection.LeftToRight),
+            396,
+            545,
+            35,
+            20);
+        var infoTrack = ChromePanel("#E3EAF3", "#E3EAF3", 4);
+        Place(SecondaryNativeLayer, infoTrack, 260, 567, 166, 7);
+        var infoFill = ChromePanel("#2F75F3", "#2F75F3", 4);
+        Place(SecondaryNativeLayer, infoFill, 260, 567, 113, 7);
+
+        // Player frame: media crop stays pixel-faithful to canonical reference.
+        var player = ChromePanel("#111827", "#111827", 8);
+        Place(SecondaryNativeLayer, player, 456, 270, 626, 310);
+
+        var media = CreateReferenceCrop(
+            "04-studio_project.png",
+            new Int32Rect(465, 282, 608, 255));
+        Place(SecondaryNativeLayer, media, 464, 278, 610, 252);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#101827", "#101827", 0),
+            464,
+            530,
+            610,
+            42);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◀", 16, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            477,
+            539,
+            24,
+            24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("▶", 16, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            511,
+            539,
+            24,
+            24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("00:38 / 01:30", 10, "#FFFFFF", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            548,
+            540,
+            100,
+            22);
+        var seek = ChromePanel("#4A5363", "#4A5363", 2);
+        Place(SecondaryNativeLayer, seek, 651, 549, 286, 4);
+        var seekFill = ChromePanel("#A35CF2", "#A35CF2", 2);
+        Place(SecondaryNativeLayer, seekFill, 651, 549, 133, 4);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#FFFFFF"), IsHitTestVisible = false },
+            778,
+            543,
+            14,
+            14);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◖   ⛶   ↗", 16, "#FFFFFF", null, FlowDirection.LeftToRight),
+            965,
+            538,
+            95,
+            25);
+
+        BuildStudioRightContext();
+    }
+
+    private void AddStudioInfoRow(double top, string label, string value)
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(label, 9.5, "#777F8B"),
+            260,
+            top,
+            75,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(value, 9.6, "#354052", FontWeights.SemiBold),
+            337,
+            top,
+            90,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#EEEAE4", "#EEEAE4", 0),
+            260,
+            top + 24,
+            166,
+            1);
+    }
+
+    private void BuildStudioRightContext()
+    {
+        var output = ChromePanel("#FFFCFBF8", "#E5E0D8", 10);
+        Place(SecondaryNativeLayer, output, 1092, 270, 352, 116);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("المخرج الحالي", 14.5, "#283347", FontWeights.SemiBold),
+            1128,
+            280,
+            130,
+            26);
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#EEE9FF", "#D8CAF6", 6),
+            1107,
+            310,
+            112,
+            58);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("UC_Council_Main_v4.mp4", 10, "#2D394A", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            1230,
+            312,
+            185,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("1.2 GB · 4K · 01:30", 9, "#6C7685", null, FlowDirection.LeftToRight),
+            1230,
+            337,
+            160,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("● نسخة محدثة", 8.5, "#169A50", FontWeights.SemiBold),
+            1230,
+            357,
+            95,
+            17);
+
+        var app = ChromePanel("#FFFCFBF8", "#E5E0D8", 10);
+        Place(SecondaryNativeLayer, app, 1092, 395, 352, 92);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("التطبيق الرئيسي", 13.5, "#283347", FontWeights.SemiBold),
+            1128,
+            405,
+            130,
+            24);
+        var prBadge = ChromePanel("#2A1352", "#2A1352", 8);
+        Place(SecondaryNativeLayer, prBadge, 1110, 436, 50, 40);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Pr", 18, "#D2A8FF", FontWeights.Bold, FlowDirection.LeftToRight),
+            1123,
+            443,
+            25,
+            25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Adobe Premiere Pro", 10.5, "#303A4B", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            1173,
+            437,
+            155,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("المونتاج النهائي والتنسيق اللوني", 8.5, "#727B88"),
+            1173,
+            457,
+            190,
+            17);
+
+        var ai = ChromePanel("#FFFCFBF8", "#E5E0D8", 10);
+        Place(SecondaryNativeLayer, ai, 1092, 496, 352, 84);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("معلومات الذكاء الاصطناعي", 13, "#283347", FontWeights.SemiBold),
+            1128,
+            504,
+            180,
+            24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Claude 3.5 Sonnet   ·   عمق التفكير: متوسط", 9, "#475366", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            1110,
+            535,
+            270,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("مدة التشغيل  02:14:37     القضايا المستعادة 3     دقة التحليل 92%", 8.5, "#6B7584"),
+            1110,
+            557,
+            310,
+            16);
+    }
+
+    private void BuildNativeStudioTimeline()
+    {
+        var timeline = ChromePanel("#FFFCFBF8", "#E5E0D8", 10);
+        Place(SecondaryNativeLayer, timeline, 16, 590, 1027, 230);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
+            34,
+            602,
+            22,
+            22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("▣", 10, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            40,
+            604,
+            12,
+            14);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الخط الزمني", 15, "#283347", FontWeights.SemiBold),
+            66,
+            596,
+            120,
+            28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("01:30", 10.5, "#4D596A", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            159,
+            600,
+            55,
+            20);
+
+        AddTimelineRuler(124, 632, 900);
+        AddStudioTrackLabel(28, 665, "▣", "الفيديو");
+        AddStudioTrackLabel(28, 711, "◖", "الصوت");
+        AddStudioTrackLabel(28, 757, "T", "النص");
+        AddStudioTrackLabel(28, 791, "✦", "المؤثرات");
+
+        for (var i = 0; i < 8; i++)
+        {
+            var clipColor = i % 3 == 0 ? "#CFE5FA" : i % 3 == 1 ? "#DCEAF6" : "#E8EDF4";
+            var clip = ChromePanel(clipColor, "#BFD3E6", 4);
+            Place(SecondaryNativeLayer, clip, 124 + (i * 108), 659, 101, 40);
+            Place(
+                SecondaryNativeLayer,
+                ChromePanel("#87ADD1", "#87ADD1", 1),
+                134 + (i * 108),
+                670,
+                70,
+                4);
+            Place(
+                SecondaryNativeLayer,
+                ChromePanel("#A9C4DE", "#A9C4DE", 1),
+                134 + (i * 108),
+                681,
+                48,
+                4);
+        }
+
+        var audioTrack = ChromePanel("#EAD9FA", "#D1B8ED", 4);
+        Place(SecondaryNativeLayer, audioTrack, 124, 707, 864, 32);
+        for (var i = 0; i < 27; i++)
+        {
+            var h = 6 + ((i * 7) % 19);
+            Place(
+                SecondaryNativeLayer,
+                ChromePanel("#9E62D5", "#9E62D5", 1),
+                133 + (i * 30),
+                722 - (h / 2),
+                3,
+                h);
+        }
+
+        AddTimelineTextClip(174, 753, 214, "لمستقبل أكثر ذكاءً وترابطاً");
+        AddTimelineTextClip(405, 753, 215, "المجلس");
+        AddTimelineTextClip(637, 753, 214, "يبني جسوراً جديدة");
+        AddTimelineTextClip(868, 753, 120, "مجتمع أكثر ازدهاراً");
+
+        AddEffectClip(124, 788, 282);
+        AddEffectClip(414, 788, 282);
+        AddEffectClip(704, 788, 284);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#2F75F3", "#2F75F3", 0),
+            516,
+            625,
+            2,
+            188);
+        var playhead = ChromePanel("#2F75F3", "#2F75F3", 6);
+        Place(SecondaryNativeLayer, playhead, 493, 624, 49, 22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("00:38", 8.5, "#FFFFFF", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            502,
+            627,
+            30,
+            15);
+    }
+
+    private void AddTimelineRuler(double left, double top, double width)
+    {
+        var line = new Line
+        {
+            X1 = left,
+            Y1 = top + 14,
+            X2 = left + width,
+            Y2 = top + 14,
+            Stroke = Brush("#D9DEE6"),
+            StrokeThickness = 1,
+            IsHitTestVisible = false,
+        };
+        SecondaryNativeLayer.Children.Add(line);
+
+        for (var i = 0; i <= 9; i++)
+        {
+            Place(
+                SecondaryNativeLayer,
+                ChromeText($"00:{i * 10:00}", 7.5, "#8B929D", null, FlowDirection.LeftToRight),
+                left + (i * 100) - 12,
+                top,
+                38,
+                15);
+        }
+    }
+
+    private void AddStudioTrackLabel(double left, double top, string glyph, string label)
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 13, "#53627A", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left,
+            top,
+            18,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(label, 9.5, "#657083"),
+            left + 25,
+            top - 2,
+            58,
+            22);
+    }
+
+    private void AddTimelineTextClip(double left, double top, double width, string text)
+    {
+        var clip = ChromePanel("#E6ECFF", "#C8D5F5", 4);
+        Place(SecondaryNativeLayer, clip, left, top, width, 27);
+        var label = ChromeText(text, 8.5, "#43526D");
+        label.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, label, left + 8, top + 4, width - 16, 18);
+    }
+
+    private void AddEffectClip(double left, double top, double width)
+    {
+        var clip = ChromePanel("#E2F7EC", "#C3EAD4", 4);
+        Place(SecondaryNativeLayer, clip, left, top, width, 22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◇", 10, "#2EB56B", FontWeights.Bold, FlowDirection.LeftToRight),
+            left + (width / 2) - 7,
+            top + 2,
+            16,
+            16);
+    }
+
+    private void BuildNativeStudioLowerWorkflow()
+    {
+        var review = ChromePanel("#FFFCFBF8", "#E5E0D8", 9);
+        Place(SecondaryNativeLayer, review, 16, 829, 290, 112);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#EF596A"), IsHitTestVisible = false },
+            32,
+            842,
+            22,
+            22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("!", 12, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            40,
+            843,
+            10,
+            16);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تذكرة المراجعة", 13.5, "#283347", FontWeights.SemiBold),
+            64,
+            837,
+            130,
+            24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("TCK-1023", 10, "#4F5B6D", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            34,
+            878,
+            70,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تعديل توازن الألوان في المشهد 3", 9, "#6C7685"),
+            34,
+            901,
+            225,
+            18);
+
+        var handoff = ChromePanel("#FFFCFBF8", "#E5E0D8", 9);
+        Place(SecondaryNativeLayer, handoff, 316, 829, 515, 112);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تدفق التسليم بين الأقسام", 13.5, "#283347", FontWeights.SemiBold),
+            334,
+            837,
+            190,
+            24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("▧  →  ▣  →  ◉  →  ◇  →  ➤", 27, "#8A5BE6", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            355,
+            873,
+            420,
+            36);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الكتابة        ما قبل الإنتاج        الإنتاج        مراجعة الجودة        التسليم", 8.3, "#697383"),
+            345,
+            909,
+            448,
+            18);
+
+        var team = ChromePanel("#FFFCFBF8", "#E5E0D8", 9);
+        Place(SecondaryNativeLayer, team, 841, 829, 202, 112);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("أعضاء الفريق النشطون", 12.5, "#283347", FontWeights.SemiBold),
+            857,
+            838,
+            160,
+            23);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("● Pr   ● Ae   ● Ps   ✎", 18, "#6754C5", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            864,
+            874,
+            142,
+            27);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("خالد     سارة     أحمد     ريم", 8.3, "#687384"),
+            858,
+            905,
+            155,
+            18);
+
+        var versions = ChromePanel("#FFFCFBF8", "#E5E0D8", 9);
+        Place(SecondaryNativeLayer, versions, 1053, 590, 391, 155);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("النسخ والبدائل", 14, "#283347", FontWeights.SemiBold),
+            1090,
+            600,
+            120,
+            25);
+        for (var i = 0; i < 4; i++)
+        {
+            var bg = i == 0 ? "#F6EEFF" : "#F4F6F9";
+            var border = i == 0 ? "#A66AE8" : "#DEE3EA";
+            var thumb = ChromePanel(bg, border, 6);
+            Place(SecondaryNativeLayer, thumb, 1070 + (i * 88), 634, 78, 72);
+            Place(
+                SecondaryNativeLayer,
+                ChromeText(i == 0 ? "v4" : $"v{4 - i}", 9, i == 0 ? "#7D4ACD" : "#596476", FontWeights.Bold, FlowDirection.LeftToRight),
+                1078 + (i * 88),
+                683,
+                22,
+                16);
+        }
+
+        var qc = ChromePanel("#FFFCFBF8", "#E5E0D8", 9);
+        Place(SecondaryNativeLayer, qc, 1053, 754, 190, 187);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("مراجعة الجودة (QC)", 12.5, "#283347", FontWeights.SemiBold),
+            1078,
+            765,
+            135,
+            23);
+        AddQcRow(802, "جودة الصورة", "4K ✓");
+        AddQcRow(832, "جودة الصوت", "ممتاز");
+        AddQcRow(862, "التناسق البصري", "✓");
+        AddQcRow(892, "الالتزام بالهوية", "✓");
+
+        var next = ChromePanel("#FFFCFBF8", "#E5E0D8", 9);
+        Place(SecondaryNativeLayer, next, 1252, 754, 192, 187);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("التسليم القادم", 12.5, "#283347", FontWeights.SemiBold),
+            1280,
+            765,
+            120,
+            23);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◈", 30, "#7A4EDC", FontWeights.Bold, FlowDirection.LeftToRight),
+            1321,
+            811,
+            38,
+            40);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("مراجعة الجودة", 10.5, "#374254", FontWeights.SemiBold),
+            1292,
+            860,
+            106,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("فريق الجودة", 9, "#6D7786"),
+            1299,
+            883,
+            90,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("موعد متوقع: بعد 2 ساعة", 8.5, "#6D7786"),
+            1278,
+            914,
+            130,
+            16);
+    }
+
+    private void AddQcRow(double top, string label, string value)
+    {
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#25C86A"), IsHitTestVisible = false },
+            1068,
+            top + 5,
+            12,
+            12);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✓", 8, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            1071,
+            top + 4,
+            9,
+            12);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(label, 8.7, "#5F6A79"),
+            1088,
+            top,
+            85,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(value, 8.7, "#23975C", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            1174,
+            top,
+            54,
+            20);
     }
 
     private void BuildSecondaryInteractions(ScreenKind screen)
