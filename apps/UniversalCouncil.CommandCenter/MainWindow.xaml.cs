@@ -2745,7 +2745,7 @@ public partial class MainWindow : Window
                 "143   +   if (size == 0) return nullptr;",
                 "144   +   void* ptr = aligned_alloc(64,size);",
                 "145   +   if (!ptr) {",
-                "146   +     UC_METRIC("alloc_failed", size);",
+                "146   +     UC_METRIC(\"alloc_failed\", size);",
                 "147   +     return fallback_allocate(size);",
                 "148   +   }",
                 "149   +   return ptr;"
@@ -2756,7 +2756,7 @@ public partial class MainWindow : Window
                 "143   -   if (size == 0) return nullptr;",
                 "144   -   void* ptr = malloc(size);",
                 "145   -   if (!ptr) {",
-                "146   -     LOG_ERROR("Allocation failed");",
+                "146   -     LOG_ERROR(\"Allocation failed\");",
                 "147   -     return nullptr;",
                 "148   -   }",
                 "149   -   return ptr;"
