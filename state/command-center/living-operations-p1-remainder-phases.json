@@ -30,7 +30,7 @@
       }
     },
     "R2_RECOVERY_FORK": {
-      "state": "READY_TO_CONTINUE",
+      "state": "CI_RENDER_VALIDATION",
       "primary_screen": "checkpoint_recovery_fork"
     },
     "R3_PULSE_STORY": {
