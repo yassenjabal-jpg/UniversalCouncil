@@ -434,3 +434,12 @@ def test_recovery_fork_has_native_reconstruction_and_truth_guards():
     ):
         assert value in code
     assert "CHECKPOINT_RESTORED_VERIFIED" in code
+
+
+def test_recovery_fork_vertical_bands_are_calibrated_to_reference():
+    code = CODE.read_text(encoding="utf-8")
+    assert "Place(SecondaryNativeLayer, card, 230, 153, 1240, 345);" in code
+    assert "TranslateSecondaryChildren(firstChild, 30);" in code
+    assert "TranslateSecondaryChildren(firstChild, 50);" in code
+    assert "Place(SecondaryNativeLayer, card, 16, 475, 324, 335);" in code
+    assert "Place(SecondaryNativeLayer, card, 1100, 475, 370, 335);" in code
