@@ -84,8 +84,8 @@
   "stage8_opened": false,
   "native_reconstruction": {
     "strategy": "SLICE_BY_SLICE_WITH_REFERENCE_UNDERLAY_AND_OVERLAY_COMPARISON",
-    "current_slice": "studio_project_native",
-    "current_slice_state": "IMPLEMENTED_CI_VALIDATION_PENDING",
+    "current_slice": "owner_decision_native",
+    "current_slice_state": "STARTED_NATIVE_RECONSTRUCTION",
     "reference_underlay_retained": true,
     "comparison_shortcut": "Ctrl+Shift+O",
     "completed_slices": [
@@ -168,17 +168,27 @@
           "native",
           "blend"
         ]
+      },
+      {
+        "id": "studio_project_native",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_PENDING",
+        "evidence_head": "79d90a62ffa0abaa94e3684f8db1686cd2faf1ce",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
       }
     ],
     "pending_slices": [
-      "studio_project_native_validation",
-      "home_micro_polish",
-      "project_workspace_micro_polish",
-      "software_autopilot_micro_polish",
       "owner_decision_native_reconstruction",
       "recovery_fork_native_reconstruction",
       "pulse_story_native_reconstruction",
-      "work_receipt_native_reconstruction"
+      "work_receipt_native_reconstruction",
+      "home_micro_polish",
+      "project_workspace_micro_polish",
+      "software_autopilot_micro_polish",
+      "studio_project_micro_polish"
     ],
     "final_native_reconstruction_complete": false,
     "home_macro_reconstruction_complete": true
