@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "addendum_id": "CC-CONTEXT-RESOLVER-PACKAGING-ADDENDUM-2026-10-21",
+  "parent_change_id": "CC-CONTEXT-RESOLVER-COMPILER-2026-10-21",
+  "status": "APPROVE_TO_IMPLEMENT",
+  "classification": "NON_MATERIAL_SCOPE_CLARIFICATION",
+  "reason": "Host composition points at state/project-context-map.json; the Windows package must include that read-only projection or future context resolution would fail with a missing-source error.",
+  "added_artifact": "apps/UniversalCouncil.CommandCenter/UniversalCouncil.CommandCenter.csproj",
+  "allowed_change": "package project-context-map.json as read-only content",
+  "explicitly_forbidden": [
+    "MainWindow changes",
+    "ViewModel behavior changes",
+    "visual changes",
+    "execution authority changes"
+  ],
+  "inherits_pre_approval": "MRTKZ-CONTEXT-RESOLVER-COMPILER-PRE-2026-10-21",
+  "material_scope_expansion": false,
+  "timestamp": "2026-10-21"
+}
