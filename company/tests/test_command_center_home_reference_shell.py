@@ -100,3 +100,23 @@ def test_interactions_remain_truthful_and_reduced_motion_aware():
     assert "CHECKPOINT_RESTORED_VERIFIED" in code
     assert "لم يتم تسجيل قرار" in code
     assert "SystemParameters.ClientAreaAnimation" in code
+
+
+def test_home_council_pulse_has_first_native_reconstruction_slice():
+    xaml = XAML.read_text(encoding="utf-8")
+    code = CODE.read_text(encoding="utf-8")
+    assert 'x:Name="NativeHomeLayer"' in xaml
+    assert "NativeRoleButtonStyle" in xaml
+    assert xaml.count('Click="NativeRole_Click"') == 8
+    assert xaml.count('Click="NativeReasoning_Click"') == 8
+    assert "CouncilActivity_Click" in code
+    assert "AnimateNativeRoleButton" in code
+
+
+def test_native_reference_overlay_comparison_is_keyboard_gated():
+    code = CODE.read_text(encoding="utf-8")
+    assert "_nativeReferenceBlendEnabled" in code
+    assert "ModifierKeys.Shift" in code
+    assert "Key.O" in code
+    assert "NativeHomeLayer.Opacity" in code
+    assert "0.46" in code
