@@ -134,6 +134,17 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
             self.assertEqual(metadata["ingested_at"], "2026-10-13T19:05:00+00:00")
             self.assertEqual(metadata["verifier_version"], "1.1")
 
+    def test_validate_receipt_rejects_naive_as_of(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project, source, _, current = self.make_source(Path(tmp))
+            with self.assertRaises(EvidenceSyncError):
+                validate_receipt(
+                    current,
+                    source,
+                    project,
+                    as_of=datetime(2026, 10, 13, 19),
+                )
+
     def test_v11_binding_mismatch_and_expiry_fail_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
             project, source, _, current = self.make_source(Path(tmp))
