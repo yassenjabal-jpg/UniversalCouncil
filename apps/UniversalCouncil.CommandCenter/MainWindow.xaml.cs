@@ -1140,11 +1140,14 @@ public partial class MainWindow : Window
         NativeHomeReconstructionRoot.Visibility = isHome ? Visibility.Visible : Visibility.Collapsed;
         NativeHomeReconstructionRoot.Opacity = _nativeReferenceBlendEnabled && isHome ? 0.46 : 1;
         RoleActivationRing.Visibility = Visibility.Collapsed;
+        SecondaryNativeLayer.Visibility = isHome ? Visibility.Collapsed : Visibility.Visible;
+        SecondaryNativeLayer.Children.Clear();
         SecondaryInteractionCanvas.Visibility = isHome ? Visibility.Collapsed : Visibility.Visible;
         SecondaryInteractionCanvas.Children.Clear();
 
         if (!isHome)
         {
+            BuildSecondaryNative(screen);
             BuildSecondaryInteractions(screen);
         }
 
@@ -1162,6 +1165,492 @@ public partial class MainWindow : Window
         {
             ReferenceImage.Opacity = 1;
         }
+    }
+
+    private void BuildSecondaryNative(ScreenKind screen)
+    {
+        if (screen == ScreenKind.ProjectWorkspace)
+        {
+            BuildNativeProjectWorkspaceCore();
+        }
+    }
+
+    private void BuildNativeProjectWorkspaceCore()
+    {
+        // Header and project identity.
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#FFFDFBF8", "#F0EBE4", 0, new Thickness(0)),
+            238,
+            49,
+            1232,
+            151);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("⌂  المشاريع   ›   Smart Secretary V2", 10.5, "#6C7686", FontWeights.SemiBold),
+            270,
+            62,
+            320,
+            24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Smart Secretary V2", 31, "#14213D", FontWeights.Bold, FlowDirection.LeftToRight),
+            270,
+            91,
+            350,
+            44);
+
+        var runningBadge = ChromePanel("#EAFBF0", "#BFEBCF", 9);
+        Place(SecondaryNativeLayer, runningBadge, 548, 98, 93, 28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("●  قيد التنفيذ", 10.5, "#1A9F52", FontWeights.SemiBold),
+            560,
+            101,
+            72,
+            22);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تحديث الخصوصية وإدارة البيانات للسكرتير المدير الذكي", 18, "#374151", FontWeights.SemiBold),
+            270,
+            133,
+            540,
+            30);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(
+                "تحسين وإقفال سياسات سحابية، معالجة البيانات، وتجربة المستخدم، مع الالتزام الكامل بالمعايير الأمنية والحوكمة.",
+                11.5,
+                "#737B88"),
+            270,
+            163,
+            705,
+            24);
+
+        AddProjectMetricCard(870, 104, 158, "بداية المشروع", "25 يناير 2025", "▣");
+        AddProjectMetricCard(1038, 104, 158, "المدة المتوقعة", "30 يوم", "◷");
+        AddProjectProgressCard(1206, 104, 228);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("▢", 20, "#394457", null, FlowDirection.LeftToRight),
+            1220,
+            62,
+            30,
+            30);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("⇧", 20, "#394457", null, FlowDirection.LeftToRight),
+            1273,
+            62,
+            30,
+            30);
+        var share = ChromePanel("#FFFFFF", "#E4E0DB", 8);
+        Place(SecondaryNativeLayer, share, 1318, 58, 70, 34);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("مشاركة", 10.5, "#465163", FontWeights.SemiBold),
+            1332,
+            63,
+            46,
+            24);
+        var more = ChromePanel("#FFFFFF", "#E4E0DB", 8);
+        Place(SecondaryNativeLayer, more, 1398, 58, 42, 34);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("•••", 15, "#465163", FontWeights.Bold, FlowDirection.LeftToRight),
+            1408,
+            59,
+            22,
+            24);
+
+        // Autopilot past/current/future rail.
+        var autopilot = ChromePanel("#FFFCFBF8", "#E5E0D8", 14);
+        Place(SecondaryNativeLayer, autopilot, 260, 204, 1184, 158);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#24C85A"), IsHitTestVisible = false },
+            278,
+            216,
+            20,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◉", 10, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            284,
+            218,
+            12,
+            14);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Autopilot", 13, "#21304A", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            305,
+            211,
+            105,
+            28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الماضي", 16, "#334155", FontWeights.SemiBold),
+            517,
+            222,
+            95,
+            28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الحالي", 18, "#1C64D9", FontWeights.Bold),
+            802,
+            213,
+            92,
+            30);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("المستقبل", 16, "#64748B", FontWeights.SemiBold),
+            1117,
+            222,
+            105,
+            28);
+
+        var line = new Line
+        {
+            X1 = 397,
+            Y1 = 274,
+            X2 = 1283,
+            Y2 = 274,
+            Stroke = Brush("#D9DEE6"),
+            StrokeThickness = 3,
+            IsHitTestVisible = false,
+        };
+        SecondaryNativeLayer.Children.Add(line);
+        var activeLine = new Line
+        {
+            X1 = 397,
+            Y1 = 274,
+            X2 = 843,
+            Y2 = 274,
+            Stroke = Brush("#27BFD7"),
+            StrokeThickness = 3,
+            IsHitTestVisible = false,
+        };
+        SecondaryNativeLayer.Children.Add(activeLine);
+
+        AddTimelineNode(397, true, "تحليل المتطلبات", "2025/01/25", false);
+        AddTimelineNode(493, true, "تصميم الحل", "2025/01/31", false);
+        AddTimelineNode(591, true, "تطوير النسخة الأولى", "2025/02/10", false);
+        AddTimelineNode(690, true, "مراجعة أمنية", "2025/02/18", false);
+        AddTimelineNode(838, true, "تحسين الخصوصية\nوتكامل البيانات", "2025/02/25", true);
+        AddTimelineNode(1003, false, "اختبارات شاملة", "2025/03/05", false);
+        AddTimelineNode(1135, false, "مراجعة الامتثال", "2025/03/12", false);
+        AddTimelineNode(1270, false, "الإطلاق النهائي", "2025/03/20", false);
+
+        var plan = ChromePanel("#FAF7FF", "#DBCDF9", 9);
+        Place(SecondaryNativeLayer, plan, 1275, 215, 151, 34);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("عرض الخطة التفصيلية  ▣", 10, "#7256CA", FontWeights.SemiBold),
+            1286,
+            220,
+            127,
+            24);
+
+        // Active Council graph.
+        var council = ChromePanel("#FFFCFBF8", "#E5E0D8", 14);
+        Place(SecondaryNativeLayer, council, 260, 374, 1184, 177);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
+            278,
+            386,
+            22,
+            22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✦", 11, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            284,
+            388,
+            12,
+            14);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("المجلس العامل على هذا المشروع", 17, "#17233B", FontWeights.SemiBold),
+            310,
+            381,
+            260,
+            31);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#28C767"), IsHitTestVisible = false },
+            574,
+            393,
+            8,
+            8);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("6 وكلاء نشطين", 9.5, "#78818E"),
+            590,
+            386,
+            90,
+            24);
+
+        AddCouncilRoutingPath("M 332,460 C 376,415 424,415 470,460 S 560,505 603,460", "#8A65E8", 0.36);
+        AddCouncilRoutingPath("M 470,460 C 520,420 558,420 603,460 S 694,500 738,460", "#51B8E4", 0.42);
+        AddCouncilRoutingPath("M 603,460 C 657,420 696,420 738,460 S 830,500 872,460", "#F5A45B", 0.42);
+        AddCouncilRoutingPath("M 738,460 C 793,420 831,420 872,460 S 965,500 1006,460", "#2BC7DC", 0.42);
+        AddCouncilRoutingPath("M 872,460 C 925,420 965,420 1006,460 S 1096,500 1138,460", "#7D68E8", 0.38);
+
+        AddProjectCouncilRole(294, 421, "#EEE7FF", "#7B4EE0", "◉", "Evidence", "تحليل الأدلة");
+        AddProjectCouncilRole(431, 421, "#EAF4FF", "#2982E5", "●", "UX", "تصميم التجربة");
+        AddProjectCouncilRole(568, 421, "#FFF0F0", "#E94B5D", "T", "Red Team", "اختبار الثغرات");
+        AddProjectCouncilRole(705, 414, "#FFF8E5", "#F09A21", "♕", "Studio", "التطوير والتصميم", true);
+        AddProjectCouncilRole(842, 421, "#E8FBFD", "#24BDD2", "▣", "Security", "المراجعة الأمنية");
+        AddProjectCouncilRole(979, 421, "#F2EDFF", "#8A58E5", "⌘", "Synthesis", "دمج النتائج");
+
+        var routing = ChromePanel("#FFFDFCFA", "#E9E3DA", 11);
+        Place(SecondaryNativeLayer, routing, 1217, 393, 205, 139);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("توجيه المهام بين الوكلاء", 11.5, "#2F394A", FontWeights.SemiBold),
+            1233,
+            403,
+            170,
+            23);
+        var routingBody = ChromeText(
+            "يقوم Autopilot بتوجيه المهام تلقائياً\nبين الوكلاء بناءً على سياق المشروع\nوالنتائج المرحلية.",
+            9.2,
+            "#727B88");
+        routingBody.TextAlignment = TextAlignment.Right;
+        routingBody.LineHeight = 16;
+        Place(SecondaryNativeLayer, routingBody, 1233, 432, 170, 53);
+        var routingAction = ChromePanel("#F8F7FF", "#DCD1F5", 8);
+        Place(SecondaryNativeLayer, routingAction, 1240, 492, 167, 29);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("عرض سجل التوجيه  ▥", 9.5, "#6C55B8", FontWeights.SemiBold),
+            1251,
+            496,
+            145,
+            20);
+    }
+
+    private void AddProjectMetricCard(
+        double left,
+        double top,
+        double width,
+        string label,
+        string value,
+        string glyph)
+    {
+        var card = ChromePanel("#FFFCFBF9", "#E4E0DB", 9);
+        Place(SecondaryNativeLayer, card, left, top, width, 68);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(label, 9.5, "#7B8491"),
+            left + 14,
+            top + 9,
+            width - 44,
+            19);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(value, 12.5, "#263247", FontWeights.SemiBold),
+            left + 14,
+            top + 30,
+            width - 44,
+            24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 18, "#4D5B73", null, FlowDirection.LeftToRight),
+            left + width - 31,
+            top + 25,
+            20,
+            24);
+    }
+
+    private void AddProjectProgressCard(double left, double top, double width)
+    {
+        var card = ChromePanel("#FFFCFBF9", "#E4E0DB", 9);
+        Place(SecondaryNativeLayer, card, left, top, width, 68);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("التقدم العام", 9.5, "#7B8491"),
+            left + 14,
+            top + 9,
+            80,
+            19);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("68%", 14, "#243049", FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 14,
+            top + 31,
+            43,
+            22);
+        var track = ChromePanel("#E0E8F3", "#E0E8F3", 4);
+        Place(SecondaryNativeLayer, track, left + 68, top + 36, width - 84, 8);
+        var fill = ChromePanel("#2F75F3", "#2F75F3", 4);
+        Place(SecondaryNativeLayer, fill, left + 68, top + 36, (width - 84) * 0.68, 8);
+    }
+
+    private void AddTimelineNode(
+        double centerX,
+        bool complete,
+        string label,
+        string date,
+        bool current)
+    {
+        var ringColor = current ? "#2F75F3" : complete ? "#25C86A" : "#B8C0CC";
+        var fillColor = current ? "#E9F2FF" : complete ? "#25C86A" : "#D7DCE3";
+        var size = current ? 34 : 24;
+        var top = current ? 257 : 262;
+        var left = centerX - (size / 2);
+
+        if (current)
+        {
+            Place(
+                SecondaryNativeLayer,
+                new Ellipse
+                {
+                    Fill = Brush("#DDEBFF"),
+                    Stroke = Brush("#79A7F4"),
+                    StrokeThickness = 1,
+                    IsHitTestVisible = false,
+                },
+                left - 7,
+                top - 7,
+                size + 14,
+                size + 14);
+        }
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush(fillColor),
+                Stroke = Brush(ringColor),
+                StrokeThickness = current ? 3 : 2,
+                IsHitTestVisible = false,
+            },
+            left,
+            top,
+            size,
+            size);
+
+        if (complete && !current)
+        {
+            Place(
+                SecondaryNativeLayer,
+                ChromeText("✓", 13, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+                left + 6,
+                top + 1,
+                14,
+                18);
+        }
+        else if (current)
+        {
+            Place(
+                SecondaryNativeLayer,
+                ChromeText("●", 13, "#2F75F3", FontWeights.Bold, FlowDirection.LeftToRight),
+                left + 10,
+                top + 6,
+                14,
+                18);
+        }
+
+        var labelText = ChromeText(label, current ? 10.4 : 9.5, current ? "#1C64D9" : "#4D596B", current ? FontWeights.SemiBold : FontWeights.Normal);
+        labelText.TextAlignment = TextAlignment.Center;
+        labelText.TextWrapping = TextWrapping.Wrap;
+        Place(SecondaryNativeLayer, labelText, centerX - 62, 296, 124, current ? 43 : 34);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(date, 8.8, "#7B8491", null, FlowDirection.LeftToRight),
+            centerX - 42,
+            current ? 337 : 329,
+            84,
+            18);
+    }
+
+    private void AddCouncilRoutingPath(string data, string color, double opacity)
+    {
+        var path = new Path
+        {
+            Data = Geometry.Parse(data),
+            Stroke = Brush(color),
+            StrokeThickness = 1.6,
+            StrokeDashArray = new DoubleCollection { 1, 4 },
+            Opacity = opacity,
+            IsHitTestVisible = false,
+        };
+        SecondaryNativeLayer.Children.Add(path);
+    }
+
+    private void AddProjectCouncilRole(
+        double left,
+        double top,
+        string background,
+        string accent,
+        string glyph,
+        string title,
+        string subtitle,
+        bool active = false)
+    {
+        if (active)
+        {
+            Place(
+                SecondaryNativeLayer,
+                new Ellipse
+                {
+                    Fill = Brush("#FFF9E7"),
+                    Stroke = Brush("#F7D98A"),
+                    StrokeThickness = 1,
+                    Opacity = 0.75,
+                    IsHitTestVisible = false,
+                },
+                left - 16,
+                top - 16,
+                100,
+                100);
+        }
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush(background),
+                Stroke = Brush(accent),
+                StrokeThickness = 1.6,
+                IsHitTestVisible = false,
+            },
+            left,
+            top,
+            68,
+            68);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 25, accent, FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 18,
+            top + 14,
+            34,
+            34);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#25C86A"), IsHitTestVisible = false },
+            left + 54,
+            top + 50,
+            17,
+            17);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✓", 10, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 58,
+            top + 50,
+            11,
+            13);
+        var titleText = ChromeText(title, 11, "#17233B", FontWeights.SemiBold, FlowDirection.LeftToRight);
+        titleText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, titleText, left - 19, top + 72, 106, 20);
+        var subtitleText = ChromeText(subtitle, 9, active ? "#D08314" : "#7A8391", active ? FontWeights.SemiBold : FontWeights.Normal);
+        subtitleText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, subtitleText, left - 29, top + 91, 126, 20);
     }
 
     private void BuildSecondaryInteractions(ScreenKind screen)
