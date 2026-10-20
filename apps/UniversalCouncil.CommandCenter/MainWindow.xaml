@@ -279,6 +279,38 @@
             </Setter>
         </Style>
 
+        <Style x:Key="NativeProjectCardStyle" TargetType="Button">
+            <Setter Property="FlowDirection" Value="LeftToRight" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="BorderBrush" Value="#D9E3EF" />
+            <Setter Property="BorderThickness" Value="1.2" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ProjectSurface"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="11">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ProjectSurface" Property="BorderThickness" Value="1.8" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="ProjectSurface" Property="BorderBrush" Value="#2F6BFF" />
+                                <Setter TargetName="ProjectSurface" Property="BorderThickness" Value="2" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="DrawerActionStyle" TargetType="Button">
             <Setter Property="Height" Value="42" />
             <Setter Property="Margin" Value="0,0,0,8" />
@@ -1162,6 +1194,434 @@
                                            FontSize="23"
                                            VerticalAlignment="Center" />
                             </StackPanel>
+                        </Button>
+                    </Canvas>
+
+                    <Canvas x:Name="NativeHomeActiveWorkLayer"
+                            Width="1536"
+                            Height="1024"
+                            FlowDirection="LeftToRight"
+                            Background="{x:Null}"
+                            AutomationProperties.Name="Native Home Active Work">
+
+                        <Border Canvas.Left="244"
+                                Canvas.Top="480"
+                                Width="1211"
+                                Height="255"
+                                Background="#FFFCFBF8"
+                                BorderBrush="#EEE9E2"
+                                BorderThickness="1"
+                                CornerRadius="15"
+                                IsHitTestVisible="False" />
+
+                        <Ellipse Canvas.Left="260" Canvas.Top="487"
+                                 Width="22" Height="22"
+                                 Fill="#2F75F3"
+                                 IsHitTestVisible="False" />
+                        <TextBlock Canvas.Left="267" Canvas.Top="489"
+                                   Text="▶"
+                                   FontSize="10"
+                                   Foreground="White"
+                                   IsHitTestVisible="False" />
+                        <TextBlock Canvas.Left="293" Canvas.Top="483"
+                                   Text="العمل الجاري"
+                                   FlowDirection="RightToLeft"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Foreground="#17233B"
+                                   IsHitTestVisible="False" />
+                        <Ellipse Canvas.Left="393" Canvas.Top="491"
+                                 Width="8" Height="8"
+                                 Fill="#28C767"
+                                 IsHitTestVisible="False" />
+                        <TextBlock Canvas.Left="406" Canvas.Top="484"
+                                   Text="مشاريع نشطة"
+                                   FlowDirection="RightToLeft"
+                                   FontSize="10"
+                                   Foreground="#7B8492"
+                                   IsHitTestVisible="False" />
+                        <Button Canvas.Left="1301" Canvas.Top="482"
+                                Width="138"
+                                Style="{StaticResource NativePulseActionStyle}"
+                                Content="عرض جميع المشاريع  ←"
+                                Click="ShowAllProjects_Click"
+                                AutomationProperties.Name="عرض جميع المشاريع" />
+
+                        <!-- Project 1 -->
+                        <Button Canvas.Left="258" Canvas.Top="523"
+                                Width="390" Height="204"
+                                Tag="smart-secretary"
+                                Style="{StaticResource NativeProjectCardStyle}"
+                                Background="#F5FAFF"
+                                BorderBrush="#93D3F7"
+                                Click="Project_Click"
+                                AutomationProperties.Name="Smart Secretary V2">
+                            <Canvas Width="390" Height="204">
+                                <Border Canvas.Left="14" Canvas.Top="13"
+                                        Width="92" Height="28"
+                                        Background="#EAF4FF"
+                                        BorderBrush="#C8E5FA"
+                                        BorderThickness="1"
+                                        CornerRadius="8">
+                                    <TextBlock Text="◉  قيد التنفيذ"
+                                               FlowDirection="RightToLeft"
+                                               FontSize="10.5"
+                                               FontWeight="SemiBold"
+                                               Foreground="#2766AF"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <TextBlock Canvas.Left="15" Canvas.Top="47"
+                                           Text="Smart Secretary V2"
+                                           FontSize="18"
+                                           FontWeight="SemiBold"
+                                           Foreground="#152238" />
+                                <TextBlock Canvas.Left="15" Canvas.Top="73"
+                                           Width="235"
+                                           Text="تحسين الخصوصية وإدارة البيانات"
+                                           FlowDirection="RightToLeft"
+                                           TextAlignment="Left"
+                                           FontSize="11.5"
+                                           Foreground="#667080" />
+                                <Border Canvas.Left="15" Canvas.Top="103"
+                                        Width="210" Height="8"
+                                        Background="#DCEAF5"
+                                        CornerRadius="4" />
+                                <Border Canvas.Left="15" Canvas.Top="103"
+                                        Width="142" Height="8"
+                                        Background="#36A9EA"
+                                        CornerRadius="4" />
+                                <TextBlock Canvas.Left="232" Canvas.Top="96"
+                                           Text="68%"
+                                           FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Foreground="#233047" />
+                                <TextBlock Canvas.Left="15" Canvas.Top="126"
+                                           Text="2/5"
+                                           FontSize="10.5"
+                                           FontWeight="SemiBold"
+                                           Foreground="#354052" />
+                                <TextBlock Canvas.Left="15" Canvas.Top="141"
+                                           Text="المهام"
+                                           FlowDirection="RightToLeft"
+                                           FontSize="9"
+                                           Foreground="#7C8490" />
+                                <TextBlock Canvas.Left="92" Canvas.Top="126"
+                                           Text="▣"
+                                           FontSize="12"
+                                           Foreground="#6F7885" />
+                                <TextBlock Canvas.Left="112" Canvas.Top="125"
+                                           Text="25 مارس 2025"
+                                           FlowDirection="RightToLeft"
+                                           FontSize="10.5"
+                                           Foreground="#515B69" />
+                                <TextBlock Canvas.Left="112" Canvas.Top="141"
+                                           Text="الإنجاز المتوقع"
+                                           FlowDirection="RightToLeft"
+                                           FontSize="8.8"
+                                           Foreground="#7C8490" />
+
+                                <!-- Native artwork: stacked project cards. -->
+                                <Border Canvas.Left="286" Canvas.Top="45"
+                                        Width="67" Height="88"
+                                        Background="#EAF4FF"
+                                        BorderBrush="#D5E6F7"
+                                        BorderThickness="1"
+                                        CornerRadius="7"
+                                        Opacity="0.88">
+                                    <Border.RenderTransform>
+                                        <RotateTransform Angle="7" CenterX="33" CenterY="44" />
+                                    </Border.RenderTransform>
+                                </Border>
+                                <Border Canvas.Left="274" Canvas.Top="50"
+                                        Width="67" Height="88"
+                                        Background="White"
+                                        BorderBrush="#D5E6F7"
+                                        BorderThickness="1"
+                                        CornerRadius="7">
+                                    <StackPanel Margin="10,12">
+                                        <Border Height="6" Width="39" Background="#6AB5EE" CornerRadius="3" HorizontalAlignment="Left" />
+                                        <Border Height="5" Width="46" Margin="0,10,0,0" Background="#DCE9F5" CornerRadius="2" HorizontalAlignment="Left" />
+                                        <Border Height="5" Width="37" Margin="0,8,0,0" Background="#DCE9F5" CornerRadius="2" HorizontalAlignment="Left" />
+                                        <Border Height="5" Width="43" Margin="0,8,0,0" Background="#DCE9F5" CornerRadius="2" HorizontalAlignment="Left" />
+                                    </StackPanel>
+                                </Border>
+
+                                <StackPanel Canvas.Left="15" Canvas.Top="168"
+                                            Orientation="Horizontal">
+                                    <Ellipse Width="20" Height="20" Fill="#2F75F3" Margin="0,0,3,0" />
+                                    <Ellipse Width="20" Height="20" Fill="#7E5CE6" Margin="0,0,3,0" />
+                                    <Ellipse Width="20" Height="20" Fill="#E0A329" Margin="0,0,3,0" />
+                                    <Ellipse Width="20" Height="20" Fill="#D9773A" Margin="0,0,3,0" />
+                                    <Ellipse Width="20" Height="20" Fill="#24A868" />
+                                </StackPanel>
+                                <Border Canvas.Left="263" Canvas.Top="164"
+                                        Width="111" Height="31"
+                                        Background="#FFFDFCFA"
+                                        BorderBrush="#D7DCE4"
+                                        BorderThickness="1"
+                                        CornerRadius="9">
+                                    <TextBlock Text="فتح المشروع   ›"
+                                               FlowDirection="RightToLeft"
+                                               FontSize="10.5"
+                                               FontWeight="SemiBold"
+                                               Foreground="#354052"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                            </Canvas>
+                        </Button>
+
+                        <!-- Project 2 -->
+                        <Button Canvas.Left="660" Canvas.Top="523"
+                                Width="390" Height="204"
+                                Tag="privacy"
+                                Style="{StaticResource NativeProjectCardStyle}"
+                                Background="#FCF7FF"
+                                BorderBrush="#D7B8F5"
+                                Click="Project_Click"
+                                AutomationProperties.Name="M2-A: Privacy">
+                            <Canvas Width="390" Height="204">
+                                <Border Canvas.Left="14" Canvas.Top="13"
+                                        Width="92" Height="28"
+                                        Background="#F4E9FF"
+                                        BorderBrush="#E0C6FB"
+                                        BorderThickness="1"
+                                        CornerRadius="8">
+                                    <TextBlock Text="◉  بحث وتحليل"
+                                               FlowDirection="RightToLeft"
+                                               FontSize="10.5"
+                                               FontWeight="SemiBold"
+                                               Foreground="#7A3BC0"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <TextBlock Canvas.Left="15" Canvas.Top="47"
+                                           Text="M2-A: Privacy"
+                                           FontSize="18"
+                                           FontWeight="SemiBold"
+                                           Foreground="#152238" />
+                                <TextBlock Canvas.Left="15" Canvas.Top="73"
+                                           Width="238"
+                                           Text="دراسة متطلبات الخصوصية والأمان"
+                                           FlowDirection="RightToLeft"
+                                           TextAlignment="Left"
+                                           FontSize="11.5"
+                                           Foreground="#667080" />
+                                <Border Canvas.Left="15" Canvas.Top="103"
+                                        Width="210" Height="8"
+                                        Background="#EADFF1"
+                                        CornerRadius="4" />
+                                <Border Canvas.Left="15" Canvas.Top="103"
+                                        Width="84" Height="8"
+                                        Background="#7064E8"
+                                        CornerRadius="4" />
+                                <TextBlock Canvas.Left="232" Canvas.Top="96"
+                                           Text="40%"
+                                           FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Foreground="#233047" />
+                                <TextBlock Canvas.Left="15" Canvas.Top="126"
+                                           Text="3/8"
+                                           FontSize="10.5"
+                                           FontWeight="SemiBold"
+                                           Foreground="#354052" />
+                                <TextBlock Canvas.Left="15" Canvas.Top="141"
+                                           Text="المهام"
+                                           FlowDirection="RightToLeft"
+                                           FontSize="9"
+                                           Foreground="#7C8490" />
+                                <TextBlock Canvas.Left="92" Canvas.Top="126"
+                                           Text="▣"
+                                           FontSize="12"
+                                           Foreground="#6F7885" />
+                                <TextBlock Canvas.Left="112" Canvas.Top="125"
+                                           Text="30 مارس 2025"
+                                           FlowDirection="RightToLeft"
+                                           FontSize="10.5"
+                                           Foreground="#515B69" />
+                                <TextBlock Canvas.Left="112" Canvas.Top="141"
+                                           Text="الإنجاز المتوقع"
+                                           FlowDirection="RightToLeft"
+                                           FontSize="8.8"
+                                           Foreground="#7C8490" />
+
+                                <Border Canvas.Left="281" Canvas.Top="50"
+                                        Width="60" Height="88"
+                                        Background="#FFFFFF"
+                                        BorderBrush="#E5D8F2"
+                                        BorderThickness="1"
+                                        CornerRadius="7" />
+                                <Border Canvas.Left="303" Canvas.Top="37"
+                                        Width="56" Height="70"
+                                        Background="#A557E8"
+                                        BorderBrush="#C68EF4"
+                                        BorderThickness="1"
+                                        CornerRadius="7">
+                                    <TextBlock Text="◇"
+                                               FontSize="29"
+                                               Foreground="White"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+
+                                <StackPanel Canvas.Left="15" Canvas.Top="168"
+                                            Orientation="Horizontal">
+                                    <Ellipse Width="20" Height="20" Fill="#2F75F3" Margin="0,0,3,0" />
+                                    <Ellipse Width="20" Height="20" Fill="#7E5CE6" Margin="0,0,3,0" />
+                                    <Ellipse Width="20" Height="20" Fill="#27A868" Margin="0,0,3,0" />
+                                    <Ellipse Width="20" Height="20" Fill="#DFA52A" />
+                                </StackPanel>
+                                <Border Canvas.Left="263" Canvas.Top="164"
+                                        Width="111" Height="31"
+                                        Background="#FFFDFCFA"
+                                        BorderBrush="#D7DCE4"
+                                        BorderThickness="1"
+                                        CornerRadius="9">
+                                    <TextBlock Text="فتح المشروع   ›"
+                                               FlowDirection="RightToLeft"
+                                               FontSize="10.5"
+                                               FontWeight="SemiBold"
+                                               Foreground="#354052"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                            </Canvas>
+                        </Button>
+
+                        <!-- Project 3 -->
+                        <Button Canvas.Left="1060" Canvas.Top="523"
+                                Width="390" Height="204"
+                                Tag="erasure"
+                                Style="{StaticResource NativeProjectCardStyle}"
+                                Background="#F7FFF9"
+                                BorderBrush="#95E4B6"
+                                Click="Project_Click"
+                                AutomationProperties.Name="Erasure Contract">
+                            <Canvas Width="390" Height="204">
+                                <Border Canvas.Left="14" Canvas.Top="13"
+                                        Width="105" Height="28"
+                                        Background="#E8FAEF"
+                                        BorderBrush="#BDEBCF"
+                                        BorderThickness="1"
+                                        CornerRadius="8">
+                                    <TextBlock Text="◉  مراجعة نهائية"
+                                               FlowDirection="RightToLeft"
+                                               FontSize="10.5"
+                                               FontWeight="SemiBold"
+                                               Foreground="#278650"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <Border Canvas.Left="126" Canvas.Top="13"
+                                        Width="82" Height="28"
+                                        Background="#EEFFF5"
+                                        BorderBrush="#98E2B8"
+                                        BorderThickness="1"
+                                        CornerRadius="8">
+                                    <TextBlock Text="✓  VERIFIED"
+                                               FlowDirection="LeftToRight"
+                                               FontSize="9.8"
+                                               FontWeight="SemiBold"
+                                               Foreground="#209252"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <TextBlock Canvas.Left="15" Canvas.Top="47"
+                                           Text="Erasure Contract"
+                                           FontSize="18"
+                                           FontWeight="SemiBold"
+                                           Foreground="#152238" />
+                                <TextBlock Canvas.Left="15" Canvas.Top="73"
+                                           Width="235"
+                                           Text="العقد الذكي لحذف البيانات"
+                                           FlowDirection="RightToLeft"
+                                           TextAlignment="Left"
+                                           FontSize="11.5"
+                                           Foreground="#667080" />
+                                <Border Canvas.Left="15" Canvas.Top="103"
+                                        Width="210" Height="8"
+                                        Background="#DDF1E4"
+                                        CornerRadius="4" />
+                                <Border Canvas.Left="15" Canvas.Top="103"
+                                        Width="189" Height="8"
+                                        Background="#2FCC78"
+                                        CornerRadius="4" />
+                                <TextBlock Canvas.Left="232" Canvas.Top="96"
+                                           Text="90%"
+                                           FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Foreground="#233047" />
+                                <TextBlock Canvas.Left="15" Canvas.Top="126"
+                                           Text="4/4"
+                                           FontSize="10.5"
+                                           FontWeight="SemiBold"
+                                           Foreground="#354052" />
+                                <TextBlock Canvas.Left="15" Canvas.Top="141"
+                                           Text="المهام"
+                                           FlowDirection="RightToLeft"
+                                           FontSize="9"
+                                           Foreground="#7C8490" />
+                                <TextBlock Canvas.Left="92" Canvas.Top="126"
+                                           Text="▣"
+                                           FontSize="12"
+                                           Foreground="#6F7885" />
+                                <TextBlock Canvas.Left="112" Canvas.Top="125"
+                                           Text="20 مارس 2025"
+                                           FlowDirection="RightToLeft"
+                                           FontSize="10.5"
+                                           Foreground="#515B69" />
+                                <TextBlock Canvas.Left="112" Canvas.Top="141"
+                                           Text="الإنجاز المتوقع"
+                                           FlowDirection="RightToLeft"
+                                           FontSize="8.8"
+                                           Foreground="#7C8490" />
+
+                                <Border Canvas.Left="293" Canvas.Top="37"
+                                        Width="60" Height="92"
+                                        Background="#FFFFFF"
+                                        BorderBrush="#56C99A"
+                                        BorderThickness="1.5"
+                                        CornerRadius="8">
+                                    <StackPanel Margin="10,16">
+                                        <Border Height="5" Width="36" Background="#AEB7C0" CornerRadius="2" />
+                                        <Border Height="5" Width="43" Margin="0,11,0,0" Background="#D4DADF" CornerRadius="2" />
+                                        <Border Height="5" Width="34" Margin="0,11,0,0" Background="#D4DADF" CornerRadius="2" />
+                                    </StackPanel>
+                                </Border>
+                                <Ellipse Canvas.Left="333" Canvas.Top="106"
+                                         Width="36" Height="36"
+                                         Fill="#25BF6A"
+                                         Stroke="#8CE0AF"
+                                         StrokeThickness="2" />
+                                <TextBlock Canvas.Left="344" Canvas.Top="111"
+                                           Text="✓"
+                                           FontSize="20"
+                                           FontWeight="Bold"
+                                           Foreground="White" />
+
+                                <StackPanel Canvas.Left="15" Canvas.Top="168"
+                                            Orientation="Horizontal">
+                                    <Ellipse Width="20" Height="20" Fill="#D89A26" Margin="0,0,3,0" />
+                                    <Ellipse Width="20" Height="20" Fill="#D17730" Margin="0,0,3,0" />
+                                    <Ellipse Width="20" Height="20" Fill="#2F75F3" Margin="0,0,3,0" />
+                                    <Ellipse Width="20" Height="20" Fill="#29A66B" />
+                                </StackPanel>
+                                <Border Canvas.Left="263" Canvas.Top="164"
+                                        Width="111" Height="31"
+                                        Background="#FFFDFCFA"
+                                        BorderBrush="#D7DCE4"
+                                        BorderThickness="1"
+                                        CornerRadius="9">
+                                    <TextBlock Text="فتح المشروع   ›"
+                                               FlowDirection="RightToLeft"
+                                               FontSize="10.5"
+                                               FontWeight="SemiBold"
+                                               Foreground="#354052"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                            </Canvas>
                         </Button>
                     </Canvas>
                     </Canvas>
