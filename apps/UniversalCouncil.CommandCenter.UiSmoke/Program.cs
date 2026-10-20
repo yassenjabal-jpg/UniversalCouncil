@@ -175,6 +175,27 @@ internal static class Program
                 "owner-decision-blend-1440x900.png",
                 "blend",
                 "DecisionMode"),
+            Render(
+                output,
+                1440,
+                900,
+                "recovery-fork-reference-1440x900.png",
+                "reference",
+                "RecoveryFork"),
+            Render(
+                output,
+                1440,
+                900,
+                "recovery-fork-native-1440x900.png",
+                "native",
+                "RecoveryFork"),
+            Render(
+                output,
+                1440,
+                900,
+                "recovery-fork-blend-1440x900.png",
+                "blend",
+                "RecoveryFork"),
         };
 
         var manifestPath = Path.Combine(output, "ui-evidence-manifest.json");
