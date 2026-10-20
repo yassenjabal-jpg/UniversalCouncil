@@ -34,7 +34,8 @@
     "principle": "audit_then_experience_then_visual_motion_then_components_then_vertical_slices_then_assurance_then_handoff",
     "one_authoritative_craft_owner_per_artifact": true,
     "parallel_read_only_review_allowed": true,
-    "silent_cross_edit_forbidden": true
+    "silent_cross_edit_forbidden": true,
+    "agentic_ux_rule": "KEEP_CANONICAL_VISUAL_SYSTEM_MODIFY_STATE_SEMANTICS_ONLY_UNLESS_SEPARATELY_APPROVED"
   },
   "functions": [
     {
@@ -167,6 +168,11 @@
     ],
     "architecture_sensitive_surface": [
       "cc_architecture_execution"
+    ],
+    "agentic_ux_state_surface": [
+      "cc_owner_experience",
+      "cc_product_truth",
+      "cc_cross_platform"
     ]
   },
   "handoff": {
