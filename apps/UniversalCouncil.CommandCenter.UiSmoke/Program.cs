@@ -175,19 +175,26 @@ internal static class Program
 
         if (window.FindName("NativeHomeReconstructionRoot") is UIElement nativeHomeLayer)
         {
-            switch (variant)
+            if (!string.IsNullOrWhiteSpace(screen))
             {
-                case "reference":
-                    nativeHomeLayer.Visibility = Visibility.Collapsed;
-                    break;
-                case "blend":
-                    nativeHomeLayer.Visibility = Visibility.Visible;
-                    nativeHomeLayer.Opacity = 0.46;
-                    break;
-                default:
-                    nativeHomeLayer.Visibility = Visibility.Visible;
-                    nativeHomeLayer.Opacity = 1;
-                    break;
+                nativeHomeLayer.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                switch (variant)
+                {
+                    case "reference":
+                        nativeHomeLayer.Visibility = Visibility.Collapsed;
+                        break;
+                    case "blend":
+                        nativeHomeLayer.Visibility = Visibility.Visible;
+                        nativeHomeLayer.Opacity = 0.46;
+                        break;
+                    default:
+                        nativeHomeLayer.Visibility = Visibility.Visible;
+                        nativeHomeLayer.Opacity = 1;
+                        break;
+                }
             }
         }
 
