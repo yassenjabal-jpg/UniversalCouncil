@@ -1186,6 +1186,10 @@ public partial class MainWindow : Window
         {
             BuildNativeOwnerDecision();
         }
+        else if (screen == ScreenKind.RecoveryFork)
+        {
+            BuildNativeRecoveryFork();
+        }
     }
 
     private void BuildNativeProjectWorkspaceCore()
@@ -3693,6 +3697,854 @@ public partial class MainWindow : Window
         var text = ChromeText(label, 12, foreground, FontWeights.SemiBold);
         text.TextAlignment = TextAlignment.Center;
         Place(SecondaryNativeLayer, text, left + 12, top + 7, width - 50, 28);
+    }
+
+    private void BuildNativeRecoveryFork()
+    {
+        BuildNativeRecoveryHeader();
+        BuildNativeRecoveryTimeline();
+        BuildNativeRecoveryCards();
+        BuildNativeRecoveryBottomPanels();
+    }
+
+    private void BuildNativeRecoveryHeader()
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#FFFDFBF8", "#EEE9E2", 0, new Thickness(0)),
+            230,
+            49,
+            1240,
+            104);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("⌂   المشاريع   /   Smart Secretary V2   /   استرجاع وفروع المشروع", 10.5, "#6D7888", FontWeights.SemiBold),
+            244,
+            59,
+            430,
+            24);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("⑂", 36, "#2F8BEE", FontWeights.Bold, FlowDirection.LeftToRight),
+            963,
+            69,
+            44,
+            48);
+        var title = ChromeText("استرجاع وفروع المشروع", 34, "#111B34", FontWeights.Bold);
+        title.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, title, 626, 72, 345, 50);
+        var subtitle = ChromeText(
+            "ارجع إلى أي نقطة في التاريخ، أو أنشئ فرعاً جديداً، وقارن النتائج بذكاء",
+            13,
+            "#606B7B",
+            FontWeights.SemiBold);
+        subtitle.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, subtitle, 550, 121, 495, 25);
+
+        var help = ChromePanel("#F7FAFF", "#DEE7F3", 12);
+        Place(SecondaryNativeLayer, help, 1150, 58, 300, 81);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("▣", 22, "#2A72DC", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            1414,
+            76,
+            24,
+            30);
+        var helpTitle = ChromeText("حول نقاط الحفظ والفروع", 12.5, "#29364A", FontWeights.Bold);
+        helpTitle.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, helpTitle, 1180, 69, 218, 25);
+        var helpBody = ChromeText(
+            "استكشف تطور المشروع، استرجع الإصدارات السابقة\nوأنشئ فروعاً جديدة لتجربة أفكار مختلفة.",
+            9.5,
+            "#737D8B",
+            FontWeights.SemiBold);
+        helpBody.TextAlignment = TextAlignment.Right;
+        helpBody.LineHeight = 16;
+        Place(SecondaryNativeLayer, helpBody, 1180, 94, 218, 39);
+    }
+
+    private void BuildNativeRecoveryTimeline()
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E5E0D8", 13);
+        Place(SecondaryNativeLayer, card, 230, 153, 1240, 315);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
+            242,
+            164,
+            28,
+            28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("♟", 13, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            250,
+            168,
+            15,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("المخطط الزمني للمشروع ونقاط الحفظ", 17, "#17233B", FontWeights.Bold),
+            280,
+            160,
+            310,
+            32);
+
+        AddTagChipToCanvas(SecondaryNativeLayer, 1112, 162, 65, "▦", "#F7F8FA", "#5E6877");
+        AddTagChipToCanvas(SecondaryNativeLayer, 1186, 162, 65, "▤", "#EEF5FF", "#2F75F3");
+        AddTagChipToCanvas(SecondaryNativeLayer, 1260, 162, 65, "▧", "#F7F8FA", "#5E6877");
+        AddTagChipToCanvas(SecondaryNativeLayer, 1333, 162, 65, "عرض", "#FFFFFF", "#566171");
+
+        var create = ChromePanel("#2475F3", "#2475F3", 8);
+        Place(SecondaryNativeLayer, create, 1300, 201, 145, 36);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("+  إنشاء نقطة حفظ جديدة", 9.5, "#FFFFFF", FontWeights.SemiBold),
+            1311,
+            207,
+            123,
+            23);
+
+        var line = new Line
+        {
+            X1 = 300,
+            Y1 = 261,
+            X2 = 1395,
+            Y2 = 261,
+            Stroke = Brush("#D7DDE5"),
+            StrokeThickness = 2.2,
+            StrokeDashArray = new DoubleCollection { 1, 4 },
+            IsHitTestVisible = false,
+        };
+        SecondaryNativeLayer.Children.Add(line);
+
+        AddRecoveryCheckpointNode(292, 238, "#2F75F3", "▶", "البداية", "1 يناير 2025", "المشروع منشأ", false);
+        AddRecoveryCheckpointNode(458, 238, "#2DC86B", "✓", "نقطة حفظ #1", "10 يناير 2025", "معمارية أساس", false);
+        AddRecoveryCheckpointNode(632, 238, "#8B63E7", "◇", "نقطة حفظ #2", "22 يناير 2025", "تكامل البيانات", false);
+        AddRecoveryCheckpointNode(809, 229, "#2475F3", "⌃", "نقطة حفظ #3", "5 فبراير 2025", "تحسين الأمان", true);
+        AddRecoveryCheckpointNode(990, 238, "#29B8CC", "✓", "نقطة حفظ #4", "20 فبراير 2025", "توسيع المزايا", false);
+        AddRecoveryCheckpointNode(1171, 238, "#8A58E5", "↗", "نقطة حفظ #5", "10 مارس 2025", "تحسين الأداء", false);
+        AddRecoveryCheckpointNode(1382, 238, "#2F75F3", "⚑", "الإصدار الحالي", "25 مارس 2025", "v2.1.0", false);
+
+        var selected = ChromePanel("#F2F7FF", "#8AB8F9", 7);
+        Place(SecondaryNativeLayer, selected, 786, 194, 108, 28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("النقطة المحددة", 9.5, "#2768C9", FontWeights.SemiBold),
+            804,
+            198,
+            73,
+            19);
+
+        var selectedInfo = ChromePanel("#FFFDFBF8", "#D9E1EC", 8);
+        Place(SecondaryNativeLayer, selectedInfo, 697, 344, 132, 61);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("5 فبراير 2025", 9.3, "#566171", FontWeights.SemiBold),
+            716,
+            351,
+            93,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تحسين الأمان", 10.3, "#263247", FontWeights.Bold),
+            716,
+            375,
+            93,
+            21);
+
+        AddRecoveryBranchPath(
+            "M 822,285 C 820,335 877,356 943,365 L 1288,365",
+            "#25C86A");
+        AddRecoveryBranchPath(
+            "M 822,285 C 820,370 877,414 943,423 L 1288,423",
+            "#875BE4");
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#25C86A"), IsHitTestVisible = false },
+            1013,
+            351,
+            31,
+            31);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◉", 15, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            1022,
+            355,
+            16,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الفرع A", 13, "#1C6840", FontWeights.Bold),
+            1058,
+            344,
+            80,
+            22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("التركيز على الخصوصية", 9.2, "#667181"),
+            1058,
+            367,
+            115,
+            19);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#875BE4"), IsHitTestVisible = false },
+            1013,
+            409,
+            31,
+            31);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◆", 15, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            1022,
+            413,
+            16,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الفرع B", 13, "#5F3EB5", FontWeights.Bold),
+            1058,
+            402,
+            80,
+            22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("ميزات الذكاء المتقدم", 9.2, "#667181"),
+            1058,
+            425,
+            125,
+            19);
+
+        AddRecoveryBranchEnd(1296, 343, "#EAFBF0", "#25C86A", "الإصدار A-1", "تم الإنشاء من #3", "12 فبراير 2025", "✓");
+        AddRecoveryBranchEnd(1296, 402, "#F3EEFF", "#875BE4", "الإصدار B-1", "تم الإنشاء من #3", "15 فبراير 2025", "⚗");
+
+        var restoreLabel = ChromePanel("#F5F8FF", "#CADAF2", 8);
+        Place(SecondaryNativeLayer, restoreLabel, 568, 344, 120, 36);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("↶  استرجاع إلى هذه النقطة", 9.2, "#3170C8", FontWeights.SemiBold),
+            579,
+            350,
+            99,
+            22);
+    }
+
+    private void AddRecoveryCheckpointNode(
+        double left,
+        double top,
+        string accent,
+        string glyph,
+        string title,
+        string date,
+        string subtitle,
+        bool selected)
+    {
+        if (selected)
+        {
+            Place(
+                SecondaryNativeLayer,
+                new Ellipse
+                {
+                    Fill = Brush("#EAF4FF"),
+                    Stroke = Brush("#8ABAFB"),
+                    StrokeThickness = 1.3,
+                    IsHitTestVisible = false,
+                },
+                left - 13,
+                top - 13,
+                70,
+                70);
+        }
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush("#FAFBFC"),
+                Stroke = Brush(accent),
+                StrokeThickness = selected ? 3 : 2,
+                IsHitTestVisible = false,
+            },
+            left,
+            top,
+            44,
+            44);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 19, accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 12,
+            top + 8,
+            22,
+            25);
+
+        var titleText = ChromeText(title, 10.5, selected ? "#2467CA" : "#354052", selected ? FontWeights.Bold : FontWeights.SemiBold);
+        titleText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, titleText, left - 32, top + 51, 108, 21);
+        var dateText = ChromeText(date, 9, selected ? "#2C70D1" : "#727B87", selected ? FontWeights.SemiBold : FontWeights.Normal);
+        dateText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, dateText, left - 30, top + 73, 104, 19);
+        var subText = ChromeText(subtitle, 8.8, "#7A8390");
+        subText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, subText, left - 36, top + 93, 116, 19);
+    }
+
+    private void AddRecoveryBranchPath(string data, string color)
+    {
+        var path = new Path
+        {
+            Data = Geometry.Parse(data),
+            Stroke = Brush(color),
+            StrokeThickness = 2,
+            StrokeDashArray = new DoubleCollection { 2, 4 },
+            Opacity = 0.9,
+            IsHitTestVisible = false,
+        };
+        SecondaryNativeLayer.Children.Add(path);
+    }
+
+    private void AddRecoveryBranchEnd(
+        double left,
+        double top,
+        string background,
+        string accent,
+        string title,
+        string subtitle,
+        string date,
+        string glyph)
+    {
+        var card = ChromePanel(background, accent, 8);
+        Place(SecondaryNativeLayer, card, left, top, 146, 50);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 18, accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 117,
+            top + 12,
+            20,
+            24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(title, 10.2, "#314055", FontWeights.Bold),
+            left + 14,
+            top + 5,
+            87,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(subtitle, 8.2, "#657083"),
+            left + 14,
+            top + 20,
+            93,
+            16);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(date, 7.8, "#7D8591"),
+            left + 14,
+            top + 34,
+            95,
+            14);
+    }
+
+    private void BuildNativeRecoveryCards()
+    {
+        BuildNativeSelectedCheckpointCard();
+        BuildNativeRecoveryBranchCard(
+            350,
+            "#EFFAF3",
+            "#25B960",
+            "الفرع A — التركيز على الخصوصية",
+            "VERIFIED",
+            "#E5F8EB",
+            "#178F49",
+            "Claude 3.7 Sonnet",
+            "عميق",
+            "يعمل بنجاح",
+            "تحسينات كبيرة في خصوصية البيانات مع الحفاظ على الأداء، وإضافة تشفير متقدم.",
+            "06-checkpoint_recovery_fork.png",
+            new Int32Rect(376, 678, 286, 75));
+        BuildNativeRecoveryBranchCard(
+            715,
+            "#F7F2FF",
+            "#8455DF",
+            "الفرع B — ميزات الذكاء المتقدم",
+            "PROPOSAL",
+            "#FFF4DD",
+            "#D68A17",
+            "GPT-4.1",
+            "إبداعي",
+            "قيد المراجعة",
+            "إضافة قدرات تحليل متقدمة وميزات تنبؤية جديدة باستخدام نماذج أكثر تقدماً.",
+            "06-checkpoint_recovery_fork.png",
+            new Int32Rect(745, 678, 289, 75));
+        BuildNativeRecoveryComparison();
+    }
+
+    private void BuildNativeSelectedCheckpointCard()
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
+        Place(SecondaryNativeLayer, card, 16, 475, 324, 315);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
+            29,
+            489,
+            28,
+            28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◇", 15, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            37,
+            492,
+            18,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("معلومات نقطة الحفظ المحددة", 15, "#263247", FontWeights.Bold),
+            69,
+            486,
+            220,
+            28);
+
+        var content = ChromePanel("#FFFDFCFB", "#ECE7E0", 8);
+        Place(SecondaryNativeLayer, content, 25, 527, 306, 250);
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#F1EEFF", "#D8CEF6", 8),
+            37,
+            539,
+            42,
+            42);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◇", 24, "#7D55E4", FontWeights.Bold, FlowDirection.LeftToRight),
+            47,
+            546,
+            25,
+            27);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("نقطة حفظ #3", 12.5, "#263247", FontWeights.Bold),
+            91,
+            537,
+            110,
+            23);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تحسين الأمان", 10, "#657083", FontWeights.SemiBold),
+            91,
+            561,
+            100,
+            19);
+
+        AddRecoveryInfoLine(594, "5 فبراير 2025 · 14:30", "▣");
+        AddRecoveryInfoLine(621, "إضافة طبقة أمان محسنة وتحديث سياسات الوصول وتحسين سجل المراجعة.", "▧", true);
+
+        AddTagChipToCanvas(SecondaryNativeLayer, 37, 666, 62, "الأمان", "#EFF6FF", "#3777C9");
+        AddTagChipToCanvas(SecondaryNativeLayer, 106, 666, 62, "التحقق", "#F3EEFF", "#7354C7");
+        AddTagChipToCanvas(SecondaryNativeLayer, 175, 666, 90, "البنية التحتية", "#F7F2FF", "#8B5BD0");
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الموديل المستخدم", 8.6, "#7A8390"),
+            37,
+            704,
+            88,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Claude 3.5 Sonnet", 9.5, "#344052", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            37,
+            724,
+            120,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("مستوى التفكير", 8.6, "#7A8390"),
+            182,
+            704,
+            78,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("متوازن", 9.5, "#7B56D1", FontWeights.SemiBold),
+            182,
+            724,
+            70,
+            20);
+
+        var result = ChromePanel("#EAFBF0", "#C3EBCF", 8);
+        Place(SecondaryNativeLayer, result, 37, 751, 122, 23);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("♥  النتيجة  VERIFIED", 8.2, "#168F49", FontWeights.Bold),
+            46,
+            754,
+            104,
+            17);
+    }
+
+    private void AddRecoveryInfoLine(double top, string value, string glyph, bool wrap = false)
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 11, "#657083", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            38,
+            top,
+            18,
+            21);
+        var text = ChromeText(value, 8.9, "#536071", FontWeights.SemiBold);
+        text.TextWrapping = wrap ? TextWrapping.Wrap : TextWrapping.NoWrap;
+        text.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, text, 62, top, 252, wrap ? 38 : 21);
+    }
+
+    private void BuildNativeRecoveryBranchCard(
+        double left,
+        string background,
+        string accent,
+        string title,
+        string truthLabel,
+        string truthBackground,
+        string truthForeground,
+        string model,
+        string reasoning,
+        string state,
+        string summary,
+        string imageName,
+        Int32Rect sourceRect)
+    {
+        var card = ChromePanel(background, "#DFDDE1", 11);
+        Place(SecondaryNativeLayer, card, left, 475, 355, 315);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush(accent), IsHitTestVisible = false },
+            left + 14,
+            489,
+            21,
+            21);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(title, 14.2, accent, FontWeights.Bold),
+            left + 46,
+            482,
+            230,
+            31);
+
+        var truth = ChromePanel(truthBackground, truthForeground, 8);
+        Place(SecondaryNativeLayer, truth, left + 250, 486, 78, 25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(truthLabel, 8.4, truthForeground, FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 261,
+            490,
+            56,
+            17);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("•••", 14, "#5C6676", FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 330,
+            488,
+            19,
+            20);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الموديل المستخدم", 8.5, "#7A8390"),
+            left + 15,
+            526,
+            85,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(model, 9.2, "#344052", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 15,
+            545,
+            112,
+            19);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("مستوى التفكير", 8.5, "#7A8390"),
+            left + 139,
+            526,
+            82,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(reasoning, 9.2, accent, FontWeights.SemiBold),
+            left + 139,
+            545,
+            74,
+            19);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("حالة الفرع", 8.5, "#7A8390"),
+            left + 236,
+            526,
+            70,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(state, 9.2, state.Contains("نجاح", StringComparison.Ordinal) ? "#15934A" : "#C48118", FontWeights.SemiBold),
+            left + 236,
+            545,
+            89,
+            19);
+
+        var summaryPanel = ChromePanel("#FFFDFCFB", "#E9E4DD", 8);
+        Place(SecondaryNativeLayer, summaryPanel, left + 14, 573, 327, 77);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("ملخص النتيجة", 10.5, "#344052", FontWeights.Bold),
+            left + 30,
+            579,
+            115,
+            20);
+        var summaryText = ChromeText(summary, 9.2, "#626C79", FontWeights.SemiBold);
+        summaryText.TextAlignment = TextAlignment.Right;
+        summaryText.TextWrapping = TextWrapping.Wrap;
+        Place(SecondaryNativeLayer, summaryText, left + 30, 602, 292, 42);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("أبرز المخرجات", 9.5, "#586273", FontWeights.SemiBold),
+            left + 20,
+            658,
+            100,
+            19);
+        var thumbs = CreateReferenceCrop(imageName, sourceRect);
+        Place(SecondaryNativeLayer, thumbs, left + 18, 681, 316, 70);
+
+        var footer = ChromePanel("#FFFDFCFB", "#E8E3DC", 8);
+        Place(SecondaryNativeLayer, footer, left + 14, 758, 327, 24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("عرض جميع المخرجات", 8.9, "#596477", FontWeights.SemiBold),
+            left + 111,
+            760,
+            118,
+            19);
+    }
+
+    private void BuildNativeRecoveryComparison()
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
+        Place(SecondaryNativeLayer, card, 1100, 475, 370, 315);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
+            1115,
+            489,
+            27,
+            27);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("⚖", 15, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            1121,
+            493,
+            18,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("مقارنة الفروع", 15.5, "#273247", FontWeights.Bold),
+            1155,
+            486,
+            130,
+            28);
+        var detailed = ChromePanel("#FFFFFF", "#E0DDD8", 8);
+        Place(SecondaryNativeLayer, detailed, 1360, 486, 92, 29);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("مقارنة تفصيلية  ›", 8.8, "#5270A5", FontWeights.SemiBold),
+            1368,
+            491,
+            76,
+            18);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#F7F8FA", "#E3E2DF", 0),
+            1114,
+            527,
+            340,
+            36);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("المعيار", 9.3, "#5A6575", FontWeights.Bold),
+            1370,
+            534,
+            62,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الفرع A\nالخصوصية", 9.2, "#168F49", FontWeights.Bold),
+            1252,
+            529,
+            80,
+            30);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الفرع B\nالذكاء المتقدم", 9.2, "#7148C3", FontWeights.Bold),
+            1132,
+            529,
+            88,
+            30);
+
+        AddRecoveryComparisonRow(563, "الموديل المستخدم", "Claude 3.7 Sonnet", "GPT-4.1", "#344052", "#344052");
+        AddRecoveryComparisonRow(596, "مستوى التفكير", "عميق", "إبداعي", "#15934A", "#7148C3");
+        AddRecoveryComparisonRow(629, "الأداء المتوقع", "+15%", "+28%", "#15934A", "#7148C3");
+        AddRecoveryComparisonRow(662, "الأمان والخصوصية", "متفوق", "جيد", "#15934A", "#C48118");
+        AddRecoveryComparisonRow(695, "قابلية التوسع", "جيد", "متفوق", "#4B63A8", "#7148C3");
+        AddRecoveryComparisonRow(728, "جاهزية الإنتاج", "جاهز", "قيد المراجعة", "#15934A", "#C48118");
+
+        var a = ChromePanel("#E9F9EF", "#C1EBCF", 8);
+        Place(SecondaryNativeLayer, a, 1240, 758, 97, 24);
+        Place(SecondaryNativeLayer, ChromeText("A  VERIFIED", 8.2, "#15934A", FontWeights.Bold, FlowDirection.LeftToRight), 1250, 761, 78, 17);
+        var b = ChromePanel("#FFF4DD", "#F3D89C", 8);
+        Place(SecondaryNativeLayer, b, 1131, 758, 100, 24);
+        Place(SecondaryNativeLayer, ChromeText("B  PROPOSAL", 8.2, "#C58118", FontWeights.Bold, FlowDirection.LeftToRight), 1140, 761, 82, 17);
+    }
+
+    private void AddRecoveryComparisonRow(
+        double top,
+        string label,
+        string aValue,
+        string bValue,
+        string aColor,
+        string bColor)
+    {
+        Place(SecondaryNativeLayer, ChromePanel("#EAE7E2", "#EAE7E2", 0), 1114, top + 31, 340, 1);
+        Place(SecondaryNativeLayer, ChromeText(label, 8.8, "#5B6574", FontWeights.SemiBold), 1350, top + 5, 82, 20);
+        Place(SecondaryNativeLayer, ChromeText(aValue, 8.8, aColor, FontWeights.SemiBold, FlowDirection.LeftToRight), 1232, top + 5, 101, 20);
+        Place(SecondaryNativeLayer, ChromeText(bValue, 8.8, bColor, FontWeights.SemiBold, FlowDirection.LeftToRight), 1123, top + 5, 101, 20);
+    }
+
+    private void BuildNativeRecoveryBottomPanels()
+    {
+        BuildNativeRecoveryEventLog();
+        BuildNativeRecoveryEvidence();
+        BuildNativeRecoveryActions();
+    }
+
+    private void BuildNativeRecoveryEventLog()
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
+        Place(SecondaryNativeLayer, card, 16, 798, 490, 170);
+        Place(SecondaryNativeLayer, ChromeText("◷", 21, "#D29A2C", FontWeights.SemiBold, FlowDirection.LeftToRight), 30, 808, 28, 28);
+        Place(SecondaryNativeLayer, ChromeText("السجل الزمني والإجراءات", 14.5, "#2C374A", FontWeights.Bold), 69, 806, 180, 27);
+        AddTagChipToCanvas(SecondaryNativeLayer, 438, 805, 52, "الكل", "#FFFFFF", "#626C79");
+
+        AddRecoveryTimelineEvent(29, 842, "#8457E6", "تم إنشاء الفرع B", "15 فبراير 2025 · 09:20");
+        AddRecoveryTimelineEvent(147, 842, "#25C86A", "تم إنشاء الفرع A", "12 فبراير 2025 · 10:15");
+        AddRecoveryTimelineEvent(265, 842, "#2F75F3", "تم استرجاع نقطة حفظ #3", "5 فبراير 2025 · 14:30");
+        AddRecoveryTimelineEvent(383, 842, "#2F75F3", "تم إنشاء نقطة حفظ #3", "5 فبراير 2025 · 14:28");
+    }
+
+    private void AddRecoveryTimelineEvent(
+        double left,
+        double top,
+        string accent,
+        string title,
+        string time)
+    {
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush(accent), IsHitTestVisible = false },
+            left,
+            top,
+            18,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("•", 10, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 6,
+            top,
+            8,
+            14);
+        var titleText = ChromeText(title, 8.9, "#344052", FontWeights.SemiBold);
+        titleText.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, titleText, left - 4, top + 24, 105, 32);
+        var timeText = ChromeText(time, 7.7, "#7A8390");
+        timeText.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, timeText, left - 4, top + 59, 105, 26);
+    }
+
+    private void BuildNativeRecoveryEvidence()
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
+        Place(SecondaryNativeLayer, card, 516, 798, 421, 170);
+        Place(SecondaryNativeLayer, ChromeText("⛓", 20, "#5279D7", FontWeights.SemiBold, FlowDirection.LeftToRight), 531, 808, 28, 28);
+        Place(SecondaryNativeLayer, ChromeText("أدلة ومقتطفات مهمة", 14.5, "#2C374A", FontWeights.Bold), 568, 806, 170, 27);
+        Place(SecondaryNativeLayer, ChromeText("•••", 15, "#6A7483", FontWeights.Bold, FlowDirection.LeftToRight), 900, 808, 22, 25);
+
+        AddRecoveryEvidenceItem(531, 842, 185, "تقرير تقييم الخصوصية .pdf", "2.4 MB · 12 فبراير 2025", "▧");
+        AddRecoveryEvidenceItem(730, 842, 185, "مقتطف من سجل التحديث", "تم تعديل تشفير من طرف لطرف", "▤");
+        AddRecoveryEvidenceItem(531, 907, 185, "مخطط المعمارية الجديد", "1.1 MB · 12 فبراير 2025", "▣");
+
+        var more = ChromePanel("#FFFFFF", "#E1DED9", 8);
+        Place(SecondaryNativeLayer, more, 730, 907, 191, 43);
+        Place(SecondaryNativeLayer, ChromeText("عرض جميع الأدلة  ›", 9.2, "#4D5A6D", FontWeights.SemiBold), 775, 917, 110, 22);
+    }
+
+    private void AddRecoveryEvidenceItem(
+        double left,
+        double top,
+        double width,
+        string title,
+        string subtitle,
+        string glyph)
+    {
+        var item = ChromePanel("#FFFDFCFB", "#E7E3DD", 7);
+        Place(SecondaryNativeLayer, item, left, top, width, 54);
+        Place(SecondaryNativeLayer, ChromeText(glyph, 15, "#5279D7", FontWeights.SemiBold, FlowDirection.LeftToRight), left + 10, top + 9, 22, 24);
+        var titleText = ChromeText(title, 8.8, "#344052", FontWeights.SemiBold);
+        titleText.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, titleText, left + 38, top + 5, width - 49, 20);
+        var subText = ChromeText(subtitle, 7.7, "#7A8390");
+        subText.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, subText, left + 38, top + 27, width - 49, 18);
+    }
+
+    private void BuildNativeRecoveryActions()
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
+        Place(SecondaryNativeLayer, card, 946, 798, 524, 170);
+        Place(SecondaryNativeLayer, ChromeText("ϟ", 20, "#E89522", FontWeights.SemiBold, FlowDirection.LeftToRight), 960, 808, 28, 28);
+        Place(SecondaryNativeLayer, ChromeText("الإجراءات المتاحة", 14.5, "#2C374A", FontWeights.Bold), 995, 806, 150, 27);
+
+        AddRecoveryActionVisual(960, 842, 240, "#F7F9FF", "#C7D9F4", "#3170C8", "↶", "استرجاع هذه النقطة", "العودة للمشروع من هذه النقطة");
+        AddRecoveryActionVisual(1214, 842, 240, "#F7F9FF", "#C7D9F4", "#3170C8", "⑂", "إنشاء فرع جديد", "بداية فرع جديد انطلاقاً من هنا");
+        AddRecoveryActionVisual(960, 900, 240, "#F0FBF3", "#C7EBD2", "#168F49", "⇧", "ترقية نتيجة الفرع", "دمج أفضل النتائج في المسار الرئيسي");
+        AddRecoveryActionVisual(1214, 900, 240, "#FFFFFF", "#E2DED8", "#4F5968", "↗", "فتح في مساحة العمل", "فتح الملفات والمخرجات");
+        var danger = ChromePanel("#FFF0F1", "#F1C9CE", 7);
+        Place(SecondaryNativeLayer, danger, 1214, 948, 240, 18);
+        Place(SecondaryNativeLayer, ChromeText("▣  حذف الفرع المحدد — فعل مدمر", 8, "#D83D50", FontWeights.SemiBold), 1250, 949, 172, 15);
+    }
+
+    private void AddRecoveryActionVisual(
+        double left,
+        double top,
+        double width,
+        string background,
+        string border,
+        string accent,
+        string glyph,
+        string title,
+        string subtitle)
+    {
+        var item = ChromePanel(background, border, 8);
+        Place(SecondaryNativeLayer, item, left, top, width, 50);
+        Place(SecondaryNativeLayer, ChromeText(glyph, 18, accent, FontWeights.Bold, FlowDirection.LeftToRight), left + 12, top + 9, 26, 27);
+        var titleText = ChromeText(title, 9.6, "#354052", FontWeights.Bold);
+        titleText.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, titleText, left + 45, top + 5, width - 58, 20);
+        var subtitleText = ChromeText(subtitle, 7.8, "#747D89");
+        subtitleText.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, subtitleText, left + 45, top + 25, width - 58, 18);
     }
 
     private Image CreateReferenceCrop(
