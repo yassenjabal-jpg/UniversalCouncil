@@ -146,3 +146,20 @@ def test_native_pulse_has_overlay_calibrated_translation():
     start = xaml.index(marker)
     fragment = xaml[start : start + 520]
     assert '<TranslateTransform Y="23" />' in fragment
+
+
+def test_home_command_composer_is_native_and_editable():
+    xaml = XAML.read_text(encoding="utf-8")
+    code = CODE.read_text(encoding="utf-8")
+    assert 'x:Name="NativeHomeReconstructionRoot"' in xaml
+    assert 'x:Name="NativeHomeComposerLayer"' in xaml
+    assert 'x:Name="OwnerPromptBox"' in xaml
+    assert xaml.count('Style="{StaticResource NativeComposerRouteStyle}"') == 3
+    assert "ComposerControl_Click" in code
+    assert "OwnerPromptBox_GotKeyboardFocus" in code
+    assert "OwnerPromptBox_LostKeyboardFocus" in code
+
+
+def test_ui_smoke_toggles_complete_native_home_root():
+    smoke = UISMOKE.read_text(encoding="utf-8")
+    assert 'FindName("NativeHomeReconstructionRoot")' in smoke
