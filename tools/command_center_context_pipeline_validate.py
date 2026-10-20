@@ -13,6 +13,7 @@ PIPELINE_STATE = STATE / "context-pipeline-state.json"
 AGENTIC_POLICY = PROJECT / "agentic-os-policy.json"
 UX_STATE = STATE / "living-operations-ux-state-contract.json"
 PRE_APPROVAL = PROJECT / "approvals" / "2026-10-21-context-resolver-compiler-pre.json"
+POST_APPROVAL = PROJECT / "approvals" / "2026-10-21-context-resolver-compiler-post.json"
 CHANGE = PROJECT / "changes" / "2026-10-21-context-resolver-compiler.json"
 BOOTSTRAP_CAPSULE = PROJECT / "context-capsules" / "2026-10-21-context-resolver-compiler.json"
 PACKAGING_ADDENDUM = PROJECT / "changes" / "2026-10-21-context-resolver-packaging-addendum.json"
@@ -45,6 +46,7 @@ for required in (
     AGENTIC_POLICY,
     UX_STATE,
     PRE_APPROVAL,
+    POST_APPROVAL,
     CHANGE,
     BOOTSTRAP_CAPSULE,
     PACKAGING_ADDENDUM,
@@ -56,6 +58,7 @@ context_map = load(CONTEXT_MAP)
 pipeline = load(PIPELINE_STATE)
 agentic = load(AGENTIC_POLICY)
 ux = load(UX_STATE)
+post = load(POST_APPROVAL)
 pre = load(PRE_APPROVAL)
 change = load(CHANGE)
 bootstrap = load(BOOTSTRAP_CAPSULE)
@@ -138,6 +141,19 @@ if not agentic_security["retrieved_text_cannot_grant_permissions"]:
 if not agentic_security["model_output_cannot_self_promote_to_canonical"]:
     raise SystemExit("Model output may not self-promote to canonical")
 
+if post["decision"] != "APPROVED_BY_AL_MURTAKAZ":
+    raise SystemExit("Context pipeline lacks Murtakaz post-approval")
+if not post["adoption_authorized"] or not post["merge_authorized"]:
+    raise SystemExit("Context pipeline post-approval must authorize adoption and merge")
+if post["live_execution_authorized"] or post["stage8_opened"]:
+    raise SystemExit("Context pipeline post-approval may not authorize execution or Stage 8")
+if post["wpf_ux_changed"] or post["android_runtime_changed"]:
+    raise SystemExit("Context pipeline post-approval unexpectedly changed client surfaces")
+if post["model_provider_calls_added"]:
+    raise SystemExit("Context pipeline post-approval may not add model/provider calls")
+if post["next_roadmap_slice_authorized"] != "MURTAKAZ_GATEWAY_INTERFACES_AND_ROUTING_COORDINATOR":
+    raise SystemExit("Context pipeline next roadmap slice drifted")
+
 if pre["decision"] != "APPROVE_TO_IMPLEMENT":
     raise SystemExit("Context pipeline lacks Murtakaz pre-approval")
 if pre["live_execution_authorized"] or pre["stage8_opened"]:
@@ -162,11 +178,12 @@ if addendum["classification"] != "NON_MATERIAL_SCOPE_CLARIFICATION":
 if addendum["material_scope_expansion"]:
     raise SystemExit("Context packaging addendum may not expand material scope")
 
-if pipeline["status"] not in {
-    "IMPLEMENTED_VALIDATION_PENDING",
-    "APPROVED_BY_AL_MURTAKAZ",
-}:
-    raise SystemExit("Unexpected context pipeline implementation status")
+if pipeline["status"] != "APPROVED_BY_AL_MURTAKAZ":
+    raise SystemExit("Context pipeline implementation is not Murtakaz-approved")
+if pipeline.get("murtakaz_post_approval") != (
+    "state/command-center/project-governance/approvals/2026-10-21-context-resolver-compiler-post.json"
+):
+    raise SystemExit("Context pipeline state is not bound to its post-approval receipt")
 
 authority = pipeline["authority"]
 if (
