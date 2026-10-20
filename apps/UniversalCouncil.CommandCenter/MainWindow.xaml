@@ -1,7 +1,6 @@
 <Window x:Class="UniversalCouncil.CommandCenter.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:automation="clr-namespace:System.Windows.Automation;assembly=PresentationCore"
         Title="UniversalCouncil Command Center"
         Width="1440"
         Height="900"
@@ -125,7 +124,7 @@
                            Stretch="Fill"
                            SnapsToDevicePixels="True"
                            RenderOptions.BitmapScalingMode="HighQuality"
-                           automation:AutomationProperties.Name="مرجع Home / Owner Workspace المعتمد" />
+                           AutomationProperties.Name="مرجع Home / Owner Workspace المعتمد" />
 
                     <Canvas x:Name="InteractionCanvas"
                             Width="1536"
@@ -139,7 +138,7 @@
                                 Tag="autopilot"
                                 Click="Region_Click"
                                 ToolTip="Autopilot — الحالة التشغيلية"
-                                automation:AutomationProperties.Name="Autopilot status" />
+                                AutomationProperties.Name="Autopilot status" />
 
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="247" Canvas.Top="164"
@@ -147,21 +146,21 @@
                                 Tag="council-route"
                                 Click="Route_Click"
                                 ToolTip="المجلس"
-                                automation:AutomationProperties.Name="توجيه إلى المجلس" />
+                                AutomationProperties.Name="توجيه إلى المجلس" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="373" Canvas.Top="164"
                                 Width="115" Height="135"
                                 Tag="studio-route"
                                 Click="Route_Click"
                                 ToolTip="الاستوديو"
-                                automation:AutomationProperties.Name="توجيه إلى الاستوديو" />
+                                AutomationProperties.Name="توجيه إلى الاستوديو" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="490" Canvas.Top="164"
                                 Width="112" Height="135"
                                 Tag="auto-route"
                                 Click="Route_Click"
                                 ToolTip="التنفيذ التلقائي"
-                                automation:AutomationProperties.Name="توجيه إلى التنفيذ التلقائي" />
+                                AutomationProperties.Name="توجيه إلى التنفيذ التلقائي" />
 
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="1275" Canvas.Top="228"
@@ -169,7 +168,7 @@
                                 Tag="start"
                                 Click="Start_Click"
                                 ToolTip="ابدأ التنفيذ"
-                                automation:AutomationProperties.Name="ابدأ التنفيذ" />
+                                AutomationProperties.Name="ابدأ التنفيذ" />
 
                         <!-- Council Pulse: exact eight member identities -->
                         <Button Style="{StaticResource HotspotButtonStyle}"
@@ -178,56 +177,56 @@
                                 Tag="owner"
                                 Click="Role_Click"
                                 ToolTip="المالك — تحديد الاتجاه"
-                                automation:AutomationProperties.Name="المالك — تحديد الاتجاه" />
+                                AutomationProperties.Name="المالك — تحديد الاتجاه" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="450" Canvas.Top="349"
                                 Width="108" Height="100"
                                 Tag="strategy"
                                 Click="Role_Click"
                                 ToolTip="الاستراتيجية — تحليل وفرص"
-                                automation:AutomationProperties.Name="الاستراتيجية — تحليل وفرص" />
+                                AutomationProperties.Name="الاستراتيجية — تحليل وفرص" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="581" Canvas.Top="349"
                                 Width="108" Height="100"
                                 Tag="research"
                                 Click="Role_Click"
                                 ToolTip="البحث — جمع الأدلة"
-                                automation:AutomationProperties.Name="البحث — جمع الأدلة" />
+                                AutomationProperties.Name="البحث — جمع الأدلة" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="710" Canvas.Top="349"
                                 Width="108" Height="100"
                                 Tag="verification"
                                 Click="Role_Click"
                                 ToolTip="التحقق — مراجعة الحقائق"
-                                automation:AutomationProperties.Name="التحقق — مراجعة الحقائق" />
+                                AutomationProperties.Name="التحقق — مراجعة الحقائق" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="839" Canvas.Top="349"
                                 Width="108" Height="100"
                                 Tag="execution"
                                 Click="Role_Click"
                                 ToolTip="التنفيذ — تحويل إلى عمل"
-                                automation:AutomationProperties.Name="التنفيذ — تحويل إلى عمل" />
+                                AutomationProperties.Name="التنفيذ — تحويل إلى عمل" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="968" Canvas.Top="349"
                                 Width="108" Height="100"
                                 Tag="creative"
                                 Click="Role_Click"
                                 ToolTip="الإبداع — تصميم وإنتاج"
-                                automation:AutomationProperties.Name="الإبداع — تصميم وإنتاج" />
+                                AutomationProperties.Name="الإبداع — تصميم وإنتاج" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="1098" Canvas.Top="349"
                                 Width="108" Height="100"
                                 Tag="data"
                                 Click="Role_Click"
                                 ToolTip="البيانات — تحليل وقياس"
-                                automation:AutomationProperties.Name="البيانات — تحليل وقياس" />
+                                AutomationProperties.Name="البيانات — تحليل وقياس" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="1227" Canvas.Top="349"
                                 Width="108" Height="100"
                                 Tag="learning"
                                 Click="Role_Click"
                                 ToolTip="التعلم — تطوير مستمر"
-                                automation:AutomationProperties.Name="التعلم — تطوير مستمر" />
+                                AutomationProperties.Name="التعلم — تطوير مستمر" />
 
                         <!-- Reasoning ring targets. They deliberately remain smaller than member targets. -->
                         <Button Style="{StaticResource ReasoningHotspotStyle}"
@@ -236,56 +235,56 @@
                                 Tag="owner"
                                 Click="Reasoning_Click"
                                 ToolTip="Model & Reasoning — المالك"
-                                automation:AutomationProperties.Name="استدلال المالك" />
+                                AutomationProperties.Name="استدلال المالك" />
                         <Button Style="{StaticResource ReasoningHotspotStyle}"
                                 Canvas.Left="512" Canvas.Top="345"
                                 Width="30" Height="30"
                                 Tag="strategy"
                                 Click="Reasoning_Click"
                                 ToolTip="Model & Reasoning — الاستراتيجية"
-                                automation:AutomationProperties.Name="استدلال الاستراتيجية" />
+                                AutomationProperties.Name="استدلال الاستراتيجية" />
                         <Button Style="{StaticResource ReasoningHotspotStyle}"
                                 Canvas.Left="643" Canvas.Top="345"
                                 Width="30" Height="30"
                                 Tag="research"
                                 Click="Reasoning_Click"
                                 ToolTip="Model & Reasoning — البحث"
-                                automation:AutomationProperties.Name="استدلال البحث" />
+                                AutomationProperties.Name="استدلال البحث" />
                         <Button Style="{StaticResource ReasoningHotspotStyle}"
                                 Canvas.Left="772" Canvas.Top="345"
                                 Width="30" Height="30"
                                 Tag="verification"
                                 Click="Reasoning_Click"
                                 ToolTip="Model & Reasoning — التحقق"
-                                automation:AutomationProperties.Name="استدلال التحقق" />
+                                AutomationProperties.Name="استدلال التحقق" />
                         <Button Style="{StaticResource ReasoningHotspotStyle}"
                                 Canvas.Left="901" Canvas.Top="345"
                                 Width="30" Height="30"
                                 Tag="execution"
                                 Click="Reasoning_Click"
                                 ToolTip="Model & Reasoning — التنفيذ"
-                                automation:AutomationProperties.Name="استدلال التنفيذ" />
+                                AutomationProperties.Name="استدلال التنفيذ" />
                         <Button Style="{StaticResource ReasoningHotspotStyle}"
                                 Canvas.Left="1030" Canvas.Top="345"
                                 Width="30" Height="30"
                                 Tag="creative"
                                 Click="Reasoning_Click"
                                 ToolTip="Model & Reasoning — الإبداع"
-                                automation:AutomationProperties.Name="استدلال الإبداع" />
+                                AutomationProperties.Name="استدلال الإبداع" />
                         <Button Style="{StaticResource ReasoningHotspotStyle}"
                                 Canvas.Left="1160" Canvas.Top="345"
                                 Width="30" Height="30"
                                 Tag="data"
                                 Click="Reasoning_Click"
                                 ToolTip="Model & Reasoning — البيانات"
-                                automation:AutomationProperties.Name="استدلال البيانات" />
+                                AutomationProperties.Name="استدلال البيانات" />
                         <Button Style="{StaticResource ReasoningHotspotStyle}"
                                 Canvas.Left="1289" Canvas.Top="345"
                                 Width="30" Height="30"
                                 Tag="learning"
                                 Click="Reasoning_Click"
                                 ToolTip="Model & Reasoning — التعلم"
-                                automation:AutomationProperties.Name="استدلال التعلم" />
+                                AutomationProperties.Name="استدلال التعلم" />
 
                         <!-- Active Work -->
                         <Button Style="{StaticResource HotspotButtonStyle}"
@@ -294,21 +293,21 @@
                                 Tag="smart-secretary"
                                 Click="Project_Click"
                                 ToolTip="فتح المشروع الأول"
-                                automation:AutomationProperties.Name="فتح مشروع Smart Secretary V2" />
+                                AutomationProperties.Name="فتح مشروع Smart Secretary V2" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="654" Canvas.Top="484"
                                 Width="396" Height="215"
                                 Tag="privacy"
                                 Click="Project_Click"
                                 ToolTip="فتح المشروع الثاني"
-                                automation:AutomationProperties.Name="فتح مشروع Privacy" />
+                                AutomationProperties.Name="فتح مشروع Privacy" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="1057" Canvas.Top="484"
                                 Width="395" Height="215"
                                 Tag="erasure"
                                 Click="Project_Click"
                                 ToolTip="فتح المشروع الثالث"
-                                automation:AutomationProperties.Name="فتح مشروع Erasure Contract" />
+                                AutomationProperties.Name="فتح مشروع Erasure Contract" />
 
                         <!-- Owner summary row -->
                         <Button Style="{StaticResource HotspotButtonStyle}"
@@ -317,21 +316,21 @@
                                 Tag="since-away"
                                 Click="Region_Click"
                                 ToolTip="منذ آخر زيارة"
-                                automation:AutomationProperties.Name="منذ آخر زيارة" />
+                                AutomationProperties.Name="منذ آخر زيارة" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="507" Canvas.Top="707"
                                 Width="502" Height="194"
                                 Tag="needs-decision"
                                 Click="Region_Click"
                                 ToolTip="يحتاج قرارك"
-                                automation:AutomationProperties.Name="يحتاج قرارك" />
+                                AutomationProperties.Name="يحتاج قرارك" />
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="1014" Canvas.Top="707"
                                 Width="439" Height="194"
                                 Tag="recent-results"
                                 Click="Region_Click"
                                 ToolTip="النتائج الأخيرة"
-                                automation:AutomationProperties.Name="النتائج الأخيرة" />
+                                AutomationProperties.Name="النتائج الأخيرة" />
 
                         <!-- Persistent chrome -->
                         <Button Style="{StaticResource HotspotButtonStyle}"
@@ -340,7 +339,7 @@
                                 Tag="tool-dock"
                                 Click="Region_Click"
                                 ToolTip="Tool Dock"
-                                automation:AutomationProperties.Name="Tool Dock" />
+                                AutomationProperties.Name="Tool Dock" />
 
                         <Button Style="{StaticResource HotspotButtonStyle}"
                                 Canvas.Left="1462" Canvas.Top="61"
@@ -348,7 +347,7 @@
                                 Tag="global-nav"
                                 Click="Region_Click"
                                 ToolTip="التنقل العام"
-                                automation:AutomationProperties.Name="التنقل العام" />
+                                AutomationProperties.Name="التنقل العام" />
 
                         <!-- Interaction emphasis: one bounded activation ring, event-driven only. -->
                         <Ellipse x:Name="RoleActivationRing"
@@ -376,7 +375,7 @@
                 Visibility="Collapsed"
                 Opacity="0"
                 Panel.ZIndex="50"
-                automation:AutomationProperties.Name="لوحة السياق">
+                AutomationProperties.Name="لوحة السياق">
             <Border.RenderTransform>
                 <TranslateTransform x:Name="DrawerTransform" X="430" />
             </Border.RenderTransform>
@@ -426,7 +425,7 @@
                             Foreground="{StaticResource ReferenceInk}"
                             Cursor="Hand"
                             Click="CloseDrawer_Click"
-                            automation:AutomationProperties.Name="إغلاق لوحة السياق" />
+                            AutomationProperties.Name="إغلاق لوحة السياق" />
                 </Grid>
 
                 <ScrollViewer Grid.Row="2"
