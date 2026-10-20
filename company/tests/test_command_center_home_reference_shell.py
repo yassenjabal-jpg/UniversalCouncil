@@ -44,3 +44,59 @@ def test_reference_asset_is_embedded_in_wpf_project():
     project = CSPROJ.read_text(encoding="utf-8")
     assert "01-home_owner_workspace.png" in project
     assert "Assets\\VisualReferences\\01-home_owner_workspace.png" in project
+
+
+def test_all_eight_canonical_screens_are_embedded_and_mapped():
+    project = CSPROJ.read_text(encoding="utf-8")
+    code = CODE.read_text(encoding="utf-8")
+    references = (
+        "01-home_owner_workspace.png",
+        "02-living_project_workspace.png",
+        "03-software_autopilot_project.png",
+        "04-studio_project.png",
+        "05-owner_decision_mode.png",
+        "06-checkpoint_recovery_fork.png",
+        "07-pulse_visual_project_story.png",
+        "08-project_complete_work_receipt.png",
+    )
+    for reference in references:
+        assert reference in project
+        assert reference in code
+
+
+def test_secondary_screens_use_native_semantic_overlay():
+    xaml = XAML.read_text(encoding="utf-8")
+    code = CODE.read_text(encoding="utf-8")
+    assert 'x:Name="SecondaryInteractionCanvas"' in xaml
+    assert "BuildSecondaryInteractions" in code
+    assert "OpenVersionInspector" in code
+    assert "HandleDecisionAction" in code
+    assert "HandleRecoveryAction" in code
+    assert "OpenArtifact" in code
+    assert "OpenStageDetail" in code
+    assert "OpenPulseDetail" in code
+
+
+def test_navigation_preserves_reference_screen_family():
+    code = CODE.read_text(encoding="utf-8")
+    for screen in (
+        "ProjectWorkspace",
+        "SoftwareAutopilot",
+        "StudioProject",
+        "DecisionMode",
+        "RecoveryFork",
+        "PulseStory",
+        "WorkReceipt",
+    ):
+        assert f"ScreenKind.{screen}" in code
+    assert "Ctrl+1" not in code
+    assert "Key.D1" in code
+    assert "Key.D8" in code
+
+
+def test_interactions_remain_truthful_and_reduced_motion_aware():
+    code = CODE.read_text(encoding="utf-8")
+    assert "LIVE DISPATCH DISABLED" in code
+    assert "CHECKPOINT_RESTORED_VERIFIED" in code
+    assert "لم يتم تسجيل قرار" in code
+    assert "SystemParameters.ClientAreaAnimation" in code
