@@ -164,3 +164,32 @@ COMMAND_CENTER_V1_RELEASE_LOCK
 - no grandfathering of non-compliant reachable surfaces;
 - compact-window acceptance before release;
 - Owner checkpoint before opening the next major stage.
+
+
+## Architecture amendment — 2026-10-20
+
+Owner adoption:
+- Murtakaz Agentic Work OS architecture is adopted as the product-level control plane.
+- Context Drift Prevention Contract is a blocking quality contract for all later stages.
+- Machine-readable architecture invariants are part of stage acceptance.
+
+Governing additions:
+- `docs/operations/command-center/MURTAKAZ_AGENTIC_OS_ARCHITECTURE_2026-10-20.md`
+- `docs/operations/command-center/CONTEXT_DRIFT_PREVENTION_CONTRACT_2026-10-20.md`
+- `state/command-center/architecture-invariants.json`
+
+The implementation sequence is extended with these foundations:
+1. Anti-Drift enforcement and Context Capsule.
+2. Murtakaz Command Gateway.
+3. Project Context Resolver and Project Knowledge Map.
+4. Multi-stage routing.
+5. Capability Registry and Model Broker.
+6. Skill Registry.
+7. Job Engine.
+8. Verification/Work Receipt integration.
+9. Automation Engine.
+10. Front-door integrations.
+
+These are additive to the existing phase model. They do not waive or replace Stage locks, Council/Studio review, Hybrid Execution, Tool Authority, exact-head evidence, Return Tickets, or Owner checkpoints.
+
+No stage may lock if a blocking invariant in `architecture-invariants.json` fails.
