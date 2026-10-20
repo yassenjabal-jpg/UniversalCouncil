@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "case_count": 16,
+  "runtime_summaries": [
+    {
+      "runtime_id": "baseline",
+      "eligible_for_winner": false,
+      "hard_mechanics_pass": false,
+      "live_decision_cases": 16,
+      "total_cases": 16,
+      "mechanics_score": 0.1,
+      "score": 0.4420160999396619,
+      "metrics": {
+        "decision_correctness": 0.4375,
+        "blocker_f1": 0.225,
+        "routing_accuracy": 0.175,
+        "dissent_preservation": 0.3125,
+        "policy_compliance": 0.4375,
+        "failure_recovery": 0.8125,
+        "desktop_execution": 0.9,
+        "unique_contribution": 0.1299771974569866,
+        "non_duplication": 0.8068493618448533,
+        "completion": 0.4375,
+        "mechanics": 0.1
+      },
+      "latency_ms_total": 1822939.42,
+      "input_tokens_total": 28197,
+      "output_tokens_total": 4102,
+      "cost_usd_total": 0.0
+    },
+    {
+      "runtime_id": "microsoft_agent_framework",
+      "eligible_for_winner": false,
+      "hard_mechanics_pass": true,
+      "live_decision_cases": 16,
+      "total_cases": 16,
+      "mechanics_score": 1.0,
+      "score": 0.23,
+      "metrics": {
+        "decision_correctness": 0.0,
+        "blocker_f1": 0.0,
+        "routing_accuracy": 0.0,
+        "dissent_preservation": 0.0,
+        "policy_compliance": 0.0,
+        "failure_recovery": 0.625,
+        "desktop_execution": 0.9,
+        "unique_contribution": 0.0,
+        "non_duplication": 1.0,
+        "completion": 0.0,
+        "mechanics": 1.0
+      },
+      "latency_ms_total": 0.0,
+      "input_tokens_total": 0,
+      "output_tokens_total": 0,
+      "cost_usd_total": 0.0
+    },
+    {
+      "runtime_id": "openai_agents",
+      "eligible_for_winner": false,
+      "hard_mechanics_pass": true,
+      "live_decision_cases": 16,
+      "total_cases": 16,
+      "mechanics_score": 1.0,
+      "score": 0.7542621254615192,
+      "metrics": {
+        "decision_correctness": 0.9375,
+        "blocker_f1": 0.41875,
+        "routing_accuracy": 0.4799107142857143,
+        "dissent_preservation": 0.625,
+        "policy_compliance": 0.9375,
+        "failure_recovery": 0.9375,
+        "desktop_execution": 0.9,
+        "unique_contribution": 0.27780911894803273,
+        "non_duplication": 0.6167822807784581,
+        "completion": 0.9375,
+        "mechanics": 1.0
+      },
+      "latency_ms_total": 7058755.57,
+      "input_tokens_total": 112571,
+      "output_tokens_total": 10604,
+      "cost_usd_total": 0.0
+    }
+  ],
+  "decision": {
+    "state": "NO_WINNER",
+    "reason": "No runtime satisfied live-decision, mechanics, and policy gates.",
+    "winner": null
+  }
+}

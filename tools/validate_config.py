@@ -5,6 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from company.runtime.agent_bakeoff import load_cases, validate_config as validate_agent_bakeoff  # noqa: E402
 from company.runtime.channel_operating_system import (  # noqa: E402
     validate_config as validate_channel_operating_system,
 )
@@ -36,6 +37,8 @@ channel_operating_system = json.loads(
     (ROOT / "company" / "config" / "channel_operating_system.json").read_text(encoding="utf-8")
 )
 media_venture = json.loads((ROOT / "company" / "config" / "media_venture.json").read_text(encoding="utf-8"))
+agent_bakeoff = json.loads((ROOT / "company" / "config" / "agent_bakeoff.json").read_text(encoding="utf-8"))
+agent_bakeoff_cases = load_cases(ROOT / "benchmarks" / "agent_runtime" / "cases.json")
 
 core = {r["id"] for r in roles["core_roles"]}
 specialists = {r["id"] for r in roles["specialist_roles"]}
@@ -169,6 +172,32 @@ validate_hybrid_execution(hybrid_execution)
 validate_memory_fabric(memory_fabric)
 validate_channel_operating_system(channel_operating_system)
 validate_media_team(media_venture)
+validate_agent_bakeoff(agent_bakeoff)
+assert agent_bakeoff["required_runner_id"] == "YASSIN", "live bake-off must be YASSIN-only"
+assert agent_bakeoff["maximum_cost_usd"] == 0, "live bake-off cost ceiling must be zero"
+live_policy = agent_bakeoff["live_execution_policy"]
+assert live_policy["execution_host"] == "YASSIN_ONLY", "live execution host policy drift"
+assert live_policy["external_compute"] is False, "external compute must remain disabled"
+assert live_policy["external_paid_api"] is False, "paid model APIs must remain disabled"
+assert live_policy["staged_run_required"] is True, "staged run must remain mandatory"
+assert live_policy["resume_required"] is True, "resume support must remain mandatory"
+assert not (ROOT / ".github" / "workflows" / "agent-runtime-live-bakeoff.yml").exists(), (
+    "live bake-off GitHub Actions workflow must not exist; execution is YASSIN-only"
+)
+for required_path in (
+    "company/runtime/agent_bakeoff_baseline.py",
+    "company/runtime/agent_bakeoff_provenance.py",
+    "tools/build_agent_bakeoff_packets.py",
+    "tools/run_agent_bakeoff_live.py",
+    "tools/run_yassin_bakeoff.ps1",
+    "tools/yassin_bakeoff_health.ps1",
+    "tools/apply_agent_bakeoff_desktop_receipts.py",
+    "benchmarks/agent_runtime/desktop_receipts.example.json",
+):
+    assert (ROOT / required_path).is_file(), f"missing YASSIN bake-off component: {required_path}"
+assert 12 <= len(agent_bakeoff_cases) <= 20, "agent runtime bake-off must keep 12-20 historical cases"
+for case in agent_bakeoff_cases:
+    assert (ROOT / case["source_artifact"]).is_file(), f"missing bake-off source artifact: {case['source_artifact']}"
 memory_events = load_memory_events(ROOT / memory_fabric["memory_root"], memory_fabric)
 memory_reduction = reduce_memory_events(memory_events)
 assert not memory_reduction.conflicts, "canonical memory must not contain unresolved conflicts"
@@ -182,5 +211,6 @@ assert (
 print(
     f"OK v{expected_version}: {len(core)} core roles, "
     f"{len(specialists)} specialists, {len(routes['routes'])} routing rules, "
-    f"{len(modes['modes'])} modes, pulse enabled, HR capability scouting + intelligence gateway + tool authority registry enforced"
+    f"{len(modes['modes'])} modes, {len(agent_bakeoff_cases)} agent bake-off cases, "
+    "pulse enabled, HR capability scouting + intelligence gateway + tool authority registry enforced"
 )
