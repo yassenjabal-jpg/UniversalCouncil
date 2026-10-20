@@ -4628,7 +4628,7 @@ public partial class MainWindow : Window
             ChromeText("نبض المشروع", 31, "#121C36", FontWeights.Bold),
             336,
             91,
-            226,
+            170,
             45);
         Place(
             SecondaryNativeLayer,
@@ -4686,11 +4686,11 @@ public partial class MainWindow : Window
     private void BuildNativePulseTimeline()
     {
         var card = ChromePanel("#FFFCFBF8", "#E4E0DA", 12);
-        Place(SecondaryNativeLayer, card, 244, 166, 1200, 110);
+        Place(SecondaryNativeLayer, card, 244, 174, 1200, 112);
 
         var line = new Path
         {
-            Data = Geometry.Parse("M 334,213 C 425,186 503,229 596,209 S 783,228 872,210 S 1058,188 1152,211 S 1304,224 1377,209"),
+            Data = Geometry.Parse("M 334,221 C 425,194 503,237 596,217 S 783,236 872,218 S 1058,196 1152,219 S 1304,232 1377,217"),
             Stroke = Brush("#79BDEB"),
             StrokeThickness = 1.8,
             StrokeDashArray = new DoubleCollection { 1, 4 },
@@ -4699,20 +4699,20 @@ public partial class MainWindow : Window
         };
         SecondaryNativeLayer.Children.Add(line);
 
-        AddPulseTimelineNode(322, 184, "#2F83EE", "◉", "اليوم", "تحسينات الخصوصية", true);
-        AddPulseTimelineNode(504, 185, "#2DC86B", "▣", "الأسبوع الماضي", "إطلاق النسخة التجريبية", false);
-        AddPulseTimelineNode(691, 185, "#8B5DE4", "◇", "قبل أسبوعين", "تحسين البنية", false);
-        AddPulseTimelineNode(876, 185, "#E8A332", "♟", "قبل شهر", "أبحاث المستخدمين", false);
-        AddPulseTimelineNode(1065, 185, "#EB596A", "♨", "قبل شهرين", "تحديد المشكلة", false);
-        AddPulseTimelineNode(1252, 185, "#5E6A83", "◈", "قبل 3 أشهر", "بداية المشروع", false);
+        AddPulseTimelineNode(322, 192, "#2F83EE", "◉", "اليوم", "تحسينات الخصوصية", true);
+        AddPulseTimelineNode(504, 193, "#2DC86B", "▣", "الأسبوع الماضي", "إطلاق النسخة التجريبية", false);
+        AddPulseTimelineNode(691, 193, "#8B5DE4", "◇", "قبل أسبوعين", "تحسين البنية", false);
+        AddPulseTimelineNode(876, 193, "#E8A332", "♟", "قبل شهر", "أبحاث المستخدمين", false);
+        AddPulseTimelineNode(1065, 193, "#EB596A", "♨", "قبل شهرين", "تحديد المشكلة", false);
+        AddPulseTimelineNode(1252, 193, "#5E6A83", "◈", "قبل 3 أشهر", "بداية المشروع", false);
 
         var full = ChromePanel("#FBF8FF", "#DCCDF5", 8);
-        Place(SecondaryNativeLayer, full, 1300, 177, 128, 31);
+        Place(SecondaryNativeLayer, full, 1300, 185, 128, 31);
         Place(
             SecondaryNativeLayer,
             ChromeText("عرض الجدول الزمني الكامل", 8.8, "#7252C1", FontWeights.SemiBold),
             1314,
-            183,
+            191,
             102,
             20);
     }
@@ -4773,34 +4773,34 @@ public partial class MainWindow : Window
     private void BuildNativePulseStorySurface()
     {
         var card = ChromePanel("#FFFCFBF8", "#E4E0DA", 12);
-        Place(SecondaryNativeLayer, card, 244, 286, 1200, 310);
+        Place(SecondaryNativeLayer, card, 244, 300, 1200, 340);
 
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
             258,
-            298,
+            312,
             26,
             26);
         Place(
             SecondaryNativeLayer,
             ChromeText("✦", 13, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
             265,
-            301,
+            315,
             15,
             18);
         Place(
             SecondaryNativeLayer,
             ChromeText("القصة المرئية للمشروع", 18, "#18243B", FontWeights.Bold),
             295,
-            294,
+            308,
             225,
             31);
         Place(
             SecondaryNativeLayer,
             ChromeText("من التحدي إلى التأثير", 10.3, "#818895"),
             520,
-            300,
+            314,
             120,
             20);
 
@@ -4813,19 +4813,19 @@ public partial class MainWindow : Window
 
         // Before panel.
         var before = ChromePanel("#FFFDFCFB", "#E8E3DC", 10);
-        Place(SecondaryNativeLayer, before, 258, 333, 382, 250);
+        Place(SecondaryNativeLayer, before, 258, 350, 382, 284);
         var beforeBadge = ChromePanel("#FFE7E8", "#F1C8CD", 8);
-        Place(SecondaryNativeLayer, beforeBadge, 271, 345, 62, 28);
+        Place(SecondaryNativeLayer, beforeBadge, 271, 362, 62, 28);
         Place(
             SecondaryNativeLayer,
             ChromeText("قبل", 10, "#D64658", FontWeights.Bold),
             290,
-            350,
+            367,
             27,
             18);
         var beforeTitle = ChromeText("تجربة معقدة ومخاوف خصوصية", 14.5, "#273247", FontWeights.Bold);
         beforeTitle.TextAlignment = TextAlignment.Right;
-        Place(SecondaryNativeLayer, beforeTitle, 365, 359, 246, 28);
+        Place(SecondaryNativeLayer, beforeTitle, 365, 376, 246, 28);
         var beforeBody = ChromeText(
             "إدارة البيانات كانت يدوية ومعقدة، مع مخاوف\nحول خصوصية المستخدمين.",
             10.3,
@@ -4833,19 +4833,19 @@ public partial class MainWindow : Window
             FontWeights.SemiBold);
         beforeBody.TextAlignment = TextAlignment.Right;
         beforeBody.LineHeight = 18;
-        Place(SecondaryNativeLayer, beforeBody, 355, 395, 260, 47);
+        Place(SecondaryNativeLayer, beforeBody, 355, 412, 260, 47);
         var beforeMedia = CreateReferenceCrop(
             "07-pulse_visual_project_story.png",
             new Int32Rect(278, 439, 366, 146));
-        Place(SecondaryNativeLayer, beforeMedia, 271, 443, 356, 128);
+        Place(SecondaryNativeLayer, beforeMedia, 271, 460, 356, 150);
 
         // Central media panel.
         var story = ChromePanel("#F8FAFD", "#DDE4ED", 10);
-        Place(SecondaryNativeLayer, story, 651, 333, 382, 250);
+        Place(SecondaryNativeLayer, story, 651, 350, 382, 284);
         var storyMedia = CreateReferenceCrop(
             "07-pulse_visual_project_story.png",
             new Int32Rect(675, 345, 335, 190));
-        Place(SecondaryNativeLayer, storyMedia, 666, 345, 352, 181);
+        Place(SecondaryNativeLayer, storyMedia, 666, 362, 352, 205);
         Place(
             SecondaryNativeLayer,
             new Ellipse
@@ -4856,55 +4856,55 @@ public partial class MainWindow : Window
                 IsHitTestVisible = false,
             },
             808,
-            402,
+            425,
             70,
             70);
         Place(
             SecondaryNativeLayer,
             ChromeText("▶", 31, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
             832,
-            416,
+            439,
             33,
             39);
         var duration = ChromePanel("#D9111A2B", "#00FFFFFF", 6, new Thickness(0));
-        Place(SecondaryNativeLayer, duration, 949, 495, 55, 25);
+        Place(SecondaryNativeLayer, duration, 949, 536, 55, 25);
         Place(
             SecondaryNativeLayer,
             ChromeText("02:18", 10, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
             958,
-            499,
+            540,
             39,
             17);
         Place(
             SecondaryNativeLayer,
             ChromeText("فيديو القصة", 13.5, "#243047", FontWeights.Bold),
             744,
-            539,
+            574,
             110,
             24);
         Place(
             SecondaryNativeLayer,
             ChromeText("من المشكلة إلى الحل في دقيقتين", 9.4, "#707988", FontWeights.SemiBold),
             744,
-            563,
+            598,
             180,
             18);
 
         // After panel.
         var after = ChromePanel("#F6FFF9", "#D6EEDC", 10);
-        Place(SecondaryNativeLayer, after, 1044, 333, 386, 250);
+        Place(SecondaryNativeLayer, after, 1044, 350, 386, 284);
         var afterBadge = ChromePanel("#E1F8E8", "#BDE8C8", 8);
-        Place(SecondaryNativeLayer, afterBadge, 1057, 345, 63, 28);
+        Place(SecondaryNativeLayer, afterBadge, 1057, 362, 63, 28);
         Place(
             SecondaryNativeLayer,
             ChromeText("بعد", 10, "#159A4C", FontWeights.Bold),
             1076,
-            350,
+            367,
             27,
             18);
         var afterTitle = ChromeText("خصوصية أقوى وتجربة أبسط", 14.5, "#233447", FontWeights.Bold);
         afterTitle.TextAlignment = TextAlignment.Right;
-        Place(SecondaryNativeLayer, afterTitle, 1152, 359, 246, 28);
+        Place(SecondaryNativeLayer, afterTitle, 1152, 376, 246, 28);
         var afterBody = ChromeText(
             "نظام ذكي وآمن لإدارة البيانات مع تحكم كامل\nللمستخدمين وشفافية عالية.",
             10.3,
@@ -4912,20 +4912,20 @@ public partial class MainWindow : Window
             FontWeights.SemiBold);
         afterBody.TextAlignment = TextAlignment.Right;
         afterBody.LineHeight = 18;
-        Place(SecondaryNativeLayer, afterBody, 1142, 395, 260, 47);
+        Place(SecondaryNativeLayer, afterBody, 1142, 412, 260, 47);
         var afterMedia = CreateReferenceCrop(
             "07-pulse_visual_project_story.png",
             new Int32Rect(1051, 439, 376, 145));
-        Place(SecondaryNativeLayer, afterMedia, 1057, 443, 360, 128);
+        Place(SecondaryNativeLayer, afterMedia, 1057, 460, 360, 150);
     }
 
     private void AddPulseFilterChip(double left, string label, bool active)
     {
         var chip = ChromePanel(active ? "#2475F3" : "#FFFFFF", active ? "#2475F3" : "#E0DDD8", 8);
-        Place(SecondaryNativeLayer, chip, left, 294, active ? 61 : 92, 30);
+        Place(SecondaryNativeLayer, chip, left, 308, active ? 61 : 92, 30);
         var text = ChromeText(label, 8.7, active ? "#FFFFFF" : "#596477", FontWeights.SemiBold);
         text.TextAlignment = TextAlignment.Center;
-        Place(SecondaryNativeLayer, text, left + 7, 299, (active ? 61 : 92) - 14, 19);
+        Place(SecondaryNativeLayer, text, left + 7, 313, (active ? 61 : 92) - 14, 19);
     }
 
     private void BuildNativePulseCards()
@@ -5033,9 +5033,9 @@ public partial class MainWindow : Window
         string secondaryAction,
         string primaryAction)
     {
-        const double top = 610;
+        const double top = 648;
         const double width = 282;
-        const double height = 346;
+        const double height = 366;
 
         var card = ChromePanel(background, border, 11);
         Place(SecondaryNativeLayer, card, left, top, width, height);
