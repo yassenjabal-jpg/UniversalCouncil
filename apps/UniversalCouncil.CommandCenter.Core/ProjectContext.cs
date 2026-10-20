@@ -24,7 +24,8 @@ public sealed record ContextConflictProjection(
     string Reason,
     IReadOnlyList<string> SourceIds,
     IReadOnlyList<string> Domains,
-    bool RequiresOwnerDecision);
+    bool RequiresOwnerDecision,
+    bool ChangeOfTruthRequired);
 
 public sealed record ContextResolutionRequest(
     string ProjectId,
@@ -43,6 +44,7 @@ public sealed record ContextResolutionResult(
     IReadOnlyList<string> RequestedScopes,
     IReadOnlyList<ContextSourceProjection> Sources,
     IReadOnlyList<ContextConflictProjection> Conflicts,
+    bool ChangeOfTruthRequired,
     IReadOnlyList<string> OwnerDirectiveIds,
     IReadOnlyList<string> CanonicalDecisionIds)
 {
@@ -60,6 +62,7 @@ public sealed record ContextResolutionResult(
             requestedScopes,
             [],
             [],
+            false,
             [],
             []);
 }
