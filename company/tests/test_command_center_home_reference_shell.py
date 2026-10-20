@@ -183,3 +183,13 @@ def test_home_active_work_cards_are_native_and_navigable():
         assert f'Tag="{project}"' in xaml
     assert 'Click="ShowAllProjects_Click"' in xaml
     assert "ShowAllProjects_Click" in code
+
+
+def test_home_owner_summary_panels_are_native_and_interactive():
+    xaml = XAML.read_text(encoding="utf-8")
+    assert 'x:Name="NativeHomeOwnerSummaryLayer"' in xaml
+    for region in ("since-away", "needs-decision", "recent-results"):
+        assert f'Tag="{region}"' in xaml
+    assert xaml.count('AutomationProperties.Name="منذ آخر زيارة"') >= 1
+    assert xaml.count('AutomationProperties.Name="يحتاج قرارك"') >= 1
+    assert xaml.count('AutomationProperties.Name="النتائج الأخيرة"') >= 1
