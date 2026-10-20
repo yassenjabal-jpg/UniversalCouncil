@@ -120,3 +120,19 @@ func canonicalizeUnderRoot(path, rawRoot string) string {
 	}
 	return path
 }
+
+// NormalizeWindowsPath exposes the already-tested lexical Windows path
+// normalization for other bridge packages that must apply the same rules.
+func NormalizeWindowsPath(raw string) (string, error) {
+	return normalizeWindowsPath(raw)
+}
+
+// WindowsPathWithinRoot performs the same case-insensitive, segment-aware
+// containment check used by filesystem authorization.
+func WindowsPathWithinRoot(path, root string) bool {
+	normalized, err := normalizeWindowsPath(path)
+	if err != nil {
+		return false
+	}
+	return pathWithinRoot(normalized, root)
+}
