@@ -19,6 +19,7 @@ from company.runtime.evidence_sync import (
 
 
 ROOT = Path(__file__).resolve().parents[2]
+FIXED_NOW = datetime(2026, 10, 13, 19, tzinfo=timezone.utc)
 BASE_CFG = json.loads((ROOT / "company/config/hybrid_execution.json").read_text(encoding="utf-8"))
 BASE_REGISTRY = json.loads((ROOT / "company/config/tool_authority.json").read_text(encoding="utf-8"))
 
@@ -102,7 +103,7 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
     def test_legacy_receipt_is_historical_not_current(self):
         with tempfile.TemporaryDirectory() as tmp:
             project, source, legacy, _ = self.make_source(Path(tmp))
-            self.assertTrue(validate_receipt(legacy, source, project))
+            self.assertTrue(validate_receipt(legacy, source, project, as_of=FIXED_NOW))
             state = receipt_evidence_state(
                 legacy,
                 source,
@@ -113,7 +114,7 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
     def test_v11_receipt_can_be_current_verified(self):
         with tempfile.TemporaryDirectory() as tmp:
             project, source, _, current = self.make_source(Path(tmp))
-            self.assertTrue(validate_receipt(current, source, project))
+            self.assertTrue(validate_receipt(current, source, project, as_of=FIXED_NOW))
             state = receipt_evidence_state(
                 current,
                 source,
@@ -148,7 +149,7 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
                 variant[field] = value
                 with self.subTest(field=field):
                     with self.assertRaises(EvidenceSyncError):
-                        validate_receipt(variant, source, project)
+                        validate_receipt(variant, source, project, as_of=FIXED_NOW)
 
             expired = copy.deepcopy(current)
             expired["expires_at"] = "2026-10-13T17:00:00+00:00"
@@ -175,7 +176,7 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
                 EvidenceState.REVOKED,
             )
             with self.assertRaises(EvidenceSyncError):
-                validate_receipt(current, revoked_source, project)
+                validate_receipt(current, revoked_source, project, as_of=FIXED_NOW)
 
     def test_gui_execution_cannot_exceed_verified_evidence_scope(self):
         registry = copy.deepcopy(BASE_REGISTRY)
