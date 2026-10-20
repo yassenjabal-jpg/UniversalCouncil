@@ -1,0 +1,75 @@
+name: Command Center Reference UI
+
+on:
+  pull_request:
+    paths:
+      - 'apps/UniversalCouncil.CommandCenter/**'
+      - 'apps/UniversalCouncil.CommandCenter.UiSmoke/**'
+      - 'docs/operations/command-center/living-operations/references/**'
+      - 'state/command-center/**'
+      - '.github/workflows/command-center-reference-ui.yml'
+  push:
+    branches:
+      - 'command-center/project-local-council-studio-20261019'
+    paths:
+      - 'apps/UniversalCouncil.CommandCenter/**'
+      - 'apps/UniversalCouncil.CommandCenter.UiSmoke/**'
+      - 'docs/operations/command-center/living-operations/references/**'
+      - 'state/command-center/**'
+      - '.github/workflows/command-center-reference-ui.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: command-center-reference-ui-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-render:
+    name: WPF Reference Shell Build + Render
+    runs-on: windows-2025-vs2026
+    timeout-minutes: 25
+
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+      CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+
+    steps:
+      - name: Checkout exact candidate head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          fetch-depth: 1
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        shell: pwsh
+        run: |
+          dotnet restore apps/UniversalCouncil.CommandCenter/UniversalCouncil.CommandCenter.csproj
+          dotnet restore apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj
+
+      - name: Build WPF product
+        shell: pwsh
+        run: |
+          dotnet build apps/UniversalCouncil.CommandCenter/UniversalCouncil.CommandCenter.csproj --configuration Release --no-restore
+          dotnet build apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-restore
+
+      - name: Render reference-shell evidence
+        shell: pwsh
+        run: |
+          dotnet run --project apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-build -- artifacts/reference-ui
+
+      - name: Upload rendered UI evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: UniversalCouncil-Reference-UI-${{ env.CANDIDATE_SHA }}
+          path: artifacts/reference-ui/
+          if-no-files-found: error
+          retention-days: 14
