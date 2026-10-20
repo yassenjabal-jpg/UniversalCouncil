@@ -443,3 +443,42 @@ def test_recovery_fork_vertical_bands_are_calibrated_to_reference():
     assert "TranslateSecondaryChildren(firstChild, 50);" in code
     assert "Place(SecondaryNativeLayer, card, 16, 475, 324, 335);" in code
     assert "Place(SecondaryNativeLayer, card, 1100, 475, 370, 335);" in code
+
+
+def test_pulse_story_has_native_timeline_story_and_five_truth_cards():
+    code = CODE.read_text(encoding="utf-8")
+    for method in (
+        "BuildNativePulseStory",
+        "BuildNativePulseHeader",
+        "BuildNativePulseTimeline",
+        "BuildNativePulseStorySurface",
+        "BuildNativePulseCards",
+        "AddPulseCard",
+        "AddPulseFactRow",
+    ):
+        assert method in code
+    for value in (
+        "نبض المشروع",
+        "القصة المرئية للمشروع",
+        "قبل",
+        "فيديو القصة",
+        "بعد",
+        "إنجاز رئيسي",
+        "تحدي / عائق",
+        "اكتشاف / غير معروف",
+        "تسليم / تعاون",
+        "نتيجة محققة",
+        "EVIDENCE-BACKED",
+        "UNKNOWN",
+        "PROPOSAL",
+        "VERIFIED",
+    ):
+        assert value in code
+
+
+def test_pulse_story_media_is_cropped_from_canonical_reference():
+    code = CODE.read_text(encoding="utf-8")
+    assert '"07-pulse_visual_project_story.png"' in code
+    assert "new Int32Rect(278, 439, 366, 146)" in code
+    assert "new Int32Rect(675, 345, 335, 190)" in code
+    assert "new Int32Rect(1051, 439, 376, 145)" in code
