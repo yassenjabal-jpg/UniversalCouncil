@@ -3005,8 +3005,8 @@ public partial class MainWindow : Window
         Stretch stretch = Stretch.UniformToFill)
     {
         var uri = new Uri(
-            $"/UniversalCouncil.CommandCenter;component/Assets/VisualReferences/{imageName}",
-            UriKind.Relative);
+            $"pack://application:,,,/UniversalCouncil.CommandCenter;component/Assets/VisualReferences/{imageName}",
+            UriKind.Absolute);
         var source = new BitmapImage(uri);
         var cropped = new CroppedBitmap(source, sourceRect);
         return new Image
