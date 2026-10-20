@@ -274,3 +274,28 @@ def test_home_macro_native_reconstruction_regions_are_all_present():
     ):
         assert marker in xaml
     assert "BuildNativeHomeChrome" in code
+
+
+def test_project_workspace_native_reconstruction_covers_full_reference_structure():
+    code = CODE.read_text(encoding="utf-8")
+    for method in (
+        "BuildNativeProjectWorkspaceLeftRail",
+        "BuildNativeProjectWorkspaceFilmstrip",
+        "BuildNativeProjectWorkspaceBottomPanels",
+        "AddProjectRailItem",
+        "AddVersionCard",
+        "AddDecisionRow",
+        "AddActiveToolTile",
+        "AddExecutionRow",
+    ):
+        assert method in code
+    for content in (
+        "نظرة عامة على المشروع",
+        "أهداف المشروع",
+        "حالة المشروع",
+        "شريط إصدارات المشروع",
+        "Decision Stack",
+        "الأدوات النشطة في هذا المشروع",
+        "معلومات التنفيذ الحالية",
+    ):
+        assert content in code
