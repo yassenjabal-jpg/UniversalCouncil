@@ -1,0 +1,160 @@
+{
+  "version": "1.0",
+  "observed_at": "2026-10-20",
+  "status": "OWNER_ADOPTED_IMPLEMENTATION_GATED",
+  "scope": "command_center",
+  "source_branch_base": "command-center/living-operations-execution-package-20261019",
+  "invariants": [
+    {
+      "id": "AD-001",
+      "rule": "all_material_jobs_require_context_capsule",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-002",
+      "rule": "context_capsule_is_immutable_per_job",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-003",
+      "rule": "canonical_conflict_fails_closed",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-004",
+      "rule": "working_and_output_cannot_auto_promote_to_canonical",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-005",
+      "rule": "material_mutation_requires_typed_change_envelope_and_plan",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-006",
+      "rule": "unplanned_scope_expansion_requires_return_ticket_or_change_request",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-007",
+      "rule": "role_is_not_model",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-008",
+      "rule": "silent_model_or_provider_fallback_forbidden",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-009",
+      "rule": "unknown_never_equals_succeeded",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-010",
+      "rule": "provider_success_does_not_equal_task_success_without_verification",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-011",
+      "rule": "exact_head_evidence_only",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-012",
+      "rule": "downstream_cannot_silently_repair_locked_upstream",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-013",
+      "rule": "owner_locked_visual_references_are_hash_pinned",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-014",
+      "rule": "generated_visual_output_never_becomes_visual_reference_automatically",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-015",
+      "rule": "visual_acceptance_requires_side_by_side_reference_review",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-016",
+      "rule": "high_drift_domains_require_independent_second_review",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-017",
+      "rule": "every_material_result_requires_work_receipt_and_source_traceability",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-018",
+      "rule": "critical_provider_model_tool_versions_are_recorded",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-019",
+      "rule": "owner_directives_are_versioned_and_superseded_not_overwritten",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-020",
+      "rule": "model_confidence_is_not_acceptance_evidence",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-021",
+      "rule": "front_doors_do_not_own_business_logic_or_authority",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-022",
+      "rule": "all_commands_route_through_murtakaz_gateway",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-023",
+      "rule": "ai_may_propose_route_but_policy_engine_authorizes_it",
+      "severity": "BLOCKING"
+    },
+    {
+      "id": "AD-024",
+      "rule": "automation_requires_reliability_plus_authority_review_not_run_count_only",
+      "severity": "BLOCKING"
+    }
+  ],
+  "visual_drift": {
+    "canonical_zones": [
+      "SOURCE",
+      "CANONICAL",
+      "WORKING",
+      "OUTPUT",
+      "ARCHIVE"
+    ],
+    "generated_output_can_define_reference": false,
+    "reference_assets_require_hashes": true,
+    "side_by_side_review": true,
+    "forbidden_patterns_must_be_machine_or_checklist_validated": true
+  },
+  "result_states": [
+    "SUCCEEDED",
+    "FAILED",
+    "UNKNOWN",
+    "BLOCKED",
+    "STALE_CONTEXT",
+    "CONTEXT_CONFLICT"
+  ],
+  "routing_stages": [
+    "intent",
+    "project_context",
+    "authority_risk",
+    "skill",
+    "reasoning_path",
+    "model",
+    "execution",
+    "verification"
+  ]
+}
