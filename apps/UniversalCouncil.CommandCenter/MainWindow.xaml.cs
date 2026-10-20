@@ -5206,7 +5206,7 @@ public partial class MainWindow : Window
             ChromeText("تم إنجاز المشروع بنجاح", 34, "#101A30", FontWeights.Bold),
             678,
             63,
-            395,
+            305,
             50);
         Place(
             SecondaryNativeLayer,
@@ -5356,7 +5356,7 @@ public partial class MainWindow : Window
     private void BuildNativeWorkReceiptStages()
     {
         var stages = ChromePanel("#FFFCFBF8", "#E3DED7", 12);
-        Place(SecondaryNativeLayer, stages, 244, 295, 1200, 145);
+        Place(SecondaryNativeLayer, stages, 244, 295, 1200, 165);
 
         Place(
             SecondaryNativeLayer,
@@ -5471,40 +5471,40 @@ public partial class MainWindow : Window
     private void BuildNativeBusinessReceipt()
     {
         var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
-        Place(SecondaryNativeLayer, card, 244, 452, 312, 338);
+        Place(SecondaryNativeLayer, card, 244, 480, 312, 370);
 
         Place(
             SecondaryNativeLayer,
             ChromeText("▣", 23, "#20B765", FontWeights.Bold, FlowDirection.LeftToRight),
             260,
-            463,
+            491,
             30,
             30);
         Place(
             SecondaryNativeLayer,
             ChromeText("إيصال الأعمال", 17, "#273247", FontWeights.Bold),
             300,
-            459,
+            487,
             135,
             30);
         var verified = ChromePanel("#E8F9ED", "#BDE8C8", 8);
-        Place(SecondaryNativeLayer, verified, 445, 463, 88, 25);
+        Place(SecondaryNativeLayer, verified, 445, 491, 88, 25);
         Place(
             SecondaryNativeLayer,
             ChromeText("● VERIFIED", 8, "#16964B", FontWeights.Bold, FlowDirection.LeftToRight),
             458,
-            467,
+            495,
             64,
             17);
 
-        AddReceiptKeyValue(265, 503, "الجهة الطالبة", "المجلس الداخلي");
-        AddReceiptKeyValue(395, 503, "تاريخ الطلب", "25 مايو 2025");
+        AddReceiptKeyValue(265, 531, "الجهة الطالبة", "المجلس الداخلي");
+        AddReceiptKeyValue(395, 531, "تاريخ الطلب", "25 مايو 2025");
 
         Place(
             SecondaryNativeLayer,
             ChromeText("المطلوب (الملخص)", 9, "#7A8390", FontWeights.SemiBold),
             265,
-            555,
+            583,
             104,
             18);
         var scope = ChromeText(
@@ -5515,29 +5515,29 @@ public partial class MainWindow : Window
         scope.TextAlignment = TextAlignment.Right;
         scope.TextWrapping = TextWrapping.Wrap;
         scope.LineHeight = 19;
-        Place(SecondaryNativeLayer, scope, 264, 579, 268, 55);
+        Place(SecondaryNativeLayer, scope, 264, 607, 268, 55);
 
         var complete = ChromePanel("#F2FBF5", "#D3EEDA", 9);
-        Place(SecondaryNativeLayer, complete, 259, 648, 282, 75);
+        Place(SecondaryNativeLayer, complete, 259, 676, 282, 85);
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush("#20B961"), IsHitTestVisible = false },
             272,
-            660,
+            688,
             25,
             25);
         Place(
             SecondaryNativeLayer,
             ChromeText("✓", 13, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
             279,
-            663,
+            691,
             13,
             17);
         Place(
             SecondaryNativeLayer,
             ChromeText("المكتمل", 11, "#1C8F4E", FontWeights.Bold),
             313,
-            655,
+            683,
             68,
             21);
         var completeText = ChromeText(
@@ -5546,22 +5546,22 @@ public partial class MainWindow : Window
             "#657469",
             FontWeights.SemiBold);
         completeText.TextAlignment = TextAlignment.Right;
-        Place(SecondaryNativeLayer, completeText, 310, 681, 214, 34);
+        Place(SecondaryNativeLayer, completeText, 310, 712, 214, 36);
 
         var accepted = ChromePanel("#E9FFF0", "#BDE9C9", 9);
-        Place(SecondaryNativeLayer, accepted, 259, 735, 282, 43);
+        Place(SecondaryNativeLayer, accepted, 259, 775, 282, 47);
         Place(
             SecondaryNativeLayer,
             ChromeText("✓", 16, "#15984C", FontWeights.Bold, FlowDirection.LeftToRight),
             272,
-            744,
+            786,
             18,
             21);
         Place(
             SecondaryNativeLayer,
             ChromeText("تم اعتماد واستلام الأعمال", 10.5, "#177E45", FontWeights.Bold),
             303,
-            741,
+            782,
             183,
             23);
     }
@@ -5591,43 +5591,43 @@ public partial class MainWindow : Window
     private void BuildNativeFinalOutputs()
     {
         var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
-        Place(SecondaryNativeLayer, card, 567, 452, 528, 256);
+        Place(SecondaryNativeLayer, card, 567, 480, 528, 256);
 
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush("#20BB62"), IsHitTestVisible = false },
             582,
-            463,
+            491,
             27,
             27);
         Place(
             SecondaryNativeLayer,
             ChromeText("✓", 14, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
             589,
-            466,
+            494,
             14,
             18);
         Place(
             SecondaryNativeLayer,
             ChromeText("المخرجات النهائية", 16, "#273247", FontWeights.Bold),
             620,
-            458,
+            486,
             145,
             29);
         Place(
             SecondaryNativeLayer,
             ChromeText("4 ملفات رئيسية", 9, "#7A8391", FontWeights.SemiBold),
             778,
-            463,
+            491,
             90,
             21);
         var verified = ChromePanel("#E8F9ED", "#BDE8C8", 8);
-        Place(SecondaryNativeLayer, verified, 981, 462, 92, 25);
+        Place(SecondaryNativeLayer, verified, 981, 490, 92, 25);
         Place(
             SecondaryNativeLayer,
             ChromeText("● VERIFIED", 8, "#15964B", FontWeights.Bold, FlowDirection.LeftToRight),
             994,
-            466,
+            494,
             66,
             17);
 
@@ -5665,39 +5665,39 @@ public partial class MainWindow : Window
         string action)
     {
         var artifact = ChromePanel("#FFFDFCFB", "#E5E1DB", 9);
-        Place(SecondaryNativeLayer, artifact, left, 496, 118, 199);
+        Place(SecondaryNativeLayer, artifact, left, 524, 118, 199);
 
         var preview = CreateReferenceCrop(
             "08-project_complete_work_receipt.png",
             crop);
-        Place(SecondaryNativeLayer, preview, left + 7, 505, 104, 78);
+        Place(SecondaryNativeLayer, preview, left + 7, 533, 104, 78);
 
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush("#22BE63"), IsHitTestVisible = false },
             left + 92,
-            501,
+            529,
             20,
             20);
         Place(
             SecondaryNativeLayer,
             ChromeText("✓", 10, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
             left + 98,
-            502,
+            530,
             10,
             14);
 
         var titleText = ChromeText(title, 9.7, "#2F3A4C", FontWeights.Bold);
         titleText.TextAlignment = TextAlignment.Center;
         titleText.TextWrapping = TextWrapping.Wrap;
-        Place(SecondaryNativeLayer, titleText, left + 7, 590, 104, 35);
+        Place(SecondaryNativeLayer, titleText, left + 7, 618, 104, 35);
 
         var metaText = ChromeText(meta, 8.2, "#78818D", FontWeights.SemiBold);
         metaText.TextAlignment = TextAlignment.Center;
-        Place(SecondaryNativeLayer, metaText, left + 8, 628, 102, 18);
+        Place(SecondaryNativeLayer, metaText, left + 8, 656, 102, 18);
 
         var button = ChromePanel("#FFFFFF", "#DFDCD7", 7);
-        Place(SecondaryNativeLayer, button, left + 8, 655, 102, 27);
+        Place(SecondaryNativeLayer, button, left + 8, 683, 102, 27);
         var actionText = ChromeText(action + "  ↓", 8.7, "#495467", FontWeights.SemiBold);
         actionText.TextAlignment = TextAlignment.Center;
         Place(SecondaryNativeLayer, actionText, left + 17, 660, 84, 18);
@@ -5706,45 +5706,45 @@ public partial class MainWindow : Window
     private void BuildNativeReceiptEvidence()
     {
         var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
-        Place(SecondaryNativeLayer, card, 1106, 452, 338, 338);
+        Place(SecondaryNativeLayer, card, 1106, 480, 338, 370);
 
         Place(
             SecondaryNativeLayer,
             ChromeText("✓", 19, "#19A854", FontWeights.Bold, FlowDirection.LeftToRight),
             1122,
-            462,
+            490,
             24,
             26);
         Place(
             SecondaryNativeLayer,
             ChromeText("الأدلة والشواهد", 16, "#273247", FontWeights.Bold),
             1152,
-            458,
+            486,
             145,
             29);
         Place(
             SecondaryNativeLayer,
             ChromeText("6 عناصر موثقة", 8.7, "#7B8491", FontWeights.SemiBold),
             1300,
-            464,
+            492,
             74,
             19);
         var verified = ChromePanel("#E8F9ED", "#BDE8C8", 8);
-        Place(SecondaryNativeLayer, verified, 1357, 462, 72, 24);
+        Place(SecondaryNativeLayer, verified, 1357, 490, 72, 24);
         Place(
             SecondaryNativeLayer,
             ChromeText("VERIFIED", 7.5, "#15964B", FontWeights.Bold, FlowDirection.LeftToRight),
             1369,
-            466,
+            494,
             49,
             16);
 
-        AddReceiptEvidenceRow(501, "▧", "#E64558", "نتائج الاختبارات النهائية", "PDF · 12 صفحة");
-        AddReceiptEvidenceRow(546, "▧", "#E64558", "محضر القبول من المجلس", "PDF · 3 صفحات");
-        AddReceiptEvidenceRow(591, "▤", "#20A85A", "سجلات الأداء والاختبارات", "CSV · 5 ميجابايت");
-        AddReceiptEvidenceRow(636, "⌘", "#E9A32A", "صور من النظام المنتج", "ZIP · 28 ملف");
-        AddReceiptEvidenceRow(681, "▶", "#8256E4", "تسجيل جلسة التسليم", "MP4 · 42 دقيقة");
-        AddReceiptEvidenceRow(726, "▧", "#E64558", "التوصيات والاعتماد", "PDF · 2 صفحة");
+        AddReceiptEvidenceRow(529, "▧", "#E64558", "نتائج الاختبارات النهائية", "PDF · 12 صفحة");
+        AddReceiptEvidenceRow(574, "▧", "#E64558", "محضر القبول من المجلس", "PDF · 3 صفحات");
+        AddReceiptEvidenceRow(619, "▤", "#20A85A", "سجلات الأداء والاختبارات", "CSV · 5 ميجابايت");
+        AddReceiptEvidenceRow(664, "⌘", "#E9A32A", "صور من النظام المنتج", "ZIP · 28 ملف");
+        AddReceiptEvidenceRow(709, "▶", "#8256E4", "تسجيل جلسة التسليم", "MP4 · 42 دقيقة");
+        AddReceiptEvidenceRow(754, "▧", "#E64558", "التوصيات والاعتماد", "PDF · 2 صفحة");
     }
 
     private void AddReceiptEvidenceRow(
@@ -5792,7 +5792,7 @@ public partial class MainWindow : Window
     private void BuildNativeUsageSummary()
     {
         var card = ChromePanel("#FFFCFBF8", "#E3DED7", 10);
-        Place(SecondaryNativeLayer, card, 567, 716, 528, 74);
+        Place(SecondaryNativeLayer, card, 567, 742, 528, 82);
 
         AddUsageMetric(578, 130, "استخدام الاستدلال", "68%", "متوازن", "◎", "#7654DD");
         AddUsageMetric(712, 130, "الأدوات المستخدمة", "8 أدوات", "Figma, …", "▦", "#5367DB");
@@ -5813,35 +5813,35 @@ public partial class MainWindow : Window
             SecondaryNativeLayer,
             ChromePanel("#F8F9FC", "#E4E1DC", 8),
             left,
-            724,
+            750,
             width,
-            58);
+            66);
         Place(
             SecondaryNativeLayer,
             ChromeText(glyph, 17, accent, FontWeights.Bold, FlowDirection.LeftToRight),
             left + 9,
-            731,
+            757,
             22,
             24);
         Place(
             SecondaryNativeLayer,
             ChromeText(label, 8.4, "#737D8A", FontWeights.SemiBold),
             left + 35,
-            728,
+            754,
             width - 45,
             17);
         Place(
             SecondaryNativeLayer,
             ChromeText(value, 15.5, "#1F2A3D", FontWeights.Bold, FlowDirection.LeftToRight),
             left + 10,
-            746,
+            772,
             width - 20,
             21);
         Place(
             SecondaryNativeLayer,
             ChromeText(sub, 7.8, "#8A919C", FontWeights.SemiBold),
             left + 10,
-            765,
+            792,
             width - 20,
             15);
     }
@@ -5916,31 +5916,31 @@ public partial class MainWindow : Window
         IReadOnlyList<string> items)
     {
         var card = ChromePanel(background, "#E3DED7", 10);
-        Place(SecondaryNativeLayer, card, left, 804, width, 145);
+        Place(SecondaryNativeLayer, card, left, 858, width, 120);
 
         Place(
             SecondaryNativeLayer,
             ChromeText("◉", 15, accent, FontWeights.Bold, FlowDirection.LeftToRight),
             left + 12,
-            816,
+            870,
             20,
             22);
         Place(
             SecondaryNativeLayer,
             ChromeText(title, 10.8, "#2F3B4E", FontWeights.Bold),
             left + 40,
-            811,
+            865,
             width - 100,
             23);
         var countBadge = ChromePanel("#FFFFFF", "#E0DDD7", 7);
-        Place(SecondaryNativeLayer, countBadge, left + width - 58, 814, 46, 22);
+        Place(SecondaryNativeLayer, countBadge, left + width - 58, 868, 46, 22);
         var countText = ChromeText(count, 7.8, accent, FontWeights.SemiBold);
         countText.TextAlignment = TextAlignment.Center;
-        Place(SecondaryNativeLayer, countText, left + width - 54, 817, 38, 16);
+        Place(SecondaryNativeLayer, countText, left + width - 54, 871, 38, 16);
 
         for (var index = 0; index < items.Count; index++)
         {
-            var y = 844 + index * 23;
+            var y = 898 + index * 18;
             Place(
                 SecondaryNativeLayer,
                 new Ellipse { Fill = Brush(accent), IsHitTestVisible = false },
@@ -5958,48 +5958,48 @@ public partial class MainWindow : Window
     private void AddNextReceiptAction()
     {
         var card = ChromePanel("#F7F2FF", "#DCCFF2", 10);
-        Place(SecondaryNativeLayer, card, 1247, 804, 197, 145);
+        Place(SecondaryNativeLayer, card, 1247, 858, 197, 120);
 
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush("#7A55DE"), IsHitTestVisible = false },
             1260,
-            816,
+            868,
             31,
             31);
         Place(
             SecondaryNativeLayer,
             ChromeText("✦", 16, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
             1268,
-            820,
+            872,
             17,
             20);
         Place(
             SecondaryNativeLayer,
             ChromeText("الإجراء الموصى به الآن", 10.8, "#4B3A80", FontWeights.Bold),
             1301,
-            814,
+            866,
             130,
             24);
 
         var title = ChromeText("الانتقال إلى مرحلة التشغيل", 12.5, "#2D254E", FontWeights.Bold);
         title.TextAlignment = TextAlignment.Right;
-        Place(SecondaryNativeLayer, title, 1260, 853, 171, 24);
+        Place(SecondaryNativeLayer, title, 1260, 896, 171, 24);
         var sub = ChromeText("يوصى بالتشغيل ومراقبة الأداء والجودة", 8.5, "#716A84", FontWeights.SemiBold);
         sub.TextAlignment = TextAlignment.Right;
-        Place(SecondaryNativeLayer, sub, 1260, 877, 171, 19);
+        Place(SecondaryNativeLayer, sub, 1260, 917, 171, 18);
 
         var primary = ChromePanel("#2875F2", "#2875F2", 7);
-        Place(SecondaryNativeLayer, primary, 1260, 901, 171, 27);
+        Place(SecondaryNativeLayer, primary, 1260, 939, 171, 25);
         var primaryText = ChromeText("بدء التشغيل الآن  ←", 8.8, "#FFFFFF", FontWeights.SemiBold);
         primaryText.TextAlignment = TextAlignment.Center;
-        Place(SecondaryNativeLayer, primaryText, 1280, 905, 132, 18);
+        Place(SecondaryNativeLayer, primaryText, 1280, 943, 132, 17);
 
         var secondary = ChromePanel("#FFFFFF", "#DDD8D1", 7);
-        Place(SecondaryNativeLayer, secondary, 1260, 933, 171, 24);
+        Place(SecondaryNativeLayer, secondary, 1260, 966, 171, 17);
         var secondaryText = ChromeText("إنشاء مشروع متابعة", 8.5, "#4F5B6B", FontWeights.SemiBold);
         secondaryText.TextAlignment = TextAlignment.Center;
-        Place(SecondaryNativeLayer, secondaryText, 1280, 936, 132, 16);
+        Place(SecondaryNativeLayer, secondaryText, 1280, 966, 132, 15);
     }
 
     private Image CreateReferenceCrop(
