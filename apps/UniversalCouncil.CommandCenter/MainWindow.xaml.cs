@@ -5204,9 +5204,9 @@ public partial class MainWindow : Window
         Place(
             SecondaryNativeLayer,
             ChromeText("تم إنجاز المشروع بنجاح", 34, "#101A30", FontWeights.Bold),
-            678,
+            620,
             63,
-            305,
+            365,
             50);
         Place(
             SecondaryNativeLayer,
