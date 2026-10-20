@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-UX-IMPACT-STATE-CONTRACT-PRE-2026-10-21",
+  "change_id": "CC-UX-IMPACT-STATE-CONTRACT-2026-10-21",
+  "status": "APPROVE_TO_IMPLEMENT",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "requested_by": "OWNER_DIRECTIVE",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "91aa5604fea04d6ddb9cc89769e5afa139e817d6"
+  },
+  "scope": [
+    "audit UX impact of the adopted Agentic Work OS across all eight canonical reference screens",
+    "define a machine-readable UX State Contract for new job/context/approval truth states",
+    "define progressive-disclosure behavior for technical states",
+    "define cross-platform semantic mapping for Windows and Android",
+    "add validators/tests and bind them to the Murtakaz validation gate"
+  ],
+  "explicitly_out_of_scope": [
+    "changing the eight canonical visual references",
+    "creating new visual identity or screen artwork",
+    "modifying WPF screen geometry or styling",
+    "live execution",
+    "Stage 8",
+    "real Android connection",
+    "Context Resolver implementation",
+    "Context Capsule Compiler implementation",
+    "real Job Engine implementation"
+  ],
+  "risk_class": "MATERIAL_UX_TRUTH_CONTRACT",
+  "required_reviewers": [
+    "cc_owner_experience",
+    "cc_product_truth",
+    "cc_red_team",
+    "cc_cross_platform",
+    "cc_durable_autopilot",
+    "cc_ai_runtime"
+  ],
+  "required_workshop_reviewers": [
+    "cc_studio_producer",
+    "cc_experience_architect",
+    "cc_interaction_director",
+    "cc_android_experience",
+    "cc_accessibility_clearance",
+    "cc_visual_qa"
+  ],
+  "evidence_refs": [
+    "docs/operations/command-center/project-governance/12_MURTAKAZ_AGENTIC_WORK_OS_INTEGRATION_2026-10-21.md",
+    "docs/operations/command-center/project-governance/13_CONTEXT_DRIFT_PREVENTION_PLAYBOOK_2026-10-21.md",
+    "state/command-center/living-operations-reference-object-inventory.json",
+    "state/command-center/living-operations-reference-manifest.json",
+    "docs/operations/command-center/living-operations/05_DESKTOP_SCREEN_MAP.md",
+    "docs/operations/command-center/living-operations/06_ANDROID_OWNER_SCREEN_MAP.md"
+  ],
+  "implementation_authorized": true,
+  "final_adoption_granted": false,
+  "merge_authorized": false,
+  "visual_direction_change_authorized": false,
+  "timestamp": "2026-10-21"
+}
