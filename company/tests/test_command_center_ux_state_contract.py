@@ -22,6 +22,10 @@ class CommandCenterUxStateContractTests(unittest.TestCase):
         cls.agentic = load(PROJECT / "agentic-os-policy.json")
         cls.manifest = load(STATE / "living-operations-reference-manifest.json")
 
+    def test_contracts_are_murtakaz_approved(self) -> None:
+        self.assertEqual(self.ux["status"], "APPROVED_BY_AL_MURTAKAZ")
+        self.assertEqual(self.impact["status"], "APPROVED_BY_AL_MURTAKAZ")
+
     def test_all_eight_canonical_screens_are_audited(self) -> None:
         self.assertEqual(len(self.impact["screens"]), 8)
         self.assertEqual(
