@@ -51,6 +51,40 @@ func New(cfg Config) *Client {
 	return &Client{cfg: cfg}
 }
 
+func (c *Client) ListTools(ctx context.Context) ([]string, error) {
+	if c.cfg.Executable == "" {
+		return nil, errors.New("MCP executable is required")
+	}
+
+	callCtx, cancel := context.WithTimeout(ctx, c.cfg.Timeout)
+	defer cancel()
+
+	cmd := exec.CommandContext(callCtx, c.cfg.Executable, c.cfg.Args...)
+	cmd.Dir = c.cfg.WorkDir
+	cmd.Env = append([]string{}, c.cfg.Env...)
+
+	transport := &mcp.CommandTransport{Command: cmd}
+	client := mcp.NewClient(&mcp.Implementation{Name: "yassin-commander-bridge", Version: "v1"}, nil)
+	session, err := client.Connect(callCtx, transport, nil)
+	if err != nil {
+		_, classified := classifyCallError(callCtx, err)
+		return nil, classified
+	}
+	defer session.Close()
+
+	var names []string
+	for tool, err := range session.Tools(callCtx, nil) {
+		if err != nil {
+			_, classified := classifyCallError(callCtx, err)
+			return nil, classified
+		}
+		if tool != nil && tool.Name != "" {
+			names = append(names, tool.Name)
+		}
+	}
+	return names, nil
+}
+
 func (c *Client) Call(ctx context.Context, tool string, args map[string]any) (Result, error) {
 	if c.cfg.Executable == "" {
 		return Result{Code: "CONFIG_ERROR", IsError: true}, errors.New("MCP executable is required")
