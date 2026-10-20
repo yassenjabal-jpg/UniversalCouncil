@@ -1181,6 +1181,10 @@ public partial class MainWindow : Window
         {
             BuildNativeStudioProject();
         }
+        else if (screen == ScreenKind.DecisionMode)
+        {
+            BuildNativeOwnerDecision();
+        }
     }
 
     private void BuildNativeProjectWorkspaceCore()
@@ -2997,6 +3001,724 @@ public partial class MainWindow : Window
         BuildNativeStudioPlayerAndContext();
         BuildNativeStudioTimeline();
         BuildNativeStudioLowerWorkflow();
+    }
+
+    private void BuildNativeOwnerDecision()
+    {
+        // Decision mode intentionally preserves the originating project as a
+        // de-emphasized underlay instead of replacing it with a blank modal.
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#B8EDF2F8", "#00FFFFFF", 0, new Thickness(0)),
+            0,
+            49,
+            1470,
+            914);
+
+        BuildNativeDecisionHeader();
+        BuildNativeDecisionSurface();
+        BuildNativeDecisionRolesAndRouting();
+        BuildNativeDecisionEvidencePeek();
+        BuildNativeDecisionActions();
+    }
+
+    private void BuildNativeDecisionHeader()
+    {
+        var titlePill = ChromePanel("#FFFDFBFA", "#D7DDE8", 24);
+        Place(SecondaryNativeLayer, titlePill, 657, 62, 252, 52);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("وضع قرار المجلس", 23, "#16203A", FontWeights.Bold),
+            697,
+            68,
+            172,
+            34);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush("#2F75F3"),
+                Stroke = Brush("#92B9FA"),
+                StrokeThickness = 1.2,
+                IsHitTestVisible = false,
+            },
+            864,
+            74,
+            28,
+            28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◎", 17, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            871,
+            75,
+            18,
+            22);
+
+        var subtitle = ChromeText(
+            "تحليل شامل · نقاش متعدد الزوايا · توصية موحدة",
+            12.5,
+            "#5C6676",
+            FontWeights.SemiBold);
+        subtitle.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, subtitle, 620, 117, 330, 24);
+    }
+
+    private void BuildNativeDecisionSurface()
+    {
+        var surface = ChromePanel("#FFFCFBFA", "#C8D5E8", 16);
+        surface.Effect = new DropShadowEffect
+        {
+            BlurRadius = 26,
+            ShadowDepth = 3,
+            Opacity = 0.16,
+            Color = Color.FromRgb(53, 72, 105),
+        };
+        Place(SecondaryNativeLayer, surface, 400, 145, 735, 730);
+
+        var badge = ChromePanel("#FFF0F2", "#F5CCD3", 8);
+        Place(SecondaryNativeLayer, badge, 429, 164, 95, 29);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("قرار مطلوب", 10.5, "#D84259", FontWeights.SemiBold),
+            443,
+            168,
+            68,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("#UC-2025-041", 9.5, "#737D8C", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            541,
+            168,
+            93,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("26 مايو 2025", 9.5, "#87909C"),
+            653,
+            168,
+            92,
+            20);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#EFF6FF", "#CFE2FC", 11),
+            1056,
+            181,
+            57,
+            57);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◇", 31, "#1674E8", FontWeights.Bold, FlowDirection.LeftToRight),
+            1070,
+            190,
+            31,
+            38);
+
+        var question = ChromeText(
+            "هل نعتمد إطلاق المشروع؟",
+            31,
+            "#101A34",
+            FontWeights.Bold);
+        question.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, question, 661, 196, 376, 47);
+
+        var productBadge = ChromePanel("#EAFBF0", "#BFEBCF", 8);
+        Place(SecondaryNativeLayer, productBadge, 1003, 247, 70, 26);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("منتج", 9.5, "#17994E", FontWeights.SemiBold),
+            1019,
+            250,
+            38,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Smart Secretary V2", 12.5, "#4F5B6D", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            842,
+            247,
+            154,
+            24);
+
+        var summary = ChromeText(
+            "اكتملت متطلبات التطوير الأساسية، واجتازت النسخة التجريبية الاختبارات الداخلية بنجاح.\nنحتاج قرار المجلس للمضي في الإطلاق العام.",
+            13,
+            "#626C7A",
+            FontWeights.SemiBold);
+        summary.TextAlignment = TextAlignment.Right;
+        summary.TextWrapping = TextWrapping.Wrap;
+        summary.LineHeight = 23;
+        Place(SecondaryNativeLayer, summary, 506, 278, 590, 55);
+
+        AddDecisionInfoPanel(
+            414,
+            344,
+            349,
+            195,
+            "#F2F8FF",
+            "#C9DFF8",
+            "#226ED8",
+            "✦",
+            "لماذا وصل المشروع إلى هذه المرحلة؟",
+            new[]
+            {
+                "اكتملت جميع متطلبات المنتج الأساسية",
+                "نجحت النسخة التجريبية في الاختبارات الداخلية",
+                "تم معالجة 92% من الملاحظات الحرجة",
+                "جاهزية البنية التحتية وقابلية التوسع",
+                "توافق مع المعايير القانونية والأمنية",
+            });
+
+        AddDecisionRecommendationPanel();
+
+        AddDecisionDissentPanel();
+
+        AddDecisionEvidenceSummaryPanel();
+
+        AddDecisionImpactPanel(
+            414,
+            727,
+            349,
+            135,
+            "#F1FBF4",
+            "#C8ECD2",
+            "#14994E",
+            "✓",
+            "أثر الموافقة",
+            new[]
+            {
+                "إطلاق المنتج في السوق خلال 2 أسبوع",
+                "تحقيق ميزة تنافسية مبكرة",
+                "توقع نمو الإيرادات بنسبة 25% في الربع الأول",
+                "تعزيز ثقة العملاء والمستثمرين",
+            });
+
+        AddDecisionImpactPanel(
+            774,
+            727,
+            349,
+            135,
+            "#FFF3F4",
+            "#F0D0D4",
+            "#E03B4E",
+            "×",
+            "أثر الرفض",
+            new[]
+            {
+                "تأخير الوصول إلى السوق",
+                "خسارة فرصة تنافسية لصالح المنافسين",
+                "ارتفاع التكاليف التشغيلية الإضافية",
+                "احتمال تراجع ثقة الفريق وأصحاب المصلحة",
+            });
+    }
+
+    private void AddDecisionInfoPanel(
+        double left,
+        double top,
+        double width,
+        double height,
+        string background,
+        string border,
+        string accent,
+        string glyph,
+        string title,
+        IReadOnlyList<string> items)
+    {
+        var panel = ChromePanel(background, border, 11);
+        Place(SecondaryNativeLayer, panel, left, top, width, height);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 20, accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 17,
+            top + 13,
+            27,
+            27);
+        var titleText = ChromeText(title, 15, "#253149", FontWeights.SemiBold);
+        titleText.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, titleText, left + 56, top + 11, width - 73, 29);
+
+        for (var index = 0; index < items.Count; index++)
+        {
+            var y = top + 51 + index * 27;
+            Place(
+                SecondaryNativeLayer,
+                new Ellipse
+                {
+                    Fill = Brush("#22B761"),
+                    IsHitTestVisible = false,
+                },
+                left + width - 34,
+                y + 4,
+                14,
+                14);
+            Place(
+                SecondaryNativeLayer,
+                ChromeText("✓", 8, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+                left + width - 31,
+                y + 2,
+                10,
+                14);
+            var itemText = ChromeText(items[index], 10.5, "#566171", FontWeights.SemiBold);
+            itemText.TextAlignment = TextAlignment.Right;
+            Place(SecondaryNativeLayer, itemText, left + 20, y, width - 61, 21);
+        }
+    }
+
+    private void AddDecisionRecommendationPanel()
+    {
+        var panel = ChromePanel("#F1FBF4", "#BFE9CB", 11);
+        Place(SecondaryNativeLayer, panel, 774, 344, 349, 195);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#24BB61"), IsHitTestVisible = false },
+            790,
+            359,
+            30,
+            30);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✓", 16, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            798,
+            361,
+            18,
+            22);
+        var heading = ChromeText("توصية المجلس", 16, "#17683B", FontWeights.Bold);
+        heading.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, heading, 855, 356, 245, 31);
+
+        var recommendationBadge = ChromePanel("#E5F7EB", "#BDE8C9", 8);
+        Place(SecondaryNativeLayer, recommendationBadge, 1033, 402, 69, 25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("التوصية", 9, "#15934A", FontWeights.SemiBold),
+            1047,
+            405,
+            42,
+            18);
+
+        var recommendation = ChromeText(
+            "المضي في الإطلاق مع تحسينات محددة",
+            15.5,
+            "#1E4732",
+            FontWeights.Bold);
+        recommendation.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, recommendation, 802, 442, 286, 31);
+
+        var details = ChromeText(
+            "يؤيد أغلب أعضاء المجلس إطلاق المشروع نظراً لقيمته العالية\nوجاهزيته، مع تنفيذ التوصيات المدرجة.",
+            10.8,
+            "#577063",
+            FontWeights.SemiBold);
+        details.TextAlignment = TextAlignment.Right;
+        details.TextWrapping = TextWrapping.Wrap;
+        details.LineHeight = 18;
+        Place(SecondaryNativeLayer, details, 803, 479, 286, 47);
+    }
+
+    private void AddDecisionDissentPanel()
+    {
+        var panel = ChromePanel("#FFF1F2", "#F2CDD2", 11);
+        Place(SecondaryNativeLayer, panel, 414, 549, 349, 165);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#F1475A"), IsHitTestVisible = false },
+            431,
+            563,
+            30,
+            30);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("!", 17, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            443,
+            565,
+            10,
+            22);
+        var heading = ChromeText("أقوى اعتراض", 15.5, "#B72E41", FontWeights.Bold);
+        heading.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, heading, 533, 560, 205, 28);
+
+        var teamBadge = ChromePanel("#F8DDE1", "#F0C6CC", 8);
+        Place(SecondaryNativeLayer, teamBadge, 594, 600, 144, 25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الفريق المعارض", 9, "#C0394D", FontWeights.SemiBold),
+            610,
+            603,
+            110,
+            18);
+
+        var text = ChromeText(
+            "مخاطر الخصوصية المرتبطة بمعالجة البيانات الحساسة\nتحتاج إلى مزيد من الضمانات قبل الإطلاق العام.",
+            11,
+            "#6B4B52",
+            FontWeights.SemiBold);
+        text.TextAlignment = TextAlignment.Right;
+        text.TextWrapping = TextWrapping.Wrap;
+        text.LineHeight = 20;
+        Place(SecondaryNativeLayer, text, 445, 638, 288, 54);
+    }
+
+    private void AddDecisionEvidenceSummaryPanel()
+    {
+        var panel = ChromePanel("#F7F8FC", "#DEE2EB", 11);
+        Place(SecondaryNativeLayer, panel, 774, 549, 349, 165);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("▤", 22, "#6253DA", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            792,
+            560,
+            30,
+            30);
+        var heading = ChromeText("ملخص الأدلة", 15.5, "#283348", FontWeights.Bold);
+        heading.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, heading, 940, 558, 160, 28);
+
+        var evidenceCount = ChromePanel("#F1EEFF", "#DAD2F6", 8);
+        Place(SecondaryNativeLayer, evidenceCount, 792, 598, 76, 25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("12 دليلاً", 9.2, "#6250BC", FontWeights.SemiBold),
+            809,
+            601,
+            44,
+            18);
+
+        AddDecisionEvidenceRow(793, 630, "نتائج الاختبارات الداخلية والأداء", "3 ملفات", "▣");
+        AddDecisionEvidenceRow(793, 659, "مراجعة الامتثال القانوني والخصوصية", "4 ملفات", "♢");
+        AddDecisionEvidenceRow(793, 688, "تحليل السوق وتعليقات المستخدمين", "5 ملفات", "▥");
+    }
+
+    private void AddDecisionEvidenceRow(
+        double left,
+        double top,
+        string title,
+        string count,
+        string glyph)
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 12, "#5869C8", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left,
+            top,
+            20,
+            20);
+        var titleText = ChromeText(title, 9.6, "#556071", FontWeights.SemiBold);
+        titleText.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, titleText, left + 27, top, 220, 20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(count, 8.8, "#7B8491"),
+            left + 261,
+            top,
+            54,
+            20);
+    }
+
+    private void AddDecisionImpactPanel(
+        double left,
+        double top,
+        double width,
+        double height,
+        string background,
+        string border,
+        string accent,
+        string glyph,
+        string title,
+        IReadOnlyList<string> items)
+    {
+        var panel = ChromePanel(background, border, 11);
+        Place(SecondaryNativeLayer, panel, left, top, width, height);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush(accent), IsHitTestVisible = false },
+            left + 17,
+            top + 14,
+            30,
+            30);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 16, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 25,
+            top + 16,
+            18,
+            22);
+        var titleText = ChromeText(title, 14, accent, FontWeights.Bold);
+        titleText.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, titleText, left + 70, top + 13, width - 91, 26);
+
+        for (var index = 0; index < items.Count; index++)
+        {
+            var y = top + 48 + index * 20;
+            Place(
+                SecondaryNativeLayer,
+                new Ellipse { Fill = Brush(accent), IsHitTestVisible = false },
+                left + width - 28,
+                y + 5,
+                6,
+                6);
+            var itemText = ChromeText(items[index], 9.5, "#596474");
+            itemText.TextAlignment = TextAlignment.Right;
+            Place(SecondaryNativeLayer, itemText, left + 18, y, width - 52, 19);
+        }
+    }
+
+    private void BuildNativeDecisionRolesAndRouting()
+    {
+        AddDecisionRoutingPath("M 300,214 C 340,192 366,192 400,211", "#744DE7", false);
+        AddDecisionRoutingPath("M 264,430 C 325,409 350,443 400,472", "#EF3E55", true);
+        AddDecisionRoutingPath("M 1135,211 C 1172,190 1200,190 1232,211", "#28C878", false);
+        AddDecisionRoutingPath("M 1135,430 C 1183,405 1211,410 1260,435", "#2986E9", false);
+        AddDecisionRoutingPath("M 1135,635 C 1182,610 1208,611 1248,635", "#E6B530", false);
+
+        AddDecisionRole(205, 165, 96, "#F3EEFF", "#6F4BE1", "▣", "الأدلة", "يحلل الأدلة الحالية...", "evidence");
+        AddDecisionRole(146, 366, 112, "#FFF0F2", "#EE4057", "♦", "الفريق المعارض", "يحدد المخاطر والثغرات...", "redteam");
+        AddDecisionRole(1222, 151, 106, "#EDFFF5", "#28C878", "✦", "المركزي", "يلخص ويحسن القرار...", "synthesis");
+        AddDecisionRole(1269, 365, 106, "#EEF6FF", "#2B83E8", "●", "تجربة المستخدم", "يقيم الأثر على المستخدمين...", "ux");
+        AddDecisionRole(1252, 572, 110, "#FFF9E7", "#DFB228", "▣", "الأمن والخصوصية", "يقيم المخاطر والالتزام...", "security");
+
+        var dissent = ChromePanel("#FFE1E5", "#F3B9C1", 10);
+        Place(SecondaryNativeLayer, dissent, 302, 445, 121, 35);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("مسار الاعتراض", 10.5, "#BD3548", FontWeights.SemiBold),
+            322,
+            451,
+            82,
+            22);
+    }
+
+    private void AddDecisionRoutingPath(
+        string data,
+        string color,
+        bool dissent)
+    {
+        var path = new Path
+        {
+            Data = Geometry.Parse(data),
+            Stroke = Brush(color),
+            StrokeThickness = dissent ? 3 : 2.1,
+            StrokeDashArray = new DoubleCollection { 1, dissent ? 3 : 5 },
+            Opacity = dissent ? 0.9 : 0.72,
+            IsHitTestVisible = false,
+        };
+        SecondaryNativeLayer.Children.Add(path);
+    }
+
+    private void AddDecisionRole(
+        double left,
+        double top,
+        double size,
+        string background,
+        string accent,
+        string glyph,
+        string title,
+        string subtitle,
+        string roleId)
+    {
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush("#30FFFFFF"),
+                Stroke = Brush("#65FFFFFF"),
+                StrokeThickness = 1,
+                IsHitTestVisible = false,
+            },
+            left - 22,
+            top - 22,
+            size + 44,
+            size + 44);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush(background),
+                Stroke = Brush(accent),
+                StrokeThickness = 2.3,
+                IsHitTestVisible = false,
+            },
+            left,
+            top,
+            size,
+            size);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush("#00FFFFFF"),
+                Stroke = Brush(accent),
+                StrokeThickness = 1,
+                Opacity = 0.35,
+                IsHitTestVisible = false,
+            },
+            left - 11,
+            top - 11,
+            size + 22,
+            size + 22);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, size * 0.34, accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            left + size * 0.31,
+            top + size * 0.25,
+            size * 0.45,
+            size * 0.45);
+        var titleText = ChromeText(title, 13.5, "#1E293B", FontWeights.Bold);
+        titleText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, titleText, left - 40, top + size + 9, size + 80, 25);
+        var subtitleText = ChromeText(subtitle, 9.3, "#667181", FontWeights.SemiBold);
+        subtitleText.TextAlignment = TextAlignment.Center;
+        subtitleText.TextTrimming = TextTrimming.CharacterEllipsis;
+        Place(SecondaryNativeLayer, subtitleText, left - 50, top + size + 34, size + 100, 24);
+
+        var stateDot = new Ellipse
+        {
+            Fill = Brush(accent),
+            IsHitTestVisible = false,
+        };
+        Place(SecondaryNativeLayer, stateDot, left + size - 2, top + size * 0.46, 9, 9);
+    }
+
+    private void BuildNativeDecisionEvidencePeek()
+    {
+        var card = ChromePanel("#FFFDFCFB", "#D8DEE8", 13);
+        card.Effect = new DropShadowEffect
+        {
+            BlurRadius = 16,
+            ShadowDepth = 2,
+            Opacity = 0.13,
+            Color = Color.FromRgb(69, 79, 98),
+        };
+        Place(SecondaryNativeLayer, card, 32, 575, 325, 300);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("×", 22, "#526071", FontWeights.Normal, FlowDirection.LeftToRight),
+            50,
+            590,
+            27,
+            28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("معاينة دليل", 17, "#1E293B", FontWeights.Bold),
+            140,
+            589,
+            120,
+            29);
+        var counter = ChromePanel("#F4F5F7", "#E1E3E7", 7);
+        Place(SecondaryNativeLayer, counter, 305, 592, 38, 25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("3/12", 9, "#606A78", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            312,
+            596,
+            26,
+            17);
+
+        var pdf = ChromePanel("#FFF0F1", "#F0D8DB", 7);
+        Place(SecondaryNativeLayer, pdf, 58, 638, 43, 52);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("PDF", 11, "#E13D52", FontWeights.Bold, FlowDirection.LeftToRight),
+            65,
+            652,
+            29,
+            23);
+
+        var evidenceTitle = ChromeText(
+            "تقرير التدقيق الأمني والخصوصية",
+            11.5,
+            "#263246",
+            FontWeights.Bold);
+        evidenceTitle.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, evidenceTitle, 113, 637, 195, 24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("20 مايو 2025  ·  1.4 MB", 9, "#7A8390"),
+            162,
+            666,
+            146,
+            20);
+
+        var verified = ChromePanel("#E7F9ED", "#BCEAC9", 8);
+        Place(SecondaryNativeLayer, verified, 61, 703, 85, 25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("● VERIFIED", 8.5, "#15944B", FontWeights.Bold, FlowDirection.LeftToRight),
+            71,
+            706,
+            66,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("↗   ⛓", 17, "#647083", null, FlowDirection.LeftToRight),
+            275,
+            701,
+            55,
+            25);
+
+        var body = ChromeText(
+            "يؤكد التقرير أن النظام يتوافق مع معايير حماية\nالبيانات، مع توصيات إضافية لتشفير البيانات\nالحساسة في بيئات الإنتاج.",
+            10.2,
+            "#566171",
+            FontWeights.SemiBold);
+        body.TextAlignment = TextAlignment.Right;
+        body.TextWrapping = TextWrapping.Wrap;
+        body.LineHeight = 19;
+        Place(SecondaryNativeLayer, body, 57, 744, 276, 70);
+
+        var full = ChromePanel("#FFFFFF", "#E2E4E8", 8);
+        Place(SecondaryNativeLayer, full, 57, 825, 275, 34);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("عرض الدليل الكامل  ←", 10, "#344055", FontWeights.SemiBold),
+            129,
+            832,
+            168,
+            21);
+    }
+
+    private void BuildNativeDecisionActions()
+    {
+        var dock = ChromePanel("#FFFCFBFA", "#D7DCE6", 17);
+        dock.Effect = new DropShadowEffect
+        {
+            BlurRadius = 18,
+            ShadowDepth = 2,
+            Opacity = 0.14,
+            Color = Color.FromRgb(58, 71, 95),
+        };
+        Place(SecondaryNativeLayer, dock, 381, 880, 796, 70);
+
+        AddDecisionActionVisual(397, 894, 137, "#F7F9FF", "#8AAAE9", "#244D9C", "▤", "فحص الأدلة");
+        AddDecisionActionVisual(545, 894, 137, "#FFFFFF", "#D9DCE3", "#3D4758", "?", "طرح سؤال");
+        AddDecisionActionVisual(694, 894, 137, "#FFF0F2", "#EEA6B0", "#DB334B", "×", "رفض");
+        AddDecisionActionVisual(843, 894, 166, "#FFF9E8", "#F0CC78", "#B97D13", "⚙", "طلب تعديلات");
+        AddDecisionActionVisual(1020, 894, 139, "#2475F3", "#2475F3", "#FFFFFF", "✓", "الموافقة");
+    }
+
+    private void AddDecisionActionVisual(
+        double left,
+        double top,
+        double width,
+        string background,
+        string border,
+        string foreground,
+        string glyph,
+        string label)
+    {
+        var panel = ChromePanel(background, border, 9);
+        Place(SecondaryNativeLayer, panel, left, top, width, 44);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 16, foreground, FontWeights.Bold, FlowDirection.LeftToRight),
+            left + width - 34,
+            top + 8,
+            21,
+            27);
+        var text = ChromeText(label, 12, foreground, FontWeights.SemiBold);
+        text.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, text, left + 12, top + 7, width - 50, 28);
     }
 
     private Image CreateReferenceCrop(
