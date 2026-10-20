@@ -13,6 +13,7 @@ REFERENCE_MANIFEST = STATE / "living-operations-reference-manifest.json"
 OBJECT_INVENTORY = STATE / "living-operations-reference-object-inventory.json"
 AGENTIC_POLICY = PROJECT / "agentic-os-policy.json"
 PRE_APPROVAL = PROJECT / "approvals" / "2026-10-21-ux-impact-state-contract-pre.json"
+POST_APPROVAL = PROJECT / "approvals" / "2026-10-21-ux-impact-state-contract-post.json"
 CHANGE = PROJECT / "changes" / "2026-10-21-ux-impact-state-contract.json"
 CAPSULE = PROJECT / "context-capsules" / "2026-10-21-ux-impact-state-contract.json"
 COUNCIL = PROJECT / "project-council.json"
@@ -30,6 +31,7 @@ for required in (
     OBJECT_INVENTORY,
     AGENTIC_POLICY,
     PRE_APPROVAL,
+    POST_APPROVAL,
     CHANGE,
     CAPSULE,
     COUNCIL,
@@ -44,11 +46,16 @@ manifest = load(REFERENCE_MANIFEST)
 inventory = load(OBJECT_INVENTORY)
 agentic = load(AGENTIC_POLICY)
 pre = load(PRE_APPROVAL)
+post = load(POST_APPROVAL)
 change = load(CHANGE)
 capsule = load(CAPSULE)
 council = load(COUNCIL)
 studio = load(STUDIO)
 
+if impact["status"] != "APPROVED_BY_AL_MURTAKAZ":
+    raise SystemExit("UX impact audit is not Murtakaz-approved")
+if ux["status"] != "APPROVED_BY_AL_MURTAKAZ":
+    raise SystemExit("UX State Contract is not Murtakaz-approved")
 if impact["visual_direction_changed"]:
     raise SystemExit("UX impact audit may not change the visual direction")
 if ux["visual_direction_change"]:
@@ -134,6 +141,27 @@ required_context_fields = {
 }
 if set(ux["engineering_requirements_for_context_resolver"]) != required_context_fields:
     raise SystemExit("UX contract no longer defines the required Context Resolver truth surface")
+
+if post["decision"] != "APPROVED_BY_AL_MURTAKAZ":
+    raise SystemExit("UX state work lacks Murtakaz post-approval")
+if not post["adoption_authorized"] or not post["merge_authorized"]:
+    raise SystemExit("UX post-approval must explicitly authorize adoption and merge")
+if post["visual_direction_changed"]:
+    raise SystemExit("UX post-approval may not change visual direction")
+if post["live_execution_authorized"] or post["stage8_opened"]:
+    raise SystemExit("UX post-approval may not authorize live execution or Stage 8")
+if post["next_roadmap_slice_authorized"] != "CONTEXT_RESOLVER_AND_CONTEXT_CAPSULE_COMPILER":
+    raise SystemExit("UX post-approval next roadmap slice drifted")
+if impact.get("murtakaz_post_approval") != (
+    "state/command-center/project-governance/approvals/"
+    "2026-10-21-ux-impact-state-contract-post.json"
+):
+    raise SystemExit("UX impact audit is not bound to its post-approval receipt")
+if ux.get("murtakaz_post_approval") != (
+    "state/command-center/project-governance/approvals/"
+    "2026-10-21-ux-impact-state-contract-post.json"
+):
+    raise SystemExit("UX State Contract is not bound to its post-approval receipt")
 
 if pre["decision"] != "APPROVE_TO_IMPLEMENT":
     raise SystemExit("UX state work lacks Murtakaz pre-approval")
