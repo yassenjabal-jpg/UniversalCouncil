@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CTX-CC-UX-IMPACT-STATE-CONTRACT-2026-10-21",
+  "immutable": true,
+  "project_id": "universal-council-command-center",
+  "job_or_change_id": "CC-UX-IMPACT-STATE-CONTRACT-2026-10-21",
+  "created_at": "2026-10-21",
+  "source_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "91aa5604fea04d6ddb9cc89769e5afa139e817d6"
+  },
+  "checkpoint_lock_id": "AL_MURTAKAZ_P1_ALIGNMENT_LOCK",
+  "canonical_sources": [
+    {
+      "id": "agentic-os-policy",
+      "locator": "state/command-center/project-governance/agentic-os-policy.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "anti-drift-playbook",
+      "locator": "docs/operations/command-center/project-governance/13_CONTEXT_DRIFT_PREVENTION_PLAYBOOK_2026-10-21.md",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "desktop-screen-map",
+      "locator": "docs/operations/command-center/living-operations/05_DESKTOP_SCREEN_MAP.md",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "android-screen-map",
+      "locator": "docs/operations/command-center/living-operations/06_ANDROID_OWNER_SCREEN_MAP.md",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "navigation-flows",
+      "locator": "docs/operations/command-center/living-operations/12_NAVIGATION_INTERACTION_FLOW_MAPS.md",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "reference-manifest",
+      "locator": "state/command-center/living-operations-reference-manifest.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "object-inventory",
+      "locator": "state/command-center/living-operations-reference-object-inventory.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "screen-review",
+      "locator": "state/command-center/living-operations-p1-screen-review.json",
+      "authority_class": "ACCEPTED_EVIDENCE"
+    },
+    {
+      "id": "mandatory-approval",
+      "locator": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
+      "authority_class": "LOCKED_POLICY"
+    }
+  ],
+  "allowed_scope": "SEE_CHANGE_ENVELOPE_CC-UX-IMPACT-STATE-CONTRACT-2026-10-21",
+  "forbidden_scope": [
+    "new visual direction",
+    "reference replacement",
+    "WPF geometry/styling change",
+    "Android implementation",
+    "Context Resolver implementation",
+    "live execution",
+    "Stage 8"
+  ],
+  "authority_policy_version": "al-murtakaz-mandatory-approval:1.0",
+  "risk_class": "MATERIAL_UX_TRUTH_CONTRACT",
+  "expected_outputs": [
+    "UX Impact Audit",
+    "UX State Contract",
+    "machine-readable impact matrix",
+    "machine-readable state contract",
+    "validators/tests",
+    "Murtakaz post-review"
+  ],
+  "acceptance_tests": [
+    "command_center_ux_state_validate.py",
+    "command_center_murtakaz_validate.py",
+    "company unit tests",
+    "exact-head CI"
+  ],
+  "freshness_rules": {
+    "baseline_must_match_pre_approval": true,
+    "material_baseline_move_result": "STALE_CONTEXT",
+    "conflicting_canonical_truth_result": "CONTEXT_CONFLICT"
+  },
+  "visual_binding": {
+    "source_of_truth": "EIGHT_PINNED_CANONICAL_REFERENCE_IMAGES",
+    "mutation_authorized": false,
+    "generated_visual_output_authorized": false
+  }
+}
