@@ -86,8 +86,10 @@ internal static class Program
 
         var evidence = new[]
         {
-            Render(output, 1440, 900, "command-center-stage7-1440x900.png"),
-            Render(output, 1180, 720, "command-center-stage7-1180x720.png"),
+            Render(output, 1440, 900, "command-center-stage7-1440x900.png", "native"),
+            Render(output, 1180, 720, "command-center-stage7-1180x720.png", "native"),
+            Render(output, 1440, 900, "home-reference-only-1440x900.png", "reference"),
+            Render(output, 1440, 900, "home-native-overlay-1440x900.png", "blend"),
         };
 
         var manifestPath = Path.Combine(output, "ui-evidence-manifest.json");
@@ -114,9 +116,32 @@ internal static class Program
         return 0;
     }
 
-    private static object Render(string output, int width, int height, string fileName)
+    private static object Render(
+        string output,
+        int width,
+        int height,
+        string fileName,
+        string variant)
     {
         var window = App.CreateMainWindow(AppContext.BaseDirectory);
+
+        if (window.FindName("NativeHomeLayer") is UIElement nativeHomeLayer)
+        {
+            switch (variant)
+            {
+                case "reference":
+                    nativeHomeLayer.Visibility = Visibility.Collapsed;
+                    break;
+                case "blend":
+                    nativeHomeLayer.Visibility = Visibility.Visible;
+                    nativeHomeLayer.Opacity = 0.46;
+                    break;
+                default:
+                    nativeHomeLayer.Visibility = Visibility.Visible;
+                    nativeHomeLayer.Opacity = 1;
+                    break;
+            }
+        }
 
         if (window.Content is not FrameworkElement root)
         {
@@ -174,6 +199,7 @@ internal static class Program
             pixel_height = bitmap.PixelHeight,
             bytes = bytes.Length,
             sha256,
+            variant,
         };
     }
 }
