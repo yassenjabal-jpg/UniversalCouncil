@@ -369,3 +369,30 @@ def test_studio_player_media_uses_canonical_reference_crop_not_generated_media()
     assert '"04-studio_project.png"' in code
     assert "new Int32Rect(465, 282, 608, 255)" in code
     assert "CroppedBitmap" in code
+
+
+def test_owner_decision_mode_has_native_reconstruction():
+    code = CODE.read_text(encoding="utf-8")
+    assert "BuildNativeOwnerDecision" in code
+    assert "BuildNativeDecisionSurface" in code
+    assert "BuildNativeDecisionRolesAndRouting" in code
+    assert "BuildNativeDecisionEvidencePeek" in code
+    assert "BuildNativeDecisionActions" in code
+    for role in ("الأدلة", "الفريق المعارض", "المركزي", "تجربة المستخدم", "الأمن والخصوصية"):
+        assert role in code
+    for action in ("الموافقة", "طلب تعديلات", "رفض", "طرح سؤال", "فحص الأدلة"):
+        assert action in code
+
+
+def test_owner_decision_keeps_dissent_evidence_and_impacts_visible():
+    code = CODE.read_text(encoding="utf-8")
+    for value in (
+        "مسار الاعتراض",
+        "أقوى اعتراض",
+        "ملخص الأدلة",
+        "أثر الموافقة",
+        "أثر الرفض",
+        "معاينة دليل",
+        "VERIFIED",
+    ):
+        assert value in code
