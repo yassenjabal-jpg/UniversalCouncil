@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "implementation_id": "p1-home-native-reference-shell",
+  "status": "IMPLEMENTED_INTERACTION_REVIEW_PENDING",
+  "screen_id": "home_owner_workspace",
+  "canonical_parent": {
+    "path": "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+    "sha256": "7cb7d12f8819576ad4992158f6f0eb098ae3350a3684118ffc43192ea56749eb"
+  },
+  "implementation_paths": [
+    "apps/UniversalCouncil.CommandCenter/MainWindow.xaml",
+    "apps/UniversalCouncil.CommandCenter/MainWindow.xaml.cs"
+  ],
+  "approach": "CANONICAL_REFERENCE_AS_WPF_VISUAL_SHELL_WITH_NATIVE_SEMANTIC_OVERLAY",
+  "implemented": [
+    "eight_interactive_council_members",
+    "role_context_drawer",
+    "eight_reasoning_targets",
+    "model_reasoning_inspector",
+    "composer_routing_context",
+    "start_feedback_without_execution",
+    "project_card_context",
+    "owner_summary_context",
+    "autopilot_context",
+    "tool_dock_context",
+    "global_navigation_context",
+    "keyboard_focus",
+    "escape_to_close",
+    "reduced_motion_respect",
+    "bounded_role_activation_motion"
+  ],
+  "not_claimed": [
+    "runtime_execution",
+    "live_role_activity",
+    "live_verified_state",
+    "final_visual_artifact_approval",
+    "p1_completion",
+    "stage8_open"
+  ],
+  "next_step": "RUN_WPF_BUILD_AND_MURTAKAZ_STUDIO_INTERACTION_REVIEW"
+}
