@@ -171,3 +171,15 @@ def test_native_composer_has_overlay_calibrated_translation():
     start = xaml.index(marker)
     fragment = xaml[start : start + 520]
     assert '<TranslateTransform Y="10" />' in fragment
+
+
+def test_home_active_work_cards_are_native_and_navigable():
+    xaml = XAML.read_text(encoding="utf-8")
+    code = CODE.read_text(encoding="utf-8")
+    assert 'x:Name="NativeHomeActiveWorkLayer"' in xaml
+    assert "NativeProjectCardStyle" in xaml
+    assert xaml.count('Style="{StaticResource NativeProjectCardStyle}"') == 3
+    for project in ("smart-secretary", "privacy", "erasure"):
+        assert f'Tag="{project}"' in xaml
+    assert 'Click="ShowAllProjects_Click"' in xaml
+    assert "ShowAllProjects_Click" in code
