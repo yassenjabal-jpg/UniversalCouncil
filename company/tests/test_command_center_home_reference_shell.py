@@ -332,3 +332,40 @@ def test_software_autopilot_has_native_checkpoint_branch_and_history_reconstruct
         "تاريخ المشروع",
     ):
         assert content in code
+
+
+def test_studio_project_has_native_pipeline_player_timeline_and_handoff():
+    code = CODE.read_text(encoding="utf-8")
+    for method in (
+        "BuildNativeStudioProject",
+        "BuildNativeStudioHeaderAndPipeline",
+        "BuildNativeStudioPlayerAndContext",
+        "BuildNativeStudioTimeline",
+        "BuildNativeStudioLowerWorkflow",
+        "CreateReferenceCrop",
+        "AddStudioStage",
+        "AddStudioTrackLabel",
+        "AddTimelineTextClip",
+        "AddEffectClip",
+        "AddQcRow",
+    ):
+        assert method in code
+    for content in (
+        "إطلاق هوية المجلس الجديدة",
+        "الكتابة",
+        "ما قبل الإنتاج",
+        "الإنتاج",
+        "المراجعة والجودة",
+        "التسليم والنشر",
+        "Adobe Premiere Pro",
+        "مراجعة الجودة (QC)",
+        "تدفق التسليم بين الأقسام",
+    ):
+        assert content in code
+
+
+def test_studio_player_media_uses_canonical_reference_crop_not_generated_media():
+    code = CODE.read_text(encoding="utf-8")
+    assert '"04-studio_project.png"' in code
+    assert "new Int32Rect(465, 282, 608, 255)" in code
+    assert "CroppedBitmap" in code
