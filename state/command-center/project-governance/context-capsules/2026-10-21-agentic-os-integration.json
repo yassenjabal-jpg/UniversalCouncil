@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CTX-CC-AGENTIC-OS-INTEGRATION-2026-10-21",
+  "capsule_type": "BOOTSTRAP_CONTEXT_CAPSULE",
+  "bootstrap_note": "The Context Capsule contract is introduced by this bounded integration. The task baseline and scope were already pinned by the Murtakaz pre-approval receipt before material architecture edits; this capsule freezes that same baseline for the remainder of this change.",
+  "immutable": true,
+  "project_id": "universal-council-command-center",
+  "job_or_change_id": "CC-AGENTIC-OS-INTEGRATION-2026-10-21",
+  "created_at": "2026-10-21",
+  "source_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "1702d73eafa2319200164898bdaf0d400d4af524"
+  },
+  "checkpoint_lock_id": "AL_MURTAKAZ_P1_ALIGNMENT_LOCK",
+  "owner_directive_ids": [
+    "OWNER_DIRECTIVE:2026-10-20-adopt-agentic-os-decisions",
+    "MRTKZ-AGENTIC-OS-INTEGRATION-PRE-2026-10-21"
+  ],
+  "canonical_sources": [
+    {
+      "id": "approval-policy",
+      "locator": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "murtakaz-identity",
+      "locator": "docs/operations/command-center/project-governance/05_AL_MURTAKAZ_IDENTITY.md",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "latest-review",
+      "locator": "PR#55 / review record",
+      "authority_class": "ACCEPTED_EVIDENCE"
+    },
+    {
+      "id": "visual-reference-lock",
+      "locator": "docs/operations/command-center/living-operations/18_REFERENCE_ONLY_VISUAL_LOCK.md",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "visual-production-gate",
+      "locator": "docs/operations/command-center/living-operations/23_VISUAL_PRODUCTION_HARD_GATE.md",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "visual-reference-manifest",
+      "locator": "state/command-center/living-operations-reference-manifest.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    }
+  ],
+  "domain_precedence": "COMPILED_FROM_CONTEXT_CAPSULE_CONTRACT",
+  "allowed_scope": "SEE_CHANGE_ENVELOPE_CC-AGENTIC-OS-INTEGRATION-2026-10-21",
+  "forbidden_scope": [
+    "live execution",
+    "Stage 8",
+    "new visual identity",
+    "canonical reference replacement",
+    "real Android connection",
+    "real Autopilot",
+    "parent system mutation"
+  ],
+  "required_skill_version": "ARCHITECTURE_BOUNDARY_AUDIT_CURRENT + PROJECT_LOCAL_MURTAKAZ_REVIEW",
+  "authority_policy_version": "al-murtakaz-mandatory-approval:1.0",
+  "risk_class": "MATERIAL_ARCHITECTURE_GOVERNANCE",
+  "expected_outputs": [
+    "reconciled policy",
+    "scoped invariants",
+    "context/change contracts",
+    "validators/tests",
+    "projection binding",
+    "architecture docs",
+    "roadmap amendment",
+    "post-review"
+  ],
+  "acceptance_tests": [
+    "command_center_agentic_os_validate.py",
+    "command_center_murtakaz_validate.py",
+    "company unit tests",
+    "exact-head CI"
+  ],
+  "freshness_rules": {
+    "baseline_must_match_pre_approval": true,
+    "material_baseline_move_result": "STALE_CONTEXT",
+    "conflicting_canonical_truth_result": "CONTEXT_CONFLICT"
+  },
+  "visual_binding_when_applicable": {
+    "manifest": "state/command-center/living-operations-reference-manifest.json",
+    "protocol": "state/command-center/living-operations-visual-production-protocol.json",
+    "reference_count": 8,
+    "no_visual_generation_in_this_change": true
+  }
+}
