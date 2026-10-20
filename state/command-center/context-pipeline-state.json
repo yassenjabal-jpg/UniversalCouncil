@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "state_id": "command-center-context-pipeline",
-  "status": "IMPLEMENTED_VALIDATION_PENDING",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
   "project_id": "universal-council-command-center",
   "canonical_base": "379820e27e70609c724740e2e138baa8b8a92c7d",
   "components": {
@@ -29,10 +29,30 @@
     "model_provider_calls_added": false
   },
   "evidence": {
-    "csharp_context_validation": "PENDING",
-    "company_stage0": "PENDING",
-    "codeql": "PENDING",
-    "reference_ui": "PENDING",
-    "murtakaz_post_review": "PENDING"
-  }
+    "csharp_context_validation": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39511082305,
+      "head_sha": "ac0f174fdc64ba0d6985fba403a71d27f5ff13bb"
+    },
+    "company_stage0": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39511082225,
+      "head_sha": "ac0f174fdc64ba0d6985fba403a71d27f5ff13bb"
+    },
+    "codeql": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39511082228,
+      "head_sha": "ac0f174fdc64ba0d6985fba403a71d27f5ff13bb"
+    },
+    "reference_ui": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39511082305,
+      "head_sha": "ac0f174fdc64ba0d6985fba403a71d27f5ff13bb"
+    },
+    "murtakaz_post_review": {
+      "status": "APPROVED_BY_AL_MURTAKAZ",
+      "receipt": "state/command-center/project-governance/approvals/2026-10-21-context-resolver-compiler-post.json"
+    }
+  },
+  "murtakaz_post_approval": "state/command-center/project-governance/approvals/2026-10-21-context-resolver-compiler-post.json"
 }
