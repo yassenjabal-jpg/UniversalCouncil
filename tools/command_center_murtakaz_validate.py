@@ -141,9 +141,7 @@ subprocess.run(
     [__import__("sys").executable, str(ROOT / "tools" / "command_center_visual_reference_validate.py")], check=True
 )
 
-subprocess.run(
-    [__import__("sys").executable, str(AGENTIC_VALIDATOR)], check=True
-)
+subprocess.run([__import__("sys").executable, str(AGENTIC_VALIDATOR)], check=True)
 
 for visual_file in VISUAL_DIRECTION_FILES:
     text = visual_file.read_text(encoding="utf-8").casefold()
