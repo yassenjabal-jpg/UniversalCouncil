@@ -85,6 +85,7 @@
         </Style>
 
         <Style x:Key="NativeRoleButtonStyle" TargetType="Button">
+            <Setter Property="FlowDirection" Value="RightToLeft" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="BorderThickness" Value="1.5" />
@@ -156,6 +157,7 @@
         </Style>
 
         <Style x:Key="NativePulseActionStyle" TargetType="Button">
+            <Setter Property="FlowDirection" Value="RightToLeft" />
             <Setter Property="Height" Value="32" />
             <Setter Property="Padding" Value="14,0" />
             <Setter Property="Background" Value="#FBFAFF" />
@@ -467,6 +469,7 @@
                     <Canvas x:Name="NativeHomeLayer"
                             Width="1536"
                             Height="1024"
+                            FlowDirection="LeftToRight"
                             Background="{x:Null}"
                             Panel.ZIndex="5"
                             AutomationProperties.Name="Native Home reconstruction layer — Council Pulse">
@@ -504,6 +507,7 @@
                         <TextBlock Canvas.Left="296"
                                    Canvas.Top="321"
                                    Width="112"
+                                   FlowDirection="RightToLeft"
                                    Text="نبض المجلس"
                                    FontSize="18"
                                    FontWeight="SemiBold"
@@ -518,6 +522,7 @@
                         <TextBlock Canvas.Left="428"
                                    Canvas.Top="323"
                                    Width="112"
+                                   FlowDirection="RightToLeft"
                                    Text="يعمل بشكل طبيعي"
                                    FontSize="10"
                                    Foreground="#687384"
