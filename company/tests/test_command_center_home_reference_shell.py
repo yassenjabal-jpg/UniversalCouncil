@@ -163,3 +163,11 @@ def test_home_command_composer_is_native_and_editable():
 def test_ui_smoke_toggles_complete_native_home_root():
     smoke = UISMOKE.read_text(encoding="utf-8")
     assert 'FindName("NativeHomeReconstructionRoot")' in smoke
+
+
+def test_native_composer_has_overlay_calibrated_translation():
+    xaml = XAML.read_text(encoding="utf-8")
+    marker = 'x:Name="NativeHomeComposerLayer"'
+    start = xaml.index(marker)
+    fragment = xaml[start : start + 520]
+    assert '<TranslateTransform Y="10" />' in fragment
