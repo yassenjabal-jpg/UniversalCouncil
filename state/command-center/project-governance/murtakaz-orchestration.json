@@ -13,7 +13,7 @@
     },
     {
       "path": "state/command-center/project-governance/project-council.json",
-      "blob_sha": "fb9331c176cf7532f90307a0dad556eca382fc5c"
+      "blob_sha": "82dadbdf39add93e139a533dec47c86ff082453d"
     },
     {
       "path": "state/command-center/project-governance/product-studio.json",
@@ -230,6 +230,27 @@
         "cc_product_truth"
       ],
       "architecture_boundary": [
+        "cc_architecture_execution",
+        "cc_red_team"
+      ],
+      "agentic_os_architecture": [
+        "cc_architecture_execution",
+        "cc_ai_runtime",
+        "cc_security_remote_trust",
+        "cc_product_truth",
+        "cc_durable_autopilot",
+        "cc_owner_experience",
+        "cc_red_team"
+      ],
+      "context_memory_truth": [
+        "cc_product_truth",
+        "cc_ai_runtime",
+        "cc_security_remote_trust"
+      ],
+      "automation_authority": [
+        "cc_durable_autopilot",
+        "cc_security_remote_trust",
+        "cc_product_truth",
         "cc_architecture_execution",
         "cc_red_team"
       ]
