@@ -3025,6 +3025,14 @@ public partial class MainWindow : Window
 
     private void BuildNativeDecisionHeader()
     {
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#EAF1F5F9", "#00FFFFFF", 0, new Thickness(0)),
+            596,
+            52,
+            388,
+            96);
+
         var titlePill = ChromePanel("#FFFDFBFA", "#D7DDE8", 24);
         Place(SecondaryNativeLayer, titlePill, 657, 62, 252, 52);
         Place(
@@ -3074,29 +3082,29 @@ public partial class MainWindow : Window
             Opacity = 0.16,
             Color = Color.FromRgb(53, 72, 105),
         };
-        Place(SecondaryNativeLayer, surface, 400, 145, 735, 730);
+        Place(SecondaryNativeLayer, surface, 400, 155, 735, 785);
 
         var badge = ChromePanel("#FFF0F2", "#F5CCD3", 8);
-        Place(SecondaryNativeLayer, badge, 429, 164, 95, 29);
+        Place(SecondaryNativeLayer, badge, 429, 174, 95, 29);
         Place(
             SecondaryNativeLayer,
             ChromeText("قرار مطلوب", 10.5, "#D84259", FontWeights.SemiBold),
             443,
-            168,
+            178,
             68,
             20);
         Place(
             SecondaryNativeLayer,
             ChromeText("#UC-2025-041", 9.5, "#737D8C", FontWeights.SemiBold, FlowDirection.LeftToRight),
             541,
-            168,
+            178,
             93,
             20);
         Place(
             SecondaryNativeLayer,
             ChromeText("26 مايو 2025", 9.5, "#87909C"),
             653,
-            168,
+            178,
             92,
             20);
 
@@ -3104,14 +3112,14 @@ public partial class MainWindow : Window
             SecondaryNativeLayer,
             ChromePanel("#EFF6FF", "#CFE2FC", 11),
             1056,
-            181,
+            191,
             57,
             57);
         Place(
             SecondaryNativeLayer,
             ChromeText("◇", 31, "#1674E8", FontWeights.Bold, FlowDirection.LeftToRight),
             1070,
-            190,
+            200,
             31,
             38);
 
@@ -3124,19 +3132,19 @@ public partial class MainWindow : Window
         Place(SecondaryNativeLayer, question, 661, 196, 376, 47);
 
         var productBadge = ChromePanel("#EAFBF0", "#BFEBCF", 8);
-        Place(SecondaryNativeLayer, productBadge, 1003, 247, 70, 26);
+        Place(SecondaryNativeLayer, productBadge, 1003, 262, 70, 26);
         Place(
             SecondaryNativeLayer,
             ChromeText("منتج", 9.5, "#17994E", FontWeights.SemiBold),
             1019,
-            250,
+            265,
             38,
             18);
         Place(
             SecondaryNativeLayer,
             ChromeText("Smart Secretary V2", 12.5, "#4F5B6D", FontWeights.SemiBold, FlowDirection.LeftToRight),
             842,
-            247,
+            262,
             154,
             24);
 
@@ -3148,13 +3156,13 @@ public partial class MainWindow : Window
         summary.TextAlignment = TextAlignment.Right;
         summary.TextWrapping = TextWrapping.Wrap;
         summary.LineHeight = 23;
-        Place(SecondaryNativeLayer, summary, 506, 278, 590, 55);
+        Place(SecondaryNativeLayer, summary, 506, 300, 590, 55);
 
         AddDecisionInfoPanel(
             414,
-            344,
+            366,
             349,
-            195,
+            205,
             "#F2F8FF",
             "#C9DFF8",
             "#226ED8",
@@ -3177,9 +3185,9 @@ public partial class MainWindow : Window
 
         AddDecisionImpactPanel(
             414,
-            727,
+            773,
             349,
-            135,
+            156,
             "#F1FBF4",
             "#C8ECD2",
             "#14994E",
@@ -3195,9 +3203,9 @@ public partial class MainWindow : Window
 
         AddDecisionImpactPanel(
             774,
-            727,
+            773,
             349,
-            135,
+            156,
             "#FFF3F4",
             "#F0D0D4",
             "#E03B4E",
@@ -3267,19 +3275,19 @@ public partial class MainWindow : Window
     private void AddDecisionRecommendationPanel()
     {
         var panel = ChromePanel("#F1FBF4", "#BFE9CB", 11);
-        Place(SecondaryNativeLayer, panel, 774, 344, 349, 195);
+        Place(SecondaryNativeLayer, panel, 774, 366, 349, 205);
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush("#24BB61"), IsHitTestVisible = false },
             790,
-            359,
+            381,
             30,
             30);
         Place(
             SecondaryNativeLayer,
             ChromeText("✓", 16, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
             798,
-            361,
+            383,
             18,
             22);
         var heading = ChromeText("توصية المجلس", 16, "#17683B", FontWeights.Bold);
@@ -3287,12 +3295,12 @@ public partial class MainWindow : Window
         Place(SecondaryNativeLayer, heading, 855, 356, 245, 31);
 
         var recommendationBadge = ChromePanel("#E5F7EB", "#BDE8C9", 8);
-        Place(SecondaryNativeLayer, recommendationBadge, 1033, 402, 69, 25);
+        Place(SecondaryNativeLayer, recommendationBadge, 1033, 424, 69, 25);
         Place(
             SecondaryNativeLayer,
             ChromeText("التوصية", 9, "#15934A", FontWeights.SemiBold),
             1047,
-            405,
+            427,
             42,
             18);
 
@@ -3318,19 +3326,19 @@ public partial class MainWindow : Window
     private void AddDecisionDissentPanel()
     {
         var panel = ChromePanel("#FFF1F2", "#F2CDD2", 11);
-        Place(SecondaryNativeLayer, panel, 414, 549, 349, 165);
+        Place(SecondaryNativeLayer, panel, 414, 584, 349, 177);
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush("#F1475A"), IsHitTestVisible = false },
             431,
-            563,
+            598,
             30,
             30);
         Place(
             SecondaryNativeLayer,
             ChromeText("!", 17, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
             443,
-            565,
+            600,
             10,
             22);
         var heading = ChromeText("أقوى اعتراض", 15.5, "#B72E41", FontWeights.Bold);
@@ -3338,12 +3346,12 @@ public partial class MainWindow : Window
         Place(SecondaryNativeLayer, heading, 533, 560, 205, 28);
 
         var teamBadge = ChromePanel("#F8DDE1", "#F0C6CC", 8);
-        Place(SecondaryNativeLayer, teamBadge, 594, 600, 144, 25);
+        Place(SecondaryNativeLayer, teamBadge, 594, 635, 144, 25);
         Place(
             SecondaryNativeLayer,
             ChromeText("الفريق المعارض", 9, "#C0394D", FontWeights.SemiBold),
             610,
-            603,
+            638,
             110,
             18);
 
@@ -3361,12 +3369,12 @@ public partial class MainWindow : Window
     private void AddDecisionEvidenceSummaryPanel()
     {
         var panel = ChromePanel("#F7F8FC", "#DEE2EB", 11);
-        Place(SecondaryNativeLayer, panel, 774, 549, 349, 165);
+        Place(SecondaryNativeLayer, panel, 774, 584, 349, 177);
         Place(
             SecondaryNativeLayer,
             ChromeText("▤", 22, "#6253DA", FontWeights.SemiBold, FlowDirection.LeftToRight),
             792,
-            560,
+            595,
             30,
             30);
         var heading = ChromeText("ملخص الأدلة", 15.5, "#283348", FontWeights.Bold);
@@ -3374,18 +3382,18 @@ public partial class MainWindow : Window
         Place(SecondaryNativeLayer, heading, 940, 558, 160, 28);
 
         var evidenceCount = ChromePanel("#F1EEFF", "#DAD2F6", 8);
-        Place(SecondaryNativeLayer, evidenceCount, 792, 598, 76, 25);
+        Place(SecondaryNativeLayer, evidenceCount, 792, 633, 76, 25);
         Place(
             SecondaryNativeLayer,
             ChromeText("12 دليلاً", 9.2, "#6250BC", FontWeights.SemiBold),
             809,
-            601,
+            636,
             44,
             18);
 
-        AddDecisionEvidenceRow(793, 630, "نتائج الاختبارات الداخلية والأداء", "3 ملفات", "▣");
-        AddDecisionEvidenceRow(793, 659, "مراجعة الامتثال القانوني والخصوصية", "4 ملفات", "♢");
-        AddDecisionEvidenceRow(793, 688, "تحليل السوق وتعليقات المستخدمين", "5 ملفات", "▥");
+        AddDecisionEvidenceRow(793, 665, "نتائج الاختبارات الداخلية والأداء", "3 ملفات", "▣");
+        AddDecisionEvidenceRow(793, 696, "مراجعة الامتثال القانوني والخصوصية", "4 ملفات", "♢");
+        AddDecisionEvidenceRow(793, 727, "تحليل السوق وتعليقات المستخدمين", "5 ملفات", "▥");
     }
 
     private void AddDecisionEvidenceRow(
@@ -3464,25 +3472,25 @@ public partial class MainWindow : Window
 
     private void BuildNativeDecisionRolesAndRouting()
     {
-        AddDecisionRoutingPath("M 300,214 C 340,192 366,192 400,211", "#744DE7", false);
-        AddDecisionRoutingPath("M 264,430 C 325,409 350,443 400,472", "#EF3E55", true);
-        AddDecisionRoutingPath("M 1135,211 C 1172,190 1200,190 1232,211", "#28C878", false);
-        AddDecisionRoutingPath("M 1135,430 C 1183,405 1211,410 1260,435", "#2986E9", false);
-        AddDecisionRoutingPath("M 1135,635 C 1182,610 1208,611 1248,635", "#E6B530", false);
+        AddDecisionRoutingPath("M 300,226 C 340,204 366,204 400,223", "#744DE7", false);
+        AddDecisionRoutingPath("M 264,452 C 325,431 350,465 400,494", "#EF3E55", true);
+        AddDecisionRoutingPath("M 1135,223 C 1172,202 1200,202 1232,223", "#28C878", false);
+        AddDecisionRoutingPath("M 1135,456 C 1183,431 1211,436 1260,461", "#2986E9", false);
+        AddDecisionRoutingPath("M 1135,645 C 1182,620 1208,621 1248,645", "#E6B530", false);
 
-        AddDecisionRole(205, 165, 96, "#F3EEFF", "#6F4BE1", "▣", "الأدلة", "يحلل الأدلة الحالية...", "evidence");
-        AddDecisionRole(146, 366, 112, "#FFF0F2", "#EE4057", "♦", "الفريق المعارض", "يحدد المخاطر والثغرات...", "redteam");
-        AddDecisionRole(1222, 151, 106, "#EDFFF5", "#28C878", "✦", "المركزي", "يلخص ويحسن القرار...", "synthesis");
-        AddDecisionRole(1269, 365, 106, "#EEF6FF", "#2B83E8", "●", "تجربة المستخدم", "يقيم الأثر على المستخدمين...", "ux");
-        AddDecisionRole(1252, 572, 110, "#FFF9E7", "#DFB228", "▣", "الأمن والخصوصية", "يقيم المخاطر والالتزام...", "security");
+        AddDecisionRole(205, 177, 96, "#F3EEFF", "#6F4BE1", "▣", "الأدلة", "يحلل الأدلة الحالية...", "evidence");
+        AddDecisionRole(146, 388, 112, "#FFF0F2", "#EE4057", "♦", "الفريق المعارض", "يحدد المخاطر والثغرات...", "redteam");
+        AddDecisionRole(1222, 163, 106, "#EDFFF5", "#28C878", "✦", "المركزي", "يلخص ويحسن القرار...", "synthesis");
+        AddDecisionRole(1269, 391, 106, "#EEF6FF", "#2B83E8", "●", "تجربة المستخدم", "يقيم الأثر على المستخدمين...", "ux");
+        AddDecisionRole(1252, 582, 110, "#FFF9E7", "#DFB228", "▣", "الأمن والخصوصية", "يقيم المخاطر والالتزام...", "security");
 
         var dissent = ChromePanel("#FFE1E5", "#F3B9C1", 10);
-        Place(SecondaryNativeLayer, dissent, 302, 445, 121, 35);
+        Place(SecondaryNativeLayer, dissent, 302, 467, 121, 35);
         Place(
             SecondaryNativeLayer,
             ChromeText("مسار الاعتراض", 10.5, "#BD3548", FontWeights.SemiBold),
             322,
-            451,
+            473,
             82,
             22);
     }
@@ -3559,6 +3567,14 @@ public partial class MainWindow : Window
 
         Place(
             SecondaryNativeLayer,
+            ChromePanel("#E8F2F5F9", "#00FFFFFF", 8, new Thickness(0)),
+            left - 48,
+            top + size + 4,
+            size + 96,
+            60);
+
+        Place(
+            SecondaryNativeLayer,
             ChromeText(glyph, size * 0.34, accent, FontWeights.Bold, FlowDirection.LeftToRight),
             left + size * 0.31,
             top + size * 0.25,
@@ -3582,6 +3598,13 @@ public partial class MainWindow : Window
 
     private void BuildNativeDecisionEvidencePeek()
     {
+        var group = new Canvas
+        {
+            Width = 325,
+            Height = 322,
+            FlowDirection = FlowDirection.LeftToRight,
+        };
+
         var card = ChromePanel("#FFFDFCFB", "#D8DEE8", 13);
         card.Effect = new DropShadowEffect
         {
@@ -3590,73 +3613,27 @@ public partial class MainWindow : Window
             Opacity = 0.13,
             Color = Color.FromRgb(69, 79, 98),
         };
-        Place(SecondaryNativeLayer, card, 32, 575, 325, 300);
+        Place(group, card, 0, 0, 325, 322);
 
-        Place(
-            SecondaryNativeLayer,
-            ChromeText("×", 22, "#526071", FontWeights.Normal, FlowDirection.LeftToRight),
-            50,
-            590,
-            27,
-            28);
-        Place(
-            SecondaryNativeLayer,
-            ChromeText("معاينة دليل", 17, "#1E293B", FontWeights.Bold),
-            140,
-            589,
-            120,
-            29);
+        Place(group, ChromeText("×", 22, "#526071", FontWeights.Normal, FlowDirection.LeftToRight), 18, 15, 27, 28);
+        Place(group, ChromeText("معاينة دليل", 17, "#1E293B", FontWeights.Bold), 108, 14, 120, 29);
         var counter = ChromePanel("#F4F5F7", "#E1E3E7", 7);
-        Place(SecondaryNativeLayer, counter, 305, 592, 38, 25);
-        Place(
-            SecondaryNativeLayer,
-            ChromeText("3/12", 9, "#606A78", FontWeights.SemiBold, FlowDirection.LeftToRight),
-            312,
-            596,
-            26,
-            17);
+        Place(group, counter, 273, 17, 38, 25);
+        Place(group, ChromeText("3/12", 9, "#606A78", FontWeights.SemiBold, FlowDirection.LeftToRight), 280, 21, 26, 17);
 
         var pdf = ChromePanel("#FFF0F1", "#F0D8DB", 7);
-        Place(SecondaryNativeLayer, pdf, 58, 638, 43, 52);
-        Place(
-            SecondaryNativeLayer,
-            ChromeText("PDF", 11, "#E13D52", FontWeights.Bold, FlowDirection.LeftToRight),
-            65,
-            652,
-            29,
-            23);
+        Place(group, pdf, 26, 63, 43, 52);
+        Place(group, ChromeText("PDF", 11, "#E13D52", FontWeights.Bold, FlowDirection.LeftToRight), 33, 77, 29, 23);
 
-        var evidenceTitle = ChromeText(
-            "تقرير التدقيق الأمني والخصوصية",
-            11.5,
-            "#263246",
-            FontWeights.Bold);
+        var evidenceTitle = ChromeText("تقرير التدقيق الأمني والخصوصية", 11.5, "#263246", FontWeights.Bold);
         evidenceTitle.TextAlignment = TextAlignment.Right;
-        Place(SecondaryNativeLayer, evidenceTitle, 113, 637, 195, 24);
-        Place(
-            SecondaryNativeLayer,
-            ChromeText("20 مايو 2025  ·  1.4 MB", 9, "#7A8390"),
-            162,
-            666,
-            146,
-            20);
+        Place(group, evidenceTitle, 81, 62, 195, 24);
+        Place(group, ChromeText("20 مايو 2025  ·  1.4 MB", 9, "#7A8390"), 130, 91, 146, 20);
 
         var verified = ChromePanel("#E7F9ED", "#BCEAC9", 8);
-        Place(SecondaryNativeLayer, verified, 61, 703, 85, 25);
-        Place(
-            SecondaryNativeLayer,
-            ChromeText("● VERIFIED", 8.5, "#15944B", FontWeights.Bold, FlowDirection.LeftToRight),
-            71,
-            706,
-            66,
-            18);
-        Place(
-            SecondaryNativeLayer,
-            ChromeText("↗   ⛓", 17, "#647083", null, FlowDirection.LeftToRight),
-            275,
-            701,
-            55,
-            25);
+        Place(group, verified, 29, 128, 85, 25);
+        Place(group, ChromeText("● VERIFIED", 8.5, "#15944B", FontWeights.Bold, FlowDirection.LeftToRight), 39, 131, 66, 18);
+        Place(group, ChromeText("↗   ⛓", 17, "#647083", null, FlowDirection.LeftToRight), 243, 126, 55, 25);
 
         var body = ChromeText(
             "يؤكد التقرير أن النظام يتوافق مع معايير حماية\nالبيانات، مع توصيات إضافية لتشفير البيانات\nالحساسة في بيئات الإنتاج.",
@@ -3666,17 +3643,13 @@ public partial class MainWindow : Window
         body.TextAlignment = TextAlignment.Right;
         body.TextWrapping = TextWrapping.Wrap;
         body.LineHeight = 19;
-        Place(SecondaryNativeLayer, body, 57, 744, 276, 70);
+        Place(group, body, 25, 169, 276, 70);
 
         var full = ChromePanel("#FFFFFF", "#E2E4E8", 8);
-        Place(SecondaryNativeLayer, full, 57, 825, 275, 34);
-        Place(
-            SecondaryNativeLayer,
-            ChromeText("عرض الدليل الكامل  ←", 10, "#344055", FontWeights.SemiBold),
-            129,
-            832,
-            168,
-            21);
+        Place(group, full, 25, 250, 275, 40);
+        Place(group, ChromeText("عرض الدليل الكامل  ←", 10, "#344055", FontWeights.SemiBold), 97, 259, 168, 21);
+
+        Place(SecondaryNativeLayer, group, 32, 610, 325, 322);
     }
 
     private void BuildNativeDecisionActions()
@@ -3689,13 +3662,13 @@ public partial class MainWindow : Window
             Opacity = 0.14,
             Color = Color.FromRgb(58, 71, 95),
         };
-        Place(SecondaryNativeLayer, dock, 381, 880, 796, 70);
+        Place(SecondaryNativeLayer, dock, 381, 941, 796, 70);
 
-        AddDecisionActionVisual(397, 894, 137, "#F7F9FF", "#8AAAE9", "#244D9C", "▤", "فحص الأدلة");
-        AddDecisionActionVisual(545, 894, 137, "#FFFFFF", "#D9DCE3", "#3D4758", "?", "طرح سؤال");
-        AddDecisionActionVisual(694, 894, 137, "#FFF0F2", "#EEA6B0", "#DB334B", "×", "رفض");
-        AddDecisionActionVisual(843, 894, 166, "#FFF9E8", "#F0CC78", "#B97D13", "⚙", "طلب تعديلات");
-        AddDecisionActionVisual(1020, 894, 139, "#2475F3", "#2475F3", "#FFFFFF", "✓", "الموافقة");
+        AddDecisionActionVisual(397, 955, 137, "#F7F9FF", "#8AAAE9", "#244D9C", "▤", "فحص الأدلة");
+        AddDecisionActionVisual(545, 955, 137, "#FFFFFF", "#D9DCE3", "#3D4758", "?", "طرح سؤال");
+        AddDecisionActionVisual(694, 955, 137, "#FFF0F2", "#EEA6B0", "#DB334B", "×", "رفض");
+        AddDecisionActionVisual(843, 955, 166, "#FFF9E8", "#F0CC78", "#B97D13", "⚙", "طلب تعديلات");
+        AddDecisionActionVisual(1020, 955, 139, "#2475F3", "#2475F3", "#FFFFFF", "✓", "الموافقة");
     }
 
     private void AddDecisionActionVisual(
