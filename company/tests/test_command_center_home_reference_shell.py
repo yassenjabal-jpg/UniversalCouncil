@@ -3,12 +3,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 XAML = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "MainWindow.xaml"
 CODE = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "MainWindow.xaml.cs"
-CSPROJ = (
-    ROOT
-    / "apps"
-    / "UniversalCouncil.CommandCenter"
-    / "UniversalCouncil.CommandCenter.csproj"
-)
+APP_ROOT = ROOT / "apps" / "UniversalCouncil.CommandCenter"
+CSPROJ = APP_ROOT / "UniversalCouncil.CommandCenter.csproj"
 
 
 def test_home_uses_canonical_reference_as_visual_shell():
