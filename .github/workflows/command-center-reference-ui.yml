@@ -4,6 +4,11 @@ on:
   pull_request:
     paths:
       - 'apps/UniversalCouncil.CommandCenter/**'
+      - 'apps/UniversalCouncil.CommandCenter.Core/**'
+      - 'apps/UniversalCouncil.CommandCenter.Application/**'
+      - 'apps/UniversalCouncil.CommandCenter.Infrastructure/**'
+      - 'apps/UniversalCouncil.CommandCenter.Host/**'
+      - 'apps/UniversalCouncil.CommandCenter.ContextValidation/**'
       - 'apps/UniversalCouncil.CommandCenter.UiSmoke/**'
       - 'docs/operations/command-center/living-operations/references/**'
       - 'state/command-center/**'
@@ -13,6 +18,11 @@ on:
       - 'command-center/project-local-council-studio-20261019'
     paths:
       - 'apps/UniversalCouncil.CommandCenter/**'
+      - 'apps/UniversalCouncil.CommandCenter.Core/**'
+      - 'apps/UniversalCouncil.CommandCenter.Application/**'
+      - 'apps/UniversalCouncil.CommandCenter.Infrastructure/**'
+      - 'apps/UniversalCouncil.CommandCenter.Host/**'
+      - 'apps/UniversalCouncil.CommandCenter.ContextValidation/**'
       - 'apps/UniversalCouncil.CommandCenter.UiSmoke/**'
       - 'docs/operations/command-center/living-operations/references/**'
       - 'state/command-center/**'
@@ -53,13 +63,20 @@ jobs:
         shell: pwsh
         run: |
           dotnet restore apps/UniversalCouncil.CommandCenter/UniversalCouncil.CommandCenter.csproj
+          dotnet restore apps/UniversalCouncil.CommandCenter.ContextValidation/UniversalCouncil.CommandCenter.ContextValidation.csproj
           dotnet restore apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj
 
       - name: Build WPF product
         shell: pwsh
         run: |
           dotnet build apps/UniversalCouncil.CommandCenter/UniversalCouncil.CommandCenter.csproj --configuration Release --no-restore
+          dotnet build apps/UniversalCouncil.CommandCenter.ContextValidation/UniversalCouncil.CommandCenter.ContextValidation.csproj --configuration Release --no-restore
           dotnet build apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-restore
+
+      - name: Validate context resolver and capsule compiler
+        shell: pwsh
+        run: |
+          dotnet run --project apps/UniversalCouncil.CommandCenter.ContextValidation/UniversalCouncil.CommandCenter.ContextValidation.csproj --configuration Release --no-build
 
       - name: Render reference-shell evidence
         shell: pwsh
