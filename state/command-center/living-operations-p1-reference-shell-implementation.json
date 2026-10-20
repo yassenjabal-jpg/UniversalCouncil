@@ -84,7 +84,7 @@
   "stage8_opened": false,
   "native_reconstruction": {
     "strategy": "SLICE_BY_SLICE_WITH_REFERENCE_UNDERLAY_AND_OVERLAY_COMPARISON",
-    "current_slice": "home_command_composer",
+    "current_slice": "home_active_work_cards",
     "current_slice_state": "IMPLEMENTED_CI_VALIDATION_PENDING",
     "reference_underlay_retained": true,
     "comparison_shortcut": "Ctrl+Shift+O",
@@ -98,11 +98,20 @@
           "native",
           "blend"
         ]
+      },
+      {
+        "id": "home_command_composer",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_PENDING",
+        "evidence_head": "8ea15f5b452964889fbc8b1a65cbb9f436118c6a",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
       }
     ],
     "pending_slices": [
-      "home_command_composer_validation",
-      "home_active_work_cards",
+      "home_active_work_cards_validation",
       "home_owner_summary_panels",
       "home_side_rails",
       "home_tool_dock",
