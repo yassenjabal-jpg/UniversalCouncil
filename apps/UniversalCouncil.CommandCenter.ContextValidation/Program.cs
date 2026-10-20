@@ -44,16 +44,18 @@ var first = compiler.Compile(current, compileRequest);
 var second = compiler.Compile(current, compileRequest);
 
 Require(first.State == ContextResolutionState.Current, "Current context must compile");
-Require(first.Capsule is not null, "Current context must produce a capsule");
-Require(second.Capsule is not null, "Repeated compilation must produce a capsule");
+var firstCapsule = first.Capsule
+    ?? throw new InvalidOperationException("Current context must produce a capsule");
+var secondCapsule = second.Capsule
+    ?? throw new InvalidOperationException("Repeated compilation must produce a capsule");
 Require(
-    first.Capsule.CapsuleId == second.Capsule.CapsuleId,
+    firstCapsule.CapsuleId == secondCapsule.CapsuleId,
     "Identical context/request must produce a deterministic capsule id");
 Require(
-    first.Capsule.CapsuleId.StartsWith("CTX-", StringComparison.Ordinal),
+    firstCapsule.CapsuleId.StartsWith("CTX-", StringComparison.Ordinal),
     "Capsule id prefix drifted");
 Require(
-    first.Capsule.Sources.All(item =>
+    firstCapsule.Sources.All(item =>
         item.AuthorityClass != "UNTRUSTED_EXTERNAL_DATA" || !item.CanGovern),
     "Untrusted data may not govern a capsule");
 
@@ -145,9 +147,10 @@ Require(
     "Explicitly included untrusted data should remain usable as non-governing context");
 
 var untrustedCompilation = compiler.Compile(untrustedResolution, compileRequest);
-Require(untrustedCompilation.Capsule is not null, "Untrusted-data context should still compile");
+var untrustedCapsule = untrustedCompilation.Capsule
+    ?? throw new InvalidOperationException("Untrusted-data context should still compile");
 Require(
-    untrustedCompilation.Capsule.Sources
+    untrustedCapsule.Sources
         .Single(item => item.Id == "validation-untrusted-source")
         .CanGovern is false,
     "Untrusted content gained governing authority");
@@ -163,9 +166,10 @@ var changedResolution = current with
 };
 
 var changedCompilation = compiler.Compile(changedResolution, compileRequest);
-Require(changedCompilation.Capsule is not null, "Changed current context should compile");
+var changedCapsule = changedCompilation.Capsule
+    ?? throw new InvalidOperationException("Changed current context should compile");
 Require(
-    first.Capsule.CapsuleId != changedCompilation.Capsule.CapsuleId,
+    firstCapsule.CapsuleId != changedCapsule.CapsuleId,
     "Changing a source digest must change the capsule id");
 
 Console.WriteLine("Command Center Context Resolver/Capsule Compiler validation: PASS");
