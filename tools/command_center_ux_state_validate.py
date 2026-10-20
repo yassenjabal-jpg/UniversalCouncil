@@ -153,13 +153,11 @@ if post["live_execution_authorized"] or post["stage8_opened"]:
 if post["next_roadmap_slice_authorized"] != "CONTEXT_RESOLVER_AND_CONTEXT_CAPSULE_COMPILER":
     raise SystemExit("UX post-approval next roadmap slice drifted")
 if impact.get("murtakaz_post_approval") != (
-    "state/command-center/project-governance/approvals/"
-    "2026-10-21-ux-impact-state-contract-post.json"
+    "state/command-center/project-governance/approvals/2026-10-21-ux-impact-state-contract-post.json"
 ):
     raise SystemExit("UX impact audit is not bound to its post-approval receipt")
 if ux.get("murtakaz_post_approval") != (
-    "state/command-center/project-governance/approvals/"
-    "2026-10-21-ux-impact-state-contract-post.json"
+    "state/command-center/project-governance/approvals/2026-10-21-ux-impact-state-contract-post.json"
 ):
     raise SystemExit("UX State Contract is not bound to its post-approval receipt")
 
