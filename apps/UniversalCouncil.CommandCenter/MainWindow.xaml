@@ -120,7 +120,8 @@
                      HorizontalAlignment="Center"
                      VerticalAlignment="Center">
                 <Grid Width="1536" Height="1024" Background="#F7F6F2">
-                    <Image Source="/UniversalCouncil.CommandCenter;component/Assets/VisualReferences/01-home_owner_workspace.png"
+                    <Image x:Name="ReferenceImage"
+                           Source="/UniversalCouncil.CommandCenter;component/Assets/VisualReferences/01-home_owner_workspace.png"
                            Stretch="Fill"
                            SnapsToDevicePixels="True"
                            RenderOptions.BitmapScalingMode="HighQuality"
@@ -360,6 +361,12 @@
                                  IsHitTestVisible="False"
                                  Opacity="0" />
                     </Canvas>
+
+                    <Canvas x:Name="SecondaryInteractionCanvas"
+                            Width="1536"
+                            Height="1024"
+                            Background="Transparent"
+                            Visibility="Collapsed" />
                 </Grid>
             </Viewbox>
         </Grid>
