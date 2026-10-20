@@ -473,6 +473,9 @@
                             Background="{x:Null}"
                             Panel.ZIndex="5"
                             AutomationProperties.Name="Native Home reconstruction layer — Council Pulse">
+                        <Canvas.RenderTransform>
+                            <TranslateTransform Y="23" />
+                        </Canvas.RenderTransform>
 
                         <Border Canvas.Left="244"
                                 Canvas.Top="313"
@@ -562,7 +565,7 @@
                               Opacity="0.40"
                               IsHitTestVisible="False" />
 
-                        <Button Canvas.Left="312" Canvas.Top="350"
+                        <Button Canvas.Left="308" Canvas.Top="350"
                                 Width="112" Height="88"
                                 Tag="owner"
                                 Style="{StaticResource NativeRoleButtonStyle}"
@@ -591,7 +594,7 @@
                                            HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
-                        <Button Canvas.Left="400" Canvas.Top="351"
+                        <Button Canvas.Left="396" Canvas.Top="351"
                                 Tag="owner"
                                 Style="{StaticResource NativeReasoningDotStyle}"
                                 Click="NativeReasoning_Click"
@@ -634,7 +637,7 @@
                                 ToolTip="Model &amp; Reasoning — الاستراتيجية"
                                 AutomationProperties.Name="استدلال الاستراتيجية" />
 
-                        <Button Canvas.Left="574" Canvas.Top="350"
+                        <Button Canvas.Left="577" Canvas.Top="350"
                                 Width="112" Height="88"
                                 Tag="research"
                                 Style="{StaticResource NativeRoleButtonStyle}"
@@ -663,14 +666,14 @@
                                            HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
-                        <Button Canvas.Left="662" Canvas.Top="351"
+                        <Button Canvas.Left="665" Canvas.Top="351"
                                 Tag="research"
                                 Style="{StaticResource NativeReasoningDotStyle}"
                                 Click="NativeReasoning_Click"
                                 ToolTip="Model &amp; Reasoning — البحث"
                                 AutomationProperties.Name="استدلال البحث" />
 
-                        <Button Canvas.Left="703" Canvas.Top="350"
+                        <Button Canvas.Left="710" Canvas.Top="350"
                                 Width="112" Height="88"
                                 Tag="verification"
                                 Style="{StaticResource NativeRoleButtonStyle}"
@@ -699,14 +702,14 @@
                                            HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
-                        <Button Canvas.Left="791" Canvas.Top="351"
+                        <Button Canvas.Left="798" Canvas.Top="351"
                                 Tag="verification"
                                 Style="{StaticResource NativeReasoningDotStyle}"
                                 Click="NativeReasoning_Click"
                                 ToolTip="Model &amp; Reasoning — التحقق"
                                 AutomationProperties.Name="استدلال التحقق" />
 
-                        <Button Canvas.Left="832" Canvas.Top="350"
+                        <Button Canvas.Left="846" Canvas.Top="350"
                                 Width="112" Height="88"
                                 Tag="execution"
                                 Style="{StaticResource NativeRoleButtonStyle}"
@@ -736,14 +739,14 @@
                                            HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
-                        <Button Canvas.Left="920" Canvas.Top="351"
+                        <Button Canvas.Left="934" Canvas.Top="351"
                                 Tag="execution"
                                 Style="{StaticResource NativeReasoningDotStyle}"
                                 Click="NativeReasoning_Click"
                                 ToolTip="Model &amp; Reasoning — التنفيذ"
                                 AutomationProperties.Name="استدلال التنفيذ" />
 
-                        <Button Canvas.Left="961" Canvas.Top="350"
+                        <Button Canvas.Left="978" Canvas.Top="350"
                                 Width="112" Height="88"
                                 Tag="creative"
                                 Style="{StaticResource NativeRoleButtonStyle}"
@@ -772,14 +775,14 @@
                                            HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
-                        <Button Canvas.Left="1049" Canvas.Top="351"
+                        <Button Canvas.Left="1066" Canvas.Top="351"
                                 Tag="creative"
                                 Style="{StaticResource NativeReasoningDotStyle}"
                                 Click="NativeReasoning_Click"
                                 ToolTip="Model &amp; Reasoning — الإبداع"
                                 AutomationProperties.Name="استدلال الإبداع" />
 
-                        <Button Canvas.Left="1090" Canvas.Top="350"
+                        <Button Canvas.Left="1108" Canvas.Top="350"
                                 Width="112" Height="88"
                                 Tag="data"
                                 Style="{StaticResource NativeRoleButtonStyle}"
@@ -808,14 +811,14 @@
                                            HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
-                        <Button Canvas.Left="1178" Canvas.Top="351"
+                        <Button Canvas.Left="1196" Canvas.Top="351"
                                 Tag="data"
                                 Style="{StaticResource NativeReasoningDotStyle}"
                                 Click="NativeReasoning_Click"
                                 ToolTip="Model &amp; Reasoning — البيانات"
                                 AutomationProperties.Name="استدلال البيانات" />
 
-                        <Button Canvas.Left="1219" Canvas.Top="350"
+                        <Button Canvas.Left="1238" Canvas.Top="350"
                                 Width="112" Height="88"
                                 Tag="learning"
                                 Style="{StaticResource NativeRoleButtonStyle}"
@@ -844,7 +847,7 @@
                                            HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
-                        <Button Canvas.Left="1307" Canvas.Top="351"
+                        <Button Canvas.Left="1326" Canvas.Top="351"
                                 Tag="learning"
                                 Style="{StaticResource NativeReasoningDotStyle}"
                                 Click="NativeReasoning_Click"
