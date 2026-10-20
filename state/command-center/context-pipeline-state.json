@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "state_id": "command-center-context-pipeline",
+  "status": "IMPLEMENTED_VALIDATION_PENDING",
+  "project_id": "universal-council-command-center",
+  "canonical_base": "379820e27e70609c724740e2e138baa8b8a92c7d",
+  "components": {
+    "core_contracts": "IMPLEMENTED",
+    "context_resolver": "IMPLEMENTED_READ_ONLY",
+    "context_capsule_compiler": "IMPLEMENTED_DETERMINISTIC",
+    "json_context_map_reader": "IMPLEMENTED_READ_ONLY",
+    "host_composition": "WIRED",
+    "wpf_ui_exposure": "NOT_EXPOSED",
+    "mutable_project_store": "NOT_IMPLEMENTED"
+  },
+  "truth_rules": {
+    "current_only_compilation": true,
+    "stale_context_blocks_compilation": true,
+    "context_conflict_blocks_compilation": true,
+    "unknown_never_success": true,
+    "untrusted_content_can_govern": false,
+    "deterministic_capsule_id": true,
+    "source_digest_changes_capsule_id": true
+  },
+  "authority": {
+    "live_execution_authorized": false,
+    "stage8_opened": false,
+    "tool_execution_added": false,
+    "model_provider_calls_added": false
+  },
+  "evidence": {
+    "csharp_context_validation": "PENDING",
+    "company_stage0": "PENDING",
+    "codeql": "PENDING",
+    "reference_ui": "PENDING",
+    "murtakaz_post_review": "PENDING"
+  }
+}
