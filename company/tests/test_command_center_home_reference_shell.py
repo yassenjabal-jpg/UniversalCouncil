@@ -529,3 +529,12 @@ def test_work_receipt_artifact_media_uses_canonical_reference_crops():
     assert "new Int32Rect(706, 513, 100, 83)" in code
     assert "new Int32Rect(830, 513, 105, 83)" in code
     assert "new Int32Rect(954, 513, 105, 83)" in code
+
+
+def test_work_receipt_native_geometry_is_calibrated_to_reference():
+    code = CODE.read_text(encoding="utf-8")
+    assert "Place(SecondaryNativeLayer, stages, 244, 295, 1200, 165);" in code
+    assert "Place(SecondaryNativeLayer, card, 244, 480, 312, 370);" in code
+    assert "Place(SecondaryNativeLayer, card, 1106, 480, 338, 370);" in code
+    assert "Place(SecondaryNativeLayer, card, 567, 742, 528, 82);" in code
+    assert "Place(SecondaryNativeLayer, card, left, 858, width, 120);" in code
