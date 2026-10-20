@@ -270,7 +270,13 @@ def build_imported_receipt(
     return imported
 
 
-def validate_receipt(receipt: dict[str, Any], source: dict[str, Any], source_root: Path) -> bool:
+def validate_receipt(
+    receipt: dict[str, Any],
+    source: dict[str, Any],
+    source_root: Path,
+    *,
+    as_of: datetime | None = None,
+) -> bool:
     missing = RECEIPT_REQUIRED - set(receipt)
     if missing:
         raise EvidenceSyncError(f"receipt missing fields: {sorted(missing)}")
@@ -307,7 +313,10 @@ def validate_receipt(receipt: dict[str, Any], source: dict[str, Any], source_roo
     if not re.fullmatch(r"[0-9a-f]{40}", str(receipt["source_commit"])):
         raise EvidenceSyncError("source_commit must be a full lowercase git SHA")
     observed_at = _parse_observed_at(str(receipt["observed_at"])).astimezone(timezone.utc)
-    now = datetime.now(timezone.utc)
+    now = as_of or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        raise EvidenceSyncError("evidence as_of must be timezone-aware")
+    now = now.astimezone(timezone.utc)
     if observed_at > now + timedelta(minutes=5):
         raise EvidenceSyncError("observed_at cannot be materially in the future")
     max_age_days = int(source.get("max_receipt_age_days", 30))
