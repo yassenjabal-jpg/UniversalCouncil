@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-CONTEXT-RESOLVER-COMPILER-2026-10-21",
+  "project_id": "universal-council-command-center",
+  "status": "IMPLEMENTING",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "379820e27e70609c724740e2e138baa8b8a92c7d"
+  },
+  "scope": [
+    "Core context contracts",
+    "Application Context Resolver",
+    "Application Context Capsule Compiler",
+    "Infrastructure JSON context-map reader",
+    "Host composition wiring",
+    "project-context-map repository projection",
+    "C# behavior validation",
+    "Python/source-hash validation",
+    "CI integration"
+  ],
+  "non_goals": [
+    "WPF UI changes",
+    "Android implementation",
+    "live execution",
+    "tool invocation",
+    "provider/model calls",
+    "Job Engine",
+    "Automation",
+    "Stage 8",
+    "visual changes",
+    "mutable project store"
+  ],
+  "affected_artifacts": [
+    "apps/UniversalCouncil.CommandCenter.Core/*Context*",
+    "apps/UniversalCouncil.CommandCenter.Application/*Context*",
+    "apps/UniversalCouncil.CommandCenter.Infrastructure/*Context*",
+    "apps/UniversalCouncil.CommandCenter.Host/CommandCenterComposition.cs",
+    "apps/UniversalCouncil.CommandCenter.ContextValidation/**",
+    "state/command-center/project-context-map.json",
+    "tools/command_center_context_pipeline_validate.py",
+    "company/tests/test_command_center_context_pipeline.py",
+    ".github/workflows/command-center-reference-ui.yml"
+  ],
+  "expected_behavior": [
+    "resolve bounded relevant sources only",
+    "treat retrieved content as data, not authority",
+    "return STALE_CONTEXT for stale selected canonical sources",
+    "return CONTEXT_CONFLICT without choosing a winner",
+    "compile a deterministic immutable capsule only from CURRENT context",
+    "carry source revision, canonical sources, owner directives, scope and acceptance tests into the capsule",
+    "never grant execution authority"
+  ],
+  "risk_class": "MATERIAL_APPLICATION_ARCHITECTURE_READ_ONLY",
+  "acceptance_criteria": [
+    "Core/Application/Infrastructure/Host boundaries remain intact",
+    "Current context compiles successfully",
+    "Stale context cannot compile",
+    "Context conflict cannot compile",
+    "capsule id is deterministic for identical input",
+    "changing a source hash changes capsule id",
+    "untrusted content cannot be promoted to governing authority",
+    "host exposes resolver/compiler without enabling execution",
+    "exact-head CI passes"
+  ],
+  "verification_plan": [
+    "C# context validation console",
+    "WPF/Host build through Reference UI workflow",
+    "Python source/hash validator",
+    "Company Stage 0",
+    "CodeQL",
+    "Murtakaz post-review"
+  ],
+  "pre_approval_receipt": "state/command-center/project-governance/approvals/2026-10-21-context-resolver-compiler-pre.json",
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE"
+}
