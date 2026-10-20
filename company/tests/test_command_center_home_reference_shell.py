@@ -247,3 +247,30 @@ def test_home_native_chrome_preserves_canonical_identity_and_regions():
         "Android Owner",
     ):
         assert value in code
+
+
+def test_project_workspace_has_native_core_reconstruction():
+    xaml = XAML.read_text(encoding="utf-8")
+    code = CODE.read_text(encoding="utf-8")
+    assert 'x:Name="SecondaryNativeLayer"' in xaml
+    assert "BuildSecondaryNative" in code
+    assert "BuildNativeProjectWorkspaceCore" in code
+    assert "AddTimelineNode" in code
+    assert "AddProjectCouncilRole" in code
+    assert "Smart Secretary V2" in code
+    for role in ("Evidence", "UX", "Red Team", "Studio", "Security", "Synthesis"):
+        assert role in code
+
+
+def test_home_macro_native_reconstruction_regions_are_all_present():
+    xaml = XAML.read_text(encoding="utf-8")
+    code = CODE.read_text(encoding="utf-8")
+    for marker in (
+        'x:Name="NativeHomeLayer"',
+        'x:Name="NativeHomeComposerLayer"',
+        'x:Name="NativeHomeActiveWorkLayer"',
+        'x:Name="NativeHomeOwnerSummaryLayer"',
+        'x:Name="NativeHomeChromeLayer"',
+    ):
+        assert marker in xaml
+    assert "BuildNativeHomeChrome" in code
