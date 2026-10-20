@@ -3313,6 +3313,14 @@ public partial class MainWindow : Window
 
     private void BuildStudioRightContext()
     {
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#FFF9F7F2", "#F0EBE4", 0, new Thickness(0)),
+            1088,
+            265,
+            360,
+            320);
+
         var output = ChromePanel("#FFFCFBF8", "#E5E0D8", 10);
         Place(SecondaryNativeLayer, output, 1092, 270, 352, 116);
         Place(
@@ -3329,6 +3337,10 @@ public partial class MainWindow : Window
             310,
             112,
             58);
+        var outputThumb = CreateReferenceCrop(
+            "04-studio_project.png",
+            new Int32Rect(1111, 316, 109, 61));
+        Place(SecondaryNativeLayer, outputThumb, 1111, 314, 108, 58);
         Place(
             SecondaryNativeLayer,
             ChromeText("UC_Council_Main_v4.mp4", 10, "#2D394A", FontWeights.SemiBold, FlowDirection.LeftToRight),
@@ -3579,6 +3591,22 @@ public partial class MainWindow : Window
 
     private void BuildNativeStudioLowerWorkflow()
     {
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#FFF9F7F2", "#F0EBE4", 0, new Thickness(0)),
+            12,
+            824,
+            1436,
+            139);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#FFF9F7F2", "#F0EBE4", 0, new Thickness(0)),
+            1048,
+            585,
+            400,
+            239);
+
         var review = ChromePanel("#FFFCFBF8", "#E5E0D8", 9);
         Place(SecondaryNativeLayer, review, 16, 829, 290, 112);
         Place(
@@ -3680,6 +3708,13 @@ public partial class MainWindow : Window
             var border = i == 0 ? "#A66AE8" : "#DEE3EA";
             var thumb = ChromePanel(bg, border, 6);
             Place(SecondaryNativeLayer, thumb, 1070 + (i * 88), 634, 78, 72);
+
+            var sourceX = 1074 + (i * 88);
+            var versionCrop = CreateReferenceCrop(
+                "04-studio_project.png",
+                new Int32Rect(sourceX, 682, 74, 45));
+            Place(SecondaryNativeLayer, versionCrop, 1072 + (i * 88), 636, 74, 45);
+
             Place(
                 SecondaryNativeLayer,
                 ChromeText(i == 0 ? "v4" : $"v{4 - i}", 9, i == 0 ? "#7D4ACD" : "#596476", FontWeights.Bold, FlowDirection.LeftToRight),
