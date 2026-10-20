@@ -306,3 +306,29 @@ def test_project_workspace_bottom_panels_cover_reference_to_lower_edge():
     assert "decision, 260, 760, 431, 250" in code
     assert "tools, 702, 760, 397, 250" in code
     assert "execution, 1110, 760, 334, 250" in code
+
+
+def test_software_autopilot_has_native_checkpoint_branch_and_history_reconstruction():
+    code = CODE.read_text(encoding="utf-8")
+    for method in (
+        "BuildNativeSoftwareAutopilot",
+        "BuildNativeAutopilotHeader",
+        "BuildNativeAutopilotTimeline",
+        "BuildNativeAutopilotDiffAndBranches",
+        "BuildNativeAutopilotHistory",
+        "AddCheckpointNode",
+        "AddBranchScorecard",
+        "AddOwnerBranchChoice",
+        "AddHistoryFrame",
+    ):
+        assert method in code
+    for content in (
+        "Memory Fabric Repair",
+        "Checkpoint",
+        "Branch A",
+        "Branch B",
+        "مقارنة التغييرات",
+        "قرار المالك",
+        "تاريخ المشروع",
+    ):
+        assert content in code
