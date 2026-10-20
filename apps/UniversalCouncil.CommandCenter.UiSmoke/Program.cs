@@ -112,6 +112,27 @@ internal static class Program
                 "project-workspace-blend-1440x900.png",
                 "blend",
                 "ProjectWorkspace"),
+            Render(
+                output,
+                1440,
+                900,
+                "software-autopilot-reference-1440x900.png",
+                "reference",
+                "SoftwareAutopilot"),
+            Render(
+                output,
+                1440,
+                900,
+                "software-autopilot-native-1440x900.png",
+                "native",
+                "SoftwareAutopilot"),
+            Render(
+                output,
+                1440,
+                900,
+                "software-autopilot-blend-1440x900.png",
+                "blend",
+                "SoftwareAutopilot"),
         };
 
         var manifestPath = Path.Combine(output, "ui-evidence-manifest.json");
