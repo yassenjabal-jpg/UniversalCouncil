@@ -42,7 +42,7 @@
       }
     },
     "R3_PULSE_STORY": {
-      "state": "READY_TO_CONTINUE",
+      "state": "CI_RENDER_VALIDATION",
       "primary_screen": "pulse_visual_project_story"
     },
     "R4_WORK_RECEIPT": {
