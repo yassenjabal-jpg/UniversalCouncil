@@ -134,6 +134,35 @@ public sealed class ContextCapsuleCompiler : IContextCapsuleCompiler
                 "A capsule may not compile from stale sources.");
         }
 
+        foreach (var source in resolution.Sources)
+        {
+            if (string.IsNullOrWhiteSpace(source.Id) ||
+                string.IsNullOrWhiteSpace(source.Path) ||
+                source.BlobSha.Length != 40)
+            {
+                throw new ContextCapsuleCompileException(
+                    $"Resolved source identity is incomplete: {source.Id}");
+            }
+
+            var expectedCanGovern =
+                source.AuthorityClass is
+                    "OWNER_DIRECTIVE_TYPED" or
+                    "LOCKED_POLICY" or
+                    "CANONICAL_ARTIFACT";
+
+            if (source.Untrusted && source.CanGovern)
+            {
+                throw new ContextCapsuleCompileException(
+                    $"Untrusted source gained governing authority: {source.Id}");
+            }
+
+            if (source.CanGovern != expectedCanGovern)
+            {
+                throw new ContextCapsuleCompileException(
+                    $"Resolved source authority projection drifted: {source.Id}");
+            }
+        }
+
         if (resolution.Conflicts.Count != 0)
         {
             throw new ContextCapsuleCompileException(
