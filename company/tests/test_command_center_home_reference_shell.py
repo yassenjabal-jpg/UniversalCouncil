@@ -486,7 +486,11 @@ def test_pulse_story_media_is_cropped_from_canonical_reference():
 
 def test_pulse_story_native_geometry_is_calibrated_to_reference():
     code = CODE.read_text(encoding="utf-8")
-    assert 'Place(SecondaryNativeLayer, card, 244, 174, 1200, 112);' in code
-    assert 'Place(SecondaryNativeLayer, card, 244, 300, 1200, 340);' in code
-    assert 'const double top = 648;' in code
-    assert 'const double height = 366;' in code
+    assert (
+        "Place(SecondaryNativeLayer, card, 244, 174, 1200, 112);" in code
+    )
+    assert (
+        "Place(SecondaryNativeLayer, card, 244, 300, 1200, 340);" in code
+    )
+    assert "const double top = 648;" in code
+    assert "const double height = 366;" in code
