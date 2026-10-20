@@ -1814,7 +1814,7 @@ public partial class MainWindow : Window
     private void BuildNativeProjectWorkspaceBottomPanels()
     {
         var decision = ChromePanel("#FFFCFBF8", "#E5E0D8", 11);
-        Place(SecondaryNativeLayer, decision, 260, 760, 431, 190);
+        Place(SecondaryNativeLayer, decision, 260, 760, 431, 250);
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush("#F2AA29"), IsHitTestVisible = false },
@@ -1851,7 +1851,7 @@ public partial class MainWindow : Window
         AddDecisionRow(920, "#EF596A", "مرفوض", "إزالة ميزة التحويل التلقائي للملفات", "#FFE9EC");
 
         var tools = ChromePanel("#FFFCFBF8", "#E5E0D8", 11);
-        Place(SecondaryNativeLayer, tools, 702, 760, 397, 190);
+        Place(SecondaryNativeLayer, tools, 702, 760, 397, 250);
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
@@ -1896,7 +1896,7 @@ public partial class MainWindow : Window
             21);
 
         var execution = ChromePanel("#FFFCFBF8", "#E5E0D8", 11);
-        Place(SecondaryNativeLayer, execution, 1110, 760, 334, 190);
+        Place(SecondaryNativeLayer, execution, 1110, 760, 334, 250);
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush("#F1A62B"), IsHitTestVisible = false },
