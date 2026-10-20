@@ -85,7 +85,7 @@
   "native_reconstruction": {
     "strategy": "SLICE_BY_SLICE_WITH_REFERENCE_UNDERLAY_AND_OVERLAY_COMPARISON",
     "current_slice": "work_receipt_native",
-    "current_slice_state": "IMPLEMENTED_CI_RENDER_VALIDATION_PENDING",
+    "current_slice_state": "CALIBRATED_CI_RENDER_VALIDATION_PENDING",
     "reference_underlay_retained": true,
     "comparison_shortcut": "Ctrl+Shift+O",
     "completed_slices": [
