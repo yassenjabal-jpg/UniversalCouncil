@@ -120,3 +120,11 @@ def test_native_reference_overlay_comparison_is_keyboard_gated():
     assert "Key.O" in code
     assert "NativeHomeLayer.Opacity" in code
     assert "0.46" in code
+
+
+def test_native_home_canvas_uses_ltr_coordinates_inside_rtl_window():
+    xaml = XAML.read_text(encoding="utf-8")
+    marker = 'x:Name="NativeHomeLayer"'
+    start = xaml.index(marker)
+    fragment = xaml[start : start + 260]
+    assert 'FlowDirection="LeftToRight"' in fragment
