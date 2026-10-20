@@ -16,6 +16,8 @@ PRE_APPROVAL = PROJECT / "approvals" / "2026-10-21-agentic-os-integration-pre.js
 PROJECTION = PROJECT / "murtakaz-orchestration.json"
 REFERENCE_MANIFEST = STATE / "living-operations-reference-manifest.json"
 VISUAL_PROTOCOL = STATE / "living-operations-visual-production-protocol.json"
+CHANGE_ENVELOPE_INSTANCE = PROJECT / "changes" / "2026-10-21-agentic-os-integration.json"
+CONTEXT_CAPSULE_INSTANCE = PROJECT / "context-capsules" / "2026-10-21-agentic-os-integration.json"
 
 
 def load(path: Path) -> dict:
@@ -32,6 +34,8 @@ for required in (
     PROJECTION,
     REFERENCE_MANIFEST,
     VISUAL_PROTOCOL,
+    CHANGE_ENVELOPE_INSTANCE,
+    CONTEXT_CAPSULE_INSTANCE,
 ):
     if not required.exists():
         raise SystemExit(f"missing Agentic OS contract: {required.relative_to(ROOT)}")
@@ -45,6 +49,8 @@ pre_approval = load(PRE_APPROVAL)
 projection = load(PROJECTION)
 reference_manifest = load(REFERENCE_MANIFEST)
 visual_protocol = load(VISUAL_PROTOCOL)
+change_envelope_instance = load(CHANGE_ENVELOPE_INSTANCE)
+context_capsule_instance = load(CONTEXT_CAPSULE_INSTANCE)
 
 if policy["status"] != "OWNER_ADOPTED_IMPLEMENTATION_GATED":
     raise SystemExit("Agentic OS policy status drifted")
@@ -226,5 +232,25 @@ if policy["execution"]["live_execution_authorized"]:
     raise SystemExit("Agentic OS integration may not authorize live execution")
 if policy["cross_platform"]["android_is_authority_host"]:
     raise SystemExit("Android may not become an authority host")
+
+
+
+if change_envelope_instance["change_id"] != "CC-AGENTIC-OS-INTEGRATION-2026-10-21":
+    raise SystemExit("Agentic OS integration Change Envelope id drifted")
+if change_envelope_instance["pre_approval_receipt"] != "state/command-center/project-governance/approvals/2026-10-21-agentic-os-integration-pre.json":
+    raise SystemExit("Change Envelope is not bound to its Murtakaz pre-approval")
+if change_envelope_instance["unplanned_scope_policy"] != "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE":
+    raise SystemExit("Change Envelope scope-growth rule drifted")
+
+if context_capsule_instance["job_or_change_id"] != change_envelope_instance["change_id"]:
+    raise SystemExit("Bootstrap Context Capsule is not bound to the active change")
+if context_capsule_instance["immutable"] is not True:
+    raise SystemExit("Bootstrap Context Capsule must remain immutable")
+if context_capsule_instance["source_revision"] != pre_approval["canonical_base"]:
+    raise SystemExit("Context Capsule source revision no longer matches Murtakaz pre-approval baseline")
+if context_capsule_instance["freshness_rules"]["material_baseline_move_result"] != "STALE_CONTEXT":
+    raise SystemExit("Bootstrap Context Capsule stale-baseline behavior drifted")
+if context_capsule_instance["freshness_rules"]["conflicting_canonical_truth_result"] != "CONTEXT_CONFLICT":
+    raise SystemExit("Bootstrap Context Capsule conflict behavior drifted")
 
 print("Al-Murtakaz Agentic Work OS contract validation: PASS")
