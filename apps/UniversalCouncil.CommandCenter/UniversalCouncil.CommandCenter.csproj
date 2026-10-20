@@ -58,6 +58,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="..\..\state\command-center\project-context-map.json"
+             Link="state\project-context-map.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="..\..\state\command-center\remote-owner-gateway.json"
              Link="state\remote-owner-gateway.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
