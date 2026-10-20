@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "implementation_id": "p1-canonical-reference-shell-interactions-v1",
-  "status": "IMPLEMENTED_CI_VALIDATION_PENDING_CURRENT_HEAD",
+  "status": "NATIVE_RECONSTRUCTION_IN_PROGRESS",
   "strategy": "CANONICAL_REFERENCE_PIXELS_PLUS_NATIVE_WPF_SEMANTIC_OVERLAY",
   "canonical_reference_count": 8,
   "reference_pixels_reauthored": false,
@@ -81,5 +81,23 @@
     "unknown_never_rendered_as_success": true
   },
   "final_native_reconstruction_complete": false,
-  "stage8_opened": false
+  "stage8_opened": false,
+  "native_reconstruction": {
+    "strategy": "SLICE_BY_SLICE_WITH_REFERENCE_UNDERLAY_AND_OVERLAY_COMPARISON",
+    "current_slice": "home_council_pulse",
+    "current_slice_state": "IMPLEMENTED_CI_VALIDATION_PENDING",
+    "reference_underlay_retained": true,
+    "comparison_shortcut": "Ctrl+Shift+O",
+    "completed_slices": [],
+    "pending_slices": [
+      "home_council_pulse_validation",
+      "home_command_composer",
+      "home_active_work_cards",
+      "home_owner_summary_panels",
+      "home_side_rails",
+      "home_tool_dock",
+      "secondary_screen_native_reconstruction"
+    ],
+    "final_native_reconstruction_complete": false
+  }
 }
