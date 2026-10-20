@@ -138,3 +138,11 @@ def test_ui_smoke_emits_reference_native_and_blend_evidence():
     assert 'case "reference"' in smoke
     assert 'case "blend"' in smoke
     assert "nativeHomeLayer.Opacity = 0.46" in smoke
+
+
+def test_native_pulse_has_overlay_calibrated_translation():
+    xaml = XAML.read_text(encoding="utf-8")
+    marker = 'x:Name="NativeHomeLayer"'
+    start = xaml.index(marker)
+    fragment = xaml[start : start + 520]
+    assert '<TranslateTransform Y="23" />' in fragment
