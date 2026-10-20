@@ -7,42 +7,76 @@
   "screens": [
     {
       "id": "home_owner_workspace",
-      "state": "PRODUCTION_PROTOCOL_LOCKED_ARTIFACT_PENDING",
-      "murtakaz_decision": "PENDING",
+      "state": "NATIVE_REFERENCE_SHELL_IMPLEMENTED_INTERACTION_REVIEW_COMPLETE",
+      "murtakaz_decision": "PENDING_FINAL_NATIVE_RECONSTRUCTION",
       "blueprint": "docs/operations/command-center/living-operations/20_HOME_OWNER_WORKSPACE_FIDELITY_BLUEPRINT.md",
       "visual_job_id": "P1-HOME-ARTIFACT-002",
       "repair_audit": "docs/operations/command-center/living-operations/21_MEMBER_SIGIL_REFERENCE_GAP_AUDIT.md",
       "invalidated_visual_job_id": "P1-HOME-ARTIFACT-001",
-      "production_protocol": "state/command-center/living-operations-visual-production-protocol.json"
+      "production_protocol": "state/command-center/living-operations-visual-production-protocol.json",
+      "reference_shell_interaction_implemented": true
     },
     {
       "id": "living_project_workspace",
-      "state": "VISUAL_ARTIFACT_PENDING",
-      "murtakaz_decision": "PENDING"
+      "state": "NATIVE_REFERENCE_SHELL_IMPLEMENTED_INTERACTION_REVIEW_COMPLETE",
+      "murtakaz_decision": "PENDING_FINAL_NATIVE_RECONSTRUCTION",
+      "reference_shell_interaction_implemented": true
     },
     {
       "id": "owner_decision_mode",
-      "state": "VISUAL_ARTIFACT_PENDING",
-      "murtakaz_decision": "PENDING"
+      "state": "NATIVE_REFERENCE_SHELL_IMPLEMENTED_INTERACTION_REVIEW_COMPLETE",
+      "murtakaz_decision": "PENDING_FINAL_NATIVE_RECONSTRUCTION",
+      "reference_shell_interaction_implemented": true
     },
     {
       "id": "recovery_checkpoint_fork",
-      "state": "VISUAL_ARTIFACT_PENDING",
-      "murtakaz_decision": "PENDING"
+      "state": "NATIVE_REFERENCE_SHELL_IMPLEMENTED_INTERACTION_REVIEW_COMPLETE",
+      "murtakaz_decision": "PENDING_FINAL_NATIVE_RECONSTRUCTION",
+      "reference_shell_interaction_implemented": true
     },
     {
       "id": "project_complete_work_receipt",
-      "state": "VISUAL_ARTIFACT_PENDING",
-      "murtakaz_decision": "PENDING"
+      "state": "NATIVE_REFERENCE_SHELL_IMPLEMENTED_INTERACTION_REVIEW_COMPLETE",
+      "murtakaz_decision": "PENDING_FINAL_NATIVE_RECONSTRUCTION",
+      "reference_shell_interaction_implemented": true
     }
   ],
   "shared_motion": {
-    "state": "STORYBOARD_DEFINED_ARTIFACT_PENDING",
-    "murtakaz_decision": "PENDING"
+    "state": "NATIVE_SEMANTIC_MOTION_LAYER_IMPLEMENTED_REVIEW_COMPLETE",
+    "murtakaz_decision": "PENDING_FINAL_NATIVE_RECONSTRUCTION"
   },
   "android_semantic_pair": {
     "state": "DIRECTION_DEFINED_ARTIFACT_PENDING",
     "murtakaz_decision": "PENDING"
   },
-  "phase_complete": false
+  "phase_complete": false,
+  "native_reference_shell": {
+    "state": "IMPLEMENTED_AND_CI_VALIDATED",
+    "visual_authority": "EIGHT_CANONICAL_REFERENCES",
+    "implementation": "apps/UniversalCouncil.CommandCenter/MainWindow.xaml + MainWindow.xaml.cs",
+    "screens": [
+      "home_owner_workspace",
+      "living_project_workspace",
+      "software_autopilot_project",
+      "studio_project",
+      "owner_decision_mode",
+      "checkpoint_recovery_fork",
+      "pulse_visual_project_story",
+      "project_complete_work_receipt"
+    ],
+    "interaction_layers": [
+      "role_context",
+      "reasoning_inspector",
+      "artifact_viewer",
+      "version_inspector",
+      "tool_inspector",
+      "decision_actions",
+      "recovery_fork_actions",
+      "stage_detail",
+      "pulse_detail",
+      "keyboard_navigation",
+      "reduced_motion"
+    ],
+    "final_native_reconstruction_complete": false
+  }
 }
