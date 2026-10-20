@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace UniversalCouncil.CommandCenter;
 
@@ -193,12 +194,655 @@ public partial class MainWindow : Window
         _viewModel = viewModel;
         InitializeComponent();
         DataContext = viewModel;
+        BuildNativeHomeChrome();
     }
 
     private string ExecutionTruthLabel =>
         _viewModel.ExecutionFabric.LiveDispatchEnabled
             ? "LIVE DISPATCH ENABLED"
             : "LIVE DISPATCH DISABLED";
+
+    private static SolidColorBrush Brush(string hex) =>
+        new((Color)ColorConverter.ConvertFromString(hex));
+
+    private static TextBlock ChromeText(
+        string text,
+        double fontSize,
+        string color,
+        FontWeight? weight = null,
+        FlowDirection flow = FlowDirection.RightToLeft)
+    {
+        return new TextBlock
+        {
+            Text = text,
+            FontSize = fontSize,
+            Foreground = Brush(color),
+            FontWeight = weight ?? FontWeights.Normal,
+            FlowDirection = flow,
+            VerticalAlignment = VerticalAlignment.Center,
+            TextTrimming = TextTrimming.CharacterEllipsis,
+        };
+    }
+
+    private static void Place(
+        Canvas canvas,
+        FrameworkElement element,
+        double left,
+        double top,
+        double width,
+        double height)
+    {
+        element.Width = width;
+        element.Height = height;
+        Canvas.SetLeft(element, left);
+        Canvas.SetTop(element, top);
+        canvas.Children.Add(element);
+    }
+
+    private static Border ChromePanel(
+        string background,
+        string border,
+        double radius,
+        Thickness? borderThickness = null) =>
+        new()
+        {
+            Background = Brush(background),
+            BorderBrush = Brush(border),
+            BorderThickness = borderThickness ?? new Thickness(1),
+            CornerRadius = new CornerRadius(radius),
+            IsHitTestVisible = false,
+        };
+
+    private Button AddChromeHotspot(
+        double left,
+        double top,
+        double width,
+        double height,
+        string tag,
+        string label,
+        RoutedEventHandler handler)
+    {
+        var button = new Button
+        {
+            Tag = tag,
+            ToolTip = label,
+            Style = (Style)FindResource("HotspotButtonStyle"),
+        };
+        AutomationProperties.SetName(button, label);
+        button.Click += handler;
+        Place(NativeHomeChromeLayer, button, left, top, width, height);
+        return button;
+    }
+
+    private void BuildNativeHomeChrome()
+    {
+        NativeHomeChromeLayer.Children.Clear();
+
+        // Top chrome.
+        Place(
+            NativeHomeChromeLayer,
+            ChromePanel("#FFFCF8F3", "#E5E0D8", 0, new Thickness(0, 0, 0, 1)),
+            0,
+            0,
+            1536,
+            49);
+
+        var mark = new Ellipse
+        {
+            Fill = Brush("#FFEEC34B"),
+            Stroke = Brush("#E1B232"),
+            StrokeThickness = 1,
+            IsHitTestVisible = false,
+        };
+        Place(NativeHomeChromeLayer, mark, 25, 14, 18, 18);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("✦", 15, "#3978DA", FontWeights.Bold, FlowDirection.LeftToRight),
+            28,
+            11,
+            20,
+            22);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("UniversalCouncil", 17, "#15213B", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            55,
+            9,
+            140,
+            28);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("Command Center", 13, "#7A8290", null, FlowDirection.LeftToRight),
+            198,
+            11,
+            120,
+            26);
+
+        var search = ChromePanel("#FFFCFBFA", "#DCD9D5", 13);
+        Place(NativeHomeChromeLayer, search, 505, 7, 525, 35);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("⌕", 16, "#5C86C5", null, FlowDirection.LeftToRight),
+            520,
+            9,
+            25,
+            30);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("البحث في جميع مشاريعك وملفاتك وقرارات المجلس...", 11, "#9A9FA8"),
+            554,
+            9,
+            390,
+            30);
+        var shortcut = ChromePanel("#F7F6F4", "#E0DDD8", 6);
+        Place(NativeHomeChromeLayer, shortcut, 973, 13, 48, 22);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("Ctrl K", 9, "#596171", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            982,
+            14,
+            34,
+            19);
+        AddChromeHotspot(505, 7, 525, 35, "search", "البحث العام", NativeUtility_Click);
+
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("☼", 21, "#D99D26", null, FlowDirection.LeftToRight),
+            1220,
+            10,
+            28,
+            28);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("♟", 20, "#DB334F", null, FlowDirection.LeftToRight),
+            1268,
+            9,
+            28,
+            28);
+        AddChromeHotspot(1209, 5, 43, 39, "theme", "المظهر", NativeUtility_Click);
+        AddChromeHotspot(1257, 5, 43, 39, "notifications", "التنبيهات", NativeUtility_Click);
+
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("المجلس الخاص بك", 11.5, "#3A4454", FontWeights.SemiBold),
+            1321,
+            5,
+            122,
+            20);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("Owner", 10, "#78808D", null, FlowDirection.LeftToRight),
+            1377,
+            22,
+            57,
+            17);
+        var ownerAvatar = new Ellipse
+        {
+            Fill = new RadialGradientBrush(
+                Color.FromRgb(232, 244, 255),
+                Color.FromRgb(116, 105, 228)),
+            Stroke = Brush("#B8B3F0"),
+            StrokeThickness = 1.2,
+            IsHitTestVisible = false,
+        };
+        Place(NativeHomeChromeLayer, ownerAvatar, 1437, 10, 28, 28);
+        AddChromeHotspot(1314, 3, 154, 43, "owner", "سياق المالك", NativeUtility_Click);
+
+        // Hero band.
+        Place(
+            NativeHomeChromeLayer,
+            ChromePanel("#FFF9F3EC", "#F3EEE7", 0, new Thickness(0)),
+            240,
+            49,
+            1230,
+            114);
+
+        AddHeroPath("M 252,98 C 330,42 414,56 538,130", "#65CDE9", 1.5, 0.46);
+        AddHeroPath("M 300,135 C 400,65 474,66 596,153", "#856EE8", 1.5, 0.34);
+        AddHeroPath("M 1188,121 C 1295,60 1360,74 1460,102", "#F3B06B", 1.4, 0.34);
+        AddHeroPath("M 1280,155 C 1365,88 1414,91 1466,85", "#F4C97A", 1.2, 0.28);
+
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("✦", 31, "#318DFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            963,
+            72,
+            36,
+            44);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("ماذا تريد أن تنجز؟", 39, "#101A36", FontWeights.Bold),
+            650,
+            66,
+            325,
+            60);
+        var support = ChromeText(
+            "حوّل أفكارك إلى نتائج حقيقية\nمع مجلسك الذكي.",
+            14,
+            "#394456",
+            FontWeights.SemiBold);
+        support.TextAlignment = TextAlignment.Right;
+        support.LineHeight = 22;
+        Place(NativeHomeChromeLayer, support, 1065, 72, 225, 60);
+
+        // Left status rail.
+        Place(
+            NativeHomeChromeLayer,
+            ChromePanel("#FFF8F5EF", "#EEE9E1", 0, new Thickness(0, 0, 1, 0)),
+            0,
+            49,
+            238,
+            914);
+
+        var autoCard = ChromePanel("#FFFCFBF8", "#DDE2E7", 14);
+        Place(NativeHomeChromeLayer, autoCard, 16, 62, 215, 159);
+        Place(
+            NativeHomeChromeLayer,
+            new Ellipse { Fill = Brush("#24C85A"), IsHitTestVisible = false },
+            31,
+            79,
+            13,
+            13);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("Autopilot", 16, "#1E293B", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            55,
+            70,
+            115,
+            27);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("يعمل الآن", 10, "#16A452", FontWeights.SemiBold),
+            55,
+            96,
+            80,
+            20);
+
+        var waveform = new Polyline
+        {
+            Stroke = Brush("#54E98A"),
+            StrokeThickness = 2.3,
+            Opacity = 0.9,
+            IsHitTestVisible = false,
+            Points = new PointCollection
+            {
+                new(0, 22), new(19, 21), new(30, 16), new(42, 25), new(53, 20),
+                new(63, 5), new(74, 34), new(84, 10), new(95, 21), new(114, 19),
+                new(132, 23), new(150, 22)
+            }
+        };
+        Place(NativeHomeChromeLayer, waveform, 46, 113, 150, 40);
+        var autoMessage = ChromeText("لا يوجد شيء مطلوب\nمنك الآن", 11.5, "#485161", FontWeights.SemiBold);
+        autoMessage.TextAlignment = TextAlignment.Center;
+        Place(NativeHomeChromeLayer, autoMessage, 45, 158, 155, 48);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("›", 24, "#647083", null, FlowDirection.LeftToRight),
+            199,
+            75,
+            20,
+            30);
+        AddChromeHotspot(16, 62, 215, 159, "autopilot", "Autopilot — يعمل الآن", NativeStatus_Click);
+
+        AddNativeStatusCard(
+            228,
+            "3",
+            "#2F75F3",
+            "المشاريع النشطة",
+            "جميع النظم تعمل بسلاسة",
+            "projects");
+        AddNativeStatusCard(
+            316,
+            "0",
+            "#E7A629",
+            "المهام بانتظارك",
+            "لا توجد قرارات مطلوبة حالياً",
+            "waiting");
+        AddNativeStatusCard(
+            404,
+            "0",
+            "#F06679",
+            "تنبيهات مهمة",
+            "كل شيء تحت السيطرة",
+            "alerts");
+
+        // Right global navigation rail.
+        Place(
+            NativeHomeChromeLayer,
+            ChromePanel("#FFFCFBF8", "#E5E0D8", 0, new Thickness(1, 0, 0, 0)),
+            1470,
+            0,
+            66,
+            963);
+        var brandTop = ChromePanel("#15152D", "#15152D", 0);
+        Place(NativeHomeChromeLayer, brandTop, 1470, 0, 66, 64);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("◇", 30, "#FFFFFF", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            1487,
+            14,
+            34,
+            34);
+
+        AddNativeNavItem(72, "⌂", "الرئيسية", "home", true);
+        AddNativeNavItem(158, "▣", "المشاريع", "project", false);
+        AddNativeNavItem(244, "♧", "المجلس", "council", false);
+        AddNativeNavItem(330, "✎", "الاستوديو", "studio", false);
+        AddNativeNavItem(416, "◇", "المعرفة", "knowledge", false);
+        AddNativeNavItem(502, "⌘", "الأدوات", "tools", false);
+        AddNativeNavItem(588, "▥", "التقارير", "reports", false);
+        AddNativeNavItem(858, "⚙", "الإعدادات", "settings", false);
+
+        // Bottom Tool Dock.
+        var dock = ChromePanel("#FFFCFBFA", "#DDD9D4", 16);
+        Place(NativeHomeChromeLayer, dock, 0, 963, 1536, 61);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("⌃", 18, "#475366", null, FlowDirection.LeftToRight),
+            19,
+            978,
+            25,
+            25);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("أدواتك", 12, "#273349", FontWeights.SemiBold),
+            58,
+            974,
+            62,
+            25);
+        Place(
+            NativeHomeChromeLayer,
+            new Ellipse { Fill = Brush("#28C767"), IsHitTestVisible = false },
+            118,
+            981,
+            8,
+            8);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("نشط الآن", 9, "#15974C"),
+            128,
+            976,
+            53,
+            20);
+
+        AddDockChip(182, 103, "●", "GitHub", "github", "#F3F5F8", "#161B22");
+        AddDockChip(292, 78, "Ps", "Photoshop", "photoshop", "#122D55", "#31A8FF");
+        AddDockChip(377, 86, "Ae", "After Effects", "after-effects", "#26154D", "#9999FF");
+        AddDockChip(470, 82, "Pr", "Premiere", "premiere", "#26154D", "#9999FF");
+        AddDockChip(559, 96, "◇", "YASSIN", "yassin", "#17182B", "#FFFFFF");
+        AddDockChip(662, 104, "▦", "Tailscale", "tailscale", "#F0F1F4", "#111827");
+        AddDockChip(773, 93, "⬡", "Models", "models", "#F4F5F8", "#48556D");
+        AddDockChip(873, 103, "▤", "Evidence", "evidence", "#F4F5F8", "#25324A");
+        AddDockChip(983, 126, "●", "Android Owner", "android-owner", "#F4F5F8", "#151D2C");
+
+        var allTools = ChromePanel("#F8F8F7", "#DEDBD6", 10);
+        Place(NativeHomeChromeLayer, allTools, 1390, 973, 126, 40);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText("جميع الأدوات   ▦", 11, "#4E5868", FontWeights.SemiBold),
+            1402,
+            980,
+            101,
+            25);
+        AddChromeHotspot(1390, 973, 126, 40, "all-tools", "جميع الأدوات", NativeDockTool_Click);
+    }
+
+    private void AddHeroPath(string data, string color, double thickness, double opacity)
+    {
+        var path = new Path
+        {
+            Data = Geometry.Parse(data),
+            Stroke = Brush(color),
+            StrokeThickness = thickness,
+            Opacity = opacity,
+            IsHitTestVisible = false,
+        };
+        NativeHomeChromeLayer.Children.Add(path);
+    }
+
+    private void AddNativeStatusCard(
+        double top,
+        string count,
+        string accent,
+        string title,
+        string subtitle,
+        string tag)
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E7E2DA", 12);
+        Place(NativeHomeChromeLayer, card, 16, top, 215, 75);
+
+        var countBadge = ChromePanel("#F8F9FB", "#E3E5E9", 8);
+        Place(NativeHomeChromeLayer, countBadge, 29, top + 12, 36, 32);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText(count, 18, accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            39,
+            top + 13,
+            20,
+            29);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText(title, 12.5, "#2D3748", FontWeights.SemiBold),
+            77,
+            top + 8,
+            126,
+            25);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText(subtitle, 9.2, "#7A8390"),
+            77,
+            top + 32,
+            126,
+            27);
+        Place(
+            NativeHomeChromeLayer,
+            new Ellipse { Fill = Brush(accent), IsHitTestVisible = false, Opacity = 0.9 },
+            198,
+            top + 27,
+            9,
+            9);
+        AddChromeHotspot(16, top, 215, 75, tag, title, NativeStatus_Click);
+    }
+
+    private void AddNativeNavItem(
+        double top,
+        string glyph,
+        string label,
+        string tag,
+        bool active)
+    {
+        if (active)
+        {
+            Place(
+                NativeHomeChromeLayer,
+                ChromePanel("#EFF5FF", "#EFF5FF", 10),
+                1478,
+                top,
+                50,
+                70);
+        }
+
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText(
+                glyph,
+                21,
+                active ? "#196FF1" : "#273349",
+                FontWeights.SemiBold,
+                FlowDirection.LeftToRight),
+            1492,
+            top + 7,
+            26,
+            27);
+        var labelText = ChromeText(
+            label,
+            9.5,
+            active ? "#196FF1" : "#455064",
+            active ? FontWeights.SemiBold : FontWeights.Normal);
+        labelText.TextAlignment = TextAlignment.Center;
+        Place(NativeHomeChromeLayer, labelText, 1478, top + 39, 50, 22);
+        AddChromeHotspot(1478, top, 50, 70, tag, label, NativeHomeNav_Click);
+    }
+
+    private void AddDockChip(
+        double left,
+        double width,
+        string glyph,
+        string label,
+        string tag,
+        string background,
+        string accent)
+    {
+        var chip = ChromePanel(background, "#E1DED9", 9);
+        Place(NativeHomeChromeLayer, chip, left, 972, width, 42);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText(glyph, 16, accent, FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 10,
+            980,
+            24,
+            24);
+        Place(
+            NativeHomeChromeLayer,
+            ChromeText(label, 10.5, "#313B4C", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 34,
+            978,
+            width - 42,
+            26);
+        AddChromeHotspot(left, 972, width, 42, tag, label, NativeDockTool_Click);
+    }
+
+    private void NativeStatus_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button button || button.Tag is not string tag)
+        {
+            return;
+        }
+
+        _lastInteractionTarget = button;
+        switch (tag)
+        {
+            case "autopilot":
+                NavigateTo(ScreenKind.SoftwareAutopilot);
+                break;
+            case "projects":
+                NavigateTo(ScreenKind.ProjectWorkspace);
+                break;
+            case "waiting":
+                OpenGenericRegion(
+                    "المهام بانتظارك",
+                    "Owner queue",
+                    "يعرض القرارات والمهام التي تحتاج تدخل المالك فقط عندما تكون موجودة فعليًا.",
+                    "REFERENCE FIXTURE");
+                break;
+            default:
+                OpenGenericRegion(
+                    "تنبيهات مهمة",
+                    "Owner alerts",
+                    "لا توجد تنبيهات حية مفترضة من المرجع؛ الحالة الفعلية تأتي من runtime.",
+                    "REFERENCE FIXTURE");
+                break;
+        }
+    }
+
+    private void NativeHomeNav_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button button || button.Tag is not string tag)
+        {
+            return;
+        }
+
+        _lastInteractionTarget = button;
+        switch (tag)
+        {
+            case "home":
+                NavigateTo(ScreenKind.Home);
+                break;
+            case "project":
+                NavigateTo(ScreenKind.ProjectWorkspace);
+                break;
+            case "studio":
+                NavigateTo(ScreenKind.StudioProject);
+                break;
+            case "council":
+                OpenGenericRegion(
+                    "المجلس",
+                    "Council workspace",
+                    "يفتح سياق المجلس والأعضاء ومساهماتهم دون تغيير truth state.",
+                    "UI INTERACTION LAYER");
+                break;
+            case "knowledge":
+                OpenGenericRegion(
+                    "المعرفة",
+                    "Knowledge",
+                    "يفتح سياق المعرفة والأدلة والمصادر المرتبطة بالمشاريع.",
+                    "UI INTERACTION LAYER");
+                break;
+            case "tools":
+                OpenToolInspector("global-tools");
+                break;
+            case "reports":
+                OpenGenericRegion(
+                    "التقارير",
+                    "Reports",
+                    "يعرض تقارير موثقة فقط عند توفر بيانات ومخرجات فعلية.",
+                    "UI INTERACTION LAYER");
+                break;
+            case "settings":
+                OpenGenericRegion(
+                    "الإعدادات",
+                    "Command Center settings",
+                    "إعدادات المنتج والنماذج والأدوات والواجهة، بدون تغيير تلقائي.",
+                    "UI INTERACTION LAYER");
+                break;
+        }
+    }
+
+    private void NativeUtility_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button button || button.Tag is not string tag)
+        {
+            return;
+        }
+
+        _lastInteractionTarget = button;
+        var (title, explanation) = tag switch
+        {
+            "search" => (
+                "البحث العام",
+                "بحث موحد في المشاريع والملفات وقرارات المجلس عند ربط مصدر البحث الفعلي."),
+            "theme" => (
+                "المظهر",
+                "تغيير المظهر غير منفذ تلقائيًا من هذا السطح أثناء قفل المرجع البصري."),
+            "notifications" => (
+                "التنبيهات",
+                "تظهر التنبيهات الفعلية فقط من state موثوق."),
+            _ => (
+                "Owner",
+                "سياق المالك وصلاحياته؛ لا يتم تغيير صلاحيات أو نموذج من هذا الضغط.")
+        };
+        OpenGenericRegion(title, "Top chrome", explanation, "UI INTERACTION LAYER");
+    }
+
+    private void NativeDockTool_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button button || button.Tag is not string tag)
+        {
+            return;
+        }
+
+        _lastInteractionTarget = button;
+        OpenDrawer(
+            "TOOL INSPECTOR",
+            button.ToolTip?.ToString() ?? tag,
+            "Tool Dock",
+            "الأداة قابلة للفحص من الـDock ولا يعني ظهورها أنها متصلة أو نشطة.",
+            "لا توجد مهمة tool runtime مفترضة.",
+            tag == "yassin" ? ExecutionTruthLabel : "UNKNOWN / REFERENCE FIXTURE",
+            "Ready / Active / Connected / Blocked / Unknown يجب أن تأتي من حالة موثقة.",
+            "لا يوجد blocker مفترض من الصورة.",
+            "آخر تحقق ودليل الاتصال يظهران عند توفرهما.",
+            "N/A");
+    }
 
     private void Role_Click(object sender, RoutedEventArgs e)
     {
