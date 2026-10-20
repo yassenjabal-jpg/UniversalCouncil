@@ -1173,6 +1173,10 @@ public partial class MainWindow : Window
         {
             BuildNativeProjectWorkspaceCore();
         }
+        else if (screen == ScreenKind.SoftwareAutopilot)
+        {
+            BuildNativeSoftwareAutopilot();
+        }
     }
 
     private void BuildNativeProjectWorkspaceCore()
@@ -2242,6 +2246,745 @@ public partial class MainWindow : Window
         var subtitleText = ChromeText(subtitle, 9, active ? "#D08314" : "#7A8391", active ? FontWeights.SemiBold : FontWeights.Normal);
         subtitleText.TextAlignment = TextAlignment.Center;
         Place(SecondaryNativeLayer, subtitleText, left - 29, top + 91, 126, 20);
+    }
+
+    private void BuildNativeSoftwareAutopilot()
+    {
+        BuildNativeAutopilotHeader();
+        BuildNativeAutopilotTimeline();
+        BuildNativeAutopilotDiffAndBranches();
+        BuildNativeAutopilotHistory();
+    }
+
+    private void BuildNativeAutopilotHeader()
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#FFFDFBF8", "#F0EBE4", 0, new Thickness(0)),
+            238,
+            49,
+            1232,
+            203);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("‹  المشاريع   /   Command Center Runtime", 10.5, "#707A89", FontWeights.SemiBold),
+            340,
+            62,
+            320,
+            24);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#EFE9FF", "#D3C7F7", 19),
+            250,
+            82,
+            72,
+            72);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◇", 41, "#7251E3", FontWeights.Bold, FlowDirection.LeftToRight),
+            267,
+            91,
+            40,
+            50);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Memory Fabric Repair", 31, "#13203A", FontWeights.Bold, FlowDirection.LeftToRight),
+            340,
+            88,
+            360,
+            45);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تحسين استقرار الذاكرة وأداء المشغل في مركز القيادة", 15.5, "#596476", FontWeights.SemiBold),
+            340,
+            127,
+            430,
+            30);
+
+        AddTagChip(340, 160, 92, "نظام أساسي", "#F3F6FF", "#4769B3");
+        AddTagChip(438, 160, 45, "C++", "#F7F7FA", "#6A7180");
+        AddTagChip(489, 160, 67, "runtime", "#F7F7FA", "#6A7180");
+        AddTagChip(562, 160, 66, "memory", "#F7F7FA", "#6A7180");
+        AddTagChip(634, 160, 84, "performance", "#F7F7FA", "#6A7180");
+        AddTagChip(724, 160, 36, "+", "#FFFFFF", "#687384");
+
+        AddAutopilotHeaderCard(775, 60, 205, "حالة المشروع", "يسير وفق الخطة", "◯", "#25C86A");
+        AddAutopilotHeaderCard(991, 60, 197, "الفرع النشط", "feature/memory-fabric", "⌘", "#3B6BD8");
+        AddAutopilotHeaderCard(1198, 60, 257, "النموذج النشط", "GPT-5.6 Sol · Deep", "AI", "#7D55E7");
+
+        var tabBar = ChromePanel("#FFFDFBF8", "#EEE9E2", 0, new Thickness(0, 0, 0, 1));
+        Place(SecondaryNativeLayer, tabBar, 238, 199, 1232, 53);
+        AddAutopilotTab(250, "⌂", "نظرة عامة", true);
+        AddAutopilotTab(366, "‹›", "الكود", false);
+        AddAutopilotTab(470, "⌘", "الفروع", false);
+        AddAutopilotTab(577, "♙", "الاختبارات الآن", false);
+        AddAutopilotTab(709, "☁", "البناء و CI", false);
+        AddAutopilotTab(834, "♧", "الأدلة والتشغيل", false);
+        AddAutopilotTab(982, "◉", "المراجعات", false);
+        AddAutopilotTab(1100, "⚙", "الإعدادات", false);
+
+        var taskButton = ChromePanel("#2F75F3", "#2F75F3", 8);
+        Place(SecondaryNativeLayer, taskButton, 1272, 207, 169, 37);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✦  بدء مهمة Autopilot", 11, "#FFFFFF", FontWeights.SemiBold),
+            1287,
+            214,
+            138,
+            23);
+    }
+
+    private void AddTagChip(
+        double left,
+        double top,
+        double width,
+        string text,
+        string background,
+        string foreground)
+    {
+        var chip = ChromePanel(background, "#E4E2DF", 10);
+        Place(SecondaryNativeLayer, chip, left, top, width, 25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(text, 9.5, foreground, FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 10,
+            top + 3,
+            width - 20,
+            18);
+    }
+
+    private void AddAutopilotHeaderCard(
+        double left,
+        double top,
+        double width,
+        string title,
+        string value,
+        string glyph,
+        string accent)
+    {
+        var card = ChromePanel("#FFFCFBF9", "#E4E0DB", 10);
+        Place(SecondaryNativeLayer, card, left, top, width, 126);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(title, 10.5, "#647083", FontWeights.SemiBold),
+            left + 15,
+            top + 11,
+            width - 55,
+            22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 21, accent, FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 16,
+            top + 45,
+            33,
+            33);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(value, 12.5, "#263247", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 54,
+            top + 43,
+            width - 66,
+            28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("حالة مرجعية — لا تفترض اتصالاً حياً", 8.5, "#8A929E"),
+            left + 15,
+            top + 87,
+            width - 30,
+            22);
+    }
+
+    private void AddAutopilotTab(
+        double left,
+        string glyph,
+        string text,
+        bool active)
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 14, active ? "#2F75F3" : "#647083", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left,
+            213,
+            22,
+            22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(text, 10.3, active ? "#2F75F3" : "#596476", active ? FontWeights.SemiBold : FontWeights.Normal),
+            left + 25,
+            210,
+            87,
+            25);
+        if (active)
+        {
+            Place(
+                SecondaryNativeLayer,
+                ChromePanel("#2F75F3", "#2F75F3", 1),
+                left - 2,
+                247,
+                96,
+                3);
+        }
+    }
+
+    private void BuildNativeAutopilotTimeline()
+    {
+        var rail = ChromePanel("#FFFCFBF8", "#E5E0D8", 12);
+        Place(SecondaryNativeLayer, rail, 244, 260, 958, 209);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
+            262,
+            273,
+            22,
+            22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("♜", 11, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            268,
+            275,
+            12,
+            14);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("سير التطوير والفرع (Checkpoint)", 15.5, "#283347", FontWeights.SemiBold),
+            295,
+            269,
+            260,
+            29);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("يمكنك الرجوع إلى أي نقطة في التاريخ أو إنشاء فرع جديد", 9.5, "#7960CF"),
+            782,
+            272,
+            300,
+            24);
+
+        var timeline = new Line
+        {
+            X1 = 315,
+            Y1 = 336,
+            X2 = 1152,
+            Y2 = 336,
+            Stroke = Brush("#CBD6E4"),
+            StrokeThickness = 3,
+            IsHitTestVisible = false,
+        };
+        SecondaryNativeLayer.Children.Add(timeline);
+
+        AddCheckpointNode(318, "#5D6BE6", "main", "v2.4.1", false, false);
+        AddCheckpointNode(450, "#25C86A", "a3ff9c1", "إصلاح تسرب الذاكرة", true, false);
+        AddCheckpointNode(600, "#25C86A", "d72e9b", "تحسين تجميع الكاش", true, false);
+        AddCheckpointNode(737, "#8759E8", "f4c2d0", "نقطة الفرع", true, true);
+        AddCheckpointNode(880, "#2F75F3", "e1a7b3", "تجربة خوارزمية جديدة", true, false);
+        AddCheckpointNode(1026, "#25C86A", "9c8d2a", "تحسين إدارة الخيوط", true, false);
+        AddCheckpointNode(1158, "#B8C4D2", "…", "التالي", false, false);
+
+        var branchA = ChromePanel("#ECFBF4", "#B9EFD4", 8);
+        Place(SecondaryNativeLayer, branchA, 482, 406, 245, 49);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("A", 16, "#25B870", FontWeights.Bold, FlowDirection.LeftToRight),
+            497,
+            417,
+            20,
+            25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Branch A", 11, "#2D5C48", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            523,
+            410,
+            82,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("feature/memory-new-allocator", 8.5, "#4B7867", null, FlowDirection.LeftToRight),
+            523,
+            431,
+            185,
+            17);
+
+        var branchB = ChromePanel("#EFF7FF", "#BFDDF7", 8);
+        Place(SecondaryNativeLayer, branchB, 827, 406, 235, 49);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("B", 16, "#2F75F3", FontWeights.Bold, FlowDirection.LeftToRight),
+            842,
+            417,
+            20,
+            25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Branch B", 11, "#315C85", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            868,
+            410,
+            82,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("feature/memory-garbage-collector", 8.5, "#52799B", null, FlowDirection.LeftToRight),
+            868,
+            431,
+            178,
+            17);
+
+        var recovery = ChromePanel("#FFFCFBF8", "#E5E0D8", 12);
+        Place(SecondaryNativeLayer, recovery, 1212, 260, 240, 209);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("التحكم الزمني والاستعادة", 14, "#283347", FontWeights.SemiBold),
+            1232,
+            274,
+            190,
+            28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◀   ●──●──◉──●   ▶", 19, "#8157E9", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            1235,
+            323,
+            180,
+            34);
+        var restore = ChromePanel("#FBF8FF", "#DCCEF8", 7);
+        Place(SecondaryNativeLayer, restore, 1250, 368, 164, 32);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الرجوع إلى هذه النقطة", 9.5, "#6C54BA", FontWeights.SemiBold),
+            1266,
+            373,
+            130,
+            21);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("f4c2d0 · 2025-01-25 14:32", 9, "#6D7786", null, FlowDirection.LeftToRight),
+            1248,
+            416,
+            170,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("نقطة الفرع: تحسين الذاكرة", 9.5, "#374254"),
+            1248,
+            437,
+            170,
+            20);
+    }
+
+    private void AddCheckpointNode(
+        double centerX,
+        string accent,
+        string title,
+        string subtitle,
+        bool complete,
+        bool current)
+    {
+        var size = current ? 34 : 23;
+        var top = current ? 319 : 324;
+        if (current)
+        {
+            Place(
+                SecondaryNativeLayer,
+                new Ellipse
+                {
+                    Fill = Brush("#EFE8FF"),
+                    Stroke = Brush("#B498F7"),
+                    StrokeThickness = 1,
+                    IsHitTestVisible = false,
+                },
+                centerX - 24,
+                top - 8,
+                50,
+                50);
+        }
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush(complete ? accent : "#F4F6F8"),
+                Stroke = Brush(accent),
+                StrokeThickness = 2,
+                IsHitTestVisible = false,
+            },
+            centerX - (size / 2),
+            top,
+            size,
+            size);
+
+        if (complete && !current)
+        {
+            Place(
+                SecondaryNativeLayer,
+                ChromeText("✓", 11, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+                centerX - 6,
+                top + 1,
+                13,
+                16);
+        }
+        else if (current)
+        {
+            Place(
+                SecondaryNativeLayer,
+                ChromeText("●", 11, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+                centerX - 5,
+                top + 7,
+                12,
+                15);
+        }
+
+        var titleText = ChromeText(title, 9.8, current ? "#7046D4" : "#364254", FontWeights.SemiBold, FlowDirection.LeftToRight);
+        titleText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, titleText, centerX - 52, 355, 104, 18);
+        var subtitleText = ChromeText(subtitle, 8.5, current ? "#7046D4" : "#77818F", current ? FontWeights.SemiBold : FontWeights.Normal);
+        subtitleText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, subtitleText, centerX - 68, 374, 136, 24);
+    }
+
+    private void BuildNativeAutopilotDiffAndBranches()
+    {
+        var diff = ChromePanel("#FFFCFBF8", "#E5E0D8", 12);
+        Place(SecondaryNativeLayer, diff, 16, 480, 578, 292);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
+            33,
+            492,
+            23,
+            23);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("∆", 12, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            39,
+            494,
+            12,
+            16);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("مقارنة التغييرات", 16, "#273247", FontWeights.SemiBold),
+            66,
+            487,
+            170,
+            30);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("src/memory/FabricAllocator.cpp", 10, "#6D7786", null, FlowDirection.LeftToRight),
+            38,
+            528,
+            250,
+            22);
+
+        AddCodePane(30, 553, 270, 205, false);
+        AddCodePane(306, 553, 274, 205, true);
+
+        AddBranchScorecard(607, "A", "feature/memory-new-allocator", "#27BD73", true);
+        AddBranchScorecard(858, "B", "feature/memory-garbage-collector", "#2F75F3", false);
+
+        var ownerDecision = ChromePanel("#FFFCFBF8", "#E5E0D8", 12);
+        Place(SecondaryNativeLayer, ownerDecision, 1110, 480, 342, 292);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#EAB12F"), IsHitTestVisible = false },
+            1128,
+            492,
+            24,
+            24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("♕", 12, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            1134,
+            494,
+            13,
+            16);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("قرار المالك", 15.5, "#283347", FontWeights.SemiBold),
+            1160,
+            487,
+            120,
+            30);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("اختر المسار المناسب للدمج في main", 10, "#677181"),
+            1134,
+            526,
+            250,
+            22);
+
+        AddOwnerBranchChoice(1130, 552, "A", "Branch A", "feature/memory-new-allocator", true, "#F1A62B");
+        AddOwnerBranchChoice(1130, 616, "B", "Branch B", "feature/memory-garbage-collector", false, "#2F75F3");
+        AddOwnerBranchChoice(1130, 680, "⌘", "إنشاء فرع جديد من هذه النقطة", "للاستكشاف أو النهج الإضافي", false, "#657083");
+
+        var confirm = ChromePanel("#EAA51F", "#EAA51F", 8);
+        Place(SecondaryNativeLayer, confirm, 1130, 738, 300, 30);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("♕  تأكيد القرار والبدء في الدمج", 10.5, "#FFFFFF", FontWeights.SemiBold),
+            1190,
+            742,
+            190,
+            22);
+    }
+
+    private void AddCodePane(double left, double top, double width, double height, bool after)
+    {
+        var pane = ChromePanel(after ? "#F0FBF5" : "#FFF2F3", after ? "#D0EEDD" : "#F0D5D8", 7);
+        Place(SecondaryNativeLayer, pane, left, top, width, height);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(after ? "+ بعد   (feature/memory-new-allocator)" : "− قبل   (main)", 9.5, after ? "#23975C" : "#C94855", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 10,
+            top + 8,
+            width - 20,
+            20);
+
+        var codeLines = after
+            ? new[]
+            {
+                "142   + void* allocate(size_t size) {",
+                "143   +   if (size == 0) return nullptr;",
+                "144   +   void* ptr = aligned_alloc(64,size);",
+                "145   +   if (!ptr) {",
+                "146   +     UC_METRIC("alloc_failed", size);",
+                "147   +     return fallback_allocate(size);",
+                "148   +   }",
+                "149   +   return ptr;"
+            }
+            : new[]
+            {
+                "142   - void* allocate(size_t size) {",
+                "143   -   if (size == 0) return nullptr;",
+                "144   -   void* ptr = malloc(size);",
+                "145   -   if (!ptr) {",
+                "146   -     LOG_ERROR("Allocation failed");",
+                "147   -     return nullptr;",
+                "148   -   }",
+                "149   -   return ptr;"
+            };
+
+        for (var i = 0; i < codeLines.Length; i++)
+        {
+            Place(
+                SecondaryNativeLayer,
+                ChromeText(codeLines[i], 8.2, after ? "#24764D" : "#A44A52", null, FlowDirection.LeftToRight),
+                left + 10,
+                top + 34 + (i * 19),
+                width - 20,
+                18);
+        }
+    }
+
+    private void AddBranchScorecard(
+        double left,
+        string branchLetter,
+        string branchName,
+        string accent,
+        bool recommended)
+    {
+        var card = ChromePanel("#FFFCFBF8", recommended ? "#A9E6C8" : "#BDDDF7", 10);
+        Place(SecondaryNativeLayer, card, left, 480, 240, 292);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush(accent), IsHitTestVisible = false },
+            left + 14,
+            494,
+            29,
+            29);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(branchLetter, 15, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 23,
+            498,
+            14,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText($"Branch {branchLetter}", 13, "#2D394B", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 50,
+            491,
+            95,
+            23);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(branchName, 8.4, "#647083", null, FlowDirection.LeftToRight),
+            left + 50,
+            516,
+            178,
+            20);
+
+        AddBranchMetric(left, 548, "البناء", recommended ? "نجح  2m 14s" : "نجح  3m 02s", "#25C86A");
+        AddBranchMetric(left, 582, "الاختبارات", recommended ? "148/148 نجح" : "12/148 فشل", recommended ? "#25C86A" : "#E95362");
+        AddBranchMetric(left, 616, "CodeQL", recommended ? "لم يتم العثور على مشكلات" : "2 تحذيرات", recommended ? "#25C86A" : "#EAA228");
+        AddBranchMetric(left, 650, "الأداء", recommended ? "تحسن +32%" : "تحسن +18%", "#25C86A");
+        AddBranchMetric(left, 684, "استخدام الذاكرة", recommended ? "انخفاض -18%" : "انخفاض -35%", "#25C86A");
+
+        var open = ChromePanel("#FFFFFF", "#CAD7E9", 7);
+        Place(SecondaryNativeLayer, open, left + 14, 727, 170, 31);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("فتح في محرر الكود  ⌘", 9, "#3A6AAE", FontWeights.SemiBold),
+            left + 30,
+            732,
+            140,
+            20);
+    }
+
+    private void AddBranchMetric(
+        double left,
+        double top,
+        string label,
+        string value,
+        string accent)
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◉", 10, accent, FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 17,
+            top + 2,
+            15,
+            15);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(label, 9, "#667181"),
+            left + 39,
+            top,
+            71,
+            19);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(value, 8.8, accent, FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 111,
+            top,
+            116,
+            19);
+    }
+
+    private void AddOwnerBranchChoice(
+        double left,
+        double top,
+        string glyph,
+        string title,
+        string subtitle,
+        bool selected,
+        string accent)
+    {
+        var card = ChromePanel(selected ? "#FFF6E5" : "#FFFFFF", selected ? "#F0B544" : "#E5E1DB", 8);
+        Place(SecondaryNativeLayer, card, left, top, 300, 55);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush(selected ? accent : "#F4F5F7"),
+                Stroke = Brush(accent),
+                StrokeThickness = 1.5,
+                IsHitTestVisible = false,
+            },
+            left + 10,
+            top + 12,
+            30,
+            30);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 13, selected ? "#FFFFFF" : accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 19,
+            top + 16,
+            14,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(title, 10.5, "#303B4C", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 50,
+            top + 8,
+            215,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(subtitle, 8.2, "#6F7987", null, FlowDirection.LeftToRight),
+            left + 50,
+            top + 29,
+            226,
+            17);
+    }
+
+    private void BuildNativeAutopilotHistory()
+    {
+        var history = ChromePanel("#FFFCFBF8", "#E5E0D8", 12);
+        Place(SecondaryNativeLayer, history, 16, 784, 1436, 151);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
+            34,
+            796,
+            23,
+            23);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("▶", 10, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            40,
+            799,
+            12,
+            14);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تاريخ المشروع", 15.5, "#283347", FontWeights.SemiBold),
+            66,
+            791,
+            130,
+            30);
+
+        AddHistoryFrame(40, "a3f9c1 · 14:02", "إضافة سجل تشخيص", "#25C86A", false);
+        AddHistoryFrame(236, "d72e9b · 15:18", "تحسين تجميع الكاش", "#25C86A", false);
+        AddHistoryFrame(432, "f4c2d0 · 16:32", "بداية تجربة التحسينات", "#8457E6", true);
+        AddHistoryFrame(628, "e1a7b3 · 17:10", "فشل 12 اختبار", "#E95362", false);
+        AddHistoryFrame(824, "8d5e4f · 18:05", "إصلاح الاختبارات", "#25C86A", false);
+        AddHistoryFrame(1020, "9c8d2a · 19:22", "لا مشاكل CodeQL", "#25C86A", false);
+        AddHistoryFrame(1216, "1b7a9c · 20:11", "VERIFIED · جاهز للدمج", "#25C86A", false);
+    }
+
+    private void AddHistoryFrame(
+        double left,
+        string title,
+        string subtitle,
+        string accent,
+        bool current)
+    {
+        var card = ChromePanel(current ? "#F8F3FF" : "#FFFFFF", current ? "#9E75EC" : "#E3E0DB", 7);
+        Place(SecondaryNativeLayer, card, left, 826, 180, 94);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush(accent), IsHitTestVisible = false },
+            left + 8,
+            834,
+            10,
+            10);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(title, 8.5, current ? "#714AD1" : "#667181", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 24,
+            830,
+            145,
+            18);
+
+        var preview = ChromePanel("#1E2430", "#2D3542", 4);
+        Place(SecondaryNativeLayer, preview, left + 10, 850, 160, 39);
+        for (var i = 0; i < 3; i++)
+        {
+            Place(
+                SecondaryNativeLayer,
+                ChromePanel(i == 1 ? accent : "#3E4858", i == 1 ? accent : "#3E4858", 1),
+                left + 19,
+                858 + (i * 8),
+                105 - (i * 17),
+                3);
+        }
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(subtitle, 8.3, current ? "#714AD1" : "#5E6978", current ? FontWeights.SemiBold : FontWeights.Normal),
+            left + 12,
+            894,
+            155,
+            19);
     }
 
     private void BuildSecondaryInteractions(ScreenKind screen)
