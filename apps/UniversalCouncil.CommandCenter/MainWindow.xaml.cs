@@ -1194,6 +1194,10 @@ public partial class MainWindow : Window
         {
             BuildNativePulseStory();
         }
+        else if (screen == ScreenKind.WorkReceipt)
+        {
+            BuildNativeWorkReceipt();
+        }
     }
 
     private void BuildNativeProjectWorkspaceCore()
@@ -5139,6 +5143,863 @@ public partial class MainWindow : Window
         valueText.TextAlignment = TextAlignment.Right;
         valueText.TextTrimming = TextTrimming.CharacterEllipsis;
         Place(SecondaryNativeLayer, valueText, left + 14, top, width - 111, 18);
+    }
+
+    private void BuildNativeWorkReceipt()
+    {
+        BuildNativeWorkReceiptHero();
+        BuildNativeWorkReceiptProjectSummary();
+        BuildNativeWorkReceiptStages();
+        BuildNativeWorkReceiptMainPanels();
+        BuildNativeWorkReceiptBottomPanels();
+    }
+
+    private void BuildNativeWorkReceiptHero()
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#FFFDF9F3", "#F1ECE4", 0, new Thickness(0)),
+            238,
+            49,
+            1232,
+            96);
+
+        AddReceiptHeroPath(
+            "M 252,88 C 367,26 468,56 584,126",
+            "#58C8E8",
+            1.5,
+            0.42);
+        AddReceiptHeroPath(
+            "M 267,121 C 411,47 497,60 618,140",
+            "#8C68EA",
+            1.5,
+            0.33);
+        AddReceiptHeroPath(
+            "M 1186,127 C 1296,65 1367,68 1458,89",
+            "#F0A766",
+            1.5,
+            0.32);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush("#24BE65"),
+                Stroke = Brush("#BCE9CB"),
+                StrokeThickness = 2,
+                IsHitTestVisible = false,
+            },
+            610,
+            69,
+            48,
+            48);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✓", 28, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            622,
+            75,
+            27,
+            32);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تم إنجاز المشروع بنجاح", 34, "#101A30", FontWeights.Bold),
+            678,
+            63,
+            395,
+            50);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تم تسليم جميع المتطلبات واعتماد مخرجات المشروع", 12, "#697383", FontWeights.SemiBold),
+            690,
+            108,
+            370,
+            24);
+
+        var impactTitle = ChromeText("من الفكرة إلى أثر حقيقي", 17, "#364154", FontWeights.Bold);
+        impactTitle.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, impactTitle, 1158, 68, 240, 30);
+        var impactSub = ChromeText("بناء أسرع · بذكاء أكبر", 10.5, "#7A8391", FontWeights.SemiBold);
+        impactSub.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, impactSub, 1180, 102, 215, 22);
+    }
+
+    private void AddReceiptHeroPath(
+        string data,
+        string color,
+        double thickness,
+        double opacity)
+    {
+        SecondaryNativeLayer.Children.Add(
+            new Path
+            {
+                Data = Geometry.Parse(data),
+                Stroke = Brush(color),
+                StrokeThickness = thickness,
+                Opacity = opacity,
+                IsHitTestVisible = false,
+            });
+    }
+
+    private void BuildNativeWorkReceiptProjectSummary()
+    {
+        var card = ChromePanel("#FFFCFBF9", "#E3DED7", 12);
+        Place(SecondaryNativeLayer, card, 244, 145, 1200, 140);
+
+        var icon = ChromePanel("#F1F6FF", "#D4E1F7", 12);
+        Place(SecondaryNativeLayer, icon, 262, 162, 78, 78);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("⬡", 43, "#2C7FE9", FontWeights.Bold, FlowDirection.LeftToRight),
+            281,
+            176,
+            40,
+            48);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Smart Secretary V2", 26, "#101A31", FontWeights.Bold, FlowDirection.LeftToRight),
+            357,
+            159,
+            280,
+            40);
+
+        var verified = ChromePanel("#E8F9ED", "#BDE9C8", 8);
+        Place(SecondaryNativeLayer, verified, 626, 166, 92, 26);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("● VERIFIED", 8.5, "#15964B", FontWeights.Bold, FlowDirection.LeftToRight),
+            638,
+            170,
+            68,
+            18);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تحديث الخصوصية وإدارة البيانات", 14.5, "#677182", FontWeights.SemiBold),
+            357,
+            198,
+            290,
+            26);
+
+        AddReceiptMetadata(262, 241, "▦", "#PRJ-2025-042");
+        AddReceiptMetadata(443, 241, "⬡", "تطوير منصات");
+        AddReceiptMetadata(607, 241, "▣", "بدأ في 25 مايو 2025");
+        AddReceiptMetadata(820, 241, "✓", "اكتمل في 20 يونيو 2025");
+        AddReceiptMetadata(1058, 241, "◷", "المدة الإجمالية 25 يوماً");
+
+        var share = ChromePanel("#FFFFFF", "#E2DED8", 8);
+        Place(SecondaryNativeLayer, share, 1272, 158, 116, 34);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("مشاركة المشروع  ↗", 9.5, "#4A5566", FontWeights.SemiBold),
+            1284,
+            164,
+            92,
+            21);
+        var more = ChromePanel("#FFFFFF", "#E2DED8", 8);
+        Place(SecondaryNativeLayer, more, 1395, 158, 38, 34);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("•••", 14, "#526072", FontWeights.Bold, FlowDirection.LeftToRight),
+            1404,
+            161,
+            20,
+            22);
+
+        var accepted = ChromePanel("#EEFFF4", "#48CC7D", 10);
+        Place(SecondaryNativeLayer, accepted, 1140, 200, 293, 65);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#21B95E"), IsHitTestVisible = false },
+            1154,
+            214,
+            36,
+            36);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✓", 20, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            1164,
+            218,
+            20,
+            24);
+        var acceptedTitle = ChromeText("تم التسليم واعتماد المشروع", 12.5, "#176B3B", FontWeights.Bold);
+        acceptedTitle.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, acceptedTitle, 1205, 209, 205, 24);
+        var acceptedSub = ChromeText("مغلق · جميع المخرجات مكتملة وموثقة", 9.6, "#5D7867", FontWeights.SemiBold);
+        acceptedSub.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, acceptedSub, 1205, 235, 205, 20);
+    }
+
+    private void AddReceiptMetadata(
+        double left,
+        double top,
+        string glyph,
+        string value)
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 14, "#5D6980", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left,
+            top,
+            22,
+            22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(value, 9.5, "#596477", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            left + 28,
+            top,
+            164,
+            22);
+    }
+
+    private void BuildNativeWorkReceiptStages()
+    {
+        var stages = ChromePanel("#FFFCFBF8", "#E3DED7", 12);
+        Place(SecondaryNativeLayer, stages, 244, 295, 1200, 145);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
+            264,
+            309,
+            26,
+            26);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◉", 12, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            271,
+            312,
+            14,
+            17);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("مراحل المشروع", 17, "#253147", FontWeights.Bold),
+            300,
+            305,
+            145,
+            28);
+
+        var allDone = ChromePanel("#E8F9ED", "#BFE8CB", 8);
+        Place(SecondaryNativeLayer, allDone, 452, 308, 111, 25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("جميع المراحل مكتملة", 8.8, "#15954A", FontWeights.SemiBold),
+            468,
+            312,
+            80,
+            17);
+
+        var sevenOfSeven = ChromePanel("#F7F3FF", "#DCCFF3", 8);
+        Place(SecondaryNativeLayer, sevenOfSeven, 1310, 307, 118, 27);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✓  7 من 7 مراحل مكتملة", 8.5, "#6B50B9", FontWeights.SemiBold),
+            1322,
+            312,
+            95,
+            18);
+
+        var path = new Path
+        {
+            Data = Geometry.Parse("M 307,367 C 393,354 470,376 557,364 S 729,376 815,365 S 988,354 1072,365 S 1248,377 1350,365"),
+            Stroke = Brush("#63D9A0"),
+            StrokeThickness = 2,
+            StrokeDashArray = new DoubleCollection { 1, 4 },
+            Opacity = 0.72,
+            IsHitTestVisible = false,
+        };
+        SecondaryNativeLayer.Children.Add(path);
+
+        AddReceiptStage(286, 347, "الانطلاق", "تم الاكتمال", "25 مايو 2025", "✓");
+        AddReceiptStage(467, 347, "الاستراتيجية", "تم الاكتمال", "27 مايو 2025", "⌘");
+        AddReceiptStage(648, 347, "البحث", "تم الاكتمال", "30 مايو 2025", "✓");
+        AddReceiptStage(830, 347, "التصميم", "تم الاكتمال", "02 يونيو 2025", "✓");
+        AddReceiptStage(1011, 347, "التطوير", "تم الاكتمال", "10 يونيو 2025", "✓");
+        AddReceiptStage(1192, 347, "الاختبار", "تم الاكتمال", "16 يونيو 2025", "✓");
+        AddReceiptStage(1360, 347, "التسليم", "تم الاكتمال", "20 يونيو 2025", "⬡");
+    }
+
+    private void AddReceiptStage(
+        double left,
+        double top,
+        string title,
+        string state,
+        string date,
+        string glyph)
+    {
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush("#20BC61"),
+                Stroke = Brush("#D4F2DE"),
+                StrokeThickness = 4,
+                IsHitTestVisible = false,
+            },
+            left,
+            top,
+            42,
+            42);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 18, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 11,
+            top + 8,
+            22,
+            24);
+
+        var titleText = ChromeText(title, 10.8, "#2B374A", FontWeights.Bold);
+        titleText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, titleText, left - 28, top + 47, 98, 20);
+        var stateText = ChromeText(state, 8.8, "#24A95A", FontWeights.SemiBold);
+        stateText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, stateText, left - 28, top + 67, 98, 18);
+        var dateText = ChromeText(date, 8, "#79818D");
+        dateText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, dateText, left - 35, top + 86, 112, 18);
+    }
+
+    private void BuildNativeWorkReceiptMainPanels()
+    {
+        BuildNativeBusinessReceipt();
+        BuildNativeFinalOutputs();
+        BuildNativeReceiptEvidence();
+        BuildNativeUsageSummary();
+    }
+
+    private void BuildNativeBusinessReceipt()
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
+        Place(SecondaryNativeLayer, card, 244, 452, 312, 338);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("▣", 23, "#20B765", FontWeights.Bold, FlowDirection.LeftToRight),
+            260,
+            463,
+            30,
+            30);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("إيصال الأعمال", 17, "#273247", FontWeights.Bold),
+            300,
+            459,
+            135,
+            30);
+        var verified = ChromePanel("#E8F9ED", "#BDE8C8", 8);
+        Place(SecondaryNativeLayer, verified, 445, 463, 88, 25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("● VERIFIED", 8, "#16964B", FontWeights.Bold, FlowDirection.LeftToRight),
+            458,
+            467,
+            64,
+            17);
+
+        AddReceiptKeyValue(265, 503, "الجهة الطالبة", "المجلس الداخلي");
+        AddReceiptKeyValue(395, 503, "تاريخ الطلب", "25 مايو 2025");
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("المطلوب (الملخص)", 9, "#7A8390", FontWeights.SemiBold),
+            265,
+            555,
+            104,
+            18);
+        var scope = ChromeText(
+            "تحديث إطار الخصوصية وإدارة البيانات مع تطوير واجهات\nSmart Secretary V2 وتحسين تجربة المستخدم.",
+            10.4,
+            "#435064",
+            FontWeights.SemiBold);
+        scope.TextAlignment = TextAlignment.Right;
+        scope.TextWrapping = TextWrapping.Wrap;
+        scope.LineHeight = 19;
+        Place(SecondaryNativeLayer, scope, 264, 579, 268, 55);
+
+        var complete = ChromePanel("#F2FBF5", "#D3EEDA", 9);
+        Place(SecondaryNativeLayer, complete, 259, 648, 282, 75);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#20B961"), IsHitTestVisible = false },
+            272,
+            660,
+            25,
+            25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✓", 13, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            279,
+            663,
+            13,
+            17);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("المكتمل", 11, "#1C8F4E", FontWeights.Bold),
+            313,
+            655,
+            68,
+            21);
+        var completeText = ChromeText(
+            "تم تنفيذ جميع المتطلبات وتسليم النظام المحدث بالكامل\nمع التوثيق والتدريب.",
+            9.2,
+            "#657469",
+            FontWeights.SemiBold);
+        completeText.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, completeText, 310, 681, 214, 34);
+
+        var accepted = ChromePanel("#E9FFF0", "#BDE9C9", 9);
+        Place(SecondaryNativeLayer, accepted, 259, 735, 282, 43);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✓", 16, "#15984C", FontWeights.Bold, FlowDirection.LeftToRight),
+            272,
+            744,
+            18,
+            21);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تم اعتماد واستلام الأعمال", 10.5, "#177E45", FontWeights.Bold),
+            303,
+            741,
+            183,
+            23);
+    }
+
+    private void AddReceiptKeyValue(
+        double left,
+        double top,
+        string label,
+        string value)
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(label, 8.7, "#858C97", FontWeights.SemiBold),
+            left,
+            top,
+            90,
+            17);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(value, 10.3, "#364255", FontWeights.SemiBold),
+            left,
+            top + 18,
+            120,
+            20);
+    }
+
+    private void BuildNativeFinalOutputs()
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
+        Place(SecondaryNativeLayer, card, 567, 452, 528, 256);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#20BB62"), IsHitTestVisible = false },
+            582,
+            463,
+            27,
+            27);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✓", 14, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            589,
+            466,
+            14,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("المخرجات النهائية", 16, "#273247", FontWeights.Bold),
+            620,
+            458,
+            145,
+            29);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("4 ملفات رئيسية", 9, "#7A8391", FontWeights.SemiBold),
+            778,
+            463,
+            90,
+            21);
+        var verified = ChromePanel("#E8F9ED", "#BDE8C8", 8);
+        Place(SecondaryNativeLayer, verified, 981, 462, 92, 25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("● VERIFIED", 8, "#15964B", FontWeights.Bold, FlowDirection.LeftToRight),
+            994,
+            466,
+            66,
+            17);
+
+        AddFinalArtifact(
+            580,
+            "واجهات النظام النهائية",
+            "Figma · 56 شاشة",
+            new Int32Rect(571, 513, 110, 83),
+            "تنزيل");
+        AddFinalArtifact(
+            708,
+            "التقرير النهائي",
+            "PDF · 42 صفحة",
+            new Int32Rect(706, 513, 100, 83),
+            "تنزيل");
+        AddFinalArtifact(
+            836,
+            "فيديو العرض النهائي",
+            "MP4 · 6 دقائق",
+            new Int32Rect(830, 513, 105, 83),
+            "تنزيل");
+        AddFinalArtifact(
+            964,
+            "عقد التسليم النهائي",
+            "PDF · نسخة موقعة",
+            new Int32Rect(954, 513, 105, 83),
+            "تنزيل");
+    }
+
+    private void AddFinalArtifact(
+        double left,
+        string title,
+        string meta,
+        Int32Rect crop,
+        string action)
+    {
+        var artifact = ChromePanel("#FFFDFCFB", "#E5E1DB", 9);
+        Place(SecondaryNativeLayer, artifact, left, 496, 118, 199);
+
+        var preview = CreateReferenceCrop(
+            "08-project_complete_work_receipt.png",
+            crop);
+        Place(SecondaryNativeLayer, preview, left + 7, 505, 104, 78);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#22BE63"), IsHitTestVisible = false },
+            left + 92,
+            501,
+            20,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✓", 10, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 98,
+            502,
+            10,
+            14);
+
+        var titleText = ChromeText(title, 9.7, "#2F3A4C", FontWeights.Bold);
+        titleText.TextAlignment = TextAlignment.Center;
+        titleText.TextWrapping = TextWrapping.Wrap;
+        Place(SecondaryNativeLayer, titleText, left + 7, 590, 104, 35);
+
+        var metaText = ChromeText(meta, 8.2, "#78818D", FontWeights.SemiBold);
+        metaText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, metaText, left + 8, 628, 102, 18);
+
+        var button = ChromePanel("#FFFFFF", "#DFDCD7", 7);
+        Place(SecondaryNativeLayer, button, left + 8, 655, 102, 27);
+        var actionText = ChromeText(action + "  ↓", 8.7, "#495467", FontWeights.SemiBold);
+        actionText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, actionText, left + 17, 660, 84, 18);
+    }
+
+    private void BuildNativeReceiptEvidence()
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
+        Place(SecondaryNativeLayer, card, 1106, 452, 338, 338);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✓", 19, "#19A854", FontWeights.Bold, FlowDirection.LeftToRight),
+            1122,
+            462,
+            24,
+            26);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الأدلة والشواهد", 16, "#273247", FontWeights.Bold),
+            1152,
+            458,
+            145,
+            29);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("6 عناصر موثقة", 8.7, "#7B8491", FontWeights.SemiBold),
+            1300,
+            464,
+            74,
+            19);
+        var verified = ChromePanel("#E8F9ED", "#BDE8C8", 8);
+        Place(SecondaryNativeLayer, verified, 1357, 462, 72, 24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("VERIFIED", 7.5, "#15964B", FontWeights.Bold, FlowDirection.LeftToRight),
+            1369,
+            466,
+            49,
+            16);
+
+        AddReceiptEvidenceRow(501, "▧", "#E64558", "نتائج الاختبارات النهائية", "PDF · 12 صفحة");
+        AddReceiptEvidenceRow(546, "▧", "#E64558", "محضر القبول من المجلس", "PDF · 3 صفحات");
+        AddReceiptEvidenceRow(591, "▤", "#20A85A", "سجلات الأداء والاختبارات", "CSV · 5 ميجابايت");
+        AddReceiptEvidenceRow(636, "⌘", "#E9A32A", "صور من النظام المنتج", "ZIP · 28 ملف");
+        AddReceiptEvidenceRow(681, "▶", "#8256E4", "تسجيل جلسة التسليم", "MP4 · 42 دقيقة");
+        AddReceiptEvidenceRow(726, "▧", "#E64558", "التوصيات والاعتماد", "PDF · 2 صفحة");
+    }
+
+    private void AddReceiptEvidenceRow(
+        double top,
+        string glyph,
+        string accent,
+        string title,
+        string meta)
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#FFFDFCFB", "#ECE8E2", 6),
+            1118,
+            top,
+            314,
+            39);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 15, accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            1128,
+            top + 7,
+            22,
+            23);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(title, 9.5, "#394557", FontWeights.SemiBold),
+            1158,
+            top + 2,
+            167,
+            19);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(meta, 8.2, "#858C97"),
+            1158,
+            top + 19,
+            142,
+            16);
+        var download = ChromePanel("#FFFFFF", "#E1DED8", 6);
+        Place(SecondaryNativeLayer, download, 1350, top + 6, 67, 27);
+        var downloadText = ChromeText("تحميل  ↓", 8.5, "#465366", FontWeights.SemiBold);
+        downloadText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, downloadText, 1357, top + 10, 52, 18);
+    }
+
+    private void BuildNativeUsageSummary()
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E3DED7", 10);
+        Place(SecondaryNativeLayer, card, 567, 716, 528, 74);
+
+        AddUsageMetric(578, 130, "استخدام الاستدلال", "68%", "متوازن", "◎", "#7654DD");
+        AddUsageMetric(712, 130, "الأدوات المستخدمة", "8 أدوات", "Figma, …", "▦", "#5367DB");
+        AddUsageMetric(846, 118, "الوقت الإجمالي", "25 يوماً", "600 ساعة عمل", "◷", "#4E66DA");
+        AddUsageMetric(968, 114, "التكلفة والاستخدام", "$42.50", "1,250,000 توكن", "●", "#D98E26");
+    }
+
+    private void AddUsageMetric(
+        double left,
+        double width,
+        string label,
+        string value,
+        string sub,
+        string glyph,
+        string accent)
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#F8F9FC", "#E4E1DC", 8),
+            left,
+            724,
+            width,
+            58);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 17, accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 9,
+            731,
+            22,
+            24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(label, 8.4, "#737D8A", FontWeights.SemiBold),
+            left + 35,
+            728,
+            width - 45,
+            17);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(value, 15.5, "#1F2A3D", FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 10,
+            746,
+            width - 20,
+            21);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(sub, 7.8, "#8A919C", FontWeights.SemiBold),
+            left + 10,
+            765,
+            width - 20,
+            15);
+    }
+
+    private void BuildNativeWorkReceiptBottomPanels()
+    {
+        AddBottomReceiptPanel(
+            244,
+            250,
+            "#FFF8EF",
+            "#E6A32A",
+            "المشاكل التي تم تجاوزها نهائياً",
+            "2 حالات",
+            new[]
+            {
+                "بطء في استجابة واجهة فرعية — تم الحل",
+                "تعارض في إطار الاختبارات — تم الحل",
+            });
+
+        AddBottomReceiptPanel(
+            503,
+            250,
+            "#FFF9F0",
+            "#D58E23",
+            "خطط الرجوع (Fallbacks)",
+            "2 خطط",
+            new[]
+            {
+                "التحول إلى نموذج بديل — تم التفعيل",
+                "استعادة نسخة مستقرة عند الحاجة",
+            });
+
+        AddBottomReceiptPanel(
+            762,
+            247,
+            "#F3FBF5",
+            "#1DA85A",
+            "نقاط التحقق",
+            "6 من 6",
+            new[]
+            {
+                "مراجعة المتطلبات",
+                "موافقة التصميم",
+                "مراجعة الأمن والخصوصية",
+                "اختبار شامل واعتماد نهائي",
+            });
+
+        AddBottomReceiptPanel(
+            1018,
+            220,
+            "#F4F8FF",
+            "#326ED4",
+            "قرارات المجلس",
+            "3 قرارات",
+            new[]
+            {
+                "الموافقة على نطاق العمل",
+                "الموافقة على التصميم النهائي",
+                "اعتماد التسليم وإغلاق المشروع",
+            });
+
+        AddNextReceiptAction();
+    }
+
+    private void AddBottomReceiptPanel(
+        double left,
+        double width,
+        string background,
+        string accent,
+        string title,
+        string count,
+        IReadOnlyList<string> items)
+    {
+        var card = ChromePanel(background, "#E3DED7", 10);
+        Place(SecondaryNativeLayer, card, left, 804, width, 145);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("◉", 15, accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 12,
+            816,
+            20,
+            22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(title, 10.8, "#2F3B4E", FontWeights.Bold),
+            left + 40,
+            811,
+            width - 100,
+            23);
+        var countBadge = ChromePanel("#FFFFFF", "#E0DDD7", 7);
+        Place(SecondaryNativeLayer, countBadge, left + width - 58, 814, 46, 22);
+        var countText = ChromeText(count, 7.8, accent, FontWeights.SemiBold);
+        countText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, countText, left + width - 54, 817, 38, 16);
+
+        for (var index = 0; index < items.Count; index++)
+        {
+            var y = 844 + index * 23;
+            Place(
+                SecondaryNativeLayer,
+                new Ellipse { Fill = Brush(accent), IsHitTestVisible = false },
+                left + width - 23,
+                y + 6,
+                7,
+                7);
+            var text = ChromeText(items[index], 8.5, "#626D7B", FontWeights.SemiBold);
+            text.TextAlignment = TextAlignment.Right;
+            text.TextTrimming = TextTrimming.CharacterEllipsis;
+            Place(SecondaryNativeLayer, text, left + 12, y, width - 43, 19);
+        }
+    }
+
+    private void AddNextReceiptAction()
+    {
+        var card = ChromePanel("#F7F2FF", "#DCCFF2", 10);
+        Place(SecondaryNativeLayer, card, 1247, 804, 197, 145);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#7A55DE"), IsHitTestVisible = false },
+            1260,
+            816,
+            31,
+            31);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✦", 16, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            1268,
+            820,
+            17,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الإجراء الموصى به الآن", 10.8, "#4B3A80", FontWeights.Bold),
+            1301,
+            814,
+            130,
+            24);
+
+        var title = ChromeText("الانتقال إلى مرحلة التشغيل", 12.5, "#2D254E", FontWeights.Bold);
+        title.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, title, 1260, 853, 171, 24);
+        var sub = ChromeText("يوصى بالتشغيل ومراقبة الأداء والجودة", 8.5, "#716A84", FontWeights.SemiBold);
+        sub.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, sub, 1260, 877, 171, 19);
+
+        var primary = ChromePanel("#2875F2", "#2875F2", 7);
+        Place(SecondaryNativeLayer, primary, 1260, 901, 171, 27);
+        var primaryText = ChromeText("بدء التشغيل الآن  ←", 8.8, "#FFFFFF", FontWeights.SemiBold);
+        primaryText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, primaryText, 1280, 905, 132, 18);
+
+        var secondary = ChromePanel("#FFFFFF", "#DDD8D1", 7);
+        Place(SecondaryNativeLayer, secondary, 1260, 933, 171, 24);
+        var secondaryText = ChromeText("إنشاء مشروع متابعة", 8.5, "#4F5B6B", FontWeights.SemiBold);
+        secondaryText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, secondaryText, 1280, 936, 132, 16);
     }
 
     private Image CreateReferenceCrop(
