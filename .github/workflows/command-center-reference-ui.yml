@@ -62,6 +62,7 @@ jobs:
       - name: Restore
         shell: pwsh
         run: |
+          $PSNativeCommandUseErrorActionPreference = $true
           dotnet restore apps/UniversalCouncil.CommandCenter/UniversalCouncil.CommandCenter.csproj
           dotnet restore apps/UniversalCouncil.CommandCenter.ContextValidation/UniversalCouncil.CommandCenter.ContextValidation.csproj
           dotnet restore apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj
@@ -69,6 +70,7 @@ jobs:
       - name: Build WPF product
         shell: pwsh
         run: |
+          $PSNativeCommandUseErrorActionPreference = $true
           dotnet build apps/UniversalCouncil.CommandCenter/UniversalCouncil.CommandCenter.csproj --configuration Release --no-restore
           dotnet build apps/UniversalCouncil.CommandCenter.ContextValidation/UniversalCouncil.CommandCenter.ContextValidation.csproj --configuration Release --no-restore
           dotnet build apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-restore
@@ -76,11 +78,13 @@ jobs:
       - name: Validate context resolver and capsule compiler
         shell: pwsh
         run: |
+          $PSNativeCommandUseErrorActionPreference = $true
           dotnet run --project apps/UniversalCouncil.CommandCenter.ContextValidation/UniversalCouncil.CommandCenter.ContextValidation.csproj --configuration Release --no-build
 
       - name: Render reference-shell evidence
         shell: pwsh
         run: |
+          $PSNativeCommandUseErrorActionPreference = $true
           dotnet run --project apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-build -- artifacts/reference-ui
 
       - name: Upload rendered UI evidence
