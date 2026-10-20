@@ -198,7 +198,7 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
             BASE_CFG,
         )
         self.assertEqual(
-            enforce_tool_authority(status, registry, principal="technical_operator")["operation"],
+            enforce_tool_authority(status, registry, principal="technical_operator", as_of=FIXED_NOW)["operation"],
             "desktop_computer_use.observe",
         )
 
@@ -207,7 +207,7 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
             BASE_CFG,
         )
         self.assertEqual(
-            enforce_tool_authority(focus, registry, principal="technical_operator")["operation"],
+            enforce_tool_authority(focus, registry, principal="technical_operator", as_of=FIXED_NOW)["operation"],
             "desktop_computer_use.control",
         )
 
@@ -216,14 +216,14 @@ class Phase2R7EvidenceModelTests(unittest.TestCase):
             BASE_CFG,
         )
         with self.assertRaises(HybridExecutionError):
-            enforce_tool_authority(set_value, registry, principal="technical_operator")
+            enforce_tool_authority(set_value, registry, principal="technical_operator", as_of=FIXED_NOW)
 
         screenshot = plan_action(
             {"id": "shot", "gui_request": {"action": "screenshot"}},
             BASE_CFG,
         )
         with self.assertRaises(HybridExecutionError):
-            enforce_tool_authority(screenshot, registry, principal="technical_operator")
+            enforce_tool_authority(screenshot, registry, principal="technical_operator", as_of=FIXED_NOW)
 
 
 if __name__ == "__main__":
