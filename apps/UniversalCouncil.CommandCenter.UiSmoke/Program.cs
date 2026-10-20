@@ -154,6 +154,27 @@ internal static class Program
                 "studio-project-blend-1440x900.png",
                 "blend",
                 "StudioProject"),
+            Render(
+                output,
+                1440,
+                900,
+                "owner-decision-reference-1440x900.png",
+                "reference",
+                "DecisionMode"),
+            Render(
+                output,
+                1440,
+                900,
+                "owner-decision-native-1440x900.png",
+                "native",
+                "DecisionMode"),
+            Render(
+                output,
+                1440,
+                900,
+                "owner-decision-blend-1440x900.png",
+                "blend",
+                "DecisionMode"),
         };
 
         var manifestPath = Path.Combine(output, "ui-evidence-manifest.json");
