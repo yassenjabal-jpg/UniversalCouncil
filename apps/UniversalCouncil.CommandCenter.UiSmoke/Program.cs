@@ -1,4 +1,5 @@
 using System.IO;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Windows;
@@ -90,6 +91,27 @@ internal static class Program
             Render(output, 1180, 720, "command-center-stage7-1180x720.png", "native"),
             Render(output, 1440, 900, "home-reference-only-1440x900.png", "reference"),
             Render(output, 1440, 900, "home-native-overlay-1440x900.png", "blend"),
+            Render(
+                output,
+                1440,
+                900,
+                "project-workspace-reference-1440x900.png",
+                "reference",
+                "ProjectWorkspace"),
+            Render(
+                output,
+                1440,
+                900,
+                "project-workspace-native-1440x900.png",
+                "native",
+                "ProjectWorkspace"),
+            Render(
+                output,
+                1440,
+                900,
+                "project-workspace-blend-1440x900.png",
+                "blend",
+                "ProjectWorkspace"),
         };
 
         var manifestPath = Path.Combine(output, "ui-evidence-manifest.json");
@@ -116,14 +138,40 @@ internal static class Program
         return 0;
     }
 
+    private static void NavigateForEvidence(MainWindow window, string screenName)
+    {
+        var windowType = typeof(MainWindow);
+        var screenType = windowType.GetNestedType(
+            "ScreenKind",
+            BindingFlags.NonPublic);
+        var navigate = windowType.GetMethod(
+            "NavigateTo",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        if (screenType is null || navigate is null)
+        {
+            throw new InvalidOperationException(
+                "Unable to locate private screen navigation for UI evidence.");
+        }
+
+        var screen = Enum.Parse(screenType, screenName, ignoreCase: false);
+        navigate.Invoke(window, new[] { screen });
+    }
+
     private static object Render(
         string output,
         int width,
         int height,
         string fileName,
-        string variant)
+        string variant,
+        string? screen = null)
     {
         var window = App.CreateMainWindow(AppContext.BaseDirectory);
+
+        if (!string.IsNullOrWhiteSpace(screen))
+        {
+            NavigateForEvidence(window, screen);
+        }
 
         if (window.FindName("NativeHomeReconstructionRoot") is UIElement nativeHomeLayer)
         {
@@ -139,6 +187,25 @@ internal static class Program
                 default:
                     nativeHomeLayer.Visibility = Visibility.Visible;
                     nativeHomeLayer.Opacity = 1;
+                    break;
+            }
+        }
+
+        if (window.FindName("SecondaryNativeLayer") is UIElement secondaryNativeLayer &&
+            !string.IsNullOrWhiteSpace(screen))
+        {
+            switch (variant)
+            {
+                case "reference":
+                    secondaryNativeLayer.Visibility = Visibility.Collapsed;
+                    break;
+                case "blend":
+                    secondaryNativeLayer.Visibility = Visibility.Visible;
+                    secondaryNativeLayer.Opacity = 0.46;
+                    break;
+                default:
+                    secondaryNativeLayer.Visibility = Visibility.Visible;
+                    secondaryNativeLayer.Opacity = 1;
                     break;
             }
         }
