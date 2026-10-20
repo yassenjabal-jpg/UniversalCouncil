@@ -84,6 +84,103 @@
             </Setter>
         </Style>
 
+        <Style x:Key="NativeRoleButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1.5" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="NativeRoleSurface"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="12">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="NativeRoleSurface" Property="Background" Value="#0A2F6BFF" />
+                                <Setter TargetName="NativeRoleSurface" Property="BorderBrush" Value="#302F6BFF" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="NativeRoleSurface" Property="Background" Value="#102F6BFF" />
+                                <Setter TargetName="NativeRoleSurface" Property="BorderBrush" Value="#A02F6BFF" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="NativeReasoningDotStyle" TargetType="Button">
+            <Setter Property="Width" Value="18" />
+            <Setter Property="Height" Value="18" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Background" Value="#FCFFFFFF" />
+            <Setter Property="BorderBrush" Value="#806B5CE7" />
+            <Setter Property="BorderThickness" Value="1.4" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Ring"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="9">
+                            <Ellipse Width="5"
+                                     Height="5"
+                                     Fill="{TemplateBinding BorderBrush}"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Ring" Property="Background" Value="#F2EEFF" />
+                                <Setter Property="BorderThickness" Value="2" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Ring" Property="Background" Value="#ECE5FF" />
+                                <Setter Property="BorderThickness" Value="2" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="NativePulseActionStyle" TargetType="Button">
+            <Setter Property="Height" Value="32" />
+            <Setter Property="Padding" Value="14,0" />
+            <Setter Property="Background" Value="#FBFAFF" />
+            <Setter Property="BorderBrush" Value="#D7C8FA" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="#5E46B6" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="9"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="DrawerActionStyle" TargetType="Button">
             <Setter Property="Height" Value="42" />
             <Setter Property="Margin" Value="0,0,0,8" />
@@ -360,6 +457,394 @@
                                  Fill="Transparent"
                                  IsHitTestVisible="False"
                                  Opacity="0" />
+                    </Canvas>
+
+                    <!--
+                        First native reconstruction slice.
+                        Reference pixels remain directly underneath for fidelity comparison.
+                        Ctrl+Shift+O toggles blend comparison without changing truth state.
+                    -->
+                    <Canvas x:Name="NativeHomeLayer"
+                            Width="1536"
+                            Height="1024"
+                            Background="{x:Null}"
+                            Panel.ZIndex="5"
+                            AutomationProperties.Name="Native Home reconstruction layer — Council Pulse">
+
+                        <Border Canvas.Left="244"
+                                Canvas.Top="313"
+                                Width="1211"
+                                Height="132"
+                                Background="#FFFCFBF8"
+                                BorderBrush="#FFE7E2D9"
+                                BorderThickness="1"
+                                CornerRadius="15"
+                                IsHitTestVisible="False">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="9"
+                                                  ShadowDepth="1"
+                                                  Opacity="0.08"
+                                                  Color="#4A5364" />
+                            </Border.Effect>
+                        </Border>
+
+                        <Ellipse Canvas.Left="263"
+                                 Canvas.Top="327"
+                                 Width="25"
+                                 Height="25"
+                                 Fill="#2F6BFF"
+                                 IsHitTestVisible="False" />
+                        <TextBlock Canvas.Left="270"
+                                   Canvas.Top="329"
+                                   Text="◉"
+                                   FontSize="12"
+                                   FontWeight="Bold"
+                                   Foreground="White"
+                                   IsHitTestVisible="False" />
+                        <TextBlock Canvas.Left="296"
+                                   Canvas.Top="321"
+                                   Width="112"
+                                   Text="نبض المجلس"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Foreground="#14213D"
+                                   IsHitTestVisible="False" />
+                        <Ellipse Canvas.Left="414"
+                                 Canvas.Top="331"
+                                 Width="9"
+                                 Height="9"
+                                 Fill="#2BC86B"
+                                 IsHitTestVisible="False" />
+                        <TextBlock Canvas.Left="428"
+                                   Canvas.Top="323"
+                                   Width="112"
+                                   Text="يعمل بشكل طبيعي"
+                                   FontSize="10"
+                                   Foreground="#687384"
+                                   IsHitTestVisible="False" />
+
+                        <Button Canvas.Left="1301"
+                                Canvas.Top="320"
+                                Width="137"
+                                Style="{StaticResource NativePulseActionStyle}"
+                                Content="عرض نشاط المجلس"
+                                Click="CouncilActivity_Click"
+                                AutomationProperties.Name="عرض نشاط المجلس" />
+
+                        <!-- Fine dotted routing paths; decorative only. -->
+                        <Path Data="M 394,381 C 437,343 478,343 525,381 S 615,418 658,381"
+                              Stroke="#8457E6"
+                              StrokeThickness="1.6"
+                              StrokeDashArray="1 5"
+                              Opacity="0.38"
+                              IsHitTestVisible="False" />
+                        <Path Data="M 524,381 C 570,347 616,347 658,381 S 747,414 789,381"
+                              Stroke="#56A8F6"
+                              StrokeThickness="1.6"
+                              StrokeDashArray="1 5"
+                              Opacity="0.42"
+                              IsHitTestVisible="False" />
+                        <Path Data="M 789,381 C 832,414 875,414 919,381 S 1007,347 1050,381"
+                              Stroke="#2DBBD5"
+                              StrokeThickness="1.6"
+                              StrokeDashArray="1 5"
+                              Opacity="0.42"
+                              IsHitTestVisible="False" />
+                        <Path Data="M 1050,381 C 1094,347 1138,347 1181,381 S 1268,414 1311,381"
+                              Stroke="#775EDF"
+                              StrokeThickness="1.6"
+                              StrokeDashArray="1 5"
+                              Opacity="0.40"
+                              IsHitTestVisible="False" />
+
+                        <Button Canvas.Left="312" Canvas.Top="350"
+                                Width="112" Height="88"
+                                Tag="owner"
+                                Style="{StaticResource NativeRoleButtonStyle}"
+                                Click="NativeRole_Click"
+                                AutomationProperties.Name="المالك — تحديد الاتجاه">
+                            <StackPanel HorizontalAlignment="Center">
+                                <Border Width="45" Height="45"
+                                        Background="#FFF5DF"
+                                        BorderBrush="#E9A52E"
+                                        BorderThickness="1.7"
+                                        CornerRadius="23"
+                                        HorizontalAlignment="Center">
+                                    <TextBlock Text="♙"
+                                               FontFamily="Segoe UI Symbol"
+                                               FontSize="24"
+                                               Foreground="#A96C06"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <TextBlock Text="المالك" Margin="0,3,0,0"
+                                           FontSize="12" FontWeight="SemiBold"
+                                           Foreground="#6F4B06"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="تحديد الاتجاه" FontSize="9"
+                                           Foreground="#737B87"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Canvas.Left="400" Canvas.Top="351"
+                                Tag="owner"
+                                Style="{StaticResource NativeReasoningDotStyle}"
+                                Click="NativeReasoning_Click"
+                                ToolTip="Model &amp; Reasoning — المالك"
+                                AutomationProperties.Name="استدلال المالك" />
+
+                        <Button Canvas.Left="443" Canvas.Top="350"
+                                Width="112" Height="88"
+                                Tag="strategy"
+                                Style="{StaticResource NativeRoleButtonStyle}"
+                                Click="NativeRole_Click"
+                                AutomationProperties.Name="الاستراتيجية — تحليل وفرص">
+                            <StackPanel HorizontalAlignment="Center">
+                                <Border Width="45" Height="45"
+                                        Background="#EAF5FF"
+                                        BorderBrush="#4B9FF5"
+                                        BorderThickness="1.7"
+                                        CornerRadius="23"
+                                        HorizontalAlignment="Center">
+                                    <TextBlock Text="♟"
+                                               FontFamily="Segoe UI Symbol"
+                                               FontSize="23"
+                                               Foreground="#116FD1"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <TextBlock Text="الاستراتيجية" Margin="0,3,0,0"
+                                           FontSize="12" FontWeight="SemiBold"
+                                           Foreground="#203454"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="تحليل وفرص" FontSize="9"
+                                           Foreground="#737B87"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Canvas.Left="531" Canvas.Top="351"
+                                Tag="strategy"
+                                Style="{StaticResource NativeReasoningDotStyle}"
+                                Click="NativeReasoning_Click"
+                                ToolTip="Model &amp; Reasoning — الاستراتيجية"
+                                AutomationProperties.Name="استدلال الاستراتيجية" />
+
+                        <Button Canvas.Left="574" Canvas.Top="350"
+                                Width="112" Height="88"
+                                Tag="research"
+                                Style="{StaticResource NativeRoleButtonStyle}"
+                                Click="NativeRole_Click"
+                                AutomationProperties.Name="البحث — جمع الأدلة">
+                            <StackPanel HorizontalAlignment="Center">
+                                <Border Width="45" Height="45"
+                                        Background="#F2EDFF"
+                                        BorderBrush="#8A64E8"
+                                        BorderThickness="1.7"
+                                        CornerRadius="23"
+                                        HorizontalAlignment="Center">
+                                    <TextBlock Text="◉"
+                                               FontFamily="Segoe UI Symbol"
+                                               FontSize="21"
+                                               Foreground="#7752D7"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <TextBlock Text="البحث" Margin="0,3,0,0"
+                                           FontSize="12" FontWeight="SemiBold"
+                                           Foreground="#31324F"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="جمع الأدلة" FontSize="9"
+                                           Foreground="#737B87"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Canvas.Left="662" Canvas.Top="351"
+                                Tag="research"
+                                Style="{StaticResource NativeReasoningDotStyle}"
+                                Click="NativeReasoning_Click"
+                                ToolTip="Model &amp; Reasoning — البحث"
+                                AutomationProperties.Name="استدلال البحث" />
+
+                        <Button Canvas.Left="703" Canvas.Top="350"
+                                Width="112" Height="88"
+                                Tag="verification"
+                                Style="{StaticResource NativeRoleButtonStyle}"
+                                Click="NativeRole_Click"
+                                AutomationProperties.Name="التحقق — مراجعة الحقائق">
+                            <StackPanel HorizontalAlignment="Center">
+                                <Border Width="45" Height="45"
+                                        Background="#EAFBF1"
+                                        BorderBrush="#32BE68"
+                                        BorderThickness="1.7"
+                                        CornerRadius="23"
+                                        HorizontalAlignment="Center">
+                                    <TextBlock Text="✓"
+                                               FontSize="23"
+                                               FontWeight="Bold"
+                                               Foreground="#159F50"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <TextBlock Text="التحقق" Margin="0,3,0,0"
+                                           FontSize="12" FontWeight="SemiBold"
+                                           Foreground="#244333"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="مراجعة الحقائق" FontSize="9"
+                                           Foreground="#737B87"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Canvas.Left="791" Canvas.Top="351"
+                                Tag="verification"
+                                Style="{StaticResource NativeReasoningDotStyle}"
+                                Click="NativeReasoning_Click"
+                                ToolTip="Model &amp; Reasoning — التحقق"
+                                AutomationProperties.Name="استدلال التحقق" />
+
+                        <Button Canvas.Left="832" Canvas.Top="350"
+                                Width="112" Height="88"
+                                Tag="execution"
+                                Style="{StaticResource NativeRoleButtonStyle}"
+                                Click="NativeRole_Click"
+                                AutomationProperties.Name="التنفيذ — تحويل إلى عمل">
+                            <StackPanel HorizontalAlignment="Center">
+                                <Border Width="45" Height="45"
+                                        Background="#E8FAFD"
+                                        BorderBrush="#29BDD7"
+                                        BorderThickness="1.7"
+                                        CornerRadius="23"
+                                        HorizontalAlignment="Center">
+                                    <TextBlock Text="ϟ"
+                                               FontFamily="Segoe UI Symbol"
+                                               FontSize="25"
+                                               FontWeight="SemiBold"
+                                               Foreground="#1495AE"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <TextBlock Text="التنفيذ" Margin="0,3,0,0"
+                                           FontSize="12" FontWeight="SemiBold"
+                                           Foreground="#24404A"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="تحويل إلى عمل" FontSize="9"
+                                           Foreground="#737B87"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Canvas.Left="920" Canvas.Top="351"
+                                Tag="execution"
+                                Style="{StaticResource NativeReasoningDotStyle}"
+                                Click="NativeReasoning_Click"
+                                ToolTip="Model &amp; Reasoning — التنفيذ"
+                                AutomationProperties.Name="استدلال التنفيذ" />
+
+                        <Button Canvas.Left="961" Canvas.Top="350"
+                                Width="112" Height="88"
+                                Tag="creative"
+                                Style="{StaticResource NativeRoleButtonStyle}"
+                                Click="NativeRole_Click"
+                                AutomationProperties.Name="الإبداع — تصميم وإنتاج">
+                            <StackPanel HorizontalAlignment="Center">
+                                <Border Width="45" Height="45"
+                                        Background="#FFF0F2"
+                                        BorderBrush="#EF7687"
+                                        BorderThickness="1.7"
+                                        CornerRadius="23"
+                                        HorizontalAlignment="Center">
+                                    <TextBlock Text="✺"
+                                               FontFamily="Segoe UI Symbol"
+                                               FontSize="22"
+                                               Foreground="#D84C61"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <TextBlock Text="الإبداع" Margin="0,3,0,0"
+                                           FontSize="12" FontWeight="SemiBold"
+                                           Foreground="#513039"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="تصميم وإنتاج" FontSize="9"
+                                           Foreground="#737B87"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Canvas.Left="1049" Canvas.Top="351"
+                                Tag="creative"
+                                Style="{StaticResource NativeReasoningDotStyle}"
+                                Click="NativeReasoning_Click"
+                                ToolTip="Model &amp; Reasoning — الإبداع"
+                                AutomationProperties.Name="استدلال الإبداع" />
+
+                        <Button Canvas.Left="1090" Canvas.Top="350"
+                                Width="112" Height="88"
+                                Tag="data"
+                                Style="{StaticResource NativeRoleButtonStyle}"
+                                Click="NativeRole_Click"
+                                AutomationProperties.Name="البيانات — تحليل وقياس">
+                            <StackPanel HorizontalAlignment="Center">
+                                <Border Width="45" Height="45"
+                                        Background="#EFF0FF"
+                                        BorderBrush="#7177E7"
+                                        BorderThickness="1.7"
+                                        CornerRadius="23"
+                                        HorizontalAlignment="Center">
+                                    <TextBlock Text="▥"
+                                               FontFamily="Segoe UI Symbol"
+                                               FontSize="22"
+                                               Foreground="#565CCF"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <TextBlock Text="البيانات" Margin="0,3,0,0"
+                                           FontSize="12" FontWeight="SemiBold"
+                                           Foreground="#343758"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="تحليل وقياس" FontSize="9"
+                                           Foreground="#737B87"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Canvas.Left="1178" Canvas.Top="351"
+                                Tag="data"
+                                Style="{StaticResource NativeReasoningDotStyle}"
+                                Click="NativeReasoning_Click"
+                                ToolTip="Model &amp; Reasoning — البيانات"
+                                AutomationProperties.Name="استدلال البيانات" />
+
+                        <Button Canvas.Left="1219" Canvas.Top="350"
+                                Width="112" Height="88"
+                                Tag="learning"
+                                Style="{StaticResource NativeRoleButtonStyle}"
+                                Click="NativeRole_Click"
+                                AutomationProperties.Name="التعلم — تطوير مستمر">
+                            <StackPanel HorizontalAlignment="Center">
+                                <Border Width="45" Height="45"
+                                        Background="#F6EDFF"
+                                        BorderBrush="#A05ADD"
+                                        BorderThickness="1.7"
+                                        CornerRadius="23"
+                                        HorizontalAlignment="Center">
+                                    <TextBlock Text="∞"
+                                               FontFamily="Segoe UI Symbol"
+                                               FontSize="24"
+                                               Foreground="#8140BD"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <TextBlock Text="التعلم" Margin="0,3,0,0"
+                                           FontSize="12" FontWeight="SemiBold"
+                                           Foreground="#473354"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="تطوير مستمر" FontSize="9"
+                                           Foreground="#737B87"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Canvas.Left="1307" Canvas.Top="351"
+                                Tag="learning"
+                                Style="{StaticResource NativeReasoningDotStyle}"
+                                Click="NativeReasoning_Click"
+                                ToolTip="Model &amp; Reasoning — التعلم"
+                                AutomationProperties.Name="استدلال التعلم" />
                     </Canvas>
 
                     <Canvas x:Name="SecondaryInteractionCanvas"
