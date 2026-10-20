@@ -146,8 +146,7 @@ if pre["final_adoption_granted"] or pre["merge_authorized"]:
     raise SystemExit("Pre-approval may not pre-authorize adoption or merge")
 
 if change["pre_approval_receipt"] != (
-    "state/command-center/project-governance/approvals/"
-    "2026-10-21-context-resolver-compiler-pre.json"
+    "state/command-center/project-governance/approvals/2026-10-21-context-resolver-compiler-pre.json"
 ):
     raise SystemExit("Context pipeline Change Envelope is not bound to its pre-approval")
 if change["unplanned_scope_policy"] != "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE":
@@ -192,23 +191,17 @@ for flag in (
 if truth["untrusted_content_can_govern"]:
     raise SystemExit("Untrusted content may not govern compiled context")
 
-host_file = (
-    ROOT
-    / "apps"
-    / "UniversalCouncil.CommandCenter.Host"
-    / "CommandCenterComposition.cs"
-).read_text(encoding="utf-8")
+host_file = (ROOT / "apps" / "UniversalCouncil.CommandCenter.Host" / "CommandCenterComposition.cs").read_text(
+    encoding="utf-8"
+)
 if "IProjectContextResolver ContextResolver" not in host_file:
     raise SystemExit("Context Resolver is not exposed through Host composition")
 if "IContextCapsuleCompiler ContextCapsuleCompiler" not in host_file:
     raise SystemExit("Context Capsule Compiler is not exposed through Host composition")
 
-wpf_project = (
-    ROOT
-    / "apps"
-    / "UniversalCouncil.CommandCenter"
-    / "UniversalCouncil.CommandCenter.csproj"
-).read_text(encoding="utf-8")
+wpf_project = (ROOT / "apps" / "UniversalCouncil.CommandCenter" / "UniversalCouncil.CommandCenter.csproj").read_text(
+    encoding="utf-8"
+)
 if "project-context-map.json" not in wpf_project:
     raise SystemExit("Windows package does not include project-context-map.json")
 
