@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-CONTEXT-RESOLVER-COMPILER-PRE-2026-10-21",
+  "change_id": "CC-CONTEXT-RESOLVER-COMPILER-2026-10-21",
+  "status": "APPROVE_TO_IMPLEMENT",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "requested_by": "OWNER_DIRECTIVE_ROADMAP_CONTINUATION",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "379820e27e70609c724740e2e138baa8b8a92c7d"
+  },
+  "scope": [
+    "implement read-only Project Context Resolver in the Application layer",
+    "implement deterministic Context Capsule Compiler in the Application layer",
+    "define Core contracts/projections for context resolution and compiled capsules",
+    "add Infrastructure JSON reader for a project-local context map",
+    "wire resolver/compiler into Host composition without exposing execution authority",
+    "add project-context-map repository projection for the current Command Center project",
+    "add behavior validation for CURRENT, STALE_CONTEXT and CONTEXT_CONFLICT paths",
+    "add exact-head CI coverage for the new context pipeline"
+  ],
+  "explicitly_out_of_scope": [
+    "WPF UI changes",
+    "Android implementation",
+    "live execution",
+    "tool invocation",
+    "model/provider connection",
+    "Job Engine",
+    "Automation Engine",
+    "Stage 8",
+    "visual reference changes",
+    "mutable project store"
+  ],
+  "risk_class": "MATERIAL_APPLICATION_ARCHITECTURE_READ_ONLY",
+  "required_reviewers": [
+    "cc_architecture_execution",
+    "cc_product_truth",
+    "cc_ai_runtime",
+    "cc_security_remote_trust",
+    "cc_durable_autopilot",
+    "cc_red_team",
+    "cc_owner_experience"
+  ],
+  "required_workshop_reviewers": [
+    "cc_studio_producer",
+    "cc_experience_architect",
+    "cc_accessibility_clearance"
+  ],
+  "architecture_boundaries": [
+    "Core defines types/interfaces only",
+    "Application resolves/compiles context",
+    "Infrastructure only reads repository projection",
+    "Host composes services",
+    "WPF does not read context files or resolve authority"
+  ],
+  "implementation_authorized": true,
+  "final_adoption_granted": false,
+  "merge_authorized": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "timestamp": "2026-10-21"
+}
