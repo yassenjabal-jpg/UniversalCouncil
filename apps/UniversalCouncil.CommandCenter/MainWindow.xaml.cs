@@ -3371,7 +3371,7 @@ public partial class MainWindow : Window
         text.TextAlignment = TextAlignment.Right;
         text.TextWrapping = TextWrapping.Wrap;
         text.LineHeight = 20;
-        Place(SecondaryNativeLayer, text, 445, 638, 288, 54);
+        Place(SecondaryNativeLayer, text, 445, 673, 288, 54);
     }
 
     private void AddDecisionEvidenceSummaryPanel()
