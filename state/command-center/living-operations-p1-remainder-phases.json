@@ -54,7 +54,7 @@
       }
     },
     "R4_WORK_RECEIPT": {
-      "state": "BUILDING",
+      "state": "CI_RENDER_VALIDATION",
       "primary_screen": "project_complete_work_receipt"
     },
     "R5_HOME_MICRO_POLISH": {
