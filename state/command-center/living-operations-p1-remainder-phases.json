@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "plan_id": "p1-native-remainder-phases-v1",
   "status": "ACTIVE",
-  "current_phase": "R1_OWNER_DECISION_MODE",
+  "current_phase": "R2_RECOVERY_FORK",
   "anti_stall_rule": true,
   "phase_order": [
     "R1_OWNER_DECISION_MODE",
@@ -18,11 +18,19 @@
   ],
   "phases": {
     "R1_OWNER_DECISION_MODE": {
-      "state": "READY_TO_CONTINUE",
-      "primary_screen": "owner_decision_mode"
+      "state": "CLOSED",
+      "primary_screen": "owner_decision_mode",
+      "evidence_head": "a6d0a94b6a447899fdcd2c8d0851e1f75bf04461",
+      "review": "STRUCTURAL_FIDELITY_PASS_MICRO_POLISH_DEFERRED",
+      "ci": {
+        "company_stage0_run": 791,
+        "codeql_run": 708,
+        "reference_ui_run": 128,
+        "reference_ui_artifact_id": 12269146849
+      }
     },
     "R2_RECOVERY_FORK": {
-      "state": "NOT_OPENED",
+      "state": "READY_TO_CONTINUE",
       "primary_screen": "checkpoint_recovery_fork"
     },
     "R3_PULSE_STORY": {
