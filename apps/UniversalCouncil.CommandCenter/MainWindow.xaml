@@ -219,13 +219,13 @@
 
         <Style x:Key="NativeComposerChipStyle" TargetType="Button">
             <Setter Property="FlowDirection" Value="RightToLeft" />
-            <Setter Property="Height" Value="34" />
+            <Setter Property="Height" Value="40" />
             <Setter Property="Padding" Value="12,0" />
             <Setter Property="Background" Value="#FFFCFBF9" />
             <Setter Property="BorderBrush" Value="#E1DDD6" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Foreground" Value="#354052" />
-            <Setter Property="FontSize" Value="10.5" />
+            <Setter Property="FontSize" Value="11.5" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="Template">
@@ -965,11 +965,14 @@
                             FlowDirection="LeftToRight"
                             Background="{x:Null}"
                             AutomationProperties.Name="Native Home Command Composer">
+                        <Canvas.RenderTransform>
+                            <TranslateTransform Y="10" />
+                        </Canvas.RenderTransform>
 
                         <Border Canvas.Left="244"
                                 Canvas.Top="154"
                                 Width="1211"
-                                Height="151"
+                                Height="157"
                                 Background="#FFFCFBF8"
                                 BorderBrush="#E6E1D9"
                                 BorderThickness="1"
@@ -984,7 +987,7 @@
                         </Border>
 
                         <Button Canvas.Left="260" Canvas.Top="169"
-                                Width="108" Height="119"
+                                Width="112" Height="124"
                                 Tag="council-route"
                                 Style="{StaticResource NativeComposerRouteStyle}"
                                 Background="#EDF6FF"
@@ -999,24 +1002,24 @@
                                            HorizontalAlignment="Center" />
                                 <TextBlock Text="المجلس"
                                            Margin="0,5,0,0"
-                                           FontSize="14"
+                                           FontSize="15"
                                            FontWeight="SemiBold"
                                            Foreground="#17233B"
                                            HorizontalAlignment="Center" />
                                 <TextBlock Text="تحليل شامل"
                                            Margin="0,2,0,0"
-                                           FontSize="9.5"
+                                           FontSize="10.2"
                                            Foreground="#667080"
                                            HorizontalAlignment="Center" />
                                 <TextBlock Text="ومجلس متخصص"
-                                           FontSize="9.5"
+                                           FontSize="10.2"
                                            Foreground="#667080"
                                            HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
 
                         <Button Canvas.Left="375" Canvas.Top="169"
-                                Width="108" Height="119"
+                                Width="112" Height="124"
                                 Tag="studio-route"
                                 Style="{StaticResource NativeComposerRouteStyle}"
                                 Click="Route_Click"
@@ -1029,24 +1032,24 @@
                                            HorizontalAlignment="Center" />
                                 <TextBlock Text="الاستوديو"
                                            Margin="0,5,0,0"
-                                           FontSize="14"
+                                           FontSize="15"
                                            FontWeight="SemiBold"
                                            Foreground="#17233B"
                                            HorizontalAlignment="Center" />
                                 <TextBlock Text="إنتاج المحتوى"
                                            Margin="0,2,0,0"
-                                           FontSize="9.5"
+                                           FontSize="10.2"
                                            Foreground="#667080"
                                            HorizontalAlignment="Center" />
                                 <TextBlock Text="والتصميم"
-                                           FontSize="9.5"
+                                           FontSize="10.2"
                                            Foreground="#667080"
                                            HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
 
                         <Button Canvas.Left="490" Canvas.Top="169"
-                                Width="108" Height="119"
+                                Width="112" Height="124"
                                 Tag="auto-route"
                                 Style="{StaticResource NativeComposerRouteStyle}"
                                 Click="Route_Click"
@@ -1079,7 +1082,7 @@
                         <Border Canvas.Left="610"
                                 Canvas.Top="169"
                                 Width="830"
-                                Height="119"
+                                Height="124"
                                 Background="#FFFDFCFA"
                                 BorderBrush="#E4E0D9"
                                 BorderThickness="1"
@@ -1103,35 +1106,35 @@
                                  LostKeyboardFocus="OwnerPromptBox_LostKeyboardFocus"
                                  AutomationProperties.Name="أمر المالك" />
 
-                        <Button Canvas.Left="628" Canvas.Top="231"
+                        <Button Canvas.Left="628" Canvas.Top="237"
                                 Width="78"
                                 Tag="attach"
                                 Style="{StaticResource NativeComposerChipStyle}"
                                 Content="⌕  إرفاق"
                                 Click="ComposerControl_Click"
                                 AutomationProperties.Name="إرفاق" />
-                        <Button Canvas.Left="713" Canvas.Top="231"
+                        <Button Canvas.Left="713" Canvas.Top="237"
                                 Width="78"
                                 Tag="tools"
                                 Style="{StaticResource NativeComposerChipStyle}"
                                 Content="≛  أدوات"
                                 Click="ComposerControl_Click"
                                 AutomationProperties.Name="الأدوات" />
-                        <Button Canvas.Left="798" Canvas.Top="231"
+                        <Button Canvas.Left="798" Canvas.Top="237"
                                 Width="145"
                                 Tag="web"
                                 Style="{StaticResource NativeComposerChipStyle}"
                                 Content="●  بحث في الويب"
                                 Click="ComposerControl_Click"
                                 AutomationProperties.Name="بحث في الويب" />
-                        <Button Canvas.Left="950" Canvas.Top="231"
+                        <Button Canvas.Left="950" Canvas.Top="237"
                                 Width="160"
                                 Tag="model"
                                 Style="{StaticResource NativeComposerChipStyle}"
                                 Content="✳  Claude 3.5 Sonnet"
                                 Click="ComposerControl_Click"
                                 AutomationProperties.Name="اختيار النموذج" />
-                        <Button Canvas.Left="1117" Canvas.Top="231"
+                        <Button Canvas.Left="1117" Canvas.Top="237"
                                 Width="135"
                                 Tag="reasoning"
                                 Style="{StaticResource NativeComposerChipStyle}"
@@ -1139,13 +1142,27 @@
                                 Click="ComposerControl_Click"
                                 AutomationProperties.Name="مستوى التفكير" />
 
-                        <Button Canvas.Left="1270" Canvas.Top="222"
+                        <Button Canvas.Left="1282" Canvas.Top="235"
                                 Width="154"
                                 Tag="start"
                                 Style="{StaticResource NativeComposerPrimaryStyle}"
-                                Content="ابدأ التنفيذ   ←"
                                 Click="Start_Click"
-                                AutomationProperties.Name="ابدأ التنفيذ" />
+                                AutomationProperties.Name="ابدأ التنفيذ">
+                            <StackPanel Orientation="Horizontal"
+                                        FlowDirection="LeftToRight"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="ابدأ التنفيذ"
+                                           FlowDirection="RightToLeft"
+                                           Foreground="White"
+                                           FontSize="15"
+                                           FontWeight="SemiBold" />
+                                <TextBlock Text="›"
+                                           Margin="10,0,0,0"
+                                           Foreground="White"
+                                           FontSize="23"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
                     </Canvas>
                     </Canvas>
 
