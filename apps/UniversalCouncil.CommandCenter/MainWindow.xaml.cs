@@ -1190,6 +1190,10 @@ public partial class MainWindow : Window
         {
             BuildNativeRecoveryFork();
         }
+        else if (screen == ScreenKind.PulseStory)
+        {
+            BuildNativePulseStory();
+        }
     }
 
     private void BuildNativeProjectWorkspaceCore()
@@ -4570,6 +4574,571 @@ public partial class MainWindow : Window
         var subtitleText = ChromeText(subtitle, 7.8, "#747D89");
         subtitleText.TextAlignment = TextAlignment.Right;
         Place(SecondaryNativeLayer, subtitleText, left + 45, top + 25, width - 58, 18);
+    }
+
+    private void BuildNativePulseStory()
+    {
+        BuildNativePulseHeader();
+        BuildNativePulseTimeline();
+        BuildNativePulseStorySurface();
+        BuildNativePulseCards();
+    }
+
+    private void BuildNativePulseHeader()
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromePanel("#FFFDFBF8", "#EEE9E2", 0, new Thickness(0)),
+            238,
+            49,
+            1232,
+            113);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("المشاريع   /   Smart Secretary V2   /   نبض المشروع", 10.5, "#707A89", FontWeights.SemiBold),
+            252,
+            60,
+            330,
+            23);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush("#2F85F3"),
+                Stroke = Brush("#C7E0FB"),
+                StrokeThickness = 1.5,
+                IsHitTestVisible = false,
+            },
+            268,
+            95,
+            52,
+            52);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("▧", 25, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            282,
+            105,
+            28,
+            32);
+
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("نبض المشروع", 31, "#121C36", FontWeights.Bold),
+            336,
+            91,
+            226,
+            45);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✦", 28, "#2F8DFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            506,
+            93,
+            32,
+            36);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("قصة مرئية لرحلة المشروع من المشكلة إلى الأثر", 12.5, "#626D7C", FontWeights.SemiBold),
+            336,
+            131,
+            333,
+            24);
+
+        var selector = ChromePanel("#F8FBFF", "#DCE5F0", 11);
+        Place(SecondaryNativeLayer, selector, 1030, 79, 410, 72);
+        var thumb = CreateReferenceCrop(
+            "07-pulse_visual_project_story.png",
+            new Int32Rect(1047, 91, 48, 48));
+        Place(SecondaryNativeLayer, thumb, 1047, 91, 48, 48);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Smart Secretary V2", 15.5, "#17233B", FontWeights.Bold, FlowDirection.LeftToRight),
+            1104,
+            89,
+            190,
+            26);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("تحديثات الخصوصية وإدارة البيانات", 10, "#6C7685", FontWeights.SemiBold),
+            1104,
+            119,
+            210,
+            19);
+        var running = ChromePanel("#EEF5FF", "#C9DCF6", 8);
+        Place(SecondaryNativeLayer, running, 1313, 96, 93, 29);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("قيد التنفيذ", 9.5, "#2768C9", FontWeights.SemiBold),
+            1333,
+            101,
+            53,
+            19);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("⌄", 16, "#5A6575", FontWeights.Bold, FlowDirection.LeftToRight),
+            1414,
+            101,
+            15,
+            19);
+    }
+
+    private void BuildNativePulseTimeline()
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E4E0DA", 12);
+        Place(SecondaryNativeLayer, card, 244, 166, 1200, 110);
+
+        var line = new Path
+        {
+            Data = Geometry.Parse("M 334,213 C 425,186 503,229 596,209 S 783,228 872,210 S 1058,188 1152,211 S 1304,224 1377,209"),
+            Stroke = Brush("#79BDEB"),
+            StrokeThickness = 1.8,
+            StrokeDashArray = new DoubleCollection { 1, 4 },
+            Opacity = 0.58,
+            IsHitTestVisible = false,
+        };
+        SecondaryNativeLayer.Children.Add(line);
+
+        AddPulseTimelineNode(322, 184, "#2F83EE", "◉", "اليوم", "تحسينات الخصوصية", true);
+        AddPulseTimelineNode(504, 185, "#2DC86B", "▣", "الأسبوع الماضي", "إطلاق النسخة التجريبية", false);
+        AddPulseTimelineNode(691, 185, "#8B5DE4", "◇", "قبل أسبوعين", "تحسين البنية", false);
+        AddPulseTimelineNode(876, 185, "#E8A332", "♟", "قبل شهر", "أبحاث المستخدمين", false);
+        AddPulseTimelineNode(1065, 185, "#EB596A", "♨", "قبل شهرين", "تحديد المشكلة", false);
+        AddPulseTimelineNode(1252, 185, "#5E6A83", "◈", "قبل 3 أشهر", "بداية المشروع", false);
+
+        var full = ChromePanel("#FBF8FF", "#DCCDF5", 8);
+        Place(SecondaryNativeLayer, full, 1300, 177, 128, 31);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("عرض الجدول الزمني الكامل", 8.8, "#7252C1", FontWeights.SemiBold),
+            1314,
+            183,
+            102,
+            20);
+    }
+
+    private void AddPulseTimelineNode(
+        double left,
+        double top,
+        string accent,
+        string glyph,
+        string title,
+        string subtitle,
+        bool active)
+    {
+        if (active)
+        {
+            Place(
+                SecondaryNativeLayer,
+                new Ellipse
+                {
+                    Fill = Brush("#EAF4FF"),
+                    Stroke = Brush("#AFD3FB"),
+                    StrokeThickness = 1.3,
+                    IsHitTestVisible = false,
+                },
+                left - 9,
+                top - 9,
+                56,
+                56);
+        }
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush("#FAFBFC"),
+                Stroke = Brush(accent),
+                StrokeThickness = active ? 2.5 : 1.7,
+                IsHitTestVisible = false,
+            },
+            left,
+            top,
+            38,
+            38);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 16, accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 10,
+            top + 6,
+            20,
+            24);
+        var titleText = ChromeText(title, 10, active ? "#2369C9" : "#3E495A", active ? FontWeights.Bold : FontWeights.SemiBold);
+        titleText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, titleText, left - 42, top + 45, 122, 20);
+        var subtitleText = ChromeText(subtitle, 8.7, active ? "#3171C5" : "#7B8490");
+        subtitleText.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, subtitleText, left - 53, top + 65, 144, 20);
+    }
+
+    private void BuildNativePulseStorySurface()
+    {
+        var card = ChromePanel("#FFFCFBF8", "#E4E0DA", 12);
+        Place(SecondaryNativeLayer, card, 244, 286, 1200, 310);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
+            258,
+            298,
+            26,
+            26);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("✦", 13, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            265,
+            301,
+            15,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("القصة المرئية للمشروع", 18, "#18243B", FontWeights.Bold),
+            295,
+            294,
+            225,
+            31);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("من التحدي إلى التأثير", 10.3, "#818895"),
+            520,
+            300,
+            120,
+            20);
+
+        AddPulseFilterChip(915, "عمليات التسليم", false);
+        AddPulseFilterChip(1020, "الاكتشافات", false);
+        AddPulseFilterChip(1112, "التحديات", false);
+        AddPulseFilterChip(1198, "الإنجازات", false);
+        AddPulseFilterChip(1285, "التحديثات", false);
+        AddPulseFilterChip(1372, "الكل", true);
+
+        // Before panel.
+        var before = ChromePanel("#FFFDFCFB", "#E8E3DC", 10);
+        Place(SecondaryNativeLayer, before, 258, 333, 382, 250);
+        var beforeBadge = ChromePanel("#FFE7E8", "#F1C8CD", 8);
+        Place(SecondaryNativeLayer, beforeBadge, 271, 345, 62, 28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("قبل", 10, "#D64658", FontWeights.Bold),
+            290,
+            350,
+            27,
+            18);
+        var beforeTitle = ChromeText("تجربة معقدة ومخاوف خصوصية", 14.5, "#273247", FontWeights.Bold);
+        beforeTitle.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, beforeTitle, 365, 359, 246, 28);
+        var beforeBody = ChromeText(
+            "إدارة البيانات كانت يدوية ومعقدة، مع مخاوف\nحول خصوصية المستخدمين.",
+            10.3,
+            "#697382",
+            FontWeights.SemiBold);
+        beforeBody.TextAlignment = TextAlignment.Right;
+        beforeBody.LineHeight = 18;
+        Place(SecondaryNativeLayer, beforeBody, 355, 395, 260, 47);
+        var beforeMedia = CreateReferenceCrop(
+            "07-pulse_visual_project_story.png",
+            new Int32Rect(278, 439, 366, 146));
+        Place(SecondaryNativeLayer, beforeMedia, 271, 443, 356, 128);
+
+        // Central media panel.
+        var story = ChromePanel("#F8FAFD", "#DDE4ED", 10);
+        Place(SecondaryNativeLayer, story, 651, 333, 382, 250);
+        var storyMedia = CreateReferenceCrop(
+            "07-pulse_visual_project_story.png",
+            new Int32Rect(675, 345, 335, 190));
+        Place(SecondaryNativeLayer, storyMedia, 666, 345, 352, 181);
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse
+            {
+                Fill = Brush("#D9111A2B"),
+                Stroke = Brush("#FFFFFF"),
+                StrokeThickness = 2,
+                IsHitTestVisible = false,
+            },
+            808,
+            402,
+            70,
+            70);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("▶", 31, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            832,
+            416,
+            33,
+            39);
+        var duration = ChromePanel("#D9111A2B", "#00FFFFFF", 6, new Thickness(0));
+        Place(SecondaryNativeLayer, duration, 949, 495, 55, 25);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("02:18", 10, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            958,
+            499,
+            39,
+            17);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("فيديو القصة", 13.5, "#243047", FontWeights.Bold),
+            744,
+            539,
+            110,
+            24);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("من المشكلة إلى الحل في دقيقتين", 9.4, "#707988", FontWeights.SemiBold),
+            744,
+            563,
+            180,
+            18);
+
+        // After panel.
+        var after = ChromePanel("#F6FFF9", "#D6EEDC", 10);
+        Place(SecondaryNativeLayer, after, 1044, 333, 386, 250);
+        var afterBadge = ChromePanel("#E1F8E8", "#BDE8C8", 8);
+        Place(SecondaryNativeLayer, afterBadge, 1057, 345, 63, 28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("بعد", 10, "#159A4C", FontWeights.Bold),
+            1076,
+            350,
+            27,
+            18);
+        var afterTitle = ChromeText("خصوصية أقوى وتجربة أبسط", 14.5, "#233447", FontWeights.Bold);
+        afterTitle.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, afterTitle, 1152, 359, 246, 28);
+        var afterBody = ChromeText(
+            "نظام ذكي وآمن لإدارة البيانات مع تحكم كامل\nللمستخدمين وشفافية عالية.",
+            10.3,
+            "#607063",
+            FontWeights.SemiBold);
+        afterBody.TextAlignment = TextAlignment.Right;
+        afterBody.LineHeight = 18;
+        Place(SecondaryNativeLayer, afterBody, 1142, 395, 260, 47);
+        var afterMedia = CreateReferenceCrop(
+            "07-pulse_visual_project_story.png",
+            new Int32Rect(1051, 439, 376, 145));
+        Place(SecondaryNativeLayer, afterMedia, 1057, 443, 360, 128);
+    }
+
+    private void AddPulseFilterChip(double left, string label, bool active)
+    {
+        var chip = ChromePanel(active ? "#2475F3" : "#FFFFFF", active ? "#2475F3" : "#E0DDD8", 8);
+        Place(SecondaryNativeLayer, chip, left, 294, active ? 61 : 92, 30);
+        var text = ChromeText(label, 8.7, active ? "#FFFFFF" : "#596477", FontWeights.SemiBold);
+        text.TextAlignment = TextAlignment.Center;
+        Place(SecondaryNativeLayer, text, left + 7, 299, (active ? 61 : 92) - 14, 19);
+    }
+
+    private void BuildNativePulseCards()
+    {
+        AddPulseCard(
+            18,
+            "#F1FBF4",
+            "#BFE7CA",
+            "#159A4C",
+            "✓",
+            "إنجاز رئيسي",
+            "VERIFIED",
+            "إطلاق طبقة الخصوصية الجديدة",
+            "تم تفعيل التشفير الشامل وإدارة الصلاحيات.",
+            "لحماية بيانات المستخدمين وبناء الثقة.",
+            "تعميم الميزة على جميع المستخدمين.",
+            "07-pulse_visual_project_story.png",
+            new Int32Rect(31, 657, 276, 83),
+            "عرض التفاصيل",
+            "فتح في المشروع");
+
+        AddPulseCard(
+            323,
+            "#FFF3F4",
+            "#F0C9CE",
+            "#E64457",
+            "▲",
+            "تحدي / عائق",
+            "EVIDENCE-BACKED",
+            "ارتفاع زمن استجابة واجهة الإعدادات",
+            "زمن الاستجابة زاد إلى 2.8 ثانية.",
+            "بسبب زيادة حجم البيانات المؤقتة.",
+            "تنفيذ تحسينات الأداء في الأسبوع القادم.",
+            "07-pulse_visual_project_story.png",
+            new Int32Rect(343, 657, 252, 83),
+            "عرض التحليل",
+            "إنشاء مهمة");
+
+        AddPulseCard(
+            613,
+            "#F7F2FF",
+            "#DCCDF5",
+            "#7D55DB",
+            "◇",
+            "اكتشاف / غير معروف",
+            "UNKNOWN",
+            "سؤال حول تخزين البيانات الإقليمية",
+            "مطلوب فهم أفضل للقوانين المحلية في بعض الدول.",
+            "قد يؤثر على طريقة تخزين البيانات.",
+            "إجراء بحث قانوني وتقييم الخيارات.",
+            "07-pulse_visual_project_story.png",
+            new Int32Rect(627, 657, 258, 83),
+            "عرض التفاصيل",
+            "بدء البحث");
+
+        AddPulseCard(
+            903,
+            "#F2F8FF",
+            "#CADFF7",
+            "#2673D5",
+            "▧",
+            "تسليم / تعاون",
+            "PROPOSAL",
+            "محطة تسليم إلى فريق البنية التحتية",
+            "جاهز لتسليم نسخة التشفير الجديدة.",
+            "للتنفيذ في بيئة الإنتاج.",
+            "مراجعة التسليم وتحديد موعد النشر.",
+            "07-pulse_visual_project_story.png",
+            new Int32Rect(917, 657, 257, 83),
+            "عرض الحزمة",
+            "تسليم الآن");
+
+        AddPulseCard(
+            1192,
+            "#F1FBF4",
+            "#BFE7CA",
+            "#159A4C",
+            "✓",
+            "نتيجة محققة",
+            "VERIFIED",
+            "زيادة مستوى الأمان إلى 98%",
+            "تحسن معدل الامتثال الأمني من 78% إلى 98%.",
+            "بفضل تطبيق طبقة التشفير الجديدة.",
+            "الحفاظ على المستوى ومراقبة مستمرة.",
+            "07-pulse_visual_project_story.png",
+            new Int32Rect(1208, 657, 238, 83),
+            "عرض التقرير",
+            "مشاركة النتيجة");
+    }
+
+    private void AddPulseCard(
+        double left,
+        string background,
+        string border,
+        string accent,
+        string glyph,
+        string category,
+        string truth,
+        string title,
+        string changed,
+        string why,
+        string next,
+        string imageName,
+        Int32Rect crop,
+        string secondaryAction,
+        string primaryAction)
+    {
+        const double top = 610;
+        const double width = 282;
+        const double height = 346;
+
+        var card = ChromePanel(background, border, 11);
+        Place(SecondaryNativeLayer, card, left, top, width, height);
+
+        Place(
+            SecondaryNativeLayer,
+            new Ellipse { Fill = Brush(accent), IsHitTestVisible = false },
+            left + 13,
+            top + 14,
+            29,
+            29);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(glyph, 15, "#FFFFFF", FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 21,
+            top + 17,
+            17,
+            20);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(category, 12.5, accent, FontWeights.Bold),
+            left + 51,
+            top + 14,
+            105,
+            25);
+        var truthBadge = ChromePanel(truth == "UNKNOWN" ? "#F1ECFF" : truth == "PROPOSAL" ? "#E8F3FF" : truth == "EVIDENCE-BACKED" ? "#FFE7EA" : "#E6F8EC", border, 8);
+        Place(SecondaryNativeLayer, truthBadge, left + 165, top + 14, 104, 26);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(truth, 7.8, accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            left + 178,
+            top + 18,
+            80,
+            17);
+
+        var media = CreateReferenceCrop(imageName, crop);
+        Place(SecondaryNativeLayer, media, left + 14, top + 50, width - 28, 83);
+
+        var titleText = ChromeText(title, 11.7, "#283448", FontWeights.Bold);
+        titleText.TextAlignment = TextAlignment.Right;
+        titleText.TextWrapping = TextWrapping.Wrap;
+        Place(SecondaryNativeLayer, titleText, left + 14, top + 140, width - 28, 31);
+
+        AddPulseFactRow(left, top + 177, width, "ما الذي تغير؟", changed);
+        AddPulseFactRow(left, top + 215, width, "لماذا؟", why);
+        AddPulseFactRow(left, top + 253, width, "ماذا بعد؟", next);
+
+        var evidence = ChromePanel("#FFFDFCFB", "#E4E0DB", 7);
+        Place(SecondaryNativeLayer, evidence, left + 14, top + 289, width - 28, 27);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("الدليل", 8.3, "#485568", FontWeights.Bold),
+            left + 18,
+            top + 293,
+            40,
+            18);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("▧  مصدر مرتبط", 8.1, "#677183", FontWeights.SemiBold),
+            left + 68,
+            top + 293,
+            91,
+            18);
+
+        var secondary = ChromePanel("#FFFFFF", "#DDD9D3", 7);
+        Place(SecondaryNativeLayer, secondary, left + 14, top + 321, 118, 28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(secondaryAction, 8.7, "#4D596B", FontWeights.SemiBold),
+            left + 28,
+            top + 326,
+            90,
+            18);
+
+        var primary = ChromePanel(truth == "UNKNOWN" ? "#744DE7" : truth == "EVIDENCE-BACKED" ? "#E19A2B" : "#2475F3", "#00FFFFFF", 7, new Thickness(0));
+        Place(SecondaryNativeLayer, primary, left + 141, top + 321, 127, 28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(primaryAction, 8.7, "#FFFFFF", FontWeights.SemiBold),
+            left + 153,
+            top + 326,
+            101,
+            18);
+    }
+
+    private void AddPulseFactRow(
+        double left,
+        double top,
+        double width,
+        string label,
+        string value)
+    {
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(label, 8.2, "#3B4658", FontWeights.Bold),
+            left + width - 91,
+            top,
+            75,
+            18);
+        var valueText = ChromeText(value, 8.2, "#687280", FontWeights.SemiBold);
+        valueText.TextAlignment = TextAlignment.Right;
+        valueText.TextTrimming = TextTrimming.CharacterEllipsis;
+        Place(SecondaryNativeLayer, valueText, left + 14, top, width - 111, 18);
     }
 
     private Image CreateReferenceCrop(
