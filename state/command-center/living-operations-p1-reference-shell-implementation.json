@@ -191,6 +191,11 @@
       "studio_project_micro_polish"
     ],
     "final_native_reconstruction_complete": false,
-    "home_macro_reconstruction_complete": true
-  }
+    "home_macro_reconstruction_complete": true,
+    "current_phase": "R1_OWNER_DECISION_MODE",
+    "anti_stall_rule": true,
+    "phase_policy": "ONE_PRIMARY_SCREEN_PER_RECONSTRUCTION_PHASE"
+  },
+  "remainder_phase_plan": "state/command-center/living-operations-p1-remainder-phases.json",
+  "remainder_phase_plan_document": "docs/operations/command-center/living-operations/27_P1_REMAINING_NATIVE_RECONSTRUCTION_PHASE_PLAN.md"
 }
