@@ -14,6 +14,7 @@ public partial class MainWindow : Window
     private FrameworkElement? _lastInteractionTarget;
     private string? _activeRoleId;
     private ScreenKind _currentScreen = ScreenKind.Home;
+    private bool _nativeReferenceBlendEnabled;
 
     private static readonly IReadOnlyDictionary<ScreenKind, string> ScreenImages =
         new Dictionary<ScreenKind, string>
@@ -218,6 +219,36 @@ public partial class MainWindow : Window
         OpenReasoningContext(roleId, button);
     }
 
+    private void NativeRole_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button button || button.Tag is not string roleId)
+        {
+            return;
+        }
+
+        OpenRoleContext(roleId, button, useNativeActivation: true);
+    }
+
+    private void NativeReasoning_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button button || button.Tag is not string roleId)
+        {
+            return;
+        }
+
+        OpenReasoningContext(roleId, button);
+    }
+
+    private void CouncilActivity_Click(object sender, RoutedEventArgs e)
+    {
+        _lastInteractionTarget = sender as FrameworkElement;
+        OpenGenericRegion(
+            "نشاط المجلس",
+            "Council Pulse",
+            "يفتح سجل تفعيل الأعضاء ومسارات handoff والاعتراضات عند وجود أحداث حقيقية.",
+            "REFERENCE FIXTURE / NATIVE RECONSTRUCTION SLICE");
+    }
+
     private void Route_Click(object sender, RoutedEventArgs e)
     {
         if (sender is not Button button || button.Tag is not string route)
@@ -313,7 +344,11 @@ public partial class MainWindow : Window
         ShowNotice("التنفيذ الحي غير مفعل من Home البصرية. تم اختبار press/feedback فقط بدون إرسال أي أمر.");
     }
 
-    private void OpenRoleContext(string roleId, FrameworkElement source, bool useHomeActivationRing = false)
+    private void OpenRoleContext(
+        string roleId,
+        FrameworkElement source,
+        bool useHomeActivationRing = false,
+        bool useNativeActivation = false)
     {
         if (!Roles.TryGetValue(roleId, out var role))
         {
@@ -323,7 +358,11 @@ public partial class MainWindow : Window
         _activeRoleId = roleId;
         _lastInteractionTarget = source;
 
-        if (useHomeActivationRing && source is Button button)
+        if (useNativeActivation && source is Button nativeButton)
+        {
+            AnimateNativeRoleButton(nativeButton);
+        }
+        else if (useHomeActivationRing && source is Button button)
         {
             ShowRoleActivation(button);
         }
@@ -384,6 +423,8 @@ public partial class MainWindow : Window
 
         var isHome = screen == ScreenKind.Home;
         InteractionCanvas.Visibility = isHome ? Visibility.Visible : Visibility.Collapsed;
+        NativeHomeLayer.Visibility = isHome ? Visibility.Visible : Visibility.Collapsed;
+        NativeHomeLayer.Opacity = _nativeReferenceBlendEnabled && isHome ? 0.46 : 1;
         RoleActivationRing.Visibility = Visibility.Collapsed;
         SecondaryInteractionCanvas.Visibility = isHome ? Visibility.Collapsed : Visibility.Visible;
         SecondaryInteractionCanvas.Children.Clear();
@@ -681,6 +722,20 @@ public partial class MainWindow : Window
             return;
         }
 
+        if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) &&
+            e.Key == Key.O &&
+            _currentScreen == ScreenKind.Home)
+        {
+            _nativeReferenceBlendEnabled = !_nativeReferenceBlendEnabled;
+            NativeHomeLayer.Opacity = _nativeReferenceBlendEnabled ? 0.46 : 1;
+            ShowNotice(
+                _nativeReferenceBlendEnabled
+                    ? "وضع مقارنة Overlay مفعّل: المرجع الأصلي ظاهر تحت Council Pulse الـNative."
+                    : "وضع المقارنة متوقف: Council Pulse الـNative بكامل العتامة.");
+            e.Handled = true;
+            return;
+        }
+
         var screen = e.Key switch
         {
             Key.D1 => ScreenKind.Home,
@@ -789,6 +844,32 @@ public partial class MainWindow : Window
     }
 
     private void RestoreInteractionFocus() => _lastInteractionTarget?.Focus();
+
+    private static void AnimateNativeRoleButton(Button button)
+    {
+        if (!SystemParameters.ClientAreaAnimation)
+        {
+            return;
+        }
+
+        button.RenderTransformOrigin = new Point(0.5, 0.5);
+        var scale = new ScaleTransform(1, 1);
+        button.RenderTransform = scale;
+
+        var pulse = new DoubleAnimationUsingKeyFrames();
+        pulse.KeyFrames.Add(new EasingDoubleKeyFrame(
+            1,
+            KeyTime.FromTimeSpan(TimeSpan.Zero)));
+        pulse.KeyFrames.Add(new EasingDoubleKeyFrame(
+            1.045,
+            KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(90))));
+        pulse.KeyFrames.Add(new EasingDoubleKeyFrame(
+            1,
+            KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(260))));
+
+        scale.BeginAnimation(ScaleTransform.ScaleXProperty, pulse);
+        scale.BeginAnimation(ScaleTransform.ScaleYProperty, pulse);
+    }
 
     private void ShowRoleActivation(Button button)
     {
