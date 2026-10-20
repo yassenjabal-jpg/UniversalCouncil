@@ -135,8 +135,7 @@ func normalizeConfig(cfg Config) (Config, error) {
 	}
 	for _, app := range cfg.AllowedApps {
 		app = strings.TrimSpace(strings.ToLower(app))
-		if app == "" || strings.ContainsAny(app, "\\/:
-	") {
+		if app == "" || strings.ContainsAny(app, "\\/:\r\n\t") {
 			return Config{}, fmt.Errorf("invalid allowed app %q", app)
 		}
 		out.AllowedApps = append(out.AllowedApps, app)
