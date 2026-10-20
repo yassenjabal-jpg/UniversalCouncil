@@ -84,14 +84,24 @@
   "stage8_opened": false,
   "native_reconstruction": {
     "strategy": "SLICE_BY_SLICE_WITH_REFERENCE_UNDERLAY_AND_OVERLAY_COMPARISON",
-    "current_slice": "home_council_pulse",
+    "current_slice": "home_command_composer",
     "current_slice_state": "IMPLEMENTED_CI_VALIDATION_PENDING",
     "reference_underlay_retained": true,
     "comparison_shortcut": "Ctrl+Shift+O",
-    "completed_slices": [],
+    "completed_slices": [
+      {
+        "id": "home_council_pulse",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_PENDING",
+        "evidence_head": "0f4e039b71d2ed4122634bc99ba3833b3a5199e3",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
+      }
+    ],
     "pending_slices": [
-      "home_council_pulse_validation",
-      "home_command_composer",
+      "home_command_composer_validation",
       "home_active_work_cards",
       "home_owner_summary_panels",
       "home_side_rails",
