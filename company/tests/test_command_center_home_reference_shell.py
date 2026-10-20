@@ -490,3 +490,42 @@ def test_pulse_story_native_geometry_is_calibrated_to_reference():
     assert "Place(SecondaryNativeLayer, card, 244, 300, 1200, 340);" in code
     assert "const double top = 648;" in code
     assert "const double height = 366;" in code
+
+
+def test_work_receipt_has_native_reconstruction():
+    code = CODE.read_text(encoding="utf-8")
+    assert "BuildNativeWorkReceipt" in code
+    assert "BuildNativeWorkReceiptHero" in code
+    assert "BuildNativeWorkReceiptStages" in code
+    assert "BuildNativeBusinessReceipt" in code
+    assert "BuildNativeFinalOutputs" in code
+    assert "BuildNativeReceiptEvidence" in code
+    assert "BuildNativeUsageSummary" in code
+    assert "BuildNativeWorkReceiptBottomPanels" in code
+
+
+def test_work_receipt_preserves_canonical_business_sections():
+    code = CODE.read_text(encoding="utf-8")
+    for value in (
+        "تم إنجاز المشروع بنجاح",
+        "مراحل المشروع",
+        "إيصال الأعمال",
+        "المخرجات النهائية",
+        "الأدلة والشواهد",
+        "استخدام الاستدلال",
+        "المشاكل التي تم تجاوزها نهائياً",
+        "خطط الرجوع (Fallbacks)",
+        "نقاط التحقق",
+        "قرارات المجلس",
+        "الإجراء الموصى به الآن",
+    ):
+        assert value in code
+
+
+def test_work_receipt_artifact_media_uses_canonical_reference_crops():
+    code = CODE.read_text(encoding="utf-8")
+    assert '"08-project_complete_work_receipt.png"' in code
+    assert "new Int32Rect(571, 513, 110, 83)" in code
+    assert "new Int32Rect(706, 513, 100, 83)" in code
+    assert "new Int32Rect(830, 513, 105, 83)" in code
+    assert "new Int32Rect(954, 513, 105, 83)" in code
