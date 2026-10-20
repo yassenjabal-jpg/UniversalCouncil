@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "implementation_id": "p1-canonical-reference-shell-interactions-v1",
+  "status": "IMPLEMENTED_CI_VALIDATION_PENDING_CURRENT_HEAD",
+  "strategy": "CANONICAL_REFERENCE_PIXELS_PLUS_NATIVE_WPF_SEMANTIC_OVERLAY",
+  "canonical_reference_count": 8,
+  "reference_pixels_reauthored": false,
+  "wpf_native_interactions": true,
+  "screens": {
+    "home_owner_workspace": [
+      "role_context",
+      "reasoning",
+      "composer_routing",
+      "projects",
+      "owner_panels",
+      "tool_dock"
+    ],
+    "living_project_workspace": [
+      "active_roles",
+      "reasoning",
+      "autopilot_rail",
+      "filmstrip",
+      "decision_stack",
+      "tools",
+      "execution_info"
+    ],
+    "software_autopilot_project": [
+      "checkpoint_timeline",
+      "diff",
+      "branches",
+      "recovery",
+      "fork",
+      "tool_dock"
+    ],
+    "studio_project": [
+      "production_stages",
+      "artifact_viewer",
+      "timeline",
+      "tools_qc",
+      "handoff",
+      "active_team"
+    ],
+    "owner_decision_mode": [
+      "decision_context",
+      "member_ring",
+      "evidence_peek",
+      "approve",
+      "request_changes",
+      "reject",
+      "ask"
+    ],
+    "checkpoint_recovery_fork": [
+      "checkpoint_inspector",
+      "branch_compare",
+      "restore_request",
+      "fork",
+      "promote",
+      "destructive_guard"
+    ],
+    "pulse_visual_project_story": [
+      "story_timeline",
+      "pulse_details",
+      "before_after",
+      "truth_evidence_context"
+    ],
+    "project_complete_work_receipt": [
+      "work_receipt",
+      "final_artifacts",
+      "evidence",
+      "usage",
+      "fallbacks",
+      "checkpoints",
+      "council_decisions"
+    ]
+  },
+  "truth_constraints": {
+    "runtime_execution_claimed": false,
+    "reference_verified_labels_treated_as_live_truth": false,
+    "restore_success_requires_verified_event": true,
+    "decision_actions_do_not_resume_execution_without_state_event": true,
+    "unknown_never_rendered_as_success": true
+  },
+  "final_native_reconstruction_complete": false,
+  "stage8_opened": false
+}
