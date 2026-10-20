@@ -3768,7 +3768,7 @@ public partial class MainWindow : Window
     private void BuildNativeRecoveryTimeline()
     {
         var card = ChromePanel("#FFFCFBF8", "#E5E0D8", 13);
-        Place(SecondaryNativeLayer, card, 230, 153, 1240, 315);
+        Place(SecondaryNativeLayer, card, 230, 153, 1240, 345);
 
         Place(
             SecondaryNativeLayer,
@@ -3798,12 +3798,12 @@ public partial class MainWindow : Window
         AddTagChipToCanvas(SecondaryNativeLayer, 1333, 162, 65, "عرض", "#FFFFFF", "#566171");
 
         var create = ChromePanel("#2475F3", "#2475F3", 8);
-        Place(SecondaryNativeLayer, create, 1300, 201, 145, 36);
+        Place(SecondaryNativeLayer, create, 1300, 171, 145, 36);
         Place(
             SecondaryNativeLayer,
             ChromeText("+  إنشاء نقطة حفظ جديدة", 9.5, "#FFFFFF", FontWeights.SemiBold),
             1311,
-            207,
+            177,
             123,
             23);
 
@@ -4051,6 +4051,8 @@ public partial class MainWindow : Window
 
     private void BuildNativeRecoveryCards()
     {
+        var firstChild = SecondaryNativeLayer.Children.Count;
+
         BuildNativeSelectedCheckpointCard();
         BuildNativeRecoveryBranchCard(
             350,
@@ -4081,12 +4083,14 @@ public partial class MainWindow : Window
             "06-checkpoint_recovery_fork.png",
             new Int32Rect(745, 678, 289, 75));
         BuildNativeRecoveryComparison();
+
+        TranslateSecondaryChildren(firstChild, 30);
     }
 
     private void BuildNativeSelectedCheckpointCard()
     {
         var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
-        Place(SecondaryNativeLayer, card, 16, 475, 324, 315);
+        Place(SecondaryNativeLayer, card, 16, 475, 324, 335);
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
@@ -4218,7 +4222,7 @@ public partial class MainWindow : Window
         Int32Rect sourceRect)
     {
         var card = ChromePanel(background, "#DFDDE1", 11);
-        Place(SecondaryNativeLayer, card, left, 475, 355, 315);
+        Place(SecondaryNativeLayer, card, left, 475, 355, 335);
 
         Place(
             SecondaryNativeLayer,
@@ -4333,7 +4337,7 @@ public partial class MainWindow : Window
     private void BuildNativeRecoveryComparison()
     {
         var card = ChromePanel("#FFFCFBF8", "#E3DED7", 11);
-        Place(SecondaryNativeLayer, card, 1100, 475, 370, 315);
+        Place(SecondaryNativeLayer, card, 1100, 475, 370, 335);
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush("#2F75F3"), IsHitTestVisible = false },
@@ -4425,9 +4429,30 @@ public partial class MainWindow : Window
 
     private void BuildNativeRecoveryBottomPanels()
     {
+        var firstChild = SecondaryNativeLayer.Children.Count;
+
         BuildNativeRecoveryEventLog();
         BuildNativeRecoveryEvidence();
         BuildNativeRecoveryActions();
+
+        TranslateSecondaryChildren(firstChild, 50);
+    }
+
+    private void TranslateSecondaryChildren(int firstChild, double deltaY)
+    {
+        for (var index = firstChild; index < SecondaryNativeLayer.Children.Count; index++)
+        {
+            if (SecondaryNativeLayer.Children[index] is not FrameworkElement element)
+            {
+                continue;
+            }
+
+            var top = Canvas.GetTop(element);
+            if (!double.IsNaN(top))
+            {
+                Canvas.SetTop(element, top + deltaY);
+            }
+        }
     }
 
     private void BuildNativeRecoveryEventLog()
