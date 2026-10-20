@@ -143,8 +143,7 @@ if pre["final_adoption_granted"] or pre["merge_authorized"]:
     raise SystemExit("UX pre-approval may not pre-authorize adoption or merge")
 
 if change["pre_approval_receipt"] != (
-    "state/command-center/project-governance/approvals/"
-    "2026-10-21-ux-impact-state-contract-pre.json"
+    "state/command-center/project-governance/approvals/2026-10-21-ux-impact-state-contract-pre.json"
 ):
     raise SystemExit("UX Change Envelope is not bound to its pre-approval")
 if change["unplanned_scope_policy"] != "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE":
