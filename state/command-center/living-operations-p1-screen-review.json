@@ -8,7 +8,7 @@
     {
       "id": "home_owner_workspace",
       "state": "NATIVE_REFERENCE_SHELL_IMPLEMENTED_INTERACTION_REVIEW_COMPLETE",
-      "murtakaz_decision": "PENDING_FINAL_NATIVE_RECONSTRUCTION",
+      "murtakaz_decision": "PENDING",
       "blueprint": "docs/operations/command-center/living-operations/20_HOME_OWNER_WORKSPACE_FIDELITY_BLUEPRINT.md",
       "visual_job_id": "P1-HOME-ARTIFACT-002",
       "repair_audit": "docs/operations/command-center/living-operations/21_MEMBER_SIGIL_REFERENCE_GAP_AUDIT.md",
@@ -19,31 +19,31 @@
     {
       "id": "living_project_workspace",
       "state": "NATIVE_REFERENCE_SHELL_IMPLEMENTED_INTERACTION_REVIEW_COMPLETE",
-      "murtakaz_decision": "PENDING_FINAL_NATIVE_RECONSTRUCTION",
+      "murtakaz_decision": "PENDING",
       "reference_shell_interaction_implemented": true
     },
     {
       "id": "owner_decision_mode",
       "state": "NATIVE_REFERENCE_SHELL_IMPLEMENTED_INTERACTION_REVIEW_COMPLETE",
-      "murtakaz_decision": "PENDING_FINAL_NATIVE_RECONSTRUCTION",
+      "murtakaz_decision": "PENDING",
       "reference_shell_interaction_implemented": true
     },
     {
       "id": "recovery_checkpoint_fork",
       "state": "NATIVE_REFERENCE_SHELL_IMPLEMENTED_INTERACTION_REVIEW_COMPLETE",
-      "murtakaz_decision": "PENDING_FINAL_NATIVE_RECONSTRUCTION",
+      "murtakaz_decision": "PENDING",
       "reference_shell_interaction_implemented": true
     },
     {
       "id": "project_complete_work_receipt",
       "state": "NATIVE_REFERENCE_SHELL_IMPLEMENTED_INTERACTION_REVIEW_COMPLETE",
-      "murtakaz_decision": "PENDING_FINAL_NATIVE_RECONSTRUCTION",
+      "murtakaz_decision": "PENDING",
       "reference_shell_interaction_implemented": true
     }
   ],
   "shared_motion": {
     "state": "NATIVE_SEMANTIC_MOTION_LAYER_IMPLEMENTED_REVIEW_COMPLETE",
-    "murtakaz_decision": "PENDING_FINAL_NATIVE_RECONSTRUCTION"
+    "murtakaz_decision": "PENDING"
   },
   "android_semantic_pair": {
     "state": "DIRECTION_DEFINED_ARTIFACT_PENDING",
