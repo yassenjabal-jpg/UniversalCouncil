@@ -125,7 +125,7 @@ internal static class Program
     {
         var window = App.CreateMainWindow(AppContext.BaseDirectory);
 
-        if (window.FindName("NativeHomeLayer") is UIElement nativeHomeLayer)
+        if (window.FindName("NativeHomeReconstructionRoot") is UIElement nativeHomeLayer)
         {
             switch (variant)
             {
