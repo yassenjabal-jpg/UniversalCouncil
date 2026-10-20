@@ -1634,139 +1634,139 @@
 
                         <!-- Since last visit -->
                         <Border Canvas.Left="244" Canvas.Top="746"
-                                Width="257" Height="165"
+                                Width="257" Height="215"
                                 Background="#FFFCFBF8"
                                 BorderBrush="#E9E4DC"
                                 BorderThickness="1"
                                 CornerRadius="13"
                                 IsHitTestVisible="False">
-                            <Canvas Width="257" Height="165">
-                                <Ellipse Canvas.Left="14" Canvas.Top="12"
+                            <Canvas Width="257" Height="215">
+                                <Ellipse Canvas.Left="14" Canvas.Top="15"
                                          Width="25" Height="25"
                                          Fill="#FFF4DB"
                                          Stroke="#E6B757"
                                          StrokeThickness="1" />
-                                <TextBlock Canvas.Left="21" Canvas.Top="15"
+                                <TextBlock Canvas.Left="21" Canvas.Top="18.75"
                                            Text="◷"
                                            FontSize="15"
                                            Foreground="#C58B20" />
-                                <TextBlock Canvas.Left="48" Canvas.Top="10"
+                                <TextBlock Canvas.Left="48" Canvas.Top="12.50"
                                            Text="منذ آخر زيارة"
                                            FlowDirection="RightToLeft"
                                            FontSize="17"
                                            FontWeight="SemiBold"
                                            Foreground="#17233B" />
-                                <TextBlock Canvas.Left="170" Canvas.Top="13"
+                                <TextBlock Canvas.Left="170" Canvas.Top="16.25"
                                            Text="6 تحديثات جديدة"
                                            FlowDirection="RightToLeft"
                                            FontSize="9.5"
                                            Foreground="#87909C" />
 
-                                <Border Canvas.Left="12" Canvas.Top="43"
-                                        Width="233" Height="27"
+                                <Border Canvas.Left="12" Canvas.Top="53.75"
+                                        Width="233" Height="34"
                                         Background="#FFFFFF"
                                         BorderBrush="#EEEAE4"
                                         BorderThickness="1"
                                         CornerRadius="7" />
-                                <TextBlock Canvas.Left="26" Canvas.Top="48"
+                                <TextBlock Canvas.Left="26" Canvas.Top="60"
                                            Text="▣"
                                            FontSize="12"
                                            Foreground="#758294" />
-                                <TextBlock Canvas.Left="48" Canvas.Top="45"
+                                <TextBlock Canvas.Left="48" Canvas.Top="56.25"
                                            Width="145"
                                            Text="تم إكمال تحليل متطلبات الخصوصية"
                                            FlowDirection="RightToLeft"
                                            FontSize="9.7"
                                            FontWeight="SemiBold"
                                            Foreground="#344052" />
-                                <TextBlock Canvas.Left="48" Canvas.Top="58"
+                                <TextBlock Canvas.Left="48" Canvas.Top="72.50"
                                            Text="M2-A: Privacy"
                                            FontSize="8.5"
                                            Foreground="#737C89" />
-                                <TextBlock Canvas.Left="196" Canvas.Top="50"
+                                <TextBlock Canvas.Left="196" Canvas.Top="62.50"
                                            Text="منذ 12 دقيقة"
                                            FlowDirection="RightToLeft"
                                            FontSize="8.2"
                                            Foreground="#8A929D" />
-                                <Ellipse Canvas.Left="231" Canvas.Top="53"
+                                <Ellipse Canvas.Left="231" Canvas.Top="66.25"
                                          Width="6" Height="6" Fill="#2BC86B" />
 
-                                <Border Canvas.Left="12" Canvas.Top="73"
-                                        Width="233" Height="27"
+                                <Border Canvas.Left="12" Canvas.Top="91.25"
+                                        Width="233" Height="34"
                                         Background="#FFFFFF"
                                         BorderBrush="#EEEAE4"
                                         BorderThickness="1"
                                         CornerRadius="7" />
-                                <TextBlock Canvas.Left="26" Canvas.Top="79"
+                                <TextBlock Canvas.Left="26" Canvas.Top="98.75"
                                            Text="⌕"
                                            FontSize="12"
                                            Foreground="#7456D8" />
-                                <TextBlock Canvas.Left="48" Canvas.Top="75"
+                                <TextBlock Canvas.Left="48" Canvas.Top="93.75"
                                            Width="145"
                                            Text="تقرير البحث متاح للمراجعة"
                                            FlowDirection="RightToLeft"
                                            FontSize="9.7"
                                            FontWeight="SemiBold"
                                            Foreground="#344052" />
-                                <TextBlock Canvas.Left="48" Canvas.Top="88"
+                                <TextBlock Canvas.Left="48" Canvas.Top="110"
                                            Text="Erasure Contract"
                                            FontSize="8.5"
                                            Foreground="#737C89" />
-                                <TextBlock Canvas.Left="196" Canvas.Top="80"
+                                <TextBlock Canvas.Left="196" Canvas.Top="100"
                                            Text="منذ 47 دقيقة"
                                            FlowDirection="RightToLeft"
                                            FontSize="8.2"
                                            Foreground="#8A929D" />
-                                <Ellipse Canvas.Left="231" Canvas.Top="83"
+                                <Ellipse Canvas.Left="231" Canvas.Top="103.75"
                                          Width="6" Height="6" Fill="#825CE0" />
 
-                                <Border Canvas.Left="12" Canvas.Top="103"
-                                        Width="233" Height="27"
+                                <Border Canvas.Left="12" Canvas.Top="128.75"
+                                        Width="233" Height="34"
                                         Background="#FFFFFF"
                                         BorderBrush="#EEEAE4"
                                         BorderThickness="1"
                                         CornerRadius="7" />
-                                <TextBlock Canvas.Left="26" Canvas.Top="109"
+                                <TextBlock Canvas.Left="26" Canvas.Top="136.25"
                                            Text="▧"
                                            FontSize="12"
                                            Foreground="#2F75F3" />
-                                <TextBlock Canvas.Left="48" Canvas.Top="105"
+                                <TextBlock Canvas.Left="48" Canvas.Top="131.25"
                                            Width="145"
                                            Text="تم توليد 3 نماذج للتصميم"
                                            FlowDirection="RightToLeft"
                                            FontSize="9.7"
                                            FontWeight="SemiBold"
                                            Foreground="#344052" />
-                                <TextBlock Canvas.Left="48" Canvas.Top="118"
+                                <TextBlock Canvas.Left="48" Canvas.Top="147.50"
                                            Text="Smart Secretary V2"
                                            FontSize="8.5"
                                            Foreground="#737C89" />
-                                <TextBlock Canvas.Left="205" Canvas.Top="110"
+                                <TextBlock Canvas.Left="205" Canvas.Top="137.50"
                                            Text="منذ ساعتين"
                                            FlowDirection="RightToLeft"
                                            FontSize="8.2"
                                            Foreground="#8A929D" />
-                                <Ellipse Canvas.Left="231" Canvas.Top="113"
+                                <Ellipse Canvas.Left="231" Canvas.Top="141.25"
                                          Width="6" Height="6" Fill="#318BF1" />
 
-                                <Border Canvas.Left="12" Canvas.Top="133"
-                                        Width="233" Height="24"
+                                <Border Canvas.Left="12" Canvas.Top="166.25"
+                                        Width="233" Height="30"
                                         Background="#FFFFFF"
                                         BorderBrush="#EEEAE4"
                                         BorderThickness="1"
                                         CornerRadius="7" />
-                                <TextBlock Canvas.Left="26" Canvas.Top="139"
+                                <TextBlock Canvas.Left="26" Canvas.Top="173.75"
                                            Text="↗"
                                            FontSize="11"
                                            Foreground="#2A9B65" />
-                                <TextBlock Canvas.Left="48" Canvas.Top="136"
+                                <TextBlock Canvas.Left="48" Canvas.Top="170"
                                            Width="154"
                                            Text="مزامنة الأدلة من المصادر الخارجية"
                                            FlowDirection="RightToLeft"
                                            FontSize="9.5"
                                            FontWeight="SemiBold"
                                            Foreground="#344052" />
-                                <TextBlock Canvas.Left="206" Canvas.Top="140"
+                                <TextBlock Canvas.Left="206" Canvas.Top="175"
                                            Text="3 س"
                                            FlowDirection="RightToLeft"
                                            FontSize="8.2"
@@ -1776,59 +1776,59 @@
 
                         <!-- Needs your decision -->
                         <Border Canvas.Left="507" Canvas.Top="746"
-                                Width="503" Height="165"
+                                Width="503" Height="215"
                                 Background="#FFFCFBF8"
                                 BorderBrush="#E9E4DC"
                                 BorderThickness="1"
                                 CornerRadius="13"
                                 IsHitTestVisible="False">
-                            <Canvas Width="503" Height="165">
-                                <Ellipse Canvas.Left="14" Canvas.Top="12"
+                            <Canvas Width="503" Height="215">
+                                <Ellipse Canvas.Left="14" Canvas.Top="15"
                                          Width="25" Height="25"
                                          Fill="#FFF2D7"
                                          Stroke="#F0BE55"
                                          StrokeThickness="1" />
-                                <TextBlock Canvas.Left="22" Canvas.Top="14"
+                                <TextBlock Canvas.Left="22" Canvas.Top="17.50"
                                            Text="♙"
                                            FontFamily="Segoe UI Symbol"
                                            FontSize="14"
                                            Foreground="#C38B1D" />
-                                <TextBlock Canvas.Left="48" Canvas.Top="10"
+                                <TextBlock Canvas.Left="48" Canvas.Top="12.50"
                                            Text="يحتاج قرارك"
                                            FlowDirection="RightToLeft"
                                            FontSize="17"
                                            FontWeight="SemiBold"
                                            Foreground="#17233B" />
-                                <TextBlock Canvas.Left="143" Canvas.Top="13"
+                                <TextBlock Canvas.Left="143" Canvas.Top="16.25"
                                            Text="2 عنصر تحتاج لمراجعتك"
                                            FlowDirection="RightToLeft"
                                            FontSize="9.5"
                                            Foreground="#87909C" />
 
-                                <Border Canvas.Left="13" Canvas.Top="45"
-                                        Width="477" Height="50"
+                                <Border Canvas.Left="13" Canvas.Top="56.25"
+                                        Width="477" Height="63"
                                         Background="#FFFFFF"
                                         BorderBrush="#EEEAE4"
                                         BorderThickness="1"
                                         CornerRadius="8" />
-                                <Ellipse Canvas.Left="28" Canvas.Top="58"
+                                <Ellipse Canvas.Left="28" Canvas.Top="72.50"
                                          Width="25" Height="25"
                                          Fill="#E9F8EF" />
-                                <TextBlock Canvas.Left="35" Canvas.Top="62"
+                                <TextBlock Canvas.Left="35" Canvas.Top="77.50"
                                            Text="▣"
                                            FontSize="12"
                                            Foreground="#24A969" />
-                                <TextBlock Canvas.Left="65" Canvas.Top="51"
+                                <TextBlock Canvas.Left="65" Canvas.Top="63.75"
                                            Text="مراجعة المقترح النهائي"
                                            FlowDirection="RightToLeft"
                                            FontSize="11"
                                            FontWeight="SemiBold"
                                            Foreground="#2C3749" />
-                                <TextBlock Canvas.Left="65" Canvas.Top="69"
+                                <TextBlock Canvas.Left="65" Canvas.Top="86.25"
                                            Text="Erasure Contract"
                                            FontSize="9"
                                            Foreground="#6F7885" />
-                                <Border Canvas.Left="184" Canvas.Top="63"
+                                <Border Canvas.Left="184" Canvas.Top="78.75"
                                         Width="64" Height="22"
                                         Background="#FFF3CF"
                                         CornerRadius="7">
@@ -1839,12 +1839,12 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center" />
                                 </Border>
-                                <TextBlock Canvas.Left="344" Canvas.Top="52"
+                                <TextBlock Canvas.Left="344" Canvas.Top="65"
                                            Text="منذ ساعة"
                                            FlowDirection="RightToLeft"
                                            FontSize="8.5"
                                            Foreground="#8A929D" />
-                                <Border Canvas.Left="358" Canvas.Top="64"
+                                <Border Canvas.Left="358" Canvas.Top="80"
                                         Width="54" Height="25"
                                         Background="#FFFFFF"
                                         BorderBrush="#DFE2E8"
@@ -1857,7 +1857,7 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center" />
                                 </Border>
-                                <Border Canvas.Left="420" Canvas.Top="64"
+                                <Border Canvas.Left="420" Canvas.Top="80"
                                         Width="58" Height="25"
                                         Background="#E9A110"
                                         CornerRadius="7">
@@ -1870,30 +1870,30 @@
                                                VerticalAlignment="Center" />
                                 </Border>
 
-                                <Border Canvas.Left="13" Canvas.Top="101"
-                                        Width="477" Height="50"
+                                <Border Canvas.Left="13" Canvas.Top="126.25"
+                                        Width="477" Height="63"
                                         Background="#FFFFFF"
                                         BorderBrush="#EEEAE4"
                                         BorderThickness="1"
                                         CornerRadius="8" />
-                                <Ellipse Canvas.Left="28" Canvas.Top="114"
+                                <Ellipse Canvas.Left="28" Canvas.Top="142.50"
                                          Width="25" Height="25"
                                          Fill="#FFF6DD" />
-                                <TextBlock Canvas.Left="35" Canvas.Top="118"
+                                <TextBlock Canvas.Left="35" Canvas.Top="147.50"
                                            Text="ϟ"
                                            FontSize="14"
                                            Foreground="#D28A14" />
-                                <TextBlock Canvas.Left="65" Canvas.Top="107"
+                                <TextBlock Canvas.Left="65" Canvas.Top="133.75"
                                            Text="اعتماد نطاق المرحلة التالية"
                                            FlowDirection="RightToLeft"
                                            FontSize="11"
                                            FontWeight="SemiBold"
                                            Foreground="#2C3749" />
-                                <TextBlock Canvas.Left="65" Canvas.Top="125"
+                                <TextBlock Canvas.Left="65" Canvas.Top="156.25"
                                            Text="Smart Secretary V2"
                                            FontSize="9"
                                            Foreground="#6F7885" />
-                                <Border Canvas.Left="184" Canvas.Top="119"
+                                <Border Canvas.Left="184" Canvas.Top="148.75"
                                         Width="71" Height="22"
                                         Background="#FFF1D1"
                                         CornerRadius="7">
@@ -1904,12 +1904,12 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center" />
                                 </Border>
-                                <TextBlock Canvas.Left="338" Canvas.Top="108"
+                                <TextBlock Canvas.Left="338" Canvas.Top="135"
                                            Text="منذ 3 ساعات"
                                            FlowDirection="RightToLeft"
                                            FontSize="8.5"
                                            Foreground="#8A929D" />
-                                <Border Canvas.Left="358" Canvas.Top="120"
+                                <Border Canvas.Left="358" Canvas.Top="150"
                                         Width="54" Height="25"
                                         Background="#FFFFFF"
                                         BorderBrush="#DFE2E8"
@@ -1922,7 +1922,7 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center" />
                                 </Border>
-                                <Border Canvas.Left="420" Canvas.Top="120"
+                                <Border Canvas.Left="420" Canvas.Top="150"
                                         Width="58" Height="25"
                                         Background="#E9A110"
                                         CornerRadius="7">
@@ -1939,54 +1939,54 @@
 
                         <!-- Recent results -->
                         <Border Canvas.Left="1016" Canvas.Top="746"
-                                Width="439" Height="165"
+                                Width="439" Height="215"
                                 Background="#FFFCFBF8"
                                 BorderBrush="#E9E4DC"
                                 BorderThickness="1"
                                 CornerRadius="13"
                                 IsHitTestVisible="False">
-                            <Canvas Width="439" Height="165">
-                                <Ellipse Canvas.Left="14" Canvas.Top="12"
+                            <Canvas Width="439" Height="215">
+                                <Ellipse Canvas.Left="14" Canvas.Top="15"
                                          Width="25" Height="25"
                                          Fill="#E9F9EF"
                                          Stroke="#65D08B"
                                          StrokeThickness="1" />
-                                <TextBlock Canvas.Left="21" Canvas.Top="15"
+                                <TextBlock Canvas.Left="21" Canvas.Top="18.75"
                                            Text="✓"
                                            FontSize="15"
                                            FontWeight="Bold"
                                            Foreground="#22A85F" />
-                                <TextBlock Canvas.Left="48" Canvas.Top="10"
+                                <TextBlock Canvas.Left="48" Canvas.Top="12.50"
                                            Text="النتائج الأخيرة"
                                            FlowDirection="RightToLeft"
                                            FontSize="17"
                                            FontWeight="SemiBold"
                                            Foreground="#17233B" />
-                                <TextBlock Canvas.Left="169" Canvas.Top="13"
+                                <TextBlock Canvas.Left="169" Canvas.Top="16.25"
                                            Text="4 نتائج مكتملة"
                                            FlowDirection="RightToLeft"
                                            FontSize="9.5"
                                            Foreground="#87909C" />
 
-                                <Border Canvas.Left="13" Canvas.Top="43"
-                                        Width="413" Height="27"
+                                <Border Canvas.Left="13" Canvas.Top="53.75"
+                                        Width="413" Height="34"
                                         Background="#FFFFFF"
                                         BorderBrush="#EEEAE4"
                                         BorderThickness="1"
                                         CornerRadius="7" />
-                                <TextBlock Canvas.Left="26" Canvas.Top="49"
+                                <TextBlock Canvas.Left="26" Canvas.Top="61.25"
                                            Text="▣" FontSize="11" Foreground="#6B7C91" />
-                                <TextBlock Canvas.Left="50" Canvas.Top="45"
+                                <TextBlock Canvas.Left="50" Canvas.Top="56.25"
                                            Text="تقرير تحليل السوق"
                                            FlowDirection="RightToLeft"
                                            FontSize="10.5"
                                            FontWeight="SemiBold"
                                            Foreground="#344052" />
-                                <TextBlock Canvas.Left="50" Canvas.Top="58"
+                                <TextBlock Canvas.Left="50" Canvas.Top="72.50"
                                            Text="Smart Secretary V2"
                                            FontSize="8.5"
                                            Foreground="#737C89" />
-                                <Border Canvas.Left="250" Canvas.Top="48"
+                                <Border Canvas.Left="250" Canvas.Top="60"
                                         Width="67" Height="18"
                                         Background="#E9FAEF"
                                         CornerRadius="6">
@@ -1996,31 +1996,31 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center" />
                                 </Border>
-                                <TextBlock Canvas.Left="346" Canvas.Top="50"
+                                <TextBlock Canvas.Left="346" Canvas.Top="62.50"
                                            Text="منذ 5 ساعات"
                                            FlowDirection="RightToLeft"
                                            FontSize="8.3"
                                            Foreground="#8A929D" />
 
-                                <Border Canvas.Left="13" Canvas.Top="73"
-                                        Width="413" Height="27"
+                                <Border Canvas.Left="13" Canvas.Top="91.25"
+                                        Width="413" Height="34"
                                         Background="#FFFFFF"
                                         BorderBrush="#EEEAE4"
                                         BorderThickness="1"
                                         CornerRadius="7" />
-                                <TextBlock Canvas.Left="26" Canvas.Top="79"
+                                <TextBlock Canvas.Left="26" Canvas.Top="98.75"
                                            Text="✎" FontSize="11" Foreground="#6E7786" />
-                                <TextBlock Canvas.Left="50" Canvas.Top="75"
+                                <TextBlock Canvas.Left="50" Canvas.Top="93.75"
                                            Text="نموذج التصميم الأولي"
                                            FlowDirection="RightToLeft"
                                            FontSize="10.5"
                                            FontWeight="SemiBold"
                                            Foreground="#344052" />
-                                <TextBlock Canvas.Left="50" Canvas.Top="88"
+                                <TextBlock Canvas.Left="50" Canvas.Top="110"
                                            Text="M2-A: Privacy"
                                            FontSize="8.5"
                                            Foreground="#737C89" />
-                                <Border Canvas.Left="250" Canvas.Top="78"
+                                <Border Canvas.Left="250" Canvas.Top="97.50"
                                         Width="67" Height="18"
                                         Background="#E9FAEF"
                                         CornerRadius="6">
@@ -2030,31 +2030,31 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center" />
                                 </Border>
-                                <TextBlock Canvas.Left="346" Canvas.Top="80"
+                                <TextBlock Canvas.Left="346" Canvas.Top="100"
                                            Text="منذ 17 ساعة"
                                            FlowDirection="RightToLeft"
                                            FontSize="8.3"
                                            Foreground="#8A929D" />
 
-                                <Border Canvas.Left="13" Canvas.Top="103"
-                                        Width="413" Height="27"
+                                <Border Canvas.Left="13" Canvas.Top="128.75"
+                                        Width="413" Height="34"
                                         Background="#FFFFFF"
                                         BorderBrush="#EEEAE4"
                                         BorderThickness="1"
                                         CornerRadius="7" />
-                                <TextBlock Canvas.Left="26" Canvas.Top="109"
+                                <TextBlock Canvas.Left="26" Canvas.Top="136.25"
                                            Text="▰" FontSize="11" Foreground="#2F75F3" />
-                                <TextBlock Canvas.Left="50" Canvas.Top="105"
+                                <TextBlock Canvas.Left="50" Canvas.Top="131.25"
                                            Text="مجلد الأدلة والبيانات"
                                            FlowDirection="RightToLeft"
                                            FontSize="10.5"
                                            FontWeight="SemiBold"
                                            Foreground="#344052" />
-                                <TextBlock Canvas.Left="50" Canvas.Top="118"
+                                <TextBlock Canvas.Left="50" Canvas.Top="147.50"
                                            Text="Erasure Contract"
                                            FontSize="8.5"
                                            Foreground="#737C89" />
-                                <Border Canvas.Left="250" Canvas.Top="108"
+                                <Border Canvas.Left="250" Canvas.Top="135"
                                         Width="67" Height="18"
                                         Background="#E9FAEF"
                                         CornerRadius="6">
@@ -2064,31 +2064,31 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center" />
                                 </Border>
-                                <TextBlock Canvas.Left="346" Canvas.Top="110"
+                                <TextBlock Canvas.Left="346" Canvas.Top="137.50"
                                            Text="منذ يوم واحد"
                                            FlowDirection="RightToLeft"
                                            FontSize="8.3"
                                            Foreground="#8A929D" />
 
-                                <Border Canvas.Left="13" Canvas.Top="133"
-                                        Width="413" Height="24"
+                                <Border Canvas.Left="13" Canvas.Top="166.25"
+                                        Width="413" Height="30"
                                         Background="#FFFFFF"
                                         BorderBrush="#EEEAE4"
                                         BorderThickness="1"
                                         CornerRadius="7" />
-                                <TextBlock Canvas.Left="26" Canvas.Top="139"
+                                <TextBlock Canvas.Left="26" Canvas.Top="173.75"
                                            Text="▧" FontSize="11" Foreground="#5279DA" />
-                                <TextBlock Canvas.Left="50" Canvas.Top="136"
+                                <TextBlock Canvas.Left="50" Canvas.Top="170"
                                            Text="خطة التنفيذ التفصيلية"
                                            FlowDirection="RightToLeft"
                                            FontSize="10"
                                            FontWeight="SemiBold"
                                            Foreground="#344052" />
-                                <TextBlock Canvas.Left="50" Canvas.Top="149"
+                                <TextBlock Canvas.Left="50" Canvas.Top="186.25"
                                            Text="Smart Secretary V2"
                                            FontSize="8.2"
                                            Foreground="#737C89" />
-                                <Border Canvas.Left="250" Canvas.Top="137"
+                                <Border Canvas.Left="250" Canvas.Top="171.25"
                                         Width="67" Height="18"
                                         Background="#E9FAEF"
                                         CornerRadius="6">
@@ -2102,19 +2102,19 @@
                         </Border>
 
                         <Button Canvas.Left="244" Canvas.Top="746"
-                                Width="257" Height="165"
+                                Width="257" Height="215"
                                 Tag="since-away"
                                 Style="{StaticResource HotspotButtonStyle}"
                                 Click="Region_Click"
                                 AutomationProperties.Name="منذ آخر زيارة" />
                         <Button Canvas.Left="507" Canvas.Top="746"
-                                Width="503" Height="165"
+                                Width="503" Height="215"
                                 Tag="needs-decision"
                                 Style="{StaticResource HotspotButtonStyle}"
                                 Click="Region_Click"
                                 AutomationProperties.Name="يحتاج قرارك" />
                         <Button Canvas.Left="1016" Canvas.Top="746"
-                                Width="439" Height="165"
+                                Width="439" Height="215"
                                 Tag="recent-results"
                                 Style="{StaticResource HotspotButtonStyle}"
                                 Click="Region_Click"
