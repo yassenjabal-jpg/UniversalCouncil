@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "murtakaz-change-envelope",
+  "status": "DESIGN_CONTRACT_ACTIVE_PROCESS_ENFORCED",
+  "required_fields": [
+    "change_id",
+    "project_id",
+    "base_revision",
+    "scope",
+    "non_goals",
+    "affected_artifacts",
+    "expected_behavior",
+    "risk_class",
+    "required_reviewers",
+    "required_workshop_reviewers",
+    "acceptance_criteria",
+    "verification_plan",
+    "pre_approval_receipt"
+  ],
+  "unplanned_scope_expansion": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE",
+  "material_mutation_from_freeform_prompt_only_forbidden": true,
+  "delta_only_default": true,
+  "downstream_locked_stage_repair": "RETURN_TICKET_REQUIRED"
+}
