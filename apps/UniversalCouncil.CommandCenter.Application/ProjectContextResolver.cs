@@ -132,6 +132,7 @@ public sealed class ProjectContextResolver : IProjectContextResolver
                     request.RequestedScopes.OrderBy(item => item, StringComparer.Ordinal).ToArray(),
                     conflictSources,
                     conflicts.Select(ProjectConflict).ToArray(),
+                    conflicts.Any(item => item.ChangeOfTruthRequired),
                     document.OwnerDirectives.OrderBy(item => item, StringComparer.Ordinal).ToArray(),
                     document.CanonicalDecisions.OrderBy(item => item, StringComparer.Ordinal).ToArray());
             }
@@ -164,6 +165,7 @@ public sealed class ProjectContextResolver : IProjectContextResolver
                     request.RequestedScopes.OrderBy(item => item, StringComparer.Ordinal).ToArray(),
                     selected,
                     [],
+                    false,
                     document.OwnerDirectives.OrderBy(item => item, StringComparer.Ordinal).ToArray(),
                     document.CanonicalDecisions.OrderBy(item => item, StringComparer.Ordinal).ToArray());
             }
@@ -177,6 +179,7 @@ public sealed class ProjectContextResolver : IProjectContextResolver
                 request.RequestedScopes.OrderBy(item => item, StringComparer.Ordinal).ToArray(),
                 selected,
                 [],
+                false,
                 document.OwnerDirectives.OrderBy(item => item, StringComparer.Ordinal).ToArray(),
                 document.CanonicalDecisions.OrderBy(item => item, StringComparer.Ordinal).ToArray());
         }
@@ -216,7 +219,8 @@ public sealed class ProjectContextResolver : IProjectContextResolver
             item.Reason,
             item.SourceIds.OrderBy(value => value, StringComparer.Ordinal).ToArray(),
             item.Domains.OrderBy(value => value, StringComparer.Ordinal).ToArray(),
-            item.RequiresOwnerDecision);
+            item.RequiresOwnerDecision,
+            item.ChangeOfTruthRequired);
 
     private static bool CanGovern(string authorityClass, bool untrusted) =>
         !untrusted &&
