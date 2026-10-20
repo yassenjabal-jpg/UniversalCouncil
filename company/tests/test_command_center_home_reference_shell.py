@@ -400,8 +400,8 @@ def test_owner_decision_keeps_dissent_evidence_and_impacts_visible():
 
 def test_owner_decision_native_vertical_calibration_matches_reference_bands():
     code = CODE.read_text(encoding="utf-8")
-    assert 'Place(SecondaryNativeLayer, surface, 400, 155, 735, 785);' in code
-    assert 'Place(SecondaryNativeLayer, dock, 381, 941, 796, 70);' in code
-    assert 'Place(SecondaryNativeLayer, group, 32, 610, 325, 322);' in code
-    assert 'AddDecisionRole(146, 388, 112' in code
-    assert 'AddDecisionRole(1269, 391, 106' in code
+    assert "Place(SecondaryNativeLayer, surface, 400, 155, 735, 785);" in code
+    assert "Place(SecondaryNativeLayer, dock, 381, 941, 796, 70);" in code
+    assert "Place(SecondaryNativeLayer, group, 32, 610, 325, 322);" in code
+    assert "AddDecisionRole(146, 388, 112" in code
+    assert "AddDecisionRole(1269, 391, 106" in code
