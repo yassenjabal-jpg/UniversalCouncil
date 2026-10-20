@@ -16,6 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\01-home_owner_workspace.png">
+      <Link>Assets\VisualReferences\01-home_owner_workspace.png</Link>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="..\..\state\command-center\command-center-state.json"
              Link="state\command-center-state.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
