@@ -217,6 +217,27 @@ internal static class Program
                 "pulse-story-blend-1440x900.png",
                 "blend",
                 "PulseStory"),
+            Render(
+                output,
+                1440,
+                900,
+                "work-receipt-reference-1440x900.png",
+                "reference",
+                "WorkReceipt"),
+            Render(
+                output,
+                1440,
+                900,
+                "work-receipt-native-1440x900.png",
+                "native",
+                "WorkReceipt"),
+            Render(
+                output,
+                1440,
+                900,
+                "work-receipt-blend-1440x900.png",
+                "blend",
+                "WorkReceipt"),
         };
 
         var manifestPath = Path.Combine(output, "ui-evidence-manifest.json");
