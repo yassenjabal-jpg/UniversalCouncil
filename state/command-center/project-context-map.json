@@ -1,0 +1,207 @@
+{
+  "schema_version": "1.0",
+  "source_type": "project_local_repository_projection",
+  "project_id": "universal-council-command-center",
+  "source_revision": "379820e27e70609c724740e2e138baa8b8a92c7d",
+  "project_manifest": {
+    "display_name": "UniversalCouncil Command Center",
+    "governance_system": "al-murtakaz",
+    "owner_authority": "FINAL"
+  },
+  "current_state": {
+    "delivery_stage": "STAGE_7",
+    "visual_phase": "P1_VISUAL_DIRECTION_IN_PROGRESS",
+    "live_execution_authorized": false,
+    "stage8_opened": false
+  },
+  "canonical_decisions": [
+    "one_governed_brain_many_front_doors",
+    "role_is_not_model",
+    "unknown_is_never_success",
+    "no_silent_fallback",
+    "eight_reference_visual_lock",
+    "murtakaz_pre_post_review_required"
+  ],
+  "active_work": [
+    "CONTEXT_RESOLVER_AND_CONTEXT_CAPSULE_COMPILER"
+  ],
+  "relevant_skills": [
+    "project_local_murtakaz_review",
+    "architecture_boundary_review"
+  ],
+  "recent_events": [
+    "AGENTIC_OS_INTEGRATED",
+    "UX_STATE_CONTRACT_APPROVED"
+  ],
+  "blockers": [
+    "PHASE0_LIVE_EXECUTION_LOCK",
+    "REAL_AUTOPILOT_NOT_IMPLEMENTED",
+    "ANDROID_LIVE_CONNECTION_UNPROVEN",
+    "STAGE8_NOT_OPENED"
+  ],
+  "owner_directives": [
+    "al-murtakaz-mandatory-approval",
+    "owner-visual-reference-lock",
+    "owner-model-selection-control"
+  ],
+  "sources": [
+    {
+      "id": "agentic-os-policy",
+      "path": "state/command-center/project-governance/agentic-os-policy.json",
+      "blob_sha": "53e1d9c8b19ba26440f7ca9590d34e483226af94",
+      "authority_class": "LOCKED_POLICY",
+      "freshness": "CURRENT",
+      "domains": [
+        "architecture",
+        "context",
+        "execution",
+        "routing"
+      ],
+      "scopes": [
+        "project",
+        "context",
+        "orchestration"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "architecture-invariants",
+      "path": "state/command-center/project-governance/architecture-invariants.json",
+      "blob_sha": "7045cc58b19e3321dff41feaa07892991b2493cb",
+      "authority_class": "LOCKED_POLICY",
+      "freshness": "CURRENT",
+      "domains": [
+        "architecture",
+        "context",
+        "governance"
+      ],
+      "scopes": [
+        "project",
+        "context",
+        "validation"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "context-capsule-contract",
+      "path": "state/command-center/project-governance/context-capsule-contract.json",
+      "blob_sha": "9d50f1c853bd6d1ff12b1e777221664b554361fc",
+      "authority_class": "LOCKED_POLICY",
+      "freshness": "CURRENT",
+      "domains": [
+        "context"
+      ],
+      "scopes": [
+        "project",
+        "context",
+        "capsule"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "ux-state-contract",
+      "path": "state/command-center/living-operations-ux-state-contract.json",
+      "blob_sha": "626662757d11e97f719c8a3b8fa006a112ae9937",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "context",
+        "ux"
+      ],
+      "scopes": [
+        "project",
+        "context",
+        "ux"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "murtakaz-approval-policy",
+      "path": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
+      "blob_sha": "6b54343313b8cb3080712ba5744888e83a53e458",
+      "authority_class": "LOCKED_POLICY",
+      "freshness": "CURRENT",
+      "domains": [
+        "authority",
+        "governance"
+      ],
+      "scopes": [
+        "project",
+        "approval",
+        "authority"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "stage-phase-map",
+      "path": "state/command-center/project-governance/stage-phase-map.json",
+      "blob_sha": "2abd1d9d4558eaae466a1038625728c6344c50c4",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "governance",
+        "project_state"
+      ],
+      "scopes": [
+        "project",
+        "stage",
+        "phase"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "visual-reference-manifest",
+      "path": "state/command-center/living-operations-reference-manifest.json",
+      "blob_sha": "bcd8ee23a5618c07919baa47971d83f86f908b69",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "ux",
+        "visual"
+      ],
+      "scopes": [
+        "project",
+        "visual",
+        "reference"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "project-council",
+      "path": "state/command-center/project-governance/project-council.json",
+      "blob_sha": "c74398013e550b360910d28ceb700f9fe6681265",
+      "authority_class": "LOCKED_POLICY",
+      "freshness": "CURRENT",
+      "domains": [
+        "governance",
+        "routing"
+      ],
+      "scopes": [
+        "project",
+        "review",
+        "routing"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "product-studio",
+      "path": "state/command-center/project-governance/product-studio.json",
+      "blob_sha": "d5fae36a2e501305415f985a3652932ed788ef8a",
+      "authority_class": "LOCKED_POLICY",
+      "freshness": "CURRENT",
+      "domains": [
+        "governance",
+        "ux",
+        "visual"
+      ],
+      "scopes": [
+        "project",
+        "review",
+        "ux",
+        "visual"
+      ],
+      "untrusted": false
+    }
+  ],
+  "conflicts": []
+}
