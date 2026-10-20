@@ -2130,11 +2130,21 @@
 
                     </Canvas>
 
+                    <Canvas x:Name="SecondaryNativeLayer"
+                            Width="1536"
+                            Height="1024"
+                            FlowDirection="LeftToRight"
+                            Background="{x:Null}"
+                            Visibility="Collapsed"
+                            Panel.ZIndex="4"
+                            AutomationProperties.Name="Secondary native reconstruction layer" />
+
                     <Canvas x:Name="SecondaryInteractionCanvas"
                             Width="1536"
                             Height="1024"
                             Background="Transparent"
-                            Visibility="Collapsed" />
+                            Visibility="Collapsed"
+                            Panel.ZIndex="5" />
                 </Grid>
             </Viewbox>
         </Grid>
