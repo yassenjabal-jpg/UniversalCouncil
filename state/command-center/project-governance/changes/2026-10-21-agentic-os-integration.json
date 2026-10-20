@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-AGENTIC-OS-INTEGRATION-2026-10-21",
+  "project_id": "universal-council-command-center",
+  "status": "IMPLEMENTING",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "1702d73eafa2319200164898bdaf0d400d4af524"
+  },
+  "scope": [
+    "reconcile Agentic Work OS with project-local Murtakaz",
+    "add anti-drift machine-readable contracts",
+    "bind contracts into Murtakaz projection and validators",
+    "add mandatory Murtakaz routing for agentic/context/automation changes",
+    "document architecture and delivery playbook"
+  ],
+  "non_goals": [
+    "live execution",
+    "Stage 8",
+    "real Autopilot",
+    "real Android connection",
+    "new visual design",
+    "changing canonical eight references",
+    "model/provider connection",
+    "parent Council or Media Studio mutation"
+  ],
+  "affected_artifacts": [
+    "state/command-center/project-governance/*agentic*",
+    "state/command-center/project-governance/*capsule*",
+    "state/command-center/project-governance/*envelope*",
+    "state/command-center/project-governance/project-council.json",
+    "state/command-center/project-governance/murtakaz-orchestration.json",
+    "tools/build_command_center_murtakaz_projection.py",
+    "tools/command_center_murtakaz_validate.py",
+    "tools/command_center_agentic_os_validate.py",
+    "company/tests/test_command_center_agentic_os_contract.py",
+    "docs/operations/command-center/project-governance/12_*",
+    "docs/operations/command-center/project-governance/13_*",
+    "docs/operations/command-center/COMMAND_CENTER_ROADMAP_2026-10-19.md"
+  ],
+  "expected_behavior": [
+    "PR54 architecture ideas preserved without stale-baseline merge",
+    "one logical gateway with bounded services",
+    "current visual hard gate remains supreme",
+    "invariants gain applicability metadata",
+    "prompt injection and audit privacy boundaries become explicit",
+    "CI fails on contract drift"
+  ],
+  "risk_class": "MATERIAL_ARCHITECTURE_GOVERNANCE",
+  "required_reviewers": [
+    "cc_architecture_execution",
+    "cc_ai_runtime",
+    "cc_security_remote_trust",
+    "cc_product_truth",
+    "cc_durable_autopilot",
+    "cc_owner_experience",
+    "cc_red_team"
+  ],
+  "required_workshop_reviewers": [
+    "cc_studio_producer",
+    "cc_experience_architect",
+    "cc_visual_qa"
+  ],
+  "acceptance_criteria": [
+    "projection rebuild is deterministic",
+    "Murtakaz validator calls Agentic OS validator",
+    "24 invariants have scoped applicability",
+    "visual policy references existing manifest/protocol and does not replace them",
+    "authority remains execution=false and stage8=false",
+    "tests and CI pass on exact head",
+    "post-change Murtakaz review is recorded"
+  ],
+  "verification_plan": [
+    "static policy validation",
+    "projection source-hash validation",
+    "unit tests",
+    "existing visual reference validator",
+    "existing Murtakaz validator",
+    "exact-head GitHub CI",
+    "Murtakaz post-review"
+  ],
+  "pre_approval_receipt": "state/command-center/project-governance/approvals/2026-10-21-agentic-os-integration-pre.json",
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE"
+}

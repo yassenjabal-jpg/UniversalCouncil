@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-AGENTIC-OS-INTEGRATION-PRE-2026-10-21",
+  "change_id": "CC-AGENTIC-OS-INTEGRATION-2026-10-21",
+  "status": "APPROVE_TO_IMPLEMENT",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "requested_by": "OWNER_DIRECTIVE",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "1702d73eafa2319200164898bdaf0d400d4af524"
+  },
+  "scope": [
+    "reconcile Agentic Work OS architecture with current project-local Al-Murtakaz governance",
+    "bind one logical Murtakaz gateway to existing remote owner trust boundary",
+    "split gateway responsibilities into bounded application services",
+    "define typed Context Capsule and Change Envelope contracts",
+    "define multi-stage routing without LLM authority expansion",
+    "define model/capability/skill/job/automation policy contracts",
+    "inherit existing visual reference and production hard gates",
+    "add prompt/data injection and audit-redaction boundaries",
+    "add machine-readable invariant applicability/enforcement metadata",
+    "add validators/tests and bind them to existing Murtakaz validation"
+  ],
+  "explicitly_out_of_scope": [
+    "live execution enablement",
+    "Stage 8 opening",
+    "changing the eight canonical visual references",
+    "new visual identity or UI generation",
+    "real Android connection",
+    "real Autopilot implementation",
+    "provider/model connection",
+    "parent Universal Council or Media Studio mutation"
+  ],
+  "risk_class": "MATERIAL_ARCHITECTURE_GOVERNANCE",
+  "required_reviewers": [
+    "cc_project_chair",
+    "cc_product_truth",
+    "cc_architecture_execution",
+    "cc_security_remote_trust",
+    "cc_durable_autopilot",
+    "cc_ai_runtime",
+    "cc_owner_experience",
+    "cc_red_team"
+  ],
+  "required_workshop_reviewers": [
+    "cc_studio_producer",
+    "cc_experience_architect",
+    "cc_visual_qa"
+  ],
+  "evidence_refs": [
+    "PR#54",
+    "PR#55",
+    "docs/operations/command-center/project-governance/11_AGENTIC_OS_LATEST_DECISIONS_REVIEW_2026-10-20.md"
+  ],
+  "implementation_authorized": true,
+  "final_adoption_granted": false,
+  "merge_authorized": false,
+  "reopen_triggers": [
+    "source baseline moves materially",
+    "authority/security scope expands",
+    "visual source of truth changes",
+    "live execution is enabled",
+    "Stage 8 is opened"
+  ],
+  "timestamp": "2026-10-21"
+}

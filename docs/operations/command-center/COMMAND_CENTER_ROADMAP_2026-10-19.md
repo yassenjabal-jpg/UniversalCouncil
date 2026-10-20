@@ -164,3 +164,60 @@ COMMAND_CENTER_V1_RELEASE_LOCK
 - no grandfathering of non-compliant reachable surfaces;
 - compact-window acceptance before release;
 - Owner checkpoint before opening the next major stage.
+
+
+## 2026-10-21 — Murtakaz Agentic Work OS integration
+
+Status: OWNER-DIRECTED / MURTAKAZ PRE-APPROVED / POST-REVIEW REQUIRED
+
+Canonical architecture additions are governed by:
+- `project-governance/12_MURTAKAZ_AGENTIC_WORK_OS_INTEGRATION_2026-10-21.md`
+- `project-governance/13_CONTEXT_DRIFT_PREVENTION_PLAYBOOK_2026-10-21.md`
+- `state/command-center/project-governance/agentic-os-policy.json`
+- `state/command-center/project-governance/architecture-invariants.json`
+- `state/command-center/project-governance/context-capsule-contract.json`
+- `state/command-center/project-governance/change-envelope-contract.json`
+
+### Delivery sequence extension
+
+The existing Stage model remains authoritative. These are bounded implementation slices inside it, not new Stage numbers:
+
+1. Anti-Drift governance + Context/Change contracts.
+2. Context Resolver and Context Capsule compiler.
+3. Logical Murtakaz Gateway facade + bounded application-service interfaces.
+4. Multi-stage Routing Coordinator.
+5. Capability Registry + Model Broker.
+6. Skill Registry.
+7. Durable Project Store consistency model.
+8. Job Engine + Flight Recorder + Tool Effect Ledger.
+9. Verification + Work Receipt integration.
+10. Automation/Trigger Engine.
+11. Android/Web/Chat ingress adapters through the same logical authority boundary.
+12. Optional Voice and knowledge-graph visualization.
+
+### Non-negotiable carry-forward constraints
+
+- Role != Model.
+- No silent model/provider fallback.
+- UNKNOWN != SUCCEEDED.
+- No live execution until existing Phase 0 execution gates authorize it.
+- Stage 8 remains unopened.
+- The eight canonical UI reference images remain the only visual source of truth.
+- Agentic OS visual concepts inherit, and may not weaken, the Reference-Only Visual Lock or Visual Production Hard Gate.
+- Material changes require Murtakaz pre-review and post-review.
+- Front doors do not own authority or business logic.
+- A model may propose routing; deterministic policy authorizes it.
+- Retrieved/project content cannot grant itself authority.
+- Real Autopilot remains blocked until durable Project Store, consistency, recovery and verification foundations are implemented and evidenced.
+
+### Drift-control rule
+
+Every material implementation slice must be tied to:
+- exact baseline;
+- Change Envelope;
+- immutable Context Capsule;
+- bounded plan;
+- verification evidence;
+- explicit Murtakaz post-review.
+
+A later slice may not silently repair a locked upstream slice.

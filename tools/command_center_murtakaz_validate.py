@@ -19,6 +19,7 @@ VISUAL_APPROVAL = PROJECT / "approvals" / "2026-10-19-visual-direction-continuat
 TAILNET_POLICY = STATE / "owner-device-tailnet-policy.json"
 TAILNET_PROJECTION = STATE / "owner-device-tailnet.json"
 BUILDER = ROOT / "tools" / "build_command_center_murtakaz_projection.py"
+AGENTIC_VALIDATOR = ROOT / "tools" / "command_center_agentic_os_validate.py"
 
 VISUAL_DIRECTION_ROOT = ROOT / "docs" / "operations" / "command-center" / "living-operations"
 VISUAL_DIRECTION_FILES = (
@@ -62,6 +63,7 @@ for required in (
     TAILNET_POLICY,
     TAILNET_PROJECTION,
     BUILDER,
+    AGENTIC_VALIDATOR,
 ):
     if not required.exists():
         raise SystemExit(f"missing Murtakaz alignment artifact: {required.relative_to(ROOT)}")
@@ -138,6 +140,8 @@ if any(item["murtakaz_decision"] != "PENDING" for item in screen_review["screens
 subprocess.run(
     [__import__("sys").executable, str(ROOT / "tools" / "command_center_visual_reference_validate.py")], check=True
 )
+
+subprocess.run([__import__("sys").executable, str(AGENTIC_VALIDATOR)], check=True)
 
 for visual_file in VISUAL_DIRECTION_FILES:
     text = visual_file.read_text(encoding="utf-8").casefold()

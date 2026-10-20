@@ -201,6 +201,27 @@
     "architecture_boundary": [
       "cc_architecture_execution",
       "cc_red_team"
+    ],
+    "agentic_os_architecture": [
+      "cc_architecture_execution",
+      "cc_ai_runtime",
+      "cc_security_remote_trust",
+      "cc_product_truth",
+      "cc_durable_autopilot",
+      "cc_owner_experience",
+      "cc_red_team"
+    ],
+    "context_memory_truth": [
+      "cc_product_truth",
+      "cc_ai_runtime",
+      "cc_security_remote_trust"
+    ],
+    "automation_authority": [
+      "cc_durable_autopilot",
+      "cc_security_remote_trust",
+      "cc_product_truth",
+      "cc_architecture_execution",
+      "cc_red_team"
     ]
   },
   "default_modes": {
