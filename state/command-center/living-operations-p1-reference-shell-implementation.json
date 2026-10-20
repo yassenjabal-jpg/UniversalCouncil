@@ -84,7 +84,7 @@
   "stage8_opened": false,
   "native_reconstruction": {
     "strategy": "SLICE_BY_SLICE_WITH_REFERENCE_UNDERLAY_AND_OVERLAY_COMPARISON",
-    "current_slice": "project_workspace_full_native",
+    "current_slice": "software_autopilot_native",
     "current_slice_state": "IMPLEMENTED_CI_VALIDATION_PENDING",
     "reference_underlay_retained": true,
     "comparison_shortcut": "Ctrl+Shift+O",
@@ -148,13 +148,22 @@
           "native",
           "blend"
         ]
+      },
+      {
+        "id": "project_workspace_full_native",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_PENDING",
+        "evidence_head": "28ef3ec70b1eab4ae6363d958cffdaedebe1015c",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
       }
     ],
     "pending_slices": [
-      "project_workspace_full_native_validation",
+      "software_autopilot_native_validation",
       "home_micro_polish",
       "project_workspace_micro_polish",
-      "software_autopilot_native_reconstruction",
       "studio_project_native_reconstruction",
       "owner_decision_native_reconstruction",
       "recovery_fork_native_reconstruction",
