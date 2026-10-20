@@ -84,7 +84,7 @@
   "stage8_opened": false,
   "native_reconstruction": {
     "strategy": "SLICE_BY_SLICE_WITH_REFERENCE_UNDERLAY_AND_OVERLAY_COMPARISON",
-    "current_slice": "home_chrome_rails_hero_tool_dock",
+    "current_slice": "project_workspace_core",
     "current_slice_state": "IMPLEMENTED_CI_VALIDATION_PENDING",
     "reference_underlay_retained": true,
     "comparison_shortcut": "Ctrl+Shift+O",
@@ -128,13 +128,27 @@
           "native",
           "blend"
         ]
+      },
+      {
+        "id": "home_chrome_rails_hero_tool_dock",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_PENDING",
+        "evidence_head": "b909b93b7c9ad7015bdde5ee546768b6021d84ec",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
       }
     ],
     "pending_slices": [
-      "home_chrome_rails_hero_tool_dock_validation",
+      "project_workspace_core_validation",
+      "project_workspace_left_rail",
+      "project_workspace_filmstrip",
+      "project_workspace_bottom_panels",
       "home_micro_polish",
-      "secondary_screen_native_reconstruction"
+      "remaining_secondary_screen_native_reconstruction"
     ],
-    "final_native_reconstruction_complete": false
+    "final_native_reconstruction_complete": false,
+    "home_macro_reconstruction_complete": true
   }
 }
