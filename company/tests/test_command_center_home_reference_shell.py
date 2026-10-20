@@ -299,3 +299,10 @@ def test_project_workspace_native_reconstruction_covers_full_reference_structure
         "معلومات التنفيذ الحالية",
     ):
         assert content in code
+
+
+def test_project_workspace_bottom_panels_cover_reference_to_lower_edge():
+    code = CODE.read_text(encoding="utf-8")
+    assert "decision, 260, 760, 431, 250" in code
+    assert "tools, 702, 760, 397, 250" in code
+    assert "execution, 1110, 760, 334, 250" in code
