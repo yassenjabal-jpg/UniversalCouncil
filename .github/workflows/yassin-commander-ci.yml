@@ -1,0 +1,31 @@
+name: YASSIN Commander CI
+
+on:
+  push:
+    branches:
+      - design/yassin-commander
+    paths:
+      - 'tools/yassin_commander/**'
+      - '.github/workflows/yassin-commander-ci.yml'
+  pull_request:
+    paths:
+      - 'tools/yassin_commander/**'
+      - '.github/workflows/yassin-commander-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/yassin_commander
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25.x'
+          cache-dependency-path: tools/yassin_commander/go.sum
+      - name: Test
+        run: go test ./...
