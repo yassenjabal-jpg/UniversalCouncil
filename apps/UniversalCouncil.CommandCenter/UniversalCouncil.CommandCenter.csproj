@@ -19,6 +19,27 @@
     <Resource Include="..\..\docs\operations\command-center\living-operations\references\01-home_owner_workspace.png">
       <Link>Assets\VisualReferences\01-home_owner_workspace.png</Link>
     </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\02-living_project_workspace.png">
+      <Link>Assets\VisualReferences\02-living_project_workspace.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\03-software_autopilot_project.png">
+      <Link>Assets\VisualReferences\03-software_autopilot_project.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\04-studio_project.png">
+      <Link>Assets\VisualReferences\04-studio_project.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\05-owner_decision_mode.png">
+      <Link>Assets\VisualReferences\05-owner_decision_mode.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\06-checkpoint_recovery_fork.png">
+      <Link>Assets\VisualReferences\06-checkpoint_recovery_fork.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\07-pulse_visual_project_story.png">
+      <Link>Assets\VisualReferences\07-pulse_visual_project_story.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\08-project_complete_work_receipt.png">
+      <Link>Assets\VisualReferences\08-project_complete_work_receipt.png</Link>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
