@@ -42,7 +42,8 @@ public sealed record ProjectContextConflictDocument(
     string Reason,
     IReadOnlyList<string> SourceIds,
     IReadOnlyList<string> Domains,
-    bool RequiresOwnerDecision);
+    bool RequiresOwnerDecision,
+    bool ChangeOfTruthRequired);
 
 public interface IProjectContextMapReader
 {
