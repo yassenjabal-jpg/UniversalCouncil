@@ -203,3 +203,47 @@ def test_native_summary_panels_cover_full_reference_height():
     assert 'Width="257" Height="215"' in fragment
     assert 'Width="503" Height="215"' in fragment
     assert 'Width="439" Height="215"' in fragment
+
+
+def test_home_remaining_chrome_is_native_wpf():
+    xaml = XAML.read_text(encoding="utf-8")
+    code = CODE.read_text(encoding="utf-8")
+    assert 'x:Name="NativeHomeChromeLayer"' in xaml
+    assert "BuildNativeHomeChrome" in code
+    assert "AddNativeStatusCard" in code
+    assert "AddNativeNavItem" in code
+    assert "AddDockChip" in code
+    assert "NativeStatus_Click" in code
+    assert "NativeHomeNav_Click" in code
+    assert "NativeDockTool_Click" in code
+
+
+def test_home_native_chrome_preserves_canonical_identity_and_regions():
+    code = CODE.read_text(encoding="utf-8")
+    for value in (
+        "UniversalCouncil",
+        "Command Center",
+        "ماذا تريد أن تنجز؟",
+        "Autopilot",
+        "المشاريع النشطة",
+        "المهام بانتظارك",
+        "تنبيهات مهمة",
+        "الرئيسية",
+        "المشاريع",
+        "المجلس",
+        "الاستوديو",
+        "المعرفة",
+        "الأدوات",
+        "التقارير",
+        "الإعدادات",
+        "GitHub",
+        "Photoshop",
+        "After Effects",
+        "Premiere",
+        "YASSIN",
+        "Tailscale",
+        "Models",
+        "Evidence",
+        "Android Owner",
+    ):
+        assert value in code
