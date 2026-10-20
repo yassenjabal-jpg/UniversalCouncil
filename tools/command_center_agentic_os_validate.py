@@ -234,10 +234,9 @@ if policy["cross_platform"]["android_is_authority_host"]:
     raise SystemExit("Android may not become an authority host")
 
 
-
 if change_envelope_instance["change_id"] != "CC-AGENTIC-OS-INTEGRATION-2026-10-21":
     raise SystemExit("Agentic OS integration Change Envelope id drifted")
-if change_envelope_instance["pre_approval_receipt"] != "state/command-center/project-governance/approvals/2026-10-21-agentic-os-integration-pre.json":
+if (\n    change_envelope_instance["pre_approval_receipt"]\n    != "state/command-center/project-governance/approvals/2026-10-21-agentic-os-integration-pre.json"\n):
     raise SystemExit("Change Envelope is not bound to its Murtakaz pre-approval")
 if change_envelope_instance["unplanned_scope_policy"] != "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE":
     raise SystemExit("Change Envelope scope-growth rule drifted")
