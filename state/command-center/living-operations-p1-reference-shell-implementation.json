@@ -84,8 +84,8 @@
   "stage8_opened": false,
   "native_reconstruction": {
     "strategy": "SLICE_BY_SLICE_WITH_REFERENCE_UNDERLAY_AND_OVERLAY_COMPARISON",
-    "current_slice": "work_receipt_native",
-    "current_slice_state": "CALIBRATED_CI_RENDER_VALIDATION_PENDING",
+    "current_slice": "home_micro_polish",
+    "current_slice_state": "READY_TO_CONTINUE",
     "reference_underlay_retained": true,
     "comparison_shortcut": "Ctrl+Shift+O",
     "completed_slices": [
@@ -226,10 +226,25 @@
           "reference_ui_run": 166,
           "reference_ui_artifact_id": 12285604936
         }
+      },
+      {
+        "id": "work_receipt_native",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_PENDING",
+        "evidence_head": "8dce677662a509bedeb413ccb12399f178853993",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ],
+        "workflow_evidence": {
+          "company_stage0_run": 823,
+          "codeql_run": 740,
+          "reference_ui_run": 186,
+          "reference_ui_artifact_id": 12286807319
+        }
       }
     ],
     "pending_slices": [
-      "work_receipt_native_validation",
       "home_micro_polish",
       "project_workspace_micro_polish",
       "software_autopilot_micro_polish",
@@ -237,13 +252,16 @@
       "owner_decision_micro_polish",
       "recovery_fork_micro_polish",
       "pulse_story_micro_polish",
-      "work_receipt_micro_polish"
+      "work_receipt_micro_polish",
+      "cross_screen_consistency_audit",
+      "final_murtakaz_studio_review"
     ],
     "final_native_reconstruction_complete": false,
     "home_macro_reconstruction_complete": true,
-    "current_phase": "R4_WORK_RECEIPT",
+    "current_phase": "R5_HOME_MICRO_POLISH",
     "anti_stall_rule": true,
-    "phase_policy": "ONE_PRIMARY_SCREEN_PER_RECONSTRUCTION_PHASE"
+    "phase_policy": "ONE_PRIMARY_SCREEN_PER_RECONSTRUCTION_PHASE",
+    "all_eight_macro_reconstruction_complete": true
   },
   "remainder_phase_plan": "state/command-center/living-operations-p1-remainder-phases.json",
   "remainder_phase_plan_document": "docs/operations/command-center/living-operations/27_P1_REMAINING_NATIVE_RECONSTRUCTION_PHASE_PLAN.md"
