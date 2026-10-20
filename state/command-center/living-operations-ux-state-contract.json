@@ -1,0 +1,312 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "living-operations-ux-state-contract",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "visual_direction_change": false,
+  "source_agentic_policy": "state/command-center/project-governance/agentic-os-policy.json",
+  "primary_state_rule": "EXACTLY_ONE_PRIMARY_JOB_STATE",
+  "primary_states": [
+    {
+      "id": "QUEUED",
+      "label_ar": "في الانتظار",
+      "semantic": "neutral",
+      "owner_attention": "NO_BY_DEFAULT",
+      "terminal": false,
+      "success": false
+    },
+    {
+      "id": "PLANNING",
+      "label_ar": "يتم إعداد الخطة",
+      "semantic": "progress",
+      "owner_attention": "NO_BY_DEFAULT",
+      "terminal": false,
+      "success": false
+    },
+    {
+      "id": "WAITING_FOR_APPROVAL",
+      "label_ar": "ينتظر قرارك",
+      "semantic": "attention",
+      "owner_attention": "YES_IF_OWNER_IS_APPROVER",
+      "terminal": false,
+      "success": false
+    },
+    {
+      "id": "EXECUTING",
+      "label_ar": "جارٍ التنفيذ",
+      "semantic": "progress",
+      "owner_attention": "NO_BY_DEFAULT",
+      "terminal": false,
+      "success": false
+    },
+    {
+      "id": "VERIFYING",
+      "label_ar": "جارٍ التحقق",
+      "semantic": "progress",
+      "owner_attention": "NO_BY_DEFAULT",
+      "terminal": false,
+      "success": false
+    },
+    {
+      "id": "BLOCKED",
+      "label_ar": "متوقف بأمان",
+      "semantic": "warning",
+      "owner_attention": "IF_OWNER_CAN_UNLOCK",
+      "terminal": true,
+      "success": false
+    },
+    {
+      "id": "FAILED",
+      "label_ar": "فشل التنفيذ",
+      "semantic": "error",
+      "owner_attention": "POLICY_DEPENDENT",
+      "terminal": true,
+      "success": false
+    },
+    {
+      "id": "UNKNOWN",
+      "label_ar": "النتيجة غير مؤكدة",
+      "semantic": "unknown",
+      "owner_attention": "HIGH_IF_MATERIAL",
+      "terminal": true,
+      "success": false
+    },
+    {
+      "id": "STALE_CONTEXT",
+      "label_ar": "تغيّر السياق",
+      "semantic": "warning",
+      "owner_attention": "ONLY_IF_MATERIAL_OR_CHANGE_OF_TRUTH",
+      "terminal": false,
+      "success": false
+    },
+    {
+      "id": "CONTEXT_CONFLICT",
+      "label_ar": "تعارض في مصادر الحقيقة",
+      "semantic": "attention",
+      "owner_attention": "YES_WHEN_NOT_DETERMINISTICALLY_RESOLVABLE",
+      "terminal": true,
+      "success": false
+    },
+    {
+      "id": "SUCCEEDED",
+      "label_ar": "اكتمل وتم التحقق",
+      "semantic": "success",
+      "owner_attention": "NO_BY_DEFAULT",
+      "terminal": true,
+      "success": true
+    }
+  ],
+  "secondary_overlays": [
+    {
+      "id": "PAUSED",
+      "kind": "CONTROL",
+      "may_imply_success": false
+    },
+    {
+      "id": "RECOVERING",
+      "kind": "EXECUTION_MODE",
+      "may_imply_success": false
+    },
+    {
+      "id": "RETURNED_FOR_CHANGES",
+      "kind": "REVIEW",
+      "may_imply_success": false
+    },
+    {
+      "id": "MURTAKAZ_REVIEW_REQUIRED",
+      "kind": "GOVERNANCE",
+      "may_imply_success": false
+    },
+    {
+      "id": "APPROVED_BY_AL_MURTAKAZ",
+      "kind": "GOVERNANCE",
+      "may_grant_live_execution": false
+    },
+    {
+      "id": "FALLBACK_USED",
+      "kind": "PROVENANCE",
+      "requires_disclosure": true
+    }
+  ],
+  "laws": {
+    "unknown_never_success": true,
+    "succeeded_requires_independent_postcondition_verification": true,
+    "tool_success_never_directly_maps_to_succeeded": true,
+    "stale_context_requires_new_capsule_and_replan": true,
+    "context_conflict_fails_closed": true,
+    "no_fake_progress_percentage": true,
+    "no_fake_eta": true,
+    "no_fake_connected_ready_live_state": true,
+    "state_never_depends_on_color_alone": true,
+    "disabled_control_requires_reason": true,
+    "progressive_disclosure_required": true,
+    "same_semantics_across_windows_android": true
+  },
+  "presentation_levels": {
+    "level_1": [
+      "primary_state",
+      "short_meaning",
+      "owner_action_if_required"
+    ],
+    "level_2": [
+      "why",
+      "current_stage",
+      "checkpoint",
+      "source_revision",
+      "last_verified_event",
+      "evidence_summary"
+    ],
+    "level_3": [
+      "context_capsule_id",
+      "skill_version",
+      "route_decisions",
+      "model_provider_reasoning",
+      "tool_effects",
+      "hashes",
+      "verification_details",
+      "approvals"
+    ]
+  },
+  "default_surface_level": {
+    "home": 1,
+    "android_home": 1,
+    "project_workspace": 2,
+    "decision_mode": 2,
+    "recovery": 2,
+    "system": 3,
+    "evidence": 3,
+    "work_receipt": 3
+  },
+  "owner_attention_rules": {
+    "requires_material_and_actionable": true,
+    "typical_interruptions": [
+      "WAITING_FOR_APPROVAL",
+      "OWNER_REQUIRED_CONTEXT_CONFLICT",
+      "MATERIAL_UNKNOWN",
+      "OWNER_UNLOCKABLE_BLOCKED",
+      "CHANGE_OF_TRUTH",
+      "DESTRUCTIVE_OR_IRREVERSIBLE_EFFECT",
+      "AUTHORITY_EXPANSION",
+      "MATERIAL_PRIVACY_OR_SPEND_OR_FALLBACK_CHOICE"
+    ],
+    "do_not_interrupt_for": [
+      "QUEUED",
+      "PLANNING",
+      "ORDINARY_EXECUTING",
+      "ORDINARY_VERIFYING",
+      "ROUTER_HOP",
+      "MODEL_CALL_COMPLETE",
+      "TOOL_OPENED"
+    ]
+  },
+  "state_actions": {
+    "QUEUED": [
+      "VIEW_QUEUE_CONTEXT",
+      "CANCEL_IF_SUPPORTED"
+    ],
+    "PLANNING": [
+      "VIEW_PLAN_PREVIEW"
+    ],
+    "WAITING_FOR_APPROVAL": [
+      "OPEN_DECISION",
+      "ASK",
+      "INSPECT_EVIDENCE",
+      "TYPED_APPROVAL_ACTIONS"
+    ],
+    "EXECUTING": [
+      "VIEW_ACTIVITY",
+      "PAUSE_IF_SUPPORTED"
+    ],
+    "VERIFYING": [
+      "VIEW_VERIFICATION"
+    ],
+    "BLOCKED": [
+      "WHY_BLOCKED",
+      "WHAT_UNLOCKS",
+      "OWNER_ACTION_IF_APPLICABLE"
+    ],
+    "FAILED": [
+      "VIEW_FAILURE",
+      "PRESERVE_WORK",
+      "SAFE_RETRY_OR_RETURN_TICKET_IF_ALLOWED"
+    ],
+    "UNKNOWN": [
+      "INSPECT_EVIDENCE",
+      "VERIFY_AGAIN",
+      "PRESERVE_OR_HOLD"
+    ],
+    "STALE_CONTEXT": [
+      "COMPARE_OLD_AND_CURRENT_TRUTH",
+      "PRESERVE_OUTPUT",
+      "REPLAN_LATEST"
+    ],
+    "CONTEXT_CONFLICT": [
+      "COMPARE_SOURCES",
+      "INSPECT_PROVENANCE",
+      "TYPED_RESOLUTION"
+    ],
+    "SUCCEEDED": [
+      "OPEN_WORK_RECEIPT",
+      "OPEN_ARTIFACT",
+      "START_FOLLOW_UP"
+    ]
+  },
+  "android_projection": {
+    "RUNNING": [
+      "EXECUTING"
+    ],
+    "WAITING_OWNER": [
+      "WAITING_FOR_APPROVAL",
+      "OWNER_REQUIRED_CONTEXT_CONFLICT"
+    ],
+    "BLOCKED": [
+      "BLOCKED"
+    ],
+    "RECOVERING": [
+      "EXECUTING+RECOVERING"
+    ],
+    "PAUSED": [
+      "ANY_ACTIVE_PRIMARY+PAUSED"
+    ],
+    "COMPLETE": [
+      "SUCCEEDED"
+    ],
+    "forbidden_projection": [
+      "UNKNOWN->COMPLETE",
+      "STALE_CONTEXT->GENERIC_BLOCKED_WITHOUT_EXPLANATION",
+      "CONTEXT_CONFLICT->GENERIC_WAITING_OWNER_WITHOUT_EXPLANATION"
+    ]
+  },
+  "notification_policy": {
+    "event_summary_not_raw_log": true,
+    "privacy_safe": true,
+    "sensitive_evidence_on_lock_screen_forbidden": true,
+    "success_notification_requires_succeeded": true
+  },
+  "accessibility": {
+    "text_label_required": true,
+    "non_color_cue_required": true,
+    "accessible_name_required": true,
+    "windows_keyboard_path_required": true,
+    "screen_reader_semantics_required": true,
+    "reduced_motion_equivalent_required": true
+  },
+  "completion": {
+    "verified_success_hero_state": "SUCCEEDED",
+    "non_success_receipt_variants": [
+      "FAILED",
+      "BLOCKED",
+      "UNKNOWN"
+    ],
+    "non_success_may_not_use_verified_completion_hero": true
+  },
+  "engineering_requirements_for_context_resolver": [
+    "context_freshness",
+    "context_conflict",
+    "source_revision",
+    "context_capsule_id",
+    "canonical_source_ids",
+    "conflict_provenance",
+    "change_of_truth_flag"
+  ],
+  "murtakaz_post_approval": "state/command-center/project-governance/approvals/2026-10-21-ux-impact-state-contract-post.json"
+}

@@ -222,6 +222,14 @@
       "cc_product_truth",
       "cc_architecture_execution",
       "cc_red_team"
+    ],
+    "agentic_ux_state": [
+      "cc_owner_experience",
+      "cc_product_truth",
+      "cc_red_team",
+      "cc_cross_platform",
+      "cc_durable_autopilot",
+      "cc_ai_runtime"
     ]
   },
   "default_modes": {

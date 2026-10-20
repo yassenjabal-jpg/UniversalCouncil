@@ -1,0 +1,285 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "living-operations-agentic-ux-impact-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "canonical_base": "91aa5604fea04d6ddb9cc89769e5afa139e817d6",
+  "visual_direction_changed": false,
+  "canonical_reference_count": 8,
+  "decisions_allowed": [
+    "KEEP",
+    "MODIFY",
+    "ADD_STATE",
+    "ADD_INTERACTION",
+    "NO_CHANGE"
+  ],
+  "screens": [
+    {
+      "id": "home_owner_workspace",
+      "reference": "01-home_owner_workspace.png",
+      "reference_sha256": "7cb7d12f8819576ad4992158f6f0eb098ae3350a3684118ffc43192ea56749eb",
+      "decisions": [
+        "KEEP",
+        "MODIFY",
+        "ADD_STATE",
+        "ADD_INTERACTION"
+      ],
+      "keep": [
+        "command_first_hierarchy",
+        "command_composer",
+        "rails",
+        "active_work",
+        "owner_bottom_row",
+        "tool_dock"
+      ],
+      "add_states": [
+        "WAITING_FOR_APPROVAL",
+        "BLOCKED",
+        "UNKNOWN",
+        "STALE_CONTEXT",
+        "CONTEXT_CONFLICT",
+        "VERIFYING",
+        "SUCCEEDED"
+      ],
+      "add_interactions": [
+        "state_explanation",
+        "decision_deep_link",
+        "context_change_detail",
+        "truth_conflict_detail",
+        "evidence_verification_detail",
+        "work_receipt_deep_link"
+      ],
+      "forbidden": [
+        "infrastructure_first_home",
+        "router_dashboard",
+        "provider_grid",
+        "fake_progress"
+      ]
+    },
+    {
+      "id": "living_project_workspace",
+      "reference": "02-living_project_workspace.png",
+      "reference_sha256": "6f412a1f11e9e9f32df810194dbd4df1c42b973be9dcfb80354f10fb1cf3b799",
+      "decisions": [
+        "KEEP",
+        "MODIFY",
+        "ADD_STATE",
+        "ADD_INTERACTION"
+      ],
+      "add_states": [
+        "JOB_PRIMARY_STATE",
+        "CONTEXT_FRESHNESS",
+        "APPROVAL_STATE",
+        "VERIFICATION_STATE",
+        "LAST_VERIFIED_CHECKPOINT"
+      ],
+      "add_interactions": [
+        "job_context_drawer",
+        "why_this_route",
+        "evidence",
+        "governed_pause_resume",
+        "truth_conflict_compare"
+      ],
+      "forbidden": [
+        "permanent_router_panel",
+        "architecture_dashboard"
+      ]
+    },
+    {
+      "id": "software_autopilot_project",
+      "reference": "03-software_autopilot_project.png",
+      "reference_sha256": "cb2c26d0d54a0a0c6aef3d03cc65737d3a27084fe8228112b719379d7ab966ec",
+      "decisions": [
+        "KEEP",
+        "MODIFY",
+        "ADD_STATE",
+        "ADD_INTERACTION"
+      ],
+      "add_states": [
+        "VERIFYING",
+        "STALE_CONTEXT",
+        "UNKNOWN",
+        "CONTEXT_CONFLICT",
+        "WAITING_FOR_APPROVAL"
+      ],
+      "add_interactions": [
+        "compare_capsule_sha_to_latest",
+        "preserve_and_replan",
+        "verify_first",
+        "governed_fork",
+        "merge_readback_verification"
+      ],
+      "forbidden": [
+        "branch_exists_equals_verified",
+        "blind_replay",
+        "implicit_merge_success"
+      ]
+    },
+    {
+      "id": "studio_project",
+      "reference": "04-studio_project.png",
+      "reference_sha256": "e2f012f6207006a5068152027ccbef8cd55f866b25e60899a113937ebe523664",
+      "decisions": [
+        "KEEP",
+        "MODIFY",
+        "ADD_STATE",
+        "ADD_INTERACTION"
+      ],
+      "add_states": [
+        "JOB_PRIMARY_STATE",
+        "HANDOFF_STATE",
+        "QC_VERIFICATION",
+        "STALE_CONTEXT",
+        "CONTEXT_CONFLICT",
+        "UNKNOWN",
+        "RETURNED_FOR_CHANGES"
+      ],
+      "add_interactions": [
+        "handoff_receipt",
+        "return_ticket_detail",
+        "source_version_compare",
+        "owner_decision_deep_link"
+      ],
+      "forbidden": [
+        "tool_render_equals_stage_complete",
+        "downstream_silent_repair"
+      ]
+    },
+    {
+      "id": "owner_decision_mode",
+      "reference": "05-owner_decision_mode.png",
+      "reference_sha256": "6351f755874fd9cec7cad4d8136d6c84eb8c3e8111a1d9ba219054f6d2488eeb",
+      "decisions": [
+        "KEEP",
+        "MODIFY",
+        "ADD_STATE",
+        "ADD_INTERACTION"
+      ],
+      "decision_types": [
+        "APPROVAL_REQUIRED",
+        "CHANGE_OF_TRUTH",
+        "CONTEXT_CONFLICT",
+        "AUTHORITY_EXPANSION",
+        "DESTRUCTIVE_EFFECT",
+        "PRIVACY_TRADEOFF",
+        "MODEL_FALLBACK_CHOICE"
+      ],
+      "add_interactions": [
+        "compare_sources",
+        "inspect_provenance",
+        "typed_decision",
+        "ask_in_context"
+      ],
+      "forbidden": [
+        "generic_approve_dialog",
+        "approve_equals_downstream_success",
+        "fake_consensus"
+      ]
+    },
+    {
+      "id": "checkpoint_recovery_fork",
+      "reference": "06-checkpoint_recovery_fork.png",
+      "reference_sha256": "7b1ceb447bebb3e9d488749e1beb4f82bf03fb078e58a2035c3ed2a58fe69076",
+      "decisions": [
+        "KEEP",
+        "MODIFY",
+        "ADD_STATE",
+        "ADD_INTERACTION"
+      ],
+      "add_states": [
+        "PAUSED_OVERLAY",
+        "RECOVERING_OVERLAY",
+        "VERIFYING",
+        "UNKNOWN",
+        "STALE_CONTEXT",
+        "CONTEXT_CONFLICT",
+        "SUCCEEDED"
+      ],
+      "add_interactions": [
+        "inspect_checkpoint",
+        "compare",
+        "fork",
+        "preserve_state",
+        "governed_recovery",
+        "replan"
+      ],
+      "forbidden": [
+        "recovery_visual_success_before_verification",
+        "destructive_restore_default",
+        "blind_retry_after_unknown"
+      ]
+    },
+    {
+      "id": "pulse_visual_project_story",
+      "reference": "07-pulse_visual_project_story.png",
+      "reference_sha256": "f92ff13312e11ac6e52914a8cb595e0c870027f45ea8161aadaf72217cb483ed",
+      "decisions": [
+        "KEEP",
+        "MODIFY",
+        "ADD_STATE",
+        "ADD_INTERACTION"
+      ],
+      "event_types": [
+        "WAITING_FOR_APPROVAL",
+        "MATERIAL_BLOCKED",
+        "STALE_CONTEXT",
+        "CONTEXT_CONFLICT",
+        "RETURNED_FOR_CHANGES",
+        "RECOVERY_VERIFIED",
+        "MILESTONE_VERIFIED",
+        "PROJECT_COMPLETED_VERIFIED"
+      ],
+      "add_interactions": [
+        "origin_job",
+        "decision",
+        "evidence",
+        "artifact_version"
+      ],
+      "forbidden": [
+        "router_hop_story",
+        "model_call_story",
+        "tool_heartbeat_story",
+        "decorative_ai_activity",
+        "pulse_as_source_of_truth"
+      ]
+    },
+    {
+      "id": "project_complete_work_receipt",
+      "reference": "08-project_complete_work_receipt.png",
+      "reference_sha256": "f8db7163bc4e5396cd2d58563cf2d513504cef7863da299851142ce554e22b7f",
+      "decisions": [
+        "KEEP",
+        "MODIFY",
+        "ADD_STATE",
+        "ADD_INTERACTION"
+      ],
+      "add_fields": [
+        "FINAL_RESULT_STATE",
+        "EXACT_REVISION",
+        "CONTEXT_CAPSULE_ID",
+        "SKILL_VERSION",
+        "MODEL_PROVIDER_REASONING",
+        "FALLBACK_USE",
+        "TOOL_EFFECTS",
+        "VERIFICATION_SUMMARY",
+        "CHECKPOINTS",
+        "APPROVALS",
+        "KNOWN_USAGE"
+      ],
+      "add_interactions": [
+        "open_artifact",
+        "inspect_evidence",
+        "expand_trace",
+        "start_follow_up",
+        "archive"
+      ],
+      "forbidden": [
+        "completion_hero_for_failed_unknown_blocked",
+        "fabricated_cost_usage",
+        "publish_without_separate_governance"
+      ]
+    }
+  ],
+  "final_verdict": "KEEP_VISUAL_SYSTEM_MODIFY_UX_STATE_SEMANTICS",
+  "next_dependency": "UX_STATE_CONTRACT",
+  "murtakaz_post_approval": "state/command-center/project-governance/approvals/2026-10-21-ux-impact-state-contract-post.json"
+}
