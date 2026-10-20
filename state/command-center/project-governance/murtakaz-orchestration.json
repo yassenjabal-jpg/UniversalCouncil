@@ -13,11 +13,11 @@
     },
     {
       "path": "state/command-center/project-governance/project-council.json",
-      "blob_sha": "82dadbdf39add93e139a533dec47c86ff082453d"
+      "blob_sha": "c74398013e550b360910d28ceb700f9fe6681265"
     },
     {
       "path": "state/command-center/project-governance/product-studio.json",
-      "blob_sha": "64fdc22f0bd140925f249956600fc04f53a4b75a"
+      "blob_sha": "d5fae36a2e501305415f985a3652932ed788ef8a"
     },
     {
       "path": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
@@ -253,6 +253,14 @@
         "cc_product_truth",
         "cc_architecture_execution",
         "cc_red_team"
+      ],
+      "agentic_ux_state": [
+        "cc_owner_experience",
+        "cc_product_truth",
+        "cc_red_team",
+        "cc_cross_platform",
+        "cc_durable_autopilot",
+        "cc_ai_runtime"
       ]
     },
     "default_modes": {
@@ -293,7 +301,8 @@
       "principle": "audit_then_experience_then_visual_motion_then_components_then_vertical_slices_then_assurance_then_handoff",
       "one_authoritative_craft_owner_per_artifact": true,
       "parallel_read_only_review_allowed": true,
-      "silent_cross_edit_forbidden": true
+      "silent_cross_edit_forbidden": true,
+      "agentic_ux_rule": "KEEP_CANONICAL_VISUAL_SYSTEM_MODIFY_STATE_SEMANTICS_ONLY_UNLESS_SEPARATELY_APPROVED"
     },
     "functions": [
       {
@@ -426,6 +435,11 @@
       ],
       "architecture_sensitive_surface": [
         "cc_architecture_execution"
+      ],
+      "agentic_ux_state_surface": [
+        "cc_owner_experience",
+        "cc_product_truth",
+        "cc_cross_platform"
       ]
     },
     "handoff": {
