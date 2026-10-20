@@ -160,3 +160,14 @@ func TestCallCapsTextOutput(t *testing.T) {
 		t.Fatalf("unexpected capped result: %#v", result)
 	}
 }
+
+func TestListToolsReturnsServerCatalog(t *testing.T) {
+	client := New(helperConfig(t))
+	tools, err := client.ListTools(context.Background())
+	if err != nil {
+		t.Fatalf("ListTools: %v", err)
+	}
+	if len(tools) != 1 || tools[0] != "probe" {
+		t.Fatalf("tools = %#v, want [probe]", tools)
+	}
+}
