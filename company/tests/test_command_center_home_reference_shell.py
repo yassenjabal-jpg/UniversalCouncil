@@ -405,3 +405,32 @@ def test_owner_decision_native_vertical_calibration_matches_reference_bands():
     assert "Place(SecondaryNativeLayer, group, 32, 610, 325, 322);" in code
     assert "AddDecisionRole(146, 388, 112" in code
     assert "AddDecisionRole(1269, 391, 106" in code
+
+
+def test_recovery_fork_has_native_reconstruction_and_truth_guards():
+    code = CODE.read_text(encoding="utf-8")
+    for method in (
+        "BuildNativeRecoveryFork",
+        "BuildNativeRecoveryTimeline",
+        "BuildNativeRecoveryCards",
+        "BuildNativeSelectedCheckpointCard",
+        "BuildNativeRecoveryComparison",
+        "BuildNativeRecoveryBottomPanels",
+        "BuildNativeRecoveryActions",
+    ):
+        assert method in code
+    for value in (
+        "المخطط الزمني للمشروع ونقاط الحفظ",
+        "نقطة حفظ #3",
+        "الفرع A",
+        "الفرع B",
+        "مقارنة الفروع",
+        "السجل الزمني والإجراءات",
+        "أدلة ومقتطفات مهمة",
+        "استرجاع هذه النقطة",
+        "إنشاء فرع جديد",
+        "ترقية نتيجة الفرع",
+        "حذف الفرع المحدد — فعل مدمر",
+    ):
+        assert value in code
+    assert "CHECKPOINT_RESTORED_VERIFIED" in code
