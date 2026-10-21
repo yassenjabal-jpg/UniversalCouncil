@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0",
+  "source_type": "project_local_repository_projection",
+  "policy_id": "murtakaz-gateway-routing",
+  "status": "SHADOW_PLANNING_ONLY",
+  "project_id": "universal-council-command-center",
+  "live_dispatch_allowed": false,
+  "free_text_intent_inference_allowed": false,
+  "llm_route_proposal_connected": false,
+  "allowed_front_doors": [
+    "Windows",
+    "Android",
+    "Web",
+    "Chat",
+    "Voice"
+  ],
+  "allowed_intents": [
+    "Observe",
+    "Analyze",
+    "Plan",
+    "ModifyProject",
+    "ExecuteHost",
+    "ExternalAction",
+    "Recover"
+  ],
+  "allowed_effects": [
+    "Read",
+    "Write",
+    "Execute"
+  ],
+  "risk_tiers": [
+    "T0Observe",
+    "T1Reversible",
+    "T2LocalStateChange",
+    "T3HighImpact"
+  ],
+  "materiality_levels": [
+    "LOW",
+    "MATERIAL",
+    "HIGH",
+    "CRITICAL"
+  ],
+  "uncertainty_levels": [
+    "LOW",
+    "MEDIUM",
+    "HIGH"
+  ],
+  "approval_triggers": [
+    "WRITE_EFFECT",
+    "EXECUTE_EFFECT",
+    "CHANGE_OF_TRUTH",
+    "AUTHORITY_EXPANSION",
+    "EXTERNAL_CONSEQUENCE",
+    "DESTRUCTIVE_OR_IRREVERSIBLE",
+    "PRIVACY_SENSITIVE",
+    "SPEND_OR_SUBSCRIPTION",
+    "T3_HIGH_IMPACT"
+  ],
+  "arena_domains": [
+    "authority",
+    "security",
+    "durability",
+    "recovery",
+    "privacy"
+  ],
+  "governance_domains": [
+    "architecture",
+    "context",
+    "routing",
+    "automation",
+    "cross_platform",
+    "ux"
+  ],
+  "deterministic_read_intents": [
+    "Observe"
+  ],
+  "future_dependencies": {
+    "skill_registry": "NOT_IMPLEMENTED",
+    "model_broker": "NOT_IMPLEMENTED",
+    "capability_registry": "NOT_IMPLEMENTED",
+    "job_engine": "NOT_IMPLEMENTED"
+  },
+  "stage_order": [
+    "intent",
+    "project_context",
+    "authority_risk",
+    "skill",
+    "reasoning_path",
+    "model",
+    "execution",
+    "verification"
+  ],
+  "execution_policy": {
+    "read_only_shadow_planning_allowed": true,
+    "write_dispatch_allowed": false,
+    "execute_dispatch_allowed": false,
+    "live_execution_authorized": false,
+    "stage8_opened": false
+  },
+  "verification_policy": {
+    "read": "SOURCE_PROVENANCE_REQUIRED",
+    "write": "INDEPENDENT_POSTCONDITION_REQUIRED",
+    "execute": "INDEPENDENT_POSTCONDITION_REQUIRED"
+  }
+}

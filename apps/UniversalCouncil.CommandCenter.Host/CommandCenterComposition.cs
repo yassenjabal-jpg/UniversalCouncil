@@ -11,6 +11,8 @@ public sealed record CommandCenterHostServices(
     ICouncilPlanner CouncilPlanner,
     IProjectContextResolver ContextResolver,
     IContextCapsuleCompiler ContextCapsuleCompiler,
+    IMurtakazCommandGateway CommandGateway,
+    IRoutingCoordinator RoutingCoordinator,
     IExecutionFabricProvider ExecutionFabric,
     IExecutionManifestValidator ExecutionManifestValidator,
     IRemoteOwnerGatewayProvider RemoteOwnerGateway,
@@ -39,6 +41,18 @@ public static class CommandCenterComposition
         var contextReader = new JsonProjectContextMapReader(contextMapPath);
         var contextResolver = new ProjectContextResolver(contextReader);
         var contextCapsuleCompiler = new ContextCapsuleCompiler();
+
+        var gatewayRoutingPolicyPath = Path.Combine(
+            baseDirectory,
+            "state",
+            "gateway-routing-policy.json");
+
+        var gatewayRoutingReader = new JsonGatewayRoutingPolicyReader(gatewayRoutingPolicyPath);
+        var routingCoordinator = new RoutingCoordinator(gatewayRoutingReader);
+        var commandGateway = new MurtakazCommandGateway(
+            contextResolver,
+            contextCapsuleCompiler,
+            routingCoordinator);
 
         var executionFabricPath = Path.Combine(
             baseDirectory,
@@ -85,6 +99,8 @@ public static class CommandCenterComposition
             orchestrationService,
             contextResolver,
             contextCapsuleCompiler,
+            commandGateway,
+            routingCoordinator,
             executionService,
             executionService,
             remoteOwnerService,

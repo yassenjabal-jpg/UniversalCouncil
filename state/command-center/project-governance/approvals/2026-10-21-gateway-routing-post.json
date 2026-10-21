@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-GATEWAY-ROUTING-POST-2026-10-21",
+  "change_id": "CC-GATEWAY-ROUTING-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "reviewed_revision": "74f00eb100b70afe26757bf4c99a6c5621e06752",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "8cb72d3f04b6396d9d594924446dd8dc9c896aff"
+  },
+  "governance_review": {
+    "cc_architecture_execution": "PASS",
+    "cc_product_truth": "PASS",
+    "cc_ai_runtime": "PASS_NO_MODEL_SELECTION",
+    "cc_security_remote_trust": "PASS_INGRESS_CONTRACT_ONLY",
+    "cc_durable_autopilot": "PASS_NO_JOB_RUNTIME",
+    "cc_red_team": "PASS_AFTER_CONSEQUENTIAL_ROUTING_HARDENING",
+    "cc_owner_experience": "PASS_PROGRESSIVE_DISCLOSURE_PRESERVED"
+  },
+  "workshop_review": {
+    "cc_studio_producer": "PASS",
+    "cc_experience_architect": "PASS_NO_UI_COMPLEXITY_ADDED",
+    "cc_accessibility_clearance": "PASS_NO_SURFACE_CHANGE"
+  },
+  "architecture_boundary_audit": {
+    "verdict": "PASS",
+    "gateway": "APPLICATION_FACADE_ONLY",
+    "routing_coordinator": "APPLICATION_ROUTE_PLANNING_ONLY",
+    "context": "SEPARATE_APPLICATION_SERVICE",
+    "execution": "NOT_CALLED",
+    "infrastructure": "READ_ONLY_POLICY_READER",
+    "host": "COMPOSITION_ONLY",
+    "wpf": "NO_AUTHORITY_OR_ROUTING_LOGIC"
+  },
+  "red_team_findings_resolved": [
+    "Owner approval no longer has any path to ExecutionAuthorized=true.",
+    "Observe/Analyze/Plan typed intents cannot disguise WRITE/EXECUTE effects.",
+    "Recovery always routes to Murtakaz Arena.",
+    "ExecuteHost and ExternalAction cannot route below Murtakaz Governance unless Arena rules apply.",
+    "External consequence is a governance-level reasoning trigger.",
+    "STALE_CONTEXT and CONTEXT_CONFLICT propagate through the Gateway without capsule compilation or improvisation.",
+    "Model selection remains explicit and blocked until Model Broker exists.",
+    "Gateway and Routing Coordinator contain no Execution Fabric dependency."
+  ],
+  "behavior_evidence": [
+    "Low-risk Observe -> deterministic PLANNING shadow route.",
+    "WRITE without approval -> WAITING_FOR_APPROVAL.",
+    "Approved WRITE -> BLOCKED because live dispatch remains disabled.",
+    "High-risk EXECUTE -> MURTAKAZ_ARENA + BLOCKED.",
+    "External consequential WRITE -> MURTAKAZ_GOVERNANCE + BLOCKED.",
+    "Recovery -> MURTAKAZ_ARENA + BLOCKED.",
+    "Non-deterministic analysis -> BLOCKED until Model Broker exists.",
+    "Intent/effect mismatch and unauthenticated ingress fail closed."
+  ],
+  "exact_head_evidence": [
+    {
+      "workflow": "Company Stage 0",
+      "run_id": 39545041526,
+      "conclusion": "SUCCESS",
+      "head_sha": "74f00eb100b70afe26757bf4c99a6c5621e06752"
+    },
+    {
+      "workflow": "CodeQL",
+      "run_id": 39545041228,
+      "conclusion": "SUCCESS",
+      "head_sha": "74f00eb100b70afe26757bf4c99a6c5621e06752"
+    },
+    {
+      "workflow": "Command Center Reference UI",
+      "run_id": 39545041338,
+      "conclusion": "SUCCESS",
+      "head_sha": "74f00eb100b70afe26757bf4c99a6c5621e06752",
+      "includes": "ContextValidation + GatewayValidation + WPF build/render"
+    }
+  ],
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "wpf_ux_changed": false,
+  "android_runtime_changed": false,
+  "model_broker_implemented": false,
+  "skill_registry_implemented": false,
+  "capability_registry_implemented": false,
+  "job_engine_implemented": false,
+  "adoption_authorized": true,
+  "merge_authorized": true,
+  "next_roadmap_slice_authorized": "CAPABILITY_REGISTRY_AND_MODEL_BROKER",
+  "reopen_triggers": [
+    "free-text intent inference is introduced",
+    "LLM route proposal becomes connected",
+    "approval semantics change",
+    "reasoning path floors change",
+    "model selection becomes connected",
+    "execution provider selection becomes connected",
+    "live dispatch or Stage 8 changes"
+  ],
+  "timestamp": "2026-10-21"
+}

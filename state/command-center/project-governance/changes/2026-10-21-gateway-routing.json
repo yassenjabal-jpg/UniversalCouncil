@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-GATEWAY-ROUTING-2026-10-21",
+  "project_id": "universal-council-command-center",
+  "status": "IMPLEMENTING",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "8cb72d3f04b6396d9d594924446dd8dc9c896aff"
+  },
+  "scope": [
+    "Core Gateway/Routing contracts",
+    "Application Gateway facade",
+    "Application Routing Coordinator",
+    "Host composition wiring",
+    "machine-readable routing policy/state",
+    "C# behavior validation",
+    "Python/static validation",
+    "CI integration"
+  ],
+  "non_goals": [
+    "free-text intent inference",
+    "LLM route proposal",
+    "Model Broker",
+    "Capability Registry",
+    "Skill Registry",
+    "tool/provider invocation",
+    "live execution",
+    "Job Engine",
+    "Automation",
+    "WPF changes",
+    "Android runtime",
+    "Stage 8"
+  ],
+  "affected_artifacts": [
+    "apps/UniversalCouncil.CommandCenter.Core/*Gateway*",
+    "apps/UniversalCouncil.CommandCenter.Core/*Routing*",
+    "apps/UniversalCouncil.CommandCenter.Application/*Gateway*",
+    "apps/UniversalCouncil.CommandCenter.Application/*Routing*",
+    "apps/UniversalCouncil.CommandCenter.Host/CommandCenterComposition.cs",
+    "apps/UniversalCouncil.CommandCenter.GatewayValidation/**",
+    "state/command-center/gateway-routing-policy.json",
+    "state/command-center/gateway-routing-state.json",
+    "state/command-center/project-governance/project-council.json",
+    "tools/command_center_gateway_routing_validate.py",
+    "tools/command_center_murtakaz_validate.py",
+    "company/tests/test_command_center_gateway_routing.py",
+    ".github/workflows/command-center-reference-ui.yml"
+  ],
+  "expected_behavior": [
+    "all front doors converge on one logical Gateway contract",
+    "typed intent required; free text cannot grant authority or choose route",
+    "context stale/conflict states propagate without improvisation",
+    "authority/risk classification is deterministic",
+    "read-only planning may proceed without execution authority",
+    "material write/execute requests become WAITING_FOR_APPROVAL or BLOCKED",
+    "model selection never occurs silently",
+    "skill/model/execution future dependencies are truthful",
+    "Gateway never invokes Execution Fabric in this slice",
+    "route reasons are explicit and stable"
+  ],
+  "risk_class": "MATERIAL_APPLICATION_ARCHITECTURE_ROUTING_SHADOW_ONLY",
+  "acceptance_criteria": [
+    "Gateway remains facade only",
+    "routing stages are explicit",
+    "typed intent cannot be derived from raw instruction in this slice",
+    "read-only route produces PLANNED with no live execution",
+    "write without approval produces WAITING_FOR_APPROVAL",
+    "execute remains BLOCKED while live execution is disabled",
+    "STALE_CONTEXT and CONTEXT_CONFLICT propagate exactly",
+    "high-risk authority/security/durability route selects MURTAKAZ_ARENA reasoning path",
+    "non-deterministic reasoning never chooses a model because Model Broker is not implemented",
+    "exact-head CI passes"
+  ],
+  "verification_plan": [
+    "GatewayRoutingValidation C# console",
+    "Company Stage 0",
+    "CodeQL",
+    "Reference UI build/render",
+    "Murtakaz validator",
+    "Murtakaz post-review"
+  ],
+  "pre_approval_receipt": "state/command-center/project-governance/approvals/2026-10-21-gateway-routing-pre.json",
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE"
+}
