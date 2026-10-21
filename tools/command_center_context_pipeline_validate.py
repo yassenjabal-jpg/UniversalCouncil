@@ -25,6 +25,7 @@ A1_PRE = PROJECT / "approvals" / "2026-10-21-repair-a1-context-baseline-pre.json
 A1_POST = PROJECT / "approvals" / "2026-10-21-repair-a1-context-baseline-post.json"
 A2_POST = PROJECT / "approvals" / "2026-10-21-repair-a2-governance-metadata-post.json"
 A3_POST = PROJECT / "approvals" / "2026-10-21-repair-a3-truth-lock-post.json"
+B1_POST = PROJECT / "approvals" / "2026-10-21-repair-b1-native-completion-post.json"
 A1_CHANGE = PROJECT / "changes" / "2026-10-21-repair-a1-context-baseline.json"
 A1_CAPSULE = PROJECT / "context-capsules" / "2026-10-21-repair-a1-context-baseline.json"
 MAP_BUILDER = ROOT / "tools" / "build_command_center_project_context_map.py"
@@ -118,6 +119,7 @@ a1_capsule = load(A1_CAPSULE)
 a1_post = load(A1_POST) if A1_POST.exists() else None
 a2_post = load(A2_POST) if A2_POST.exists() else None
 a3_post = load(A3_POST) if A3_POST.exists() else None
+b1_post = load(B1_POST) if B1_POST.exists() else None
 
 if context_map["schema_version"] != "2.0":
     raise SystemExit("Project context map must use repaired schema 2.0")
@@ -176,6 +178,8 @@ if context_map["conflicts"]:
     raise SystemExit("Canonical project context map currently expects no unresolved conflicts")
 if pipeline["status"] == "MURTAKAZ_REVIEW_REQUIRED":
     expected_active_work = ["REPAIR_WAVE_A1_CONTEXT_BASELINE"]
+elif b1_post is not None and b1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ":
+    expected_active_work = ["REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"]
 elif a3_post is not None and a3_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ":
     expected_active_work = ["REPAIR_WAVE_B1_COMPLETE_REMAINING_NATIVE_WORK"]
 elif a2_post is not None and a2_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ":
