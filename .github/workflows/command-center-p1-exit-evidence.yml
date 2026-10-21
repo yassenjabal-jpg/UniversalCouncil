@@ -69,8 +69,8 @@ jobs:
         shell: pwsh
         run: |
           $PSNativeCommandUseErrorActionPreference = $true
-          ffmpeg -y -framerate 6 -i artifacts/p1-exit-evidence/full/frames/frame-%04d.png -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p artifacts/p1-exit-evidence/full/p1-critical-path-motion.mp4
-          ffmpeg -y -framerate 6 -i artifacts/p1-exit-evidence/reduced/frames/frame-%04d.png -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p artifacts/p1-exit-evidence/reduced/p1-critical-path-reduced-motion.mp4
+          ffmpeg -y -framerate 20 -i artifacts/p1-exit-evidence/full/frames/frame-%04d.png -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p artifacts/p1-exit-evidence/full/p1-critical-path-motion.mp4
+          ffmpeg -y -framerate 20 -i artifacts/p1-exit-evidence/reduced/frames/frame-%04d.png -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p artifacts/p1-exit-evidence/reduced/p1-critical-path-reduced-motion.mp4
 
           foreach ($mode in @("full","reduced")) {
             $file = if ($mode -eq "full") { "p1-critical-path-motion.mp4" } else { "p1-critical-path-reduced-motion.mp4" }
