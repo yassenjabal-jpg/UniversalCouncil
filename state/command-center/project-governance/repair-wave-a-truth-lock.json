@@ -127,8 +127,10 @@
   "head_progression_allowed_after_lock": true,
   "historical_anchor_correction": {
     "change_id": "CC-WAVE-A-HISTORICAL-LOCK-CORRECTION-2026-10-21",
-    "status": "MURTAKAZ_REVIEW_REQUIRED",
+    "status": "APPROVED_BY_AL_MURTAKAZ",
     "pre_approval": "state/command-center/project-governance/approvals/2026-10-21-wave-a-historical-lock-correction-pre.json",
-    "proof": "ALL_18_LOCKED_SOURCE_BLOBS_MATCH_A3_MERGE_REVISION"
+    "proof": "ALL_18_LOCKED_SOURCE_BLOBS_MATCH_A3_MERGE_REVISION",
+    "post_approval": "state/command-center/project-governance/approvals/2026-10-21-wave-a-historical-lock-correction-post.json",
+    "reviewed_head": "38c33e85d1aa191c00dd07054e5e1f1128788860"
   }
 }
