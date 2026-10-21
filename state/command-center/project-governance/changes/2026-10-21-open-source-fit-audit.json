@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-OSS-FIT-2026-10-21",
+  "project": "UniversalCouncil Command Center / المرتكز",
+  "date": "2026-10-21",
+  "base_revision": "e201c50c091b90938ba0167037555903a63e0f10",
+  "base_branch": "command-center/capability-registry-model-broker-20261021",
+  "change_class": [
+    "governance",
+    "architecture_research",
+    "dependency_planning"
+  ],
+  "scope": [
+    "Assess candidate open-source projects against current ModelBroker, CapabilityRegistry, Context Capsule, Gateway and Execution Fabric boundaries",
+    "Classify candidates as PILOT, ARCHITECTURE_REFERENCE, DEFER, or REJECT",
+    "Define three bounded integration waves and hard acceptance gates",
+    "Record license/security/authority constraints"
+  ],
+  "non_goals": [
+    "Adding NuGet/PyPI/npm dependencies",
+    "Calling any external model provider",
+    "Enabling Cua or any computer-use provider on YASSIN",
+    "Replacing Murtakaz governance",
+    "Changing owner approval semantics",
+    "Merging into the parent branch"
+  ],
+  "risk_class": "T0_OBSERVE",
+  "expected_outputs": [
+    "14_OPEN_SOURCE_TECHNICAL_FIT_AUDIT_2026-10-21.md",
+    "15_OPEN_SOURCE_INTEGRATION_ROADMAP_2026-10-21.md",
+    "open-source-fit-audit.json",
+    "open-source-integration-roadmap.json"
+  ],
+  "acceptance_criteria": [
+    "Every candidate has a boundary-preserving disposition",
+    "No candidate can grant itself authority or silently select/fallback a model",
+    "Command Center .NET compatibility is considered explicitly",
+    "Licensing caveats are captured",
+    "No production code or live capability state is modified"
+  ]
+}
