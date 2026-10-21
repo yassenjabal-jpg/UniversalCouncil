@@ -39,6 +39,29 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
         raise SystemExit(f"{mode} motion capture is below duration floor")
     if manifest["frame_count"] != len(manifest["frames"]):
         raise SystemExit(f"{mode} frame manifest is incomplete")
+    if manifest["frame_rate"] < 20:
+        raise SystemExit(f"{mode} motion capture frame rate is below the owner-review floor")
+
+    visibility = manifest.get("motion_visibility")
+    if not isinstance(visibility, dict):
+        raise SystemExit(f"{mode} motion visibility metrics are missing")
+
+    changed_frames = int(visibility.get("changed_frame_count", 0))
+    longest_run = int(visibility.get("longest_changed_run", 0))
+    motion_runs = int(visibility.get("motion_run_count", 0))
+
+    if mode == "full":
+        if changed_frames < 60:
+            raise SystemExit("full motion capture does not contain enough visibly changing frames")
+        if longest_run < 6:
+            raise SystemExit("full motion capture still looks like state jumps rather than animation")
+        if motion_runs < 8:
+            raise SystemExit("full motion capture does not prove enough separate semantic motion events")
+    else:
+        if changed_frames < 24:
+            raise SystemExit("reduced motion capture lost too much visible state-transition feedback")
+        if motion_runs < 5:
+            raise SystemExit("reduced motion capture does not prove semantic parity across transitions")
 
     video = folder / integrity["file"]
     if not video.exists():
