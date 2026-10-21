@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-REPAIR-B3-FINAL-P1-ACCEPTANCE-2026-10-21",
+  "status": "MURTAKAZ_REVIEWING",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "77a0e21bd40fc4a306fe75cc131e9c5740110db6"
+  },
+  "scope": [
+    "R10 final Al-Murtakaz + Studio review",
+    "final fidelity review of all eight canonical desktop screens",
+    "interaction additions versus canonical visual language",
+    "truth-state semantics",
+    "rejected-generation parent exclusion",
+    "shared motion exit evidence",
+    "Android semantic adaptation exit evidence",
+    "P1 close-or-return decision"
+  ],
+  "non_goals": [
+    "new visual direction",
+    "desktop screen redesign",
+    "Stage 8 opening",
+    "live execution authority",
+    "production Android host/runtime authority",
+    "Skill Registry",
+    "Durable Project Store",
+    "Job Engine"
+  ],
+  "expected_output": "APPROVE_P1_OR_RETURN_FOR_CHANGES",
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE",
+  "pre_approval_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-pre.json",
+  "timestamp": "2026-10-21"
+}

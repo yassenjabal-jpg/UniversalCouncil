@@ -28,6 +28,7 @@ GOVERNANCE_METADATA_VALIDATOR = ROOT / "tools" / "command_center_governance_meta
 REPAIR_WAVE_A_VALIDATOR = ROOT / "tools" / "command_center_repair_wave_a_validate.py"
 REPAIR_B1_NATIVE_VALIDATOR = ROOT / "tools" / "command_center_repair_b1_native_validate.py"
 REPAIR_B2_CONSISTENCY_VALIDATOR = ROOT / "tools" / "command_center_repair_b2_validate.py"
+REPAIR_B3_FINAL_VALIDATOR = ROOT / "tools" / "command_center_repair_b3_final_validate.py"
 
 VISUAL_DIRECTION_ROOT = ROOT / "docs" / "operations" / "command-center" / "living-operations"
 VISUAL_DIRECTION_FILES = (
@@ -80,6 +81,7 @@ for required in (
     REPAIR_WAVE_A_VALIDATOR,
     REPAIR_B1_NATIVE_VALIDATOR,
     REPAIR_B2_CONSISTENCY_VALIDATOR,
+    REPAIR_B3_FINAL_VALIDATOR,
 ):
     if not required.exists():
         raise SystemExit(f"missing Murtakaz alignment artifact: {required.relative_to(ROOT)}")
@@ -150,6 +152,7 @@ allowed_screen_review_states = {
     "B1_NATIVE_COMPLETION_APPROVED_R9_READY",
     "B2_CROSS_SCREEN_REVIEW_REQUIRED",
     "B2_CROSS_SCREEN_APPROVED_B3_READY",
+    "B3_RETURNED_FOR_CHANGES_EXIT_EVIDENCE_PENDING",
 }
 if screen_review["status"] not in allowed_screen_review_states:
     raise SystemExit("P1 screen review entered an unsupported lifecycle state")
@@ -161,6 +164,7 @@ allowed_scoped_decisions = {
     "PENDING",
     "B1_NATIVE_COMPLETION_APPROVED",
     "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+    "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
 }
 if any(item["murtakaz_decision"] not in allowed_scoped_decisions for item in screen_review["screens"]):
     raise SystemExit("P1 screen state claimed unsupported/final approval during scoped P1 repair")
@@ -180,6 +184,7 @@ subprocess.run([__import__("sys").executable, str(GOVERNANCE_METADATA_VALIDATOR)
 subprocess.run([__import__("sys").executable, str(REPAIR_WAVE_A_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(REPAIR_B1_NATIVE_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(REPAIR_B2_CONSISTENCY_VALIDATOR)], check=True)
+subprocess.run([__import__("sys").executable, str(REPAIR_B3_FINAL_VALIDATOR)], check=True)
 
 for visual_file in VISUAL_DIRECTION_FILES:
     text = visual_file.read_text(encoding="utf-8").casefold()

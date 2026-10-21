@@ -1,99 +1,107 @@
 {
   "schema_version": "1.0",
   "review_id": "living-operations-p1-screen-review",
-  "status": "B2_CROSS_SCREEN_APPROVED_B3_READY",
+  "status": "B3_RETURNED_FOR_CHANGES_EXIT_EVIDENCE_PENDING",
   "approval_system": "al-murtakaz",
   "final_state_requires": "APPROVED_BY_AL_MURTAKAZ",
   "screens": [
     {
       "id": "home_owner_workspace",
-      "state": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED_B3_PENDING",
-      "murtakaz_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "state": "B3_DESKTOP_FINAL_FIDELITY_PASS_EXIT_EVIDENCE_PENDING",
+      "murtakaz_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "blueprint": "docs/operations/command-center/living-operations/20_HOME_OWNER_WORKSPACE_FIDELITY_BLUEPRINT.md",
       "visual_job_id": "P1-HOME-ARTIFACT-002",
       "repair_audit": "docs/operations/command-center/living-operations/21_MEMBER_SIGIL_REFERENCE_GAP_AUDIT.md",
       "invalidated_visual_job_id": "P1-HOME-ARTIFACT-001",
       "production_protocol": "state/command-center/living-operations-visual-production-protocol.json",
       "reference_shell_interaction_implemented": true,
-      "workshop_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "workshop_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "b1_evidence": "state/command-center/living-operations-p1-b1-native-completion.json",
-      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json"
+      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json",
+      "b3_evidence": "state/command-center/living-operations-p1-b3-final-review-result.json"
     },
     {
       "id": "living_project_workspace",
-      "state": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED_B3_PENDING",
-      "murtakaz_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "state": "B3_DESKTOP_FINAL_FIDELITY_PASS_EXIT_EVIDENCE_PENDING",
+      "murtakaz_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "reference_shell_interaction_implemented": true,
-      "workshop_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "workshop_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "b1_evidence": "state/command-center/living-operations-p1-b1-native-completion.json",
-      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json"
+      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json",
+      "b3_evidence": "state/command-center/living-operations-p1-b3-final-review-result.json"
     },
     {
       "id": "software_autopilot_project",
       "reference_shell_interaction_implemented": true,
-      "state": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED_B3_PENDING",
-      "murtakaz_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
-      "workshop_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "state": "B3_DESKTOP_FINAL_FIDELITY_PASS_EXIT_EVIDENCE_PENDING",
+      "murtakaz_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
+      "workshop_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "b1_evidence": "state/command-center/living-operations-p1-b1-native-completion.json",
-      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json"
+      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json",
+      "b3_evidence": "state/command-center/living-operations-p1-b3-final-review-result.json"
     },
     {
       "id": "studio_project",
       "reference_shell_interaction_implemented": true,
-      "state": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED_B3_PENDING",
-      "murtakaz_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
-      "workshop_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "state": "B3_DESKTOP_FINAL_FIDELITY_PASS_EXIT_EVIDENCE_PENDING",
+      "murtakaz_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
+      "workshop_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "b1_evidence": "state/command-center/living-operations-p1-b1-native-completion.json",
-      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json"
+      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json",
+      "b3_evidence": "state/command-center/living-operations-p1-b3-final-review-result.json"
     },
     {
       "id": "owner_decision_mode",
-      "state": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED_B3_PENDING",
-      "murtakaz_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "state": "B3_DESKTOP_FINAL_FIDELITY_PASS_EXIT_EVIDENCE_PENDING",
+      "murtakaz_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "reference_shell_interaction_implemented": true,
-      "workshop_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "workshop_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "b1_evidence": "state/command-center/living-operations-p1-b1-native-completion.json",
-      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json"
+      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json",
+      "b3_evidence": "state/command-center/living-operations-p1-b3-final-review-result.json"
     },
     {
       "id": "checkpoint_recovery_fork",
-      "state": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED_B3_PENDING",
-      "murtakaz_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "state": "B3_DESKTOP_FINAL_FIDELITY_PASS_EXIT_EVIDENCE_PENDING",
+      "murtakaz_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "reference_shell_interaction_implemented": true,
-      "workshop_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "workshop_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "b1_evidence": "state/command-center/living-operations-p1-b1-native-completion.json",
-      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json"
+      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json",
+      "b3_evidence": "state/command-center/living-operations-p1-b3-final-review-result.json"
     },
     {
       "id": "pulse_visual_project_story",
       "reference_shell_interaction_implemented": true,
-      "state": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED_B3_PENDING",
-      "murtakaz_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
-      "workshop_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "state": "B3_DESKTOP_FINAL_FIDELITY_PASS_EXIT_EVIDENCE_PENDING",
+      "murtakaz_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
+      "workshop_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "b1_evidence": "state/command-center/living-operations-p1-b1-native-completion.json",
-      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json"
+      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json",
+      "b3_evidence": "state/command-center/living-operations-p1-b3-final-review-result.json"
     },
     {
       "id": "project_complete_work_receipt",
-      "state": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED_B3_PENDING",
-      "murtakaz_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "state": "B3_DESKTOP_FINAL_FIDELITY_PASS_EXIT_EVIDENCE_PENDING",
+      "murtakaz_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "reference_shell_interaction_implemented": true,
-      "workshop_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+      "workshop_decision": "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
       "b1_evidence": "state/command-center/living-operations-p1-b1-native-completion.json",
-      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json"
+      "b2_evidence": "state/command-center/living-operations-p1-b2-cross-screen-review.json",
+      "b3_evidence": "state/command-center/living-operations-p1-b3-final-review-result.json"
     }
   ],
   "shared_motion": {
-    "state": "NATIVE_SEMANTIC_MOTION_LAYER_IMPLEMENTED_REVIEW_COMPLETE",
-    "murtakaz_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED_B3_PENDING"
+    "state": "B3_EXIT_EVIDENCE_MISSING",
+    "murtakaz_decision": "RETURNED_FOR_CHANGES_MOTION_CAPTURE_REQUIRED"
   },
   "android_semantic_pair": {
-    "state": "DIRECTION_DEFINED_ARTIFACT_PENDING",
-    "murtakaz_decision": "PENDING"
+    "state": "B3_EXIT_EVIDENCE_MISSING",
+    "murtakaz_decision": "RETURNED_FOR_CHANGES_ANDROID_PROTOTYPE_REQUIRED"
   },
   "phase_complete": false,
   "native_reference_shell": {
-    "state": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED_B3_READY",
+    "state": "B3_DESKTOP_FIDELITY_APPROVED_EXIT_EVIDENCE_PENDING",
     "visual_authority": "EIGHT_CANONICAL_REFERENCES",
     "implementation": "apps/UniversalCouncil.CommandCenter/MainWindow.xaml + MainWindow.xaml.cs",
     "screens": [
@@ -136,5 +144,10 @@
     "verdict": "APPROVED_B2_ONLY_B3_REQUIRED",
     "next_if_owner_opens": "B3_FINAL_REVIEW_P1_ACCEPTANCE",
     "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b2-cross-screen-consistency-post.json"
+  },
+  "b3_final_review": {
+    "status": "RETURNED_FOR_CHANGES",
+    "review_result": "state/command-center/living-operations-p1-b3-final-review-result.json",
+    "final_p1_approval": false
   }
 }

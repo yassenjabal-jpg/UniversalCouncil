@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-B3-RETURN-STATE-ADOPTION-2026-10-21",
+  "change_id": "CC-REPAIR-B3-FINAL-P1-ACCEPTANCE-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "scoped_verdict": "ADOPT_B3_RETURN_FOR_CHANGES_STATE_ONLY",
+  "adoption_authorized": true,
+  "merge_authorized": true,
+  "merge_condition": "EXACT_HEAD_CI_SUCCESS_AFTER_RECEIPT",
+  "desktop_fidelity_accepted": true,
+  "final_p1_approval_granted": false,
+  "p1_complete": false,
+  "unresolved_exit_evidence": [
+    "P1_MOTION_CAPTURE_MISSING",
+    "P1_ANDROID_SEMANTIC_ADAPTATION_MISSING"
+  ],
+  "next_work": "P1_EXIT_REMEDIATION_MOTION_AND_ANDROID",
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "evidence_refs": [
+    "state/command-center/living-operations-p1-b3-final-review-result.json",
+    "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-return.json"
+  ],
+  "timestamp": "2026-10-21"
+}

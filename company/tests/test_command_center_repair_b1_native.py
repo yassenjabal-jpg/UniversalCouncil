@@ -76,15 +76,16 @@ class CommandCenterRepairB1NativeTests(unittest.TestCase):
                 self.remainder["phases"]["R9_CROSS_SCREEN_CONSISTENCY_AUDIT"]["state"],
                 {"READY_TO_CONTINUE", "CLOSED"},
             )
-            self.assertEqual(
+            self.assertIn(
                 self.remainder["phases"]["R10_FINAL_MURTAKAZ_STUDIO_REVIEW"]["state"],
-                "NOT_OPENED",
+                {"NOT_OPENED", "MURTAKAZ_STUDIO_REVIEW", "RETURNED_FOR_CHANGES"},
             )
             self.assertIn(
                 self.context["active_work"],
                 [
                     ["REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"],
                     ["REPAIR_WAVE_B3_FINAL_REVIEW_P1_ACCEPTANCE_PENDING"],
+                    ["P1_EXIT_REMEDIATION_MOTION_AND_ANDROID"],
                 ],
             )
         else:
