@@ -42,6 +42,14 @@ class CommandCenterGovernanceMetadataTests(unittest.TestCase):
             self.current_review["repair_program"]["wave_a"]["A1"],
             "COMPLETE_APPROVED",
         )
+        self.assertEqual(
+            self.current_review["repair_program"]["wave_a"]["A2"],
+            "COMPLETE_APPROVED",
+        )
+        self.assertEqual(
+            self.current_review["repair_program"]["wave_a"]["A3"],
+            "ACTIVE",
+        )
 
     def test_agentic_post_receipt_is_machine_readable_history(self) -> None:
         self.assertEqual(self.agentic_post["normalized_from"]["source"], "PR_COMMENT")
@@ -79,6 +87,11 @@ class CommandCenterGovernanceMetadataTests(unittest.TestCase):
 
     def test_repairs_pause_skill_registry_without_opening_stage8(self) -> None:
         self.assertIn("**PENDING AFTER REPAIR CLOSURE** — Skill Registry.", self.roadmap)
+        self.assertIn(
+            "**A2 Governance Metadata Reconciliation — COMPLETE / APPROVED_BY_AL_MURTAKAZ**",
+            self.roadmap,
+        )
+        self.assertIn("**A3 Truth Lock + Murtakaz Closure — ACTIVE**", self.roadmap)
         self.assertIn("Stage 8 = **NOT_OPENED**", self.roadmap)
 
 
