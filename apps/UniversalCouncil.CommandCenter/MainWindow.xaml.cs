@@ -3446,8 +3446,12 @@ public partial class MainWindow : Window
 
     private void BuildNativeOwnerDecision()
     {
-        // Decision mode intentionally preserves the originating project as a
-        // de-emphasized underlay instead of replacing it with a blank modal.
+        // Decision mode preserves a native reconstruction of the originating
+        // project beneath the governed decision surface. The underlay is
+        // de-emphasized by the translucent veil below; it never falls back to
+        // reference pixels in native-only evidence.
+        BuildNativeProjectWorkspaceCore();
+
         Place(
             SecondaryNativeLayer,
             ChromePanel("#B8EDF2F8", "#00FFFFFF", 0, new Thickness(0)),
