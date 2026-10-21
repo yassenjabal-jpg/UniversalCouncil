@@ -18,16 +18,8 @@ class CommandCenterRepairB2ConsistencyTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.plan = load(STATE / "living-operations-p1-b2-cross-screen-consistency.json")
-        cls.pre = load(
-            PROJECT
-            / "approvals"
-            / "2026-10-21-repair-b2-cross-screen-consistency-pre.json"
-        )
-        cls.b2_1_check = load(
-            PROJECT
-            / "approvals"
-            / "2026-10-21-repair-b2-1-shared-visual-check.json"
-        )
+        cls.pre = load(PROJECT / "approvals" / "2026-10-21-repair-b2-cross-screen-consistency-pre.json")
+        cls.b2_1_check = load(PROJECT / "approvals" / "2026-10-21-repair-b2-1-shared-visual-check.json")
         cls.p1 = load(STATE / "living-operations-p1-visual-phase.json")
         cls.screen_review = load(STATE / "living-operations-p1-screen-review.json")
         cls.main = (
