@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CC-CAPSULE-POST-P1-MOTION-INTERACTION-LAW-2026-10-21",
+  "job_or_change_id": "CC-POST-P1-MOTION-INTERACTION-LAW-2026-10-21",
+  "immutable": true,
+  "canonical_branch": "command-center/project-local-council-studio-20261019",
+  "canonical_base_sha": "07f2575eaed71f806724b461fc297ce9edc84d4a",
+  "governing_sources": [
+    "docs/operations/command-center/living-operations/02_MOTION_BIBLE.md",
+    "docs/operations/command-center/living-operations/10_STATE_MOTION_MATRIX.md",
+    "docs/operations/command-center/living-operations/16_P1_INTERACTION_MOTION_STORYBOARD.md",
+    "state/command-center/living-operations-p1-screen-review.json",
+    "state/command-center/living-operations-p1-final-acceptance.json",
+    "apps/UniversalCouncil.CommandCenter/MainWindow.xaml",
+    "apps/UniversalCouncil.CommandCenter/MainWindow.xaml.cs"
+  ],
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "p1_complete": true,
+    "stage8_opened": false,
+    "runtime_authority": false
+  },
+  "timestamp": "2026-10-21"
+}
