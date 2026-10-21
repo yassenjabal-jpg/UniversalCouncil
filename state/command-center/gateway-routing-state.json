@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "state_id": "murtakaz-gateway-routing",
-  "status": "MURTAKAZ_REVIEW_REQUIRED",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
   "canonical_base": "8cb72d3f04b6396d9d594924446dd8dc9c896aff",
   "components": {
     "typed_gateway_contract": "IMPLEMENTED",
@@ -59,16 +59,17 @@
       "receipt": "state/command-center/project-governance/approvals/2026-10-21-gateway-routing-post.json"
     },
     "capability_model_extension": {
-      "status": "PENDING",
-      "reviewed_head": null,
-      "post_approval": null
+      "status": "APPROVED_BY_AL_MURTAKAZ",
+      "reviewed_head": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe",
+      "post_approval": "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-post.json"
     }
   },
   "murtakaz_post_approval": "state/command-center/project-governance/approvals/2026-10-21-gateway-routing-post.json",
   "current_extension": {
     "change_id": "CC-CAPABILITY-MODEL-BROKER-2026-10-21",
     "pre_approval": "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-pre.json",
-    "status": "IMPLEMENTING",
-    "reason": "Model Broker and Capability Registry are now integrated into the routing model stage; prior Gateway approval remains historical evidence but does not cover this material extension."
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "reason": "Model Broker and Capability Registry are now integrated into the routing model stage; prior Gateway approval remains historical evidence but does not cover this material extension.",
+    "post_approval": "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-post.json"
   }
 }
