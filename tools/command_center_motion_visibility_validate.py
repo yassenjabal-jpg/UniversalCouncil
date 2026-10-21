@@ -110,7 +110,7 @@ required_gate_markers = (
     "math.ceil(3 * fps_scale)",
     'timing.get("clock") != "STOPWATCH_REALTIME_WPF"',
     "abs(actual_capture - target_capture) > 1.25",
-    'timing.get("max_capture_lateness_ms", 999999) > 100',
+    'float(timing.get("max_capture_lateness_ms", 999999)) > 100',
 )
 for marker in required_gate_markers:
     if marker not in p1_validator:
