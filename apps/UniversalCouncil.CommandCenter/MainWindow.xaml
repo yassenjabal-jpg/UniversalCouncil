@@ -9,6 +9,9 @@
         WindowStartupLocation="CenterScreen"
         Background="#EEF2F8"
         FlowDirection="RightToLeft"
+        KeyboardNavigation.TabNavigation="Cycle"
+        KeyboardNavigation.ControlTabNavigation="Cycle"
+        AutomationProperties.Name="UniversalCouncil Command Center"
         PreviewKeyDown="Window_PreviewKeyDown">
 
     <Window.Resources>
