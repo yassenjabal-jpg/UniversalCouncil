@@ -181,7 +181,7 @@ if gates["live_execution_authorized"] is not False:
 host = projection["host_evidence"]
 if (
     host["yassin_remote_agent_seen_online"] is not True
-    or host["remote_command_channel_state"] != "PAIRED_ONLINE_BUT_TOOL_QUOTA_BLOCKED"
+    or host["remote_command_channel_state"] != "DEVICE_OFFLINE_AND_TOOL_QUOTA_BLOCKED"
     or host["tailscale_status_observed"] is not False
     or host["remote_transport_deployed_to_yassin"] is not False
     or host["remote_transport_running_on_yassin"] is not False
