@@ -161,7 +161,12 @@ if not post["adoption_authorized"] or not post["merge_authorized"]:
     raise SystemExit("Gateway/Routing post-approval must authorize adoption and merge")
 if post["live_execution_authorized"] or post["stage8_opened"]:
     raise SystemExit("Gateway/Routing post-approval may not enable live execution or Stage 8")
-if post["model_broker_implemented"] or post["skill_registry_implemented"] or post["capability_registry_implemented"] or post["job_engine_implemented"]:
+if (
+    post["model_broker_implemented"]
+    or post["skill_registry_implemented"]
+    or post["capability_registry_implemented"]
+    or post["job_engine_implemented"]
+):
     raise SystemExit("Gateway/Routing approval fabricated later roadmap components")
 if post["next_roadmap_slice_authorized"] != "CAPABILITY_REGISTRY_AND_MODEL_BROKER":
     raise SystemExit("Gateway/Routing next roadmap slice drifted")
