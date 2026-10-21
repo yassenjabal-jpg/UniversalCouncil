@@ -260,8 +260,8 @@ Repair sequence is mandatory before resuming Skill Registry:
 
 ### Wave B — Visual P1 Completion
 
-- **B1 Complete Remaining Native Work — ACTIVE**
-- **B2 Cross-Screen Consistency & Polish — PENDING**
+- **B1 Complete Remaining Native Work — COMPLETE / APPROVED_BY_AL_MURTAKAZ**
+- **B2 Cross-Screen Consistency & Polish — ACTIVE**
 - **B3 Final Review & P1 Acceptance — PENDING**
 
 P1 remains `IN_PROGRESS` until explicit final Murtakaz + Workshop approval.
