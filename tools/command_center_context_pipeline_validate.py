@@ -170,8 +170,13 @@ if context_map["source_revision"] != expected_revision:
 
 if context_map["conflicts"]:
     raise SystemExit("Canonical project context map currently expects no unresolved conflicts")
-if context_map["active_work"] != ["REPAIR_WAVE_A1_CONTEXT_BASELINE"]:
-    raise SystemExit("Project context active work is not aligned with repair A1")
+expected_active_work = (
+    ["REPAIR_WAVE_A1_CONTEXT_BASELINE"]
+    if pipeline["status"] == "MURTAKAZ_REVIEW_REQUIRED"
+    else ["REPAIR_WAVE_A2_GOVERNANCE_METADATA_RECONCILIATION"]
+)
+if context_map["active_work"] != expected_active_work:
+    raise SystemExit("Project context active work is not aligned with the repair lifecycle")
 
 manifest = context_map["project_manifest"]
 if manifest["governance_system"] != "al-murtakaz" or manifest["owner_authority"] != "FINAL":
