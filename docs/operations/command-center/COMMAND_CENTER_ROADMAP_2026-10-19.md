@@ -246,12 +246,12 @@ Repair sequence is mandatory before resuming Skill Registry:
   - Git baseline provenance separated from live source-set SHA-256 truth;
   - actual HEAD source blobs are dynamically validated;
   - merged through PR #61.
-- **A2 Governance Metadata Reconciliation — ACTIVE**
+- **A2 Governance Metadata Reconciliation — COMPLETE / APPROVED_BY_AL_MURTAKAZ**
   - architecture invariant implementation metadata;
   - current vs historical Agentic review truth;
   - normalized PR #56 post-review receipt;
   - roadmap/status reconciliation.
-- **A3 Truth Lock + Murtakaz Closure — PENDING**
+- **A3 Truth Lock + Murtakaz Closure — ACTIVE**
   - final cross-file truth audit;
   - anti-drift revalidation;
   - repair-wave A closure lock.
