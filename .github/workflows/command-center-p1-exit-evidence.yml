@@ -65,7 +65,7 @@ jobs:
           dotnet restore apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj
           dotnet build apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-restore
 
-      - name: Probe Windows.Graphics.Capture via pinned WgcSharp
+      - name: Probe persistent Windows.Graphics.Capture session
         shell: pwsh
         run: |
           $PSNativeCommandUseErrorActionPreference = $true
