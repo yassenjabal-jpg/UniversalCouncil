@@ -9,7 +9,7 @@
     "system": "al-murtakaz",
     "mandatory_approval_policy": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
     "final_approval_required": true,
-    "current_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED_B3_PENDING"
+    "current_decision": "RETURNED_FOR_CHANGES"
   },
   "required_flagship_surfaces": [
     "home_owner_workspace",
@@ -34,7 +34,7 @@
   },
   "exit_requires": "APPROVED_BY_AL_MURTAKAZ",
   "material_change_reopens_review": true,
-  "current_repair_stage": "B2_COMPLETE_B3_PENDING",
+  "current_repair_stage": "B3_RETURNED_FOR_CHANGES_EXIT_EVIDENCE_PENDING",
   "b1_completion": {
     "status": "APPROVED_BY_AL_MURTAKAZ",
     "final_p1_approval": false,
@@ -43,8 +43,16 @@
   "b2_completion": {
     "status": "APPROVED_BY_AL_MURTAKAZ",
     "final_p1_approval": false,
-    "b3_opened": false,
-    "r10_opened": false,
+    "b3_opened": true,
+    "r10_opened": true,
     "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b2-cross-screen-consistency-post.json"
+  },
+  "b3_review": {
+    "status": "RETURNED_FOR_CHANGES",
+    "desktop_fidelity_accepted": true,
+    "motion_capture_accepted": false,
+    "android_semantic_adaptation_accepted": false,
+    "final_p1_approval": false,
+    "return_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-return.json"
   }
 }
