@@ -102,7 +102,7 @@ public sealed class RoutingCoordinator : IRoutingCoordinator
             projectedUxState,
             reasoningPath,
             approvalRequired,
-            request.OwnerApprovalPresent && approvalRequired,
+            false,
             false,
             stages,
             reasons);
