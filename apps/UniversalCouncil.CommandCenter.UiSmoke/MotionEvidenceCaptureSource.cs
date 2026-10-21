@@ -282,14 +282,6 @@ internal sealed class PersistentWgcWindowCaptureSource : IMotionEvidenceCaptureS
 
         try
         {
-            _item.Dispose();
-        }
-        catch
-        {
-        }
-
-        try
-        {
             _winrtDevice.Dispose();
         }
         catch
