@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-A3-TRUTH-LOCK-PRE-2026-10-21",
+  "change_id": "CC-REPAIR-A3-TRUTH-LOCK-2026-10-21",
+  "status": "APPROVE_TO_IMPLEMENT",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "requested_by": "OWNER_DIRECTIVE_REPAIR_ROADMAP",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "76eeca02b79790c28a181520cc019d3586769b26"
+  },
+  "scope": [
+    "perform final cross-file truth audit for Repair Wave A",
+    "create a machine-readable Wave A truth lock over canonical source blobs without self-referencing current HEAD",
+    "validate A1 and A2 approval lineage and current repair state",
+    "validate protected runtime truth: live execution off, Stage 8 closed, model providers disconnected, real Autopilot not implemented",
+    "validate Visual P1 remains explicitly IN_PROGRESS and is not falsely closed",
+    "validate Skill Registry remains pending until repair closure",
+    "add Wave A closure validator/tests and bind them into Murtakaz validation",
+    "after exact-head evidence, mark Wave A complete and advance active work to Wave B / B1"
+  ],
+  "explicitly_out_of_scope": [
+    "Visual P1 implementation itself",
+    "repository PR/branch cleanup",
+    "Skill Registry implementation",
+    "Durable Project Store",
+    "Job Engine",
+    "live execution",
+    "Stage 8"
+  ],
+  "risk_class": "MATERIAL_TRUTH_LOCK_AND_REPAIR_WAVE_CLOSURE",
+  "required_reviewers": [
+    "cc_product_truth",
+    "cc_architecture_execution",
+    "cc_red_team",
+    "cc_durable_autopilot",
+    "cc_ai_runtime",
+    "cc_owner_experience"
+  ],
+  "implementation_authorized": true,
+  "final_adoption_granted": false,
+  "merge_authorized": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "timestamp": "2026-10-21"
+}
