@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-A1-CONTEXT-BASELINE-PRE-2026-10-21",
+  "change_id": "CC-REPAIR-A1-CONTEXT-BASELINE-2026-10-21",
+  "status": "APPROVE_TO_IMPLEMENT",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "requested_by": "OWNER_DIRECTIVE_REPAIR_ROADMAP",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "b3ef5d8f60e3f623371b40036bcea01f7a396d2a"
+  },
+  "scope": [
+    "repair project-context-map baseline semantics",
+    "separate immutable Git baseline provenance from current source-set fingerprint",
+    "make context validation inspect actual checkout HEAD and source blobs dynamically",
+    "remove validator dependence on the historical Context Resolver implementation SHA",
+    "refresh project-context-map current work/recent events and canonical source set",
+    "reopen Context Pipeline approval only for this material anti-drift correction",
+    "update Context validation behavior/tests for dynamic HEAD and source-set freshness"
+  ],
+  "explicitly_out_of_scope": [
+    "Architecture Invariant metadata reconciliation (A2)",
+    "Roadmap/latest-review cleanup (A2)",
+    "Visual P1 work (Wave B)",
+    "PR/branch cleanup (Wave C)",
+    "Skill Registry",
+    "live execution",
+    "Stage 8",
+    "WPF visual changes",
+    "Android runtime changes"
+  ],
+  "risk_class": "MATERIAL_CONTEXT_TRUTH_REPAIR",
+  "required_reviewers": [
+    "cc_product_truth",
+    "cc_architecture_execution",
+    "cc_durable_autopilot",
+    "cc_red_team",
+    "cc_ai_runtime",
+    "cc_owner_experience"
+  ],
+  "implementation_authorized": true,
+  "final_adoption_granted": false,
+  "merge_authorized": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "timestamp": "2026-10-21"
+}
