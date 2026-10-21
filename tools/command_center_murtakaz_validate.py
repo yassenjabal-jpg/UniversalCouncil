@@ -150,6 +150,7 @@ allowed_screen_review_states = {
     "B1_NATIVE_COMPLETION_APPROVED_R9_READY",
     "B2_CROSS_SCREEN_REVIEW_REQUIRED",
     "B2_CROSS_SCREEN_APPROVED_B3_READY",
+    "B3_RETURNED_FOR_CHANGES_EXIT_EVIDENCE_PENDING",
 }
 if screen_review["status"] not in allowed_screen_review_states:
     raise SystemExit("P1 screen review entered an unsupported lifecycle state")
@@ -161,6 +162,7 @@ allowed_scoped_decisions = {
     "PENDING",
     "B1_NATIVE_COMPLETION_APPROVED",
     "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+    "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
 }
 if any(item["murtakaz_decision"] not in allowed_scoped_decisions for item in screen_review["screens"]):
     raise SystemExit("P1 screen state claimed unsupported/final approval during scoped P1 repair")
