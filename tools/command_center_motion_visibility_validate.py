@@ -5,16 +5,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MAIN = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "MainWindow.xaml.cs"
 RECORDER = ROOT / "apps" / "UniversalCouncil.CommandCenter.UiSmoke" / "MotionEvidence.cs"
+WGC_RECORDER = ROOT / "apps" / "UniversalCouncil.CommandCenter.UiSmoke" / "WgcMotionEvidence.cs"
 WORKFLOW = ROOT / ".github" / "workflows" / "command-center-p1-exit-evidence.yml"
 P1_VALIDATOR = ROOT / "tools" / "command_center_p1_exit_evidence_validate.py"
 SCREEN_TRANSITION = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "ScreenTransitionMotion.cs"
 
-for required in (MAIN, RECORDER, WORKFLOW, P1_VALIDATOR, SCREEN_TRANSITION):
+for required in (MAIN, RECORDER, WGC_RECORDER, WORKFLOW, P1_VALIDATOR, SCREEN_TRANSITION):
     if not required.exists():
         raise SystemExit(f"missing owner-visible motion artifact: {required.relative_to(ROOT)}")
 
 main = MAIN.read_text(encoding="utf-8")
 recorder = RECORDER.read_text(encoding="utf-8")
+wgc_recorder = WGC_RECORDER.read_text(encoding="utf-8")
 workflow = WORKFLOW.read_text(encoding="utf-8")
 p1_validator = P1_VALIDATOR.read_text(encoding="utf-8")
 screen_transition = SCREEN_TRANSITION.read_text(encoding="utf-8")
@@ -101,6 +103,22 @@ for marker in required_recorder_markers:
     if marker not in recorder:
         raise SystemExit(f"30fps owner-review motion evidence marker missing: {marker}")
 
+
+required_wgc_recorder_markers = (
+    'pipeline =',
+    '"PERSISTENT_WINDOWS_GRAPHICS_CAPTURE_HWND_BGRA_TO_BACKGROUND_FFMPEG_PNG"',
+    'capture_surface = "ACTUAL_COMMAND_CENTER_HWND"',
+    'fallback_used = false',
+    'silent_dxgi_fallback = false',
+    'source_frame_errors = sourceFrameErrors',
+    'unique_sampled_source_frames =',
+    'BackgroundPngFrameEncoder',
+    'BuildMotionSteps(reducedMotion)',
+)
+for marker in required_wgc_recorder_markers:
+    if marker not in wgc_recorder:
+        raise SystemExit(f"WGC owner-review evidence marker missing: {marker}")
+
 if "new PngBitmapEncoder" in recorder:
     raise SystemExit("WPF recorder reintroduced synchronous PNG encoding and time dilation")
 
@@ -123,7 +141,13 @@ required_gate_markers = (
     "reduced motion capture lost required discrete state-transition feedback",
     "math.ceil(3 * fps_scale)",
     'timing.get("clock") != "STOPWATCH_REALTIME_WPF"',
-    'timing.get("pipeline") != "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG"',
+    'render_target_pipeline = "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG"',
+    'wgc_pipeline = "PERSISTENT_WINDOWS_GRAPHICS_CAPTURE_HWND_BGRA_TO_BACKGROUND_FFMPEG_PNG"',
+    "if pipeline not in {render_target_pipeline, wgc_pipeline}:",
+    'timing.get("capture_surface") != "ACTUAL_COMMAND_CENTER_HWND"',
+    'timing.get("fallback_used") is not False',
+    'timing.get("silent_dxgi_fallback") is not False',
+    'int(timing.get("source_frame_errors", -1)) != 0',
     'timing.get("background_encoder") != "FFMPEG_LOSSLESS_PNG"',
     'timing.get("png_encoding_on_wpf_capture_thread") is not False',
     'timing.get("capture_surface_cache") != "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE"',
