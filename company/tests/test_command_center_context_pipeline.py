@@ -19,11 +19,7 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.context_map = load(STATE / "project-context-map.json")
         cls.pipeline = load(STATE / "context-pipeline-state.json")
-        cls.a1_pre = load(
-            PROJECT
-            / "approvals"
-            / "2026-10-21-repair-a1-context-baseline-pre.json"
-        )
+        cls.a1_pre = load(PROJECT / "approvals" / "2026-10-21-repair-a1-context-baseline-pre.json")
 
     def test_context_map_uses_repaired_provenance_schema(self) -> None:
         self.assertEqual(self.context_map["schema_version"], "2.0")
@@ -64,12 +60,7 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
 
     def test_canonical_context_has_current_source_truth(self) -> None:
         self.assertEqual(self.context_map["conflicts"], [])
-        self.assertTrue(
-            all(
-                source["freshness"] == "CURRENT"
-                for source in self.context_map["sources"]
-            )
-        )
+        self.assertTrue(all(source["freshness"] == "CURRENT" for source in self.context_map["sources"]))
         self.assertGreaterEqual(len(self.context_map["sources"]), 16)
 
     def test_context_pipeline_does_not_expand_authority(self) -> None:
@@ -89,9 +80,7 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
         self.assertTrue(truth["context_conflict_blocks_compilation"])
 
     def test_untrusted_content_never_governs(self) -> None:
-        self.assertFalse(
-            self.pipeline["truth_rules"]["untrusted_content_can_govern"]
-        )
+        self.assertFalse(self.pipeline["truth_rules"]["untrusted_content_can_govern"])
 
 
 if __name__ == "__main__":
