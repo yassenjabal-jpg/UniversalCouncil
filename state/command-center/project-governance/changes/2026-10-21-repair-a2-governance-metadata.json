@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-REPAIR-A2-GOVERNANCE-METADATA-2026-10-21",
+  "project_id": "universal-council-command-center",
+  "status": "IMPLEMENTING",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "f55d6f924d0e29a27eebead09e342e899615b38f"
+  },
+  "scope": [
+    "Architecture Invariants metadata reconciliation",
+    "Agentic OS current-review/supersession metadata",
+    "Agentic OS historical post-approval normalization",
+    "Command Center roadmap progress reconciliation",
+    "project-context-map refresh",
+    "Murtakaz projection refresh",
+    "governance metadata validators/tests"
+  ],
+  "non_goals": [
+    "runtime code changes",
+    "visual changes",
+    "repository cleanup",
+    "Skill Registry",
+    "live execution",
+    "Stage 8"
+  ],
+  "acceptance_criteria": [
+    "no invariant remains marked future/pending when its scoped capability is already implemented and validated",
+    "future-only invariants remain future and are not falsely marked complete",
+    "the old RETURN_FOR_ALIGNMENT review is explicitly historical/superseded without rewriting its verdict",
+    "a current review record points to the adopted Agentic OS lineage and current canonical branch state",
+    "PR #56 post-review exists as machine-readable receipt matching the original comment evidence",
+    "roadmap marks slices 1-5 complete and repair A1 complete/A2 active",
+    "live execution and Stage 8 remain disabled",
+    "exact-head CI passes"
+  ],
+  "verification_plan": [
+    "governance metadata validator",
+    "Agentic OS validator",
+    "Murtakaz validator",
+    "Company Stage 0",
+    "CodeQL",
+    "Reference UI",
+    "Murtakaz post-review"
+  ],
+  "pre_approval_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-a2-governance-metadata-pre.json",
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE"
+}
