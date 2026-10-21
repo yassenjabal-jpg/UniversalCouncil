@@ -106,6 +106,12 @@
     "entry_opacity_start": 0.1,
     "timing_policy": "M3_580_600MS_ROUTINE_M4_660MS_DECISION_RECOVERY_COMPLETION",
     "detector_thresholds_changed": false,
-    "reduced_motion_changed": false
+    "reduced_motion_changed": false,
+    "recorder_clock": "STOPWATCH_REALTIME_WPF",
+    "recorder_pipeline": "RENDERTARGETBITMAP_BGRA_STREAM_THEN_POST_CAPTURE_PNG_EXTRACTION",
+    "png_encoding_during_capture": false,
+    "capture_duration_tolerance_seconds": 1.25,
+    "max_capture_lateness_ms": 100,
+    "review_artifact_split": true
   }
 }

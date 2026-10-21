@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text.Json;
@@ -17,7 +18,13 @@ internal static partial class Program
     private const int MotionFramesPerSecond = 30;
 
     private sealed record MotionStep(int Frame, string Name, Action<MainWindow> Execute);
-    private sealed record MotionCapture(string Sha256, byte[] Pixels);
+    private sealed record MotionCapture(byte[] Pixels);
+    private sealed record MotionFrameSample(
+        int Frame,
+        string File,
+        double MeanSampleDelta,
+        double ChangedSampleRatio,
+        bool VisiblyChanged);
     private sealed record MotionFrameEvidence(
         int Frame,
         string File,
@@ -50,58 +57,115 @@ internal static partial class Program
             .GroupBy(step => step.Frame)
             .ToDictionary(group => group.Key, group => group.ToArray());
 
-        var frameEvidence = new List<MotionFrameEvidence>(frameCount);
+        var frameSamples = new List<MotionFrameSample>(frameCount);
         byte[]? previousPixels = null;
         var changedFrameCount = 0;
         var currentChangedRun = 0;
         var longestChangedRun = 0;
         var motionRunCount = 0;
         var wasChanged = false;
+        var totalCaptureLatenessMs = 0d;
+        var maxCaptureLatenessMs = 0d;
+        var lateFrameCount = 0;
+        var rawCapturePath = Path.Combine(output, $"wpf-{mode}-capture.bgra");
+        var captureClock = Stopwatch.StartNew();
 
-        for (var frame = 0; frame < frameCount; frame++)
+        using (var rawCapture = new FileStream(
+            rawCapturePath,
+            FileMode.Create,
+            FileAccess.Write,
+            FileShare.None,
+            1024 * 1024,
+            FileOptions.SequentialScan))
         {
-            if (stepsByFrame.TryGetValue(frame, out var frameSteps))
+            for (var frame = 0; frame < frameCount; frame++)
             {
-                foreach (var step in frameSteps)
+                if (stepsByFrame.TryGetValue(frame, out var frameSteps))
                 {
-                    step.Execute(window);
-                    Console.WriteLine($"Motion evidence [{mode}] step @{frame}: {step.Name}");
+                    foreach (var step in frameSteps)
+                    {
+                        step.Execute(window);
+                        Console.WriteLine($"Motion evidence [{mode}] step @{frame}: {step.Name}");
+                    }
                 }
-            }
 
-            PumpDispatcher(TimeSpan.FromMilliseconds(1000d / MotionFramesPerSecond));
-            var path = Path.Combine(framesDirectory, $"frame-{frame:D4}.png");
-            var capture = CaptureMotionFrame(window, path);
-            var (meanDelta, changedRatio) = previousPixels is null
-                ? (0d, 0d)
-                : ComputeFrameDelta(previousPixels, capture.Pixels);
-            var visiblyChanged = meanDelta >= 0.20 || changedRatio >= 0.004;
+                var targetCaptureTime = TimeSpan.FromSeconds(
+                    (frame + 1d) / MotionFramesPerSecond);
+                PaceDispatcherToCaptureTime(captureClock, targetCaptureTime);
 
-            if (visiblyChanged)
-            {
-                changedFrameCount++;
-                currentChangedRun++;
-                longestChangedRun = Math.Max(longestChangedRun, currentChangedRun);
-                if (!wasChanged)
+                var captureTime = captureClock.Elapsed;
+                var latenessMs = Math.Max(
+                    0,
+                    (captureTime - targetCaptureTime).TotalMilliseconds);
+                totalCaptureLatenessMs += latenessMs;
+                maxCaptureLatenessMs = Math.Max(maxCaptureLatenessMs, latenessMs);
+                if (latenessMs > (1000d / MotionFramesPerSecond))
                 {
-                    motionRunCount++;
+                    lateFrameCount++;
                 }
-            }
-            else
-            {
-                currentChangedRun = 0;
-            }
 
-            wasChanged = visiblyChanged;
-            frameEvidence.Add(new MotionFrameEvidence(
-                frame,
-                Path.GetFileName(path),
-                capture.Sha256,
-                Math.Round(meanDelta, 4),
-                Math.Round(changedRatio, 6),
-                visiblyChanged));
-            previousPixels = capture.Pixels;
+                var capture = CaptureMotionFrame(window);
+                rawCapture.Write(capture.Pixels, 0, capture.Pixels.Length);
+
+                var (meanDelta, changedRatio) = previousPixels is null
+                    ? (0d, 0d)
+                    : ComputeFrameDelta(previousPixels, capture.Pixels);
+                var visiblyChanged = meanDelta >= 0.20 || changedRatio >= 0.004;
+
+                if (visiblyChanged)
+                {
+                    changedFrameCount++;
+                    currentChangedRun++;
+                    longestChangedRun = Math.Max(longestChangedRun, currentChangedRun);
+                    if (!wasChanged)
+                    {
+                        motionRunCount++;
+                    }
+                }
+                else
+                {
+                    currentChangedRun = 0;
+                }
+
+                wasChanged = visiblyChanged;
+                frameSamples.Add(new MotionFrameSample(
+                    frame,
+                    $"frame-{frame:D4}.png",
+                    Math.Round(meanDelta, 4),
+                    Math.Round(changedRatio, 6),
+                    visiblyChanged));
+                previousPixels = capture.Pixels;
+            }
         }
+
+        captureClock.Stop();
+        var actualCaptureDurationSeconds = captureClock.Elapsed.TotalSeconds;
+
+        try
+        {
+            ExtractRawFramesWithFfmpeg(rawCapturePath, framesDirectory, frameCount);
+        }
+        finally
+        {
+            if (File.Exists(rawCapturePath))
+            {
+                File.Delete(rawCapturePath);
+            }
+        }
+
+        var frameEvidence = frameSamples
+            .Select(sample =>
+            {
+                var path = Path.Combine(framesDirectory, sample.File);
+                return new MotionFrameEvidence(
+                    sample.Frame,
+                    sample.File,
+                    HashMotionFrame(path),
+                    sample.MeanSampleDelta,
+                    sample.ChangedSampleRatio,
+                    sample.VisiblyChanged);
+            })
+            .ToList();
 
         var manifestPath = Path.Combine(output, "motion-evidence-manifest.json");
         File.WriteAllText(
@@ -129,6 +193,19 @@ internal static partial class Program
                     frame_rate = MotionFramesPerSecond,
                     frame_count = frameCount,
                     encoded_duration_seconds = (double)frameCount / MotionFramesPerSecond,
+                    capture_timing = new
+                    {
+                        clock = "STOPWATCH_REALTIME_WPF",
+                        pipeline = "RENDERTARGETBITMAP_BGRA_STREAM_THEN_POST_CAPTURE_PNG_EXTRACTION",
+                        target_capture_duration_seconds = (double)frameCount / MotionFramesPerSecond,
+                        actual_capture_duration_seconds = Math.Round(actualCaptureDurationSeconds, 3),
+                        max_capture_lateness_ms = Math.Round(maxCaptureLatenessMs, 3),
+                        mean_capture_lateness_ms = Math.Round(
+                            totalCaptureLatenessMs / Math.Max(1, frameCount),
+                            3),
+                        late_frame_count_over_one_frame = lateFrameCount,
+                        png_encoding_during_capture = false,
+                    },
                     motion_visibility = new
                     {
                         changed_frame_count = changedFrameCount,
@@ -364,7 +441,24 @@ internal static partial class Program
         Dispatcher.PushFrame(frame);
     }
 
-    private static MotionCapture CaptureMotionFrame(MainWindow window, string path)
+    private static void PaceDispatcherToCaptureTime(
+        Stopwatch captureClock,
+        TimeSpan targetCaptureTime)
+    {
+        var remaining = targetCaptureTime - captureClock.Elapsed;
+        if (remaining > TimeSpan.Zero)
+        {
+            PumpDispatcher(remaining);
+            return;
+        }
+
+        // The capture is already behind its target. Pump one render turn without
+        // adding a synthetic delay so WPF animation clocks and queued continuations
+        // can advance before the actual RenderTargetBitmap sample.
+        PumpDispatcher(TimeSpan.FromMilliseconds(1));
+    }
+
+    private static MotionCapture CaptureMotionFrame(MainWindow window)
     {
         if (window.Content is not FrameworkElement root)
         {
@@ -384,18 +478,78 @@ internal static partial class Program
         var stride = MotionWidth * 4;
         var pixels = new byte[stride * MotionHeight];
         bitmap.CopyPixels(pixels, stride, 0);
+        return new MotionCapture(pixels);
+    }
 
-        var encoder = new PngBitmapEncoder();
-        encoder.Frames.Add(BitmapFrame.Create(bitmap));
-
-        using (var stream = File.Create(path))
+    private static void ExtractRawFramesWithFfmpeg(
+        string rawCapturePath,
+        string framesDirectory,
+        int frameCount)
+    {
+        var outputPattern = Path.Combine(framesDirectory, "frame-%04d.png");
+        var startInfo = new ProcessStartInfo
         {
-            encoder.Save(stream);
+            FileName = "ffmpeg",
+            UseShellExecute = false,
+            RedirectStandardError = true,
+            RedirectStandardOutput = true,
+            CreateNoWindow = true,
+        };
+
+        foreach (var argument in new[]
+        {
+            "-hide_banner",
+            "-loglevel",
+            "error",
+            "-y",
+            "-f",
+            "rawvideo",
+            "-pixel_format",
+            "bgra",
+            "-video_size",
+            $"{MotionWidth}x{MotionHeight}",
+            "-framerate",
+            MotionFramesPerSecond.ToString(),
+            "-i",
+            rawCapturePath,
+            "-start_number",
+            "0",
+            "-frames:v",
+            frameCount.ToString(),
+            "-compression_level",
+            "6",
+            outputPattern,
+        })
+        {
+            startInfo.ArgumentList.Add(argument);
         }
 
-        var bytes = File.ReadAllBytes(path);
-        var sha256 = Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant();
-        return new MotionCapture(sha256, pixels);
+        using var process = Process.Start(startInfo)
+            ?? throw new InvalidOperationException("Unable to start ffmpeg for WPF frame extraction.");
+        var stdoutTask = process.StandardOutput.ReadToEndAsync();
+        var stderrTask = process.StandardError.ReadToEndAsync();
+        process.WaitForExit();
+        var stdout = stdoutTask.GetAwaiter().GetResult();
+        var stderr = stderrTask.GetAwaiter().GetResult();
+
+        if (process.ExitCode != 0)
+        {
+            throw new InvalidOperationException(
+                $"ffmpeg WPF frame extraction failed ({process.ExitCode}). {stderr} {stdout}");
+        }
+
+        var extractedFrameCount = Directory.GetFiles(framesDirectory, "frame-*.png").Length;
+        if (extractedFrameCount != frameCount)
+        {
+            throw new InvalidOperationException(
+                $"WPF raw-frame extraction mismatch: expected {frameCount}, got {extractedFrameCount}.");
+        }
+    }
+
+    private static string HashMotionFrame(string path)
+    {
+        using var stream = File.OpenRead(path);
+        return Convert.ToHexString(SHA256.HashData(stream)).ToLowerInvariant();
     }
 
     private static (double MeanSampleDelta, double ChangedSampleRatio) ComputeFrameDelta(

@@ -60,6 +60,8 @@ The deterministic WPF evidence path now visits all eight canonical screens in bo
 
 Evidence remains 30 FPS, 1440×900, actual WPF, exact-head and unedited.
 
+The recorder now samples WPF against a real-time Stopwatch cadence and writes BGRA render buffers during the live capture. PNG compression happens only after the live motion window has finished, preventing recorder-induced time dilation. The evidence gate rejects captures whose actual live capture duration drifts by more than 1.25 seconds from the nominal duration or whose maximum frame lateness exceeds 100ms. Motion visibility thresholds remain unchanged. A separate lightweight owner-review artifact contains only the Full/Reduced videos and their manifests/integrity files; the complete raw-frame artifact remains authoritative.
+
 ## Protected truth
 
 Stage 7 remains authoritative. Stage 8 remains closed. PR #72 remains Draft and non-mergeable. The visual identity and eight canonical reference files are unchanged.

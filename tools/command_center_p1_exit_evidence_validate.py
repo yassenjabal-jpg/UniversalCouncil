@@ -92,6 +92,23 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
             if key not in step:
                 raise SystemExit(f"{mode} evidence timeline missing field: {key}")
 
+    timing = manifest.get("capture_timing")
+    if not isinstance(timing, dict):
+        raise SystemExit(f"{mode} capture timing evidence is missing")
+    if timing.get("clock") != "STOPWATCH_REALTIME_WPF":
+        raise SystemExit(f"{mode} capture clock is not real-time WPF")
+    if timing.get("png_encoding_during_capture") is not False:
+        raise SystemExit(f"{mode} recorder reintroduced PNG encoding during animation capture")
+    target_capture = float(timing.get("target_capture_duration_seconds", 0))
+    actual_capture = float(timing.get("actual_capture_duration_seconds", 0))
+    if abs(actual_capture - target_capture) > 1.25:
+        raise SystemExit(
+            f"{mode} recorder time dilation exceeded tolerance "
+            f"({actual_capture:.3f}s actual vs {target_capture:.3f}s target)"
+        )
+    if float(timing.get("max_capture_lateness_ms", 999999)) > 100:
+        raise SystemExit(f"{mode} recorder missed the WPF sampling cadence by more than 100ms")
+
     visibility = manifest.get("motion_visibility")
     if not isinstance(visibility, dict):
         raise SystemExit(f"{mode} motion visibility metrics are missing")

@@ -84,10 +84,17 @@ required_recorder_markers = (
     "raw_frames_included = true",
     "semantic_event_timestamps = true",
     "referenceImage.Visibility = Visibility.Visible;",
+    "Stopwatch.StartNew()",
+    "ExtractRawFramesWithFfmpeg(",
+    'clock = "STOPWATCH_REALTIME_WPF"',
+    "png_encoding_during_capture = false",
 )
 for marker in required_recorder_markers:
     if marker not in recorder:
         raise SystemExit(f"30fps owner-review motion evidence marker missing: {marker}")
+
+if "new PngBitmapEncoder" in recorder:
+    raise SystemExit("WPF recorder reintroduced synchronous PNG encoding and time dilation")
 
 if workflow.count("-framerate 30") < 2:
     raise SystemExit("WPF full/reduced owner-review motion videos are not both encoded at 30fps")
@@ -101,6 +108,9 @@ required_gate_markers = (
     "motion_runs < 8",
     "reduced motion capture lost required discrete state-transition feedback",
     "math.ceil(3 * fps_scale)",
+    'timing.get("clock") != "STOPWATCH_REALTIME_WPF"',
+    "abs(actual_capture - target_capture) > 1.25",
+    'timing.get("max_capture_lateness_ms", 999999) > 100',
 )
 for marker in required_gate_markers:
     if marker not in p1_validator:

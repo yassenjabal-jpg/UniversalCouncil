@@ -110,6 +110,20 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+      - name: Upload WPF owner-review bundle
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: UniversalCouncil-P1-WPF-Review-${{ env.CANDIDATE_SHA }}
+          path: |
+            artifacts/p1-exit-evidence/full/p1-critical-path-motion.mp4
+            artifacts/p1-exit-evidence/full/motion-evidence-manifest.json
+            artifacts/p1-exit-evidence/full/motion-video-integrity.json
+            artifacts/p1-exit-evidence/reduced/p1-critical-path-reduced-motion.mp4
+            artifacts/p1-exit-evidence/reduced/motion-evidence-manifest.json
+            artifacts/p1-exit-evidence/reduced/motion-video-integrity.json
+          if-no-files-found: error
+          retention-days: 14
+
   android-semantic:
     name: Android Semantic Companion Evidence
     runs-on: ubuntu-24.04
