@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "change_id": "CC-MOTION-VISIBILITY-REMEDIATION-2026-10-21",
-  "status": "MURTAKAZ_PRE_REVIEW",
+  "status": "ROADMAP_APPROVED_REMEDIATION_ACTIVE",
   "trigger": {
     "type": "OWNER_VISUAL_REJECTION",
     "statement": "Recorded P1 video shows no materially visible motion/animation.",
@@ -47,5 +47,14 @@
     "changing the approved visual identity",
     "using generated concept animation as evidence"
   ],
-  "timestamp": "2026-10-21"
+  "timestamp": "2026-10-21",
+  "governing_roadmap": {
+    "id": "CC-MOTION-REMEDIATION-MASTER-ROADMAP-2026-10-21",
+    "path": "state/command-center/motion-remediation-master-roadmap.json",
+    "current_wave": "W0",
+    "current_phase": "W0.1",
+    "final_gate": "MOTION_SYSTEM_LOCKED"
+  },
+  "merge_authorized": false,
+  "current_pr_classification": "WAVE_0_IMPLEMENTATION_EXPERIMENT_NOT_FINAL"
 }
