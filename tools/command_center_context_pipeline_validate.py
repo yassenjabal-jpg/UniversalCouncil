@@ -30,6 +30,7 @@ B2_POST = PROJECT / "approvals" / "2026-10-21-repair-b2-cross-screen-consistency
 B3_RETURN = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-return.json"
 B3_RETURN_ADOPTION = PROJECT / "approvals" / "2026-10-21-repair-b3-return-state-adoption.json"
 FINAL_P1_POST = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json"
+STAGE7_READINESS_POST = PROJECT / "approvals" / "2026-10-21-stage7-real-host-evidence-readiness-post.json"
 A1_CHANGE = PROJECT / "changes" / "2026-10-21-repair-a1-context-baseline.json"
 A1_CAPSULE = PROJECT / "context-capsules" / "2026-10-21-repair-a1-context-baseline.json"
 MAP_BUILDER = ROOT / "tools" / "build_command_center_project_context_map.py"
@@ -128,6 +129,7 @@ b2_post = load(B2_POST) if B2_POST.exists() else None
 b3_return = load(B3_RETURN) if B3_RETURN.exists() else None
 b3_return_adoption = load(B3_RETURN_ADOPTION) if B3_RETURN_ADOPTION.exists() else None
 final_p1_post = load(FINAL_P1_POST) if FINAL_P1_POST.exists() else None
+stage7_readiness_post = load(STAGE7_READINESS_POST) if STAGE7_READINESS_POST.exists() else None
 
 if context_map["schema_version"] != "2.0":
     raise SystemExit("Project context map must use repaired schema 2.0")
@@ -186,6 +188,13 @@ if context_map["conflicts"]:
     raise SystemExit("Canonical project context map currently expects no unresolved conflicts")
 if pipeline["status"] == "MURTAKAZ_REVIEW_REQUIRED":
     expected_active_work = ["REPAIR_WAVE_A1_CONTEXT_BASELINE"]
+elif (
+    stage7_readiness_post is not None
+    and stage7_readiness_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ"
+    and stage7_readiness_post.get("repository_readiness_complete") is True
+    and stage7_readiness_post.get("stage7_final_lock_granted") is False
+):
+    expected_active_work = ["STAGE7_REAL_HOST_EVIDENCE_PENDING"]
 elif (
     final_p1_post is not None
     and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ"

@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-STAGE7-REAL-HOST-EVIDENCE-READINESS-PRE-2026-10-21",
+  "change_id": "CC-STAGE7-REAL-HOST-EVIDENCE-READINESS-2026-10-21",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "scope": "STAGE7_REPOSITORY_READINESS_AND_TRUTH_RECONCILIATION_ONLY",
+  "implementation_authorized": true,
+  "real_host_success_claim_authorized": false,
+  "stage7_final_lock_authorized": false,
+  "stage8_opened": false,
+  "runtime_authority_added": false,
+  "live_execution_authorized": false,
+  "target_host_must_remain": "YASSIN",
+  "owner_authority": "FINAL",
+  "reviewers": [
+    "cc_product_truth",
+    "cc_security",
+    "cc_durable_autopilot",
+    "cc_owner_experience",
+    "cc_red_team"
+  ],
+  "timestamp": "2026-10-21"
+}

@@ -8,9 +8,10 @@ This runbook is the bounded real-host sequence for Stage 7.
 
 It is not proof that any step has run.
 
-Current truth at authoring:
-- YASSIN remote agent was observed Online;
-- Desktop Commander host commands are blocked by the current monthly tool-usage limit;
+Current truth, reconciled on 2026-10-21:
+- YASSIN has historical Online evidence but is currently Offline;
+- Desktop Commander monthly remote calls remaining are 0%;
+- no substitute PC is accepted as evidence for the YASSIN gate;
 - Tailscale installation/login state is UNKNOWN;
 - owner phone enrollment is NOT PROVEN;
 - RemoteTransport deployment to YASSIN is NOT PROVEN.

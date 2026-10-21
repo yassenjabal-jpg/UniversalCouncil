@@ -17,7 +17,7 @@ var projection = new OwnerTailnetProjectionService(
 Require(projection.Health == OwnerTailnetHealth.Healthy, "Stage 7 projection must be healthy");
 Require(projection.Mode == "OWNER_DEVICE_ENROLLMENT_TAILNET_PILOT", "unexpected Stage 7 mode");
 Require(projection.TargetHost == "YASSIN", "Stage 7 target host drifted");
-Require(projection.HostControlState == "PAIRED_ONLINE_BUT_TOOL_QUOTA_BLOCKED", "host-control truth drifted");
+Require(projection.HostControlState == "DEVICE_OFFLINE_AND_TOOL_QUOTA_BLOCKED", "host-control truth drifted");
 Require(projection.TailscaleInstallationState == "UNKNOWN", "Tailscale installation must remain unknown without host evidence");
 Require(projection.TailscaleConnectionState == "UNKNOWN", "Tailscale connection must remain unknown without host evidence");
 Require(projection.TailscaleServeConfigurationState == "NOT_CONFIGURED", "Serve may not be fabricated");

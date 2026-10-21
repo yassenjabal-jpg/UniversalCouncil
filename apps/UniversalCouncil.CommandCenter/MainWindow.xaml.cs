@@ -901,18 +901,47 @@ public partial class MainWindow : Window
         }
 
         _lastInteractionTarget = button;
+
+        if (tag is "yassin" or "tailscale" or "android-owner")
+        {
+            OpenStage7OwnerConnectivityInspector(tag);
+            return;
+        }
+
         OpenDrawer(
             "TOOL INSPECTOR",
             button.ToolTip?.ToString() ?? tag,
             "Tool Dock",
             "الأداة قابلة للفحص من الـDock ولا يعني ظهورها أنها متصلة أو نشطة.",
             "لا توجد مهمة tool runtime مفترضة.",
-            tag == "yassin" ? ExecutionTruthLabel : "UNKNOWN / REFERENCE FIXTURE",
+            "UNKNOWN / REFERENCE FIXTURE",
             "Ready / Active / Connected / Blocked / Unknown يجب أن تأتي من حالة موثقة.",
             "لا يوجد blocker مفترض من الصورة.",
             "آخر تحقق ودليل الاتصال يظهران عند توفرهما.",
             "N/A");
     }
+
+    private void OpenStage7OwnerConnectivityInspector(string source) =>
+        OpenDrawer(
+            "STAGE 7 CONNECTIVITY",
+            source switch
+            {
+                "tailscale" => "Tailscale / Private Serve",
+                "android-owner" => "Owner Phone / Android",
+                _ => "YASSIN Host"
+            },
+            _viewModel.Stage7ModeLabel,
+            $"Host: {_viewModel.Stage7HostAccessLabel}. " +
+            $"Tailscale: {_viewModel.Stage7TailscaleLabel}. " +
+            $"Serve: {_viewModel.Stage7ServeLabel}.",
+            $"Enrollment: {_viewModel.Stage7EnrollmentLabel}. " +
+            $"Session: {_viewModel.Stage7SessionLabel}. " +
+            $"Phone: {_viewModel.Stage7PhoneLabel}.",
+            _viewModel.Stage7ExecutionLabel,
+            "Stage 7 CI foundation is verified; real-host/device gates remain evidence-driven.",
+            "YASSIN host probe, private Serve, phone round-trip and revocation may not be inferred from repository state.",
+            "Current evidence is fail-closed until sanitized real-host artifacts are supplied.",
+            $"{ExecutionTruthLabel} / STAGE 8 CLOSED");
 
     private void Role_Click(object sender, RoutedEventArgs e)
     {
