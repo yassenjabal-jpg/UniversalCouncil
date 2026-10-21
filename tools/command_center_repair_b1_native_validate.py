@@ -78,7 +78,11 @@ post = load(B1_POST) if B1_POST.exists() else None
 change = load(B1_CHANGE)
 capsule = load(B1_CAPSULE)
 final_p1_post = load(FINAL_P1_POST) if FINAL_P1_POST.exists() else None
-final_p1_approved = final_p1_post is not None and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ" and final_p1_post.get("p1_complete") is True
+final_p1_approved = (
+    final_p1_post is not None
+    and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ"
+    and final_p1_post.get("p1_complete") is True
+)
 
 manifest_roles = [item["role"] for item in manifest["references"]]
 if manifest_roles != CANONICAL_ROLES:
