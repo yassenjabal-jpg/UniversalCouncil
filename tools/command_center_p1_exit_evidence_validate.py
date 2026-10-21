@@ -53,7 +53,6 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
         "Navigate Home -> Project Workspace",
         "Navigate Project -> Decision Mode",
         "Navigate Decision -> Recovery/Fork",
-        "Navigate Recovery -> Work Receipt",
     }
     if mode == "full":
         required |= {
@@ -63,7 +62,10 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
             "Exercise non-authoritative Fork intent",
             "Navigate Recovery -> Pulse Story",
             "Open Handoff Pulse context",
+            "Navigate Pulse -> Work Receipt",
         }
+    else:
+        required.add("Navigate Recovery -> Work Receipt")
     if not required.issubset(step_names):
         raise SystemExit(f"{mode} critical-path steps are incomplete")
 
