@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-MOTION-W0-3-EVIDENCE-PIPELINE-LOCK-2026-10-21",
+  "roadmap_id": "CC-MOTION-REMEDIATION-MASTER-ROADMAP-2026-10-21",
+  "phase": "W0.3",
+  "gate": "MOTION_EVIDENCE_PIPELINE_LOCK",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "scope": "W0_EVIDENCE_MECHANISM_ONLY",
+  "prerequisites": [
+    "MOTION_RETURN_BASELINE_LOCK",
+    "MOTION_STORYBOARD_CODE_COVERAGE_LOCK"
+  ],
+  "owner_review_capture_fps": 30,
+  "ci_capture_fps_floor": 20,
+  "threshold_policy": "TIME_NORMALIZED_NO_RELAXATION",
+  "next_phase": "W1.1",
+  "next_phase_allowed": true,
+  "next_phase_started": false,
+  "owner_visual_motion_acceptance": false,
+  "merge_authorized": false,
+  "stage8_opened": false,
+  "runtime_authority_added": false,
+  "live_execution_authorized": false,
+  "timestamp": "2026-10-21"
+}

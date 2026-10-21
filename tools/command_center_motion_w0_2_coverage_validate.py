@@ -118,12 +118,10 @@ if gate["merge_authorized"] or gate["owner_visual_motion_acceptance"]:
     raise SystemExit("W0.2 receipt inflated acceptance")
 
 position = roadmap["current_position"]
-if position["wave"] != "W0" or position["phase"] != "W0.2":
-    raise SystemExit("roadmap is not at W0.2")
-if position["phase_status"] != "MOTION_STORYBOARD_CODE_COVERAGE_LOCK":
-    raise SystemExit("roadmap does not record W0.2 coverage lock")
-if position["next_phase_started"] is not False:
-    raise SystemExit("W0.3 started before W0.2 validation")
+if position["pr_merge_allowed"]:
+    raise SystemExit("motion remediation may not authorize merge before W6")
+if position["wave"] not in {"W0", "W1", "W2", "W3", "W4", "W5", "W6"}:
+    raise SystemExit("motion remediation roadmap position is invalid")
 
 doc = DOC.read_text(encoding="utf-8")
 for marker in (

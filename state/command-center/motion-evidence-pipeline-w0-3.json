@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "pipeline_id": "CC-MOTION-W0-3-EVIDENCE-PIPELINE-2026-10-21",
+  "phase": "W0.3",
+  "status": "MOTION_EVIDENCE_PIPELINE_LOCK",
+  "owner_review_capture_fps": 30,
+  "ci_capture_fps_floor": 20,
+  "baseline_threshold_equivalence": {
+    "baseline_fps": 20,
+    "baseline_full_changed_frames": 60,
+    "owner_fps": 30,
+    "owner_full_changed_frames_required": 90,
+    "baseline_longest_run": 6,
+    "owner_longest_run_required": 9,
+    "rule": "ceil(baseline_threshold * frame_rate / 20)"
+  },
+  "evidence_requirements": {
+    "actual_wpf": true,
+    "resolution": "1440x900",
+    "exact_head_checkout": true,
+    "candidate_sha_in_manifest": true,
+    "candidate_sha_in_video_integrity": true,
+    "full_motion": true,
+    "reduced_motion": true,
+    "raw_frames": true,
+    "raw_frame_sha256": true,
+    "encoded_video_sha256": true,
+    "semantic_event_timestamps": true,
+    "unedited": true,
+    "optical_flow": false,
+    "frame_interpolation": false,
+    "post_produced_animation": false
+  },
+  "workflow": ".github/workflows/command-center-p1-exit-evidence.yml",
+  "recorder": "apps/UniversalCouncil.CommandCenter.UiSmoke/MotionEvidence.cs",
+  "gate_validator": "tools/command_center_p1_exit_evidence_validate.py",
+  "anti_gaming": {
+    "threshold_lowering_forbidden": true,
+    "fps_increase_must_scale_frame_count_thresholds": true,
+    "metrics_can_reject_not_approve": true
+  },
+  "expected_current_product_result": "MAY_STILL_FAIL_UNTIL_W1_W3_SEMANTIC_MOTION_IMPROVES",
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution_authorized": false,
+    "visual_identity_locked": true
+  },
+  "next_phase": "W1.1",
+  "next_phase_started": false,
+  "gate": "MOTION_EVIDENCE_PIPELINE_LOCK"
+}

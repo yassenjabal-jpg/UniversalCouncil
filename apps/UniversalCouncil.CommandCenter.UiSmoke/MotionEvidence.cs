@@ -14,7 +14,7 @@ internal static partial class Program
 {
     private const int MotionWidth = 1440;
     private const int MotionHeight = 900;
-    private const int MotionFramesPerSecond = 20;
+    private const int MotionFramesPerSecond = 30;
 
     private sealed record MotionStep(int Frame, string Name, Action<MainWindow> Execute);
     private sealed record MotionCapture(string Sha256, byte[] Pixels);
@@ -29,6 +29,7 @@ internal static partial class Program
     private static int RenderMotionEvidence(string output, bool reducedMotion)
     {
         var mode = reducedMotion ? "reduced" : "full";
+        var candidateSha = Environment.GetEnvironmentVariable("CANDIDATE_SHA")?.Trim().ToLowerInvariant() ?? "unknown";
         Environment.SetEnvironmentVariable(
             "UNIVERSALCOUNCIL_MOTION_EVIDENCE",
             reducedMotion ? "reduced" : "full");
@@ -108,6 +109,14 @@ internal static partial class Program
                 {
                     schema_version = "1.0",
                     evidence_type = "WPF_P1_CRITICAL_PATH_MOTION",
+                    candidate_sha = candidateSha,
+                    source_surface = "ACTUAL_WPF",
+                    unedited = true,
+                    optical_flow = false,
+                    frame_interpolation = false,
+                    post_produced_animation = false,
+                    raw_frames_included = true,
+                    semantic_event_timestamps = true,
                     mode,
                     reduced_motion = reducedMotion,
                     runtime_authority = false,
@@ -129,10 +138,14 @@ internal static partial class Program
                     expected_video_file = reducedMotion
                         ? "p1-critical-path-reduced-motion.mp4"
                         : "p1-critical-path-motion.mp4",
-                    steps = steps.Select(step => new
+                    steps = steps.Select((step, index) => new
                     {
+                        evidence_step_id = $"step-{index + 1:D2}",
                         frame = step.Frame,
                         second = (double)step.Frame / MotionFramesPerSecond,
+                        occurred_at_seconds = (double)step.Frame / MotionFramesPerSecond,
+                        event_type = EvidenceEventType(step.Name),
+                        semantic_object = EvidenceSemanticObject(step.Name),
                         step.Name,
                     }),
                     frames = frameEvidence,
@@ -144,6 +157,71 @@ internal static partial class Program
             $"({frameCount} frames, {seconds}s, visible={changedFrameCount}, " +
             $"longest-run={longestChangedRun}, runs={motionRunCount})");
         return 0;
+    }
+
+    private static string EvidenceEventType(string name)
+    {
+        if (name.Contains("Activate Evidence role", StringComparison.Ordinal))
+        {
+            return "ROLE_ACTIVATED";
+        }
+
+        if (name.Contains("Request Changes intent", StringComparison.Ordinal))
+        {
+            return "OWNER_INTENT_PREVIEW";
+        }
+
+        if (name.Contains("Fork intent", StringComparison.Ordinal))
+        {
+            return "FORK_INTENT_PREVIEW";
+        }
+
+        if (name.Contains("Handoff Pulse context", StringComparison.Ordinal))
+        {
+            return "HANDOFF_CONTEXT_PREVIEW";
+        }
+
+        if (name.StartsWith("Navigate ", StringComparison.Ordinal))
+        {
+            return "EVIDENCE_NAVIGATION";
+        }
+
+        if (name.StartsWith("Close ", StringComparison.Ordinal))
+        {
+            return "CONTEXT_CLOSED";
+        }
+
+        return "EVIDENCE_INSPECTION";
+    }
+
+    private static string EvidenceSemanticObject(string name)
+    {
+        if (name.Contains("Evidence role", StringComparison.Ordinal))
+        {
+            return "role:evidence";
+        }
+
+        if (name.Contains("Decision", StringComparison.Ordinal))
+        {
+            return "screen:owner-decision-mode";
+        }
+
+        if (name.Contains("Fork", StringComparison.Ordinal) || name.Contains("Recovery", StringComparison.Ordinal))
+        {
+            return "screen:checkpoint-recovery-fork";
+        }
+
+        if (name.Contains("Handoff", StringComparison.Ordinal) || name.Contains("Pulse", StringComparison.Ordinal))
+        {
+            return "screen:pulse-visual-project-story";
+        }
+
+        if (name.Contains("Work Receipt", StringComparison.Ordinal))
+        {
+            return "screen:project-complete-work-receipt";
+        }
+
+        return "command-center:wpf";
     }
 
     private static IReadOnlyList<MotionStep> BuildMotionSteps(bool reducedMotion)

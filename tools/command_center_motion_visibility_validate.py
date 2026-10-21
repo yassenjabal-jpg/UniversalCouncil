@@ -48,24 +48,30 @@ if main.count("if (!MotionEnabled)") < 8:
     raise SystemExit("Reduced Motion guards do not cover the expanded semantic motion paths")
 
 required_recorder_markers = (
-    "private const int MotionFramesPerSecond = 20;",
+    "private const int MotionFramesPerSecond = 30;",
     "MotionFrameEvidence",
     "ComputeFrameDelta(",
     "changed_frame_count = changedFrameCount",
     "longest_changed_run = longestChangedRun",
     "motion_run_count = motionRunCount",
+    'candidate_sha = candidateSha',
+    'source_surface = "ACTUAL_WPF"',
+    'raw_frames_included = true',
+    'semantic_event_timestamps = true',
 )
 for marker in required_recorder_markers:
     if marker not in recorder:
-        raise SystemExit(f"20fps motion visibility evidence marker missing: {marker}")
+        raise SystemExit(f"30fps owner-review motion evidence marker missing: {marker}")
 
-if workflow.count("-framerate 20") < 2:
-    raise SystemExit("WPF full/reduced motion videos are not both encoded at 20fps")
+if workflow.count("-framerate 30") < 2:
+    raise SystemExit("WPF full/reduced owner-review motion videos are not both encoded at 30fps")
+if "Verify exact candidate head" not in workflow:
+    raise SystemExit("WPF evidence workflow does not verify the exact candidate head")
 
 required_gate_markers = (
     'manifest["frame_rate"] < 20',
-    "changed_frames < 60",
-    "longest_run < 6",
+    "math.ceil(60 * fps_scale)",
+    "math.ceil(6 * fps_scale)",
     "motion_runs < 8",
     "reduced motion capture lost required discrete state-transition feedback",
     "longest_run > 3",
@@ -76,5 +82,5 @@ for marker in required_gate_markers:
 
 print(
     "Owner-visible semantic motion validation: PASS "
-    "(screen travel + semantic cues + 20fps evidence + anti-slide metrics enforced)"
+    "(screen travel + semantic cues + 30fps owner evidence + time-normalized anti-slide metrics enforced)"
 )

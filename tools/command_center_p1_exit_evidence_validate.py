@@ -3,6 +3,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
+import os
+import re
 from pathlib import Path
 
 
@@ -28,6 +31,23 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
     manifest = load(manifest_path)
     integrity = load(integrity_path)
     expected_reduced = mode == "reduced"
+    expected_candidate = os.environ.get("CANDIDATE_SHA", "").strip().lower()
+
+    if not re.fullmatch(r"[0-9a-f]{40}", expected_candidate):
+        raise SystemExit("CANDIDATE_SHA is missing or invalid in evidence gate")
+    if str(manifest.get("candidate_sha", "")).lower() != expected_candidate:
+        raise SystemExit(f"{mode} motion evidence is not bound to the exact candidate SHA")
+    if str(integrity.get("candidate_sha", "")).lower() != expected_candidate:
+        raise SystemExit(f"{mode} video integrity is not bound to the exact candidate SHA")
+    if manifest.get("source_surface") != "ACTUAL_WPF":
+        raise SystemExit(f"{mode} motion evidence is not labeled as actual WPF")
+    for forbidden_flag in ("optical_flow", "frame_interpolation", "post_produced_animation"):
+        if manifest.get(forbidden_flag) is not False:
+            raise SystemExit(f"{mode} evidence enabled forbidden processing: {forbidden_flag}")
+        if integrity.get(forbidden_flag) is not False:
+            raise SystemExit(f"{mode} video integrity enabled forbidden processing: {forbidden_flag}")
+    if manifest.get("unedited") is not True or integrity.get("unedited") is not True:
+        raise SystemExit(f"{mode} evidence is not declared unedited")
 
     if manifest["evidence_type"] != "WPF_P1_CRITICAL_PATH_MOTION":
         raise SystemExit(f"{mode} evidence type drifted")
@@ -39,8 +59,38 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
         raise SystemExit(f"{mode} motion capture is below duration floor")
     if manifest["frame_count"] != len(manifest["frames"]):
         raise SystemExit(f"{mode} frame manifest is incomplete")
-    if manifest["frame_rate"] < 20:
-        raise SystemExit(f"{mode} motion capture frame rate is below the owner-review floor")
+    frame_rate = int(manifest["frame_rate"])
+    if frame_rate < 20:
+        raise SystemExit(f"{mode} motion capture frame rate is below the CI floor")
+    if int(integrity.get("frame_rate", 0)) != frame_rate:
+        raise SystemExit(f"{mode} video/frame rate binding drifted")
+    if manifest.get("raw_frames_included") is not True:
+        raise SystemExit(f"{mode} raw-frame evidence flag is missing")
+    if manifest.get("semantic_event_timestamps") is not True:
+        raise SystemExit(f"{mode} semantic event timestamps are missing")
+
+    for frame in manifest["frames"]:
+        raw = folder / "frames" / frame["File"]
+        if not raw.exists():
+            raise SystemExit(f"{mode} raw frame missing: {frame['File']}")
+        if sha256(raw) != frame["Sha256"]:
+            raise SystemExit(f"{mode} raw frame hash mismatch: {frame['File']}")
+
+    timeline = manifest.get("steps")
+    if not isinstance(timeline, list) or not timeline:
+        raise SystemExit(f"{mode} evidence timeline is missing")
+    for step in timeline:
+        for key in (
+            "evidence_step_id",
+            "frame",
+            "second",
+            "occurred_at_seconds",
+            "event_type",
+            "semantic_object",
+            "Name",
+        ):
+            if key not in step:
+                raise SystemExit(f"{mode} evidence timeline missing field: {key}")
 
     visibility = manifest.get("motion_visibility")
     if not isinstance(visibility, dict):
@@ -50,19 +100,27 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
     longest_run = int(visibility.get("longest_changed_run", 0))
     motion_runs = int(visibility.get("motion_run_count", 0))
 
+    fps_scale = frame_rate / 20.0
     if mode == "full":
-        if changed_frames < 60:
-            raise SystemExit("full motion capture does not contain enough visibly changing frames")
-        if longest_run < 6:
+        minimum_changed_frames = math.ceil(60 * fps_scale)
+        minimum_continuous_run = math.ceil(6 * fps_scale)
+        if changed_frames < minimum_changed_frames:
+            raise SystemExit(
+                "full motion capture does not contain enough visibly changing frames "
+                f"({changed_frames} < {minimum_changed_frames} at {frame_rate}fps)"
+            )
+        if longest_run < minimum_continuous_run:
             raise SystemExit("full motion capture still looks like state jumps rather than animation")
         if motion_runs < 8:
             raise SystemExit("full motion capture does not prove enough separate semantic motion events")
     else:
-        if changed_frames < 8:
+        minimum_changed_frames = math.ceil(8 * fps_scale)
+        maximum_continuous_run = math.ceil(3 * fps_scale)
+        if changed_frames < minimum_changed_frames:
             raise SystemExit("reduced motion capture lost required discrete state-transition feedback")
         if motion_runs < 8:
             raise SystemExit("reduced motion capture does not prove semantic parity across transitions")
-        if longest_run > 3:
+        if longest_run > maximum_continuous_run:
             raise SystemExit("reduced motion capture retained travel/loop motion that should be removed")
 
     video = folder / integrity["file"]
