@@ -80,8 +80,7 @@ def is_lower_hex(value: str, length: int) -> bool:
 
 def source_revision(sources: list[dict]) -> str:
     payload = "".join(
-        f"{item['id']}|{item['path']}|{item['blob_sha']}\n"
-        for item in sorted(sources, key=lambda item: item["id"])
+        f"{item['id']}|{item['path']}|{item['blob_sha']}\n" for item in sorted(sources, key=lambda item: item["id"])
     )
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
