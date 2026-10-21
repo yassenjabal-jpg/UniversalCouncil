@@ -31,6 +31,7 @@ REPAIR_B1_NATIVE_VALIDATOR = ROOT / "tools" / "command_center_repair_b1_native_v
 REPAIR_B2_CONSISTENCY_VALIDATOR = ROOT / "tools" / "command_center_repair_b2_validate.py"
 REPAIR_B3_FINAL_VALIDATOR = ROOT / "tools" / "command_center_repair_b3_final_validate.py"
 POST_P1_INTERACTION_MOTION_VALIDATOR = ROOT / "tools" / "command_center_post_p1_interaction_motion_validate.py"
+STAGE7_REAL_EVIDENCE_VALIDATOR = ROOT / "tools" / "command_center_stage7_real_evidence_validate.py"
 
 VISUAL_DIRECTION_ROOT = ROOT / "docs" / "operations" / "command-center" / "living-operations"
 VISUAL_DIRECTION_FILES = (
@@ -85,6 +86,7 @@ for required in (
     REPAIR_B2_CONSISTENCY_VALIDATOR,
     REPAIR_B3_FINAL_VALIDATOR,
     POST_P1_INTERACTION_MOTION_VALIDATOR,
+    STAGE7_REAL_EVIDENCE_VALIDATOR,
 ):
     if not required.exists():
         raise SystemExit(f"missing Murtakaz alignment artifact: {required.relative_to(ROOT)}")
@@ -200,6 +202,7 @@ subprocess.run([__import__("sys").executable, str(REPAIR_B1_NATIVE_VALIDATOR)], 
 subprocess.run([__import__("sys").executable, str(REPAIR_B2_CONSISTENCY_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(REPAIR_B3_FINAL_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(POST_P1_INTERACTION_MOTION_VALIDATOR)], check=True)
+subprocess.run([__import__("sys").executable, str(STAGE7_REAL_EVIDENCE_VALIDATOR)], check=True)
 
 for visual_file in VISUAL_DIRECTION_FILES:
     text = visual_file.read_text(encoding="utf-8").casefold()
