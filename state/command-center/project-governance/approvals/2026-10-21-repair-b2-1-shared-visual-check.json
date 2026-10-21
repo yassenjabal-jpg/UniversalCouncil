@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-B2-1-SHARED-VISUAL-CHECK-2026-10-21",
+  "change_id": "CC-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-2026-10-21",
+  "slice": "B2.1_SHARED_VISUAL_TOKENS_AND_CHROME",
+  "status": "APPROVED_TO_CONTINUE_B2_2",
+  "decision": "APPROVE_B2_1_CONTINUE",
+  "material_head": "37b838df92a2118e3b30fb617a7ac03a2bf8972e",
+  "evidence": {
+    "company_stage0": {
+      "run_id": 39592891867,
+      "conclusion": "success"
+    },
+    "reference_ui": {
+      "run_id": 39592891739,
+      "conclusion": "success",
+      "artifact_id": 12341854446,
+      "digest": "sha256:c3eb807110264432fa1e315aef96d772e01923fb9fead6ec56ae9f1023e4bd60"
+    },
+    "codeql": {
+      "run_id": 39592892692,
+      "conclusion": "success"
+    },
+    "visual_inspection": "EIGHT_NATIVE_SCREENS_REVIEWED_SHARED_CHROME_CONSISTENT"
+  },
+  "reviewer_decisions": {
+    "cc_experience_architect": "PASS_B2_1",
+    "cc_visual_fidelity": "PASS_B2_1",
+    "cc_accessibility_clearance": "PASS_CONTINUE_TO_B2_2",
+    "cc_product_truth": "PASS_WITH_TRUTHFUL_SHARED_STATE_FIX_REQUIRED_IN_B2_2",
+    "cc_studio_producer": "PASS_B2_1",
+    "cc_red_team": "PASS_NO_SCOPE_EXPANSION"
+  },
+  "findings": [
+    "Top chrome geometry and typography are now aligned across Home and secondary canonical screens.",
+    "Right navigation geometry, active-state styling and glyph scale are aligned.",
+    "Status rail card rhythm and Tool Dock geometry are aligned with Home.",
+    "Interaction hit targets were moved to the harmonized visible geometry.",
+    "Visible runtime-like labels still require truth correction in B2.2."
+  ],
+  "b3_opened": false,
+  "final_p1_approval_granted": false,
+  "stage8_opened": false,
+  "timestamp": "2026-10-21"
+}
