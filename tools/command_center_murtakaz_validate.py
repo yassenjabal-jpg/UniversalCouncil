@@ -22,6 +22,7 @@ BUILDER = ROOT / "tools" / "build_command_center_murtakaz_projection.py"
 AGENTIC_VALIDATOR = ROOT / "tools" / "command_center_agentic_os_validate.py"
 UX_STATE_VALIDATOR = ROOT / "tools" / "command_center_ux_state_validate.py"
 CONTEXT_PIPELINE_VALIDATOR = ROOT / "tools" / "command_center_context_pipeline_validate.py"
+GATEWAY_ROUTING_VALIDATOR = ROOT / "tools" / "command_center_gateway_routing_validate.py"
 
 VISUAL_DIRECTION_ROOT = ROOT / "docs" / "operations" / "command-center" / "living-operations"
 VISUAL_DIRECTION_FILES = (
@@ -68,6 +69,7 @@ for required in (
     AGENTIC_VALIDATOR,
     UX_STATE_VALIDATOR,
     CONTEXT_PIPELINE_VALIDATOR,
+    GATEWAY_ROUTING_VALIDATOR,
 ):
     if not required.exists():
         raise SystemExit(f"missing Murtakaz alignment artifact: {required.relative_to(ROOT)}")
@@ -148,6 +150,7 @@ subprocess.run(
 subprocess.run([__import__("sys").executable, str(AGENTIC_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(UX_STATE_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(CONTEXT_PIPELINE_VALIDATOR)], check=True)
+subprocess.run([__import__("sys").executable, str(GATEWAY_ROUTING_VALIDATOR)], check=True)
 
 for visual_file in VISUAL_DIRECTION_FILES:
     text = visual_file.read_text(encoding="utf-8").casefold()
