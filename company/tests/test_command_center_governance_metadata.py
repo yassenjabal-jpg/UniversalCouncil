@@ -22,6 +22,7 @@ class CommandCenterGovernanceMetadataTests(unittest.TestCase):
         cls.old_review = load(PROJECT / "agentic-os-latest-review.json")
         cls.current_review = load(PROJECT / "agentic-os-current-review.json")
         cls.agentic_post = load(PROJECT / "approvals" / "2026-10-21-agentic-os-integration-post.json")
+        cls.b1_post = load(PROJECT / "approvals" / "2026-10-21-repair-b1-native-completion-post.json")
         cls.roadmap = ROADMAP.read_text(encoding="utf-8")
 
     def test_old_return_for_alignment_is_preserved_as_history(self) -> None:
@@ -57,6 +58,14 @@ class CommandCenterGovernanceMetadataTests(unittest.TestCase):
         self.assertEqual(
             self.current_review["repair_program"]["wave_b"],
             "ACTIVE",
+        )
+        self.assertEqual(
+            self.current_review["repair_program"]["wave_b_current_stage"],
+            "B2_CROSS_SCREEN_CONSISTENCY",
+        )
+        self.assertEqual(
+            self.current_review["repair_program"]["wave_b_b1"],
+            "COMPLETE_APPROVED",
         )
 
     def test_agentic_post_receipt_is_machine_readable_history(self) -> None:
@@ -103,9 +112,24 @@ class CommandCenterGovernanceMetadataTests(unittest.TestCase):
             "**A3 Truth Lock + Murtakaz Closure — COMPLETE / APPROVED_BY_AL_MURTAKAZ**",
             self.roadmap,
         )
-        self.assertIn("**B1 Complete Remaining Native Work — ACTIVE**", self.roadmap)
+        self.assertIn(
+            "**B1 Complete Remaining Native Work — COMPLETE / APPROVED_BY_AL_MURTAKAZ**",
+            self.roadmap,
+        )
+        self.assertIn("**B2 Cross-Screen Consistency & Polish — ACTIVE**", self.roadmap)
         self.assertIn("Stage 8 = **NOT_OPENED**", self.roadmap)
 
+
+    def test_b1_receipt_is_scoped_and_does_not_close_p1(self) -> None:
+        self.assertEqual(
+            self.b1_post["scoped_verdict"],
+            "APPROVE_B1_NATIVE_COMPLETION_ONLY",
+        )
+        self.assertFalse(self.b1_post["final_p1_approval_granted"])
+        self.assertFalse(self.b1_post["p1_complete"])
+        self.assertTrue(self.b1_post["b2_r9_authorized"])
+        self.assertFalse(self.b1_post["r10_opened"])
+        self.assertFalse(self.b1_post["stage8_opened"])
 
 if __name__ == "__main__":
     unittest.main()
