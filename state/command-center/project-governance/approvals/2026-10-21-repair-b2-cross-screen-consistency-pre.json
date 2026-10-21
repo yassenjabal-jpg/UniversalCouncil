@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-PRE-2026-10-21",
+  "change_id": "CC-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-2026-10-21",
+  "status": "APPROVE_TO_IMPLEMENT",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "requested_by": "OWNER_DIRECTIVE_UNDER_AL_MURTAKAZ_SUPERVISION",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "9352eada66776f1a87e7a10e599b7003c833b49d"
+  },
+  "scope": [
+    "cross-screen spacing and shared geometry harmonization across all eight canonical desktop screens",
+    "cross-screen typography hierarchy and glyph sizing/alignment harmonization",
+    "shared border thickness, radius, semantic tint and chrome consistency",
+    "RTL, keyboard focus, accessibility naming and truthful actionable-state consistency where shared surfaces differ",
+    "reference/native/blend evidence regeneration for all eight canonical screens",
+    "B2-specific validators and tests"
+  ],
+  "explicitly_out_of_scope": [
+    "new visual direction or freeform redesign",
+    "macro-layout reconstruction already closed in B1",
+    "R10 / Wave B3 final P1 acceptance",
+    "P1 completion",
+    "Android artifact",
+    "Wave C repository cleanup",
+    "Skill Registry",
+    "Durable Project Store",
+    "Job Engine",
+    "live execution",
+    "Stage 8"
+  ],
+  "visual_authority": {
+    "source": "state/command-center/living-operations-reference-manifest.json",
+    "canonical_reference_count": 8,
+    "rule": "REFERENCE_FIRST_DELTA_SECOND_NO_VISUAL_REINVENTION",
+    "generated_parent_forbidden": true
+  },
+  "specialist_review_weights": {
+    "cc_experience_architect": "HIGHEST_SPECIALIST_WEIGHT_FOR_UI_UX",
+    "cc_visual_fidelity": "REQUIRED",
+    "cc_accessibility_clearance": "REQUIRED",
+    "cc_product_truth": "REQUIRED",
+    "cc_studio_producer": "REQUIRED",
+    "cc_red_team": "REQUIRED"
+  },
+  "acceptance_criteria": [
+    "all eight canonical desktop roles are audited together rather than independently",
+    "shared typography, spacing, border/radius and semantic tint rules are explicit and consistently applied to shared surfaces",
+    "shared glyph sizing/alignment is consistent without inventing a new icon language",
+    "RTL, focus traversal, keyboard affordances and accessibility names remain truthful and usable",
+    "visible actionable objects work, navigate to real information, or are clearly disabled with a truthful reason",
+    "UNKNOWN never becomes SUCCEEDED and B2 does not alter runtime truth",
+    "canonical reference bytes remain the visual source of truth and comparison modes remain available",
+    "no B2 change grants final P1 approval or opens R10/B3",
+    "reference/native/blend evidence exists for all eight screens at the reviewed head",
+    "exact-head CI passes before B2 post-review"
+  ],
+  "required_reviewers": [
+    "cc_experience_architect",
+    "cc_studio_producer",
+    "cc_visual_fidelity",
+    "cc_accessibility_clearance",
+    "cc_product_truth",
+    "cc_red_team"
+  ],
+  "implementation_authorized": true,
+  "final_p1_approval_granted": false,
+  "merge_authorized": false,
+  "b3_r10_opened": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "timestamp": "2026-10-21"
+}

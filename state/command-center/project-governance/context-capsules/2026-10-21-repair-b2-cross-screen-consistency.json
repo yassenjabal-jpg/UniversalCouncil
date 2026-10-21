@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CTX-CC-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-2026-10-21",
+  "immutable": true,
+  "project_id": "universal-council-command-center",
+  "job_or_change_id": "CC-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-2026-10-21",
+  "created_at": "2026-10-21",
+  "source_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "9352eada66776f1a87e7a10e599b7003c833b49d"
+  },
+  "checkpoint_lock_id": "MRTKZ-REPAIR-WAVE-A-TRUTH-LOCK-2026-10-21",
+  "predecessor_approval": "state/command-center/project-governance/approvals/2026-10-21-repair-b1-native-completion-post.json",
+  "canonical_sources": [
+    {
+      "id": "visual-reference-manifest",
+      "locator": "state/command-center/living-operations-reference-manifest.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "visual-object-inventory",
+      "locator": "state/command-center/living-operations-reference-object-inventory.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "visual-production-protocol",
+      "locator": "state/command-center/living-operations-visual-production-protocol.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "visual-p1-state",
+      "locator": "state/command-center/living-operations-p1-visual-phase.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "p1-reference-shell",
+      "locator": "state/command-center/living-operations-p1-reference-shell-implementation.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "p1-remainder-plan",
+      "locator": "state/command-center/living-operations-p1-remainder-phases.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "p1-screen-review",
+      "locator": "state/command-center/living-operations-p1-screen-review.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "component-truth-states",
+      "locator": "state/command-center/living-operations-component-states.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "b1-native-completion",
+      "locator": "state/command-center/living-operations-p1-b1-native-completion.json",
+      "authority_class": "APPROVED_PREDECESSOR_EVIDENCE"
+    }
+  ],
+  "forbidden_scope": [
+    "new visual direction or freeform redesign",
+    "macro-layout reconstruction already closed in B1",
+    "R10 / Wave B3 final P1 acceptance",
+    "P1 completion",
+    "Android artifact",
+    "Wave C repository cleanup",
+    "Skill Registry",
+    "Durable Project Store",
+    "Job Engine",
+    "live execution",
+    "Stage 8"
+  ],
+  "risk_class": "MATERIAL_CROSS_SCREEN_VISUAL_CONSISTENCY",
+  "expected_outputs": [
+    "B2 cross-screen consistency ledger",
+    "shared visual token/chrome implementation",
+    "B2 validators/tests",
+    "eight-screen reference/native/blend evidence",
+    "Murtakaz post-review",
+    "B3 handoff without opening B3 prematurely"
+  ]
+}

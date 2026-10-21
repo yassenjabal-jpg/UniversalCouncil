@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "plan_id": "p1-native-remainder-phases-v1",
-  "status": "B1_COMPLETE_R9_READY",
-  "current_phase": "R9_CROSS_SCREEN_CONSISTENCY_AUDIT",
+  "status": "B2_COMPLETE_R9_CLOSED_R10_NOT_OPENED",
+  "current_phase": "R9_CLOSED_R10_NOT_OPENED",
   "anti_stall_rule": true,
   "phase_order": [
     "R1_OWNER_DECISION_MODE",
@@ -106,8 +106,12 @@
       "b1_post_review": "APPROVED_BY_AL_MURTAKAZ"
     },
     "R9_CROSS_SCREEN_CONSISTENCY_AUDIT": {
-      "state": "READY_TO_CONTINUE",
-      "primary_screen": "all_eight"
+      "state": "CLOSED",
+      "primary_screen": "all_eight",
+      "evidence_head": "8fa47a8b7ffd7a7b79cded710500c4830aa59bbc",
+      "review": "APPROVED_BY_AL_MURTAKAZ_B2_ONLY",
+      "reference_ui_run_id": 39594694429,
+      "artifact_id": 12343191879
     },
     "R10_FINAL_MURTAKAZ_STUDIO_REVIEW": {
       "state": "NOT_OPENED",
@@ -133,5 +137,11 @@
     "post_review_required": false,
     "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b1-native-completion-post.json",
     "verdict": "APPROVED_B1_NATIVE_COMPLETION_ONLY"
+  },
+  "b2_closure": {
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "r10_opened": false,
+    "final_p1_approval": false,
+    "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b2-cross-screen-consistency-post.json"
   }
 }

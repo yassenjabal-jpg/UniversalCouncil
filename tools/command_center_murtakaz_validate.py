@@ -27,6 +27,7 @@ CAPABILITY_MODEL_VALIDATOR = ROOT / "tools" / "command_center_capability_model_v
 GOVERNANCE_METADATA_VALIDATOR = ROOT / "tools" / "command_center_governance_metadata_validate.py"
 REPAIR_WAVE_A_VALIDATOR = ROOT / "tools" / "command_center_repair_wave_a_validate.py"
 REPAIR_B1_NATIVE_VALIDATOR = ROOT / "tools" / "command_center_repair_b1_native_validate.py"
+REPAIR_B2_CONSISTENCY_VALIDATOR = ROOT / "tools" / "command_center_repair_b2_validate.py"
 
 VISUAL_DIRECTION_ROOT = ROOT / "docs" / "operations" / "command-center" / "living-operations"
 VISUAL_DIRECTION_FILES = (
@@ -78,6 +79,7 @@ for required in (
     GOVERNANCE_METADATA_VALIDATOR,
     REPAIR_WAVE_A_VALIDATOR,
     REPAIR_B1_NATIVE_VALIDATOR,
+    REPAIR_B2_CONSISTENCY_VALIDATOR,
 ):
     if not required.exists():
         raise SystemExit(f"missing Murtakaz alignment artifact: {required.relative_to(ROOT)}")
@@ -146,6 +148,8 @@ allowed_screen_review_states = {
     "IN_PROGRESS",
     "B1_NATIVE_COMPLETION_REVIEW_REQUIRED",
     "B1_NATIVE_COMPLETION_APPROVED_R9_READY",
+    "B2_CROSS_SCREEN_REVIEW_REQUIRED",
+    "B2_CROSS_SCREEN_APPROVED_B3_READY",
 }
 if screen_review["status"] not in allowed_screen_review_states:
     raise SystemExit("P1 screen review entered an unsupported lifecycle state")
@@ -153,11 +157,15 @@ if screen_review["final_state_requires"] != "APPROVED_BY_AL_MURTAKAZ":
     raise SystemExit("P1 screen review exit is not Murtakaz-gated")
 if screen_review["phase_complete"] is not False:
     raise SystemExit("P1 screen review fabricated phase completion")
-allowed_scoped_decisions = {"PENDING", "B1_NATIVE_COMPLETION_APPROVED"}
+allowed_scoped_decisions = {
+    "PENDING",
+    "B1_NATIVE_COMPLETION_APPROVED",
+    "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+}
 if any(item["murtakaz_decision"] not in allowed_scoped_decisions for item in screen_review["screens"]):
-    raise SystemExit("P1 screen state claimed unsupported/final approval during B1")
+    raise SystemExit("P1 screen state claimed unsupported/final approval during scoped P1 repair")
 if any(item["murtakaz_decision"] == "APPROVED_BY_AL_MURTAKAZ" for item in screen_review["screens"]):
-    raise SystemExit("B1 may not grant final per-screen P1 approval")
+    raise SystemExit("Scoped B1/B2 repair may not grant final per-screen P1 approval")
 
 subprocess.run(
     [__import__("sys").executable, str(ROOT / "tools" / "command_center_visual_reference_validate.py")], check=True
@@ -171,6 +179,7 @@ subprocess.run([__import__("sys").executable, str(CAPABILITY_MODEL_VALIDATOR)], 
 subprocess.run([__import__("sys").executable, str(GOVERNANCE_METADATA_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(REPAIR_WAVE_A_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(REPAIR_B1_NATIVE_VALIDATOR)], check=True)
+subprocess.run([__import__("sys").executable, str(REPAIR_B2_CONSISTENCY_VALIDATOR)], check=True)
 
 for visual_file in VISUAL_DIRECTION_FILES:
     text = visual_file.read_text(encoding="utf-8").casefold()
