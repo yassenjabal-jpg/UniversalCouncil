@@ -1,8 +1,11 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "source_type": "project_local_repository_projection",
   "project_id": "universal-council-command-center",
-  "source_revision": "379820e27e70609c724740e2e138baa8b8a92c7d",
+  "baseline_branch": "command-center/project-local-council-studio-20261019",
+  "baseline_revision": "b3ef5d8f60e3f623371b40036bcea01f7a396d2a",
+  "source_revision": "8f6870dd006f6a27530421e42eab806814b2b6f63928cf82023bfbd799ce12bd",
+  "head_validation_mode": "BASELINE_ANCESTOR_AND_SOURCE_BLOBS_MATCH_HEAD",
   "project_manifest": {
     "display_name": "UniversalCouncil Command Center",
     "governance_system": "al-murtakaz",
@@ -20,18 +23,25 @@
     "unknown_is_never_success",
     "no_silent_fallback",
     "eight_reference_visual_lock",
-    "murtakaz_pre_post_review_required"
+    "murtakaz_pre_post_review_required",
+    "context_baseline_is_provenance_not_currentness",
+    "context_currentness_is_source_blob_verified"
   ],
   "active_work": [
-    "CONTEXT_RESOLVER_AND_CONTEXT_CAPSULE_COMPILER"
+    "REPAIR_WAVE_A1_CONTEXT_BASELINE"
   ],
   "relevant_skills": [
     "project_local_murtakaz_review",
-    "architecture_boundary_review"
+    "architecture_boundary_review",
+    "anti_drift_truth_validation"
   ],
   "recent_events": [
     "AGENTIC_OS_INTEGRATED",
-    "UX_STATE_CONTRACT_APPROVED"
+    "UX_STATE_CONTRACT_APPROVED",
+    "CONTEXT_RESOLVER_CAPSULE_COMPILER_APPROVED",
+    "GATEWAY_ROUTING_APPROVED",
+    "CAPABILITY_REGISTRY_MODEL_BROKER_APPROVED",
+    "REPAIR_INVENTORY_IDENTIFIED_STALE_CONTEXT_BASELINE"
   ],
   "blockers": [
     "PHASE0_LIVE_EXECUTION_LOCK",
@@ -85,7 +95,7 @@
     {
       "id": "context-capsule-contract",
       "path": "state/command-center/project-governance/context-capsule-contract.json",
-      "blob_sha": "9d50f1c853bd6d1ff12b1e777221664b554361fc",
+      "blob_sha": "194e8cdde4802a5915d1995c0db172fd24db2b6b",
       "authority_class": "LOCKED_POLICY",
       "freshness": "CURRENT",
       "domains": [
@@ -199,6 +209,131 @@
         "review",
         "ux",
         "visual"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "phase0-execution-gates",
+      "path": "state/command-center/phase0-execution-gates.json",
+      "blob_sha": "6ca3d2827026d712933cabd11c8816967ae163af",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "execution",
+        "authority",
+        "project_state"
+      ],
+      "scopes": [
+        "project",
+        "execution",
+        "gates"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "gateway-routing-policy",
+      "path": "state/command-center/gateway-routing-policy.json",
+      "blob_sha": "635d3c4916e9b8a40be16bb6da79494c38465993",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "routing",
+        "authority",
+        "model"
+      ],
+      "scopes": [
+        "project",
+        "routing",
+        "planning"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "gateway-routing-state",
+      "path": "state/command-center/gateway-routing-state.json",
+      "blob_sha": "ea4c5d7317d1ae87eca0012ccab66add8bce50fb",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "routing",
+        "project_state"
+      ],
+      "scopes": [
+        "project",
+        "routing",
+        "state"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "capability-registry",
+      "path": "state/command-center/capability-registry.json",
+      "blob_sha": "c84f150bdad8391bca424709c1d17d6bcf67bcba",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "capability",
+        "execution",
+        "model"
+      ],
+      "scopes": [
+        "project",
+        "capability",
+        "health"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "model-broker-policy",
+      "path": "state/command-center/model-broker-policy.json",
+      "blob_sha": "52fa6436e837bec1e250dd79920a8b925b6d01c9",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "model",
+        "routing",
+        "authority"
+      ],
+      "scopes": [
+        "project",
+        "model",
+        "selection"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "capability-model-state",
+      "path": "state/command-center/capability-model-state.json",
+      "blob_sha": "2c45c0e695fcb6ebfafd84fb5c1fd536096d06e2",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "capability",
+        "model",
+        "project_state"
+      ],
+      "scopes": [
+        "project",
+        "capability",
+        "model",
+        "state"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "context-pipeline-state",
+      "path": "state/command-center/context-pipeline-state.json",
+      "blob_sha": "30065442b3ec3ca1cb48d25c504090f42af9e2ff",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "context",
+        "project_state"
+      ],
+      "scopes": [
+        "project",
+        "context",
+        "state"
       ],
       "untrusted": false
     }
