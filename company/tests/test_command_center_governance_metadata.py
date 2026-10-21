@@ -21,9 +21,7 @@ class CommandCenterGovernanceMetadataTests(unittest.TestCase):
         cls.invariants = load(PROJECT / "architecture-invariants.json")
         cls.old_review = load(PROJECT / "agentic-os-latest-review.json")
         cls.current_review = load(PROJECT / "agentic-os-current-review.json")
-        cls.agentic_post = load(
-            PROJECT / "approvals" / "2026-10-21-agentic-os-integration-post.json"
-        )
+        cls.agentic_post = load(PROJECT / "approvals" / "2026-10-21-agentic-os-integration-post.json")
         cls.roadmap = ROADMAP.read_text(encoding="utf-8")
 
     def test_old_return_for_alignment_is_preserved_as_history(self) -> None:
