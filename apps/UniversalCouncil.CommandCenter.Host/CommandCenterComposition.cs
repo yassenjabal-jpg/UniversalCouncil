@@ -9,6 +9,8 @@ public sealed record CommandCenterHostServices(
     IOperationalStateProvider Operational,
     IOrchestrationCatalogProvider Orchestration,
     ICouncilPlanner CouncilPlanner,
+    IProjectContextResolver ContextResolver,
+    IContextCapsuleCompiler ContextCapsuleCompiler,
     IExecutionFabricProvider ExecutionFabric,
     IExecutionManifestValidator ExecutionManifestValidator,
     IRemoteOwnerGatewayProvider RemoteOwnerGateway,
@@ -28,6 +30,15 @@ public static class CommandCenterComposition
             baseDirectory,
             "state",
             "orchestration-catalog.json");
+
+        var contextMapPath = Path.Combine(
+            baseDirectory,
+            "state",
+            "project-context-map.json");
+
+        var contextReader = new JsonProjectContextMapReader(contextMapPath);
+        var contextResolver = new ProjectContextResolver(contextReader);
+        var contextCapsuleCompiler = new ContextCapsuleCompiler();
 
         var executionFabricPath = Path.Combine(
             baseDirectory,
@@ -72,6 +83,8 @@ public static class CommandCenterComposition
             stateService,
             orchestrationService,
             orchestrationService,
+            contextResolver,
+            contextCapsuleCompiler,
             executionService,
             executionService,
             remoteOwnerService,
