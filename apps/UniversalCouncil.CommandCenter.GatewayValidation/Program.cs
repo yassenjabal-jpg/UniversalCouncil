@@ -334,6 +334,8 @@ static ModelRoutingPreferences EmptyModelPreferences() =>
         FallbackMode: ModelFallbackMode.Disabled,
         AllowedFallbackModelIds: [],
         RequiredCapabilities: ["text", "reasoning"],
+        MinimumContextWindow: 32000,
+        AllowedLatencyCosts: ["LOCAL_LOW", "UNKNOWN", "SYNTHETIC"],
         MinimumQualityTier: "STANDARD",
         MaximumCostTier: "HIGH",
         RequiredPrivacyClass: "EXTERNAL_ALLOWED");
