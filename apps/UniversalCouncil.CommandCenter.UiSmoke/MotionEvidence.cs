@@ -14,9 +14,17 @@ internal static partial class Program
 {
     private const int MotionWidth = 1440;
     private const int MotionHeight = 900;
-    private const int MotionFramesPerSecond = 6;
+    private const int MotionFramesPerSecond = 20;
 
     private sealed record MotionStep(int Frame, string Name, Action<MainWindow> Execute);
+    private sealed record MotionCapture(string Sha256, byte[] Pixels);
+    private sealed record MotionFrameEvidence(
+        int Frame,
+        string File,
+        string Sha256,
+        double MeanSampleDelta,
+        double ChangedSampleRatio,
+        bool VisiblyChanged);
 
     private static int RenderMotionEvidence(string output, bool reducedMotion)
     {
@@ -39,7 +47,14 @@ internal static partial class Program
             .GroupBy(step => step.Frame)
             .ToDictionary(group => group.Key, group => group.ToArray());
 
-        var frameEvidence = new List<object>(frameCount);
+        var frameEvidence = new List<MotionFrameEvidence>(frameCount);
+        byte[]? previousPixels = null;
+        var changedFrameCount = 0;
+        var currentChangedRun = 0;
+        var longestChangedRun = 0;
+        var motionRunCount = 0;
+        var wasChanged = false;
+
         for (var frame = 0; frame < frameCount; frame++)
         {
             if (stepsByFrame.TryGetValue(frame, out var frameSteps))
@@ -53,13 +68,36 @@ internal static partial class Program
 
             PumpDispatcher(TimeSpan.FromMilliseconds(1000d / MotionFramesPerSecond));
             var path = Path.Combine(framesDirectory, $"frame-{frame:D4}.png");
-            var sha256 = CaptureMotionFrame(window, path);
-            frameEvidence.Add(new
+            var capture = CaptureMotionFrame(window, path);
+            var (meanDelta, changedRatio) = previousPixels is null
+                ? (0d, 0d)
+                : ComputeFrameDelta(previousPixels, capture.Pixels);
+            var visiblyChanged = meanDelta >= 0.20 || changedRatio >= 0.004;
+
+            if (visiblyChanged)
             {
+                changedFrameCount++;
+                currentChangedRun++;
+                longestChangedRun = Math.Max(longestChangedRun, currentChangedRun);
+                if (!wasChanged)
+                {
+                    motionRunCount++;
+                }
+            }
+            else
+            {
+                currentChangedRun = 0;
+            }
+
+            wasChanged = visiblyChanged;
+            frameEvidence.Add(new MotionFrameEvidence(
                 frame,
-                file = Path.GetFileName(path),
-                sha256,
-            });
+                Path.GetFileName(path),
+                capture.Sha256,
+                Math.Round(meanDelta, 4),
+                Math.Round(changedRatio, 6),
+                visiblyChanged));
+            previousPixels = capture.Pixels;
         }
 
         var manifestPath = Path.Combine(output, "motion-evidence-manifest.json");
@@ -80,6 +118,14 @@ internal static partial class Program
                     frame_rate = MotionFramesPerSecond,
                     frame_count = frameCount,
                     encoded_duration_seconds = (double)frameCount / MotionFramesPerSecond,
+                    motion_visibility = new
+                    {
+                        changed_frame_count = changedFrameCount,
+                        changed_frame_ratio = Math.Round((double)changedFrameCount / Math.Max(1, frameCount - 1), 4),
+                        longest_changed_run = longestChangedRun,
+                        motion_run_count = motionRunCount,
+                        frame_change_rule = "mean_sample_delta>=0.20 OR changed_sample_ratio>=0.004",
+                    },
                     expected_video_file = reducedMotion
                         ? "p1-critical-path-reduced-motion.mp4"
                         : "p1-critical-path-motion.mp4",
@@ -94,7 +140,9 @@ internal static partial class Program
                 new JsonSerializerOptions { WriteIndented = true }));
 
         Console.WriteLine(
-            $"Command Center P1 {mode} motion evidence frames: PASS ({frameCount} frames, {seconds}s)");
+            $"Command Center P1 {mode} motion evidence frames: PASS " +
+            $"({frameCount} frames, {seconds}s, visible={changedFrameCount}, " +
+            $"longest-run={longestChangedRun}, runs={motionRunCount})");
         return 0;
     }
 
@@ -209,7 +257,7 @@ internal static partial class Program
         Dispatcher.PushFrame(frame);
     }
 
-    private static string CaptureMotionFrame(MainWindow window, string path)
+    private static MotionCapture CaptureMotionFrame(MainWindow window, string path)
     {
         if (window.Content is not FrameworkElement root)
         {
@@ -226,6 +274,10 @@ internal static partial class Program
             PixelFormats.Pbgra32);
         bitmap.Render(root);
 
+        var stride = MotionWidth * 4;
+        var pixels = new byte[stride * MotionHeight];
+        bitmap.CopyPixels(pixels, stride, 0);
+
         var encoder = new PngBitmapEncoder();
         encoder.Frames.Add(BitmapFrame.Create(bitmap));
 
@@ -235,6 +287,48 @@ internal static partial class Program
         }
 
         var bytes = File.ReadAllBytes(path);
-        return Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant();
+        var sha256 = Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant();
+        return new MotionCapture(sha256, pixels);
+    }
+
+    private static (double MeanSampleDelta, double ChangedSampleRatio) ComputeFrameDelta(
+        byte[] previous,
+        byte[] current)
+    {
+        if (previous.Length != current.Length)
+        {
+            return (255, 1);
+        }
+
+        long totalDelta = 0;
+        var changedSamples = 0;
+        var samples = 0;
+
+        // Sample one BGRA pixel out of every sixteen pixels. This is dense enough to
+        // catch region motion while keeping evidence capture affordable in CI.
+        for (var index = 0; index + 2 < current.Length; index += 64)
+        {
+            var blue = Math.Abs(current[index] - previous[index]);
+            var green = Math.Abs(current[index + 1] - previous[index + 1]);
+            var red = Math.Abs(current[index + 2] - previous[index + 2]);
+            var delta = blue + green + red;
+
+            totalDelta += delta;
+            if (delta >= 18)
+            {
+                changedSamples++;
+            }
+
+            samples++;
+        }
+
+        if (samples == 0)
+        {
+            return (0, 0);
+        }
+
+        return (
+            (double)totalDelta / (samples * 3),
+            (double)changedSamples / samples);
     }
 }
