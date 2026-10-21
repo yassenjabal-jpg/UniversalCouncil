@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CC-CAPSULE-MOTION-VISIBILITY-REMEDIATION-2026-10-21",
+  "job_or_change_id": "CC-MOTION-VISIBILITY-REMEDIATION-2026-10-21",
+  "immutable": true,
+  "canonical_branch": "command-center/project-local-council-studio-20261019",
+  "canonical_base_sha": "4b2a7bffe93e1defc93080906f87d7f8d123d66f",
+  "governing_sources": [
+    "docs/operations/command-center/living-operations/02_MOTION_BIBLE.md",
+    "docs/operations/command-center/living-operations/10_STATE_MOTION_MATRIX.md",
+    "docs/operations/command-center/living-operations/16_P1_INTERACTION_MOTION_STORYBOARD.md",
+    "docs/operations/command-center/living-operations/23_POST_P1_INTERACTION_MOTION_LAW.md",
+    "apps/UniversalCouncil.CommandCenter/MainWindow.xaml.cs",
+    "apps/UniversalCouncil.CommandCenter.UiSmoke/MotionEvidence.cs",
+    ".github/workflows/command-center-p1-exit-evidence.yml"
+  ],
+  "owner_feedback_is_authoritative": true,
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution_authorized": false
+  },
+  "timestamp": "2026-10-21"
+}
