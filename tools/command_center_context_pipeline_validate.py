@@ -26,6 +26,9 @@ A1_POST = PROJECT / "approvals" / "2026-10-21-repair-a1-context-baseline-post.js
 A2_POST = PROJECT / "approvals" / "2026-10-21-repair-a2-governance-metadata-post.json"
 A3_POST = PROJECT / "approvals" / "2026-10-21-repair-a3-truth-lock-post.json"
 B1_POST = PROJECT / "approvals" / "2026-10-21-repair-b1-native-completion-post.json"
+B2_POST = PROJECT / "approvals" / "2026-10-21-repair-b2-cross-screen-consistency-post.json"
+B3_RETURN = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-return.json"
+B3_RETURN_ADOPTION = PROJECT / "approvals" / "2026-10-21-repair-b3-return-state-adoption.json"
 A1_CHANGE = PROJECT / "changes" / "2026-10-21-repair-a1-context-baseline.json"
 A1_CAPSULE = PROJECT / "context-capsules" / "2026-10-21-repair-a1-context-baseline.json"
 MAP_BUILDER = ROOT / "tools" / "build_command_center_project_context_map.py"
@@ -120,6 +123,9 @@ a1_post = load(A1_POST) if A1_POST.exists() else None
 a2_post = load(A2_POST) if A2_POST.exists() else None
 a3_post = load(A3_POST) if A3_POST.exists() else None
 b1_post = load(B1_POST) if B1_POST.exists() else None
+b2_post = load(B2_POST) if B2_POST.exists() else None
+b3_return = load(B3_RETURN) if B3_RETURN.exists() else None
+b3_return_adoption = load(B3_RETURN_ADOPTION) if B3_RETURN_ADOPTION.exists() else None
 
 if context_map["schema_version"] != "2.0":
     raise SystemExit("Project context map must use repaired schema 2.0")
@@ -178,6 +184,16 @@ if context_map["conflicts"]:
     raise SystemExit("Canonical project context map currently expects no unresolved conflicts")
 if pipeline["status"] == "MURTAKAZ_REVIEW_REQUIRED":
     expected_active_work = ["REPAIR_WAVE_A1_CONTEXT_BASELINE"]
+elif (
+    b3_return is not None
+    and b3_return.get("decision") == "RETURNED_FOR_CHANGES"
+    and b3_return_adoption is not None
+    and b3_return_adoption.get("decision") == "APPROVED_BY_AL_MURTAKAZ"
+    and b3_return_adoption.get("adoption_authorized") is True
+):
+    expected_active_work = ["P1_EXIT_REMEDIATION_MOTION_AND_ANDROID"]
+elif b2_post is not None and b2_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ":
+    expected_active_work = ["REPAIR_WAVE_B3_FINAL_REVIEW_P1_ACCEPTANCE_PENDING"]
 elif b1_post is not None and b1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ":
     expected_active_work = ["REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"]
 elif a3_post is not None and a3_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ":
