@@ -210,6 +210,8 @@ internal static partial class Program
                 mean_sample_copy_ms = sampleCopyDurations.Count == 0 ? 0 : Math.Round(sampleCopyDurations.Average(), 3),
                 p95_sample_copy_ms = Math.Round(Percentile95(sampleCopyDurations), 3),
                 max_sample_copy_ms = sampleCopyDurations.Count == 0 ? 0 : Math.Round(sampleCopyDurations.Max(), 3),
+                observed_widths = capturedWidths.Distinct().OrderBy(value => value).ToArray(),
+                observed_heights = capturedHeights.Distinct().OrderBy(value => value).ToArray(),
                 dimensions_exact_1440x900 = dimensionsExact,
                 timing_within_pilot_tolerance = timingExact,
                 sustained_30fps = sustainedThirtyFps,
