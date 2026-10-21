@@ -134,10 +134,12 @@ if actual_lineage != expected_lineage:
 repair = current_review["repair_program"]
 if repair["wave_a"]["A1"] != "COMPLETE_APPROVED":
     raise SystemExit("Current review lost A1 completion truth")
-if repair["wave_a"]["A2"] not in {"ACTIVE", "COMPLETE_APPROVED"}:
-    raise SystemExit("Current review A2 repair state is invalid")
-if repair["wave_a"]["A3"] not in {"PENDING", "ACTIVE"}:
-    raise SystemExit("Current review A3 repair state is invalid")
+if a2_post is None:
+    if repair["wave_a"]["A2"] != "ACTIVE" or repair["wave_a"]["A3"] != "PENDING":
+        raise SystemExit("Current review repair state does not match active A2 lifecycle")
+else:
+    if repair["wave_a"]["A2"] != "COMPLETE_APPROVED" or repair["wave_a"]["A3"] != "ACTIVE":
+        raise SystemExit("Current review did not advance to A3 after A2 approval")
 if current_review["next_engineering_after_repairs"] != "SKILL_REGISTRY":
     raise SystemExit("Current review engineering continuation drifted")
 
@@ -215,8 +217,16 @@ required_roadmap_markers = (
     "**COMPLETE** — Capability Registry + Model Broker.",
     "**PENDING AFTER REPAIR CLOSURE** — Skill Registry.",
     "**A1 Context & Baseline Repair — COMPLETE / APPROVED_BY_AL_MURTAKAZ**",
-    "**A2 Governance Metadata Reconciliation — ACTIVE**",
-    "**A3 Truth Lock + Murtakaz Closure — PENDING**",
+    (
+        "**A2 Governance Metadata Reconciliation — COMPLETE / APPROVED_BY_AL_MURTAKAZ**"
+        if a2_post is not None
+        else "**A2 Governance Metadata Reconciliation — ACTIVE**"
+    ),
+    (
+        "**A3 Truth Lock + Murtakaz Closure — ACTIVE**"
+        if a2_post is not None
+        else "**A3 Truth Lock + Murtakaz Closure — PENDING**"
+    ),
 )
 for marker in required_roadmap_markers:
     if marker not in roadmap:
