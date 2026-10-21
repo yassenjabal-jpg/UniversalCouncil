@@ -120,9 +120,9 @@ for marker in (
 
 if '"Autopilot — يعمل الآن"' in main_source:
     raise SystemExit("Shared Autopilot hotspot still claims unverified live activity")
-if "KeyboardNavigation.TabNavigation=\"Cycle\"" not in xaml_source:
+if 'KeyboardNavigation.TabNavigation="Cycle"' not in xaml_source:
     raise SystemExit("B2 keyboard traversal is not explicitly cyclic")
-if "KeyboardNavigation.ControlTabNavigation=\"Cycle\"" not in xaml_source:
+if 'KeyboardNavigation.ControlTabNavigation="Cycle"' not in xaml_source:
     raise SystemExit("B2 Ctrl+Tab traversal is not explicitly cyclic")
 if 'AutomationProperties.Name="UniversalCouncil Command Center"' not in xaml_source:
     raise SystemExit("B2 root accessibility name missing")
@@ -130,10 +130,7 @@ if 'AutomationProperties.Name="UniversalCouncil Command Center"' not in xaml_sou
 key_block = main_source.split("private void Window_PreviewKeyDown", 1)[1]
 if "e.Key == Key.K" not in key_block:
     raise SystemExit("Advertised Ctrl+K shortcut is still dead")
-home_only_overlay_gate = (
-    "e.Key == Key.O &&\n"
-    "            _currentScreen == ScreenKind.Home"
-)
+home_only_overlay_gate = "e.Key == Key.O &&\n            _currentScreen == ScreenKind.Home"
 if "e.Key == Key.O" not in key_block or home_only_overlay_gate in key_block:
     raise SystemExit("Reference/native overlay shortcut is still Home-only")
 
