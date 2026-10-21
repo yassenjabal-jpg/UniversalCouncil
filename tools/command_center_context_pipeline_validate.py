@@ -23,6 +23,7 @@ PACKAGING_ADDENDUM = PROJECT / "changes" / "2026-10-21-context-resolver-packagin
 
 A1_PRE = PROJECT / "approvals" / "2026-10-21-repair-a1-context-baseline-pre.json"
 A1_POST = PROJECT / "approvals" / "2026-10-21-repair-a1-context-baseline-post.json"
+A2_POST = PROJECT / "approvals" / "2026-10-21-repair-a2-governance-metadata-post.json"
 A1_CHANGE = PROJECT / "changes" / "2026-10-21-repair-a1-context-baseline.json"
 A1_CAPSULE = PROJECT / "context-capsules" / "2026-10-21-repair-a1-context-baseline.json"
 MAP_BUILDER = ROOT / "tools" / "build_command_center_project_context_map.py"
@@ -114,6 +115,7 @@ a1_pre = load(A1_PRE)
 a1_change = load(A1_CHANGE)
 a1_capsule = load(A1_CAPSULE)
 a1_post = load(A1_POST) if A1_POST.exists() else None
+a2_post = load(A2_POST) if A2_POST.exists() else None
 
 if context_map["schema_version"] != "2.0":
     raise SystemExit("Project context map must use repaired schema 2.0")
@@ -170,13 +172,16 @@ if context_map["source_revision"] != expected_revision:
 
 if context_map["conflicts"]:
     raise SystemExit("Canonical project context map currently expects no unresolved conflicts")
-expected_active_work = (
-    ["REPAIR_WAVE_A1_CONTEXT_BASELINE"]
-    if pipeline["status"] == "MURTAKAZ_REVIEW_REQUIRED"
-    else ["REPAIR_WAVE_A2_GOVERNANCE_METADATA_RECONCILIATION"]
-)
+if pipeline["status"] == "MURTAKAZ_REVIEW_REQUIRED":
+    expected_active_work = ["REPAIR_WAVE_A1_CONTEXT_BASELINE"]
+elif a2_post is not None and a2_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ":
+    expected_active_work = ["REPAIR_WAVE_A3_TRUTH_LOCK_AND_MURTAKAZ_CLOSURE"]
+elif a1_post is not None and a1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ":
+    expected_active_work = ["REPAIR_WAVE_A2_GOVERNANCE_METADATA_RECONCILIATION"]
+else:
+    raise SystemExit("Repair lifecycle cannot derive current active work from approval receipts")
 if context_map["active_work"] != expected_active_work:
-    raise SystemExit("Project context active work is not aligned with the repair lifecycle")
+    raise SystemExit("Project context active work is not aligned with governed repair receipts")
 
 manifest = context_map["project_manifest"]
 if manifest["governance_system"] != "al-murtakaz" or manifest["owner_authority"] != "FINAL":

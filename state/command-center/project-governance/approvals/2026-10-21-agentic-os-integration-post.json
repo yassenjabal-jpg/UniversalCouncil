@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-AGENTIC-OS-INTEGRATION-POST-2026-10-21",
+  "change_id": "CC-AGENTIC-OS-INTEGRATION-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "approved_revision": "02a92f1e90fe3d36b51880c1cbd8d7cc22b3be0a",
+  "canonical_base": "1702d73eafa2319200164898bdaf0d400d4af524",
+  "merged_pr": 56,
+  "merge_commit_sha": "91aa5604fea04d6ddb9cc89769e5afa139e817d6",
+  "adoption_authorized": true,
+  "merge_authorized": true,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "reviewers": {
+    "product_truth": "PASS",
+    "architecture_execution": "PASS",
+    "security_remote_trust": "PASS",
+    "durable_autopilot": "PASS_FOR_CONTRACT_ONLY",
+    "ai_runtime_model_memory": "PASS",
+    "red_team": "PASS",
+    "owner_ux": "PASS",
+    "visual_fidelity": "PASS_NO_VISUAL_MUTATION"
+  },
+  "architecture_boundary_audit": "PASS_AFTER_CORRECTION",
+  "exact_head_evidence": [
+    {
+      "workflow": "Company Stage 0",
+      "run_id": 39506822281,
+      "conclusion": "SUCCESS"
+    },
+    {
+      "workflow": "CodeQL",
+      "run_id": 39506822402,
+      "conclusion": "SUCCESS"
+    },
+    {
+      "workflow": "Command Center Reference UI",
+      "run_id": 39506822268,
+      "conclusion": "SUCCESS"
+    }
+  ],
+  "normalized_from": {
+    "source": "PR_COMMENT",
+    "pr": 56,
+    "comment_id": 6303028014,
+    "created_at": "2026-10-20T22:17:58Z",
+    "historical_decision_changed": false
+  },
+  "authority_limits": [
+    "no live execution",
+    "no real Autopilot authorization",
+    "no Android live control authorization",
+    "Stage 8 remains closed"
+  ],
+  "timestamp": "2026-10-21"
+}

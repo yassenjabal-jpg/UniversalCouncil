@@ -39,8 +39,8 @@
         "runtime_architecture"
       ],
       "enforcement": "STATIC_ARCHITECTURE",
-      "implementation_state": "CONTRACT_ACTIVE_IMPLEMENTATION_PENDING",
-      "validator": "future_boundary_tests"
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_gateway_routing_validate + UniversalCouncil.CommandCenter.GatewayValidation"
     },
     {
       "id": "AO-004",
@@ -85,8 +85,8 @@
         "files"
       ],
       "enforcement": "UNIT_AND_INTEGRATION",
-      "implementation_state": "CONTRACT_ACTIVE",
-      "validator": "future_context_security_tests"
+      "implementation_state": "ENFORCED_FOR_CONTEXT_RESOLVER_EXTERNAL_RETRIEVAL_FUTURE",
+      "validator": "command_center_context_pipeline_validate + UniversalCouncil.CommandCenter.ContextValidation"
     },
     {
       "id": "AO-007",
@@ -112,8 +112,8 @@
         "context"
       ],
       "enforcement": "UNIT_AND_RUNTIME",
-      "implementation_state": "CONTRACT_ACTIVE",
-      "validator": "future_context_resolver_tests"
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_context_pipeline_validate + UniversalCouncil.CommandCenter.ContextValidation"
     },
     {
       "id": "AO-009",
@@ -175,7 +175,7 @@
       ],
       "enforcement": "STATIC_AND_RUNTIME",
       "implementation_state": "ENFORCED_NOW",
-      "validator": "existing_murtakaz_validator"
+      "validator": "command_center_capability_model_validate + command_center_gateway_routing_validate"
     },
     {
       "id": "AO-014",
@@ -189,7 +189,7 @@
       ],
       "enforcement": "STATIC_AND_RUNTIME",
       "implementation_state": "ENFORCED_NOW",
-      "validator": "existing_murtakaz_validator"
+      "validator": "command_center_capability_model_validate + UniversalCouncil.CommandCenter.CapabilityModelValidation"
     },
     {
       "id": "AO-015",
@@ -280,8 +280,8 @@
         "capability"
       ],
       "enforcement": "UNIT_AND_RUNTIME",
-      "implementation_state": "CONTRACT_ACTIVE",
-      "validator": "future_capability_tests"
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_capability_model_validate + UniversalCouncil.CommandCenter.CapabilityModelValidation"
     },
     {
       "id": "AO-022",
@@ -323,5 +323,8 @@
       "implementation_state": "CONTRACT_ACTIVE",
       "validator": "murtakaz_workshop_review"
     }
-  ]
+  ],
+  "last_reconciled_at": "2026-10-21",
+  "last_reconciled_change_id": "CC-REPAIR-A2-GOVERNANCE-METADATA-2026-10-21",
+  "reconciliation_rule": "IMPLEMENTATION_STATE_MUST_MATCH_MERGED_AND_VALIDATED_CAPABILITY_SCOPE_WITHOUT_PRETENDING_FUTURE_SURFACES_EXIST"
 }

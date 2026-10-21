@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-A2-GOVERNANCE-METADATA-PRE-2026-10-21",
+  "change_id": "CC-REPAIR-A2-GOVERNANCE-METADATA-2026-10-21",
+  "status": "APPROVE_TO_IMPLEMENT",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "requested_by": "OWNER_DIRECTIVE_REPAIR_ROADMAP",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "f55d6f924d0e29a27eebead09e342e899615b38f"
+  },
+  "scope": [
+    "reconcile architecture invariant implementation_state/validator metadata with actually merged capabilities",
+    "preserve the 2026-10-20 RETURN_FOR_ALIGNMENT review as historical evidence while creating a current Agentic OS review record",
+    "normalize the PR #56 Murtakaz post-review comment into a machine-readable approval receipt without changing its decision",
+    "update Command Center roadmap status to reflect merged slices 1-5 and the active repair program",
+    "refresh project context source hashes/source-set revision after governance metadata changes",
+    "refresh Murtakaz projection source hashes affected by metadata reconciliation",
+    "add validators/tests that reject stale current-review/roadmap/invariant metadata"
+  ],
+  "explicitly_out_of_scope": [
+    "changing architecture rules themselves",
+    "changing runtime behavior",
+    "Visual P1 implementation or review",
+    "repository PR/branch cleanup",
+    "Skill Registry",
+    "Durable Project Store",
+    "live execution",
+    "Stage 8"
+  ],
+  "risk_class": "MATERIAL_GOVERNANCE_METADATA_RECONCILIATION",
+  "required_reviewers": [
+    "cc_product_truth",
+    "cc_architecture_execution",
+    "cc_red_team",
+    "cc_ai_runtime",
+    "cc_durable_autopilot"
+  ],
+  "implementation_authorized": true,
+  "final_adoption_granted": false,
+  "merge_authorized": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "timestamp": "2026-10-21"
+}

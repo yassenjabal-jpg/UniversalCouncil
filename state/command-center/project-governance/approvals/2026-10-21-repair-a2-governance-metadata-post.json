@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-A2-GOVERNANCE-METADATA-POST-2026-10-21",
+  "change_id": "CC-REPAIR-A2-GOVERNANCE-METADATA-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "reviewed_revision": "d6ab8bc97d44f9f3c0a50b9cf8e2bbf4b7a64947",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "f55d6f924d0e29a27eebead09e342e899615b38f"
+  },
+  "governance_review": {
+    "cc_product_truth": "PASS",
+    "cc_architecture_execution": "PASS",
+    "cc_red_team": "PASS",
+    "cc_ai_runtime": "PASS",
+    "cc_durable_autopilot": "PASS"
+  },
+  "findings": [
+    "Architecture invariant implementation metadata now matches merged and validated capability scope without falsely completing future systems.",
+    "The PR #54 RETURN_FOR_ALIGNMENT verdict is preserved as historical evidence and no longer presents itself as current truth.",
+    "The adopted Agentic OS lineage is represented by a current canonical review summary.",
+    "The PR #56 Murtakaz post-review comment is normalized into machine-readable evidence without rewriting the historical decision.",
+    "The roadmap distinguishes historical G1 phases from the canonical Stage map and marks implementation slices 1-5 complete.",
+    "Repair A1 is recorded complete; A2 may close and A3 may become active."
+  ],
+  "exact_head_evidence": [
+    {
+      "workflow": "Company Stage 0",
+      "run_id": 39556576978,
+      "conclusion": "SUCCESS",
+      "head_sha": "d6ab8bc97d44f9f3c0a50b9cf8e2bbf4b7a64947"
+    },
+    {
+      "workflow": "CodeQL",
+      "run_id": 39556576935,
+      "conclusion": "SUCCESS",
+      "head_sha": "d6ab8bc97d44f9f3c0a50b9cf8e2bbf4b7a64947"
+    },
+    {
+      "workflow": "Command Center Reference UI",
+      "run_id": 39556576962,
+      "conclusion": "SUCCESS",
+      "head_sha": "d6ab8bc97d44f9f3c0a50b9cf8e2bbf4b7a64947"
+    }
+  ],
+  "historical_evidence_preserved": true,
+  "runtime_behavior_changed": false,
+  "visual_p1_changed": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "adoption_authorized": true,
+  "merge_authorized": true,
+  "next_repair_stage_authorized": "REPAIR_WAVE_A3_TRUTH_LOCK_AND_MURTAKAZ_CLOSURE",
+  "reopen_triggers": [
+    "implemented capability metadata regresses to future/pending",
+    "historical review is presented as current truth",
+    "current Agentic lineage loses an adopted merge",
+    "roadmap status diverges from canonical Stage map or merged slices",
+    "normalized historical receipt no longer matches original evidence",
+    "live execution or Stage 8 changes"
+  ],
+  "timestamp": "2026-10-21"
+}

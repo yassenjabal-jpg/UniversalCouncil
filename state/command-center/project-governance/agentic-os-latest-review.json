@@ -40,5 +40,9 @@
     "canonical_visual_reference_count": 8,
     "android_live_state": "UNPROVEN",
     "real_autopilot": "NOT_IMPLEMENTED"
-  }
+  },
+  "record_status": "HISTORICAL_SUPERSEDED",
+  "historical_verdict_preserved": true,
+  "superseded_by": "state/command-center/project-governance/agentic-os-current-review.json",
+  "supersession_reason": "PR #54 was returned for alignment; the corrected architecture was later adopted through PR #56 and subsequent validated slices."
 }
