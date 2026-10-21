@@ -127,6 +127,7 @@ public sealed class ProjectContextResolver : IProjectContextResolver
                     ContextResolutionState.ContextConflict,
                     "Canonical context sources conflict; fail-closed resolution required.",
                     document.ProjectId,
+                    document.BaselineRevision,
                     document.SourceRevision,
                     request.Domains.OrderBy(item => item, StringComparer.Ordinal).ToArray(),
                     request.RequestedScopes.OrderBy(item => item, StringComparer.Ordinal).ToArray(),
@@ -160,6 +161,7 @@ public sealed class ProjectContextResolver : IProjectContextResolver
                     ContextResolutionState.StaleContext,
                     "Selected context is stale and requires a new capsule/re-plan.",
                     document.ProjectId,
+                    document.BaselineRevision,
                     document.SourceRevision,
                     request.Domains.OrderBy(item => item, StringComparer.Ordinal).ToArray(),
                     request.RequestedScopes.OrderBy(item => item, StringComparer.Ordinal).ToArray(),
@@ -174,6 +176,7 @@ public sealed class ProjectContextResolver : IProjectContextResolver
                 ContextResolutionState.Current,
                 string.Empty,
                 document.ProjectId,
+                document.BaselineRevision,
                 document.SourceRevision,
                 request.Domains.OrderBy(item => item, StringComparer.Ordinal).ToArray(),
                 request.RequestedScopes.OrderBy(item => item, StringComparer.Ordinal).ToArray(),
@@ -254,7 +257,7 @@ public sealed class ProjectContextResolver : IProjectContextResolver
 
     private static void ValidateDocument(ProjectContextMapDocument document)
     {
-        if (document.SchemaVersion != "1.0" ||
+        if (document.SchemaVersion != "2.0" ||
             document.SourceType != "project_local_repository_projection")
         {
             throw new ProjectContextReadException(
@@ -262,10 +265,13 @@ public sealed class ProjectContextResolver : IProjectContextResolver
         }
 
         if (string.IsNullOrWhiteSpace(document.ProjectId) ||
-            document.SourceRevision.Length != 40)
+            string.IsNullOrWhiteSpace(document.BaselineBranch) ||
+            !IsLowerHex(document.BaselineRevision, 40) ||
+            !IsLowerHex(document.SourceRevision, 64) ||
+            document.HeadValidationMode != "BASELINE_ANCESTOR_AND_SOURCE_BLOBS_MATCH_HEAD")
         {
             throw new ProjectContextReadException(
-                "Project context identity/source revision is incomplete.");
+                "Project context identity/baseline/source revision is incomplete.");
         }
 
         if (document.ProjectManifest.GovernanceSystem != "al-murtakaz" ||
@@ -356,6 +362,11 @@ public sealed class ProjectContextResolver : IProjectContextResolver
         ValidateDistinct(document.CanonicalDecisions, "canonical decisions");
         ValidateDistinct(document.OwnerDirectives, "owner directives");
     }
+
+    private static bool IsLowerHex(string value, int length) =>
+        value.Length == length &&
+        value.All(character =>
+            character is >= '0' and <= '9' or >= 'a' and <= 'f');
 
     private static void ValidateDistinctNonEmpty(
         IReadOnlyList<string> values,

@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-A1-CONTEXT-BASELINE-POST-2026-10-21",
+  "change_id": "CC-REPAIR-A1-CONTEXT-BASELINE-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "reviewed_revision": "dd00cf5646ae2ef49b20a652fe4543477f7557ba",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "b3ef5d8f60e3f623371b40036bcea01f7a396d2a"
+  },
+  "governance_review": {
+    "cc_product_truth": "PASS",
+    "cc_architecture_execution": "PASS",
+    "cc_durable_autopilot": "PASS",
+    "cc_red_team": "PASS_AFTER_SELF_REFERENCE_DESIGN_CORRECTION",
+    "cc_ai_runtime": "PASS",
+    "cc_owner_experience": "PASS_NO_USER_SURFACE_REGRESSION"
+  },
+  "findings": [
+    "A committed context map cannot safely define currentness by embedding its own checkout HEAD because committing the map changes HEAD.",
+    "The repaired design separates Git baseline provenance from current source-set truth.",
+    "baseline_revision is historical provenance and must be an ancestor of the validated checkout HEAD.",
+    "source_revision is SHA-256 over sorted canonical source id/path/blob tuples.",
+    "Every declared canonical source blob is verified against the actual checkout HEAD.",
+    "Context Resolver and compiled Context Capsules preserve both baseline_revision and source_revision.",
+    "The historical Context Resolver implementation receipt remains immutable history and no longer pins current project truth."
+  ],
+  "exact_head_evidence": [
+    {
+      "workflow": "Company Stage 0",
+      "run_id": 39554877558,
+      "conclusion": "SUCCESS",
+      "head_sha": "dd00cf5646ae2ef49b20a652fe4543477f7557ba"
+    },
+    {
+      "workflow": "CodeQL",
+      "run_id": 39554877546,
+      "conclusion": "SUCCESS",
+      "head_sha": "dd00cf5646ae2ef49b20a652fe4543477f7557ba"
+    },
+    {
+      "workflow": "Command Center Reference UI",
+      "run_id": 39554877531,
+      "conclusion": "SUCCESS",
+      "head_sha": "dd00cf5646ae2ef49b20a652fe4543477f7557ba",
+      "includes": "WPF build + ContextValidation + GatewayValidation + CapabilityModelValidation + reference render"
+    }
+  ],
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "visual_direction_changed": false,
+  "wpf_ux_changed": false,
+  "android_runtime_changed": false,
+  "adoption_authorized": true,
+  "merge_authorized": true,
+  "next_repair_stage_authorized": "REPAIR_WAVE_A2_GOVERNANCE_METADATA_RECONCILIATION",
+  "reopen_triggers": [
+    "baseline/source revision semantics change",
+    "canonical source-set membership changes without map refresh",
+    "declared source blob differs from actual HEAD",
+    "baseline is no longer ancestor of checkout HEAD",
+    "context map reintroduces fixed implementation SHA as current truth",
+    "live execution or Stage 8 changes"
+  ],
+  "timestamp": "2026-10-21"
+}

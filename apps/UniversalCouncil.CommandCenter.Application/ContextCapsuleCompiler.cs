@@ -68,6 +68,7 @@ public sealed class ContextCapsuleCompiler : IContextCapsuleCompiler
             resolution.ProjectId,
             request.JobOrChangeId,
             request.CreatedAt,
+            resolution.BaselineRevision,
             resolution.SourceRevision,
             domains,
             requestedScopes,
@@ -97,6 +98,7 @@ public sealed class ContextCapsuleCompiler : IContextCapsuleCompiler
             fingerprint.ProjectId,
             fingerprint.JobOrChangeId,
             fingerprint.CreatedAt,
+            fingerprint.BaselineRevision,
             fingerprint.SourceRevision,
             fingerprint.Domains,
             fingerprint.RequestedScopes,
@@ -116,10 +118,11 @@ public sealed class ContextCapsuleCompiler : IContextCapsuleCompiler
     private static void ValidateResolution(ContextResolutionResult resolution)
     {
         if (string.IsNullOrWhiteSpace(resolution.ProjectId) ||
-            resolution.SourceRevision.Length != 40)
+            !IsLowerHex(resolution.BaselineRevision, 40) ||
+            !IsLowerHex(resolution.SourceRevision, 64))
         {
             throw new ContextCapsuleCompileException(
-                "Resolved context identity/source revision is incomplete.");
+                "Resolved context identity/baseline/source revision is incomplete.");
         }
 
         if (resolution.Sources.Count == 0)
@@ -222,6 +225,11 @@ public sealed class ContextCapsuleCompiler : IContextCapsuleCompiler
                 $"Unsupported authority class: {authorityClass}")
         };
 
+    private static bool IsLowerHex(string value, int length) =>
+        value.Length == length &&
+        value.All(character =>
+            character is >= '0' and <= '9' or >= 'a' and <= 'f');
+
     private static void Require(string value, string name)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -260,6 +268,7 @@ public sealed class ContextCapsuleCompiler : IContextCapsuleCompiler
         string ProjectId,
         string JobOrChangeId,
         DateTimeOffset CreatedAt,
+        string BaselineRevision,
         string SourceRevision,
         IReadOnlyList<string> Domains,
         IReadOnlyList<string> RequestedScopes,
