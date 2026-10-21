@@ -37,11 +37,7 @@ class CommandCenterRepairWaveATruthLockTests(unittest.TestCase):
             self.stage["delivery"]["authoritative_current_stage"],
             "STAGE_7",
         )
-        stage8 = next(
-            item
-            for item in self.stage["delivery"]["stages"]
-            if item["id"] == "STAGE_8"
-        )
+        stage8 = next(item for item in self.stage["delivery"]["stages"] if item["id"] == "STAGE_8")
         self.assertEqual(stage8["status"], "NOT_OPENED")
         self.assertFalse(self.phase0["live_execution_authorized"])
         self.assertFalse(all(item["status"] == "PASS" for item in self.phase0["gates"].values()))
