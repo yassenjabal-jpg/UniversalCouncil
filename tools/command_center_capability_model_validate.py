@@ -95,10 +95,7 @@ ids = [item["id"] for item in capabilities]
 if len(ids) != len(set(ids)):
     raise SystemExit("Capability ids must be unique")
 
-tuples = [
-    (item["operation"], item["provider_id"], item["environment_host"])
-    for item in capabilities
-]
+tuples = [(item["operation"], item["provider_id"], item["environment_host"]) for item in capabilities]
 if len(tuples) != len(set(tuples)):
     raise SystemExit("Capability operation/provider/host tuples must be unique")
 
@@ -177,7 +174,16 @@ if agentic_model["silent_fallback_allowed"]:
     raise SystemExit("Agentic OS silent fallback prohibition was weakened")
 if not agentic_model["owner_controlled"]:
     raise SystemExit("Agentic OS Owner model control was weakened")
-for required_input in ("capability", "context", "latency", "cost", "quality", "availability", "privacy", "fallback_policy"):
+for required_input in (
+    "capability",
+    "context",
+    "latency",
+    "cost",
+    "quality",
+    "availability",
+    "privacy",
+    "fallback_policy",
+):
     if required_input not in agentic_model["required_inputs"]:
         raise SystemExit(f"Agentic Model Broker input missing: {required_input}")
 
@@ -266,18 +272,18 @@ if state["status"] == "APPROVED_BY_AL_MURTAKAZ":
     if post["provider_calls_authorized"] or post["live_execution_authorized"] or post["stage8_opened"]:
         raise SystemExit("Capability/Model post-review inflated runtime authority")
 
-broker_source = (
-    ROOT / "apps" / "UniversalCouncil.CommandCenter.Application" / "ModelBroker.cs"
-).read_text(encoding="utf-8")
+broker_source = (ROOT / "apps" / "UniversalCouncil.CommandCenter.Application" / "ModelBroker.cs").read_text(
+    encoding="utf-8"
+)
 registry_source = (
     ROOT / "apps" / "UniversalCouncil.CommandCenter.Application" / "CapabilityRegistryService.cs"
 ).read_text(encoding="utf-8")
-host_source = (
-    ROOT / "apps" / "UniversalCouncil.CommandCenter.Host" / "CommandCenterComposition.cs"
-).read_text(encoding="utf-8")
-wpf_project = (
-    ROOT / "apps" / "UniversalCouncil.CommandCenter" / "UniversalCouncil.CommandCenter.csproj"
-).read_text(encoding="utf-8")
+host_source = (ROOT / "apps" / "UniversalCouncil.CommandCenter.Host" / "CommandCenterComposition.cs").read_text(
+    encoding="utf-8"
+)
+wpf_project = (ROOT / "apps" / "UniversalCouncil.CommandCenter" / "UniversalCouncil.CommandCenter.csproj").read_text(
+    encoding="utf-8"
+)
 
 for forbidden in ("HttpClient", "SendAsync(", "PostAsync(", "GetAsync(", "InvokeProvider", "ApiKey", "Bearer "):
     if forbidden in broker_source:
