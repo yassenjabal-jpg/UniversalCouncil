@@ -44,7 +44,7 @@
       "provider_id": "murtakaz-model-broker",
       "operation": "model.select",
       "version_hash": "model-broker-v1",
-      "health": "HEALTHY",
+      "health": "IN_TEST",
       "authentication_state": "INTERNAL",
       "effect": "READ",
       "risk": "T0_OBSERVE",
@@ -54,7 +54,7 @@
       "environment_host": "LOCAL_APP",
       "evidence_level": "IMPLEMENTATION_VALIDATION_PENDING",
       "fallback_eligible": false,
-      "failure_reason": ""
+      "failure_reason": "CAPABILITY_MODEL_SLICE_REVIEW_PENDING"
     },
     {
       "id": "model-invoke-external",
