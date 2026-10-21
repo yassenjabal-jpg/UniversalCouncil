@@ -60,6 +60,11 @@ class CommandCenterRepairB2ConsistencyTests(unittest.TestCase):
             2,
         )
 
+    def test_reference_fixture_is_explicitly_non_live(self) -> None:
+        self.assertIn("REFERENCE FIXTURE · NOT LIVE", self.main)
+        self.assertGreaterEqual(self.main.count("AddFixtureTruthBadge("), 3)
+        self.assertNotIn('ChromeText("يعمل الآن"', self.main)
+
     def test_keyboard_and_accessibility_consistency(self) -> None:
         self.assertIn("AutomationProperties.SetHelpText", self.main)
         self.assertIn("e.Key == Key.K", self.main)
