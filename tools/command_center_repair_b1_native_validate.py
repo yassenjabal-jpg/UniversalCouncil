@@ -189,9 +189,10 @@ ui_smoke_source = UI_SMOKE.read_text(encoding="utf-8")
 
 for required_marker in (
     "BuildSecondarySharedChrome(screen);",
+    "BuildSecondaryTopChrome();",
+    "BuildSecondaryRightNavigation(screen);",
     "BuildSecondarySharedInteractions(screen);",
     "BuildNativeProjectWorkspaceCore();",
-    "shared global chrome",
 ):
     if required_marker not in main_source:
         raise SystemExit(f"B1 native implementation marker missing: {required_marker}")
