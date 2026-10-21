@@ -1277,6 +1277,8 @@ public partial class MainWindow : Window
             BuildSecondaryInteractions(screen);
         }
 
+        RunScreenEntranceMotion(screen, isHome);
+
         if (MotionEnabled)
         {
             ReferenceImage.Opacity = 0.68;
@@ -7472,9 +7474,11 @@ public partial class MainWindow : Window
                 OpenToolInspector(hotspot.Id);
                 break;
             case HotspotKind.DecisionAction:
+                AnimateDecisionIntentCue(source);
                 HandleDecisionAction(hotspot.Id);
                 break;
             case HotspotKind.RecoveryAction:
+                AnimateRecoveryIntentCue(source, hotspot.Id);
                 HandleRecoveryAction(hotspot.Id);
                 break;
             case HotspotKind.Artifact:
@@ -7484,6 +7488,7 @@ public partial class MainWindow : Window
                 OpenStageDetail(hotspot.Id);
                 break;
             case HotspotKind.Pulse:
+                AnimatePulseInteractionCue(source, hotspot.Id);
                 OpenPulseDetail(hotspot.Id);
                 break;
             default:
@@ -7791,6 +7796,407 @@ public partial class MainWindow : Window
         }
     }
 
+    private void RunScreenEntranceMotion(ScreenKind screen, bool isHome)
+    {
+        var layer = isHome
+            ? (FrameworkElement)NativeHomeReconstructionRoot
+            : SecondaryNativeLayer;
+        var targetOpacity = _nativeReferenceBlendEnabled ? 0.46 : 1.0;
+
+        layer.BeginAnimation(OpacityProperty, null);
+        layer.Opacity = targetOpacity;
+        layer.RenderTransformOrigin = new Point(0.5, 0.5);
+
+        if (!MotionEnabled)
+        {
+            layer.RenderTransform = Transform.Identity;
+            return;
+        }
+
+        var (durationMs, startX, startY, startScale) = screen switch
+        {
+            ScreenKind.Home => (420d, 0d, 24d, 0.985d),
+            ScreenKind.ProjectWorkspace => (520d, 42d, 0d, 0.985d),
+            ScreenKind.SoftwareAutopilot => (540d, 48d, 0d, 0.982d),
+            ScreenKind.StudioProject => (560d, 0d, 34d, 0.982d),
+            ScreenKind.DecisionMode => (620d, 0d, 42d, 0.965d),
+            ScreenKind.RecoveryFork => (680d, -58d, 0d, 0.975d),
+            ScreenKind.PulseStory => (560d, 52d, 0d, 0.982d),
+            ScreenKind.WorkReceipt => (680d, 0d, 46d, 0.95d),
+            _ => (500d, 28d, 0d, 0.985d),
+        };
+
+        var scale = new ScaleTransform(1, 1);
+        var translate = new TranslateTransform();
+        var group = new TransformGroup();
+        group.Children.Add(scale);
+        group.Children.Add(translate);
+        layer.RenderTransform = group;
+
+        var duration = TimeSpan.FromMilliseconds(durationMs);
+        var ease = new CubicEase { EasingMode = EasingMode.EaseOut };
+
+        layer.BeginAnimation(
+            OpacityProperty,
+            new DoubleAnimation(Math.Max(0.18, targetOpacity * 0.28), targetOpacity, duration)
+            {
+                EasingFunction = ease,
+                FillBehavior = FillBehavior.Stop,
+            });
+
+        scale.BeginAnimation(
+            ScaleTransform.ScaleXProperty,
+            new DoubleAnimation(startScale, 1, duration)
+            {
+                EasingFunction = ease,
+                FillBehavior = FillBehavior.Stop,
+            });
+        scale.BeginAnimation(
+            ScaleTransform.ScaleYProperty,
+            new DoubleAnimation(startScale, 1, duration)
+            {
+                EasingFunction = ease,
+                FillBehavior = FillBehavior.Stop,
+            });
+        translate.BeginAnimation(
+            TranslateTransform.XProperty,
+            new DoubleAnimation(startX, 0, duration)
+            {
+                EasingFunction = ease,
+                FillBehavior = FillBehavior.Stop,
+            });
+        translate.BeginAnimation(
+            TranslateTransform.YProperty,
+            new DoubleAnimation(startY, 0, duration)
+            {
+                EasingFunction = ease,
+                FillBehavior = FillBehavior.Stop,
+            });
+    }
+
+    private void AnimateRoleRouteCue(FrameworkElement target)
+    {
+        if (!MotionEnabled || SecondaryInteractionCanvas.Visibility != Visibility.Visible)
+        {
+            return;
+        }
+
+        var left = Canvas.GetLeft(target);
+        var top = Canvas.GetTop(target);
+        if (double.IsNaN(left) || double.IsNaN(top))
+        {
+            return;
+        }
+
+        var width = target.ActualWidth > 0 ? target.ActualWidth : target.Width;
+        var height = target.ActualHeight > 0 ? target.ActualHeight : target.Height;
+        var destination = new Point(left + width / 2, top + height / 2);
+        var origin = _currentScreen switch
+        {
+            ScreenKind.ProjectWorkspace => new Point(835, 330),
+            ScreenKind.DecisionMode => new Point(770, 520),
+            ScreenKind.StudioProject => new Point(835, 790),
+            _ => new Point(Math.Max(40, destination.X - 120), destination.Y),
+        };
+
+        var route = new Line
+        {
+            X1 = origin.X,
+            Y1 = origin.Y,
+            X2 = destination.X,
+            Y2 = destination.Y,
+            Stroke = new SolidColorBrush(Color.FromArgb(210, 47, 131, 238)),
+            StrokeThickness = 3,
+            StrokeDashArray = new DoubleCollection { 5, 4 },
+            IsHitTestVisible = false,
+            Opacity = 0.92,
+        };
+        Panel.SetZIndex(route, 18);
+        SecondaryInteractionCanvas.Children.Add(route);
+
+        var duration = TimeSpan.FromMilliseconds(480);
+        var ease = new CubicEase { EasingMode = EasingMode.EaseOut };
+        var x = new DoubleAnimation(origin.X, destination.X, duration)
+        {
+            EasingFunction = ease,
+            FillBehavior = FillBehavior.Stop,
+        };
+        var y = new DoubleAnimation(origin.Y, destination.Y, duration)
+        {
+            EasingFunction = ease,
+            FillBehavior = FillBehavior.Stop,
+        };
+        x.Completed += (_, _) => SecondaryInteractionCanvas.Children.Remove(route);
+        route.BeginAnimation(Line.X2Property, x);
+        route.BeginAnimation(Line.Y2Property, y);
+    }
+
+    private void AnimateDecisionIntentCue(FrameworkElement target) =>
+        AnimateSemanticRegionCue(target, Color.FromRgb(191, 139, 52), 560);
+
+    private void AnimateRecoveryIntentCue(FrameworkElement target, string action)
+    {
+        if (!MotionEnabled)
+        {
+            return;
+        }
+
+        if (action == "fork")
+        {
+            AnimateForkSplitCue(target);
+            return;
+        }
+
+        if (action == "restore")
+        {
+            AnimateRewindCue(target);
+            return;
+        }
+
+        AnimateSemanticRegionCue(target, Color.FromRgb(117, 92, 184), 620);
+    }
+
+    private void AnimatePulseInteractionCue(FrameworkElement target, string id)
+    {
+        if (!MotionEnabled)
+        {
+            return;
+        }
+
+        if (id == "handoff")
+        {
+            AnimateHandoffCue(target);
+            return;
+        }
+
+        AnimateSemanticRegionCue(target, Color.FromRgb(47, 131, 238), 520);
+    }
+
+    private void AnimateSemanticRegionCue(
+        FrameworkElement target,
+        Color accent,
+        double durationMs)
+    {
+        if (!MotionEnabled || SecondaryInteractionCanvas.Visibility != Visibility.Visible)
+        {
+            return;
+        }
+
+        var left = Canvas.GetLeft(target);
+        var top = Canvas.GetTop(target);
+        if (double.IsNaN(left) || double.IsNaN(top))
+        {
+            return;
+        }
+
+        var width = target.ActualWidth > 0 ? target.ActualWidth : target.Width;
+        var height = target.ActualHeight > 0 ? target.ActualHeight : target.Height;
+        var cue = new Border
+        {
+            Width = width + 16,
+            Height = height + 16,
+            BorderBrush = new SolidColorBrush(Color.FromArgb(225, accent.R, accent.G, accent.B)),
+            BorderThickness = new Thickness(3),
+            Background = new SolidColorBrush(Color.FromArgb(22, accent.R, accent.G, accent.B)),
+            CornerRadius = new CornerRadius(20),
+            IsHitTestVisible = false,
+            Opacity = 0,
+            RenderTransformOrigin = new Point(0.5, 0.5),
+        };
+        var scale = new ScaleTransform(0.94, 0.94);
+        cue.RenderTransform = scale;
+        Canvas.SetLeft(cue, left - 8);
+        Canvas.SetTop(cue, top - 8);
+        Panel.SetZIndex(cue, 24);
+        SecondaryInteractionCanvas.Children.Add(cue);
+
+        var duration = TimeSpan.FromMilliseconds(durationMs);
+        var opacity = new DoubleAnimationUsingKeyFrames();
+        opacity.KeyFrames.Add(new EasingDoubleKeyFrame(0, KeyTime.FromTimeSpan(TimeSpan.Zero)));
+        opacity.KeyFrames.Add(new EasingDoubleKeyFrame(0.92, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(130))));
+        opacity.KeyFrames.Add(new EasingDoubleKeyFrame(0, KeyTime.FromTimeSpan(duration)));
+        opacity.Completed += (_, _) => SecondaryInteractionCanvas.Children.Remove(cue);
+        cue.BeginAnimation(OpacityProperty, opacity);
+
+        var ease = new CubicEase { EasingMode = EasingMode.EaseOut };
+        scale.BeginAnimation(
+            ScaleTransform.ScaleXProperty,
+            new DoubleAnimation(0.94, 1.055, duration) { EasingFunction = ease });
+        scale.BeginAnimation(
+            ScaleTransform.ScaleYProperty,
+            new DoubleAnimation(0.94, 1.055, duration) { EasingFunction = ease });
+    }
+
+    private void AnimateForkSplitCue(FrameworkElement target)
+    {
+        var left = Canvas.GetLeft(target);
+        var top = Canvas.GetTop(target);
+        if (double.IsNaN(left) || double.IsNaN(top))
+        {
+            return;
+        }
+
+        var width = target.ActualWidth > 0 ? target.ActualWidth : target.Width;
+        var height = target.ActualHeight > 0 ? target.ActualHeight : target.Height;
+        var cx = left + width / 2;
+        var cy = top + height / 2;
+        var spread = Math.Min(92, Math.Max(58, width * 0.28));
+        var drop = Math.Min(48, Math.Max(28, height * 0.35));
+        var brush = new SolidColorBrush(Color.FromArgb(225, 117, 92, 184));
+
+        var stem = new Line
+        {
+            X1 = cx,
+            Y1 = cy - 32,
+            X2 = cx,
+            Y2 = cy,
+            Stroke = brush,
+            StrokeThickness = 4,
+            IsHitTestVisible = false,
+        };
+        var leftBranch = new Line
+        {
+            X1 = cx,
+            Y1 = cy,
+            X2 = cx,
+            Y2 = cy,
+            Stroke = brush,
+            StrokeThickness = 4,
+            IsHitTestVisible = false,
+        };
+        var rightBranch = new Line
+        {
+            X1 = cx,
+            Y1 = cy,
+            X2 = cx,
+            Y2 = cy,
+            Stroke = brush,
+            StrokeThickness = 4,
+            IsHitTestVisible = false,
+        };
+        Panel.SetZIndex(stem, 26);
+        Panel.SetZIndex(leftBranch, 26);
+        Panel.SetZIndex(rightBranch, 26);
+        SecondaryInteractionCanvas.Children.Add(stem);
+        SecondaryInteractionCanvas.Children.Add(leftBranch);
+        SecondaryInteractionCanvas.Children.Add(rightBranch);
+
+        var duration = TimeSpan.FromMilliseconds(640);
+        var ease = new CubicEase { EasingMode = EasingMode.EaseOut };
+        leftBranch.BeginAnimation(
+            Line.X2Property,
+            new DoubleAnimation(cx, cx - spread, duration) { EasingFunction = ease });
+        leftBranch.BeginAnimation(
+            Line.Y2Property,
+            new DoubleAnimation(cy, cy + drop, duration) { EasingFunction = ease });
+        rightBranch.BeginAnimation(
+            Line.Y2Property,
+            new DoubleAnimation(cy, cy + drop, duration) { EasingFunction = ease });
+
+        var rightX = new DoubleAnimation(cx, cx + spread, duration) { EasingFunction = ease };
+        rightX.Completed += (_, _) =>
+        {
+            SecondaryInteractionCanvas.Children.Remove(stem);
+            SecondaryInteractionCanvas.Children.Remove(leftBranch);
+            SecondaryInteractionCanvas.Children.Remove(rightBranch);
+        };
+        rightBranch.BeginAnimation(Line.X2Property, rightX);
+    }
+
+    private void AnimateRewindCue(FrameworkElement target)
+    {
+        var left = Canvas.GetLeft(target);
+        var top = Canvas.GetTop(target);
+        if (double.IsNaN(left) || double.IsNaN(top))
+        {
+            return;
+        }
+
+        var width = target.ActualWidth > 0 ? target.ActualWidth : target.Width;
+        var height = target.ActualHeight > 0 ? target.ActualHeight : target.Height;
+        var marker = new Ellipse
+        {
+            Width = 18,
+            Height = 18,
+            Fill = new SolidColorBrush(Color.FromArgb(235, 117, 92, 184)),
+            Stroke = Brushes.White,
+            StrokeThickness = 2,
+            IsHitTestVisible = false,
+        };
+        Canvas.SetLeft(marker, left + Math.Max(24, width - 36));
+        Canvas.SetTop(marker, top + Math.Max(10, height / 2 - 9));
+        Panel.SetZIndex(marker, 26);
+        SecondaryInteractionCanvas.Children.Add(marker);
+
+        var travel = Math.Max(70, width - 70);
+        var transform = new TranslateTransform();
+        marker.RenderTransform = transform;
+        var duration = TimeSpan.FromMilliseconds(620);
+        var ease = new CubicEase { EasingMode = EasingMode.EaseInOut };
+        var move = new DoubleAnimation(0, -travel, duration) { EasingFunction = ease };
+        move.Completed += (_, _) => SecondaryInteractionCanvas.Children.Remove(marker);
+        transform.BeginAnimation(TranslateTransform.XProperty, move);
+        marker.BeginAnimation(
+            OpacityProperty,
+            new DoubleAnimation(1, 0.3, duration) { EasingFunction = ease });
+    }
+
+    private void AnimateHandoffCue(FrameworkElement target)
+    {
+        var left = Canvas.GetLeft(target);
+        var top = Canvas.GetTop(target);
+        if (double.IsNaN(left) || double.IsNaN(top))
+        {
+            return;
+        }
+
+        var width = target.ActualWidth > 0 ? target.ActualWidth : target.Width;
+        var height = target.ActualHeight > 0 ? target.ActualHeight : target.Height;
+        var startX = left + 28;
+        var endX = left + Math.Max(70, width - 40);
+        var y = top + height / 2;
+
+        var route = new Line
+        {
+            X1 = startX,
+            Y1 = y,
+            X2 = endX,
+            Y2 = y,
+            Stroke = new SolidColorBrush(Color.FromArgb(150, 31, 166, 196)),
+            StrokeThickness = 3,
+            StrokeDashArray = new DoubleCollection { 5, 5 },
+            IsHitTestVisible = false,
+        };
+        var artifact = new Border
+        {
+            Width = 28,
+            Height = 22,
+            Background = new SolidColorBrush(Color.FromRgb(31, 166, 196)),
+            BorderBrush = Brushes.White,
+            BorderThickness = new Thickness(2),
+            CornerRadius = new CornerRadius(5),
+            IsHitTestVisible = false,
+        };
+        Canvas.SetLeft(artifact, startX - 14);
+        Canvas.SetTop(artifact, y - 11);
+        Panel.SetZIndex(route, 25);
+        Panel.SetZIndex(artifact, 26);
+        SecondaryInteractionCanvas.Children.Add(route);
+        SecondaryInteractionCanvas.Children.Add(artifact);
+
+        var transform = new TranslateTransform();
+        artifact.RenderTransform = transform;
+        var duration = TimeSpan.FromMilliseconds(620);
+        var ease = new CubicEase { EasingMode = EasingMode.EaseInOut };
+        var move = new DoubleAnimation(0, endX - startX, duration) { EasingFunction = ease };
+        move.Completed += (_, _) =>
+        {
+            SecondaryInteractionCanvas.Children.Remove(route);
+            SecondaryInteractionCanvas.Children.Remove(artifact);
+        };
+        transform.BeginAnimation(TranslateTransform.XProperty, move);
+    }
+
     private void OpenDrawer(
         string eyebrow,
         string title,
@@ -7952,6 +8358,7 @@ public partial class MainWindow : Window
         Canvas.SetTop(ring, top - 5);
         Panel.SetZIndex(ring, 20);
         SecondaryInteractionCanvas.Children.Add(ring);
+        AnimateRoleRouteCue(target);
 
         if (!MotionEnabled)
         {
