@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "evaluation_id": "CC-MOTION-W1-1-WGC-PILOT-EVALUATION-2026-10-22",
+  "phase": "W1.1",
+  "candidate_sha": "4cb1bf61a5d3f1c5613227116e0d0404e5454752",
+  "workflow_run_id": 39694125614,
+  "artifact": {
+    "id": 12389738471,
+    "name": "UniversalCouncil-W1-1-WGC-Pilot-4cb1bf61a5d3f1c5613227116e0d0404e5454752",
+    "digest": "sha256:811d528d44fb1e2b0c4a9bc6aba8cdb4c1bada52c761282e30fca2013d33cd86"
+  },
+  "source": "WgcSharp-1.1.1/WGC_ONLY",
+  "result": {
+    "requested_frames": 30,
+    "successful_frames": 0,
+    "achieved_fps": 0,
+    "capture_call_ms": 1886.946,
+    "error": "InvalidOperationException: WgcSharp WGC-only capture returned no frame."
+  },
+  "decision": "FAIL_PUBLIC_API_NOT_SUITABLE_FOR_GOVERNED_30FPS_RECORDER",
+  "interpretation": "CAPTURE_PATH_FAILURE_NOT_MOTION_FAILURE",
+  "next_candidate": "PERSISTENT_RAW_WGC_SESSION_PILOT",
+  "wgcsharp_adoption": "REJECTED_FOR_W1_1_RECORDER",
+  "motion_dna_changed": false,
+  "thresholds_changed": false,
+  "w1_2_started": false,
+  "stage8_opened": false,
+  "runtime_authority": false,
+  "merge_authorized": false,
+  "timestamp": "2026-10-22"
+}
