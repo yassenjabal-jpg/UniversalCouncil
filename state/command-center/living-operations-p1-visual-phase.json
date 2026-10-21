@@ -9,7 +9,7 @@
     "system": "al-murtakaz",
     "mandatory_approval_policy": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
     "final_approval_required": true,
-    "current_decision": "B1_NATIVE_COMPLETION_APPROVED_R9_B2_AUTHORIZED"
+    "current_decision": "B2_CROSS_SCREEN_CONSISTENCY_APPROVED_B3_PENDING"
   },
   "required_flagship_surfaces": [
     "home_owner_workspace",
@@ -34,10 +34,17 @@
   },
   "exit_requires": "APPROVED_BY_AL_MURTAKAZ",
   "material_change_reopens_review": true,
-  "current_repair_stage": "B2_CROSS_SCREEN_CONSISTENCY",
+  "current_repair_stage": "B2_COMPLETE_B3_PENDING",
   "b1_completion": {
     "status": "APPROVED_BY_AL_MURTAKAZ",
     "final_p1_approval": false,
     "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b1-native-completion-post.json"
+  },
+  "b2_completion": {
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "final_p1_approval": false,
+    "b3_opened": false,
+    "r10_opened": false,
+    "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b2-cross-screen-consistency-post.json"
   }
 }

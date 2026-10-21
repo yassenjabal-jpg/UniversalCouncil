@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-B2-2-TRUTH-A11Y-CHECK-2026-10-21",
+  "change_id": "CC-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-2026-10-21",
+  "slice": "B2.2_RTL_KEYBOARD_ACCESSIBILITY_TRUTH_STATES",
+  "status": "APPROVED_TO_CONTINUE_B2_3",
+  "decision": "APPROVE_B2_2_CONTINUE",
+  "material_evidence": {
+    "head_sha": "8fa47a8b7ffd7a7b79cded710500c4830aa59bbc",
+    "company_stage0_run_id": 39594694461,
+    "codeql_run_id": 39594694495,
+    "reference_ui_run_id": 39594694429,
+    "reference_ui_artifact_id": 12343191879,
+    "artifact_digest": "sha256:e43700c72b50eeaf126171f328ecea342c942b87c2d56419d06c33e04224b60f",
+    "canonical_screen_count": 8,
+    "evidence_modes": [
+      "reference",
+      "native",
+      "blend"
+    ],
+    "visual_review": "PASS_EIGHT_SCREEN_CROSS_SCREEN_AND_TRUTH_DISCLOSURE"
+  },
+  "reviewer_decisions": {
+    "cc_experience_architect": "PASS_B2_2",
+    "cc_accessibility_clearance": "PASS_B2_2_KEYBOARD_FOCUS_AND_AUTOMATION_SEMANTICS",
+    "cc_product_truth": "PASS_AFTER_EXPLICIT_REFERENCE_FIXTURE_NON_LIVE_DISCLOSURE",
+    "cc_visual_fidelity": "PASS_ALLOWED_SEMANTIC_TRUTH_DELTA_NO_REDESIGN",
+    "cc_studio_producer": "PASS_B2_2",
+    "cc_red_team": "PASS_NO_AUTHORITY_EXPANSION"
+  },
+  "findings": [
+    "Ctrl+K is functional and explains the disconnected search provider truthfully.",
+    "Ctrl+Shift+O reference/native comparison is available across all eight canonical screens.",
+    "Shared Autopilot and Tool Dock state no longer fabricate live/connected activity.",
+    "Native reference reconstructions explicitly disclose REFERENCE FIXTURE · NOT LIVE.",
+    "The prominent unverified project progress percentage is replaced by a non-authoritative dash.",
+    "Accessibility names/help text and cyclic keyboard traversal are present on the shared shell.",
+    "B2.2 grants no final P1 approval and does not open R10/B3."
+  ],
+  "b2_3_authorized": true,
+  "final_p1_approval_granted": false,
+  "r10_opened": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "timestamp": "2026-10-21"
+}
