@@ -98,8 +98,9 @@ if p1["status"] != "IN_PROGRESS" or p1["stage8_opened"] or p1["runtime_authority
     raise SystemExit("B2 changed P1/runtime authority")
 if screen_review["phase_complete"]:
     raise SystemExit("B2 may not complete P1")
-if remainder["phases"]["R10_FINAL_MURTAKAZ_STUDIO_REVIEW"]["state"] != "NOT_OPENED":
-    raise SystemExit("B2 opened R10/B3 too early")
+r10_state = remainder["phases"]["R10_FINAL_MURTAKAZ_STUDIO_REVIEW"]["state"]
+if r10_state not in {"NOT_OPENED", "MURTAKAZ_STUDIO_REVIEW", "RETURNED_FOR_CHANGES"}:
+    raise SystemExit("B2 historical validation observed an unsupported later R10 state")
 
 main_source = MAIN_WINDOW.read_text(encoding="utf-8")
 xaml_source = MAIN_XAML.read_text(encoding="utf-8")
