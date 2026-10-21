@@ -24,6 +24,11 @@ var request = new ContextResolutionRequest(
 
 var current = resolver.Resolve(request);
 Require(current.State == ContextResolutionState.Current, "Canonical context must resolve CURRENT");
+Require(current.BaselineRevision == document.BaselineRevision, "Resolver baseline provenance drifted");
+Require(current.SourceRevision == document.SourceRevision, "Resolver source-set revision drifted");
+Require(current.BaselineRevision.Length == 40, "Resolver baseline must remain a Git SHA");
+Require(current.SourceRevision.Length == 64, "Resolver source revision must be SHA-256");
+Require(current.BaselineRevision != current.SourceRevision, "Baseline provenance may not masquerade as source-set truth");
 Require(current.Sources.Count >= 3, "Canonical context must contain the required sources");
 Require(current.Sources.All(item => item.Freshness == "CURRENT"), "Current resolution contains stale sources");
 Require(current.Conflicts.Count == 0, "Canonical context unexpectedly contains conflicts");
@@ -48,6 +53,12 @@ var firstCapsule = first.Capsule
     ?? throw new InvalidOperationException("Current context must produce a capsule");
 var secondCapsule = second.Capsule
     ?? throw new InvalidOperationException("Repeated compilation must produce a capsule");
+Require(
+    firstCapsule.BaselineRevision == document.BaselineRevision,
+    "Compiled capsule lost Git baseline provenance");
+Require(
+    firstCapsule.SourceRevision == document.SourceRevision,
+    "Compiled capsule lost source-set revision");
 Require(
     firstCapsule.CapsuleId == secondCapsule.CapsuleId,
     "Identical context/request must produce a deterministic capsule id");
