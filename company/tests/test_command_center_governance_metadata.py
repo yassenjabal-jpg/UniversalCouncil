@@ -130,5 +130,6 @@ class CommandCenterGovernanceMetadataTests(unittest.TestCase):
         self.assertFalse(self.b1_post["r10_opened"])
         self.assertFalse(self.b1_post["stage8_opened"])
 
+
 if __name__ == "__main__":
     unittest.main()
