@@ -26,6 +26,7 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
         cls.b2_post_path = PROJECT / "approvals" / "2026-10-21-repair-b2-cross-screen-consistency-post.json"
         cls.b3_return_path = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-return.json"
         cls.b3_return_adoption_path = PROJECT / "approvals" / "2026-10-21-repair-b3-return-state-adoption.json"
+        cls.final_p1_post_path = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json"
 
     def test_context_map_uses_repaired_provenance_schema(self) -> None:
         self.assertEqual(self.context_map["schema_version"], "2.0")
@@ -55,7 +56,12 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
         )
 
     def test_context_map_tracks_current_repair_work(self) -> None:
-        if self.b3_return_path.exists() and self.b3_return_adoption_path.exists():
+        if self.final_p1_post_path.exists():
+            final_post = load(self.final_p1_post_path)
+            self.assertEqual(final_post["decision"], "APPROVED_BY_AL_MURTAKAZ")
+            self.assertTrue(final_post["p1_complete"])
+            expected = ["P1_COMPLETE_NEXT_PHASE_OWNER_DECISION_REQUIRED"]
+        elif self.b3_return_path.exists() and self.b3_return_adoption_path.exists():
             b3_return = load(self.b3_return_path)
             b3_adoption = load(self.b3_return_adoption_path)
             self.assertEqual(b3_return["decision"], "RETURNED_FOR_CHANGES")
@@ -81,6 +87,11 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
             "REPAIR_WAVE_A1_CONTEXT_BASELINE_APPROVED",
             self.context_map["recent_events"],
         )
+        if self.final_p1_post_path.exists():
+            self.assertIn(
+                "P1_FINAL_ACCEPTANCE_APPROVED_BY_AL_MURTAKAZ",
+                self.context_map["recent_events"],
+            )
 
     def test_canonical_context_has_current_source_truth(self) -> None:
         self.assertEqual(self.context_map["conflicts"], [])
