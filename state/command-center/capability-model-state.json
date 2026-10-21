@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "state_id": "murtakaz-capability-model-runtime",
-  "status": "IMPLEMENTED_VALIDATION_PENDING",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
   "canonical_base": "ea35e6d24931e5981d164fed89b0d494f80c2b44",
   "components": {
     "capability_registry": "IMPLEMENTED_READ_ONLY",
@@ -35,15 +35,39 @@
   "production_truth": {
     "provider_calls_connected": false,
     "configured_models": 0,
-    "model_selection_capability": "IN_TEST",
+    "model_selection_capability": "HEALTHY",
     "model_invoke_capability": "BLOCKED"
   },
   "evidence": {
-    "csharp_capability_model_validation": "PENDING",
-    "csharp_gateway_validation": "PENDING",
-    "company_stage0": "PENDING",
-    "codeql": "PENDING",
-    "reference_ui": "PENDING",
-    "murtakaz_post_review": "PENDING"
-  }
+    "csharp_capability_model_validation": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39550276767,
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe"
+    },
+    "csharp_gateway_validation": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39550276767,
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe"
+    },
+    "company_stage0": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39550276818,
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe"
+    },
+    "codeql": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39550276776,
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe"
+    },
+    "reference_ui": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39550276767,
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe"
+    },
+    "murtakaz_post_review": {
+      "status": "APPROVED_BY_AL_MURTAKAZ",
+      "receipt": "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-post.json"
+    }
+  },
+  "murtakaz_post_approval": "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-post.json"
 }
