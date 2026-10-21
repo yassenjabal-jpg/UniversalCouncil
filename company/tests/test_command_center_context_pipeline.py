@@ -20,9 +20,7 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
         cls.context_map = load(STATE / "project-context-map.json")
         cls.pipeline = load(STATE / "context-pipeline-state.json")
         cls.a1_pre = load(PROJECT / "approvals" / "2026-10-21-repair-a1-context-baseline-pre.json")
-        cls.a2_post_path = (
-            PROJECT / "approvals" / "2026-10-21-repair-a2-governance-metadata-post.json"
-        )
+        cls.a2_post_path = PROJECT / "approvals" / "2026-10-21-repair-a2-governance-metadata-post.json"
 
     def test_context_map_uses_repaired_provenance_schema(self) -> None:
         self.assertEqual(self.context_map["schema_version"], "2.0")
