@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UniversalCouncil.CommandCenter\UniversalCouncil.CommandCenter.csproj" />
+    <PackageReference Include="WgcSharp" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>

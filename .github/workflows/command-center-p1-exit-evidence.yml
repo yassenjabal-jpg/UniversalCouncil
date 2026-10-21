@@ -65,6 +65,21 @@ jobs:
           dotnet restore apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj
           dotnet build apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-restore
 
+      - name: Probe Windows.Graphics.Capture via pinned WgcSharp
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          New-Item -ItemType Directory -Force artifacts/wgc-pilot | Out-Null
+          dotnet run --project apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-build -- artifacts/wgc-pilot --wgc-pilot
+
+      - name: Upload WGC pilot diagnostics
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: UniversalCouncil-W1-1-WGC-Pilot-${{ env.CANDIDATE_SHA }}
+          path: artifacts/wgc-pilot/
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Record full and Reduced Motion frames
         shell: pwsh
         run: |
