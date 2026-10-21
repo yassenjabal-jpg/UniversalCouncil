@@ -28,12 +28,14 @@ on:
       - 'tools/build_command_center_stage6_projection.py'
       - 'tools/build_command_center_stage7_projection.py'
       - 'tools/command_center_stage7_validate.py'
+      - 'tools/command_center_stage7_real_evidence_validate.py'
       - 'tools/stage7_*.ps1'
       - 'docs/operations/command-center/**'
       - '.github/workflows/command-center-stage7.yml'
   pull_request:
     branches:
       - 'command-center/stage6-*'
+      - 'command-center/project-local-council-studio-20261019'
     paths:
       - 'apps/UniversalCouncil.CommandCenter/**'
       - 'apps/UniversalCouncil.CommandCenter.Core/**'
@@ -58,6 +60,7 @@ on:
       - 'tools/build_command_center_stage6_projection.py'
       - 'tools/build_command_center_stage7_projection.py'
       - 'tools/command_center_stage7_validate.py'
+      - 'tools/command_center_stage7_real_evidence_validate.py'
       - 'tools/stage7_*.ps1'
       - 'docs/operations/command-center/**'
       - '.github/workflows/command-center-stage7.yml'
