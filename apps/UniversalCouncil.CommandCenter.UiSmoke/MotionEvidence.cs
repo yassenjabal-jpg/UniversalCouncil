@@ -178,6 +178,9 @@ internal static partial class Program
                     {
                         clock = "STOPWATCH_REALTIME_WPF",
                         pipeline = "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG",
+                        capture_surface_cache = "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE",
+                        synchronous_layout_per_frame = false,
+                        png_compression_level = 1,
                         target_capture_duration_seconds = (double)frameCount / MotionFramesPerSecond,
                         actual_capture_duration_seconds = Math.Round(actualCaptureDurationSeconds, 3),
                         max_capture_lateness_ms = Math.Round(maxCaptureLatenessMs, 3),
@@ -370,6 +373,22 @@ internal static partial class Program
         root.Measure(new Size(MotionWidth, MotionHeight));
         root.Arrange(new Rect(0, 0, MotionWidth, MotionHeight));
         root.UpdateLayout();
+
+        if (window.FindName("ReferenceHost") is FrameworkElement referenceHost)
+        {
+            referenceHost.CacheMode = new BitmapCache(1.0)
+            {
+                EnableClearType = true,
+            };
+        }
+
+        if (window.FindName("ContextDrawer") is FrameworkElement contextDrawer)
+        {
+            contextDrawer.CacheMode = new BitmapCache(1.0)
+            {
+                EnableClearType = true,
+            };
+        }
     }
 
     private static void ClickSecondaryHotspot(MainWindow window, string tag, string? tooltipContains = null)
@@ -448,8 +467,9 @@ internal static partial class Program
             throw new InvalidOperationException("MainWindow root content is not a FrameworkElement.");
         }
 
-        root.UpdateLayout();
-
+        // Dispatcher pacing already services layout/render work before each sample.
+        // Re-running a full synchronous layout pass here turns evidence capture into
+        // a CPU benchmark and dilates WPF animation time.
         var bitmap = new RenderTargetBitmap(
             MotionWidth,
             MotionHeight,
@@ -514,7 +534,7 @@ internal static partial class Program
                 "-frames:v",
                 frameCount.ToString(),
                 "-compression_level",
-                "6",
+                "1",
                 outputPattern,
             })
             {
