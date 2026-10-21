@@ -9,7 +9,7 @@ using UniversalCouncil.CommandCenter;
 
 namespace UniversalCouncil.CommandCenter.UiSmoke;
 
-internal static class Program
+internal static partial class Program
 {
     [STAThread]
     private static int Main(string[] args)
@@ -84,6 +84,13 @@ internal static class Program
             ShutdownMode = ShutdownMode.OnExplicitShutdown,
         };
         app.InitializeComponent();
+
+        if (args.Any(arg => string.Equals(arg, "--motion-evidence", StringComparison.OrdinalIgnoreCase)))
+        {
+            var reducedMotion = args.Any(
+                arg => string.Equals(arg, "--reduced-motion", StringComparison.OrdinalIgnoreCase));
+            return RenderMotionEvidence(output, reducedMotion);
+        }
 
         var evidence = new[]
         {
