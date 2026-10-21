@@ -20,19 +20,12 @@ class CommandCenterCapabilityModelTests(unittest.TestCase):
         cls.registry = load(STATE / "capability-registry.json")
         cls.policy = load(STATE / "model-broker-policy.json")
         cls.state = load(STATE / "capability-model-state.json")
-        cls.pre = load(
-            PROJECT
-            / "approvals"
-            / "2026-10-21-capability-model-broker-pre.json"
-        )
+        cls.pre = load(PROJECT / "approvals" / "2026-10-21-capability-model-broker-pre.json")
 
     def test_capabilities_are_operation_scoped(self) -> None:
         capabilities = self.registry["capabilities"]
         self.assertTrue(capabilities)
-        keys = {
-            (item["operation"], item["provider_id"], item["environment_host"])
-            for item in capabilities
-        }
+        keys = {(item["operation"], item["provider_id"], item["environment_host"]) for item in capabilities}
         self.assertEqual(len(keys), len(capabilities))
         self.assertTrue(all(item["ttl_seconds"] > 0 for item in capabilities))
 
@@ -58,26 +51,16 @@ class CommandCenterCapabilityModelTests(unittest.TestCase):
         )
 
     def test_no_production_model_claims_connected_provider(self) -> None:
-        self.assertTrue(
-            all(not model["provider_connected"] for model in self.policy["models"])
-        )
+        self.assertTrue(all(not model["provider_connected"] for model in self.policy["models"]))
 
     def test_model_invoke_is_blocked_in_production(self) -> None:
-        capability = next(
-            item
-            for item in self.registry["capabilities"]
-            if item["id"] == "model-invoke-external"
-        )
+        capability = next(item for item in self.registry["capabilities"] if item["id"] == "model-invoke-external")
         self.assertEqual(capability["health"], "BLOCKED")
         self.assertEqual(capability["authentication_state"], "NOT_CONNECTED")
         self.assertFalse(capability["fallback_eligible"])
 
     def test_pending_slice_does_not_claim_healthy_model_selection(self) -> None:
-        capability = next(
-            item
-            for item in self.registry["capabilities"]
-            if item["id"] == "model-select-local"
-        )
+        capability = next(item for item in self.registry["capabilities"] if item["id"] == "model-select-local")
         if self.state["status"] == "IMPLEMENTED_VALIDATION_PENDING":
             self.assertEqual(capability["health"], "IN_TEST")
         else:
