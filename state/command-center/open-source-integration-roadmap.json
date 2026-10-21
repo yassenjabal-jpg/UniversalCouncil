@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "roadmap_id": "murtakaz-open-source-integration-2026-10-21",
+  "status": "APPROVED_NOT_STARTED",
+  "production_live_execution": false,
+  "waves": [
+    {
+      "id": "W1",
+      "name": "Safety Protocol Evaluation Foundation",
+      "state": "NOT_STARTED",
+      "stages": [
+        "W1-A_CONTRACTS_FIRST",
+        "W1-B_ISOLATED_EVALUATION_PILOTS",
+        "W1-C_MURTAKAZ_REVIEW"
+      ],
+      "live_actions_allowed": false,
+      "primary_candidates": [
+        "mcp-csharp-sdk",
+        "promptfoo",
+        "opentelemetry",
+        "semgrep",
+        "gitleaks",
+        "betterleaks",
+        "pydantic-ai"
+      ]
+    },
+    {
+      "id": "W2",
+      "name": "Models Observability Isolated Workers",
+      "state": "BLOCKED_BY_W1",
+      "stages": [
+        "W2-A_MODEL_TRANSPORT",
+        "W2-B_OBSERVABILITY_WORKERS",
+        "W2-C_ACCEPTANCE"
+      ],
+      "live_actions_allowed": false,
+      "primary_candidates": [
+        "litellm",
+        "langfuse",
+        "pydantic-ai",
+        "openhands-sdk"
+      ]
+    },
+    {
+      "id": "W3",
+      "name": "Computer Use Durable Execution",
+      "state": "BLOCKED_BY_W2",
+      "stages": [
+        "W3-A_COMPUTER_USE_SANDBOX",
+        "W3-B_VISION_ARCHITECTURE",
+        "W3-C_DURABILITY_DECISION"
+      ],
+      "live_actions_allowed": false,
+      "primary_candidates": [
+        "cua",
+        "microsoft-ufo",
+        "omniparser",
+        "langgraph",
+        "temporal"
+      ]
+    }
+  ],
+  "opening_rule": "EXACT_HEAD_EVIDENCE_PLUS_MURTAKAZ_POST_REVIEW",
+  "separate_owner_approval_required_for": [
+    "real model provider credentials",
+    "external spend",
+    "production YASSIN desktop execution",
+    "authority expansion",
+    "merge/release"
+  ]
+}
