@@ -105,15 +105,15 @@ for marker in required_recorder_markers:
 
 
 required_wgc_recorder_markers = (
-    'pipeline =',
+    "pipeline =",
     '"PERSISTENT_WINDOWS_GRAPHICS_CAPTURE_HWND_BGRA_TO_BACKGROUND_FFMPEG_PNG"',
     'capture_surface = "ACTUAL_COMMAND_CENTER_HWND"',
-    'fallback_used = false',
-    'silent_dxgi_fallback = false',
-    'source_frame_errors = sourceFrameErrors',
-    'unique_sampled_source_frames =',
-    'BackgroundPngFrameEncoder',
-    'BuildMotionSteps(reducedMotion)',
+    "fallback_used = false",
+    "silent_dxgi_fallback = false",
+    "source_frame_errors = sourceFrameErrors",
+    "unique_sampled_source_frames =",
+    "BackgroundPngFrameEncoder",
+    "BuildMotionSteps(reducedMotion)",
 )
 for marker in required_wgc_recorder_markers:
     if marker not in wgc_recorder:
