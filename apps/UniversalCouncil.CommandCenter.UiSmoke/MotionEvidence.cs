@@ -39,6 +39,8 @@ internal static partial class Program
         Directory.CreateDirectory(framesDirectory);
 
         var window = App.CreateMainWindow(AppContext.BaseDirectory);
+        SynchronizationContext.SetSynchronizationContext(
+            new DispatcherSynchronizationContext(window.Dispatcher));
         ConfigureMotionEvidenceWindow(window);
 
         var seconds = reducedMotion ? 28 : 38;
