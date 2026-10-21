@@ -7,9 +7,11 @@
     "PROPOSED",
     "MURTAKAZ_PRE_REVIEW",
     "APPROVE_TO_IMPLEMENT",
-    "CONTEXT_CAPSULE"
+    "CONTEXT_CAPSULE",
+    "IMPLEMENT",
+    "VERIFY"
   ],
-  "current_state": "APPROVE_TO_IMPLEMENT",
+  "current_state": "VERIFY",
   "baseline_sha": "5bf76e46990f7a44e0f7ff733d065933174c9752",
   "scope": [
     "Add visible source-exit -> target-entry choreography across the eight canonical screens.",
@@ -37,5 +39,12 @@
     "live_host_dependency_added": false,
     "status": "APPROVED_WITH_SMALL_EXTRACTION"
   },
-  "final_adoption_granted": false
+  "final_adoption_granted": false,
+  "implementation": {
+    "helper": "apps/UniversalCouncil.CommandCenter/ScreenTransitionMotion.cs",
+    "orchestrator": "apps/UniversalCouncil.CommandCenter/MainWindow.xaml.cs",
+    "evidence": "apps/UniversalCouncil.CommandCenter.UiSmoke/MotionEvidence.cs",
+    "validator": "tools/command_center_motion_w1_1_navigation_validate.py",
+    "architecture_boundary": "PRESENTATION_ONLY_EXTRACTION_APPLIED"
+  }
 }

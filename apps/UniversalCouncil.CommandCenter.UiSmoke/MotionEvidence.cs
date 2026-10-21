@@ -41,7 +41,7 @@ internal static partial class Program
         var window = App.CreateMainWindow(AppContext.BaseDirectory);
         ConfigureMotionEvidenceWindow(window);
 
-        var seconds = reducedMotion ? 20 : 28;
+        var seconds = reducedMotion ? 28 : 38;
         var frameCount = seconds * MotionFramesPerSecond;
         var steps = BuildMotionSteps(reducedMotion);
         var stepsByFrame = steps
@@ -201,24 +201,50 @@ internal static partial class Program
             return "role:evidence";
         }
 
-        if (name.Contains("Decision", StringComparison.Ordinal))
+        if (name.Contains("-> Project Workspace", StringComparison.Ordinal))
+        {
+            return "screen:living-project-workspace";
+        }
+
+        if (name.Contains("-> Software Autopilot", StringComparison.Ordinal))
+        {
+            return "screen:software-autopilot-project";
+        }
+
+        if (name.Contains("-> Studio Project", StringComparison.Ordinal))
+        {
+            return "screen:studio-project";
+        }
+
+        if (name.Contains("-> Decision Mode", StringComparison.Ordinal) ||
+            name.Contains("Decision", StringComparison.Ordinal))
         {
             return "screen:owner-decision-mode";
         }
 
-        if (name.Contains("Fork", StringComparison.Ordinal) || name.Contains("Recovery", StringComparison.Ordinal))
+        if (name.Contains("-> Recovery/Fork", StringComparison.Ordinal) ||
+            name.Contains("Fork", StringComparison.Ordinal) ||
+            name.Contains("Recovery", StringComparison.Ordinal))
         {
             return "screen:checkpoint-recovery-fork";
         }
 
-        if (name.Contains("Handoff", StringComparison.Ordinal) || name.Contains("Pulse", StringComparison.Ordinal))
+        if (name.Contains("-> Pulse Story", StringComparison.Ordinal) ||
+            name.Contains("Handoff", StringComparison.Ordinal) ||
+            name.Contains("Pulse", StringComparison.Ordinal))
         {
             return "screen:pulse-visual-project-story";
         }
 
-        if (name.Contains("Work Receipt", StringComparison.Ordinal))
+        if (name.Contains("-> Work Receipt", StringComparison.Ordinal) ||
+            name.Contains("Work Receipt", StringComparison.Ordinal))
         {
             return "screen:project-complete-work-receipt";
+        }
+
+        if (name.Contains("-> Home", StringComparison.Ordinal))
+        {
+            return "screen:home-owner-workspace";
         }
 
         return "command-center:wpf";
@@ -233,14 +259,14 @@ internal static partial class Program
             return
             [
                 new(At(1), "Navigate Home -> Project Workspace", window => NavigateForEvidence(window, "ProjectWorkspace")),
-                new(At(3), "Open Evidence role context", window => ClickSecondaryHotspot(window, "evidence", "Evidence")),
-                new(At(4.5), "Close role context", CloseMotionDrawer),
-                new(At(6), "Navigate Project -> Decision Mode", window => NavigateForEvidence(window, "DecisionMode")),
-                new(At(8), "Inspect Decision evidence", window => ClickSecondaryHotspot(window, "inspect-evidence")),
-                new(At(9.5), "Close evidence context", CloseMotionDrawer),
-                new(At(11), "Navigate Decision -> Recovery/Fork", window => NavigateForEvidence(window, "RecoveryFork")),
-                new(At(13), "Exercise non-authoritative Fork intent", window => ClickSecondaryHotspot(window, "fork")),
-                new(At(15), "Navigate Recovery -> Work Receipt", window => NavigateForEvidence(window, "WorkReceipt")),
+                new(At(4), "Navigate Project -> Software Autopilot", window => NavigateForEvidence(window, "SoftwareAutopilot")),
+                new(At(7), "Navigate Autopilot -> Studio Project", window => NavigateForEvidence(window, "StudioProject")),
+                new(At(10), "Navigate Studio -> Decision Mode", window => NavigateForEvidence(window, "DecisionMode")),
+                new(At(13), "Navigate Decision -> Recovery/Fork", window => NavigateForEvidence(window, "RecoveryFork")),
+                new(At(16), "Exercise non-authoritative Fork intent", window => ClickSecondaryHotspot(window, "fork")),
+                new(At(18), "Navigate Recovery -> Pulse Story", window => NavigateForEvidence(window, "PulseStory")),
+                new(At(21), "Navigate Pulse -> Work Receipt", window => NavigateForEvidence(window, "WorkReceipt")),
+                new(At(24), "Navigate Receipt -> Home", window => NavigateForEvidence(window, "Home")),
             ];
         }
 
@@ -248,19 +274,20 @@ internal static partial class Program
         [
             new(At(2), "Navigate Home -> Project Workspace", window => NavigateForEvidence(window, "ProjectWorkspace")),
             new(At(4), "Activate Evidence role and open context", window => ClickSecondaryHotspot(window, "evidence", "Evidence")),
-            new(At(6), "Close role context", CloseMotionDrawer),
-            new(At(7), "Open Evidence reasoning context", window => ClickSecondaryHotspot(window, "evidence", "Reasoning")),
-            new(At(9), "Close reasoning context", CloseMotionDrawer),
-            new(At(10), "Navigate Project -> Decision Mode", window => NavigateForEvidence(window, "DecisionMode")),
-            new(At(12), "Inspect Decision evidence", window => ClickSecondaryHotspot(window, "inspect-evidence")),
-            new(At(14), "Close Decision evidence", CloseMotionDrawer),
-            new(At(15), "Exercise non-authoritative Request Changes intent", window => ClickSecondaryHotspot(window, "request-changes")),
-            new(At(17), "Navigate Decision -> Recovery/Fork", window => NavigateForEvidence(window, "RecoveryFork")),
-            new(At(19), "Exercise non-authoritative Fork intent", window => ClickSecondaryHotspot(window, "fork")),
-            new(At(21), "Navigate Recovery -> Pulse Story", window => NavigateForEvidence(window, "PulseStory")),
-            new(At(22), "Open Handoff Pulse context", window => ClickSecondaryHotspot(window, "handoff")),
-            new(At(24), "Close Handoff context", CloseMotionDrawer),
-            new(At(25), "Navigate Pulse -> Work Receipt", window => NavigateForEvidence(window, "WorkReceipt")),
+            new(At(5.5), "Close role context", CloseMotionDrawer),
+            new(At(7), "Navigate Project -> Software Autopilot", window => NavigateForEvidence(window, "SoftwareAutopilot")),
+            new(At(10), "Navigate Autopilot -> Studio Project", window => NavigateForEvidence(window, "StudioProject")),
+            new(At(13), "Navigate Studio -> Decision Mode", window => NavigateForEvidence(window, "DecisionMode")),
+            new(At(16), "Inspect Decision evidence", window => ClickSecondaryHotspot(window, "inspect-evidence")),
+            new(At(17.5), "Close Decision evidence", CloseMotionDrawer),
+            new(At(19), "Exercise non-authoritative Request Changes intent", window => ClickSecondaryHotspot(window, "request-changes")),
+            new(At(21), "Navigate Decision -> Recovery/Fork", window => NavigateForEvidence(window, "RecoveryFork")),
+            new(At(24), "Exercise non-authoritative Fork intent", window => ClickSecondaryHotspot(window, "fork")),
+            new(At(26), "Navigate Recovery -> Pulse Story", window => NavigateForEvidence(window, "PulseStory")),
+            new(At(29), "Open Handoff Pulse context", window => ClickSecondaryHotspot(window, "handoff")),
+            new(At(30.5), "Close Handoff context", CloseMotionDrawer),
+            new(At(32), "Navigate Pulse -> Work Receipt", window => NavigateForEvidence(window, "WorkReceipt")),
+            new(At(35), "Navigate Receipt -> Home", window => NavigateForEvidence(window, "Home")),
         ];
     }
 

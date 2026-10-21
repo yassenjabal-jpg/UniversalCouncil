@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "state_id": "CC-MOTION-W1-1-NAVIGATION-2026-10-21",
+  "phase": "W1.1",
+  "status": "VERIFY",
+  "choreography": "SOURCE_EXIT_TARGET_COMMIT_TARGET_ENTRY_SETTLE",
+  "canonical_screen_count": 8,
+  "animated_surface": "ReferenceHost",
+  "composite_scope": [
+    "canonical reference image",
+    "native reconstruction",
+    "interaction surface"
+  ],
+  "same_screen_navigation_noop": true,
+  "reentrant_policy": "QUEUE_LATEST_TARGET_NO_OVERLAP",
+  "interaction_during_transition": "DISABLED",
+  "full_motion_policy": "BOUNDED_TRANSLATE_SCALE_OPACITY_THEN_CANONICAL_SETTLE",
+  "reduced_motion_policy": "CROSSFADE_ONLY_NO_TRANSLATE_OR_SCALE",
+  "profiles": {
+    "home": {
+      "exit_ms": 150,
+      "entry_ms": 320,
+      "entry_x": 0,
+      "entry_y": 18,
+      "entry_scale": 0.992
+    },
+    "project": {
+      "exit_ms": 160,
+      "entry_ms": 340,
+      "entry_x": 34,
+      "entry_y": 0,
+      "entry_scale": 0.988
+    },
+    "autopilot": {
+      "exit_ms": 160,
+      "entry_ms": 350,
+      "entry_x": 38,
+      "entry_y": 0,
+      "entry_scale": 0.988
+    },
+    "studio": {
+      "exit_ms": 165,
+      "entry_ms": 350,
+      "entry_x": 0,
+      "entry_y": 26,
+      "entry_scale": 0.988
+    },
+    "decision": {
+      "exit_ms": 175,
+      "entry_ms": 380,
+      "entry_x": 0,
+      "entry_y": 30,
+      "entry_scale": 0.982
+    },
+    "recovery": {
+      "exit_ms": 175,
+      "entry_ms": 390,
+      "entry_x": -34,
+      "entry_y": 0,
+      "entry_scale": 0.986
+    },
+    "pulse": {
+      "exit_ms": 165,
+      "entry_ms": 350,
+      "entry_x": 34,
+      "entry_y": 0,
+      "entry_scale": 0.988
+    },
+    "receipt": {
+      "exit_ms": 175,
+      "entry_ms": 390,
+      "entry_x": 0,
+      "entry_y": 32,
+      "entry_scale": 0.982
+    }
+  },
+  "evidence": {
+    "fps": 30,
+    "resolution": "1440x900",
+    "exact_head": true,
+    "all_eight_screens_required": true,
+    "full_and_reduced_required": true,
+    "post_production": false
+  },
+  "architecture_boundary": {
+    "helper": "apps/UniversalCouncil.CommandCenter/ScreenTransitionMotion.cs",
+    "presentation_only": true,
+    "direct_data_access_added": false,
+    "mutable_global_state_added": false,
+    "live_host_dependency_added": false
+  },
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution_authorized": false,
+    "visual_identity_locked": true
+  },
+  "w1_2_started": false,
+  "merge_authorized": false
+}

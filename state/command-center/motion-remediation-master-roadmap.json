@@ -12,7 +12,7 @@
     "classification": "IMPLEMENTATION_ACTIVE_NOT_FINAL",
     "pr_merge_allowed": false,
     "audited_implementation_head": "5bf76e46990f7a44e0f7ff733d065933174c9752",
-    "phase_status": "APPROVE_TO_IMPLEMENT",
+    "phase_status": "VERIFY",
     "phase_gate_receipt": "state/command-center/project-governance/approvals/2026-10-21-motion-w1-1-navigation-pre.json",
     "next_phase": "W1.2",
     "next_phase_started": false,

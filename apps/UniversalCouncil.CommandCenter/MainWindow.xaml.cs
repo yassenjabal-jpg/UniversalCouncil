@@ -30,6 +30,8 @@ public partial class MainWindow : Window
     private FrameworkElement? _lastInteractionTarget;
     private string? _activeRoleId;
     private ScreenKind _currentScreen = ScreenKind.Home;
+    private bool _navigationTransitionActive;
+    private ScreenKind? _queuedNavigationTarget;
     private bool _nativeReferenceBlendEnabled;
     private const string OwnerPromptPlaceholder = "صف ما تريد إنجازه...";
 
@@ -1247,14 +1249,70 @@ public partial class MainWindow : Window
 
     private void NavigateTo(ScreenKind screen)
     {
+        if (!_navigationTransitionActive && screen == _currentScreen)
+        {
+            return;
+        }
+
+        _queuedNavigationTarget = screen;
+        if (_navigationTransitionActive)
+        {
+            return;
+        }
+
+        _ = RunNavigationTransitionQueueAsync();
+    }
+
+    private async Task RunNavigationTransitionQueueAsync()
+    {
+        _navigationTransitionActive = true;
+        ReferenceHost.IsHitTestVisible = false;
+
+        try
+        {
+            while (_queuedNavigationTarget is ScreenKind target)
+            {
+                _queuedNavigationTarget = null;
+                if (target == _currentScreen)
+                {
+                    continue;
+                }
+
+                CloseDrawerImmediate();
+                var profile = GetNavigationMotionProfile(target);
+                await ScreenTransitionMotion.RunExitAsync(ReferenceHost, profile, MotionEnabled);
+                CommitScreen(target);
+                await ScreenTransitionMotion.RunEntryAsync(ReferenceHost, profile, MotionEnabled);
+            }
+        }
+        finally
+        {
+            ScreenTransitionMotion.Settle(ReferenceHost);
+            ReferenceHost.IsHitTestVisible = true;
+            _navigationTransitionActive = false;
+
+            if (_queuedNavigationTarget is ScreenKind pending && pending != _currentScreen)
+            {
+                _ = RunNavigationTransitionQueueAsync();
+            }
+            else if (_queuedNavigationTarget == _currentScreen)
+            {
+                _queuedNavigationTarget = null;
+            }
+        }
+    }
+
+    private void CommitScreen(ScreenKind screen)
+    {
         _currentScreen = screen;
         _activeRoleId = null;
-        CloseDrawerImmediate();
 
         var imageName = ScreenImages[screen];
         var uri = new Uri(
             $"/UniversalCouncil.CommandCenter;component/Assets/VisualReferences/{imageName}",
             UriKind.Relative);
+        ReferenceImage.BeginAnimation(OpacityProperty, null);
+        ReferenceImage.Opacity = 1;
         ReferenceImage.Source = new BitmapImage(uri);
         AutomationProperties.SetName(
             ReferenceImage,
@@ -1263,10 +1321,14 @@ public partial class MainWindow : Window
         var isHome = screen == ScreenKind.Home;
         InteractionCanvas.Visibility = isHome ? Visibility.Visible : Visibility.Collapsed;
         NativeHomeReconstructionRoot.Visibility = isHome ? Visibility.Visible : Visibility.Collapsed;
+        NativeHomeReconstructionRoot.BeginAnimation(OpacityProperty, null);
         NativeHomeReconstructionRoot.Opacity = _nativeReferenceBlendEnabled && isHome ? 0.46 : 1;
+        NativeHomeReconstructionRoot.RenderTransform = Transform.Identity;
         RoleActivationRing.Visibility = Visibility.Collapsed;
         SecondaryNativeLayer.Visibility = isHome ? Visibility.Collapsed : Visibility.Visible;
+        SecondaryNativeLayer.BeginAnimation(OpacityProperty, null);
         SecondaryNativeLayer.Opacity = _nativeReferenceBlendEnabled && !isHome ? 0.46 : 1;
+        SecondaryNativeLayer.RenderTransform = Transform.Identity;
         SecondaryNativeLayer.Children.Clear();
         SecondaryInteractionCanvas.Visibility = isHome ? Visibility.Collapsed : Visibility.Visible;
         SecondaryInteractionCanvas.Children.Clear();
@@ -1276,24 +1338,20 @@ public partial class MainWindow : Window
             BuildSecondaryNative(screen);
             BuildSecondaryInteractions(screen);
         }
-
-        RunScreenEntranceMotion(screen, isHome);
-
-        if (MotionEnabled)
-        {
-            ReferenceImage.Opacity = 0.68;
-            ReferenceImage.BeginAnimation(
-                OpacityProperty,
-                new DoubleAnimation(0.68, 1, TimeSpan.FromMilliseconds(220))
-                {
-                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
-                });
-        }
-        else
-        {
-            ReferenceImage.Opacity = 1;
-        }
     }
+
+    private static ScreenTransitionProfile GetNavigationMotionProfile(ScreenKind screen) => screen switch
+    {
+        ScreenKind.Home => new(150, 320, 0, 18, 0.992),
+        ScreenKind.ProjectWorkspace => new(160, 340, 34, 0, 0.988),
+        ScreenKind.SoftwareAutopilot => new(160, 350, 38, 0, 0.988),
+        ScreenKind.StudioProject => new(165, 350, 0, 26, 0.988),
+        ScreenKind.DecisionMode => new(175, 380, 0, 30, 0.982),
+        ScreenKind.RecoveryFork => new(175, 390, -34, 0, 0.986),
+        ScreenKind.PulseStory => new(165, 350, 34, 0, 0.988),
+        ScreenKind.WorkReceipt => new(175, 390, 0, 32, 0.982),
+        _ => new(160, 340, 24, 0, 0.99),
+    };
 
     private void BuildSecondaryNative(ScreenKind screen)
     {

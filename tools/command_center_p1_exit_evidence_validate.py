@@ -132,23 +132,26 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
         raise SystemExit(f"{mode} encoded video duration is below floor")
 
     step_names = {item["Name"] for item in manifest["steps"]}
-    required = {
+    navigation_required = {
         "Navigate Home -> Project Workspace",
-        "Navigate Project -> Decision Mode",
+        "Navigate Project -> Software Autopilot",
+        "Navigate Autopilot -> Studio Project",
+        "Navigate Studio -> Decision Mode",
         "Navigate Decision -> Recovery/Fork",
+        "Navigate Recovery -> Pulse Story",
+        "Navigate Pulse -> Work Receipt",
+        "Navigate Receipt -> Home",
     }
+    required = set(navigation_required)
     if mode == "full":
         required |= {
             "Activate Evidence role and open context",
-            "Open Evidence reasoning context",
             "Exercise non-authoritative Request Changes intent",
             "Exercise non-authoritative Fork intent",
-            "Navigate Recovery -> Pulse Story",
             "Open Handoff Pulse context",
-            "Navigate Pulse -> Work Receipt",
         }
     else:
-        required.add("Navigate Recovery -> Work Receipt")
+        required.add("Exercise non-authoritative Fork intent")
     if not required.issubset(step_names):
         raise SystemExit(f"{mode} critical-path steps are incomplete")
 
