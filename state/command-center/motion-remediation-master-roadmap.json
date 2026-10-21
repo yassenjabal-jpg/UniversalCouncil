@@ -1,0 +1,230 @@
+{
+  "schema_version": "1.0",
+  "roadmap_id": "CC-MOTION-REMEDIATION-MASTER-ROADMAP-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ_AS_GOVERNING_PLAN",
+  "execution_state": "NOT_ALL_WAVES_OPENED",
+  "owner_trigger": "OWNER_VISUAL_REJECTION_OF_P1_MOTION_CAPTURE",
+  "branch": "command-center/motion-visibility-remediation-20261021",
+  "pull_request": 72,
+  "current_position": {
+    "wave": "W0",
+    "phase": "W0.1",
+    "classification": "IMPLEMENTATION_EXPERIMENT_NOT_FINAL",
+    "pr_merge_allowed": false,
+    "latest_head": "27252eeeb13cf653a704c3b737b11fbef0ffecaa"
+  },
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution_authorized": false,
+    "canonical_screen_count": 8,
+    "visual_identity_locked": true
+  },
+  "signature_motion_families": [
+    "ROLE_ACTIVATION",
+    "ARTIFACT_HANDOFF_RETURN",
+    "OWNER_DECISION_FOCUS",
+    "RECOVERY",
+    "FORK_BRANCH",
+    "VERIFIED_COMPLETION_WORK_RECEIPT"
+  ],
+  "acceptance_model": {
+    "required_passes": [
+      "SEMANTIC_COMPLETENESS",
+      "HUMAN_PERCEPTUAL_LEGIBILITY",
+      "TECHNICAL_QUALITY",
+      "TRUTH_ACCESSIBILITY"
+    ],
+    "metrics_can_reject": true,
+    "metrics_can_approve_alone": false,
+    "owner_visual_rejection_overrides_numeric_pass": true,
+    "threshold_reduction_to_rescue_candidate_forbidden": true,
+    "post_produced_acceptance_evidence_forbidden": true,
+    "exact_head_evidence_required": true
+  },
+  "waves": [
+    {
+      "id": "W0",
+      "name": "Truth Reset + Acceptance Repair",
+      "gate": "MOTION_EVIDENCE_PIPELINE_LOCK",
+      "phases": [
+        {
+          "id": "W0.1",
+          "name": "Formal Return + Baseline Freeze",
+          "owner": "cc_studio_producer"
+        },
+        {
+          "id": "W0.2",
+          "name": "Storyboard-to-Code Coverage Contract",
+          "owner": "cc_motion_systems"
+        },
+        {
+          "id": "W0.3",
+          "name": "Evidence System Reset",
+          "owner": "cc_prototype_engineer"
+        }
+      ]
+    },
+    {
+      "id": "W1",
+      "name": "Navigation + Activation Motion",
+      "gate": "NAVIGATION_ACTIVATION_MOTION_ACCEPTED",
+      "phases": [
+        {
+          "id": "W1.1",
+          "name": "Eight-Screen Navigation Choreography",
+          "owner": "cc_motion_systems"
+        },
+        {
+          "id": "W1.2",
+          "name": "Role Activation + Routing",
+          "owner": "cc_interaction_director"
+        },
+        {
+          "id": "W1.3",
+          "name": "Decision / Drawer / Focus Motion",
+          "owner": "cc_interaction_director"
+        }
+      ]
+    },
+    {
+      "id": "W2",
+      "name": "Living Workflow Motion",
+      "gate": "LIVING_WORKFLOW_MOTION_ACCEPTED",
+      "phases": [
+        {
+          "id": "W2.1",
+          "name": "Autopilot Current",
+          "owner": "cc_motion_systems"
+        },
+        {
+          "id": "W2.2",
+          "name": "Artifact Handoff + Return",
+          "owner": "cc_motion_systems"
+        },
+        {
+          "id": "W2.3",
+          "name": "Filmstrip + Pulse + Story-to-Action",
+          "owner": "cc_experience_architect"
+        }
+      ]
+    },
+    {
+      "id": "W3",
+      "name": "Signature UniversalCouncil Motion",
+      "gate": "SIGNATURE_MOTION_ACCEPTED",
+      "phases": [
+        {
+          "id": "W3.1",
+          "name": "Recovery",
+          "owner": "cc_motion_systems"
+        },
+        {
+          "id": "W3.2",
+          "name": "Fork / Branch",
+          "owner": "cc_motion_systems"
+        },
+        {
+          "id": "W3.3",
+          "name": "Verified Completion + Work Receipt",
+          "owner": "cc_motion_systems"
+        }
+      ],
+      "owner_visual_review_required": true
+    },
+    {
+      "id": "W4",
+      "name": "Reduced Motion + Performance + Platform Assurance",
+      "gate": "MOTION_ACCESSIBILITY_PERFORMANCE_PARITY_ACCEPTED",
+      "phases": [
+        {
+          "id": "W4.1",
+          "name": "Reduced Motion Semantic Parity",
+          "owner": "cc_accessibility_clearance"
+        },
+        {
+          "id": "W4.2",
+          "name": "Windows Performance + Input Assurance",
+          "owner": "cc_windows_experience"
+        },
+        {
+          "id": "W4.3",
+          "name": "Android Semantic Parity",
+          "owner": "cc_android_experience"
+        }
+      ]
+    },
+    {
+      "id": "W5",
+      "name": "Evidence + Anti-False-Positive Hardening",
+      "gate": "OWNER_VISIBLE_MOTION_EVIDENCE_ACCEPTED",
+      "phases": [
+        {
+          "id": "W5.1",
+          "name": "Exact-Head Motion Capture",
+          "owner": "cc_prototype_engineer"
+        },
+        {
+          "id": "W5.2",
+          "name": "Automated Motion Diagnostics",
+          "owner": "cc_prototype_engineer"
+        },
+        {
+          "id": "W5.3",
+          "name": "Human Perceptual Review",
+          "owner": "cc_visual_qa"
+        }
+      ],
+      "owner_visual_review_required": true
+    },
+    {
+      "id": "W6",
+      "name": "Final System Lock + Integration",
+      "gate": "MOTION_SYSTEM_LOCKED",
+      "phases": [
+        {
+          "id": "W6.1",
+          "name": "Eight-Screen Regression Audit",
+          "owner": "cc_visual_qa"
+        },
+        {
+          "id": "W6.2",
+          "name": "Joint Murtakaz + Studio Final Review",
+          "owner": "al-murtakaz"
+        },
+        {
+          "id": "W6.3",
+          "name": "Merge + Permanent Regression Gates",
+          "owner": "cc_studio_producer"
+        }
+      ],
+      "final_decision_required": "APPROVED_BY_AL_MURTAKAZ"
+    }
+  ],
+  "evidence_requirements": {
+    "desktop_primary_resolution": "1440x900",
+    "owner_review_capture_fps_target": 30,
+    "ci_capture_fps_floor": 20,
+    "full_motion_capture_required": true,
+    "reduced_motion_capture_required": true,
+    "sha256_manifest_required": true,
+    "candidate_sha_binding_required": true,
+    "raw_frame_evidence_required": true,
+    "optical_flow_forbidden": true,
+    "frame_interpolation_forbidden": true
+  },
+  "permanent_laws": [
+    "STORYBOARD_IS_NOT_IMPLEMENTATION",
+    "STATE_CHANGE_IS_NOT_MOTION_QUALITY",
+    "METRICS_CANNOT_OVERRIDE_HUMAN_VISIBLE_FAILURE",
+    "NO_THRESHOLD_GAMING",
+    "NO_FILLER_MOTION",
+    "AT_REST_PRODUCT_IS_ALMOST_STILL",
+    "TRUTH_BEFORE_MOTION",
+    "REDUCED_MOTION_PARITY_REQUIRED",
+    "EXACT_HEAD_EVIDENCE_ONLY",
+    "OWNER_REJECTION_REOPENS_GATE"
+  ],
+  "timestamp": "2026-10-21"
+}
