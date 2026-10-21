@@ -74,7 +74,7 @@ required_gate_markers = (
     "math.ceil(6 * fps_scale)",
     "motion_runs < 8",
     "reduced motion capture lost required discrete state-transition feedback",
-    "longest_run > 3",
+    "math.ceil(3 * fps_scale)",
 )
 for marker in required_gate_markers:
     if marker not in p1_validator:
