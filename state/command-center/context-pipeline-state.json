@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "state_id": "command-center-context-pipeline",
-  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "status": "MURTAKAZ_REVIEW_REQUIRED",
   "project_id": "universal-council-command-center",
   "canonical_base": "379820e27e70609c724740e2e138baa8b8a92c7d",
   "components": {
@@ -11,7 +11,8 @@
     "json_context_map_reader": "IMPLEMENTED_READ_ONLY",
     "host_composition": "WIRED",
     "wpf_ui_exposure": "NOT_EXPOSED",
-    "mutable_project_store": "NOT_IMPLEMENTED"
+    "mutable_project_store": "NOT_IMPLEMENTED",
+    "context_revision_semantics": "REPAIR_IN_PROGRESS"
   },
   "truth_rules": {
     "current_only_compilation": true,
@@ -20,7 +21,11 @@
     "unknown_never_success": true,
     "untrusted_content_can_govern": false,
     "deterministic_capsule_id": true,
-    "source_digest_changes_capsule_id": true
+    "source_digest_changes_capsule_id": true,
+    "baseline_may_be_historical_provenance": true,
+    "baseline_must_be_ancestor_of_validated_head": true,
+    "source_revision_is_source_set_sha256": true,
+    "declared_source_blobs_must_match_validated_head": true
   },
   "authority": {
     "live_execution_authorized": false,
@@ -52,7 +57,19 @@
     "murtakaz_post_review": {
       "status": "APPROVED_BY_AL_MURTAKAZ",
       "receipt": "state/command-center/project-governance/approvals/2026-10-21-context-resolver-compiler-post.json"
+    },
+    "a1_context_baseline_repair": {
+      "status": "PENDING",
+      "reviewed_head": null,
+      "post_approval": null
     }
   },
-  "murtakaz_post_approval": "state/command-center/project-governance/approvals/2026-10-21-context-resolver-compiler-post.json"
+  "murtakaz_post_approval": "state/command-center/project-governance/approvals/2026-10-21-context-resolver-compiler-post.json",
+  "current_extension": {
+    "change_id": "CC-REPAIR-A1-CONTEXT-BASELINE-2026-10-21",
+    "pre_approval": "state/command-center/project-governance/approvals/2026-10-21-repair-a1-context-baseline-pre.json",
+    "baseline_sha": "b3ef5d8f60e3f623371b40036bcea01f7a396d2a",
+    "status": "IMPLEMENTING",
+    "reason": "A1 repairs stale fixed-baseline semantics by separating Git baseline provenance from a source-set fingerprint validated against actual HEAD."
+  }
 }
