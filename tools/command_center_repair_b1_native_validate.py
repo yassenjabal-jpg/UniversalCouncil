@@ -167,8 +167,13 @@ if remainder["final_native_reconstruction_complete"]:
 if remainder["stage8_opened"]:
     raise SystemExit("Remainder plan opened Stage 8")
 
-if home_shell["status"] != "IMPLEMENTED_INTERACTION_REVIEW_COMPLETE_B1_NATIVE_COMPLETION_REVIEW_REQUIRED":
-    raise SystemExit("Home native-shell status was not reconciled")
+expected_home_shell_status = (
+    "IMPLEMENTED_INTERACTION_REVIEW_COMPLETE_B1_NATIVE_COMPLETION_APPROVED"
+    if post is not None
+    else "IMPLEMENTED_INTERACTION_REVIEW_COMPLETE_B1_NATIVE_COMPLETION_REVIEW_REQUIRED"
+)
+if home_shell["status"] != expected_home_shell_status:
+    raise SystemExit("Home native-shell B1 lifecycle status drifted")
 if home_fidelity["screen_final_approval"] or home_fidelity["p1_complete"]:
     raise SystemExit("Home fidelity contract falsely claims final approval")
 if home_fidelity["stage8_opened"] or home_fidelity["runtime_authority"]:
@@ -181,8 +186,16 @@ if any(item["verdict"] != "NO_B1_BLOCKER" for item in b1_review["findings"]):
     raise SystemExit("B1 visual review contains an unresolved B1 blocker")
 if b1_review["final_p1_approval"]:
     raise SystemExit("B1 visual review may not grant final P1 approval")
-if b1_review["r9_cross_screen_audit_opened"] or b1_review["r10_final_review_opened"]:
-    raise SystemExit("B1 visual review opened R9/R10 before post-review")
+if post is None:
+    if b1_review["r9_cross_screen_audit_opened"] or b1_review["r10_final_review_opened"]:
+        raise SystemExit("B1 visual review opened R9/R10 before post-review")
+else:
+    if not b1_review["r9_cross_screen_audit_opened"]:
+        raise SystemExit("B1 approval did not open R9/B2")
+    if b1_review["r10_final_review_opened"]:
+        raise SystemExit("B1 approval opened R10 too early")
+    if b1_review["status"] != "APPROVED_B1_NATIVE_COMPLETION_ONLY":
+        raise SystemExit("B1 material visual review did not finalize to scoped approval")
 
 main_source = MAIN_WINDOW.read_text(encoding="utf-8")
 ui_smoke_source = UI_SMOKE.read_text(encoding="utf-8")
@@ -234,5 +247,15 @@ else:
         raise SystemExit("B1 approval opened R10 too early")
     if project_context["active_work"] != ["REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"]:
         raise SystemExit("B1 approval did not advance active work to B2")
+    if screen_review["status"] != "B1_NATIVE_COMPLETION_APPROVED_R9_READY":
+        raise SystemExit("B1 approval did not advance screen review to R9-ready")
+    if any(item["murtakaz_decision"] != "B1_NATIVE_COMPLETION_APPROVED" for item in screen_review["screens"]):
+        raise SystemExit("B1 scoped per-screen Murtakaz decisions drifted")
+    if any(item["workshop_decision"] != "B1_NATIVE_COMPLETION_APPROVED" for item in screen_review["screens"]):
+        raise SystemExit("B1 scoped per-screen Workshop decisions drifted")
+    if reference_shell["status"] != "B1_NATIVE_COMPLETION_APPROVED_R9_READY":
+        raise SystemExit("Reference shell did not advance to R9-ready")
+    if home_fidelity["status"] != "NATIVE_REFERENCE_SHELL_B1_COMPLETION_APPROVED_R9_READY":
+        raise SystemExit("Home fidelity did not advance to R9-ready")
 
 print("Al-Murtakaz Visual B1 native completion validation: PASS")
