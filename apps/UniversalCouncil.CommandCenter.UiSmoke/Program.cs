@@ -90,6 +90,7 @@ internal static class Program
             Render(output, 1440, 900, "command-center-stage7-1440x900.png", "native"),
             Render(output, 1180, 720, "command-center-stage7-1180x720.png", "native"),
             Render(output, 1440, 900, "home-reference-only-1440x900.png", "reference"),
+            Render(output, 1440, 900, "home-native-1440x900.png", "native"),
             Render(output, 1440, 900, "home-native-overlay-1440x900.png", "blend"),
             Render(
                 output,
@@ -299,6 +300,18 @@ internal static class Program
             NavigateForEvidence(window, screen);
         }
 
+        if (window.FindName("ReferenceImage") is UIElement referenceImage)
+        {
+            referenceImage.Visibility = variant == "native"
+                ? Visibility.Collapsed
+                : Visibility.Visible;
+        }
+
+        if (window.FindName("InteractionCanvas") is UIElement homeInteractionLayer)
+        {
+            homeInteractionLayer.Visibility = Visibility.Collapsed;
+        }
+
         if (window.FindName("NativeHomeReconstructionRoot") is UIElement nativeHomeLayer)
         {
             if (!string.IsNullOrWhiteSpace(screen))
@@ -322,6 +335,11 @@ internal static class Program
                         break;
                 }
             }
+        }
+
+        if (window.FindName("SecondaryInteractionCanvas") is UIElement secondaryInteractionLayer)
+        {
+            secondaryInteractionLayer.Visibility = Visibility.Collapsed;
         }
 
         if (window.FindName("SecondaryNativeLayer") is UIElement secondaryNativeLayer &&
