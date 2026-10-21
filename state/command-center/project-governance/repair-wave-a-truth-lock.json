@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "lock_id": "MRTKZ-REPAIR-WAVE-A-TRUTH-LOCK-2026-10-21",
-  "status": "CANDIDATE_REVIEW",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
   "project_id": "universal-council-command-center",
   "repair_wave": "A_TRUTH_AND_ANTI_DRIFT",
   "baseline_branch": "command-center/project-local-council-studio-20261019",
@@ -9,12 +9,12 @@
   "validation_mode": "BASELINE_ANCESTOR_PLUS_LOCKED_SOURCE_BLOBS_MATCH_HEAD",
   "self_reference_excluded": true,
   "lock_digest_algorithm": "SHA256_SORTED_ID_PATH_BLOB_TUPLES",
-  "lock_digest": "d0c2e8e94a812bed22646fe455572b0888f58f349ee2c2be0e65fb662d974b72",
+  "lock_digest": "6f1e3059353f37ef0e64f7556cf4333823ad88880f7ae3dea0eaa1ad63297ffe",
   "sources": [
     {
       "id": "project-context-map",
       "path": "state/command-center/project-context-map.json",
-      "blob_sha": "2f4ef3805ef5bff3437355a27a53d3dcc1719ced"
+      "blob_sha": "39a8bc3248cbf5f11ca3701fa5eba487df63195c"
     },
     {
       "id": "architecture-invariants",
@@ -24,7 +24,7 @@
     {
       "id": "agentic-os-current-review",
       "path": "state/command-center/project-governance/agentic-os-current-review.json",
-      "blob_sha": "7f3cc7f17c9f839949602029a8948219753d078a"
+      "blob_sha": "e4c8fe0cfd2bbf6e9e9345ce19b3f66714b6e0e9"
     },
     {
       "id": "agentic-os-historical-review",
@@ -84,7 +84,7 @@
     {
       "id": "roadmap",
       "path": "docs/operations/command-center/COMMAND_CENTER_ROADMAP_2026-10-19.md",
-      "blob_sha": "9e62ba4d2bf82584493c14347fb4193cf36b80b6"
+      "blob_sha": "b480c51616a3da37ff5755d225e1d347c09ae5a2"
     },
     {
       "id": "a1-post-approval",
@@ -95,6 +95,11 @@
       "id": "a2-post-approval",
       "path": "state/command-center/project-governance/approvals/2026-10-21-repair-a2-governance-metadata-post.json",
       "blob_sha": "c221a941ed12d750562969581cbeb344258a0cb0"
+    },
+    {
+      "id": "a3-post-approval",
+      "path": "state/command-center/project-governance/approvals/2026-10-21-repair-a3-truth-lock-post.json",
+      "blob_sha": "d52ca02fd75a3b04af31ac2c168e606305e7be0b"
     }
   ],
   "protected_truth": {
@@ -113,8 +118,8 @@
   "repair_lineage": {
     "A1": "APPROVED_BY_AL_MURTAKAZ",
     "A2": "APPROVED_BY_AL_MURTAKAZ",
-    "A3": "IN_REVIEW"
+    "A3": "APPROVED_BY_AL_MURTAKAZ"
   },
-  "post_review_receipt": null,
+  "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-a3-truth-lock-post.json",
   "next_active_work_after_approval": "REPAIR_WAVE_B1_COMPLETE_REMAINING_NATIVE_WORK"
 }
