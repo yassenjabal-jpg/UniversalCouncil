@@ -60,8 +60,8 @@
   "repair_program": {
     "wave_a": {
       "A1": "COMPLETE_APPROVED",
-      "A2": "ACTIVE",
-      "A3": "PENDING"
+      "A2": "COMPLETE_APPROVED",
+      "A3": "ACTIVE"
     },
     "wave_b": "PENDING",
     "wave_c": "PENDING"
@@ -77,5 +77,11 @@
     "model_provider_calls": "DISCONNECTED"
   },
   "historical_review_pointer": "state/command-center/project-governance/agentic-os-latest-review.json",
-  "historical_review_verdict_preserved": "RETURN_FOR_ALIGNMENT"
+  "historical_review_verdict_preserved": "RETURN_FOR_ALIGNMENT",
+  "latest_governance_reconciliation": {
+    "change_id": "CC-REPAIR-A2-GOVERNANCE-METADATA-2026-10-21",
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "reviewed_head": "d6ab8bc97d44f9f3c0a50b9cf8e2bbf4b7a64947",
+    "post_approval": "state/command-center/project-governance/approvals/2026-10-21-repair-a2-governance-metadata-post.json"
+  }
 }
