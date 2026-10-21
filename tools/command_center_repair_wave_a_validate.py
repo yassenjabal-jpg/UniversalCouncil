@@ -31,6 +31,7 @@ CAP_MODEL = STATE / "capability-model-state.json"
 MODEL_POLICY = STATE / "model-broker-policy.json"
 GATEWAY_POLICY = STATE / "gateway-routing-policy.json"
 VISUAL_P1 = STATE / "living-operations-p1-visual-phase.json"
+FINAL_P1_POST = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json"
 REFERENCE_MANIFEST = STATE / "living-operations-reference-manifest.json"
 UX_STATE = STATE / "living-operations-ux-state-contract.json"
 ROADMAP = ROOT / "docs" / "operations" / "command-center" / "COMMAND_CENTER_ROADMAP_2026-10-19.md"
@@ -89,6 +90,8 @@ cap_model = load(CAP_MODEL)
 model_policy = load(MODEL_POLICY)
 gateway_policy = load(GATEWAY_POLICY)
 visual_p1 = load(VISUAL_P1)
+final_p1_post = load(FINAL_P1_POST) if FINAL_P1_POST.exists() else None
+final_p1_approved = final_p1_post is not None and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ" and final_p1_post.get("p1_complete") is True
 reference_manifest = load(REFERENCE_MANIFEST)
 ux_state = load(UX_STATE)
 roadmap = ROADMAP.read_text(encoding="utf-8")
@@ -262,8 +265,10 @@ if gateway_policy["future_dependencies"]["skill_registry"] != "NOT_IMPLEMENTED":
 if gateway_policy["future_dependencies"]["job_engine"] != "NOT_IMPLEMENTED":
     raise SystemExit("Gateway policy falsely implements Job Engine")
 
-if visual_p1["status"] != "IN_PROGRESS":
-    raise SystemExit("Wave A closure falsely completed Visual P1")
+if visual_p1["status"] not in {"IN_PROGRESS", "APPROVED_BY_AL_MURTAKAZ"}:
+    raise SystemExit("Wave A historical validation observed an unsupported Visual P1 lifecycle state")
+if visual_p1["status"] == "APPROVED_BY_AL_MURTAKAZ" and not final_p1_approved:
+    raise SystemExit("Visual P1 claims later completion without the final R10 Murtakaz receipt")
 if visual_p1["governance"]["final_approval_required"] is not True:
     raise SystemExit("Visual P1 final approval requirement was weakened")
 if visual_p1["stage8_opened"]:
