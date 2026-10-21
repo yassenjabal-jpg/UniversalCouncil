@@ -998,7 +998,7 @@ public partial class MainWindow : Window
         switch (control)
         {
             case "attach":
-                ShowNotice("الإرفاق واجهة Native جاهزة؛ لم يتم فتح منتقي ملفات أو إرسال ملف.");
+                OpenAttachmentReadiness();
                 break;
             case "tools":
                 OpenToolInspector("composer-tools");
@@ -1125,8 +1125,34 @@ public partial class MainWindow : Window
     private void Start_Click(object sender, RoutedEventArgs e)
     {
         _lastInteractionTarget = sender as FrameworkElement;
-        ShowNotice("التنفيذ الحي غير مفعل من Home البصرية. تم اختبار press/feedback فقط بدون إرسال أي أمر.");
+        OpenExecutionReadiness();
     }
+
+    private void OpenExecutionReadiness() =>
+        OpenDrawer(
+            "EXECUTION READINESS",
+            "فحص جاهزية التنفيذ",
+            "Stage 7 / P1 complete",
+            "هذا الإجراء يفحص بوابات التنفيذ المطلوبة بدل تمثيل بدءٍ حي غير موجود.",
+            "يلزم قرار مرحلة جديد، Runtime Authority صالح، واتصال provider موثوق قبل أي dispatch.",
+            "STAGE 8 CLOSED / LIVE EXECUTION NOT AUTHORIZED",
+            "P1 مكتمل؛ الجاهزية البصرية والتفاعلية لا تعني جاهزية التنفيذ الحي.",
+            "فتح التنفيذ قبل البوابات سيخرق قانون المرتكز والحقيقة التشغيلية.",
+            "يمكن فحص الأدلة والحالة الحالية من الواجهات المعتمدة.",
+            "No live command dispatched.");
+
+    private void OpenAttachmentReadiness() =>
+        OpenDrawer(
+            "ATTACHMENT READINESS",
+            "حالة الإرفاق",
+            "Composer attachment",
+            "يفحص مسار الإرفاق ومصدره وسياق المشروع قبل السماح بإرسال ملف.",
+            "منتقي الملفات والإرسال الفعلي غير موصولين في Stage 7 الحالي.",
+            "UNAVAILABLE / RUNTIME NOT CONNECTED",
+            "لا يوجد ملف مختار أو مرفوع من هذا الضغط.",
+            "إظهار إرفاق ناجح دون ملف فعلي ممنوع.",
+            "سيظهر اسم الملف والمصدر والحجم عند توصيل المسار الحقيقي.",
+            "No attachment dispatched.");
 
     private void OpenRoleContext(
         string roleId,
@@ -7527,28 +7553,57 @@ public partial class MainWindow : Window
             return;
         }
 
-        if (action == "ask")
-        {
-            ShowNotice("Ask This يحتفظ بسؤال القرار والمشروع والأدلة في السياق، بدون تنفيذ قرار.");
-            return;
-        }
-
-        ShowNotice($"{label}: تم اختبار تفاعل القرار فقط. لم يتم تسجيل قرار أو استئناف تنفيذ حي.");
+        OpenOwnerIntentPreview(action, label);
     }
+
+    private void OpenOwnerIntentPreview(string action, string label) =>
+        OpenDrawer(
+            "OWNER INTENT PREVIEW",
+            label,
+            action,
+            "يفتح معاينة دلالية لنية المالك والسياق والأثر قبل أي إرسال.",
+            "لا يُسجل قرار ولا يُستأنف تنفيذ حي من هذه الطبقة.",
+            "INTENT ONLY / STAGE 8 CLOSED",
+            "السياق محفوظ للفحص: القرار، المشروع، الأدلة والاعتراض الأقوى.",
+            "أي تغيير حالة يحتاج gateway/authority وتحققًا فعليًا.",
+            action == "ask"
+                ? "السؤال يحتفظ بسياق القرار والأدلة دون تنفيذ القرار."
+                : "Evidence Peek متاح قبل أي اعتماد مستقبلي.",
+            "No owner intent dispatched.");
 
     private void HandleRecoveryAction(string action)
     {
         var message = action switch
         {
             "restore" => "طلب الاسترجاع لا يعني RESTORED. النجاح يظهر فقط بعد CHECKPOINT_RESTORED_VERIFIED.",
-            "fork" => "إنشاء Fork يحافظ على الأصل ويبدأ فرعًا جديدًا؛ لا يوجد إنشاء runtime من هذه الطبقة.",
+            "fork" => "إنشاء Fork يحافظ على الأصل ويبدأ فرعًا جديدًا.",
             "promote" => "Promote branch يحتاج اختيارًا محكومًا ونتيجة تحقق قبل اعتماده.",
-            "delete" => "الحذف فعل تدميري ويحتاج تأكيدًا وسلطة خادمية؛ لم يُنفذ شيء.",
-            _ => "تم اختبار مسار Recovery/Fork فقط بدون تعديل الحالة."
+            "delete" => "الحذف فعل تدميري ويحتاج تأكيدًا وسلطة خادمية.",
+            _ => "مسار Recovery/Fork يحتاج سلطة وحالة فعلية."
         };
 
-        ShowNotice(message);
+        OpenRecoveryIntentPreview(action, message);
     }
+
+    private void OpenRecoveryIntentPreview(string action, string explanation) =>
+        OpenDrawer(
+            "RECOVERY INTENT PREVIEW",
+            action switch
+            {
+                "restore" => "استرجاع نقطة تحقق",
+                "fork" => "إنشاء فرع جديد",
+                "promote" => "ترقية نتيجة فرع",
+                "delete" => "حذف فرع",
+                _ => action
+            },
+            "Checkpoint / Fork governance",
+            explanation,
+            "يفحص checkpoint والفرع والأدلة المطلوبة قبل أي mutation.",
+            "INTENT ONLY / NO RUNTIME MUTATION",
+            "الأصل والتاريخ يبقيان محفوظين في هذه المعاينة.",
+            "UNKNOWN لا يتحول إلى RESTORED أو SELECTED بدون تحقق.",
+            "Evidence / checkpoint inspector هو مصدر القرار.",
+            "No recovery command dispatched.");
 
     private void OpenArtifact(string id) =>
         OpenDrawer(
@@ -7607,7 +7662,11 @@ public partial class MainWindow : Window
         var context = _activeRoleId is not null && Roles.TryGetValue(_activeRoleId, out var role)
             ? role.Title
             : DrawerTitle.Text;
-        ShowNotice($"Ask This سيحمل السياق تلقائيًا: {context}. لا توجد محادثة runtime مربوطة بعد.");
+        OpenGenericRegion(
+            "Ask This",
+            context,
+            "يحفظ سياق العنصر والأدلة والسؤال في معاينة قابلة للفحص؛ لا توجد محادثة runtime مربوطة بعد.",
+            "CONTEXT PREVIEW / NO LIVE CHAT");
     }
 
     private void OpenEvidence_Click(object sender, RoutedEventArgs e) =>
@@ -7625,7 +7684,11 @@ public partial class MainWindow : Window
     }
 
     private void ContributionHistory_Click(object sender, RoutedEventArgs e) =>
-        ShowNotice("Contribution History سيعرض مساهمات العنصر المرتبطة بالمشروع عندما تتوفر أحداث فعلية.");
+        OpenGenericRegion(
+            "Contribution History",
+            "مساهمات العنصر",
+            "يفتح سجل المساهمات المرتبط بالمشروع؛ في الحالة الحالية لا توجد أحداث runtime فعلية لعرضها.",
+            "EMPTY / NO VERIFIED EVENTS");
 
     private void CloseDrawer_Click(object sender, RoutedEventArgs e) => CloseDrawer();
 
