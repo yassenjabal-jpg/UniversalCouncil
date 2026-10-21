@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "acceptance_id": "P1-FINAL-ACCEPTANCE-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "p1_complete": true,
+  "authoritative_stage": "STAGE_7",
+  "stage8_opened": false,
+  "runtime_authority": false,
+  "canonical_desktop_screens": [
+    {
+      "id": "home_owner_workspace",
+      "verdict": "APPROVED_FINAL_P1"
+    },
+    {
+      "id": "living_project_workspace",
+      "verdict": "APPROVED_FINAL_P1"
+    },
+    {
+      "id": "software_autopilot_project",
+      "verdict": "APPROVED_FINAL_P1"
+    },
+    {
+      "id": "studio_project",
+      "verdict": "APPROVED_FINAL_P1"
+    },
+    {
+      "id": "owner_decision_mode",
+      "verdict": "APPROVED_FINAL_P1"
+    },
+    {
+      "id": "checkpoint_recovery_fork",
+      "verdict": "APPROVED_FINAL_P1"
+    },
+    {
+      "id": "pulse_visual_project_story",
+      "verdict": "APPROVED_FINAL_P1"
+    },
+    {
+      "id": "project_complete_work_receipt",
+      "verdict": "APPROVED_FINAL_P1"
+    }
+  ],
+  "evidence": {
+    "material_head": "2736c4e9484e4b60c842ca69274fb93ddb16f739",
+    "company_stage0_run_id": 39611656803,
+    "codeql_run_id": 39611656919,
+    "reference_ui_run_id": 39611657006,
+    "reference_ui_artifact_id": 12350447617,
+    "p1_exit_evidence_run_id": 39611656911,
+    "wpf_motion_artifact_id": 12350871568,
+    "android_semantic_artifact_id": 12351625241
+  },
+  "exit_criteria": {
+    "eight_screen_fidelity": true,
+    "interaction_semantics": true,
+    "motion_truth_consistency": true,
+    "reduced_motion": true,
+    "android_windows_semantic_consistency": true,
+    "no_dead_surface_in_demonstrated_path": true,
+    "unknown_never_success": true
+  },
+  "scope_note": "This approves P1 visual/interaction/motion and the Android semantic prototype only. It does not open Stage 8 or authorize live execution.",
+  "next_work": "P1_COMPLETE_NEXT_PHASE_OWNER_DECISION_REQUIRED",
+  "timestamp": "2026-10-21"
+}
