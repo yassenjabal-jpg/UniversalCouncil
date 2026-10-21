@@ -119,7 +119,6 @@ class CommandCenterGovernanceMetadataTests(unittest.TestCase):
         self.assertIn("**B2 Cross-Screen Consistency & Polish — ACTIVE**", self.roadmap)
         self.assertIn("Stage 8 = **NOT_OPENED**", self.roadmap)
 
-
     def test_b1_receipt_is_scoped_and_does_not_close_p1(self) -> None:
         self.assertEqual(
             self.b1_post["scoped_verdict"],
