@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "murtakaz-open-source-fit-2026-10-21",
+  "status": "PLANNING_ACCEPTED",
+  "baseline_sha": "e201c50c091b90938ba0167037555903a63e0f10",
+  "authority_owner": "OWNER",
+  "governing_system": "AL_MURTAKAZ",
+  "production_changes_applied": false,
+  "candidates": [
+    {
+      "id": "mcp-csharp-sdk",
+      "decision": "PILOT_A_HIGH_PRIORITY",
+      "role": "capability_protocol_adapter"
+    },
+    {
+      "id": "promptfoo",
+      "decision": "PILOT_A",
+      "role": "eval_red_team_gate"
+    },
+    {
+      "id": "opentelemetry",
+      "decision": "ADOPT_INTERFACE_FIRST",
+      "role": "telemetry_contract"
+    },
+    {
+      "id": "litellm",
+      "decision": "PILOT_A_CONTROLLED",
+      "role": "model_transport_below_broker"
+    },
+    {
+      "id": "langfuse",
+      "decision": "PILOT_A",
+      "role": "observability_backend"
+    },
+    {
+      "id": "pydantic-ai",
+      "decision": "PILOT_A_BOUNDED_WORKER",
+      "role": "typed_python_worker_eval"
+    },
+    {
+      "id": "semgrep",
+      "decision": "PILOT_A_CI_ONLY",
+      "role": "static_policy_guard"
+    },
+    {
+      "id": "gitleaks",
+      "decision": "USE_CONSERVATIVELY",
+      "role": "secret_scan_baseline"
+    },
+    {
+      "id": "betterleaks",
+      "decision": "EVALUATE_W1",
+      "role": "secret_scan_successor_candidate"
+    },
+    {
+      "id": "cua",
+      "decision": "PILOT_B_SANDBOX_ONLY",
+      "role": "computer_use_provider"
+    },
+    {
+      "id": "openhands-sdk",
+      "decision": "PILOT_B_SANDBOX_ONLY",
+      "role": "coding_worker"
+    },
+    {
+      "id": "microsoft-ufo",
+      "decision": "REFERENCE",
+      "role": "gui_device_orchestration_patterns"
+    },
+    {
+      "id": "langgraph",
+      "decision": "DEFER",
+      "role": "stateful_agent_orchestration"
+    },
+    {
+      "id": "temporal",
+      "decision": "DEFER",
+      "role": "durable_workflow_engine"
+    },
+    {
+      "id": "letta-code",
+      "decision": "REFERENCE_HARD_FIREWALL",
+      "role": "git_backed_memory_patterns"
+    },
+    {
+      "id": "omniparser",
+      "decision": "DEFER_LICENSE_GATE",
+      "role": "vision_gui_fallback"
+    }
+  ],
+  "invariants": [
+    "external_framework_never_owns_authority",
+    "modelbroker_remains_selector",
+    "capability_registry_remains_operation_truth",
+    "silent_fallback_forbidden",
+    "external_content_cannot_rewrite_policy",
+    "live_execution_remains_locked"
+  ]
+}
