@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace UniversalCouncil.CommandCenter;
 
@@ -102,15 +103,13 @@ internal static class ScreenTransitionMotion
         surface.BeginAnimation(UIElement.OpacityProperty, null);
         surface.Opacity = from;
 
-        var completion = new TaskCompletionSource<bool>();
         var animation = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(durationMs))
         {
             EasingFunction = new CubicEase { EasingMode = easingMode },
             FillBehavior = FillBehavior.HoldEnd,
         };
-        animation.Completed += (_, _) => completion.TrySetResult(true);
         surface.BeginAnimation(UIElement.OpacityProperty, animation);
-        return completion.Task;
+        return WaitForDurationAsync(surface.Dispatcher, durationMs);
     }
 
     private static Task AnimateCompositeAsync(
@@ -138,14 +137,12 @@ internal static class ScreenTransitionMotion
 
         var duration = TimeSpan.FromMilliseconds(durationMs);
         var ease = new CubicEase { EasingMode = easingMode };
-        var completion = new TaskCompletionSource<bool>();
 
         var opacity = new DoubleAnimation(fromOpacity, toOpacity, duration)
         {
             EasingFunction = ease,
             FillBehavior = FillBehavior.HoldEnd,
         };
-        opacity.Completed += (_, _) => completion.TrySetResult(true);
         surface.BeginAnimation(UIElement.OpacityProperty, opacity);
 
         scale.BeginAnimation(
@@ -177,6 +174,22 @@ internal static class ScreenTransitionMotion
                 FillBehavior = FillBehavior.HoldEnd,
             });
 
+        return WaitForDurationAsync(surface.Dispatcher, durationMs);
+    }
+
+    private static Task WaitForDurationAsync(Dispatcher dispatcher, double durationMs)
+    {
+        var completion = new TaskCompletionSource<bool>();
+        var timer = new DispatcherTimer(DispatcherPriority.Render, dispatcher)
+        {
+            Interval = TimeSpan.FromMilliseconds(durationMs),
+        };
+        timer.Tick += (_, _) =>
+        {
+            timer.Stop();
+            completion.TrySetResult(true);
+        };
+        timer.Start();
         return completion.Task;
     }
 }
