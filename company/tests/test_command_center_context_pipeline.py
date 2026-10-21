@@ -27,6 +27,9 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
         cls.b3_return_path = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-return.json"
         cls.b3_return_adoption_path = PROJECT / "approvals" / "2026-10-21-repair-b3-return-state-adoption.json"
         cls.final_p1_post_path = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json"
+        cls.stage7_readiness_post_path = (
+            PROJECT / "approvals" / "2026-10-21-stage7-real-host-evidence-readiness-post.json"
+        )
 
     def test_context_map_uses_repaired_provenance_schema(self) -> None:
         self.assertEqual(self.context_map["schema_version"], "2.0")
@@ -56,7 +59,13 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
         )
 
     def test_context_map_tracks_current_repair_work(self) -> None:
-        if self.final_p1_post_path.exists():
+        if self.stage7_readiness_post_path.exists():
+            stage7_post = load(self.stage7_readiness_post_path)
+            self.assertEqual(stage7_post["decision"], "APPROVED_BY_AL_MURTAKAZ")
+            self.assertTrue(stage7_post["repository_readiness_complete"])
+            self.assertFalse(stage7_post["stage7_final_lock_granted"])
+            expected = ["STAGE7_REAL_HOST_EVIDENCE_PENDING"]
+        elif self.final_p1_post_path.exists():
             final_post = load(self.final_p1_post_path)
             self.assertEqual(final_post["decision"], "APPROVED_BY_AL_MURTAKAZ")
             self.assertTrue(final_post["p1_complete"])
