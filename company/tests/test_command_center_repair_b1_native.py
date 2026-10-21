@@ -34,11 +34,7 @@ class CommandCenterRepairB1NativeTests(unittest.TestCase):
         cls.remainder = load(STATE / "living-operations-p1-remainder-phases.json")
         cls.p1 = load(STATE / "living-operations-p1-visual-phase.json")
         cls.context = load(STATE / "project-context-map.json")
-        cls.post_path = (
-            PROJECT
-            / "approvals"
-            / "2026-10-21-repair-b1-native-completion-post.json"
-        )
+        cls.post_path = PROJECT / "approvals" / "2026-10-21-repair-b1-native-completion-post.json"
 
     def test_all_eight_canonical_roles_have_triple_evidence(self) -> None:
         self.assertEqual(
@@ -63,9 +59,7 @@ class CommandCenterRepairB1NativeTests(unittest.TestCase):
             [item["role"] for item in self.review["findings"]],
             ROLES,
         )
-        self.assertTrue(
-            all(item["verdict"] == "NO_B1_BLOCKER" for item in self.review["findings"])
-        )
+        self.assertTrue(all(item["verdict"] == "NO_B1_BLOCKER" for item in self.review["findings"]))
         self.assertFalse(self.review["final_p1_approval"])
 
     def test_b1_never_closes_p1_or_opens_stage8(self) -> None:
@@ -77,9 +71,7 @@ class CommandCenterRepairB1NativeTests(unittest.TestCase):
     def test_b1_lifecycle_advances_only_after_post_review(self) -> None:
         if self.post_path.exists():
             self.assertEqual(self.ledger["status"], "APPROVED_BY_AL_MURTAKAZ")
-            self.assertTrue(
-                all(item["state"] == "MICRO_POLISH_COMPLETE" for item in self.ledger["screens"])
-            )
+            self.assertTrue(all(item["state"] == "MICRO_POLISH_COMPLETE" for item in self.ledger["screens"]))
             self.assertEqual(
                 self.remainder["phases"]["R9_CROSS_SCREEN_CONSISTENCY_AUDIT"]["state"],
                 "READY_TO_CONTINUE",
@@ -91,10 +83,7 @@ class CommandCenterRepairB1NativeTests(unittest.TestCase):
         else:
             self.assertEqual(self.ledger["status"], "MURTAKAZ_REVIEW_REQUIRED")
             self.assertTrue(
-                all(
-                    item["state"] == "MICRO_POLISH_COMPLETE_REVIEW_REQUIRED"
-                    for item in self.ledger["screens"]
-                )
+                all(item["state"] == "MICRO_POLISH_COMPLETE_REVIEW_REQUIRED" for item in self.ledger["screens"])
             )
             self.assertEqual(
                 self.remainder["phases"]["R9_CROSS_SCREEN_CONSISTENCY_AUDIT"]["state"],
