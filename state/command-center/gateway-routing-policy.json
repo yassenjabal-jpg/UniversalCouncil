@@ -76,8 +76,8 @@
   ],
   "future_dependencies": {
     "skill_registry": "NOT_IMPLEMENTED",
-    "model_broker": "NOT_IMPLEMENTED",
-    "capability_registry": "NOT_IMPLEMENTED",
+    "model_broker": "IMPLEMENTED_SELECTION_ONLY",
+    "capability_registry": "IMPLEMENTED_READ_ONLY",
     "job_engine": "NOT_IMPLEMENTED"
   },
   "stage_order": [
