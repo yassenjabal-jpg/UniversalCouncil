@@ -241,21 +241,38 @@ else:
         raise SystemExit("B1 ledger did not finalize after post-review")
     if any(item["state"] != "MICRO_POLISH_COMPLETE" for item in ledger["screens"]):
         raise SystemExit("B1 did not close all eight screen micro-polish states")
-    if remainder["phases"]["R9_CROSS_SCREEN_CONSISTENCY_AUDIT"]["state"] != "READY_TO_CONTINUE":
-        raise SystemExit("B1 approval did not open R9")
+    r9_state = remainder["phases"]["R9_CROSS_SCREEN_CONSISTENCY_AUDIT"]["state"]
+    if r9_state not in {"READY_TO_CONTINUE", "CLOSED"}:
+        raise SystemExit("B1 lifecycle regressed: R9 must be ready or validly closed by B2")
     if remainder["phases"]["R10_FINAL_MURTAKAZ_STUDIO_REVIEW"]["state"] != "NOT_OPENED":
-        raise SystemExit("B1 approval opened R10 too early")
-    if project_context["active_work"] != ["REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"]:
-        raise SystemExit("B1 approval did not advance active work to B2")
-    if screen_review["status"] != "B1_NATIVE_COMPLETION_APPROVED_R9_READY":
-        raise SystemExit("B1 approval did not advance screen review to R9-ready")
-    if any(item["murtakaz_decision"] != "B1_NATIVE_COMPLETION_APPROVED" for item in screen_review["screens"]):
-        raise SystemExit("B1 scoped per-screen Murtakaz decisions drifted")
-    if any(item["workshop_decision"] != "B1_NATIVE_COMPLETION_APPROVED" for item in screen_review["screens"]):
-        raise SystemExit("B1 scoped per-screen Workshop decisions drifted")
+        raise SystemExit("B1/B2 lifecycle opened R10 before the governed B3 gate")
+
+    allowed_active_work = [
+        ["REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"],
+        ["REPAIR_WAVE_B3_FINAL_REVIEW_P1_ACCEPTANCE_PENDING"],
+    ]
+    if project_context["active_work"] not in allowed_active_work:
+        raise SystemExit("B1 lifecycle active work is neither B2 nor the governed B3-pending successor")
+
+    allowed_screen_review_status = {
+        "B1_NATIVE_COMPLETION_APPROVED_R9_READY",
+        "B2_CROSS_SCREEN_APPROVED_B3_READY",
+    }
+    if screen_review["status"] not in allowed_screen_review_status:
+        raise SystemExit("B1 lifecycle screen review regressed or advanced outside the governed B2 successor")
+
+    allowed_screen_decisions = {
+        "B1_NATIVE_COMPLETION_APPROVED",
+        "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+    }
+    if any(item["murtakaz_decision"] not in allowed_screen_decisions for item in screen_review["screens"]):
+        raise SystemExit("B1 scoped per-screen Murtakaz decisions regressed or drifted")
+    if any(item["workshop_decision"] not in allowed_screen_decisions for item in screen_review["screens"]):
+        raise SystemExit("B1 scoped per-screen Workshop decisions regressed or drifted")
+
     if reference_shell["status"] != "B1_NATIVE_COMPLETION_APPROVED_R9_READY":
-        raise SystemExit("Reference shell did not advance to R9-ready")
+        raise SystemExit("Reference shell lost the approved B1 checkpoint")
     if home_fidelity["status"] != "NATIVE_REFERENCE_SHELL_B1_COMPLETION_APPROVED_R9_READY":
-        raise SystemExit("Home fidelity did not advance to R9-ready")
+        raise SystemExit("Home fidelity lost the approved B1 checkpoint")
 
 print("Al-Murtakaz Visual B1 native completion validation: PASS")
