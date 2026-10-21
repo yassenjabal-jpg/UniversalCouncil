@@ -35,6 +35,9 @@ class CommandCenterRepairB1NativeTests(unittest.TestCase):
         cls.p1 = load(STATE / "living-operations-p1-visual-phase.json")
         cls.context = load(STATE / "project-context-map.json")
         cls.post_path = PROJECT / "approvals" / "2026-10-21-repair-b1-native-completion-post.json"
+        cls.stage7_post_path = (
+            PROJECT / "approvals" / "2026-10-21-stage7-real-host-evidence-readiness-post.json"
+        )
 
     def test_all_eight_canonical_roles_have_triple_evidence(self) -> None:
         self.assertEqual(
@@ -85,15 +88,19 @@ class CommandCenterRepairB1NativeTests(unittest.TestCase):
                 self.remainder["phases"]["R10_FINAL_MURTAKAZ_STUDIO_REVIEW"]["state"],
                 {"NOT_OPENED", "MURTAKAZ_STUDIO_REVIEW", "RETURNED_FOR_CHANGES", "CLOSED"},
             )
-            self.assertIn(
-                self.context["active_work"],
-                [
-                    ["REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"],
-                    ["REPAIR_WAVE_B3_FINAL_REVIEW_P1_ACCEPTANCE_PENDING"],
-                    ["P1_EXIT_REMEDIATION_MOTION_AND_ANDROID"],
-                    ["P1_COMPLETE_NEXT_PHASE_OWNER_DECISION_REQUIRED"],
-                ],
-            )
+            allowed_active_work = [
+                ["REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"],
+                ["REPAIR_WAVE_B3_FINAL_REVIEW_P1_ACCEPTANCE_PENDING"],
+                ["P1_EXIT_REMEDIATION_MOTION_AND_ANDROID"],
+                ["P1_COMPLETE_NEXT_PHASE_OWNER_DECISION_REQUIRED"],
+            ]
+            if self.stage7_post_path.exists():
+                stage7_post = load(self.stage7_post_path)
+                self.assertEqual(stage7_post["decision"], "APPROVED_BY_AL_MURTAKAZ")
+                self.assertTrue(stage7_post["repository_readiness_complete"])
+                self.assertFalse(stage7_post["stage7_final_lock_granted"])
+                allowed_active_work.append(["STAGE7_REAL_HOST_EVIDENCE_PENDING"])
+            self.assertIn(self.context["active_work"], allowed_active_work)
         else:
             self.assertEqual(self.ledger["status"], "MURTAKAZ_REVIEW_REQUIRED")
             self.assertTrue(
