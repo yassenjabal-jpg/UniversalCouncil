@@ -55,8 +55,16 @@ if receipt["interpretation"]["owner_motion_acceptance"]:
 if receipt["merge_authorized"] or receipt["stage8_opened"] or receipt["return_ticket_close_authorized"]:
     raise SystemExit("W0 exit receipt inflated authority")
 
-if change["current_state"] != "APPROVE_TO_IMPLEMENT":
-    raise SystemExit("W1.1 change is not approved to implement")
+allowed_w1_1_progress = {
+    "APPROVE_TO_IMPLEMENT",
+    "IMPLEMENT",
+    "VERIFY",
+    "STUDIO_REVIEW",
+    "MURTAKAZ_POST_REVIEW",
+    "APPROVED_BY_AL_MURTAKAZ",
+}
+if change["current_state"] not in allowed_w1_1_progress:
+    raise SystemExit("W1.1 change left the approved implementation lifecycle")
 if pre["decision"] != "APPROVE_TO_IMPLEMENT" or pre["final_adoption_granted"]:
     raise SystemExit("W1.1 pre-review approval is invalid")
 if capsule["status"] != "ACTIVE_FOR_IMPLEMENTATION":
@@ -70,8 +78,8 @@ if (
 position = roadmap["current_position"]
 if position["wave"] != "W1" or position["phase"] != "W1.1":
     raise SystemExit("roadmap did not advance exactly to W1.1")
-if position["phase_status"] != "APPROVE_TO_IMPLEMENT":
-    raise SystemExit("W1.1 roadmap state is not approved to implement")
+if position["phase_status"] not in allowed_w1_1_progress:
+    raise SystemExit("W1.1 roadmap state left the approved implementation lifecycle")
 if position["pr_merge_allowed"]:
     raise SystemExit("W1.1 may not authorize PR merge")
 

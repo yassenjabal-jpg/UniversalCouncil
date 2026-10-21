@@ -111,7 +111,14 @@ if state["w1_2_started"]:
 
 if change["current_state"] != "VERIFY":
     raise SystemExit("W1.1 governance lifecycle is not at VERIFY")
-for lifecycle_state in ("PROPOSED", "MURTAKAZ_PRE_REVIEW", "APPROVE_TO_IMPLEMENT", "CONTEXT_CAPSULE", "IMPLEMENT", "VERIFY"):
+for lifecycle_state in (
+    "PROPOSED",
+    "MURTAKAZ_PRE_REVIEW",
+    "APPROVE_TO_IMPLEMENT",
+    "CONTEXT_CAPSULE",
+    "IMPLEMENT",
+    "VERIFY",
+):
     if lifecycle_state not in change["lifecycle"]:
         raise SystemExit(f"W1.1 governance lifecycle missing: {lifecycle_state}")
 

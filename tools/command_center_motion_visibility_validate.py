@@ -29,7 +29,6 @@ required_main_markers = (
     "ReferenceHost.IsHitTestVisible = false",
     "_queuedNavigationTarget = screen",
     "if (!_navigationTransitionActive && screen == _currentScreen)",
-
     "private void AnimateRoleRouteCue(",
     "private void AnimateDecisionIntentCue(",
     "private void AnimateRecoveryIntentCue(",
