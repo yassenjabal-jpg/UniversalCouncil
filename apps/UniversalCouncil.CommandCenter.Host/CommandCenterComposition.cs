@@ -11,6 +11,8 @@ public sealed record CommandCenterHostServices(
     ICouncilPlanner CouncilPlanner,
     IProjectContextResolver ContextResolver,
     IContextCapsuleCompiler ContextCapsuleCompiler,
+    ICapabilityRegistry CapabilityRegistry,
+    IModelBroker ModelBroker,
     IMurtakazCommandGateway CommandGateway,
     IRoutingCoordinator RoutingCoordinator,
     IExecutionFabricProvider ExecutionFabric,
@@ -47,8 +49,24 @@ public static class CommandCenterComposition
             "state",
             "gateway-routing-policy.json");
 
+        var capabilityRegistryPath = Path.Combine(
+            baseDirectory,
+            "state",
+            "capability-registry.json");
+
+        var capabilityReader = new JsonCapabilityRegistryReader(capabilityRegistryPath);
+        var capabilityRegistry = new CapabilityRegistryService(capabilityReader);
+
+        var modelBrokerPolicyPath = Path.Combine(
+            baseDirectory,
+            "state",
+            "model-broker-policy.json");
+
+        var modelBrokerReader = new JsonModelBrokerPolicyReader(modelBrokerPolicyPath);
+        var modelBroker = new ModelBroker(modelBrokerReader, capabilityRegistry);
+
         var gatewayRoutingReader = new JsonGatewayRoutingPolicyReader(gatewayRoutingPolicyPath);
-        var routingCoordinator = new RoutingCoordinator(gatewayRoutingReader);
+        var routingCoordinator = new RoutingCoordinator(gatewayRoutingReader, modelBroker);
         var commandGateway = new MurtakazCommandGateway(
             contextResolver,
             contextCapsuleCompiler,
@@ -99,6 +117,8 @@ public static class CommandCenterComposition
             orchestrationService,
             contextResolver,
             contextCapsuleCompiler,
+            capabilityRegistry,
+            modelBroker,
             commandGateway,
             routingCoordinator,
             executionService,
