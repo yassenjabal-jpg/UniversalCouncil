@@ -82,6 +82,7 @@ required_recorder_markers = (
     'source_surface = "ACTUAL_WPF"',
     "raw_frames_included = true",
     "semantic_event_timestamps = true",
+    "referenceImage.Visibility = Visibility.Visible;",
 )
 for marker in required_recorder_markers:
     if marker not in recorder:
