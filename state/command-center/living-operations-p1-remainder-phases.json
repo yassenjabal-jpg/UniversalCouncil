@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "plan_id": "p1-native-remainder-phases-v1",
-  "status": "B3_R10_RETURNED_FOR_CHANGES_P1_IN_PROGRESS",
-  "current_phase": "R10_RETURNED_FOR_CHANGES",
+  "status": "P1_COMPLETE_R10_CLOSED",
+  "current_phase": "R10_CLOSED",
   "anti_stall_rule": true,
   "phase_order": [
     "R1_OWNER_DECISION_MODE",
@@ -114,16 +114,19 @@
       "artifact_id": 12343191879
     },
     "R10_FINAL_MURTAKAZ_STUDIO_REVIEW": {
-      "state": "RETURNED_FOR_CHANGES",
+      "state": "CLOSED",
       "primary_screen": "all_eight",
-      "review": "DESKTOP_FIDELITY_PASS_P1_EXIT_EVIDENCE_MISSING",
-      "evidence_head": "77a0e21bd40fc4a306fe75cc131e9c5740110db6",
-      "reference_ui_run_id": 39600198955,
-      "artifact_id": 12345134475,
-      "blockers": [
-        "P1_MOTION_CAPTURE_MISSING",
-        "P1_ANDROID_SEMANTIC_ADAPTATION_MISSING"
-      ]
+      "review": "APPROVED_BY_AL_MURTAKAZ_FINAL_P1",
+      "evidence_head": "2736c4e9484e4b60c842ca69274fb93ddb16f739",
+      "company_stage0_run_id": 39611656803,
+      "codeql_run_id": 39611656919,
+      "reference_ui_run_id": 39611657006,
+      "reference_ui_artifact_id": 12350447617,
+      "p1_exit_evidence_run_id": 39611656911,
+      "wpf_motion_artifact_id": 12350871568,
+      "android_semantic_artifact_id": 12351625241,
+      "blockers": [],
+      "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-post.json"
     }
   },
   "per_phase_gate": [
@@ -136,7 +139,7 @@
     "NEXT_PHASE_OPENED"
   ],
   "rule": "ONE_PRIMARY_SCREEN_PER_RECONSTRUCTION_PHASE",
-  "final_native_reconstruction_complete": false,
+  "final_native_reconstruction_complete": true,
   "stage8_opened": false,
   "b1_scope_correction": {
     "reason": "R1-R4 closed structural reconstruction with micro-polish deferred while R5-R8 named only four screens; B1 explicitly closes native/micro-polish debt for all eight.",
@@ -153,9 +156,10 @@
     "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b2-cross-screen-consistency-post.json"
   },
   "b3_review": {
-    "status": "RETURNED_FOR_CHANGES",
-    "final_p1_approval": false,
-    "p1_complete": false,
-    "review_result": "state/command-center/living-operations-p1-b3-final-review-result.json"
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "final_p1_approval": true,
+    "p1_complete": true,
+    "historical_review_result": "state/command-center/living-operations-p1-b3-final-review-result.json",
+    "final_acceptance": "state/command-center/living-operations-p1-final-acceptance.json"
   }
 }
