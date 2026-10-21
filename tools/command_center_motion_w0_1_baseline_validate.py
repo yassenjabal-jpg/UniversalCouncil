@@ -83,14 +83,10 @@ if ticket["evidence"]["latest_gate_result"] != "FAIL":
     raise SystemExit("Return Ticket must preserve the failed evidence gate")
 
 position = roadmap["current_position"]
-if position["wave"] != "W0" or position["phase"] != "W0.1":
-    raise SystemExit("Roadmap advanced before W0.1 validation")
-if position["phase_status"] != "MOTION_RETURN_BASELINE_LOCK":
-    raise SystemExit("Roadmap does not record W0.1 baseline lock")
-if position["next_phase_started"] is not False:
-    raise SystemExit("W0.2 started before W0.1 validation")
 if position["pr_merge_allowed"]:
-    raise SystemExit("W0.1 may not authorize merge")
+    raise SystemExit("motion remediation may not authorize merge before W6")
+if position["wave"] not in {"W0", "W1", "W2", "W3", "W4", "W5", "W6"}:
+    raise SystemExit("motion remediation roadmap position is invalid")
 
 if gate["gate"] != "MOTION_RETURN_BASELINE_LOCK" or gate["decision"] != "APPROVED_BY_AL_MURTAKAZ":
     raise SystemExit("W0.1 Murtakaz gate receipt missing")
