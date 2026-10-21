@@ -21,6 +21,7 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
         cls.pipeline = load(STATE / "context-pipeline-state.json")
         cls.a1_pre = load(PROJECT / "approvals" / "2026-10-21-repair-a1-context-baseline-pre.json")
         cls.a2_post_path = PROJECT / "approvals" / "2026-10-21-repair-a2-governance-metadata-post.json"
+        cls.a3_post_path = PROJECT / "approvals" / "2026-10-21-repair-a3-truth-lock-post.json"
 
     def test_context_map_uses_repaired_provenance_schema(self) -> None:
         self.assertEqual(self.context_map["schema_version"], "2.0")
@@ -50,11 +51,12 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
         )
 
     def test_context_map_tracks_current_repair_work(self) -> None:
-        expected = (
-            ["REPAIR_WAVE_A3_TRUTH_LOCK_AND_MURTAKAZ_CLOSURE"]
-            if self.a2_post_path.exists()
-            else ["REPAIR_WAVE_A2_GOVERNANCE_METADATA_RECONCILIATION"]
-        )
+        if self.a3_post_path.exists():
+            expected = ["REPAIR_WAVE_B1_COMPLETE_REMAINING_NATIVE_WORK"]
+        elif self.a2_post_path.exists():
+            expected = ["REPAIR_WAVE_A3_TRUTH_LOCK_AND_MURTAKAZ_CLOSURE"]
+        else:
+            expected = ["REPAIR_WAVE_A2_GOVERNANCE_METADATA_RECONCILIATION"]
         self.assertEqual(self.context_map["active_work"], expected)
         self.assertIn(
             "CAPABILITY_REGISTRY_MODEL_BROKER_APPROVED",
