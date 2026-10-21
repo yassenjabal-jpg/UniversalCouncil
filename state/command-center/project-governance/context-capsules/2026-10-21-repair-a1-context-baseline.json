@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CTX-CC-REPAIR-A1-CONTEXT-BASELINE-2026-10-21",
+  "immutable": true,
+  "project_id": "universal-council-command-center",
+  "job_or_change_id": "CC-REPAIR-A1-CONTEXT-BASELINE-2026-10-21",
+  "created_at": "2026-10-21",
+  "source_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "b3ef5d8f60e3f623371b40036bcea01f7a396d2a"
+  },
+  "checkpoint_lock_id": "MRTKZ-CAPABILITY-MODEL-BROKER-POST-2026-10-21",
+  "canonical_sources": [
+    {
+      "id": "agentic-os-policy",
+      "locator": "state/command-center/project-governance/agentic-os-policy.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "context-capsule-contract",
+      "locator": "state/command-center/project-governance/context-capsule-contract.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "context-pipeline-state",
+      "locator": "state/command-center/context-pipeline-state.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "project-context-map",
+      "locator": "state/command-center/project-context-map.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "gateway-routing-state",
+      "locator": "state/command-center/gateway-routing-state.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "capability-model-state",
+      "locator": "state/command-center/capability-model-state.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    }
+  ],
+  "allowed_scope": "SEE_CHANGE_ENVELOPE_CC-REPAIR-A1-CONTEXT-BASELINE-2026-10-21",
+  "forbidden_scope": [
+    "A2 metadata reconciliation",
+    "visual changes",
+    "repository cleanup",
+    "Skill Registry",
+    "live execution",
+    "Stage 8"
+  ],
+  "authority_policy_version": "al-murtakaz-mandatory-approval:1.0",
+  "risk_class": "MATERIAL_CONTEXT_TRUTH_REPAIR",
+  "expected_outputs": [
+    "schema-correct project context projection",
+    "dynamic anti-drift validation",
+    "source-set fingerprinting",
+    "updated context resolver/capsule provenance",
+    "CI evidence",
+    "Murtakaz post-review"
+  ],
+  "acceptance_tests": [
+    "command_center_context_pipeline_validate.py",
+    "UniversalCouncil.CommandCenter.ContextValidation",
+    "command_center_murtakaz_validate.py",
+    "Company Stage 0",
+    "CodeQL",
+    "Reference UI"
+  ]
+}
