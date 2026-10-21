@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "evidence_index_id": "CC-STAGE7-REAL-HOST-EVIDENCE-2026-10-21",
+  "stage": "STAGE_7",
+  "status": "READY_WAITING_REAL_HOST_ACCESS",
+  "target_host": "YASSIN",
+  "observed_access_snapshot": {
+    "observed_date": "2026-10-21",
+    "source": "AUTHORIZED_REMOTE_DEVICE_STATUS",
+    "device_state": "OFFLINE",
+    "remote_tool_calls_left_pct": 0,
+    "historical_online_observed": true,
+    "interpretation": "Real-host execution is externally unavailable; no host/device gate may be promoted."
+  },
+  "protected_truth": {
+    "stage8_opened": false,
+    "live_execution_authorized": false,
+    "execution_state": "BLOCKED_PHASE0",
+    "tailscale_funnel_allowed": false,
+    "public_bind_allowed": false
+  },
+  "gates": {
+    "stage7_ci_foundation": {
+      "status": "VERIFIED",
+      "evidence": {
+        "type": "REPOSITORY_CI_BASELINE",
+        "reference": "state/command-center/owner-device-tailnet-policy.json",
+        "sanitized": true
+      }
+    },
+    "yassin_host_probe": {
+      "status": "PENDING_EXTERNAL_ACCESS",
+      "evidence": null
+    },
+    "owner_device_enrollment": {
+      "status": "PENDING_REAL_DEVICE",
+      "evidence": null
+    },
+    "tailscale_private_serve": {
+      "status": "PENDING_YASSIN_HOST",
+      "evidence": null
+    },
+    "real_owner_phone_round_trip": {
+      "status": "PENDING_REAL_PHONE",
+      "evidence": null
+    },
+    "session_revocation_round_trip": {
+      "status": "PENDING_REAL_PHONE_AND_SESSION",
+      "evidence": null
+    }
+  },
+  "closure": {
+    "eligible": false,
+    "required_verified_gates": [
+      "stage7_ci_foundation",
+      "yassin_host_probe",
+      "owner_device_enrollment",
+      "tailscale_private_serve",
+      "real_owner_phone_round_trip",
+      "session_revocation_round_trip"
+    ],
+    "blocker": "YASSIN_OFFLINE_AND_REMOTE_TOOL_QUOTA_EXHAUSTED"
+  },
+  "evidence_rules": {
+    "sanitized_only": true,
+    "sha256_required_for_real_evidence": true,
+    "raw_tailscale_status_forbidden": true,
+    "peer_list_forbidden": true,
+    "account_identity_forbidden": true,
+    "auth_key_forbidden": true,
+    "bearer_token_forbidden": true,
+    "same_phone_credential_must_fail_after_revocation": true,
+    "queued_command_must_remain_execution_blocked": true
+  }
+}
