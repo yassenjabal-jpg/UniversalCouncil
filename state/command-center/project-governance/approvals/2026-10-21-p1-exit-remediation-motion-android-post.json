@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-P1-EXIT-REMEDIATION-MOTION-ANDROID-POST-2026-10-21",
+  "change_id": "CC-P1-EXIT-REMEDIATION-MOTION-ANDROID-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "scoped_verdict": "APPROVE_R10R1_R10R2_EXIT_EVIDENCE",
+  "material_evidence": {
+    "head_sha": "2736c4e9484e4b60c842ca69274fb93ddb16f739",
+    "company_stage0_run_id": 39611656803,
+    "codeql_run_id": 39611656919,
+    "reference_ui_run_id": 39611657006,
+    "reference_ui_artifact_id": 12350447617,
+    "reference_ui_artifact_digest": "sha256:736967498b0cdc17bb16b0dcea5b58300657e1f64cd667fcb38c1c66425ae117",
+    "p1_exit_evidence_run_id": 39611656911,
+    "wpf_artifact_id": 12350871568,
+    "wpf_artifact_digest": "sha256:721809591ea4af933aa8560dff9ea921ad2b3bd6200567e65ae29cbdc6b60878",
+    "android_artifact_id": 12351625241,
+    "android_artifact_digest": "sha256:d719fef63931441fad0496c4ba982b6305b50a90f488521634c221503f011b47"
+  },
+  "evidence_integrity": {
+    "wpf_full": {
+      "file": "p1-critical-path-motion.mp4",
+      "duration_seconds": 28,
+      "sha256": "9bd92534e0a432a46ce44ebe8690d92514149a82bf3b23d97f51e30327b6ad99",
+      "bytes": 1332985
+    },
+    "wpf_reduced_motion": {
+      "file": "p1-critical-path-reduced-motion.mp4",
+      "duration_seconds": 20,
+      "sha256": "9bda342ee68a3c777574793abb1e909cb853c6ab575aa10021110f329d448bc2",
+      "bytes": 866850
+    },
+    "android_semantic": {
+      "file": "android-p1-interaction.mp4",
+      "duration_seconds": 19.36,
+      "sha256": "922b33d4c1aa37ab7f3626fbb39f667efb9394fe1798604da36d869c2b48be8b",
+      "bytes": 475440,
+      "prototype_fixture": true,
+      "runtime_authority": false,
+      "stage8_opened": false
+    }
+  },
+  "motion_capture_accepted": true,
+  "reduced_motion_capture_accepted": true,
+  "android_semantic_adaptation_accepted": true,
+  "r10r3_authorized": true,
+  "final_p1_approval_granted": false,
+  "merge_authorized": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "next_work": "R10R3_FINAL_R10_REVIEW_AND_P1_ACCEPTANCE",
+  "timestamp": "2026-10-21"
+}
