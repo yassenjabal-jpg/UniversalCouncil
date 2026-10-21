@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CC-MOTION-W1-1-WGC-PILOT-CONTEXT-2026-10-22",
+  "change_id": "CC-MOTION-W1-1-WGC-PILOT-2026-10-22",
+  "phase": "W1.1",
+  "status": "ACTIVE_FOR_IMPLEMENTATION",
+  "source_truth": {
+    "baseline_sha": "f2974d852e9634a9d4668782a995390b85edf571",
+    "pr": 72,
+    "branch": "command-center/motion-visibility-remediation-20261021",
+    "governing_roadmap": "docs/operations/command-center/living-operations/30_MOTION_REMEDIATION_MASTER_ROADMAP_2026-10-21.md",
+    "studio_review": "docs/operations/command-center/living-operations/35_STUDIO_OPEN_SOURCE_MOTION_TOOLING_REVIEW_2026-10-22.md",
+    "return_ticket": "state/command-center/project-governance/return-tickets/CC-MOTION-RT-001-2026-10-21.json"
+  },
+  "problem_statement": "RenderTargetBitmap evidence capture materially dilates real time even though Full Motion already clears the protected visibility floor.",
+  "implementation_contract": {
+    "scope": "EVIDENCE CAPTURE ONLY",
+    "boundary": "IMotionEvidenceCaptureSource",
+    "preferred_first_probe": "WgcSharp 1.1.1 / WGC only / no silent DXGI fallback",
+    "fallback_rule": "If the WgcSharp public API cannot sustain the governed recorder contract, record the exact reason and return to Al-Murtakaz before implementing raw WGC, WKI-Clipper-derived architecture, DXGI, or real-host evidence.",
+    "product_motion_unchanged": true,
+    "thresholds_unchanged": true,
+    "reduced_motion_unchanged": true
+  },
+  "acceptance_contract": {
+    "target_resolution": "1440x900",
+    "target_fps": 30,
+    "capture_duration_tolerance_seconds": 1.25,
+    "max_capture_lateness_ms": 100,
+    "exact_head": true,
+    "actual_window_pixels": true,
+    "no_interpolation": true,
+    "no_post_production": true,
+    "full_existing_thresholds": true,
+    "reduced_existing_limits": true
+  },
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution": false,
+    "return_ticket_status": "OPEN",
+    "merge": false
+  }
+}

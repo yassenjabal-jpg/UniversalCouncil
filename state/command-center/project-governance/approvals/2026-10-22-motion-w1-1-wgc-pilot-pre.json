@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "CC-MOTION-W1-1-WGC-PILOT-PRE-2026-10-22",
+  "change_id": "CC-MOTION-W1-1-WGC-PILOT-2026-10-22",
+  "phase": "W1.1",
+  "review_type": "AL_MURTAKAZ_PRE_CHANGE",
+  "decision": "APPROVE_TO_IMPLEMENT_PILOT_ONLY",
+  "scope": "EVIDENCE CAPTURE ONLY",
+  "implementation_authorized": true,
+  "authorization_limits": {
+    "wgc_pilot_only": true,
+    "product_motion_change": false,
+    "motion_threshold_change": false,
+    "visual_identity_change": false,
+    "w1_2_start": false,
+    "pr72_merge": false,
+    "stage8_open": false,
+    "runtime_authority": false,
+    "permanent_dependency_adoption": false,
+    "raw_wgc_fallback_without_new_review": false,
+    "silent_dxgi_fallback": false
+  },
+  "reviewers": {
+    "al_murtakaz": "PASS_PRE_IMPLEMENTATION",
+    "studio_producer": "PASS_WITH_CONDITIONS",
+    "interaction_choreography": "PASS_NO_MOTION_CHANGE",
+    "motion_systems": "PASS_KEEP_CURRENT_MOTION_DNA",
+    "design_systems": "PASS_REFERENCE_LOCK",
+    "windows_experience": "PASS_WGC_PILOT",
+    "prototype_engineer": "PASS_BOUNDED_ADAPTER",
+    "accessibility": "PASS_REDUCED_MOTION_UNCHANGED",
+    "visual_qa": "PASS_CAPTURE_ONLY",
+    "architecture_execution": "PASS_EVIDENCE_BOUNDARY_ONLY",
+    "product_truth_evidence": "PASS_EXACT_HEAD_UNEDITED_ONLY"
+  },
+  "dependency_guard": {
+    "preferred_candidate": "WgcSharp",
+    "pinned_version": "1.1.1",
+    "pinned_upstream_commit": "16450f1fade51ed13bcfaa2555bcb4ddd4019dd3",
+    "license": "MIT",
+    "adoption_status": "NOT_ADOPTED",
+    "source_audit_finding": "Public API is single-shot rather than a persistent 30 FPS session; runtime pilot must prove suitability before adoption."
+  },
+  "final_adoption_granted": false,
+  "owner_acceptance": false,
+  "timestamp": "2026-10-22"
+}
