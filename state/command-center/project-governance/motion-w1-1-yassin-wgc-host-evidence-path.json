@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "state_id": "CC-MOTION-W1-1-YASSIN-WGC-HOST-EVIDENCE-PATH-2026-10-22",
+  "phase": "W1.1",
+  "status": "HOST_KIT_IMPLEMENTED_NOT_EXECUTED",
+  "baseline_sha": "f8c859631ec38461daf9369f19b1cb08e9455e0e",
+  "scope": "EVIDENCE_CAPTURE_ONLY",
+  "implementation": {
+    "capture_entrypoint": "--wgc-motion-evidence",
+    "source_boundary": "IMotionEvidenceCaptureSource",
+    "implementation": "PersistentWgcWindowCaptureSource",
+    "product_dependency_added": false,
+    "render_target_bitmap_removed": false,
+    "render_target_bitmap_role": "DIAGNOSTIC_FALLBACK_ONLY",
+    "host_script": "tools/w1_1_yassin_wgc_evidence.ps1",
+    "host_kit_workflow": ".github/workflows/command-center-w1-1-yassin-wgc-host-kit.yml",
+    "validator": "tools/command_center_p1_exit_evidence_validate.py --wpf-only"
+  },
+  "architecture_boundary_audit": {
+    "verdict": "PASS_SMALLEST_SAFE_EXTRACTION",
+    "boundary": "UiSmoke evidence infrastructure only",
+    "business_or_data_logic_added": false,
+    "runtime_authority_added": false,
+    "global_product_state_added": false,
+    "database_or_network_dependency_added": false,
+    "migration_path": "Pilot remains parallel to RenderTargetBitmap until exact-head YASSIN Full+Reduced evidence and post-review approve adoption."
+  },
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution": false,
+    "motion_dna_changed": false,
+    "thresholds_changed": false,
+    "w1_2_started": false,
+    "merge_authorized": false
+  },
+  "acceptance_pending": [
+    "YASSIN_HOST_KIT_CI_BUILD",
+    "YASSIN_REAL_HOST_FULL_CAPTURE",
+    "YASSIN_REAL_HOST_REDUCED_CAPTURE",
+    "EXISTING_90_9_8_FULL_THRESHOLDS",
+    "REDUCED_MOTION_EXISTING_LIMITS",
+    "REALTIME_TOLERANCE",
+    "1440X900_EXACT_HWND_GEOMETRY",
+    "VISUAL_QA",
+    "ACCESSIBILITY",
+    "PRODUCT_TRUTH",
+    "AL_MURTAKAZ_POST_APPROVAL",
+    "OWNER_VISIBLE_REVIEW"
+  ],
+  "timestamp": "2026-10-22"
+}

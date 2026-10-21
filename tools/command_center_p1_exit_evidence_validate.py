@@ -97,20 +97,43 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
         raise SystemExit(f"{mode} capture timing evidence is missing")
     if timing.get("clock") != "STOPWATCH_REALTIME_WPF":
         raise SystemExit(f"{mode} capture clock is not real-time WPF")
-    if timing.get("pipeline") != "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG":
-        raise SystemExit(f"{mode} recorder pipeline is not the governed background encoder")
+    pipeline = timing.get("pipeline")
+    render_target_pipeline = "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG"
+    wgc_pipeline = "PERSISTENT_WINDOWS_GRAPHICS_CAPTURE_HWND_BGRA_TO_BACKGROUND_FFMPEG_PNG"
+    if pipeline not in {render_target_pipeline, wgc_pipeline}:
+        raise SystemExit(f"{mode} recorder pipeline is not governed")
+
     if timing.get("background_encoder") != "FFMPEG_LOSSLESS_PNG":
         raise SystemExit(f"{mode} background frame encoder drifted")
     if timing.get("png_encoding_on_wpf_capture_thread") is not False:
         raise SystemExit(f"{mode} recorder reintroduced PNG encoding on the WPF capture thread")
     if int(timing.get("encoder_queue_capacity_frames", 0)) != 60:
         raise SystemExit(f"{mode} recorder queue capacity drifted")
-    if timing.get("capture_surface_cache") != "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE":
-        raise SystemExit(f"{mode} governed WPF capture cache drifted")
     if timing.get("synchronous_layout_per_frame") is not False:
         raise SystemExit(f"{mode} recorder reintroduced synchronous layout per frame")
     if int(timing.get("png_compression_level", -1)) != 1:
         raise SystemExit(f"{mode} background PNG compression level drifted")
+
+    if pipeline == render_target_pipeline:
+        if timing.get("capture_surface_cache") != "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE":
+            raise SystemExit(f"{mode} governed WPF capture cache drifted")
+    else:
+        if timing.get("capture_surface") != "ACTUAL_COMMAND_CENTER_HWND":
+            raise SystemExit(f"{mode} WGC evidence did not capture the actual Command Center HWND")
+        if timing.get("fallback_used") is not False:
+            raise SystemExit(f"{mode} WGC evidence used a fallback capture surface")
+        if timing.get("silent_dxgi_fallback") is not False:
+            raise SystemExit(f"{mode} WGC evidence enabled silent DXGI fallback")
+        if int(timing.get("source_width", 0)) != int(manifest.get("width", 0)):
+            raise SystemExit(f"{mode} WGC source width does not match governed output")
+        if int(timing.get("source_height", 0)) != int(manifest.get("height", 0)):
+            raise SystemExit(f"{mode} WGC source height does not match governed output")
+        if int(timing.get("source_frame_errors", -1)) != 0:
+            raise SystemExit(f"{mode} WGC source reported frame errors")
+        if float(timing.get("first_frame_latency_ms", 0)) <= 0:
+            raise SystemExit(f"{mode} WGC first-frame latency evidence is missing")
+        if int(timing.get("unique_sampled_source_frames", 0)) <= 0:
+            raise SystemExit(f"{mode} WGC source-frame diagnostics are missing")
     target_capture = float(timing.get("target_capture_duration_seconds", 0))
     actual_capture = float(timing.get("actual_capture_duration_seconds", 0))
     if abs(actual_capture - target_capture) > 1.25:
@@ -233,13 +256,16 @@ def validate_android(root: Path) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--evidence-root", required=True)
+    parser.add_argument("--wpf-only", action="store_true")
     args = parser.parse_args()
     root = Path(args.evidence_root).resolve()
 
     validate_motion(root, "full", 20.0)
     validate_motion(root, "reduced", 20.0)
-    validate_android(root)
-    print("Al-Murtakaz P1 exit evidence validation: PASS")
+    if not args.wpf_only:
+        validate_android(root)
+    scope = "WPF-only host evidence" if args.wpf_only else "P1 exit evidence"
+    print(f"Al-Murtakaz {scope} validation: PASS")
     return 0
 
 

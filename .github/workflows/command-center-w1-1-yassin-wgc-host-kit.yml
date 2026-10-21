@@ -1,0 +1,89 @@
+name: Command Center W1.1 YASSIN WGC Host Kit
+
+on:
+  pull_request:
+    paths:
+      - 'apps/UniversalCouncil.CommandCenter/**'
+      - 'apps/UniversalCouncil.CommandCenter.UiSmoke/**'
+      - 'tools/command_center_p1_exit_evidence_validate.py'
+      - 'tools/w1_1_yassin_wgc_evidence.ps1'
+      - '.github/workflows/command-center-w1-1-yassin-wgc-host-kit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: command-center-w1-1-yassin-wgc-host-kit-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-host-kit:
+    name: Build exact-head YASSIN WGC evidence kit
+    runs-on: windows-2025-vs2026
+    timeout-minutes: 20
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+      CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact candidate head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          fetch-depth: 1
+
+      - name: Verify exact candidate head
+        shell: pwsh
+        run: |
+          $actual = (git rev-parse HEAD).Trim().ToLowerInvariant()
+          $expected = $env:CANDIDATE_SHA.Trim().ToLowerInvariant()
+          if ($actual -ne $expected) {
+            throw "Exact-head host-kit mismatch: expected $expected, got $actual"
+          }
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Publish UiSmoke host executable
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          dotnet restore apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj
+          dotnet publish apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --runtime win-x64 --self-contained false --no-restore --output artifacts/yassin-wgc-host-kit/app
+
+      - name: Assemble governed host kit
+        shell: pwsh
+        run: |
+          Copy-Item tools/w1_1_yassin_wgc_evidence.ps1 artifacts/yassin-wgc-host-kit/
+          Copy-Item tools/command_center_p1_exit_evidence_validate.py artifacts/yassin-wgc-host-kit/
+          Set-Content -Encoding ASCII artifacts/yassin-wgc-host-kit/candidate-sha.txt $env:CANDIDATE_SHA
+          @'
+          # UniversalCouncil W1.1 — YASSIN WGC Evidence Host Kit
+
+          Scope: EVIDENCE CAPTURE ONLY.
+          This kit does not open Stage 8, grant runtime authority, start W1.2 or merge PR #72.
+
+          Requirements on YASSIN:
+          - Windows interactive desktop session
+          - ffmpeg + ffprobe on PATH
+          - Python is optional for local validation; evidence can be validated later if absent
+
+          Run from PowerShell:
+          .\w1_1_yassin_wgc_evidence.ps1
+
+          The script captures exact-head Full + Reduced Motion using the actual Command Center HWND,
+          writes raw hashed frames + manifests + MP4 integrity files, runs the existing thresholds
+          unchanged when Python is available, then produces a ZIP + SHA256.
+          '@ | Set-Content -Encoding UTF8 artifacts/yassin-wgc-host-kit/README.md
+
+      - name: Upload YASSIN WGC host kit
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: UniversalCouncil-W1-1-YASSIN-WGC-HostKit-${{ env.CANDIDATE_SHA }}
+          path: artifacts/yassin-wgc-host-kit/
+          if-no-files-found: error
+          retention-days: 14
