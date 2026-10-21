@@ -19,6 +19,29 @@ public partial class MainWindow : Window
     private bool _nativeReferenceBlendEnabled;
     private const string OwnerPromptPlaceholder = "صف ما تريد إنجازه...";
 
+    private static class CrossScreenVisualTokens
+    {
+        public const string TopChromeBackground = "#FFFCF8F3";
+        public const string SharedPanelBackground = "#FFFCFBF8";
+        public const string SharedBorder = "#E5E0D8";
+        public const string SharedSoftBorder = "#E7E2DA";
+        public const string SharedCoolBorder = "#DDE2E7";
+        public const string SharedMutedText = "#7A8390";
+        public const string SharedBodyText = "#2D3748";
+        public const string PrimaryBlue = "#2F75F3";
+        public const string SuccessGreen = "#16A452";
+        public const double TopChromeHeight = 49;
+        public const double RightRailLeft = 1470;
+        public const double RightRailWidth = 66;
+        public const double BottomDockTop = 963;
+        public const double BottomDockHeight = 61;
+        public const double SharedCardRadius = 12;
+        public const double NavGlyphSize = 21;
+        public const double NavLabelSize = 9.5;
+        public const double DockGlyphSize = 16;
+        public const double DockLabelSize = 10.5;
+    }
+
     private static readonly IReadOnlyDictionary<ScreenKind, string> ScreenImages =
         new Dictionary<ScreenKind, string>
         {
@@ -282,7 +305,7 @@ public partial class MainWindow : Window
         // Top chrome.
         Place(
             NativeHomeChromeLayer,
-            ChromePanel("#FFFCF8F3", "#E5E0D8", 0, new Thickness(0, 0, 0, 1)),
+            ChromePanel(CrossScreenVisualTokens.TopChromeBackground, CrossScreenVisualTokens.SharedBorder, 0, new Thickness(0, 0, 0, 1)),
             0,
             0,
             1536,
@@ -434,7 +457,7 @@ public partial class MainWindow : Window
             238,
             914);
 
-        var autoCard = ChromePanel("#FFFCFBF8", "#DDE2E7", 14);
+        var autoCard = ChromePanel(CrossScreenVisualTokens.SharedPanelBackground, CrossScreenVisualTokens.SharedCoolBorder, 14);
         Place(NativeHomeChromeLayer, autoCard, 16, 62, 215, 159);
         Place(
             NativeHomeChromeLayer,
@@ -509,7 +532,7 @@ public partial class MainWindow : Window
         // Right global navigation rail.
         Place(
             NativeHomeChromeLayer,
-            ChromePanel("#FFFCFBF8", "#E5E0D8", 0, new Thickness(1, 0, 0, 0)),
+            ChromePanel(CrossScreenVisualTokens.SharedPanelBackground, CrossScreenVisualTokens.SharedBorder, 0, new Thickness(1, 0, 0, 0)),
             1470,
             0,
             66,
@@ -608,7 +631,7 @@ public partial class MainWindow : Window
         string subtitle,
         string tag)
     {
-        var card = ChromePanel("#FFFCFBF8", "#E7E2DA", 12);
+        var card = ChromePanel(CrossScreenVisualTokens.SharedPanelBackground, CrossScreenVisualTokens.SharedSoftBorder, CrossScreenVisualTokens.SharedCardRadius);
         Place(NativeHomeChromeLayer, card, 16, top, 215, 75);
 
         var countBadge = ChromePanel("#F8F9FB", "#E3E5E9", 8);
@@ -1225,117 +1248,131 @@ public partial class MainWindow : Window
     {
         Place(
             SecondaryNativeLayer,
-            ChromePanel("#FFFDFBF8", "#E8E4DE", 0, new Thickness(0, 0, 0, 1)),
+            ChromePanel(
+                CrossScreenVisualTokens.TopChromeBackground,
+                CrossScreenVisualTokens.SharedBorder,
+                0,
+                new Thickness(0, 0, 0, 1)),
             0,
             0,
-            1470,
-            49);
+            1536,
+            CrossScreenVisualTokens.TopChromeHeight);
 
+        var mark = new Ellipse
+        {
+            Fill = Brush("#FFEEC34B"),
+            Stroke = Brush("#E1B232"),
+            StrokeThickness = 1,
+            IsHitTestVisible = false,
+        };
+        Place(SecondaryNativeLayer, mark, 25, 14, 18, 18);
         Place(
             SecondaryNativeLayer,
-            ChromeText("✦", 18, "#2F8DFF", FontWeights.Bold, FlowDirection.LeftToRight),
-            24,
-            12,
-            24,
-            24);
-        Place(
-            SecondaryNativeLayer,
-            ChromeText("UniversalCouncil", 16.5, "#17213A", FontWeights.Bold, FlowDirection.LeftToRight),
-            52,
-            10,
-            150,
-            26);
-        Place(
-            SecondaryNativeLayer,
-            ChromeText("Command Center", 10.5, "#758091", FontWeights.Normal, FlowDirection.LeftToRight),
-            204,
-            13,
-            105,
+            ChromeText("✦", 15, "#3978DA", FontWeights.Bold, FlowDirection.LeftToRight),
+            28,
+            11,
+            20,
             22);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("UniversalCouncil", 17, "#15213B", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            55,
+            9,
+            140,
+            28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("Command Center", 13, CrossScreenVisualTokens.SharedMutedText, null, FlowDirection.LeftToRight),
+            198,
+            11,
+            120,
+            26);
 
-        var search = ChromePanel("#FFFFFF", "#DEDAD4", 14);
+        var search = ChromePanel("#FFFCFBFA", "#DCD9D5", 13);
         Place(SecondaryNativeLayer, search, 505, 7, 525, 35);
         Place(
             SecondaryNativeLayer,
-            ChromeText("⌕", 13, "#3E7FE5", FontWeights.SemiBold, FlowDirection.LeftToRight),
-            522,
-            14,
-            20,
-            20);
+            ChromeText("⌕", 16, "#5C86C5", null, FlowDirection.LeftToRight),
+            520,
+            9,
+            25,
+            30);
         var searchText = ChromeText(
             "البحث في جميع مشاريعك وملفاتك وقرارات المجلس...",
-            9.5,
-            "#8A9099");
+            11,
+            "#9A9FA8");
         searchText.TextAlignment = TextAlignment.Right;
-        Place(SecondaryNativeLayer, searchText, 555, 13, 385, 20);
-        var shortcut = ChromePanel("#F7F7F6", "#E4E1DD", 5);
-        Place(SecondaryNativeLayer, shortcut, 949, 12, 55, 22);
+        Place(SecondaryNativeLayer, searchText, 554, 9, 390, 30);
+        var shortcut = ChromePanel("#F7F6F4", "#E0DDD8", 6);
+        Place(SecondaryNativeLayer, shortcut, 973, 13, 48, 22);
         Place(
             SecondaryNativeLayer,
-            ChromeText("Ctrl K", 8.2, "#596477", FontWeights.SemiBold, FlowDirection.LeftToRight),
-            959,
-            15,
-            38,
-            16);
+            ChromeText("Ctrl K", 9, "#596171", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            982,
+            14,
+            34,
+            19);
 
         Place(
             SecondaryNativeLayer,
-            ChromeText("☼", 18, "#E6A321", FontWeights.SemiBold, FlowDirection.LeftToRight),
-            1212,
-            12,
-            24,
-            24);
-        Place(
-            SecondaryNativeLayer,
-            ChromeText("♟", 17, "#E54055", FontWeights.SemiBold, FlowDirection.LeftToRight),
-            1261,
-            12,
-            24,
-            24);
-        var owner = ChromeText("المجلس الخاص بك", 10.5, "#2E3A4D", FontWeights.Bold);
-        owner.TextAlignment = TextAlignment.Right;
-        Place(SecondaryNativeLayer, owner, 1325, 6, 118, 21);
-        var ownerSub = ChromeText("Owner", 8.2, "#7A8390", FontWeights.SemiBold, FlowDirection.LeftToRight);
-        ownerSub.TextAlignment = TextAlignment.Right;
-        Place(SecondaryNativeLayer, ownerSub, 1368, 25, 74, 17);
-        Place(
-            SecondaryNativeLayer,
-            new Ellipse
-            {
-                Fill = Brush("#8C68EA"),
-                Stroke = Brush("#D7CEF7"),
-                StrokeThickness = 2,
-                IsHitTestVisible = false,
-            },
-            1437,
+            ChromeText("☼", 21, "#D99D26", null, FlowDirection.LeftToRight),
+            1220,
             10,
             28,
             28);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("♟", 20, "#DB334F", null, FlowDirection.LeftToRight),
+            1268,
+            9,
+            28,
+            28);
+        var owner = ChromeText("المجلس الخاص بك", 11.5, "#3A4454", FontWeights.SemiBold);
+        owner.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, owner, 1321, 5, 122, 20);
+        var ownerSub = ChromeText("Owner", 10, "#78808D", null, FlowDirection.LeftToRight);
+        ownerSub.TextAlignment = TextAlignment.Right;
+        Place(SecondaryNativeLayer, ownerSub, 1377, 22, 57, 17);
+
+        var ownerAvatar = new Ellipse
+        {
+            Fill = new RadialGradientBrush(
+                Color.FromRgb(232, 244, 255),
+                Color.FromRgb(116, 105, 228)),
+            Stroke = Brush("#B8B3F0"),
+            StrokeThickness = 1.2,
+            IsHitTestVisible = false,
+        };
+        Place(SecondaryNativeLayer, ownerAvatar, 1437, 10, 28, 28);
     }
 
     private void BuildSecondaryRightNavigation(ScreenKind screen)
     {
         Place(
             SecondaryNativeLayer,
-            ChromePanel("#FFFCFBF8", "#E6E1DA", 0, new Thickness(1, 0, 0, 0)),
-            1470,
+            ChromePanel(
+                CrossScreenVisualTokens.SharedPanelBackground,
+                CrossScreenVisualTokens.SharedBorder,
+                0,
+                new Thickness(1, 0, 0, 0)),
+            CrossScreenVisualTokens.RightRailLeft,
             0,
-            66,
-            963);
+            CrossScreenVisualTokens.RightRailWidth,
+            CrossScreenVisualTokens.BottomDockTop);
         Place(
             SecondaryNativeLayer,
-            ChromePanel("#111329", "#111329", 0),
-            1470,
+            ChromePanel("#15152D", "#15152D", 0),
+            CrossScreenVisualTokens.RightRailLeft,
             0,
-            66,
+            CrossScreenVisualTokens.RightRailWidth,
             64);
         Place(
             SecondaryNativeLayer,
-            ChromeText("◇", 31, "#FFFFFF", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            ChromeText("◇", 30, "#FFFFFF", FontWeights.SemiBold, FlowDirection.LeftToRight),
             1487,
             14,
             34,
-            38);
+            34);
 
         var active = screen switch
         {
@@ -1370,22 +1407,30 @@ public partial class MainWindow : Window
         {
             Place(
                 SecondaryNativeLayer,
-                ChromePanel("#EAF3FF", "#DCE9FB", 8),
+                ChromePanel("#EFF5FF", "#EFF5FF", 10),
                 1478,
                 top,
                 50,
                 70);
         }
 
-        var accent = active ? "#2475F3" : "#344052";
         Place(
             SecondaryNativeLayer,
-            ChromeText(glyph, 20, accent, FontWeights.SemiBold, FlowDirection.LeftToRight),
+            ChromeText(
+                glyph,
+                CrossScreenVisualTokens.NavGlyphSize,
+                active ? "#196FF1" : "#273349",
+                FontWeights.SemiBold,
+                FlowDirection.LeftToRight),
             1492,
-            top + 8,
-            23,
-            26);
-        var text = ChromeText(label, 8.6, accent, active ? FontWeights.Bold : FontWeights.SemiBold);
+            top + 7,
+            26,
+            27);
+        var text = ChromeText(
+            label,
+            CrossScreenVisualTokens.NavLabelSize,
+            active ? "#196FF1" : "#455064",
+            active ? FontWeights.SemiBold : FontWeights.Normal);
         text.TextAlignment = TextAlignment.Center;
         Place(SecondaryNativeLayer, text, 1478, top + 39, 50, 22);
     }
@@ -1394,63 +1439,67 @@ public partial class MainWindow : Window
     {
         Place(
             SecondaryNativeLayer,
-            ChromePanel("#FFF8F5EF", "#EEE8DF", 0, new Thickness(0, 0, 1, 0)),
+            ChromePanel("#FFF8F5EF", "#EEE9E1", 0, new Thickness(0, 0, 1, 0)),
             0,
-            49,
+            CrossScreenVisualTokens.TopChromeHeight,
             238,
             430);
 
-        var auto = ChromePanel("#FFFCFBF8", "#DDE2E7", 14);
+        var auto = ChromePanel(
+            CrossScreenVisualTokens.SharedPanelBackground,
+            CrossScreenVisualTokens.SharedCoolBorder,
+            14);
         Place(SecondaryNativeLayer, auto, 16, 62, 215, 159);
         Place(
             SecondaryNativeLayer,
-            new Ellipse { Fill = Brush("#25C86A"), IsHitTestVisible = false },
+            new Ellipse { Fill = Brush("#24C85A"), IsHitTestVisible = false },
             31,
-            77,
+            79,
             13,
             13);
         Place(
             SecondaryNativeLayer,
-            ChromeText("Autopilot", 14, "#263247", FontWeights.Bold, FlowDirection.LeftToRight),
-            52,
-            69,
-            94,
-            25);
+            ChromeText("Autopilot", 16, "#1E293B", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            55,
+            70,
+            115,
+            27);
         Place(
             SecondaryNativeLayer,
-            ChromeText("يعمل الآن", 9.2, "#1CA456", FontWeights.Bold),
-            52,
-            94,
-            74,
+            ChromeText("يعمل الآن", 10, CrossScreenVisualTokens.SuccessGreen, FontWeights.SemiBold),
+            55,
+            96,
+            80,
             20);
 
         var waveform = new Polyline
         {
-            Stroke = Brush("#45D982"),
-            StrokeThickness = 2.2,
+            Stroke = Brush("#54E98A"),
+            StrokeThickness = 2.3,
+            Opacity = 0.9,
             IsHitTestVisible = false,
             Points = new PointCollection
             {
-                new(0, 18),
-                new(22, 18),
-                new(34, 10),
-                new(47, 23),
-                new(61, 16),
-                new(72, 4),
-                new(84, 31),
-                new(98, 12),
-                new(112, 20),
-                new(132, 18),
+                new(0, 22), new(19, 21), new(30, 16), new(42, 25), new(53, 20),
+                new(63, 5), new(74, 34), new(84, 10), new(95, 21), new(114, 19),
+                new(132, 23), new(150, 22)
             },
         };
-        Place(SecondaryNativeLayer, waveform, 47, 112, 140, 38);
-        var autoMessage = ChromeText("لا يوجد شيء مطلوب\nمنك الآن", 9.4, "#475466", FontWeights.SemiBold);
+        Place(SecondaryNativeLayer, waveform, 46, 113, 150, 40);
+        var autoMessage = ChromeText("لا يوجد شيء مطلوب\nمنك الآن", 11.5, "#485161", FontWeights.SemiBold);
         autoMessage.TextAlignment = TextAlignment.Center;
-        Place(SecondaryNativeLayer, autoMessage, 48, 158, 150, 42);
+        Place(SecondaryNativeLayer, autoMessage, 45, 158, 155, 48);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText("›", 24, "#647083", null, FlowDirection.LeftToRight),
+            199,
+            75,
+            20,
+            30);
 
-        AddSecondaryStatusVisual(232, "3", "المشاريع النشطة", "جميع الأنظمة تعمل بسلاسة", "#2F75F3");
-        AddSecondaryStatusVisual(315, "0", "المهام بانتظارك", "لا توجد مهام معلقة حالياً", "#E7A42B");
-        AddSecondaryStatusVisual(398, "0", "تنبيهات مهمة", "كل شيء تحت السيطرة", "#EF596A");
+        AddSecondaryStatusVisual(228, "3", "المشاريع النشطة", "جميع النظم تعمل بسلاسة", CrossScreenVisualTokens.PrimaryBlue);
+        AddSecondaryStatusVisual(316, "0", "المهام بانتظارك", "لا توجد قرارات مطلوبة حالياً", "#E7A629");
+        AddSecondaryStatusVisual(404, "0", "تنبيهات مهمة", "كل شيء تحت السيطرة", "#F06679");
     }
 
     private void AddSecondaryStatusVisual(
@@ -1460,81 +1509,89 @@ public partial class MainWindow : Window
         string subtitle,
         string accent)
     {
-        var card = ChromePanel("#FFFCFBF8", "#E7E2DA", 11);
+        var card = ChromePanel(
+            CrossScreenVisualTokens.SharedPanelBackground,
+            CrossScreenVisualTokens.SharedSoftBorder,
+            CrossScreenVisualTokens.SharedCardRadius);
         Place(SecondaryNativeLayer, card, 16, top, 215, 75);
-        var badge = ChromePanel("#F7F8FA", "#E3E5E8", 7);
+        var badge = ChromePanel("#F8F9FB", "#E3E5E9", 8);
         Place(SecondaryNativeLayer, badge, 29, top + 12, 36, 32);
-        var countText = ChromeText(count, 12, accent, FontWeights.Bold, FlowDirection.LeftToRight);
-        countText.TextAlignment = TextAlignment.Center;
-        Place(SecondaryNativeLayer, countText, 33, top + 18, 28, 20);
-        var titleText = ChromeText(title, 10.3, "#334053", FontWeights.Bold);
+        Place(
+            SecondaryNativeLayer,
+            ChromeText(count, 18, accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            39,
+            top + 13,
+            20,
+            29);
+        var titleText = ChromeText(title, 12.5, CrossScreenVisualTokens.SharedBodyText, FontWeights.SemiBold);
         titleText.TextAlignment = TextAlignment.Right;
-        Place(SecondaryNativeLayer, titleText, 78, top + 10, 129, 22);
-        var subText = ChromeText(subtitle, 7.8, "#838B96", FontWeights.SemiBold);
+        Place(SecondaryNativeLayer, titleText, 77, top + 8, 126, 25);
+        var subText = ChromeText(subtitle, 9.2, CrossScreenVisualTokens.SharedMutedText);
         subText.TextAlignment = TextAlignment.Right;
-        Place(SecondaryNativeLayer, subText, 73, top + 35, 134, 27);
+        Place(SecondaryNativeLayer, subText, 77, top + 32, 126, 27);
         Place(
             SecondaryNativeLayer,
             new Ellipse { Fill = Brush(accent), IsHitTestVisible = false, Opacity = 0.9 },
-            211,
-            top + 30,
-            7,
-            7);
+            198,
+            top + 27,
+            9,
+            9);
     }
 
     private void BuildSecondaryToolDock()
     {
+        var dock = ChromePanel("#FFFCFBFA", "#DDD9D4", 16);
         Place(
             SecondaryNativeLayer,
-            ChromePanel("#FFFCFBF8", "#E4DFD8", 0, new Thickness(0, 1, 0, 0)),
+            dock,
             0,
-            963,
+            CrossScreenVisualTokens.BottomDockTop,
             1536,
-            61);
+            CrossScreenVisualTokens.BottomDockHeight);
         Place(
             SecondaryNativeLayer,
-            ChromeText("⌃", 12, "#657083", FontWeights.SemiBold, FlowDirection.LeftToRight),
+            ChromeText("⌃", 18, "#475366", null, FlowDirection.LeftToRight),
+            19,
+            978,
             25,
-            982,
-            18,
-            18);
+            25);
         Place(
             SecondaryNativeLayer,
-            ChromeText("أدواتك", 11, "#2E394A", FontWeights.Bold),
-            52,
-            979,
+            ChromeText("أدواتك", 12, "#273349", FontWeights.SemiBold),
+            58,
+            974,
             62,
-            22);
+            25);
         Place(
             SecondaryNativeLayer,
-            new Ellipse { Fill = Brush("#22BF67"), IsHitTestVisible = false },
-            116,
-            985,
+            new Ellipse { Fill = Brush("#28C767"), IsHitTestVisible = false },
+            118,
+            981,
             8,
             8);
         Place(
             SecondaryNativeLayer,
-            ChromeText("متصل الآن", 8, "#26A960", FontWeights.SemiBold),
+            ChromeText("نشط الآن", 9, "#15974C"),
             128,
-            981,
-            62,
-            18);
+            976,
+            53,
+            20);
 
-        AddSecondaryDockVisual(174, 94, "●", "GitHub", "#171B23");
-        AddSecondaryDockVisual(276, 85, "Ps", "Photoshop", "#1599E7");
-        AddSecondaryDockVisual(369, 96, "Ae", "After Effects", "#7353D9");
-        AddSecondaryDockVisual(473, 88, "Pr", "Premiere", "#6F3EAF");
-        AddSecondaryDockVisual(569, 91, "◇", "YASSIN", "#202539");
-        AddSecondaryDockVisual(668, 94, "▦", "Tailscale", "#29364A");
-        AddSecondaryDockVisual(770, 91, "◇", "Models", "#52637B");
-        AddSecondaryDockVisual(869, 96, "▣", "Evidence", "#52637B");
-        AddSecondaryDockVisual(973, 124, "●", "Android Owner", "#202539");
+        AddSecondaryDockVisual(182, 103, "●", "GitHub", "#F3F5F8", "#161B22");
+        AddSecondaryDockVisual(292, 78, "Ps", "Photoshop", "#122D55", "#31A8FF");
+        AddSecondaryDockVisual(377, 86, "Ae", "After Effects", "#26154D", "#9999FF");
+        AddSecondaryDockVisual(470, 82, "Pr", "Premiere", "#26154D", "#9999FF");
+        AddSecondaryDockVisual(559, 96, "◇", "YASSIN", "#17182B", "#FFFFFF");
+        AddSecondaryDockVisual(662, 104, "▦", "Tailscale", "#F0F1F4", "#111827");
+        AddSecondaryDockVisual(773, 93, "⬡", "Models", "#F4F5F8", "#48556D");
+        AddSecondaryDockVisual(873, 103, "▤", "Evidence", "#F4F5F8", "#25324A");
+        AddSecondaryDockVisual(983, 126, "●", "Android Owner", "#F4F5F8", "#151D2C");
 
-        var allTools = ChromePanel("#FFFFFF", "#E2DED8", 9);
+        var allTools = ChromePanel("#F8F8F7", "#DEDBD6", 10);
         Place(SecondaryNativeLayer, allTools, 1390, 973, 126, 40);
-        var allToolsText = ChromeText("جميع الأدوات  ▦", 9.3, "#465163", FontWeights.SemiBold);
+        var allToolsText = ChromeText("جميع الأدوات   ▦", 11, "#4E5868", FontWeights.SemiBold);
         allToolsText.TextAlignment = TextAlignment.Center;
-        Place(SecondaryNativeLayer, allToolsText, 1400, 983, 106, 20);
+        Place(SecondaryNativeLayer, allToolsText, 1402, 980, 101, 25);
     }
 
     private void AddSecondaryDockVisual(
@@ -1542,24 +1599,35 @@ public partial class MainWindow : Window
         double width,
         string glyph,
         string label,
+        string background,
         string accent)
     {
-        var chip = ChromePanel("#F7F8FA", "#E1DED9", 8);
+        var chip = ChromePanel(background, "#E1DED9", 9);
         Place(SecondaryNativeLayer, chip, left, 972, width, 42);
         Place(
             SecondaryNativeLayer,
-            ChromeText(glyph, 14, accent, FontWeights.Bold, FlowDirection.LeftToRight),
+            ChromeText(
+                glyph,
+                CrossScreenVisualTokens.DockGlyphSize,
+                accent,
+                FontWeights.SemiBold,
+                FlowDirection.LeftToRight),
             left + 10,
-            982,
-            23,
-            22);
+            980,
+            24,
+            24);
         Place(
             SecondaryNativeLayer,
-            ChromeText(label, 8.3, "#596477", FontWeights.SemiBold, FlowDirection.LeftToRight),
-            left + 33,
-            983,
-            width - 40,
-            19);
+            ChromeText(
+                label,
+                CrossScreenVisualTokens.DockLabelSize,
+                "#313B4C",
+                FontWeights.SemiBold,
+                FlowDirection.LeftToRight),
+            left + 34,
+            978,
+            width - 42,
+            26);
     }
 
     private void BuildSecondarySharedInteractions(ScreenKind screen)
@@ -1581,9 +1649,9 @@ public partial class MainWindow : Window
         if (screen is not ScreenKind.ProjectWorkspace and not ScreenKind.DecisionMode)
         {
             AddSecondarySharedHotspot(16, 62, 215, 159, "autopilot", "Autopilot — يعمل الآن", NativeStatus_Click);
-            AddSecondarySharedHotspot(16, 232, 215, 75, "projects", "المشاريع النشطة", NativeStatus_Click);
-            AddSecondarySharedHotspot(16, 315, 215, 75, "waiting", "المهام بانتظارك", NativeStatus_Click);
-            AddSecondarySharedHotspot(16, 398, 215, 75, "alerts", "تنبيهات مهمة", NativeStatus_Click);
+            AddSecondarySharedHotspot(16, 228, 215, 75, "projects", "المشاريع النشطة", NativeStatus_Click);
+            AddSecondarySharedHotspot(16, 316, 215, 75, "waiting", "المهام بانتظارك", NativeStatus_Click);
+            AddSecondarySharedHotspot(16, 404, 215, 75, "alerts", "تنبيهات مهمة", NativeStatus_Click);
         }
 
         if (screen is ScreenKind.ProjectWorkspace or
@@ -1591,15 +1659,15 @@ public partial class MainWindow : Window
             ScreenKind.StudioProject or
             ScreenKind.WorkReceipt)
         {
-            AddSecondarySharedHotspot(174, 972, 94, 42, "github", "GitHub", NativeDockTool_Click);
-            AddSecondarySharedHotspot(276, 972, 85, 42, "photoshop", "Photoshop", NativeDockTool_Click);
-            AddSecondarySharedHotspot(369, 972, 96, 42, "after-effects", "After Effects", NativeDockTool_Click);
-            AddSecondarySharedHotspot(473, 972, 88, 42, "premiere", "Premiere", NativeDockTool_Click);
-            AddSecondarySharedHotspot(569, 972, 91, 42, "yassin", "YASSIN", NativeDockTool_Click);
-            AddSecondarySharedHotspot(668, 972, 94, 42, "tailscale", "Tailscale", NativeDockTool_Click);
-            AddSecondarySharedHotspot(770, 972, 91, 42, "models", "Models", NativeDockTool_Click);
-            AddSecondarySharedHotspot(869, 972, 96, 42, "evidence", "Evidence", NativeDockTool_Click);
-            AddSecondarySharedHotspot(973, 972, 124, 42, "android-owner", "Android Owner", NativeDockTool_Click);
+            AddSecondarySharedHotspot(182, 972, 103, 42, "github", "GitHub", NativeDockTool_Click);
+            AddSecondarySharedHotspot(292, 972, 78, 42, "photoshop", "Photoshop", NativeDockTool_Click);
+            AddSecondarySharedHotspot(377, 972, 86, 42, "after-effects", "After Effects", NativeDockTool_Click);
+            AddSecondarySharedHotspot(470, 972, 82, 42, "premiere", "Premiere", NativeDockTool_Click);
+            AddSecondarySharedHotspot(559, 972, 96, 42, "yassin", "YASSIN", NativeDockTool_Click);
+            AddSecondarySharedHotspot(662, 972, 104, 42, "tailscale", "Tailscale", NativeDockTool_Click);
+            AddSecondarySharedHotspot(773, 972, 93, 42, "models", "Models", NativeDockTool_Click);
+            AddSecondarySharedHotspot(873, 972, 103, 42, "evidence", "Evidence", NativeDockTool_Click);
+            AddSecondarySharedHotspot(983, 972, 126, 42, "android-owner", "Android Owner", NativeDockTool_Click);
             AddSecondarySharedHotspot(1390, 973, 126, 40, "all-tools", "جميع الأدوات", NativeDockTool_Click);
         }
     }
