@@ -7475,11 +7475,13 @@ public partial class MainWindow : Window
                 break;
             case HotspotKind.DecisionAction:
                 AnimateDecisionIntentCue(source);
-                HandleDecisionAction(hotspot.Id);
+                RunAfterSemanticMotion(180, () => HandleDecisionAction(hotspot.Id));
                 break;
             case HotspotKind.RecoveryAction:
                 AnimateRecoveryIntentCue(source, hotspot.Id);
-                HandleRecoveryAction(hotspot.Id);
+                RunAfterSemanticMotion(
+                    hotspot.Id is "fork" or "restore" ? 360 : 180,
+                    () => HandleRecoveryAction(hotspot.Id));
                 break;
             case HotspotKind.Artifact:
                 OpenArtifact(hotspot.Id);
@@ -7489,7 +7491,9 @@ public partial class MainWindow : Window
                 break;
             case HotspotKind.Pulse:
                 AnimatePulseInteractionCue(source, hotspot.Id);
-                OpenPulseDetail(hotspot.Id);
+                RunAfterSemanticMotion(
+                    hotspot.Id == "handoff" ? 360 : 160,
+                    () => OpenPulseDetail(hotspot.Id));
                 break;
             default:
                 OpenScreenRegion(hotspot.Id, hotspot.Label);
@@ -7796,6 +7800,26 @@ public partial class MainWindow : Window
         }
     }
 
+    private void RunAfterSemanticMotion(int delayMs, Action action)
+    {
+        if (!MotionEnabled || delayMs <= 0)
+        {
+            action();
+            return;
+        }
+
+        var timer = new System.Windows.Threading.DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(delayMs),
+        };
+        timer.Tick += (_, _) =>
+        {
+            timer.Stop();
+            action();
+        };
+        timer.Start();
+    }
+
     private void RunScreenEntranceMotion(ScreenKind screen, bool isHome)
     {
         var layer = isHome
@@ -7816,13 +7840,13 @@ public partial class MainWindow : Window
         var (durationMs, startX, startY, startScale) = screen switch
         {
             ScreenKind.Home => (420d, 0d, 24d, 0.985d),
-            ScreenKind.ProjectWorkspace => (520d, 42d, 0d, 0.985d),
-            ScreenKind.SoftwareAutopilot => (540d, 48d, 0d, 0.982d),
-            ScreenKind.StudioProject => (560d, 0d, 34d, 0.982d),
-            ScreenKind.DecisionMode => (620d, 0d, 42d, 0.965d),
-            ScreenKind.RecoveryFork => (680d, -58d, 0d, 0.975d),
-            ScreenKind.PulseStory => (560d, 52d, 0d, 0.982d),
-            ScreenKind.WorkReceipt => (680d, 0d, 46d, 0.95d),
+            ScreenKind.ProjectWorkspace => (580d, 68d, 0d, 0.975d),
+            ScreenKind.SoftwareAutopilot => (580d, 72d, 0d, 0.974d),
+            ScreenKind.StudioProject => (600d, 0d, 52d, 0.974d),
+            ScreenKind.DecisionMode => (700d, 0d, 62d, 0.955d),
+            ScreenKind.RecoveryFork => (760d, -88d, 0d, 0.96d),
+            ScreenKind.PulseStory => (600d, 78d, 0d, 0.972d),
+            ScreenKind.WorkReceipt => (760d, 0d, 72d, 0.94d),
             _ => (500d, 28d, 0d, 0.985d),
         };
 
