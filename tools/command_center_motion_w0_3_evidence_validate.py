@@ -84,7 +84,7 @@ for marker in (
         raise SystemExit(f"W0.3 workflow marker missing: {marker}")
 
 for marker in (
-    'manifest["frame_rate"] < 20',
+    "if frame_rate < 20:",
     "math.ceil(60 * fps_scale)",
     "math.ceil(6 * fps_scale)",
     "sha256(raw) != frame[",
@@ -121,7 +121,4 @@ if position["phase_status"] != "MOTION_EVIDENCE_PIPELINE_LOCK":
 if position["next_phase_started"] is not False:
     raise SystemExit("W1.1 started before W0.3 validation")
 
-print(
-    "Motion W0.3 evidence validation: PASS "
-    "(30fps exact-head raw evidence + time-normalized gates locked)"
-)
+print("Motion W0.3 evidence validation: PASS (30fps exact-head raw evidence + time-normalized gates locked)")

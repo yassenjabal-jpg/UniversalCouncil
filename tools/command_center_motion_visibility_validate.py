@@ -54,10 +54,10 @@ required_recorder_markers = (
     "changed_frame_count = changedFrameCount",
     "longest_changed_run = longestChangedRun",
     "motion_run_count = motionRunCount",
-    'candidate_sha = candidateSha',
+    "candidate_sha = candidateSha",
     'source_surface = "ACTUAL_WPF"',
-    'raw_frames_included = true',
-    'semantic_event_timestamps = true',
+    "raw_frames_included = true",
+    "semantic_event_timestamps = true",
 )
 for marker in required_recorder_markers:
     if marker not in recorder:
@@ -69,7 +69,7 @@ if "Verify exact candidate head" not in workflow:
     raise SystemExit("WPF evidence workflow does not verify the exact candidate head")
 
 required_gate_markers = (
-    'manifest["frame_rate"] < 20',
+    "if frame_rate < 20:",
     "math.ceil(60 * fps_scale)",
     "math.ceil(6 * fps_scale)",
     "motion_runs < 8",
