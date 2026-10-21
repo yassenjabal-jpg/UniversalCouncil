@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "ledger_id": "repair-b1-eight-screen-native-completion",
-  "status": "EVIDENCE_PENDING",
+  "status": "MURTAKAZ_REVIEW_REQUIRED",
   "change_id": "CC-REPAIR-B1-NATIVE-COMPLETION-2026-10-21",
   "canonical_reference_manifest": "state/command-center/living-operations-reference-manifest.json",
   "evidence_rule": "REFERENCE_NATIVE_BLEND_REQUIRED_PER_SCREEN",
@@ -12,85 +12,134 @@
       "role": "home_owner_workspace",
       "source_phase": "R5_HOME_MICRO_POLISH",
       "debt_origin": "EXPLICIT_R5",
-      "state": "EVIDENCE_PENDING",
+      "state": "MICRO_POLISH_COMPLETE_REVIEW_REQUIRED",
       "reference_file": "home-reference-only-1440x900.png",
       "native_file": "home-native-1440x900.png",
-      "blend_file": "home-native-overlay-1440x900.png"
+      "blend_file": "home-native-overlay-1440x900.png",
+      "evidence": {
+        "reference_sha256": "6b0266bfc1796ea768a1b851b673bfbf34799483a3a61992f296bf54624155be",
+        "native_sha256": "35651f18563efb7c42e03ea5ebfa6b3558cc29de546b1301599e5d06d34e81f1",
+        "blend_sha256": "b60a42d7d80f28e4b2247031c08f551937d73f079f0303ca13aeb94176f6065f"
+      },
+      "review": "NO_B1_STRUCTURAL_BLOCKER_R9_CROSS_SCREEN_AUDIT_PENDING"
     },
     {
       "order": 2,
       "role": "living_project_workspace",
       "source_phase": "R6_PROJECT_WORKSPACE_MICRO_POLISH",
       "debt_origin": "EXPLICIT_R6",
-      "state": "EVIDENCE_PENDING",
+      "state": "MICRO_POLISH_COMPLETE_REVIEW_REQUIRED",
       "reference_file": "project-workspace-reference-1440x900.png",
       "native_file": "project-workspace-native-1440x900.png",
-      "blend_file": "project-workspace-blend-1440x900.png"
+      "blend_file": "project-workspace-blend-1440x900.png",
+      "evidence": {
+        "reference_sha256": "d7517b1d2e631a2e7fa89c3f6859e07fb2633a754e6d55764f91fcf9e6b5fc5e",
+        "native_sha256": "01b8607eb901ab6f93998bea1c6727122230e16804eeaeb1dcc7d15a32891c73",
+        "blend_sha256": "0a4f0c731cd7f34ebcca2ebf10ed7cebaa7f89e5c23d413866d7330e1cd8490f"
+      },
+      "review": "NO_B1_STRUCTURAL_BLOCKER_R9_CROSS_SCREEN_AUDIT_PENDING"
     },
     {
       "order": 3,
       "role": "software_autopilot_project",
       "source_phase": "R7_SOFTWARE_AUTOPILOT_MICRO_POLISH",
       "debt_origin": "EXPLICIT_R7",
-      "state": "EVIDENCE_PENDING",
+      "state": "MICRO_POLISH_COMPLETE_REVIEW_REQUIRED",
       "reference_file": "software-autopilot-reference-1440x900.png",
       "native_file": "software-autopilot-native-1440x900.png",
-      "blend_file": "software-autopilot-blend-1440x900.png"
+      "blend_file": "software-autopilot-blend-1440x900.png",
+      "evidence": {
+        "reference_sha256": "7c85da928088a5ef1c4beb5a368d0104c720ed1fcdeae099b99b55e4713ac655",
+        "native_sha256": "7a3fc87d6df1514e75c8142579f12e984f421f353a10afcbed8bcbd83c42983c",
+        "blend_sha256": "220a084fcb7471e1355911dddff41cf355544d6a661a6347b6736697964f89f9"
+      },
+      "review": "NO_B1_STRUCTURAL_BLOCKER_R9_CROSS_SCREEN_AUDIT_PENDING"
     },
     {
       "order": 4,
       "role": "studio_project",
       "source_phase": "R8_STUDIO_PROJECT_MICRO_POLISH",
       "debt_origin": "EXPLICIT_R8",
-      "state": "EVIDENCE_PENDING",
+      "state": "MICRO_POLISH_COMPLETE_REVIEW_REQUIRED",
       "reference_file": "studio-project-reference-1440x900.png",
       "native_file": "studio-project-native-1440x900.png",
-      "blend_file": "studio-project-blend-1440x900.png"
+      "blend_file": "studio-project-blend-1440x900.png",
+      "evidence": {
+        "reference_sha256": "d07e01ab4c74e776e91bccaac730acc59008d03ca22202fc6b9f1203df33766c",
+        "native_sha256": "d548617a5e228a61e26f940244ea9f1b1936336f55118f25e3cf152680575a12",
+        "blend_sha256": "d016adf5560fd02b92d69fad0ff9825c680cd2c03f1227a0db4ba7e3491bcdea"
+      },
+      "review": "NO_B1_STRUCTURAL_BLOCKER_R9_CROSS_SCREEN_AUDIT_PENDING"
     },
     {
       "order": 5,
       "role": "owner_decision_mode",
       "source_phase": "R1_OWNER_DECISION_MODE",
       "debt_origin": "MICRO_POLISH_DEFERRED_R1",
-      "state": "EVIDENCE_PENDING",
+      "state": "MICRO_POLISH_COMPLETE_REVIEW_REQUIRED",
       "reference_file": "owner-decision-reference-1440x900.png",
       "native_file": "owner-decision-native-1440x900.png",
-      "blend_file": "owner-decision-blend-1440x900.png"
+      "blend_file": "owner-decision-blend-1440x900.png",
+      "evidence": {
+        "reference_sha256": "28ede06357eb78db027bb3e45c458a9d082a84e0a8833b9a69b225e1dccdc998",
+        "native_sha256": "0d1bcd8f6d307cc3e1dd29d987f7e4418df66fad59443fa3ff6ba87655cb2c4f",
+        "blend_sha256": "c6a9b57e2c008685a42889a1b951871e9206babd396cfa91acdbf2bf6121cada"
+      },
+      "review": "NO_B1_STRUCTURAL_BLOCKER_R9_CROSS_SCREEN_AUDIT_PENDING"
     },
     {
       "order": 6,
       "role": "checkpoint_recovery_fork",
       "source_phase": "R2_RECOVERY_FORK",
       "debt_origin": "MICRO_POLISH_DEFERRED_R2",
-      "state": "EVIDENCE_PENDING",
+      "state": "MICRO_POLISH_COMPLETE_REVIEW_REQUIRED",
       "reference_file": "recovery-fork-reference-1440x900.png",
       "native_file": "recovery-fork-native-1440x900.png",
-      "blend_file": "recovery-fork-blend-1440x900.png"
+      "blend_file": "recovery-fork-blend-1440x900.png",
+      "evidence": {
+        "reference_sha256": "645c1029daaeaec24177c7d93d876604440dc567cba29931987a04ecdb86f419",
+        "native_sha256": "ed616171da2e7c936a15a80317dbe50555d159cc24e1256607e620c29f031935",
+        "blend_sha256": "fc5692f7aa9d5879b177d97b040fb1701c0a5a9582b7dae0d02edb835907a59e"
+      },
+      "review": "NO_B1_STRUCTURAL_BLOCKER_R9_CROSS_SCREEN_AUDIT_PENDING"
     },
     {
       "order": 7,
       "role": "pulse_visual_project_story",
       "source_phase": "R3_PULSE_STORY",
       "debt_origin": "MICRO_POLISH_DEFERRED_R3",
-      "state": "EVIDENCE_PENDING",
+      "state": "MICRO_POLISH_COMPLETE_REVIEW_REQUIRED",
       "reference_file": "pulse-story-reference-1440x900.png",
       "native_file": "pulse-story-native-1440x900.png",
-      "blend_file": "pulse-story-blend-1440x900.png"
+      "blend_file": "pulse-story-blend-1440x900.png",
+      "evidence": {
+        "reference_sha256": "ab7e6e356d021b1c0fcb42f19ccc099f3f7741ceaa52d7e9a1d136d7f7fd8a47",
+        "native_sha256": "977d66ced8f7198f6adb30bbdbde8c8f155b2be7ddec2ff86b63ce460c092d5d",
+        "blend_sha256": "8e4c53cdbd7c43ca2ddf94bb0ce2c689b88f1e4906c1bf72317b8e10a2193a41"
+      },
+      "review": "NO_B1_STRUCTURAL_BLOCKER_R9_CROSS_SCREEN_AUDIT_PENDING"
     },
     {
       "order": 8,
       "role": "project_complete_work_receipt",
       "source_phase": "R4_WORK_RECEIPT",
       "debt_origin": "MICRO_POLISH_DEFERRED_R4",
-      "state": "EVIDENCE_PENDING",
+      "state": "MICRO_POLISH_COMPLETE_REVIEW_REQUIRED",
       "reference_file": "work-receipt-reference-1440x900.png",
       "native_file": "work-receipt-native-1440x900.png",
-      "blend_file": "work-receipt-blend-1440x900.png"
+      "blend_file": "work-receipt-blend-1440x900.png",
+      "evidence": {
+        "reference_sha256": "754be409d18386fd8d4661c049eaa89100f75fa030d6f12e10637dcfff207804",
+        "native_sha256": "4120d2075cb80515df07c6bac2170159beb19ea29a2a8e5f82b352495f500bb0",
+        "blend_sha256": "3ad75231ca5918543cd7d34d28f940b19040e5ed19422e1bdd903ac1ada74059"
+      },
+      "review": "NO_B1_STRUCTURAL_BLOCKER_R9_CROSS_SCREEN_AUDIT_PENDING"
     }
   ],
   "allowed_screen_states": [
     "EVIDENCE_PENDING",
     "RETURNED_FOR_CHANGES",
+    "MICRO_POLISH_COMPLETE_REVIEW_REQUIRED",
     "MICRO_POLISH_COMPLETE"
   ],
   "closure_rule": "ALL_EIGHT_MICRO_POLISH_COMPLETE_AND_EXACT_HEAD_CI_PASS_AND_MURTAKAZ_POST_REVIEW",
@@ -100,5 +149,19 @@
     "stage8_opened": false,
     "runtime_authority": false,
     "final_visual_approval": false
+  },
+  "material_evidence": {
+    "head_sha": "69dc13fa94928be292237f082e77e656f792222b",
+    "reference_ui_run_id": 39583770008,
+    "artifact_id": 12338007893,
+    "artifact_digest": "sha256:e69a99e1d19b8c764928a7464c70119aea3ad7c38424a53bb87f416804cc3391",
+    "native_only_reference_hidden": true,
+    "shared_secondary_chrome_completed": true,
+    "decision_native_project_underlay_completed": true,
+    "wpf_build": "PASS",
+    "context_validation": "PASS",
+    "gateway_validation": "PASS",
+    "capability_model_validation": "PASS",
+    "render": "PASS"
   }
 }
