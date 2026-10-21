@@ -22,18 +22,8 @@ class CommandCenterRepairB2ConsistencyTests(unittest.TestCase):
         cls.b2_1_check = load(PROJECT / "approvals" / "2026-10-21-repair-b2-1-shared-visual-check.json")
         cls.p1 = load(STATE / "living-operations-p1-visual-phase.json")
         cls.screen_review = load(STATE / "living-operations-p1-screen-review.json")
-        cls.main = (
-            ROOT
-            / "apps"
-            / "UniversalCouncil.CommandCenter"
-            / "MainWindow.xaml.cs"
-        ).read_text(encoding="utf-8")
-        cls.xaml = (
-            ROOT
-            / "apps"
-            / "UniversalCouncil.CommandCenter"
-            / "MainWindow.xaml"
-        ).read_text(encoding="utf-8")
+        cls.main = (ROOT / "apps" / "UniversalCouncil.CommandCenter" / "MainWindow.xaml.cs").read_text(encoding="utf-8")
+        cls.xaml = (ROOT / "apps" / "UniversalCouncil.CommandCenter" / "MainWindow.xaml").read_text(encoding="utf-8")
 
     def test_b2_is_scoped_and_does_not_preapprove_b3(self) -> None:
         self.assertTrue(self.pre["implementation_authorized"])
@@ -75,8 +65,7 @@ class CommandCenterRepairB2ConsistencyTests(unittest.TestCase):
         self.assertIn("e.Key == Key.K", self.main)
         self.assertIn("UNKNOWN / SEARCH PROVIDER NOT CONNECTED", self.main)
         self.assertIn(
-            "SecondaryNativeLayer.Opacity = "
-            "_nativeReferenceBlendEnabled && !isHome ? 0.46 : 1;",
+            "SecondaryNativeLayer.Opacity = _nativeReferenceBlendEnabled && !isHome ? 0.46 : 1;",
             self.main,
         )
         self.assertIn('KeyboardNavigation.TabNavigation="Cycle"', self.xaml)
