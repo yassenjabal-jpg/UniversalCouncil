@@ -58,10 +58,12 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
         if motion_runs < 8:
             raise SystemExit("full motion capture does not prove enough separate semantic motion events")
     else:
-        if changed_frames < 24:
-            raise SystemExit("reduced motion capture lost too much visible state-transition feedback")
-        if motion_runs < 5:
+        if changed_frames < 8:
+            raise SystemExit("reduced motion capture lost required discrete state-transition feedback")
+        if motion_runs < 8:
             raise SystemExit("reduced motion capture does not prove semantic parity across transitions")
+        if longest_run > 3:
+            raise SystemExit("reduced motion capture retained travel/loop motion that should be removed")
 
     video = folder / integrity["file"]
     if not video.exists():
