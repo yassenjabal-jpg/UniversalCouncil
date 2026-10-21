@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "CC-POST-P1-MOTION-INTERACTION-AUDIT-2026-10-21",
+  "status": "IMPLEMENTED_AWAITING_EXACT_HEAD_CI_POST_REVIEW",
+  "change_id": "CC-POST-P1-MOTION-INTERACTION-LAW-2026-10-21",
+  "implementation_head": "76c3a47ca6a8792dea4e20f4aac9f7bce315c614",
+  "authoritative_stage": "STAGE_7",
+  "p1_complete": true,
+  "stage8_opened": false,
+  "runtime_authority": false,
+  "audit_scope": {
+    "canonical_screen_count": 8,
+    "screens": [
+      "home_owner_workspace",
+      "living_project_workspace",
+      "software_autopilot_project",
+      "studio_project",
+      "owner_decision_mode",
+      "checkpoint_recovery_fork",
+      "pulse_visual_project_story",
+      "project_complete_work_receipt"
+    ],
+    "static_wpf_buttons_reviewed": 67,
+    "static_buttons_without_action_binding": 0,
+    "dynamic_hotspot_dispatch": "CENTRALIZED_FUNCTIONAL_ROUTING"
+  },
+  "findings": [
+    {
+      "id": "MI-01",
+      "severity": "MATERIAL",
+      "status": "FIXED",
+      "finding": "Home Start was feedback-only while live execution was locked.",
+      "fix": "Start now opens Execution Readiness with explicit Stage 8/runtime gates and no false dispatch."
+    },
+    {
+      "id": "MI-02",
+      "severity": "MATERIAL",
+      "status": "FIXED",
+      "finding": "Decision Approve/Request Changes/Reject/Ask ended in transient feedback only.",
+      "fix": "Decision controls now open Owner Intent Preview with project/evidence context and explicit no-dispatch truth."
+    },
+    {
+      "id": "MI-03",
+      "severity": "MATERIAL",
+      "status": "FIXED",
+      "finding": "Recovery/Fork/Promote/Delete ended in transient feedback only.",
+      "fix": "Recovery controls now open Recovery Intent Preview with checkpoint/evidence/authority requirements."
+    },
+    {
+      "id": "MI-04",
+      "severity": "MEDIUM",
+      "status": "FIXED",
+      "finding": "Attachment, Ask This, Contribution History and unavailable reasoning paths could terminate in informational feedback only.",
+      "fix": "They now open inspectable readiness/context/history/state surfaces."
+    }
+  ],
+  "approved_motion_map": [
+    {
+      "motion": "screen_transition",
+      "purpose": [
+        "NAVIGATION"
+      ],
+      "bounded": true,
+      "reduced_motion": "direct state / restrained fade"
+    },
+    {
+      "motion": "drawer_enter_exit",
+      "purpose": [
+        "NAVIGATION",
+        "STATE"
+      ],
+      "bounded": true,
+      "reduced_motion": "instant open/close"
+    },
+    {
+      "motion": "role_button_pulse",
+      "purpose": [
+        "FEEDBACK"
+      ],
+      "bounded": true,
+      "reduced_motion": "static selected state"
+    },
+    {
+      "motion": "role_activation_ring",
+      "purpose": [
+        "STATE",
+        "FEEDBACK"
+      ],
+      "bounded": true,
+      "reduced_motion": "static emphasis"
+    },
+    {
+      "motion": "secondary_activation_ring",
+      "purpose": [
+        "FEEDBACK"
+      ],
+      "bounded": true,
+      "reduced_motion": "static emphasis"
+    },
+    {
+      "motion": "notice_fade",
+      "purpose": [
+        "FEEDBACK"
+      ],
+      "bounded": true,
+      "reduced_motion": "immediate hide after feedback interval"
+    }
+  ],
+  "law": {
+    "decorative_only_motion_forbidden": true,
+    "fake_clickable_surface_forbidden": true,
+    "feedback_only_primary_action_forbidden": true,
+    "unknown_never_success": true,
+    "reduced_motion_semantic_parity_required": true
+  },
+  "post_review_required": true,
+  "merge_authorized": false,
+  "timestamp": "2026-10-21"
+}
