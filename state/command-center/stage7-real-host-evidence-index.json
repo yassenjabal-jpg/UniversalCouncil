@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "evidence_index_id": "CC-STAGE7-REAL-HOST-EVIDENCE-2026-10-21",
   "stage": "STAGE_7",
-  "status": "READY_WAITING_REAL_HOST_ACCESS",
+  "status": "REPOSITORY_READY_WAITING_REAL_HOST_ACCESS",
   "target_host": "YASSIN",
   "observed_access_snapshot": {
     "observed_date": "2026-10-21",
@@ -71,5 +71,18 @@
     "bearer_token_forbidden": true,
     "same_phone_credential_must_fail_after_revocation": true,
     "queued_command_must_remain_execution_blocked": true
+  },
+  "repository_readiness": {
+    "decision": "APPROVED_BY_AL_MURTAKAZ",
+    "material_head": "53c4148430308b8b77f32cf92e01fa26979ff17e",
+    "stage7_run_id": 39628334396,
+    "stage7_ui_artifact_id": 12358556711,
+    "stage7_ui_artifact_digest": "sha256:50c36de8b9e00ec01aeb9dbcaeabe5eeaa2d0ad22bbb41071d62b551f63a3ea5",
+    "stage7_host_kit_artifact_id": 12357518196,
+    "stage7_host_kit_artifact_digest": "sha256:6f042487bb5c73ad6c817209dca3b1478fd04e8b12b89721fd5a23e13d53d68f",
+    "company_stage0_run_id": 39628334458,
+    "codeql_run_id": 39628334507,
+    "reference_ui_run_id": 39628334504,
+    "p1_regression_run_id": 39628334487
   }
 }
