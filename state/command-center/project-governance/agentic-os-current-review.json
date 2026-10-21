@@ -15,7 +15,9 @@
     "state/command-center/project-governance/approvals/2026-10-21-context-resolver-compiler-post.json",
     "state/command-center/project-governance/approvals/2026-10-21-gateway-routing-post.json",
     "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-post.json",
-    "state/command-center/project-governance/approvals/2026-10-21-repair-a1-context-baseline-post.json"
+    "state/command-center/project-governance/approvals/2026-10-21-repair-a1-context-baseline-post.json",
+    "state/command-center/project-governance/approvals/2026-10-21-repair-a2-governance-metadata-post.json",
+    "state/command-center/project-governance/approvals/2026-10-21-repair-a3-truth-lock-post.json"
   ],
   "merged_lineage": [
     {
@@ -47,6 +49,11 @@
       "slice": "Repair A1 Context Baseline Truth",
       "pr": 61,
       "merge_sha": "f55d6f924d0e29a27eebead09e342e899615b38f"
+    },
+    {
+      "slice": "Repair A2 Governance Metadata Reconciliation",
+      "pr": 62,
+      "merge_sha": "76eeca02b79790c28a181520cc019d3586769b26"
     }
   ],
   "completed_agentic_slices": [
@@ -55,16 +62,20 @@
     "CONTEXT_RESOLVER_AND_CONTEXT_CAPSULE_COMPILER",
     "MURTAKAZ_GATEWAY_AND_ROUTING_COORDINATOR",
     "CAPABILITY_REGISTRY_AND_MODEL_BROKER",
-    "REPAIR_A1_DYNAMIC_CONTEXT_BASELINE"
+    "REPAIR_A1_DYNAMIC_CONTEXT_BASELINE",
+    "REPAIR_A2_GOVERNANCE_METADATA_RECONCILIATION",
+    "REPAIR_A3_WAVE_A_TRUTH_LOCK"
   ],
   "repair_program": {
     "wave_a": {
       "A1": "COMPLETE_APPROVED",
       "A2": "COMPLETE_APPROVED",
-      "A3": "ACTIVE"
+      "A3": "COMPLETE_APPROVED",
+      "status": "COMPLETE_APPROVED"
     },
-    "wave_b": "PENDING",
-    "wave_c": "PENDING"
+    "wave_b": "ACTIVE",
+    "wave_c": "PENDING",
+    "wave_b_current_stage": "B1_COMPLETE_REMAINING_NATIVE_WORK"
   },
   "next_engineering_after_repairs": "SKILL_REGISTRY",
   "protected_truth": {
@@ -83,5 +94,12 @@
     "status": "APPROVED_BY_AL_MURTAKAZ",
     "reviewed_head": "d6ab8bc97d44f9f3c0a50b9cf8e2bbf4b7a64947",
     "post_approval": "state/command-center/project-governance/approvals/2026-10-21-repair-a2-governance-metadata-post.json"
+  },
+  "latest_repair_wave_a_closure": {
+    "change_id": "CC-REPAIR-A3-TRUTH-LOCK-2026-10-21",
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "reviewed_head": "aad78756da7ce050a7ca8f45817574e78689860b",
+    "post_approval": "state/command-center/project-governance/approvals/2026-10-21-repair-a3-truth-lock-post.json",
+    "next_active_work": "REPAIR_WAVE_B1_COMPLETE_REMAINING_NATIVE_WORK"
   }
 }
