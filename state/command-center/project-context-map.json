@@ -4,7 +4,7 @@
   "project_id": "universal-council-command-center",
   "baseline_branch": "command-center/project-local-council-studio-20261019",
   "baseline_revision": "b3ef5d8f60e3f623371b40036bcea01f7a396d2a",
-  "source_revision": "8f6870dd006f6a27530421e42eab806814b2b6f63928cf82023bfbd799ce12bd",
+  "source_revision": "8c3ab85be0cf2b6e182b7f66fcf078f41b80e47131f08b8697461f4892a81e26",
   "head_validation_mode": "BASELINE_ANCESTOR_AND_SOURCE_BLOBS_MATCH_HEAD",
   "project_manifest": {
     "display_name": "UniversalCouncil Command Center",
@@ -28,7 +28,7 @@
     "context_currentness_is_source_blob_verified"
   ],
   "active_work": [
-    "REPAIR_WAVE_A1_CONTEXT_BASELINE"
+    "REPAIR_WAVE_A2_GOVERNANCE_METADATA_RECONCILIATION"
   ],
   "relevant_skills": [
     "project_local_murtakaz_review",
@@ -41,7 +41,8 @@
     "CONTEXT_RESOLVER_CAPSULE_COMPILER_APPROVED",
     "GATEWAY_ROUTING_APPROVED",
     "CAPABILITY_REGISTRY_MODEL_BROKER_APPROVED",
-    "REPAIR_INVENTORY_IDENTIFIED_STALE_CONTEXT_BASELINE"
+    "REPAIR_INVENTORY_IDENTIFIED_STALE_CONTEXT_BASELINE",
+    "REPAIR_WAVE_A1_CONTEXT_BASELINE_APPROVED"
   ],
   "blockers": [
     "PHASE0_LIVE_EXECUTION_LOCK",
@@ -95,7 +96,7 @@
     {
       "id": "context-capsule-contract",
       "path": "state/command-center/project-governance/context-capsule-contract.json",
-      "blob_sha": "194e8cdde4802a5915d1995c0db172fd24db2b6b",
+      "blob_sha": "d6639502a6377aa2cc9fab868d4b8b635960f15a",
       "authority_class": "LOCKED_POLICY",
       "freshness": "CURRENT",
       "domains": [
@@ -323,7 +324,7 @@
     {
       "id": "context-pipeline-state",
       "path": "state/command-center/context-pipeline-state.json",
-      "blob_sha": "30065442b3ec3ca1cb48d25c504090f42af9e2ff",
+      "blob_sha": "ff4f45fe43cdb51af0102657bda720ae301b3427",
       "authority_class": "CANONICAL_ARTIFACT",
       "freshness": "CURRENT",
       "domains": [
