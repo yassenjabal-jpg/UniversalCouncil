@@ -61,7 +61,8 @@ public sealed class ModelBroker : IModelBroker
         var primary = EvaluateCandidate(
             preference.ModelId,
             request.Preferences,
-            policy);
+            policy,
+            asFallback: false);
 
         if (primary.Eligible)
         {
@@ -96,7 +97,8 @@ public sealed class ModelBroker : IModelBroker
             var fallback = EvaluateCandidate(
                 fallbackId,
                 request.Preferences,
-                policy);
+                policy,
+                asFallback: true);
 
             if (!fallback.Eligible)
             {
@@ -125,7 +127,8 @@ public sealed class ModelBroker : IModelBroker
     private ModelEvaluation EvaluateCandidate(
         string modelId,
         ModelRoutingPreferences preferences,
-        ModelBrokerPolicyDocument policy)
+        ModelBrokerPolicyDocument policy,
+        bool asFallback)
     {
         var model = policy.Models.SingleOrDefault(item => item.ModelId == modelId);
         if (model is null)
@@ -167,6 +170,11 @@ public sealed class ModelBroker : IModelBroker
             return new(false, model, $"Model privacy class is less restrictive than allowed: {modelId}");
         }
 
+        if (model.ContextWindow < preferences.MinimumContextWindow)
+        {
+            return new(false, model, $"Model context window is below the requested minimum: {modelId}");
+        }
+
         var capability = capabilities.Resolve(
             new(
                 model.CapabilityOperation,
@@ -182,6 +190,29 @@ public sealed class ModelBroker : IModelBroker
                 false,
                 model,
                 $"Model invocation capability is not eligible: {capability.State} / {capability.Reason}");
+        }
+
+        if (capability.Capability is null)
+        {
+            return new(false, model, "Capability Registry returned no operation projection.");
+        }
+
+        if (!preferences.AllowedLatencyCosts.Contains(
+                capability.Capability.LatencyCost,
+                StringComparer.Ordinal))
+        {
+            return new(
+                false,
+                model,
+                $"Model invocation latency/cost class is not allowed: {capability.Capability.LatencyCost}");
+        }
+
+        if (asFallback && !capability.Capability.FallbackEligible)
+        {
+            return new(
+                false,
+                model,
+                $"Model invocation capability is not fallback-eligible: {modelId}");
         }
 
         return new(true, model, "eligible");
@@ -308,6 +339,13 @@ public sealed class ModelBroker : IModelBroker
     {
         ValidateDistinct(preferences.AllowedFallbackModelIds, "fallback allowlist");
         ValidateDistinctNonEmpty(preferences.RequiredCapabilities, "required model capabilities");
+        ValidateDistinctNonEmpty(preferences.AllowedLatencyCosts, "allowed latency/cost classes");
+
+        if (preferences.MinimumContextWindow <= 0)
+        {
+            throw new ModelBrokerException(
+                "MinimumContextWindow must be positive.");
+        }
 
         if (!policy.AllowedFallbackModes.Contains(
                 preferences.FallbackMode.ToString(),
