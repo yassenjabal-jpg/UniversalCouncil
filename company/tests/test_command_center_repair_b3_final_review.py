@@ -21,9 +21,7 @@ class CommandCenterRepairB3FinalReviewTests(unittest.TestCase):
         cls.p1 = load(STATE / "living-operations-p1-visual-phase.json")
         cls.screen_review = load(STATE / "living-operations-p1-screen-review.json")
         cls.remainder = load(STATE / "living-operations-p1-remainder-phases.json")
-        cls.return_receipt = load(
-            PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-return.json"
-        )
+        cls.return_receipt = load(PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-return.json")
 
     def test_desktop_final_fidelity_review_covers_all_eight(self) -> None:
         self.assertEqual(len(self.result["desktop_screens"]), 8)
