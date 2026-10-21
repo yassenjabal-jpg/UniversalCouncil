@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-B3-FINAL-P1-ACCEPTANCE-PRE-2026-10-21",
+  "change_id": "CC-REPAIR-B3-FINAL-P1-ACCEPTANCE-2026-10-21",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "scope": "R10_FINAL_MURTAKAZ_STUDIO_REVIEW_ONLY",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "77a0e21bd40fc4a306fe75cc131e9c5740110db6"
+  },
+  "implementation_authorized": true,
+  "review_only_scope": true,
+  "merge_authorized": false,
+  "final_p1_approval_granted": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "authority_note": "Opening R10 authorizes final P1 review only; it does not imply P1 success.",
+  "governance_reviewers": [
+    "cc_product_truth",
+    "cc_red_team",
+    "cc_owner_experience",
+    "cc_experience_architect",
+    "cc_accessibility_clearance"
+  ],
+  "workshop_reviewers": [
+    "cc_visual_systems",
+    "cc_interaction_director",
+    "cc_motion_systems",
+    "cc_visual_qa"
+  ],
+  "timestamp": "2026-10-21"
+}
