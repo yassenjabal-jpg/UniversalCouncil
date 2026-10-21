@@ -68,6 +68,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="..\..\state\command-center\capability-registry.json"
+             Link="state\capability-registry.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\state\command-center\model-broker-policy.json"
+             Link="state\model-broker-policy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="..\..\state\command-center\remote-owner-gateway.json"
              Link="state\remote-owner-gateway.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

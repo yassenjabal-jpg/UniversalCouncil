@@ -9,9 +9,9 @@
     "routing_coordinator": "IMPLEMENTED_DETERMINISTIC",
     "routing_policy_reader": "IMPLEMENTED_READ_ONLY",
     "host_composition": "WIRED",
-    "model_broker": "NOT_IMPLEMENTED",
+    "model_broker": "IMPLEMENTED_SELECTION_ONLY",
     "skill_registry": "NOT_IMPLEMENTED",
-    "capability_registry": "NOT_IMPLEMENTED",
+    "capability_registry": "IMPLEMENTED_READ_ONLY",
     "job_engine": "NOT_IMPLEMENTED",
     "live_dispatch": "DISABLED"
   },
@@ -28,7 +28,10 @@
     "context_conflict_propagates": true,
     "context_resolved_before_routing": true,
     "route_reason_required": true,
-    "gateway_does_not_call_execution_fabric": true
+    "gateway_does_not_call_execution_fabric": true,
+    "provider_invocation_authorized": false,
+    "model_selection_owner_controlled": true,
+    "silent_model_fallback": false
   },
   "evidence": {
     "csharp_gateway_validation": {
@@ -54,7 +57,19 @@
     "murtakaz_post_review": {
       "status": "APPROVED_BY_AL_MURTAKAZ",
       "receipt": "state/command-center/project-governance/approvals/2026-10-21-gateway-routing-post.json"
+    },
+    "capability_model_extension": {
+      "status": "APPROVED_BY_AL_MURTAKAZ",
+      "reviewed_head": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe",
+      "post_approval": "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-post.json"
     }
   },
-  "murtakaz_post_approval": "state/command-center/project-governance/approvals/2026-10-21-gateway-routing-post.json"
+  "murtakaz_post_approval": "state/command-center/project-governance/approvals/2026-10-21-gateway-routing-post.json",
+  "current_extension": {
+    "change_id": "CC-CAPABILITY-MODEL-BROKER-2026-10-21",
+    "pre_approval": "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-pre.json",
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "reason": "Model Broker and Capability Registry are now integrated into the routing model stage; prior Gateway approval remains historical evidence but does not cover this material extension.",
+    "post_approval": "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-post.json"
+  }
 }

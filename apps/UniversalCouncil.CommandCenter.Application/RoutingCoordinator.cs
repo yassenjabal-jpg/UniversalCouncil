@@ -20,10 +20,14 @@ public sealed class RoutingCoordinator : IRoutingCoordinator
     };
 
     private readonly IGatewayRoutingPolicyReader reader;
+    private readonly IModelBroker modelBroker;
 
-    public RoutingCoordinator(IGatewayRoutingPolicyReader reader)
+    public RoutingCoordinator(
+        IGatewayRoutingPolicyReader reader,
+        IModelBroker modelBroker)
     {
         this.reader = reader;
+        this.modelBroker = modelBroker;
     }
 
     public RoutingPlan Coordinate(RoutingRequest request)
@@ -42,6 +46,9 @@ public sealed class RoutingCoordinator : IRoutingCoordinator
 
         var reasoningPath = SelectReasoningPath(request, policy);
         reasons.Add($"Reasoning path selected deterministically: {reasoningPath}.");
+
+        var modelSelection = modelBroker.Select(
+            new(reasoningPath, request.ModelPreferences));
 
         var stages = new List<RoutingStageDecision>
         {
@@ -62,7 +69,7 @@ public sealed class RoutingCoordinator : IRoutingCoordinator
                 RoutingStageState.Resolved,
                 reasoningPath.ToString(),
                 "Reasoning path is policy-derived; model strength does not change authority."),
-            BuildModelStage(reasoningPath, policy),
+            BuildModelStage(modelSelection),
             BuildExecutionStage(request, policy),
             new(
                 "verification",
@@ -86,11 +93,25 @@ public sealed class RoutingCoordinator : IRoutingCoordinator
             projectedUxState = "BLOCKED";
             reasons.Add("Write/execute dispatch remains blocked while live execution is disabled.");
         }
-        else if (reasoningPath != GatewayReasoningPath.Deterministic)
+        else if (modelSelection.State == ModelSelectionState.OwnerSelectionRequired)
+        {
+            state = GatewayPlanState.WaitingForApproval;
+            projectedUxState = "WAITING_FOR_APPROVAL";
+            reasons.Add("The selected reasoning path requires an explicit Owner model selection.");
+        }
+        else if (modelSelection.State is
+                 ModelSelectionState.Unavailable or
+                 ModelSelectionState.Blocked)
         {
             state = GatewayPlanState.Blocked;
             projectedUxState = "BLOCKED";
-            reasons.Add("The selected reasoning path needs a Model Broker, which is not implemented yet.");
+            reasons.Add($"Model selection cannot proceed: {modelSelection.Reason}");
+        }
+        else if (modelSelection.State == ModelSelectionState.Selected)
+        {
+            state = GatewayPlanState.Blocked;
+            projectedUxState = "BLOCKED";
+            reasons.Add("A model candidate is selected, but provider invocation is not authorized in this slice.");
         }
         else
         {
@@ -160,30 +181,39 @@ public sealed class RoutingCoordinator : IRoutingCoordinator
     }
 
     private static RoutingStageDecision BuildModelStage(
-        GatewayReasoningPath reasoningPath,
-        GatewayRoutingPolicyDocument policy)
-    {
-        if (reasoningPath == GatewayReasoningPath.Deterministic)
+        ModelSelectionResult selection) =>
+        selection.State switch
         {
-            return new(
+            ModelSelectionState.NotRequired => new(
                 "model",
                 RoutingStageState.NotRequired,
                 "NO_MODEL_REQUIRED",
-                "Deterministic routing path requires no model.");
-        }
-
-        if (policy.FutureDependencies.ModelBroker != "NOT_IMPLEMENTED")
-        {
-            throw new GatewayRoutingPolicyException(
-                "Routing policy unexpectedly claims Model Broker availability.");
-        }
-
-        return new(
-            "model",
-            RoutingStageState.DeferredNotImplemented,
-            "OWNER_SELECTION_REQUIRED / MODEL_BROKER_NOT_IMPLEMENTED",
-            "Role != Model; no model may be silently selected before Model Broker implementation.");
-    }
+                selection.Reason),
+            ModelSelectionState.OwnerSelectionRequired => new(
+                "model",
+                RoutingStageState.WaitingForApproval,
+                "OWNER_MODEL_SELECTION_REQUIRED",
+                selection.Reason),
+            ModelSelectionState.Selected => new(
+                "model",
+                RoutingStageState.Resolved,
+                $"{selection.ModelId}@{selection.ProviderId}",
+                selection.FallbackUsed
+                    ? $"Explicit fallback selected. {selection.Reason}"
+                    : selection.Reason),
+            ModelSelectionState.Unavailable => new(
+                "model",
+                RoutingStageState.Blocked,
+                "MODEL_UNAVAILABLE",
+                selection.Reason),
+            ModelSelectionState.Blocked => new(
+                "model",
+                RoutingStageState.Blocked,
+                "MODEL_BLOCKED",
+                selection.Reason),
+            _ => throw new GatewayRoutingPolicyException(
+                "Unsupported Model Broker selection state.")
+        };
 
     private static RoutingStageDecision BuildExecutionStage(
         RoutingRequest request,
@@ -413,12 +443,12 @@ public sealed class RoutingCoordinator : IRoutingCoordinator
         }
 
         if (policy.FutureDependencies.SkillRegistry != "NOT_IMPLEMENTED" ||
-            policy.FutureDependencies.ModelBroker != "NOT_IMPLEMENTED" ||
-            policy.FutureDependencies.CapabilityRegistry != "NOT_IMPLEMENTED" ||
+            policy.FutureDependencies.ModelBroker != "IMPLEMENTED_SELECTION_ONLY" ||
+            policy.FutureDependencies.CapabilityRegistry != "IMPLEMENTED_READ_ONLY" ||
             policy.FutureDependencies.JobEngine != "NOT_IMPLEMENTED")
         {
             throw new GatewayRoutingPolicyException(
-                "Gateway routing policy fabricated a future dependency.");
+                "Gateway routing dependency state drifted.");
         }
 
         if (policy.VerificationPolicy.Read != "SOURCE_PROVENANCE_REQUIRED" ||

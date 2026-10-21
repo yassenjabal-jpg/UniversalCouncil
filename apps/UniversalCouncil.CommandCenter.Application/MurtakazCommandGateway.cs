@@ -126,6 +126,7 @@ public sealed class MurtakazCommandGateway : IMurtakazCommandGateway
                     request.DestructiveOrIrreversible,
                     request.PrivacySensitive,
                     request.SpendOrSubscription,
+                    request.ModelPreferences,
                     capsule.Capsule.CapsuleId));
 
             return new(
@@ -187,6 +188,12 @@ public sealed class MurtakazCommandGateway : IMurtakazCommandGateway
         {
             throw new GatewayRoutingPolicyException(
                 "Gateway request timestamp is required.");
+        }
+
+        if (request.ModelPreferences is null)
+        {
+            throw new GatewayRoutingPolicyException(
+                "Gateway model preferences are required.");
         }
 
         ValidateDistinctNonEmpty(request.Domains, "domains");

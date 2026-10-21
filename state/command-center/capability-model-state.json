@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "state_id": "murtakaz-capability-model-runtime",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "canonical_base": "ea35e6d24931e5981d164fed89b0d494f80c2b44",
+  "components": {
+    "capability_registry": "IMPLEMENTED_READ_ONLY",
+    "model_broker": "IMPLEMENTED_SELECTION_ONLY",
+    "model_provider_calls": "DISCONNECTED",
+    "active_capability_probes": "NOT_IMPLEMENTED",
+    "credential_store": "NOT_IMPLEMENTED",
+    "model_settings_ui": "NOT_IMPLEMENTED",
+    "skill_registry": "NOT_IMPLEMENTED",
+    "job_engine": "NOT_IMPLEMENTED"
+  },
+  "laws": {
+    "operation_scoped_health": true,
+    "provider_level_green_forbidden": true,
+    "freshness_ttl_enforced": true,
+    "stale_capability_not_healthy": true,
+    "task_role_project_global_precedence": true,
+    "owner_controlled_selection": true,
+    "role_is_not_model": true,
+    "silent_fallback": false,
+    "explicit_fallback_allowlist_required": true,
+    "fallback_requires_capability_eligibility": true,
+    "minimum_context_window_enforced": true,
+    "latency_constraint_enforced": true,
+    "quality_floor_enforced": true,
+    "cost_ceiling_enforced": true,
+    "privacy_constraint_enforced": true,
+    "provider_invocation_authorized": false,
+    "execution_authority_granted": false
+  },
+  "production_truth": {
+    "provider_calls_connected": false,
+    "configured_models": 0,
+    "model_selection_capability": "HEALTHY",
+    "model_invoke_capability": "BLOCKED"
+  },
+  "evidence": {
+    "csharp_capability_model_validation": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39550276767,
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe"
+    },
+    "csharp_gateway_validation": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39550276767,
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe"
+    },
+    "company_stage0": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39550276818,
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe"
+    },
+    "codeql": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39550276776,
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe"
+    },
+    "reference_ui": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39550276767,
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe"
+    },
+    "murtakaz_post_review": {
+      "status": "APPROVED_BY_AL_MURTAKAZ",
+      "receipt": "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-post.json"
+    }
+  },
+  "murtakaz_post_approval": "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-post.json"
+}

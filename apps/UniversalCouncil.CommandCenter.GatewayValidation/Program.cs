@@ -5,15 +5,21 @@ using UniversalCouncil.CommandCenter.Infrastructure;
 var stateDirectory = Path.Combine(AppContext.BaseDirectory, "state");
 var contextPath = Path.Combine(stateDirectory, "project-context-map.json");
 var routingPath = Path.Combine(stateDirectory, "gateway-routing-policy.json");
+var capabilityPath = Path.Combine(stateDirectory, "capability-registry.json");
+var modelPath = Path.Combine(stateDirectory, "model-broker-policy.json");
 
 Require(File.Exists(contextPath), "Project context map fixture is missing");
 Require(File.Exists(routingPath), "Gateway routing policy fixture is missing");
+Require(File.Exists(capabilityPath), "Capability Registry fixture is missing");
+Require(File.Exists(modelPath), "Model Broker policy fixture is missing");
 
 var contextReader = new JsonProjectContextMapReader(contextPath);
 var routingReader = new JsonGatewayRoutingPolicyReader(routingPath);
+var capabilityReader = new JsonCapabilityRegistryReader(capabilityPath);
+var modelReader = new JsonModelBrokerPolicyReader(modelPath);
 var contextDocument = contextReader.Read();
 
-var gateway = BuildGateway(contextReader, routingReader);
+var gateway = BuildGateway(contextReader, routingReader, capabilityReader, modelReader);
 
 var observe = gateway.Plan(
     BuildRequest(
@@ -142,14 +148,16 @@ var analyze = gateway.Plan(
         materiality: "MATERIAL",
         uncertainty: "MEDIUM"));
 
-Require(analyze.State == GatewayPlanState.Blocked, "Non-deterministic analysis must block until Model Broker exists");
+Require(
+    analyze.State == GatewayPlanState.WaitingForApproval,
+    "Non-deterministic analysis without configured preference must wait for Owner model selection");
 Require(
     analyze.Routing.ReasoningPath == GatewayReasoningPath.SingleAgent,
     "Ordinary analysis should select SingleAgent reasoning");
 Require(
     analyze.Routing.Stages.Single(item => item.Stage == "model").Selection ==
-        "OWNER_SELECTION_REQUIRED / MODEL_BROKER_NOT_IMPLEMENTED",
-    "No model may be silently selected");
+        "OWNER_MODEL_SELECTION_REQUIRED",
+    "No model may be silently selected when no Owner preference is configured");
 
 var staleDocument = contextDocument with
 {
@@ -163,7 +171,9 @@ var staleDocument = contextDocument with
 
 var staleGateway = BuildGateway(
     new StaticProjectContextMapReader(staleDocument),
-    routingReader);
+    routingReader,
+    capabilityReader,
+    modelReader);
 
 var stale = staleGateway.Plan(
     BuildRequest(
@@ -194,7 +204,9 @@ var conflictDocument = contextDocument with
 
 var conflictGateway = BuildGateway(
     new StaticProjectContextMapReader(conflictDocument),
-    routingReader);
+    routingReader,
+    capabilityReader,
+    modelReader);
 
 var conflict = conflictGateway.Plan(
     BuildRequest(
@@ -247,11 +259,17 @@ return 0;
 
 static MurtakazCommandGateway BuildGateway(
     IProjectContextMapReader contextReader,
-    IGatewayRoutingPolicyReader routingReader)
+    IGatewayRoutingPolicyReader routingReader,
+    ICapabilityRegistryReader capabilityReader,
+    IModelBrokerPolicyReader modelReader)
 {
     var contextResolver = new ProjectContextResolver(contextReader);
     var capsuleCompiler = new ContextCapsuleCompiler();
-    var routingCoordinator = new RoutingCoordinator(routingReader);
+    var capabilityRegistry = new CapabilityRegistryService(
+        capabilityReader,
+        () => new DateTimeOffset(2026, 10, 21, 4, 50, 0, TimeSpan.Zero));
+    var modelBroker = new ModelBroker(modelReader, capabilityRegistry);
+    var routingCoordinator = new RoutingCoordinator(routingReader, modelBroker);
     return new MurtakazCommandGateway(
         contextResolver,
         capsuleCompiler,
@@ -302,9 +320,25 @@ static MurtakazGatewayRequest BuildRequest(
         DestructiveOrIrreversible: destructiveOrIrreversible,
         PrivacySensitive: false,
         SpendOrSubscription: false,
+        ModelPreferences: EmptyModelPreferences(),
         MaxContextSources: 7,
         RequestedAt: new DateTimeOffset(2026, 10, 21, 0, 0, 0, TimeSpan.Zero));
 }
+
+static ModelRoutingPreferences EmptyModelPreferences() =>
+    new(
+        TaskOverrideModelId: "",
+        RoleOverrideModelId: "",
+        ProjectDefaultModelId: "",
+        GlobalDefaultModelId: "",
+        FallbackMode: ModelFallbackMode.Disabled,
+        AllowedFallbackModelIds: [],
+        RequiredCapabilities: ["text", "reasoning"],
+        MinimumContextWindow: 32000,
+        AllowedLatencyCosts: ["LOCAL_LOW", "UNKNOWN", "SYNTHETIC"],
+        MinimumQualityTier: "STANDARD",
+        MaximumCostTier: "HIGH",
+        RequiredPrivacyClass: "EXTERNAL_ALLOWED");
 
 static void Require(bool condition, string message)
 {

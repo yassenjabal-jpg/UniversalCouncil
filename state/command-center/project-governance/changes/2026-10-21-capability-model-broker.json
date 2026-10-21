@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-CAPABILITY-MODEL-BROKER-2026-10-21",
+  "project_id": "universal-council-command-center",
+  "status": "IMPLEMENTING",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "ea35e6d24931e5981d164fed89b0d494f80c2b44"
+  },
+  "scope": [
+    "Core capability/model contracts",
+    "Application CapabilityRegistryService",
+    "Application ModelBroker",
+    "Routing Coordinator model-stage integration",
+    "Gateway typed model preferences",
+    "Infrastructure JSON readers",
+    "Host composition",
+    "capability-registry and model-broker policy projections",
+    "behavior validation",
+    "CI/static enforcement"
+  ],
+  "non_goals": [
+    "provider invocation",
+    "credentials",
+    "active health probes",
+    "Skill Registry",
+    "Job Engine",
+    "live execution",
+    "WPF/Android UI",
+    "Stage 8"
+  ],
+  "expected_behavior": [
+    "health is operation-specific and TTL/freshness bound",
+    "stale capability cannot be treated as healthy",
+    "blocked/unavailable capability cannot be selected",
+    "deterministic route requires no model",
+    "non-deterministic route uses owner preference precedence",
+    "no configured preference yields owner model selection requirement",
+    "preferred unavailable model never silently falls back",
+    "fallback works only with explicit allowlist",
+    "provider disconnected blocks model invocation even if selection policy is valid",
+    "model selection never grants execution authority"
+  ],
+  "acceptance_criteria": [
+    "Capability Registry has no provider-level green aggregate",
+    "Task override outranks Role, Project and Global",
+    "explicit fallback is observable in result",
+    "disabled fallback fails closed",
+    "freshness TTL is enforced",
+    "production model catalog has no connected provider calls",
+    "Routing Coordinator no longer fabricates Model Broker missing state",
+    "exact-head CI passes"
+  ],
+  "verification_plan": [
+    "CapabilityModelValidation C# console",
+    "Company Stage 0",
+    "CodeQL",
+    "Reference UI build/render",
+    "Murtakaz validators",
+    "Murtakaz post-review"
+  ],
+  "pre_approval_receipt": "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-pre.json",
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE"
+}

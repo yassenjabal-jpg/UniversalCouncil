@@ -10,6 +10,7 @@ on:
       - 'apps/UniversalCouncil.CommandCenter.Host/**'
       - 'apps/UniversalCouncil.CommandCenter.ContextValidation/**'
       - 'apps/UniversalCouncil.CommandCenter.GatewayValidation/**'
+      - 'apps/UniversalCouncil.CommandCenter.CapabilityModelValidation/**'
       - 'apps/UniversalCouncil.CommandCenter.UiSmoke/**'
       - 'docs/operations/command-center/living-operations/references/**'
       - 'state/command-center/**'
@@ -25,6 +26,7 @@ on:
       - 'apps/UniversalCouncil.CommandCenter.Host/**'
       - 'apps/UniversalCouncil.CommandCenter.ContextValidation/**'
       - 'apps/UniversalCouncil.CommandCenter.GatewayValidation/**'
+      - 'apps/UniversalCouncil.CommandCenter.CapabilityModelValidation/**'
       - 'apps/UniversalCouncil.CommandCenter.UiSmoke/**'
       - 'docs/operations/command-center/living-operations/references/**'
       - 'state/command-center/**'
@@ -68,6 +70,7 @@ jobs:
           dotnet restore apps/UniversalCouncil.CommandCenter/UniversalCouncil.CommandCenter.csproj
           dotnet restore apps/UniversalCouncil.CommandCenter.ContextValidation/UniversalCouncil.CommandCenter.ContextValidation.csproj
           dotnet restore apps/UniversalCouncil.CommandCenter.GatewayValidation/UniversalCouncil.CommandCenter.GatewayValidation.csproj
+          dotnet restore apps/UniversalCouncil.CommandCenter.CapabilityModelValidation/UniversalCouncil.CommandCenter.CapabilityModelValidation.csproj
           dotnet restore apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj
 
       - name: Build WPF product
@@ -77,6 +80,7 @@ jobs:
           dotnet build apps/UniversalCouncil.CommandCenter/UniversalCouncil.CommandCenter.csproj --configuration Release --no-restore
           dotnet build apps/UniversalCouncil.CommandCenter.ContextValidation/UniversalCouncil.CommandCenter.ContextValidation.csproj --configuration Release --no-restore
           dotnet build apps/UniversalCouncil.CommandCenter.GatewayValidation/UniversalCouncil.CommandCenter.GatewayValidation.csproj --configuration Release --no-restore
+          dotnet build apps/UniversalCouncil.CommandCenter.CapabilityModelValidation/UniversalCouncil.CommandCenter.CapabilityModelValidation.csproj --configuration Release --no-restore
           dotnet build apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-restore
 
       - name: Validate context resolver and capsule compiler
@@ -90,6 +94,12 @@ jobs:
         run: |
           $PSNativeCommandUseErrorActionPreference = $true
           dotnet run --project apps/UniversalCouncil.CommandCenter.GatewayValidation/UniversalCouncil.CommandCenter.GatewayValidation.csproj --configuration Release --no-build
+
+      - name: Validate Capability Registry and Model Broker
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          dotnet run --project apps/UniversalCouncil.CommandCenter.CapabilityModelValidation/UniversalCouncil.CommandCenter.CapabilityModelValidation.csproj --configuration Release --no-build
 
       - name: Render reference-shell evidence
         shell: pwsh

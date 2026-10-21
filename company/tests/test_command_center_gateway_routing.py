@@ -42,10 +42,15 @@ class CommandCenterGatewayRoutingTests(unittest.TestCase):
             ],
         )
 
-    def test_future_services_are_not_fabricated(self) -> None:
+    def test_dependency_activation_is_explicit(self) -> None:
         self.assertEqual(
-            set(self.policy["future_dependencies"].values()),
-            {"NOT_IMPLEMENTED"},
+            self.policy["future_dependencies"],
+            {
+                "skill_registry": "NOT_IMPLEMENTED",
+                "model_broker": "IMPLEMENTED_SELECTION_ONLY",
+                "capability_registry": "IMPLEMENTED_READ_ONLY",
+                "job_engine": "NOT_IMPLEMENTED",
+            },
         )
 
     def test_owner_approval_is_not_execution_authority(self) -> None:
@@ -65,10 +70,13 @@ class CommandCenterGatewayRoutingTests(unittest.TestCase):
 
     def test_model_and_skill_dependencies_remain_explicit(self) -> None:
         components = self.state["components"]
-        self.assertEqual(components["model_broker"], "NOT_IMPLEMENTED")
+        self.assertEqual(components["model_broker"], "IMPLEMENTED_SELECTION_ONLY")
         self.assertEqual(components["skill_registry"], "NOT_IMPLEMENTED")
-        self.assertEqual(components["capability_registry"], "NOT_IMPLEMENTED")
+        self.assertEqual(components["capability_registry"], "IMPLEMENTED_READ_ONLY")
         self.assertEqual(components["job_engine"], "NOT_IMPLEMENTED")
+        self.assertFalse(self.state["laws"]["provider_invocation_authorized"])
+        self.assertTrue(self.state["laws"]["model_selection_owner_controlled"])
+        self.assertFalse(self.state["laws"]["silent_model_fallback"])
 
 
 if __name__ == "__main__":

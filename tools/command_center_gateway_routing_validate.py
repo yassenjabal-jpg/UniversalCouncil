@@ -14,6 +14,8 @@ UX = STATE / "living-operations-ux-state-contract.json"
 CONTEXT_PIPELINE = STATE / "context-pipeline-state.json"
 PRE = PROJECT / "approvals" / "2026-10-21-gateway-routing-pre.json"
 POST = PROJECT / "approvals" / "2026-10-21-gateway-routing-post.json"
+CAPABILITY_PRE = PROJECT / "approvals" / "2026-10-21-capability-model-broker-pre.json"
+CAPABILITY_POST = PROJECT / "approvals" / "2026-10-21-capability-model-broker-post.json"
 CHANGE = PROJECT / "changes" / "2026-10-21-gateway-routing.json"
 CAPSULE = PROJECT / "context-capsules" / "2026-10-21-gateway-routing.json"
 
@@ -30,6 +32,7 @@ for required in (
     CONTEXT_PIPELINE,
     PRE,
     POST,
+    CAPABILITY_PRE,
     CHANGE,
     CAPSULE,
 ):
@@ -43,6 +46,8 @@ ux = load(UX)
 context_pipeline = load(CONTEXT_PIPELINE)
 pre = load(PRE)
 post = load(POST)
+capability_pre = load(CAPABILITY_PRE)
+capability_post = load(CAPABILITY_POST) if CAPABILITY_POST.exists() else None
 change = load(CHANGE)
 capsule = load(CAPSULE)
 
@@ -79,11 +84,11 @@ if policy["stage_order"] != expected_stages:
 
 if policy["future_dependencies"] != {
     "skill_registry": "NOT_IMPLEMENTED",
-    "model_broker": "NOT_IMPLEMENTED",
-    "capability_registry": "NOT_IMPLEMENTED",
+    "model_broker": "IMPLEMENTED_SELECTION_ONLY",
+    "capability_registry": "IMPLEMENTED_READ_ONLY",
     "job_engine": "NOT_IMPLEMENTED",
 }:
-    raise SystemExit("Gateway routing policy fabricated a future dependency")
+    raise SystemExit("Gateway routing dependency state drifted")
 
 execution = policy["execution_policy"]
 if (
@@ -104,6 +109,7 @@ if policy["verification_policy"] != {
 
 if state["status"] not in {
     "IMPLEMENTED_VALIDATION_PENDING",
+    "MURTAKAZ_REVIEW_REQUIRED",
     "APPROVED_BY_AL_MURTAKAZ",
 }:
     raise SystemExit("Gateway routing state has an unexpected status")
@@ -153,10 +159,25 @@ if not logical_gateway["one_logical_authority_boundary"]:
 if not logical_gateway["front_door_business_logic_forbidden"]:
     raise SystemExit("Front-door business logic boundary was weakened")
 
-if state["status"] != "APPROVED_BY_AL_MURTAKAZ":
-    raise SystemExit("Gateway/Routing state is not Murtakaz-approved")
 if post["decision"] != "APPROVED_BY_AL_MURTAKAZ":
-    raise SystemExit("Gateway/Routing work lacks Murtakaz post-approval")
+    raise SystemExit("Gateway/Routing base work lacks historical Murtakaz post-approval")
+
+extension = state.get("current_extension")
+if state["status"] == "MURTAKAZ_REVIEW_REQUIRED":
+    if not extension or extension.get("change_id") != "CC-CAPABILITY-MODEL-BROKER-2026-10-21":
+        raise SystemExit("Gateway material extension is not explicitly tracked")
+    if extension.get("status") != "IMPLEMENTING":
+        raise SystemExit("Gateway pending extension status drifted")
+    if capability_pre["decision"] != "APPROVE_TO_IMPLEMENT":
+        raise SystemExit("Gateway model/capability extension lacks Murtakaz pre-approval")
+    if capability_pre["provider_calls_authorized"] or capability_pre["live_execution_authorized"]:
+        raise SystemExit("Gateway model/capability extension pre-approval inflated runtime authority")
+elif state["status"] == "APPROVED_BY_AL_MURTAKAZ" and extension:
+    if extension.get("status") != "APPROVED_BY_AL_MURTAKAZ":
+        raise SystemExit("Gateway extension approval status drifted")
+    if capability_post is None or capability_post.get("decision") != "APPROVED_BY_AL_MURTAKAZ":
+        raise SystemExit("Gateway extension claims approval without capability/model post-review")
+
 if not post["adoption_authorized"] or not post["merge_authorized"]:
     raise SystemExit("Gateway/Routing post-approval must authorize adoption and merge")
 if post["live_execution_authorized"] or post["stage8_opened"]:
@@ -223,5 +244,9 @@ if "IRoutingCoordinator RoutingCoordinator" not in host_source:
     raise SystemExit("Routing Coordinator is not exposed through Host composition")
 if "gateway-routing-policy.json" not in wpf_project:
     raise SystemExit("Windows package does not include Gateway routing policy")
+if "capability-registry.json" not in wpf_project:
+    raise SystemExit("Windows package does not include Capability Registry")
+if "model-broker-policy.json" not in wpf_project:
+    raise SystemExit("Windows package does not include Model Broker policy")
 
 print("Al-Murtakaz Gateway/Routing validation: PASS")

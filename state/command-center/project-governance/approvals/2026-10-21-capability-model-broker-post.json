@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-CAPABILITY-MODEL-BROKER-POST-2026-10-21",
+  "change_id": "CC-CAPABILITY-MODEL-BROKER-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "reviewed_revision": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "ea35e6d24931e5981d164fed89b0d494f80c2b44"
+  },
+  "governance_review": {
+    "cc_ai_runtime": "PASS",
+    "cc_architecture_execution": "PASS",
+    "cc_product_truth": "PASS",
+    "cc_security_remote_trust": "PASS_NO_SECRETS_OR_PROVIDER_CALLS",
+    "cc_owner_experience": "PASS_OWNER_CONTROLLED_SELECTION",
+    "cc_red_team": "PASS_AFTER_CONTEXT_LATENCY_AND_FALLBACK_HARDENING"
+  },
+  "workshop_review": {
+    "cc_studio_producer": "PASS_NO_UI_SCOPE",
+    "cc_experience_architect": "PASS_PROGRESSIVE_DISCLOSURE_PRESERVED"
+  },
+  "architecture_boundary_audit": {
+    "verdict": "PASS",
+    "core": "CAPABILITY_MODEL_TYPES_AND_INTERFACES",
+    "application": "REGISTRY_RESOLUTION_AND_SELECTION_ONLY",
+    "infrastructure": "READ_ONLY_JSON_READERS",
+    "host": "COMPOSITION_ONLY",
+    "routing": "CONSUMES_SELECTION_RESULT_NO_PROVIDER_CALL",
+    "wpf": "POLICY_PACKAGING_ONLY_NO_MODEL_ROUTING_LOGIC"
+  },
+  "red_team_findings_resolved": [
+    "Fallback capability eligibility is enforced in addition to explicit model allowlisting.",
+    "Minimum model context window is enforced.",
+    "Allowed latency/cost classes are enforced through operation capability truth.",
+    "Quality floor, cost ceiling and privacy boundary are enforced.",
+    "Task override outranks Role, Project and Global preferences.",
+    "Unavailable or stale model invocation capability blocks selection.",
+    "Owner approval and model selection never grant execution authority.",
+    "Production Model Broker has no connected provider calls or credentials.",
+    "Previously approved Gateway state was explicitly reopened for this material model-stage extension."
+  ],
+  "behavior_evidence": [
+    "Production broker without configured model preference -> OWNER_SELECTION_REQUIRED.",
+    "Task > Role > Project > Global precedence verified.",
+    "Fallback disabled -> no fallback.",
+    "Explicit allowlist fallback -> only eligible allowlisted model may be selected.",
+    "Fallback-ineligible capability -> fallback rejected.",
+    "Insufficient context window -> model rejected.",
+    "Disallowed latency class -> model rejected.",
+    "Insufficient quality / excessive cost / privacy mismatch -> model rejected.",
+    "Expired capability TTL -> STALE and model selection blocked.",
+    "Ambiguous operation provider -> explicit provider selection required.",
+    "Selected model result keeps ProviderInvocationAuthorized=false and ExecutionAuthorityGranted=false."
+  ],
+  "exact_head_evidence": [
+    {
+      "workflow": "Company Stage 0",
+      "run_id": 39550276818,
+      "conclusion": "SUCCESS",
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe"
+    },
+    {
+      "workflow": "CodeQL",
+      "run_id": 39550276776,
+      "conclusion": "SUCCESS",
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe"
+    },
+    {
+      "workflow": "Command Center Reference UI",
+      "run_id": 39550276767,
+      "conclusion": "SUCCESS",
+      "head_sha": "9fe575742d5fca9ba2a99db4a08e2f106d682dbe",
+      "includes": "ContextValidation + GatewayValidation + CapabilityModelValidation + WPF render"
+    }
+  ],
+  "provider_calls_authorized": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "active_capability_probes_authorized": false,
+  "credentials_or_tokens_added": false,
+  "wpf_ux_changed": false,
+  "android_runtime_changed": false,
+  "adoption_authorized": true,
+  "merge_authorized": true,
+  "next_roadmap_slice_authorized": "SKILL_REGISTRY",
+  "reopen_triggers": [
+    "model selection precedence changes",
+    "fallback semantics change",
+    "provider/model becomes connected",
+    "capability health aggregation is introduced",
+    "freshness/TTL semantics change",
+    "model constraint semantics change",
+    "model selection gains provider invocation authority",
+    "front door gains model policy ownership",
+    "live execution or Stage 8 changes"
+  ],
+  "timestamp": "2026-10-21"
+}
