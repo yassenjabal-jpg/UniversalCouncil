@@ -16,6 +16,8 @@ PRE = PROJECT / "approvals" / "2026-10-21-gateway-routing-pre.json"
 POST = PROJECT / "approvals" / "2026-10-21-gateway-routing-post.json"
 CAPABILITY_PRE = PROJECT / "approvals" / "2026-10-21-capability-model-broker-pre.json"
 CAPABILITY_POST = PROJECT / "approvals" / "2026-10-21-capability-model-broker-post.json"
+A1_CONTEXT_PRE = PROJECT / "approvals" / "2026-10-21-repair-a1-context-baseline-pre.json"
+A1_CONTEXT_POST = PROJECT / "approvals" / "2026-10-21-repair-a1-context-baseline-post.json"
 CHANGE = PROJECT / "changes" / "2026-10-21-gateway-routing.json"
 CAPSULE = PROJECT / "context-capsules" / "2026-10-21-gateway-routing.json"
 
@@ -33,6 +35,7 @@ for required in (
     PRE,
     POST,
     CAPABILITY_PRE,
+    A1_CONTEXT_PRE,
     CHANGE,
     CAPSULE,
 ):
@@ -48,6 +51,8 @@ pre = load(PRE)
 post = load(POST)
 capability_pre = load(CAPABILITY_PRE)
 capability_post = load(CAPABILITY_POST) if CAPABILITY_POST.exists() else None
+a1_context_pre = load(A1_CONTEXT_PRE)
+a1_context_post = load(A1_CONTEXT_POST) if A1_CONTEXT_POST.exists() else None
 change = load(CHANGE)
 capsule = load(CAPSULE)
 
@@ -138,8 +143,26 @@ if laws["execution_authorized"]:
 if laws["live_dispatch_allowed"]:
     raise SystemExit("Gateway state may not enable live dispatch")
 
-if context_pipeline["status"] != "APPROVED_BY_AL_MURTAKAZ":
-    raise SystemExit("Gateway must build on the approved Context pipeline")
+context_status = context_pipeline["status"]
+if context_status == "MURTAKAZ_REVIEW_REQUIRED":
+    extension = context_pipeline.get("current_extension") or {}
+    if extension.get("change_id") != "CC-REPAIR-A1-CONTEXT-BASELINE-2026-10-21":
+        raise SystemExit("Gateway observed an untracked Context pipeline review state")
+    if extension.get("status") != "IMPLEMENTING":
+        raise SystemExit("Gateway observed an invalid Context A1 extension state")
+    if a1_context_pre["decision"] != "APPROVE_TO_IMPLEMENT":
+        raise SystemExit("Gateway Context dependency lacks A1 Murtakaz pre-approval")
+    if a1_context_post is not None:
+        raise SystemExit("Gateway Context dependency has post-approval but is still marked review-required")
+elif context_status == "APPROVED_BY_AL_MURTAKAZ":
+    extension = context_pipeline.get("current_extension")
+    if extension and extension.get("change_id") == "CC-REPAIR-A1-CONTEXT-BASELINE-2026-10-21":
+        if extension.get("status") != "APPROVED_BY_AL_MURTAKAZ":
+            raise SystemExit("Gateway Context A1 extension approval state drifted")
+        if a1_context_post is None or a1_context_post.get("decision") != "APPROVED_BY_AL_MURTAKAZ":
+            raise SystemExit("Gateway Context dependency claims A1 approval without receipt")
+else:
+    raise SystemExit("Gateway must build on an approved or explicitly pre-approved Context repair state")
 if not context_pipeline["truth_rules"]["stale_context_blocks_compilation"]:
     raise SystemExit("Gateway foundation lost STALE_CONTEXT fail-closed behavior")
 if not context_pipeline["truth_rules"]["context_conflict_blocks_compilation"]:
