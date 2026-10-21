@@ -90,6 +90,8 @@ public sealed record ModelRoutingPreferences(
     ModelFallbackMode FallbackMode,
     IReadOnlyList<string> AllowedFallbackModelIds,
     IReadOnlyList<string> RequiredCapabilities,
+    int MinimumContextWindow,
+    IReadOnlyList<string> AllowedLatencyCosts,
     string MinimumQualityTier,
     string MaximumCostTier,
     string RequiredPrivacyClass);
