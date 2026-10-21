@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "audit_id": "CC-POST-P1-MOTION-INTERACTION-AUDIT-2026-10-21",
-  "status": "IMPLEMENTED_AWAITING_EXACT_HEAD_CI_POST_REVIEW",
+  "status": "APPROVED_BY_AL_MURTAKAZ_AWAITING_FINAL_RECEIPT_CI",
   "change_id": "CC-POST-P1-MOTION-INTERACTION-LAW-2026-10-21",
   "implementation_head": "76c3a47ca6a8792dea4e20f4aac9f7bce315c614",
   "authoritative_stage": "STAGE_7",
@@ -113,7 +113,29 @@
     "unknown_never_success": true,
     "reduced_motion_semantic_parity_required": true
   },
-  "post_review_required": true,
-  "merge_authorized": false,
-  "timestamp": "2026-10-21"
+  "post_review_required": false,
+  "merge_authorized": true,
+  "timestamp": "2026-10-21",
+  "post_review": {
+    "decision": "APPROVED_BY_AL_MURTAKAZ",
+    "material_head": "3201222522925e445cc640680571dc61a8978c06",
+    "company_stage0_run_id": 39623260306,
+    "codeql_run_id": 39623260222,
+    "reference_ui_run_id": 39623260338,
+    "reference_ui_artifact_id": 12356221491,
+    "p1_exit_evidence_run_id": 39623260223,
+    "wpf_motion_artifact_id": 12356436785,
+    "android_semantic_artifact_id": 12356131625
+  },
+  "screen_verdicts": {
+    "home_owner_workspace": "APPROVED_FUNCTIONAL_INTERACTION_AND_PURPOSEFUL_MOTION",
+    "living_project_workspace": "APPROVED_FUNCTIONAL_INTERACTION_AND_PURPOSEFUL_MOTION",
+    "software_autopilot_project": "APPROVED_FUNCTIONAL_INTERACTION_AND_PURPOSEFUL_MOTION",
+    "studio_project": "APPROVED_FUNCTIONAL_INTERACTION_AND_PURPOSEFUL_MOTION",
+    "owner_decision_mode": "APPROVED_FUNCTIONAL_INTERACTION_AND_PURPOSEFUL_MOTION",
+    "checkpoint_recovery_fork": "APPROVED_FUNCTIONAL_INTERACTION_AND_PURPOSEFUL_MOTION",
+    "pulse_visual_project_story": "APPROVED_FUNCTIONAL_INTERACTION_AND_PURPOSEFUL_MOTION",
+    "project_complete_work_receipt": "APPROVED_FUNCTIONAL_INTERACTION_AND_PURPOSEFUL_MOTION"
+  },
+  "final_receipt_ci_required": true
 }
