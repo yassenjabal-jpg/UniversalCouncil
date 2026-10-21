@@ -3,7 +3,7 @@
   "source_type": "project_local_repository_projection",
   "registry_id": "murtakaz-capability-registry",
   "status": "READ_ONLY_OPERATION_TRUTH",
-  "observed_at": "2026-10-21T04:45:00Z",
+  "observed_at": "2026-10-21T05:36:00Z",
   "capabilities": [
     {
       "id": "context-resolve-local",
@@ -44,17 +44,17 @@
       "provider_id": "murtakaz-model-broker",
       "operation": "model.select",
       "version_hash": "model-broker-v1",
-      "health": "IN_TEST",
+      "health": "HEALTHY",
       "authentication_state": "INTERNAL",
       "effect": "READ",
       "risk": "T0_OBSERVE",
       "latency_cost": "LOCAL_LOW",
-      "verified_at": "2026-10-21T04:45:00Z",
+      "verified_at": "2026-10-21T05:36:00Z",
       "ttl_seconds": 604800,
       "environment_host": "LOCAL_APP",
-      "evidence_level": "IMPLEMENTATION_VALIDATION_PENDING",
+      "evidence_level": "EXACT_HEAD_CI",
       "fallback_eligible": false,
-      "failure_reason": "CAPABILITY_MODEL_SLICE_REVIEW_PENDING"
+      "failure_reason": ""
     },
     {
       "id": "model-invoke-external",
