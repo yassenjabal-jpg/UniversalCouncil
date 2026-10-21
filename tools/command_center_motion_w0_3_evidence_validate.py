@@ -114,11 +114,17 @@ if gate["merge_authorized"] or gate["owner_visual_motion_acceptance"]:
     raise SystemExit("W0.3 receipt inflated product acceptance")
 
 position = roadmap["current_position"]
-if position["wave"] != "W0" or position["phase"] != "W0.3":
-    raise SystemExit("roadmap is not at W0.3")
-if position["phase_status"] != "MOTION_EVIDENCE_PIPELINE_LOCK":
-    raise SystemExit("roadmap does not record W0.3 pipeline lock")
-if position["next_phase_started"] is not False:
-    raise SystemExit("W1.1 started before W0.3 validation")
+if position["pr_merge_allowed"]:
+    raise SystemExit("motion remediation may not authorize merge before W6")
+if position["wave"] not in {"W0", "W1", "W2", "W3", "W4", "W5", "W6"}:
+    raise SystemExit("motion remediation roadmap position is invalid")
+if position["wave"] != "W0":
+    if pipeline.get("w0_exit_verified") is not True:
+        raise SystemExit("W0.3 historical gate lacks verified exit evidence")
+    verification = pipeline.get("verification", {})
+    if verification.get("pipeline_acceptance") != "PASS":
+        raise SystemExit("W0.3 evidence mechanism was not verified before progression")
+    if verification.get("product_motion_acceptance") != "FAIL":
+        raise SystemExit("W0.3 must preserve truthful product-motion failure at exit")
 
 print("Motion W0.3 evidence validation: PASS (30fps exact-head raw evidence + time-normalized gates locked)")

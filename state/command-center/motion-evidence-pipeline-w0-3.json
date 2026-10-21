@@ -48,6 +48,45 @@
     "visual_identity_locked": true
   },
   "next_phase": "W1.1",
-  "next_phase_started": false,
-  "gate": "MOTION_EVIDENCE_PIPELINE_LOCK"
+  "next_phase_started": true,
+  "gate": "MOTION_EVIDENCE_PIPELINE_LOCK",
+  "w0_exit_verified": true,
+  "verification": {
+    "candidate_sha": "5bf76e46990f7a44e0f7ff733d065933174c9752",
+    "workflow_run_id": 39660684213,
+    "workflow_run_number": 57,
+    "wpf_job_id": 119432565765,
+    "wpf_job_result": "SUCCESS",
+    "android_job_id": 119432566364,
+    "android_job_result": "SUCCESS",
+    "evidence_gate_job_id": 119435228047,
+    "evidence_gate_result": "FAIL_EXPECTED_PRODUCT_MOTION_THRESHOLD",
+    "evidence_gate_failure": "full motion capture does not contain enough visibly changing frames (65 < 90 at 30fps)",
+    "wpf_artifact_id": 12372734406,
+    "wpf_artifact_digest": "sha256:00823e976d95d2d4be1ee97be5b79ae94fec7e2963bcb0348500a20acf5ee9f1",
+    "wpf_artifact_size_bytes": 410020219,
+    "android_artifact_id": 12373956797,
+    "android_artifact_digest": "sha256:6899c24f0066d897d4f37383712494eab842bc10de4db33fd33f807e54639917",
+    "full_motion": {
+      "fps": 30,
+      "frames": 840,
+      "duration_seconds": 28,
+      "changed_frames": 65,
+      "longest_changed_run": 8,
+      "motion_runs": 15,
+      "required_changed_frames": 90,
+      "required_longest_run": 9
+    },
+    "reduced_motion": {
+      "fps": 30,
+      "frames": 600,
+      "duration_seconds": 20,
+      "changed_frames": 9,
+      "longest_changed_run": 1,
+      "motion_runs": 9
+    },
+    "pipeline_acceptance": "PASS",
+    "product_motion_acceptance": "FAIL",
+    "owner_motion_acceptance": false
+  }
 }

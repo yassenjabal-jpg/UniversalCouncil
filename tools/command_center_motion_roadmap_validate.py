@@ -16,6 +16,15 @@ APPROVAL = (
 RETURN_TICKET = (
     ROOT / "state" / "command-center" / "project-governance" / "return-tickets" / "CC-MOTION-RT-001-2026-10-21.json"
 )
+W0_PIPELINE = ROOT / "state" / "command-center" / "motion-evidence-pipeline-w0-3.json"
+W0_EXIT = (
+    ROOT
+    / "state"
+    / "command-center"
+    / "project-governance"
+    / "approvals"
+    / "2026-10-21-motion-w0-exit-evidence-verification.json"
+)
 DOC = (
     ROOT
     / "docs"
@@ -32,13 +41,15 @@ def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-for required in (ROADMAP, APPROVAL, RETURN_TICKET, DOC):
+for required in (ROADMAP, APPROVAL, RETURN_TICKET, W0_PIPELINE, W0_EXIT, DOC):
     if not required.exists():
         raise SystemExit(f"missing motion roadmap artifact: {required.relative_to(ROOT)}")
 
 roadmap = load(ROADMAP)
 approval = load(APPROVAL)
 ticket = load(RETURN_TICKET)
+w0_pipeline = load(W0_PIPELINE)
+w0_exit = load(W0_EXIT)
 doc = DOC.read_text(encoding="utf-8")
 
 if roadmap["roadmap_id"] != "CC-MOTION-REMEDIATION-MASTER-ROADMAP-2026-10-21":
@@ -96,8 +107,26 @@ if (
     raise SystemExit("motion roadmap inflated authority or reopened visual identity")
 
 position = roadmap["current_position"]
-if position["wave"] != "W0" or position["pr_merge_allowed"]:
-    raise SystemExit("current motion remediation position must remain W0 and non-mergeable")
+ordered_waves = [f"W{i}" for i in range(7)]
+if position["wave"] not in ordered_waves:
+    raise SystemExit("current motion remediation wave is invalid")
+if position["pr_merge_allowed"]:
+    raise SystemExit("motion remediation may not authorize merge before the final W6 lock")
+wave = next(item for item in waves if item["id"] == position["wave"])
+if position["phase"] not in {item["id"] for item in wave["phases"]}:
+    raise SystemExit("current motion remediation phase does not belong to its wave")
+if position["wave"] != "W0":
+    if w0_pipeline.get("w0_exit_verified") is not True:
+        raise SystemExit("roadmap advanced beyond W0 without verified evidence pipeline exit")
+    verification = w0_pipeline.get("verification", {})
+    if verification.get("pipeline_acceptance") != "PASS":
+        raise SystemExit("roadmap advanced beyond W0 without a passing evidence mechanism")
+    if verification.get("product_motion_acceptance") != "FAIL":
+        raise SystemExit("W0 exit must preserve the truthful current product-motion failure")
+    if w0_exit.get("decision") != "APPROVED_BY_AL_MURTAKAZ":
+        raise SystemExit("roadmap advanced beyond W0 without the W0 exit verification receipt")
+    if w0_exit.get("merge_authorized") or w0_exit.get("owner_motion_acceptance"):
+        raise SystemExit("W0 exit verification inflated merge or owner motion acceptance")
 
 if roadmap["evidence_requirements"]["owner_review_capture_fps_target"] < 30:
     raise SystemExit("owner-review motion capture target fell below 30 FPS")
