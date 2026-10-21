@@ -263,6 +263,8 @@ static ModelRoutingPreferences Preferences(
         fallbackMode,
         fallbacks,
         ["text", "reasoning"],
+        32000,
+        ["SYNTHETIC", "LOCAL_LOW", "UNKNOWN"],
         "STANDARD",
         "HIGH",
         "EXTERNAL_ALLOWED");
