@@ -13,7 +13,7 @@
   },
   "current_state": {
     "delivery_stage": "STAGE_7",
-    "visual_phase": "P1_VISUAL_DIRECTION_IN_PROGRESS",
+    "visual_phase": "P1_APPROVED_BY_AL_MURTAKAZ",
     "live_execution_authorized": false,
     "stage8_opened": false
   },
@@ -28,7 +28,7 @@
     "context_currentness_is_source_blob_verified"
   ],
   "active_work": [
-    "P1_EXIT_REMEDIATION_MOTION_AND_ANDROID"
+    "P1_COMPLETE_NEXT_PHASE_OWNER_DECISION_REQUIRED"
   ],
   "relevant_skills": [
     "project_local_murtakaz_review",
@@ -47,15 +47,14 @@
     "REPAIR_WAVE_A3_TRUTH_LOCK_APPROVED",
     "REPAIR_WAVE_B1_NATIVE_COMPLETION_APPROVED",
     "REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
-    "REPAIR_WAVE_B3_RETURNED_FOR_EXIT_EVIDENCE"
+    "REPAIR_WAVE_B3_RETURNED_FOR_EXIT_EVIDENCE",
+    "P1_FINAL_ACCEPTANCE_APPROVED_BY_AL_MURTAKAZ"
   ],
   "blockers": [
     "PHASE0_LIVE_EXECUTION_LOCK",
     "REAL_AUTOPILOT_NOT_IMPLEMENTED",
     "ANDROID_LIVE_CONNECTION_UNPROVEN",
-    "STAGE8_NOT_OPENED",
-    "P1_MOTION_CAPTURE_PENDING",
-    "P1_ANDROID_SEMANTIC_ADAPTATION_PENDING"
+    "STAGE8_NOT_OPENED"
   ],
   "owner_directives": [
     "al-murtakaz-mandatory-approval",
