@@ -100,6 +100,39 @@ Require(
     "High-risk security/irreversible request must route to Murtakaz Arena");
 Require(!highRiskExecute.Routing.ExecutionAuthorized, "Arena planning cannot grant execution authority");
 
+var externalAction = gateway.Plan(
+    BuildRequest(
+        GatewayIntent.ExternalAction,
+        GatewayEffect.Write,
+        GatewayRiskTier.T2LocalStateChange,
+        domains: ["external_service"],
+        materiality: "MATERIAL",
+        uncertainty: "MEDIUM",
+        ownerApprovalPresent: true,
+        approvalRef: "OWNER-APPROVAL-VALIDATION-003",
+        externalConsequence: true));
+
+Require(externalAction.State == GatewayPlanState.Blocked, "External WRITE must remain blocked");
+Require(
+    externalAction.Routing.ReasoningPath == GatewayReasoningPath.MurtakazGovernance,
+    "External consequence must not route below Murtakaz Governance");
+
+var recovery = gateway.Plan(
+    BuildRequest(
+        GatewayIntent.Recover,
+        GatewayEffect.Execute,
+        GatewayRiskTier.T1Reversible,
+        domains: ["host_work"],
+        materiality: "MATERIAL",
+        uncertainty: "MEDIUM",
+        ownerApprovalPresent: true,
+        approvalRef: "OWNER-APPROVAL-VALIDATION-004"));
+
+Require(recovery.State == GatewayPlanState.Blocked, "Recovery execution must remain blocked");
+Require(
+    recovery.Routing.ReasoningPath == GatewayReasoningPath.MurtakazArena,
+    "Recovery must always route through Murtakaz Arena");
+
 var analyze = gateway.Plan(
     BuildRequest(
         GatewayIntent.Analyze,
@@ -234,7 +267,8 @@ static MurtakazGatewayRequest BuildRequest(
     string uncertainty,
     bool ownerApprovalPresent = false,
     string approvalRef = "",
-    bool destructiveOrIrreversible = false)
+    bool destructiveOrIrreversible = false,
+    bool externalConsequence = false)
 {
     return new(
         RequestId: $"VALIDATION-{intent}-{effect}",
@@ -264,7 +298,7 @@ static MurtakazGatewayRequest BuildRequest(
         ApprovalRef: approvalRef,
         ChangeOfTruthRequested: false,
         AuthorityExpansionRequested: false,
-        ExternalConsequence: false,
+        ExternalConsequence: externalConsequence,
         DestructiveOrIrreversible: destructiveOrIrreversible,
         PrivacySensitive: false,
         SpendOrSubscription: false,
