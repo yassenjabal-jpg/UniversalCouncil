@@ -98,6 +98,7 @@ public sealed record ModelCandidateProjection(
     string ModelId,
     string ProviderId,
     string CapabilityOperation,
+    string EnvironmentHost,
     bool Enabled,
     bool ProviderConnected,
     IReadOnlyList<string> Capabilities,
