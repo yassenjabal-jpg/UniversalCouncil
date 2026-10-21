@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "plan_id": "p1-native-remainder-phases-v1",
-  "status": "B2_COMPLETE_R9_CLOSED_R10_NOT_OPENED",
-  "current_phase": "R9_CLOSED_R10_NOT_OPENED",
+  "status": "B3_R10_RETURNED_FOR_CHANGES_P1_IN_PROGRESS",
+  "current_phase": "R10_RETURNED_FOR_CHANGES",
   "anti_stall_rule": true,
   "phase_order": [
     "R1_OWNER_DECISION_MODE",
@@ -114,8 +114,16 @@
       "artifact_id": 12343191879
     },
     "R10_FINAL_MURTAKAZ_STUDIO_REVIEW": {
-      "state": "NOT_OPENED",
-      "primary_screen": "all_eight"
+      "state": "RETURNED_FOR_CHANGES",
+      "primary_screen": "all_eight",
+      "review": "DESKTOP_FIDELITY_PASS_P1_EXIT_EVIDENCE_MISSING",
+      "evidence_head": "77a0e21bd40fc4a306fe75cc131e9c5740110db6",
+      "reference_ui_run_id": 39600198955,
+      "artifact_id": 12345134475,
+      "blockers": [
+        "P1_MOTION_CAPTURE_MISSING",
+        "P1_ANDROID_SEMANTIC_ADAPTATION_MISSING"
+      ]
     }
   },
   "per_phase_gate": [
@@ -143,5 +151,11 @@
     "r10_opened": false,
     "final_p1_approval": false,
     "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b2-cross-screen-consistency-post.json"
+  },
+  "b3_review": {
+    "status": "RETURNED_FOR_CHANGES",
+    "final_p1_approval": false,
+    "p1_complete": false,
+    "review_result": "state/command-center/living-operations-p1-b3-final-review-result.json"
   }
 }
