@@ -51,10 +51,14 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
     def test_context_map_tracks_current_repair_work(self) -> None:
         self.assertEqual(
             self.context_map["active_work"],
-            ["REPAIR_WAVE_A1_CONTEXT_BASELINE"],
+            ["REPAIR_WAVE_A2_GOVERNANCE_METADATA_RECONCILIATION"],
         )
         self.assertIn(
             "CAPABILITY_REGISTRY_MODEL_BROKER_APPROVED",
+            self.context_map["recent_events"],
+        )
+        self.assertIn(
+            "REPAIR_WAVE_A1_CONTEXT_BASELINE_APPROVED",
             self.context_map["recent_events"],
         )
 
