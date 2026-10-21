@@ -21,7 +21,7 @@ public partial class MainWindow : Window
             {
                 "full" => true,
                 "reduced" => false,
-                _ => MotionEnabled,
+                _ => SystemParameters.ClientAreaAnimation,
             };
         }
     }
