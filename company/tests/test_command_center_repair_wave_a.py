@@ -55,10 +55,15 @@ class CommandCenterRepairWaveATruthLockTests(unittest.TestCase):
         self.assertFalse(self.phase0["live_execution_authorized"])
         self.assertFalse(all(item["status"] == "PASS" for item in self.phase0["gates"].values()))
 
-    def test_visual_p1_remains_open_for_wave_b(self) -> None:
-        self.assertEqual(self.visual["status"], "IN_PROGRESS")
+    def test_wave_a_did_not_weaken_visual_p1_final_gate(self) -> None:
+        self.assertIn(self.visual["status"], {"IN_PROGRESS", "APPROVED_BY_AL_MURTAKAZ"})
         self.assertTrue(self.visual["governance"]["final_approval_required"])
         self.assertFalse(self.visual["runtime_authority"])
+        self.assertFalse(self.visual["stage8_opened"])
+        if self.visual["status"] == "APPROVED_BY_AL_MURTAKAZ":
+            final_post = load(PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json")
+            self.assertEqual(final_post["decision"], "APPROVED_BY_AL_MURTAKAZ")
+            self.assertTrue(final_post["p1_complete"])
 
     def test_skill_and_job_engine_are_not_falsely_implemented(self) -> None:
         self.assertEqual(
