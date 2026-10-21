@@ -114,12 +114,18 @@ for marker in (
     "AutomationProperties.SetHelpText",
     "UNKNOWN / SEARCH PROVIDER NOT CONNECTED",
     "SecondaryNativeLayer.Opacity = _nativeReferenceBlendEnabled && !isHome ? 0.46 : 1;",
+    "AddFixtureTruthBadge",
+    "REFERENCE FIXTURE · NOT LIVE",
 ):
     if marker not in main_source:
         raise SystemExit(f"B2 implementation marker missing: {marker}")
 
 if '"Autopilot — يعمل الآن"' in main_source:
     raise SystemExit("Shared Autopilot hotspot still claims unverified live activity")
+if 'ChromeText("يعمل الآن"' in main_source:
+    raise SystemExit("Native fixture still contains a hard-coded live-now claim")
+if main_source.count("AddFixtureTruthBadge(") < 3:
+    raise SystemExit("Reference-fixture truth badge is not applied to Home and secondary chrome")
 if 'KeyboardNavigation.TabNavigation="Cycle"' not in xaml_source:
     raise SystemExit("B2 keyboard traversal is not explicitly cyclic")
 if 'KeyboardNavigation.ControlTabNavigation="Cycle"' not in xaml_source:
