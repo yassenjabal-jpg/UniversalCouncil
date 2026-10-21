@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "review_id": "CC-STUDIO-MOTION-OSS-REVIEW-2026-10-22",
+  "date": "2026-10-22",
+  "scope": "W1.1_EVIDENCE_CAPTURE_ONLY",
+  "status": "STUDIO_REVIEW_COMPLETE",
+  "outcome": "ACCEPT_WITH_CONDITIONS",
+  "selected_direction": "WINDOWS_GRAPHICS_CAPTURE_PILOT",
+  "preferred_first_pilot": "WgcSharp",
+  "architectural_reference": "WKImods/WKI-Clipper",
+  "deferred": [
+    "ATC.Wpf",
+    "Microsoft.Xaml.Behaviors.Wpf"
+  ],
+  "prohibited_during_pilot": [
+    "MOTION_THRESHOLD_REDUCTION",
+    "MOTION_DNA_REDESIGN",
+    "W1_2_START",
+    "PR72_MERGE",
+    "STAGE8_OPEN",
+    "RUNTIME_AUTHORITY_EXPANSION"
+  ],
+  "evidence_at_review": {
+    "candidate_sha": "4f49d34899b98b67bb7afa204de447e5ca38ab0b",
+    "full_changed_frames": 96,
+    "full_longest_run": 10,
+    "full_motion_runs": 18,
+    "full_required_changed_frames": 90,
+    "full_required_longest_run": 9,
+    "reduced_changed_frames": 25,
+    "reduced_longest_run": 4,
+    "reduced_motion_runs": 9,
+    "nominal_capture_seconds": 38,
+    "actual_capture_seconds": 92.662,
+    "p1_gate": "FAIL_TIME_DILATION"
+  },
+  "pilot_acceptance": [
+    "REALTIME_CAPTURE_WITHIN_EXISTING_TOLERANCE",
+    "ACTUAL_30FPS_OWNER_REVIEW_PATH",
+    "EXACT_HEAD_SHA_BOUND",
+    "NO_INTERPOLATION",
+    "NO_POST_PRODUCTION",
+    "FULL_MOTION_EXISTING_THRESHOLDS_PASS",
+    "REDUCED_MOTION_EXISTING_LIMITS_PASS",
+    "EIGHT_SCREEN_EVIDENCE_PRESERVED",
+    "VISUAL_FIDELITY_PRESERVED",
+    "STAGE7_TRUTH_PRESERVED"
+  ],
+  "studio_roles": [
+    "CC-ST-01",
+    "CC-ST-03",
+    "CC-ST-05",
+    "CC-ST-07",
+    "CC-ST-08",
+    "CC-ST-10",
+    "CC-ST-11",
+    "CC-ST-12"
+  ],
+  "cross_clearance": [
+    "ARCHITECTURE_EXECUTION",
+    "PRODUCT_TRUTH_EVIDENCE"
+  ],
+  "implementation_authorized": false,
+  "w1_2_started": false,
+  "merge_authorized": false,
+  "stage8_opened": false
+}
