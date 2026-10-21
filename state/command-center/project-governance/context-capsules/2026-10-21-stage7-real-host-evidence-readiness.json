@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CC-CAPSULE-STAGE7-REAL-HOST-EVIDENCE-READINESS-2026-10-21",
+  "job_or_change_id": "CC-STAGE7-REAL-HOST-EVIDENCE-READINESS-2026-10-21",
+  "immutable": true,
+  "canonical_branch": "command-center/project-local-council-studio-20261019",
+  "canonical_base_sha": "2053620dfde81cea850afc0b8a9cd929586bb9e3",
+  "governing_sources": [
+    "state/command-center/project-governance/stage-phase-map.json",
+    "state/command-center/owner-device-tailnet-policy.json",
+    "state/command-center/owner-device-tailnet.json",
+    "state/command-center/phase0-execution-gates.json",
+    "state/command-center/remote-transport-policy.json",
+    "docs/operations/command-center/STAGE7_OWNER_DEVICE_TAILNET_CONTRACT_2026-10-19.md",
+    "docs/operations/command-center/STAGE7_YASSIN_HOST_RUNBOOK_2026-10-19.md",
+    "tools/stage7_yassin_probe.ps1",
+    "tools/stage7_start_remote_transport.ps1",
+    "tools/stage7_configure_tailscale_serve.ps1"
+  ],
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "target_host": "YASSIN",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "execution_state": "BLOCKED_PHASE0"
+  },
+  "timestamp": "2026-10-21"
+}
