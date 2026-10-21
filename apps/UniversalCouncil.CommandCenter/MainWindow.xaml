@@ -1145,9 +1145,9 @@
                                 Width="78"
                                 Tag="attach"
                                 Style="{StaticResource NativeComposerChipStyle}"
-                                Content="⌕  إرفاق"
+                                Content="⌕  حالة الإرفاق"
                                 Click="ComposerControl_Click"
-                                AutomationProperties.Name="إرفاق" />
+                                AutomationProperties.Name="فحص حالة الإرفاق" />
                         <Button Canvas.Left="713" Canvas.Top="237"
                                 Width="78"
                                 Tag="tools"
@@ -1159,34 +1159,34 @@
                                 Width="145"
                                 Tag="web"
                                 Style="{StaticResource NativeComposerChipStyle}"
-                                Content="●  بحث في الويب"
+                                Content="●  جاهزية الويب"
                                 Click="ComposerControl_Click"
-                                AutomationProperties.Name="بحث في الويب" />
+                                AutomationProperties.Name="فحص جاهزية بحث الويب" />
                         <Button Canvas.Left="950" Canvas.Top="237"
                                 Width="160"
                                 Tag="model"
                                 Style="{StaticResource NativeComposerChipStyle}"
-                                Content="✳  Claude 3.5 Sonnet"
+                                Content="✳  حالة النموذج"
                                 Click="ComposerControl_Click"
-                                AutomationProperties.Name="اختيار النموذج" />
+                                AutomationProperties.Name="فحص حالة النموذج" />
                         <Button Canvas.Left="1117" Canvas.Top="237"
                                 Width="135"
                                 Tag="reasoning"
                                 Style="{StaticResource NativeComposerChipStyle}"
-                                Content="▤  متوازن"
+                                Content="▤  حالة التفكير"
                                 Click="ComposerControl_Click"
-                                AutomationProperties.Name="مستوى التفكير" />
+                                AutomationProperties.Name="فحص حالة التفكير" />
 
                         <Button Canvas.Left="1282" Canvas.Top="235"
                                 Width="154"
                                 Tag="start"
                                 Style="{StaticResource NativeComposerPrimaryStyle}"
                                 Click="Start_Click"
-                                AutomationProperties.Name="ابدأ التنفيذ">
+                                AutomationProperties.Name="فحص جاهزية التنفيذ">
                             <StackPanel Orientation="Horizontal"
                                         FlowDirection="LeftToRight"
                                         HorizontalAlignment="Center">
-                                <TextBlock Text="ابدأ التنفيذ"
+                                <TextBlock Text="فحص الجاهزية"
                                            FlowDirection="RightToLeft"
                                            Foreground="White"
                                            FontSize="15"

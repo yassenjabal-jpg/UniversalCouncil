@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-POST-P1-MOTION-INTERACTION-LAW-PRE-2026-10-21",
+  "change_id": "CC-POST-P1-MOTION-INTERACTION-LAW-2026-10-21",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "scope": "POST_P1_INTERACTION_AND_MOTION_HARDENING_ONLY",
+  "implementation_authorized": true,
+  "final_post_review_required": true,
+  "p1_status_must_remain": "COMPLETE",
+  "stage8_opened": false,
+  "runtime_authority_added": false,
+  "live_execution_authorized": false,
+  "owner_authority": "FINAL",
+  "reviewers": [
+    "cc_experience_architect",
+    "cc_motion_systems",
+    "cc_accessibility_clearance",
+    "cc_product_truth",
+    "cc_visual_qa",
+    "cc_red_team"
+  ],
+  "acceptance_rules": [
+    "Every visible clickable control or hotspot has a concrete inspect/navigation/state/intent result.",
+    "Primary actions must not terminate in feedback-only toast/notice behavior.",
+    "Every animation maps to navigation, state, or feedback and has a Reduced Motion equivalent.",
+    "UNKNOWN never becomes success through animation or interaction."
+  ],
+  "timestamp": "2026-10-21"
+}
