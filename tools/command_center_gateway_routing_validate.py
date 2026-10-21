@@ -79,11 +79,11 @@ if policy["stage_order"] != expected_stages:
 
 if policy["future_dependencies"] != {
     "skill_registry": "NOT_IMPLEMENTED",
-    "model_broker": "NOT_IMPLEMENTED",
-    "capability_registry": "NOT_IMPLEMENTED",
+    "model_broker": "IMPLEMENTED_SELECTION_ONLY",
+    "capability_registry": "IMPLEMENTED_READ_ONLY",
     "job_engine": "NOT_IMPLEMENTED",
 }:
-    raise SystemExit("Gateway routing policy fabricated a future dependency")
+    raise SystemExit("Gateway routing dependency state drifted")
 
 execution = policy["execution_policy"]
 if (
@@ -223,5 +223,9 @@ if "IRoutingCoordinator RoutingCoordinator" not in host_source:
     raise SystemExit("Routing Coordinator is not exposed through Host composition")
 if "gateway-routing-policy.json" not in wpf_project:
     raise SystemExit("Windows package does not include Gateway routing policy")
+if "capability-registry.json" not in wpf_project:
+    raise SystemExit("Windows package does not include Capability Registry")
+if "model-broker-policy.json" not in wpf_project:
+    raise SystemExit("Windows package does not include Model Broker policy")
 
 print("Al-Murtakaz Gateway/Routing validation: PASS")
