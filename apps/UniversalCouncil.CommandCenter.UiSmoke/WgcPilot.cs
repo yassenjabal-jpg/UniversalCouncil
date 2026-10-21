@@ -1,8 +1,10 @@
+using System.IO;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Interop;
+using UniversalCouncil.CommandCenter;
 
 namespace UniversalCouncil.CommandCenter.UiSmoke;
 
@@ -23,7 +25,7 @@ internal static partial class Program
         var sourceId = "WgcSharp-1.1.1/WGC_ONLY";
         var overallClock = Stopwatch.StartNew();
 
-        Window? window = null;
+        MainWindow? window = null;
         try
         {
             Environment.SetEnvironmentVariable("UNIVERSALCOUNCIL_MOTION_EVIDENCE", "full");
