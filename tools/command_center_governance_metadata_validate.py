@@ -14,6 +14,7 @@ CURRENT_REVIEW = PROJECT / "agentic-os-current-review.json"
 AGENTIC_POST = PROJECT / "approvals" / "2026-10-21-agentic-os-integration-post.json"
 A2_PRE = PROJECT / "approvals" / "2026-10-21-repair-a2-governance-metadata-pre.json"
 A2_POST = PROJECT / "approvals" / "2026-10-21-repair-a2-governance-metadata-post.json"
+A3_POST = PROJECT / "approvals" / "2026-10-21-repair-a3-truth-lock-post.json"
 A2_CHANGE = PROJECT / "changes" / "2026-10-21-repair-a2-governance-metadata.json"
 A2_CAPSULE = PROJECT / "context-capsules" / "2026-10-21-repair-a2-governance-metadata.json"
 STAGE_MAP = PROJECT / "stage-phase-map.json"
@@ -43,6 +44,7 @@ current_review = load(CURRENT_REVIEW)
 agentic_post = load(AGENTIC_POST)
 a2_pre = load(A2_PRE)
 a2_post = load(A2_POST) if A2_POST.exists() else None
+a3_post = load(A3_POST) if A3_POST.exists() else None
 a2_change = load(A2_CHANGE)
 a2_capsule = load(A2_CAPSULE)
 stage_map = load(STAGE_MAP)
@@ -126,6 +128,7 @@ expected_lineage = {
     59: "ea35e6d24931e5981d164fed89b0d494f80c2b44",
     60: "b3ef5d8f60e3f623371b40036bcea01f7a396d2a",
     61: "f55d6f924d0e29a27eebead09e342e899615b38f",
+    62: "76eeca02b79790c28a181520cc019d3586769b26",
 }
 actual_lineage = {item["pr"]: item["merge_sha"] for item in current_review["merged_lineage"]}
 if actual_lineage != expected_lineage:
@@ -137,9 +140,16 @@ if repair["wave_a"]["A1"] != "COMPLETE_APPROVED":
 if a2_post is None:
     if repair["wave_a"]["A2"] != "ACTIVE" or repair["wave_a"]["A3"] != "PENDING":
         raise SystemExit("Current review repair state does not match active A2 lifecycle")
-else:
+elif a3_post is None:
     if repair["wave_a"]["A2"] != "COMPLETE_APPROVED" or repair["wave_a"]["A3"] != "ACTIVE":
         raise SystemExit("Current review did not advance to A3 after A2 approval")
+else:
+    if repair["wave_a"]["A2"] != "COMPLETE_APPROVED" or repair["wave_a"]["A3"] != "COMPLETE_APPROVED":
+        raise SystemExit("Current review did not close A3 after approval")
+    if repair["wave_a"].get("status") != "COMPLETE_APPROVED":
+        raise SystemExit("Current review did not close Repair Wave A")
+    if repair["wave_b"] != "ACTIVE" or repair.get("wave_b_current_stage") != "B1_COMPLETE_REMAINING_NATIVE_WORK":
+        raise SystemExit("Current review did not activate Wave B/B1 after A3 approval")
 if current_review["next_engineering_after_repairs"] != "SKILL_REGISTRY":
     raise SystemExit("Current review engineering continuation drifted")
 
@@ -223,9 +233,13 @@ required_roadmap_markers = (
         else "**A2 Governance Metadata Reconciliation — ACTIVE**"
     ),
     (
-        "**A3 Truth Lock + Murtakaz Closure — ACTIVE**"
-        if a2_post is not None
-        else "**A3 Truth Lock + Murtakaz Closure — PENDING**"
+        "**A3 Truth Lock + Murtakaz Closure — COMPLETE / APPROVED_BY_AL_MURTAKAZ**"
+        if a3_post is not None
+        else (
+            "**A3 Truth Lock + Murtakaz Closure — ACTIVE**"
+            if a2_post is not None
+            else "**A3 Truth Lock + Murtakaz Closure — PENDING**"
+        )
     ),
 )
 for marker in required_roadmap_markers:
@@ -234,6 +248,18 @@ for marker in required_roadmap_markers:
 
 if "POST-REVIEW REQUIRED" in roadmap:
     raise SystemExit("Roadmap still advertises stale Agentic post-review-required state")
+
+if a3_post is not None:
+    if a3_post.get("decision") != "APPROVED_BY_AL_MURTAKAZ":
+        raise SystemExit("A3 post-review receipt exists with a non-approved decision")
+    if not a3_post["adoption_authorized"] or not a3_post["merge_authorized"]:
+        raise SystemExit("A3 post-review did not authorize adoption/merge")
+    if a3_post["live_execution_authorized"] or a3_post["stage8_opened"]:
+        raise SystemExit("A3 post-review inflated runtime authority")
+    if "**Wave status: COMPLETE / APPROVED_BY_AL_MURTAKAZ**" not in roadmap:
+        raise SystemExit("Roadmap did not mark Repair Wave A complete")
+    if "**B1 Complete Remaining Native Work — ACTIVE**" not in roadmap:
+        raise SystemExit("Roadmap did not activate Wave B/B1")
 
 if a2_post is not None:
     if a2_post.get("decision") != "APPROVED_BY_AL_MURTAKAZ":

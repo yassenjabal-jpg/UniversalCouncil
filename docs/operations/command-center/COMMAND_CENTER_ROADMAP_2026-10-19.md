@@ -241,6 +241,8 @@ Repair sequence is mandatory before resuming Skill Registry:
 
 ### Wave A — Truth & Anti-Drift
 
+**Wave status: COMPLETE / APPROVED_BY_AL_MURTAKAZ**
+
 - **A1 Context & Baseline Repair — COMPLETE / APPROVED_BY_AL_MURTAKAZ**
   - project-context-map upgraded to schema 2.0;
   - Git baseline provenance separated from live source-set SHA-256 truth;
@@ -251,14 +253,14 @@ Repair sequence is mandatory before resuming Skill Registry:
   - current vs historical Agentic review truth;
   - normalized PR #56 post-review receipt;
   - roadmap/status reconciliation.
-- **A3 Truth Lock + Murtakaz Closure — ACTIVE**
+- **A3 Truth Lock + Murtakaz Closure — COMPLETE / APPROVED_BY_AL_MURTAKAZ**
   - final cross-file truth audit;
   - anti-drift revalidation;
   - repair-wave A closure lock.
 
 ### Wave B — Visual P1 Completion
 
-- **B1 Complete Remaining Native Work — PENDING**
+- **B1 Complete Remaining Native Work — ACTIVE**
 - **B2 Cross-Screen Consistency & Polish — PENDING**
 - **B3 Final Review & P1 Acceptance — PENDING**
 

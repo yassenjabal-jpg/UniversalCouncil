@@ -36,7 +36,7 @@ class CommandCenterGovernanceMetadataTests(unittest.TestCase):
         )
         self.assertEqual(
             [item["pr"] for item in self.current_review["merged_lineage"]],
-            [56, 57, 58, 59, 60, 61],
+            [56, 57, 58, 59, 60, 61, 62],
         )
         self.assertEqual(
             self.current_review["repair_program"]["wave_a"]["A1"],
@@ -48,6 +48,14 @@ class CommandCenterGovernanceMetadataTests(unittest.TestCase):
         )
         self.assertEqual(
             self.current_review["repair_program"]["wave_a"]["A3"],
+            "COMPLETE_APPROVED",
+        )
+        self.assertEqual(
+            self.current_review["repair_program"]["wave_a"]["status"],
+            "COMPLETE_APPROVED",
+        )
+        self.assertEqual(
+            self.current_review["repair_program"]["wave_b"],
             "ACTIVE",
         )
 
@@ -91,7 +99,11 @@ class CommandCenterGovernanceMetadataTests(unittest.TestCase):
             "**A2 Governance Metadata Reconciliation — COMPLETE / APPROVED_BY_AL_MURTAKAZ**",
             self.roadmap,
         )
-        self.assertIn("**A3 Truth Lock + Murtakaz Closure — ACTIVE**", self.roadmap)
+        self.assertIn(
+            "**A3 Truth Lock + Murtakaz Closure — COMPLETE / APPROVED_BY_AL_MURTAKAZ**",
+            self.roadmap,
+        )
+        self.assertIn("**B1 Complete Remaining Native Work — ACTIVE**", self.roadmap)
         self.assertIn("Stage 8 = **NOT_OPENED**", self.roadmap)
 
 

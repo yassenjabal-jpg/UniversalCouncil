@@ -25,6 +25,7 @@ CONTEXT_PIPELINE_VALIDATOR = ROOT / "tools" / "command_center_context_pipeline_v
 GATEWAY_ROUTING_VALIDATOR = ROOT / "tools" / "command_center_gateway_routing_validate.py"
 CAPABILITY_MODEL_VALIDATOR = ROOT / "tools" / "command_center_capability_model_validate.py"
 GOVERNANCE_METADATA_VALIDATOR = ROOT / "tools" / "command_center_governance_metadata_validate.py"
+REPAIR_WAVE_A_VALIDATOR = ROOT / "tools" / "command_center_repair_wave_a_validate.py"
 
 VISUAL_DIRECTION_ROOT = ROOT / "docs" / "operations" / "command-center" / "living-operations"
 VISUAL_DIRECTION_FILES = (
@@ -74,6 +75,7 @@ for required in (
     GATEWAY_ROUTING_VALIDATOR,
     CAPABILITY_MODEL_VALIDATOR,
     GOVERNANCE_METADATA_VALIDATOR,
+    REPAIR_WAVE_A_VALIDATOR,
 ):
     if not required.exists():
         raise SystemExit(f"missing Murtakaz alignment artifact: {required.relative_to(ROOT)}")
@@ -157,6 +159,7 @@ subprocess.run([__import__("sys").executable, str(CONTEXT_PIPELINE_VALIDATOR)], 
 subprocess.run([__import__("sys").executable, str(GATEWAY_ROUTING_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(CAPABILITY_MODEL_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(GOVERNANCE_METADATA_VALIDATOR)], check=True)
+subprocess.run([__import__("sys").executable, str(REPAIR_WAVE_A_VALIDATOR)], check=True)
 
 for visual_file in VISUAL_DIRECTION_FILES:
     text = visual_file.read_text(encoding="utf-8").casefold()

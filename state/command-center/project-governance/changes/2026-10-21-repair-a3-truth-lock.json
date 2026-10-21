@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-REPAIR-A3-TRUTH-LOCK-2026-10-21",
+  "project_id": "universal-council-command-center",
+  "status": "IMPLEMENTING",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "76eeca02b79790c28a181520cc019d3586769b26"
+  },
+  "scope": [
+    "Wave A truth-lock source inventory",
+    "cross-file repair truth validator",
+    "repair closure tests",
+    "Murtakaz validation binding",
+    "roadmap/current-review/project-context lifecycle transition after post-review"
+  ],
+  "non_goals": [
+    "runtime code changes",
+    "Visual P1 implementation",
+    "repository hygiene",
+    "Skill Registry",
+    "live execution",
+    "Stage 8"
+  ],
+  "acceptance_criteria": [
+    "A1 and A2 are approved with machine-readable receipts",
+    "A3 starts from the merged A2 canonical base",
+    "truth-lock sources match actual checkout HEAD blobs",
+    "truth-lock digest changes if any locked source blob changes",
+    "historical review remains historical and current review remains current",
+    "Stage map remains STAGE_7 with Stage 8 NOT_OPENED",
+    "live execution remains disabled across policy/state layers",
+    "Visual P1 remains IN_PROGRESS and is explicitly handed to Wave B",
+    "Skill Registry remains unimplemented until repair closure",
+    "exact-head CI passes",
+    "Wave A closure advances active work to B1 only after Murtakaz post-review"
+  ],
+  "verification_plan": [
+    "Wave A truth-lock validator",
+    "all existing Murtakaz validators",
+    "Company Stage 0",
+    "CodeQL",
+    "Reference UI + C# validations",
+    "Murtakaz post-review",
+    "final exact-head CI"
+  ],
+  "pre_approval_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-a3-truth-lock-pre.json",
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE"
+}

@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0",
+  "lock_id": "MRTKZ-REPAIR-WAVE-A-TRUTH-LOCK-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "project_id": "universal-council-command-center",
+  "repair_wave": "A_TRUTH_AND_ANTI_DRIFT",
+  "baseline_branch": "command-center/project-local-council-studio-20261019",
+  "baseline_revision": "76eeca02b79790c28a181520cc019d3586769b26",
+  "validation_mode": "BASELINE_ANCESTOR_PLUS_LOCKED_SOURCE_BLOBS_MATCH_HEAD",
+  "self_reference_excluded": true,
+  "lock_digest_algorithm": "SHA256_SORTED_ID_PATH_BLOB_TUPLES",
+  "lock_digest": "6f1e3059353f37ef0e64f7556cf4333823ad88880f7ae3dea0eaa1ad63297ffe",
+  "sources": [
+    {
+      "id": "project-context-map",
+      "path": "state/command-center/project-context-map.json",
+      "blob_sha": "39a8bc3248cbf5f11ca3701fa5eba487df63195c"
+    },
+    {
+      "id": "architecture-invariants",
+      "path": "state/command-center/project-governance/architecture-invariants.json",
+      "blob_sha": "457302e15e675f8644948ab71224f17118e7173c"
+    },
+    {
+      "id": "agentic-os-current-review",
+      "path": "state/command-center/project-governance/agentic-os-current-review.json",
+      "blob_sha": "e4c8fe0cfd2bbf6e9e9345ce19b3f66714b6e0e9"
+    },
+    {
+      "id": "agentic-os-historical-review",
+      "path": "state/command-center/project-governance/agentic-os-latest-review.json",
+      "blob_sha": "39306373d51abb41cd529a59f66c9abde854caee"
+    },
+    {
+      "id": "stage-phase-map",
+      "path": "state/command-center/project-governance/stage-phase-map.json",
+      "blob_sha": "2abd1d9d4558eaae466a1038625728c6344c50c4"
+    },
+    {
+      "id": "phase0-execution-gates",
+      "path": "state/command-center/phase0-execution-gates.json",
+      "blob_sha": "6ca3d2827026d712933cabd11c8816967ae163af"
+    },
+    {
+      "id": "context-pipeline-state",
+      "path": "state/command-center/context-pipeline-state.json",
+      "blob_sha": "ff4f45fe43cdb51af0102657bda720ae301b3427"
+    },
+    {
+      "id": "gateway-routing-state",
+      "path": "state/command-center/gateway-routing-state.json",
+      "blob_sha": "ea4c5d7317d1ae87eca0012ccab66add8bce50fb"
+    },
+    {
+      "id": "capability-model-state",
+      "path": "state/command-center/capability-model-state.json",
+      "blob_sha": "2c45c0e695fcb6ebfafd84fb5c1fd536096d06e2"
+    },
+    {
+      "id": "model-broker-policy",
+      "path": "state/command-center/model-broker-policy.json",
+      "blob_sha": "52fa6436e837bec1e250dd79920a8b925b6d01c9"
+    },
+    {
+      "id": "gateway-routing-policy",
+      "path": "state/command-center/gateway-routing-policy.json",
+      "blob_sha": "635d3c4916e9b8a40be16bb6da79494c38465993"
+    },
+    {
+      "id": "visual-p1-state",
+      "path": "state/command-center/living-operations-p1-visual-phase.json",
+      "blob_sha": "4f20d341273a139bca790c42e7b7754ecb4be117"
+    },
+    {
+      "id": "visual-reference-manifest",
+      "path": "state/command-center/living-operations-reference-manifest.json",
+      "blob_sha": "bcd8ee23a5618c07919baa47971d83f86f908b69"
+    },
+    {
+      "id": "ux-state-contract",
+      "path": "state/command-center/living-operations-ux-state-contract.json",
+      "blob_sha": "626662757d11e97f719c8a3b8fa006a112ae9937"
+    },
+    {
+      "id": "roadmap",
+      "path": "docs/operations/command-center/COMMAND_CENTER_ROADMAP_2026-10-19.md",
+      "blob_sha": "b480c51616a3da37ff5755d225e1d347c09ae5a2"
+    },
+    {
+      "id": "a1-post-approval",
+      "path": "state/command-center/project-governance/approvals/2026-10-21-repair-a1-context-baseline-post.json",
+      "blob_sha": "4101ff313bc4db8efa0e84bb98ae1172f1129fe9"
+    },
+    {
+      "id": "a2-post-approval",
+      "path": "state/command-center/project-governance/approvals/2026-10-21-repair-a2-governance-metadata-post.json",
+      "blob_sha": "c221a941ed12d750562969581cbeb344258a0cb0"
+    },
+    {
+      "id": "a3-post-approval",
+      "path": "state/command-center/project-governance/approvals/2026-10-21-repair-a3-truth-lock-post.json",
+      "blob_sha": "d52ca02fd75a3b04af31ac2c168e606305e7be0b"
+    }
+  ],
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_status": "NOT_OPENED",
+    "live_execution_authorized": false,
+    "phase0_all_gates_passed": false,
+    "visual_reference_count": 8,
+    "visual_p1_status": "IN_PROGRESS",
+    "model_provider_calls_connected": false,
+    "real_autopilot_status": "NOT_IMPLEMENTED",
+    "skill_registry_status": "NOT_IMPLEMENTED",
+    "job_engine_status": "NOT_IMPLEMENTED",
+    "android_live_state": "UNPROVEN"
+  },
+  "repair_lineage": {
+    "A1": "APPROVED_BY_AL_MURTAKAZ",
+    "A2": "APPROVED_BY_AL_MURTAKAZ",
+    "A3": "APPROVED_BY_AL_MURTAKAZ"
+  },
+  "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-a3-truth-lock-post.json",
+  "next_active_work_after_approval": "REPAIR_WAVE_B1_COMPLETE_REMAINING_NATIVE_WORK"
+}
