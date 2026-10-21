@@ -4,7 +4,7 @@
   "project_id": "universal-council-command-center",
   "baseline_branch": "command-center/project-local-council-studio-20261019",
   "baseline_revision": "b3ef5d8f60e3f623371b40036bcea01f7a396d2a",
-  "source_revision": "8c3ab85be0cf2b6e182b7f66fcf078f41b80e47131f08b8697461f4892a81e26",
+  "source_revision": "45144c0ee0fb2e8599ea4dea201b320467d09c277f2dce36ac831a65f2d101c7",
   "head_validation_mode": "BASELINE_ANCESTOR_AND_SOURCE_BLOBS_MATCH_HEAD",
   "project_manifest": {
     "display_name": "UniversalCouncil Command Center",
@@ -78,7 +78,7 @@
     {
       "id": "architecture-invariants",
       "path": "state/command-center/project-governance/architecture-invariants.json",
-      "blob_sha": "7045cc58b19e3321dff41feaa07892991b2493cb",
+      "blob_sha": "457302e15e675f8644948ab71224f17118e7173c",
       "authority_class": "LOCKED_POLICY",
       "freshness": "CURRENT",
       "domains": [
