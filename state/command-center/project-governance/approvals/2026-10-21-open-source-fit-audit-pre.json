@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "murtakaz-open-source-fit-audit-pre-2026-10-21",
+  "date": "2026-10-21",
+  "authority": "AL_MURTAKAZ",
+  "status": "APPROVED_FOR_RESEARCH_AND_PLANNING_ONLY",
+  "base_branch": "command-center/capability-registry-model-broker-20261021",
+  "base_sha": "e201c50c091b90938ba0167037555903a63e0f10",
+  "scope": [
+    "external open-source technical-fit research",
+    "architecture comparison",
+    "license/risk screening",
+    "three-wave integration roadmap",
+    "governance/state documentation only"
+  ],
+  "hard_blocks": [
+    "NO_PRODUCTION_RUNTIME_INTEGRATION",
+    "NO_MODEL_PROVIDER_CONNECTION",
+    "NO_LIVE_EXECUTION_ENABLEMENT",
+    "NO_OWNER_AUTHORITY_DELEGATION",
+    "NO_SILENT_MODEL_FALLBACK",
+    "NO_EXTERNAL_FRAMEWORK_MAY_BECOME_PROJECT_TRUTH"
+  ],
+  "required_reviews": [
+    "MURTAKAZ_ARCHITECTURE",
+    "MURTAKAZ_SECURITY",
+    "MURTAKAZ_DURABILITY",
+    "MURTAKAZ_MODEL_MEMORY_EVALS"
+  ],
+  "decision_reason": "Owner directed the Murtakaz to perform the technical-fit audit and produce a safe integration roadmap. Research/planning is reversible and does not grant runtime authority."
+}
