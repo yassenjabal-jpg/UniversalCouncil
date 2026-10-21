@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "plan_id": "p1-b3-final-review-v1",
   "change_id": "CC-REPAIR-B3-FINAL-P1-ACCEPTANCE-2026-10-21",
-  "status": "R10_FINAL_REVIEW_IN_PROGRESS",
+  "status": "RETURNED_FOR_CHANGES_EXIT_EVIDENCE_PENDING",
   "canonical_reference_count": 8,
   "evidence_base": {
     "head_sha": "77a0e21bd40fc4a306fe75cc131e9c5740110db6",
@@ -28,5 +28,11 @@
     "runtime_authority": false
   },
   "final_p1_approval": false,
-  "timestamp": "2026-10-21"
+  "timestamp": "2026-10-21",
+  "review_result": "state/command-center/living-operations-p1-b3-final-review-result.json",
+  "return_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-return.json",
+  "blockers": [
+    "P1_MOTION_CAPTURE_MISSING",
+    "P1_ANDROID_SEMANTIC_ADAPTATION_MISSING"
+  ]
 }
