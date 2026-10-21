@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-POST-P1-MOTION-INTERACTION-LAW-2026-10-21",
+  "status": "MURTAKAZ_PRE_REVIEW",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "07f2575eaed71f806724b461fc297ce9edc84d4a"
+  },
+  "trigger": {
+    "type": "OWNER_DIRECTIVE",
+    "directive": "Review all eight screens under Al-Murtakaz. Motion must have a specific operational purpose; anything that looks clickable must perform a real inspect/navigation/state/intent function or be explicitly unavailable, never decorative-only."
+  },
+  "scope": [
+    "audit all eight canonical Command Center screens",
+    "audit all static WPF buttons and dynamic hotspots for a concrete interaction result",
+    "audit all implemented motion for navigation/state/feedback purpose and Reduced Motion equivalence",
+    "replace feedback-only primary actions with truthful functional inspectors or intent previews",
+    "add a validator preventing decorative clickable surfaces and purposeless motion"
+  ],
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "p1_complete": true,
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution_authorized": false
+  },
+  "non_goals": [
+    "opening Stage 8",
+    "authorizing live execution",
+    "connecting providers",
+    "changing the eight-screen visual direction",
+    "starting Skill Registry or later engineering phases"
+  ],
+  "timestamp": "2026-10-21"
+}
