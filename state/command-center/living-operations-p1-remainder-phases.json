@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "plan_id": "p1-native-remainder-phases-v1",
-  "status": "ACTIVE",
-  "current_phase": "R5_HOME_MICRO_POLISH",
+  "status": "B1_NATIVE_COMPLETION_REVIEW_REQUIRED",
+  "current_phase": "B1_EIGHT_SCREEN_NATIVE_COMPLETION_REVIEW",
   "anti_stall_rule": true,
   "phase_order": [
     "R1_OWNER_DECISION_MODE",
@@ -27,7 +27,9 @@
         "codeql_run": 708,
         "reference_ui_run": 128,
         "reference_ui_artifact_id": 12269146849
-      }
+      },
+      "b1_deferred_micro_polish": "IMPLEMENTED_REVIEW_REQUIRED",
+      "b1_evidence_head": "69dc13fa94928be292237f082e77e656f792222b"
     },
     "R2_RECOVERY_FORK": {
       "state": "CLOSED",
@@ -39,7 +41,9 @@
         "codeql_run": 716,
         "reference_ui_run": 143,
         "reference_ui_artifact_id": 12270290657
-      }
+      },
+      "b1_deferred_micro_polish": "IMPLEMENTED_REVIEW_REQUIRED",
+      "b1_evidence_head": "69dc13fa94928be292237f082e77e656f792222b"
     },
     "R3_PULSE_STORY": {
       "state": "CLOSED",
@@ -51,7 +55,9 @@
         "codeql_run": 729,
         "reference_ui_run": 166,
         "reference_ui_artifact_id": 12285604936
-      }
+      },
+      "b1_deferred_micro_polish": "IMPLEMENTED_REVIEW_REQUIRED",
+      "b1_evidence_head": "69dc13fa94928be292237f082e77e656f792222b"
     },
     "R4_WORK_RECEIPT": {
       "state": "CLOSED",
@@ -63,23 +69,33 @@
         "codeql_run": 740,
         "reference_ui_run": 186,
         "reference_ui_artifact_id": 12286807319
-      }
+      },
+      "b1_deferred_micro_polish": "IMPLEMENTED_REVIEW_REQUIRED",
+      "b1_evidence_head": "69dc13fa94928be292237f082e77e656f792222b"
     },
     "R5_HOME_MICRO_POLISH": {
-      "state": "READY_TO_CONTINUE",
-      "primary_screen": "home_owner_workspace"
+      "state": "IMPLEMENTED_REVIEW_REQUIRED",
+      "primary_screen": "home_owner_workspace",
+      "evidence_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "review": "B1_NATIVE_COMPLETION_IMPLEMENTED_MURTAKAZ_REVIEW_REQUIRED"
     },
     "R6_PROJECT_WORKSPACE_MICRO_POLISH": {
-      "state": "NOT_OPENED",
-      "primary_screen": "living_project_workspace"
+      "state": "IMPLEMENTED_REVIEW_REQUIRED",
+      "primary_screen": "living_project_workspace",
+      "evidence_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "review": "B1_NATIVE_COMPLETION_IMPLEMENTED_MURTAKAZ_REVIEW_REQUIRED"
     },
     "R7_SOFTWARE_AUTOPILOT_MICRO_POLISH": {
-      "state": "NOT_OPENED",
-      "primary_screen": "software_autopilot_project"
+      "state": "IMPLEMENTED_REVIEW_REQUIRED",
+      "primary_screen": "software_autopilot_project",
+      "evidence_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "review": "B1_NATIVE_COMPLETION_IMPLEMENTED_MURTAKAZ_REVIEW_REQUIRED"
     },
     "R8_STUDIO_PROJECT_MICRO_POLISH": {
-      "state": "NOT_OPENED",
-      "primary_screen": "studio_project"
+      "state": "IMPLEMENTED_REVIEW_REQUIRED",
+      "primary_screen": "studio_project",
+      "evidence_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "review": "B1_NATIVE_COMPLETION_IMPLEMENTED_MURTAKAZ_REVIEW_REQUIRED"
     },
     "R9_CROSS_SCREEN_CONSISTENCY_AUDIT": {
       "state": "NOT_OPENED",
@@ -101,5 +117,11 @@
   ],
   "rule": "ONE_PRIMARY_SCREEN_PER_RECONSTRUCTION_PHASE",
   "final_native_reconstruction_complete": false,
-  "stage8_opened": false
+  "stage8_opened": false,
+  "b1_scope_correction": {
+    "reason": "R1-R4 closed structural reconstruction with micro-polish deferred while R5-R8 named only four screens; B1 explicitly closes native/micro-polish debt for all eight.",
+    "canonical_screen_count": 8,
+    "material_head": "69dc13fa94928be292237f082e77e656f792222b",
+    "post_review_required": true
+  }
 }
