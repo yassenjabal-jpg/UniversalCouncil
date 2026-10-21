@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0",
+  "ledger_id": "repair-b1-eight-screen-native-completion",
+  "status": "EVIDENCE_PENDING",
+  "change_id": "CC-REPAIR-B1-NATIVE-COMPLETION-2026-10-21",
+  "canonical_reference_manifest": "state/command-center/living-operations-reference-manifest.json",
+  "evidence_rule": "REFERENCE_NATIVE_BLEND_REQUIRED_PER_SCREEN",
+  "final_p1_approval_allowed": false,
+  "screens": [
+    {
+      "order": 1,
+      "role": "home_owner_workspace",
+      "source_phase": "R5_HOME_MICRO_POLISH",
+      "debt_origin": "EXPLICIT_R5",
+      "state": "EVIDENCE_PENDING",
+      "reference_file": "home-reference-only-1440x900.png",
+      "native_file": "home-native-1440x900.png",
+      "blend_file": "home-native-overlay-1440x900.png"
+    },
+    {
+      "order": 2,
+      "role": "living_project_workspace",
+      "source_phase": "R6_PROJECT_WORKSPACE_MICRO_POLISH",
+      "debt_origin": "EXPLICIT_R6",
+      "state": "EVIDENCE_PENDING",
+      "reference_file": "project-workspace-reference-1440x900.png",
+      "native_file": "project-workspace-native-1440x900.png",
+      "blend_file": "project-workspace-blend-1440x900.png"
+    },
+    {
+      "order": 3,
+      "role": "software_autopilot_project",
+      "source_phase": "R7_SOFTWARE_AUTOPILOT_MICRO_POLISH",
+      "debt_origin": "EXPLICIT_R7",
+      "state": "EVIDENCE_PENDING",
+      "reference_file": "software-autopilot-reference-1440x900.png",
+      "native_file": "software-autopilot-native-1440x900.png",
+      "blend_file": "software-autopilot-blend-1440x900.png"
+    },
+    {
+      "order": 4,
+      "role": "studio_project",
+      "source_phase": "R8_STUDIO_PROJECT_MICRO_POLISH",
+      "debt_origin": "EXPLICIT_R8",
+      "state": "EVIDENCE_PENDING",
+      "reference_file": "studio-project-reference-1440x900.png",
+      "native_file": "studio-project-native-1440x900.png",
+      "blend_file": "studio-project-blend-1440x900.png"
+    },
+    {
+      "order": 5,
+      "role": "owner_decision_mode",
+      "source_phase": "R1_OWNER_DECISION_MODE",
+      "debt_origin": "MICRO_POLISH_DEFERRED_R1",
+      "state": "EVIDENCE_PENDING",
+      "reference_file": "owner-decision-reference-1440x900.png",
+      "native_file": "owner-decision-native-1440x900.png",
+      "blend_file": "owner-decision-blend-1440x900.png"
+    },
+    {
+      "order": 6,
+      "role": "checkpoint_recovery_fork",
+      "source_phase": "R2_RECOVERY_FORK",
+      "debt_origin": "MICRO_POLISH_DEFERRED_R2",
+      "state": "EVIDENCE_PENDING",
+      "reference_file": "recovery-fork-reference-1440x900.png",
+      "native_file": "recovery-fork-native-1440x900.png",
+      "blend_file": "recovery-fork-blend-1440x900.png"
+    },
+    {
+      "order": 7,
+      "role": "pulse_visual_project_story",
+      "source_phase": "R3_PULSE_STORY",
+      "debt_origin": "MICRO_POLISH_DEFERRED_R3",
+      "state": "EVIDENCE_PENDING",
+      "reference_file": "pulse-story-reference-1440x900.png",
+      "native_file": "pulse-story-native-1440x900.png",
+      "blend_file": "pulse-story-blend-1440x900.png"
+    },
+    {
+      "order": 8,
+      "role": "project_complete_work_receipt",
+      "source_phase": "R4_WORK_RECEIPT",
+      "debt_origin": "MICRO_POLISH_DEFERRED_R4",
+      "state": "EVIDENCE_PENDING",
+      "reference_file": "work-receipt-reference-1440x900.png",
+      "native_file": "work-receipt-native-1440x900.png",
+      "blend_file": "work-receipt-blend-1440x900.png"
+    }
+  ],
+  "allowed_screen_states": [
+    "EVIDENCE_PENDING",
+    "RETURNED_FOR_CHANGES",
+    "MICRO_POLISH_COMPLETE"
+  ],
+  "closure_rule": "ALL_EIGHT_MICRO_POLISH_COMPLETE_AND_EXACT_HEAD_CI_PASS_AND_MURTAKAZ_POST_REVIEW",
+  "after_b1": "R9_CROSS_SCREEN_CONSISTENCY_AUDIT",
+  "truth": {
+    "p1_status": "IN_PROGRESS",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "final_visual_approval": false
+  }
+}
