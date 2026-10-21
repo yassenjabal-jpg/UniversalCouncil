@@ -36,7 +36,7 @@ class CommandCenterGovernanceMetadataTests(unittest.TestCase):
         )
         self.assertEqual(
             [item["pr"] for item in self.current_review["merged_lineage"]],
-            [56, 57, 58, 59, 60, 61],
+            [56, 57, 58, 59, 60, 61, 62],
         )
         self.assertEqual(
             self.current_review["repair_program"]["wave_a"]["A1"],
