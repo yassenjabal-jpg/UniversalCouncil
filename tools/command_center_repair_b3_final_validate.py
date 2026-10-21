@@ -143,7 +143,9 @@ else:
         raise SystemExit("Final P1 visual approval may not grant runtime authority or open Stage 8")
     if remediation_post is None or remediation_post.get("decision") != "APPROVED_BY_AL_MURTAKAZ":
         raise SystemExit("Final P1 approval lacks the governed exit-remediation receipt")
-    if not remediation_post.get("motion_capture_accepted") or not remediation_post.get("reduced_motion_capture_accepted"):
+    if not remediation_post.get("motion_capture_accepted") or not remediation_post.get(
+        "reduced_motion_capture_accepted"
+    ):
         raise SystemExit("Final P1 approval lacks accepted full/reduced motion evidence")
     if not remediation_post.get("android_semantic_adaptation_accepted"):
         raise SystemExit("Final P1 approval lacks accepted Android semantic evidence")
