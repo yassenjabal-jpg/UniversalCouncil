@@ -1342,15 +1342,15 @@ public partial class MainWindow : Window
 
     private static ScreenTransitionProfile GetNavigationMotionProfile(ScreenKind screen) => screen switch
     {
-        ScreenKind.Home => new(150, 320, 0, 18, 0.992),
-        ScreenKind.ProjectWorkspace => new(160, 340, 34, 0, 0.988),
-        ScreenKind.SoftwareAutopilot => new(160, 350, 38, 0, 0.988),
-        ScreenKind.StudioProject => new(165, 350, 0, 26, 0.988),
-        ScreenKind.DecisionMode => new(175, 380, 0, 30, 0.982),
-        ScreenKind.RecoveryFork => new(175, 390, -34, 0, 0.986),
-        ScreenKind.PulseStory => new(165, 350, 34, 0, 0.988),
-        ScreenKind.WorkReceipt => new(175, 390, 0, 32, 0.982),
-        _ => new(160, 340, 24, 0, 0.99),
+        ScreenKind.Home => new(180, 400, 0, 42, 0.985),
+        ScreenKind.ProjectWorkspace => new(185, 415, 64, 0, 0.978),
+        ScreenKind.SoftwareAutopilot => new(185, 415, 68, 0, 0.978),
+        ScreenKind.StudioProject => new(190, 410, 0, 54, 0.978),
+        ScreenKind.DecisionMode => new(210, 450, 0, 62, 0.968),
+        ScreenKind.RecoveryFork => new(210, 450, -68, 0, 0.972),
+        ScreenKind.PulseStory => new(190, 410, 64, 0, 0.978),
+        ScreenKind.WorkReceipt => new(210, 450, 0, 64, 0.968),
+        _ => new(185, 415, 52, 0, 0.98),
     };
 
     private void BuildSecondaryNative(ScreenKind screen)

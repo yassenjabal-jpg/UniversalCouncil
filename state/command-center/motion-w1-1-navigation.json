@@ -18,60 +18,60 @@
   "reduced_motion_policy": "CROSSFADE_ONLY_NO_TRANSLATE_OR_SCALE",
   "profiles": {
     "home": {
-      "exit_ms": 150,
-      "entry_ms": 320,
+      "exit_ms": 180,
+      "entry_ms": 400,
       "entry_x": 0,
-      "entry_y": 18,
-      "entry_scale": 0.992
+      "entry_y": 42,
+      "entry_scale": 0.985
     },
     "project": {
-      "exit_ms": 160,
-      "entry_ms": 340,
-      "entry_x": 34,
+      "exit_ms": 185,
+      "entry_ms": 415,
+      "entry_x": 64,
       "entry_y": 0,
-      "entry_scale": 0.988
+      "entry_scale": 0.978
     },
     "autopilot": {
-      "exit_ms": 160,
-      "entry_ms": 350,
-      "entry_x": 38,
+      "exit_ms": 185,
+      "entry_ms": 415,
+      "entry_x": 68,
       "entry_y": 0,
-      "entry_scale": 0.988
+      "entry_scale": 0.978
     },
     "studio": {
-      "exit_ms": 165,
-      "entry_ms": 350,
+      "exit_ms": 190,
+      "entry_ms": 410,
       "entry_x": 0,
-      "entry_y": 26,
-      "entry_scale": 0.988
+      "entry_y": 54,
+      "entry_scale": 0.978
     },
     "decision": {
-      "exit_ms": 175,
-      "entry_ms": 380,
+      "exit_ms": 210,
+      "entry_ms": 450,
       "entry_x": 0,
-      "entry_y": 30,
-      "entry_scale": 0.982
+      "entry_y": 62,
+      "entry_scale": 0.968
     },
     "recovery": {
-      "exit_ms": 175,
-      "entry_ms": 390,
-      "entry_x": -34,
+      "exit_ms": 210,
+      "entry_ms": 450,
+      "entry_x": -68,
       "entry_y": 0,
-      "entry_scale": 0.986
+      "entry_scale": 0.972
     },
     "pulse": {
-      "exit_ms": 165,
-      "entry_ms": 350,
-      "entry_x": 34,
+      "exit_ms": 190,
+      "entry_ms": 410,
+      "entry_x": 64,
       "entry_y": 0,
-      "entry_scale": 0.988
+      "entry_scale": 0.978
     },
     "receipt": {
-      "exit_ms": 175,
-      "entry_ms": 390,
+      "exit_ms": 210,
+      "entry_ms": 450,
       "entry_x": 0,
-      "entry_y": 32,
-      "entry_scale": 0.982
+      "entry_y": 64,
+      "entry_scale": 0.968
     }
   },
   "evidence": {
@@ -97,5 +97,15 @@
     "visual_identity_locked": true
   },
   "w1_2_started": false,
-  "merge_authorized": false
+  "merge_authorized": false,
+  "visibility_remediation": {
+    "reason": "TRUTHFUL_COMPOSITE_CAPTURE_SHOWED_FRONT_LOADED_MOTION_AS_EFFECTIVELY_STATIC",
+    "full_motion_easing": "QUADRATIC_STANDARD_DIRECTIONAL",
+    "source_exit_travel_ratio": 0.42,
+    "source_exit_opacity_target": 0.1,
+    "entry_opacity_start": 0.1,
+    "timing_policy": "M3_580_600MS_ROUTINE_M4_660MS_DECISION_RECOVERY_COMPLETION",
+    "detector_thresholds_changed": false,
+    "reduced_motion_changed": false
+  }
 }

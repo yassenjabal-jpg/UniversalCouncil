@@ -37,9 +37,9 @@ required_main_markers = (
     "private void AnimatePulseInteractionCue(",
     "private void AnimateHandoffCue(",
     "private void RunAfterSemanticMotion(",
-    "ScreenKind.DecisionMode => new(175, 380, 0, 30, 0.982)",
-    "ScreenKind.RecoveryFork => new(175, 390, -34, 0, 0.986)",
-    "ScreenKind.WorkReceipt => new(175, 390, 0, 32, 0.982)",
+    "ScreenKind.DecisionMode => new(210, 450, 0, 62, 0.968)",
+    "ScreenKind.RecoveryFork => new(210, 450, -68, 0, 0.972)",
+    "ScreenKind.WorkReceipt => new(210, 450, 0, 64, 0.968)",
 )
 for marker in required_main_markers:
     if marker not in main:
@@ -59,6 +59,7 @@ required_transition_markers = (
     "if (!fullMotion)",
     "surface.RenderTransform = Transform.Identity;",
     "ReducedHandoffOpacity",
+    "var ease = new QuadraticEase { EasingMode = easingMode };",
     "internal static void Settle(",
 )
 for marker in required_transition_markers:

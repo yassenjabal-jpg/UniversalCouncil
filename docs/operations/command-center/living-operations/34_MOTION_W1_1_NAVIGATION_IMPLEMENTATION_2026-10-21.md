@@ -20,9 +20,9 @@ The animated surface is `ReferenceHost`, so the approved reference image, native
 
 ### Full Motion
 
-Full Motion uses restrained Translate + Scale + Opacity. Entry travel is 18–38 design pixels depending on the canonical screen and settles in 320–390ms after a 150–175ms source exit.
+Full Motion uses bounded Translate + Scale + Opacity with a less front-loaded quadratic ease. Routine screen handoffs now use 42–68 design-pixel entry travel and 580–600ms total choreography (M3). Decision, Recovery and Work Receipt use 660ms total choreography (M4), where the Motion Bible explicitly permits stronger project-event emphasis. Source exit remains directional and bounded; every transition returns to canonical rest geometry.
 
-This is bounded navigation choreography, not continuous dashboard motion.
+This is bounded navigation choreography, not continuous dashboard motion. The remediation changes the actual WPF motion only; frame-delta thresholds remain unchanged.
 
 ### Reduced Motion
 

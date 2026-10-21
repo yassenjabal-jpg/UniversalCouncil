@@ -36,18 +36,18 @@ internal static class ScreenTransitionMotion
                 EasingMode.EaseIn);
         }
 
-        var exitX = -profile.EntryX * 0.35;
-        var exitY = -profile.EntryY * 0.35;
+        var exitX = -profile.EntryX * 0.42;
+        var exitY = -profile.EntryY * 0.42;
         return AnimateCompositeAsync(
             surface,
             fromOpacity: 1,
-            toOpacity: 0.16,
+            toOpacity: 0.10,
             fromX: 0,
             toX: exitX,
             fromY: 0,
             toY: exitY,
             fromScale: 1,
-            toScale: 0.996,
+            toScale: 0.992,
             durationMs: profile.ExitDurationMs,
             easingMode: EasingMode.EaseIn);
     }
@@ -72,7 +72,7 @@ internal static class ScreenTransitionMotion
 
         await AnimateCompositeAsync(
             surface,
-            fromOpacity: 0.18,
+            fromOpacity: 0.10,
             toOpacity: 1,
             fromX: profile.EntryX,
             toX: 0,
@@ -136,7 +136,7 @@ internal static class ScreenTransitionMotion
         surface.RenderTransform = group;
 
         var duration = TimeSpan.FromMilliseconds(durationMs);
-        var ease = new CubicEase { EasingMode = easingMode };
+        var ease = new QuadraticEase { EasingMode = easingMode };
 
         var opacity = new DoubleAnimation(fromOpacity, toOpacity, duration)
         {
