@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-B3-FINAL-P1-ACCEPTANCE-POST-2026-10-21",
+  "change_id": "CC-REPAIR-B3-FINAL-P1-ACCEPTANCE-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "scoped_verdict": "APPROVE_P1_VISUAL_INTERACTION_MOTION_AND_ANDROID_PROTOTYPE",
+  "historical_return_resolved": true,
+  "historical_return_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-return.json",
+  "remediation_receipt": "state/command-center/project-governance/approvals/2026-10-21-p1-exit-remediation-motion-android-post.json",
+  "final_review": {
+    "desktop_canonical_screen_count": 8,
+    "desktop_fidelity_accepted": true,
+    "motion_capture_accepted": true,
+    "reduced_motion_capture_accepted": true,
+    "android_semantic_adaptation_accepted": true,
+    "truth_state_consistency_accepted": true,
+    "rejected_generation_parent_excluded": true,
+    "accessibility_and_reduced_motion_accepted": true
+  },
+  "material_evidence_head": "2736c4e9484e4b60c842ca69274fb93ddb16f739",
+  "evidence_runs": {
+    "company_stage0": 39611656803,
+    "codeql": 39611656919,
+    "reference_ui": 39611657006,
+    "p1_exit_evidence": 39611656911
+  },
+  "final_p1_approval_granted": true,
+  "p1_complete": true,
+  "adoption_authorized": true,
+  "merge_authorized": true,
+  "merge_condition": "EXACT_HEAD_CI_SUCCESS_AFTER_FINAL_RECEIPTS",
+  "authoritative_stage": "STAGE_7",
+  "live_execution_authorized": false,
+  "runtime_authority_added": false,
+  "stage8_opened": false,
+  "next_work": "P1_COMPLETE_NEXT_PHASE_OWNER_DECISION_REQUIRED",
+  "timestamp": "2026-10-21"
+}

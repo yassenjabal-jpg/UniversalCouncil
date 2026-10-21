@@ -62,11 +62,16 @@ class CommandCenterRepairB1NativeTests(unittest.TestCase):
         self.assertTrue(all(item["verdict"] == "NO_B1_BLOCKER" for item in self.review["findings"]))
         self.assertFalse(self.review["final_p1_approval"])
 
-    def test_b1_never_closes_p1_or_opens_stage8(self) -> None:
-        self.assertEqual(self.p1["status"], "IN_PROGRESS")
+    def test_b1_never_granted_final_p1_or_opened_stage8(self) -> None:
+        self.assertFalse(self.review["final_p1_approval"])
+        if self.post_path.exists():
+            post = load(self.post_path)
+            self.assertFalse(post["final_p1_approval_granted"])
+        self.assertIn(self.p1["status"], {"IN_PROGRESS", "APPROVED_BY_AL_MURTAKAZ"})
         self.assertFalse(self.p1["stage8_opened"])
         self.assertFalse(self.p1["runtime_authority"])
-        self.assertFalse(self.screen_review["phase_complete"])
+        if self.p1["status"] == "APPROVED_BY_AL_MURTAKAZ":
+            self.assertTrue(self.screen_review["phase_complete"])
 
     def test_b1_lifecycle_advances_only_after_post_review(self) -> None:
         if self.post_path.exists():
@@ -78,7 +83,7 @@ class CommandCenterRepairB1NativeTests(unittest.TestCase):
             )
             self.assertIn(
                 self.remainder["phases"]["R10_FINAL_MURTAKAZ_STUDIO_REVIEW"]["state"],
-                {"NOT_OPENED", "MURTAKAZ_STUDIO_REVIEW", "RETURNED_FOR_CHANGES"},
+                {"NOT_OPENED", "MURTAKAZ_STUDIO_REVIEW", "RETURNED_FOR_CHANGES", "CLOSED"},
             )
             self.assertIn(
                 self.context["active_work"],
@@ -86,6 +91,7 @@ class CommandCenterRepairB1NativeTests(unittest.TestCase):
                     ["REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"],
                     ["REPAIR_WAVE_B3_FINAL_REVIEW_P1_ACCEPTANCE_PENDING"],
                     ["P1_EXIT_REMEDIATION_MOTION_AND_ANDROID"],
+                    ["P1_COMPLETE_NEXT_PHASE_OWNER_DECISION_REQUIRED"],
                 ],
             )
         else:

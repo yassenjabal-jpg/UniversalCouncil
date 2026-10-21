@@ -26,6 +26,7 @@ class CommandCenterProjectGovernanceTests(unittest.TestCase):
         self.approval_policy = load_json(PROJECT_STATE / "al-murtakaz-approval-policy.json")
         self.visual_phase = load_json(ROOT / "state" / "command-center" / "living-operations-p1-visual-phase.json")
         self.visual_approval = load_json(PROJECT_STATE / "approvals" / "2026-10-19-visual-direction-continuation.json")
+        self.final_p1_post_path = PROJECT_STATE / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json"
 
     def test_parent_versions_are_explicit_and_read_only(self) -> None:
         parents = self.lock["parent_sources"]
@@ -138,8 +139,8 @@ class CommandCenterProjectGovernanceTests(unittest.TestCase):
         self.assertTrue(mandatory["required_before_release"])
         self.assertTrue(mandatory["required_before_next_phase"])
 
-    def test_visual_phase_is_in_progress_and_not_final_without_murtakaz(self) -> None:
-        self.assertEqual(self.visual_phase["status"], "IN_PROGRESS")
+    def test_visual_phase_requires_murtakaz_for_final_state(self) -> None:
+        self.assertIn(self.visual_phase["status"], {"IN_PROGRESS", "APPROVED_BY_AL_MURTAKAZ"})
         self.assertEqual(
             self.visual_phase["exit_requires"],
             "APPROVED_BY_AL_MURTAKAZ",
@@ -151,6 +152,11 @@ class CommandCenterProjectGovernanceTests(unittest.TestCase):
             "APPROVE_TO_IMPLEMENT",
         )
         self.assertFalse(self.visual_approval["final_adoption_granted"])
+        if self.visual_phase["status"] == "APPROVED_BY_AL_MURTAKAZ":
+            final_post = load_json(self.final_p1_post_path)
+            self.assertEqual(final_post["decision"], "APPROVED_BY_AL_MURTAKAZ")
+            self.assertTrue(final_post["final_p1_approval_granted"])
+            self.assertTrue(final_post["p1_complete"])
 
     def test_project_write_roots_do_not_include_parent_paths(self) -> None:
         roots = self.lock["project_write_roots"]

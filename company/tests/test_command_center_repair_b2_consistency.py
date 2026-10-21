@@ -76,11 +76,15 @@ class CommandCenterRepairB2ConsistencyTests(unittest.TestCase):
         self.assertIn('KeyboardNavigation.TabNavigation="Cycle"', self.xaml)
         self.assertIn('KeyboardNavigation.ControlTabNavigation="Cycle"', self.xaml)
 
-    def test_b2_does_not_complete_p1(self) -> None:
-        self.assertEqual(self.p1["status"], "IN_PROGRESS")
+    def test_b2_did_not_grant_final_p1(self) -> None:
+        post = load(PROJECT / "approvals" / "2026-10-21-repair-b2-cross-screen-consistency-post.json")
+        self.assertFalse(post["final_p1_approval_granted"])
+        self.assertFalse(post["p1_complete"])
+        self.assertIn(self.p1["status"], {"IN_PROGRESS", "APPROVED_BY_AL_MURTAKAZ"})
         self.assertFalse(self.p1["stage8_opened"])
         self.assertFalse(self.p1["runtime_authority"])
-        self.assertFalse(self.screen_review["phase_complete"])
+        if self.p1["status"] == "APPROVED_BY_AL_MURTAKAZ":
+            self.assertTrue(self.screen_review["phase_complete"])
 
 
 if __name__ == "__main__":

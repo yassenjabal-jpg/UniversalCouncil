@@ -11,6 +11,7 @@ CHANGE = PROJECT / "changes" / "2026-10-21-repair-b3-final-p1-acceptance.json"
 PRE = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-pre.json"
 RETURN = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-return.json"
 RETURN_ADOPTION = PROJECT / "approvals" / "2026-10-21-repair-b3-return-state-adoption.json"
+REMEDIATION_POST = PROJECT / "approvals" / "2026-10-21-p1-exit-remediation-motion-android-post.json"
 POST = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json"
 CAPSULE = PROJECT / "context-capsules" / "2026-10-21-repair-b3-final-p1-acceptance.json"
 PLAN = STATE / "living-operations-p1-b3-final-review.json"
@@ -50,6 +51,7 @@ p1 = load(P1)
 screen_review = load(SCREEN_REVIEW)
 remainder = load(REMAINDER)
 post = load(POST) if POST.exists() else None
+remediation_post = load(REMEDIATION_POST) if REMEDIATION_POST.exists() else None
 
 if change["change_id"] != "CC-REPAIR-B3-FINAL-P1-ACCEPTANCE-2026-10-21":
     raise SystemExit("B3 change id drifted")
@@ -139,5 +141,31 @@ else:
         raise SystemExit("B3 post-review exists without complete final P1 approval")
     if post.get("live_execution_authorized") or post.get("stage8_opened"):
         raise SystemExit("Final P1 visual approval may not grant runtime authority or open Stage 8")
+    if remediation_post is None or remediation_post.get("decision") != "APPROVED_BY_AL_MURTAKAZ":
+        raise SystemExit("Final P1 approval lacks the governed exit-remediation receipt")
+    if not remediation_post.get("motion_capture_accepted") or not remediation_post.get(
+        "reduced_motion_capture_accepted"
+    ):
+        raise SystemExit("Final P1 approval lacks accepted full/reduced motion evidence")
+    if not remediation_post.get("android_semantic_adaptation_accepted"):
+        raise SystemExit("Final P1 approval lacks accepted Android semantic evidence")
+    if remediation_post.get("final_p1_approval_granted"):
+        raise SystemExit("Exit-remediation receipt improperly self-granted final P1 approval")
+    if p1["status"] != "APPROVED_BY_AL_MURTAKAZ":
+        raise SystemExit("Final P1 receipt exists but P1 state is not approved")
+    if plan["status"] != "APPROVED_BY_AL_MURTAKAZ_P1_COMPLETE":
+        raise SystemExit("B3 final-review plan is not resolved to P1 complete")
+    if remainder["phases"]["R10_FINAL_MURTAKAZ_STUDIO_REVIEW"]["state"] != "CLOSED":
+        raise SystemExit("Final P1 receipt exists but R10 is not closed")
+    if not remainder["final_native_reconstruction_complete"]:
+        raise SystemExit("Final P1 receipt exists but native reconstruction is not complete")
+    if screen_review["status"] != "P1_FINAL_ACCEPTED_BY_AL_MURTAKAZ" or not screen_review["phase_complete"]:
+        raise SystemExit("Final P1 receipt exists but screen review is not final")
+    if screen_review["shared_motion"]["state"] != "P1_EXIT_EVIDENCE_ACCEPTED":
+        raise SystemExit("Final P1 receipt exists without accepted motion state")
+    if screen_review["android_semantic_pair"]["state"] != "P1_EXIT_EVIDENCE_ACCEPTED":
+        raise SystemExit("Final P1 receipt exists without accepted Android semantic state")
+    if not screen_review["native_reference_shell"]["final_native_reconstruction_complete"]:
+        raise SystemExit("Final P1 receipt exists but native reference shell is not complete")
 
 print("Al-Murtakaz Visual B3 final P1 review validation: PASS")

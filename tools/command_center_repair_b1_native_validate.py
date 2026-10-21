@@ -22,6 +22,7 @@ B1_PRE = PROJECT / "approvals" / "2026-10-21-repair-b1-native-completion-pre.jso
 B1_POST = PROJECT / "approvals" / "2026-10-21-repair-b1-native-completion-post.json"
 B1_CHANGE = PROJECT / "changes" / "2026-10-21-repair-b1-native-completion.json"
 B1_CAPSULE = PROJECT / "context-capsules" / "2026-10-21-repair-b1-native-completion.json"
+FINAL_P1_POST = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json"
 
 MAIN_WINDOW = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "MainWindow.xaml.cs"
 UI_SMOKE = ROOT / "apps" / "UniversalCouncil.CommandCenter.UiSmoke" / "Program.cs"
@@ -76,6 +77,12 @@ pre = load(B1_PRE)
 post = load(B1_POST) if B1_POST.exists() else None
 change = load(B1_CHANGE)
 capsule = load(B1_CAPSULE)
+final_p1_post = load(FINAL_P1_POST) if FINAL_P1_POST.exists() else None
+final_p1_approved = (
+    final_p1_post is not None
+    and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ"
+    and final_p1_post.get("p1_complete") is True
+)
 
 manifest_roles = [item["role"] for item in manifest["references"]]
 if manifest_roles != CANONICAL_ROLES:
@@ -101,8 +108,10 @@ if change["unplanned_scope_policy"] != "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE":
 if capsule["job_or_change_id"] != change["change_id"] or not capsule["immutable"]:
     raise SystemExit("B1 Context Capsule binding drifted")
 
-if p1["status"] != "IN_PROGRESS":
-    raise SystemExit("B1 may not mark P1 complete")
+if p1["status"] not in {"IN_PROGRESS", "APPROVED_BY_AL_MURTAKAZ"}:
+    raise SystemExit("B1 historical validation observed an unsupported P1 lifecycle state")
+if p1["status"] == "APPROVED_BY_AL_MURTAKAZ" and not final_p1_approved:
+    raise SystemExit("P1 claims final approval without the later governed R10 receipt")
 if not p1["governance"]["final_approval_required"]:
     raise SystemExit("B1 weakened final P1 approval requirement")
 if p1["stage8_opened"] or p1["runtime_authority"]:
@@ -152,18 +161,18 @@ if screen_roles != CANONICAL_ROLES:
     raise SystemExit("P1 screen review does not contain exactly the eight canonical roles")
 if "recovery_checkpoint_fork" in screen_roles:
     raise SystemExit("Legacy recovery screen id survived B1 reconciliation")
-if screen_review["phase_complete"]:
-    raise SystemExit("B1 may not complete P1")
-if screen_review["native_reference_shell"]["final_native_reconstruction_complete"]:
-    raise SystemExit("B1 may not claim final native reconstruction before cross-screen/final review")
+if screen_review["phase_complete"] and not final_p1_approved:
+    raise SystemExit("P1 screen review completed without the later governed R10 receipt")
+if screen_review["native_reference_shell"]["final_native_reconstruction_complete"] and not final_p1_approved:
+    raise SystemExit("Native reconstruction completed without the later governed R10 receipt")
 
 if reference_shell["final_native_reconstruction_complete"]:
     raise SystemExit("Reference shell may not claim final reconstruction in B1")
 if not reference_shell["native_reconstruction"]["all_eight_macro_reconstruction_complete"]:
     raise SystemExit("B1 lost the eight-screen macro reconstruction foundation")
 
-if remainder["final_native_reconstruction_complete"]:
-    raise SystemExit("Remainder plan may not claim final reconstruction in B1")
+if remainder["final_native_reconstruction_complete"] and not final_p1_approved:
+    raise SystemExit("Remainder plan claimed final reconstruction without the later governed R10 receipt")
 if remainder["stage8_opened"]:
     raise SystemExit("Remainder plan opened Stage 8")
 
@@ -245,13 +254,14 @@ else:
     if r9_state not in {"READY_TO_CONTINUE", "CLOSED"}:
         raise SystemExit("B1 lifecycle regressed: R9 must be ready or validly closed by B2")
     r10_state = remainder["phases"]["R10_FINAL_MURTAKAZ_STUDIO_REVIEW"]["state"]
-    if r10_state not in {"NOT_OPENED", "MURTAKAZ_STUDIO_REVIEW", "RETURNED_FOR_CHANGES"}:
+    if r10_state not in {"NOT_OPENED", "MURTAKAZ_STUDIO_REVIEW", "RETURNED_FOR_CHANGES", "CLOSED"}:
         raise SystemExit("B1 lifecycle advanced R10 outside the governed B3 review states")
 
     allowed_active_work = [
         ["REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"],
         ["REPAIR_WAVE_B3_FINAL_REVIEW_P1_ACCEPTANCE_PENDING"],
         ["P1_EXIT_REMEDIATION_MOTION_AND_ANDROID"],
+        ["P1_COMPLETE_NEXT_PHASE_OWNER_DECISION_REQUIRED"],
     ]
     if project_context["active_work"] not in allowed_active_work:
         raise SystemExit("B1 lifecycle active work is neither B2 nor the governed B3-pending successor")
@@ -260,6 +270,7 @@ else:
         "B1_NATIVE_COMPLETION_APPROVED_R9_READY",
         "B2_CROSS_SCREEN_APPROVED_B3_READY",
         "B3_RETURNED_FOR_CHANGES_EXIT_EVIDENCE_PENDING",
+        "P1_FINAL_ACCEPTED_BY_AL_MURTAKAZ",
     }
     if screen_review["status"] not in allowed_screen_review_status:
         raise SystemExit("B1 lifecycle screen review regressed or advanced outside the governed B2 successor")

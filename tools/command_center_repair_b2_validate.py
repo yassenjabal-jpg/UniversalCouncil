@@ -14,6 +14,7 @@ B2_1_CHECK = PROJECT / "approvals" / "2026-10-21-repair-b2-1-shared-visual-check
 POST = PROJECT / "approvals" / "2026-10-21-repair-b2-cross-screen-consistency-post.json"
 CAPSULE = PROJECT / "context-capsules" / "2026-10-21-repair-b2-cross-screen-consistency.json"
 B1_POST = PROJECT / "approvals" / "2026-10-21-repair-b1-native-completion-post.json"
+FINAL_P1_POST = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json"
 PLAN = STATE / "living-operations-p1-b2-cross-screen-consistency.json"
 P1 = STATE / "living-operations-p1-visual-phase.json"
 SCREEN_REVIEW = STATE / "living-operations-p1-screen-review.json"
@@ -52,6 +53,12 @@ p1 = load(P1)
 screen_review = load(SCREEN_REVIEW)
 remainder = load(REMAINDER)
 post = load(POST) if POST.exists() else None
+final_p1_post = load(FINAL_P1_POST) if FINAL_P1_POST.exists() else None
+final_p1_approved = (
+    final_p1_post is not None
+    and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ"
+    and final_p1_post.get("p1_complete") is True
+)
 
 if change["change_id"] != "CC-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-2026-10-21":
     raise SystemExit("B2 change id drifted")
@@ -94,12 +101,16 @@ if b2_1_check["decision"] != "APPROVE_B2_1_CONTINUE":
 if plan["slices"]["B2.1_SHARED_VISUAL_TOKENS_AND_CHROME"]["state"] != "APPROVED_TO_CONTINUE":
     raise SystemExit("B2.1 is not closed before later B2 slices")
 
-if p1["status"] != "IN_PROGRESS" or p1["stage8_opened"] or p1["runtime_authority"]:
-    raise SystemExit("B2 changed P1/runtime authority")
-if screen_review["phase_complete"]:
-    raise SystemExit("B2 may not complete P1")
+if p1["status"] not in {"IN_PROGRESS", "APPROVED_BY_AL_MURTAKAZ"}:
+    raise SystemExit("B2 historical validation observed an unsupported P1 lifecycle state")
+if p1["status"] == "APPROVED_BY_AL_MURTAKAZ" and not final_p1_approved:
+    raise SystemExit("P1 claims final approval without the later governed R10 receipt")
+if p1["stage8_opened"] or p1["runtime_authority"]:
+    raise SystemExit("B2/later P1 lifecycle inflated runtime authority")
+if screen_review["phase_complete"] and not final_p1_approved:
+    raise SystemExit("P1 completed without the later governed R10 receipt")
 r10_state = remainder["phases"]["R10_FINAL_MURTAKAZ_STUDIO_REVIEW"]["state"]
-if r10_state not in {"NOT_OPENED", "MURTAKAZ_STUDIO_REVIEW", "RETURNED_FOR_CHANGES"}:
+if r10_state not in {"NOT_OPENED", "MURTAKAZ_STUDIO_REVIEW", "RETURNED_FOR_CHANGES", "CLOSED"}:
     raise SystemExit("B2 historical validation observed an unsupported later R10 state")
 
 main_source = MAIN_WINDOW.read_text(encoding="utf-8")

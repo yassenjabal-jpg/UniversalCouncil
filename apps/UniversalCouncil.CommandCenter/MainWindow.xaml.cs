@@ -12,6 +12,20 @@ namespace UniversalCouncil.CommandCenter;
 
 public partial class MainWindow : Window
 {
+    private static bool MotionEnabled
+    {
+        get
+        {
+            var evidenceOverride = Environment.GetEnvironmentVariable("UNIVERSALCOUNCIL_MOTION_EVIDENCE");
+            return evidenceOverride?.Trim().ToLowerInvariant() switch
+            {
+                "full" => true,
+                "reduced" => false,
+                _ => SystemParameters.ClientAreaAnimation,
+            };
+        }
+    }
+
     private readonly MainWindowViewModel _viewModel;
     private FrameworkElement? _lastInteractionTarget;
     private string? _activeRoleId;
@@ -1208,7 +1222,7 @@ public partial class MainWindow : Window
             BuildSecondaryInteractions(screen);
         }
 
-        if (SystemParameters.ClientAreaAnimation)
+        if (MotionEnabled)
         {
             ReferenceImage.Opacity = 0.68;
             ReferenceImage.BeginAnimation(
@@ -7706,7 +7720,7 @@ public partial class MainWindow : Window
 
         ContextDrawer.Visibility = Visibility.Visible;
 
-        if (!SystemParameters.ClientAreaAnimation)
+        if (!MotionEnabled)
         {
             DrawerTransform.X = 0;
             ContextDrawer.Opacity = 1;
@@ -7735,7 +7749,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        if (!SystemParameters.ClientAreaAnimation)
+        if (!MotionEnabled)
         {
             CloseDrawerImmediate();
             RestoreInteractionFocus();
@@ -7772,7 +7786,7 @@ public partial class MainWindow : Window
 
     private static void AnimateNativeRoleButton(Button button)
     {
-        if (!SystemParameters.ClientAreaAnimation)
+        if (!MotionEnabled)
         {
             return;
         }
@@ -7805,7 +7819,7 @@ public partial class MainWindow : Window
         Canvas.SetTop(RoleActivationRing, top - 5);
         RoleActivationRing.Visibility = Visibility.Visible;
 
-        if (!SystemParameters.ClientAreaAnimation)
+        if (!MotionEnabled)
         {
             RoleActivationRing.Opacity = 0.75;
             return;
@@ -7836,14 +7850,14 @@ public partial class MainWindow : Window
             BorderThickness = new Thickness(3),
             CornerRadius = new CornerRadius(18),
             IsHitTestVisible = false,
-            Opacity = SystemParameters.ClientAreaAnimation ? 0 : 0.7
+            Opacity = MotionEnabled ? 0 : 0.7
         };
         Canvas.SetLeft(ring, left - 5);
         Canvas.SetTop(ring, top - 5);
         Panel.SetZIndex(ring, 20);
         SecondaryInteractionCanvas.Children.Add(ring);
 
-        if (!SystemParameters.ClientAreaAnimation)
+        if (!MotionEnabled)
         {
             return;
         }
@@ -7862,22 +7876,25 @@ public partial class MainWindow : Window
         PrototypeNotice.Visibility = Visibility.Visible;
         PrototypeNotice.Opacity = 1;
 
-        await Task.Delay(2600);
+        await Task.Delay(2600).ConfigureAwait(false);
 
-        if (!IsLoaded)
+        await Dispatcher.InvokeAsync(() =>
         {
-            return;
-        }
+            if (!IsLoaded && Visibility != Visibility.Visible)
+            {
+                return;
+            }
 
-        if (!SystemParameters.ClientAreaAnimation)
-        {
-            PrototypeNotice.Visibility = Visibility.Collapsed;
-            return;
-        }
+            if (!MotionEnabled)
+            {
+                PrototypeNotice.Visibility = Visibility.Collapsed;
+                return;
+            }
 
-        var fade = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(180));
-        fade.Completed += (_, _) => PrototypeNotice.Visibility = Visibility.Collapsed;
-        PrototypeNotice.BeginAnimation(OpacityProperty, fade);
+            var fade = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(180));
+            fade.Completed += (_, _) => PrototypeNotice.Visibility = Visibility.Collapsed;
+            PrototypeNotice.BeginAnimation(OpacityProperty, fade);
+        });
     }
 
     private static ScreenKind ParseScreen(string id) => id switch

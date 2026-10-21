@@ -14,6 +14,7 @@ STAGE_MAP = PROJECT / "stage-phase-map.json"
 APPROVAL_POLICY = PROJECT / "al-murtakaz-approval-policy.json"
 VISUAL_PHASE = STATE / "living-operations-p1-visual-phase.json"
 SCREEN_REVIEW = STATE / "living-operations-p1-screen-review.json"
+FINAL_P1_POST = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json"
 REFERENCE_MANIFEST = STATE / "living-operations-reference-manifest.json"
 VISUAL_APPROVAL = PROJECT / "approvals" / "2026-10-19-visual-direction-continuation.json"
 TAILNET_POLICY = STATE / "owner-device-tailnet-policy.json"
@@ -138,8 +139,16 @@ for required_gate in (
         raise SystemExit(f"Murtakaz approval gate missing: {required_gate}")
 
 visual_phase = load(VISUAL_PHASE)
-if visual_phase["status"] != "IN_PROGRESS":
-    raise SystemExit("P1 visual phase must remain IN_PROGRESS until final Murtakaz approval")
+final_p1_post = load(FINAL_P1_POST) if FINAL_P1_POST.exists() else None
+final_p1_approved = (
+    final_p1_post is not None
+    and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ"
+    and final_p1_post.get("p1_complete") is True
+)
+if visual_phase["status"] not in {"IN_PROGRESS", "APPROVED_BY_AL_MURTAKAZ"}:
+    raise SystemExit("P1 visual phase entered an unsupported lifecycle state")
+if visual_phase["status"] == "APPROVED_BY_AL_MURTAKAZ" and not final_p1_approved:
+    raise SystemExit("P1 visual phase claims final approval without the final Murtakaz receipt")
 if visual_phase["exit_requires"] != "APPROVED_BY_AL_MURTAKAZ":
     raise SystemExit("P1 visual phase exit is not Murtakaz-gated")
 if visual_phase["runtime_authority"] is not False or visual_phase["stage8_opened"] is not False:
@@ -153,13 +162,16 @@ allowed_screen_review_states = {
     "B2_CROSS_SCREEN_REVIEW_REQUIRED",
     "B2_CROSS_SCREEN_APPROVED_B3_READY",
     "B3_RETURNED_FOR_CHANGES_EXIT_EVIDENCE_PENDING",
+    "P1_FINAL_ACCEPTED_BY_AL_MURTAKAZ",
 }
 if screen_review["status"] not in allowed_screen_review_states:
     raise SystemExit("P1 screen review entered an unsupported lifecycle state")
 if screen_review["final_state_requires"] != "APPROVED_BY_AL_MURTAKAZ":
     raise SystemExit("P1 screen review exit is not Murtakaz-gated")
-if screen_review["phase_complete"] is not False:
+if screen_review["phase_complete"] is True and not final_p1_approved:
     raise SystemExit("P1 screen review fabricated phase completion")
+if final_p1_approved and screen_review["phase_complete"] is not True:
+    raise SystemExit("Final P1 receipt exists but screen review is not complete")
 allowed_scoped_decisions = {
     "PENDING",
     "B1_NATIVE_COMPLETION_APPROVED",

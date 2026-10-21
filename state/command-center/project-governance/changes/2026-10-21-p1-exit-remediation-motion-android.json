@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-P1-EXIT-REMEDIATION-MOTION-ANDROID-2026-10-21",
+  "status": "MURTAKAZ_PRE_REVIEW",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "f10ce1b44eabeb40167efadbadc11fa49f27a293"
+  },
+  "trigger": {
+    "type": "B3_RETURNED_FOR_CHANGES",
+    "receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-return.json",
+    "blockers": [
+      "P1_MOTION_CAPTURE_MISSING",
+      "P1_ANDROID_SEMANTIC_ADAPTATION_MISSING"
+    ]
+  },
+  "scope": [
+    "produce verified 20-40 second WPF critical-path motion capture from the actual P1 prototype",
+    "produce verified Reduced Motion capture preserving the same operational meaning",
+    "produce a platform-appropriate Android semantic companion prototype and interaction capture for the governed P1 mobile path",
+    "bind all exit evidence to manifests, hashes and CI artifacts",
+    "rerun R10 final Al-Murtakaz and Studio review only after both evidence families pass"
+  ],
+  "slices": [
+    "R10R1_DESKTOP_MOTION_EVIDENCE",
+    "R10R2_ANDROID_SEMANTIC_COMPANION_EVIDENCE",
+    "R10R3_FINAL_R10_REVIEW_AND_P1_ACCEPTANCE"
+  ],
+  "non_goals": [
+    "production Android application",
+    "Android live host command dispatch",
+    "new desktop visual direction",
+    "Stage 8 opening",
+    "live execution authority",
+    "provider connection",
+    "Skill Registry",
+    "Durable Project Store",
+    "Job Engine"
+  ],
+  "truth_rules": [
+    "a recording must be generated from an executable or interactive prototype path, never relabeled static screenshots",
+    "reduced-motion evidence must preserve state meaning without motion-dependent semantics",
+    "Android evidence must be labeled prototype evidence unless a real Android runtime is actually exercised",
+    "UNKNOWN must never be represented as success",
+    "no final P1 approval before both evidence families are verified"
+  ],
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE",
+  "timestamp": "2026-10-21"
+}

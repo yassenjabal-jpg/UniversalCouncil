@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "plan_id": "p1-b3-final-review-v1",
   "change_id": "CC-REPAIR-B3-FINAL-P1-ACCEPTANCE-2026-10-21",
-  "status": "RETURNED_FOR_CHANGES_EXIT_EVIDENCE_PENDING",
+  "status": "APPROVED_BY_AL_MURTAKAZ_P1_COMPLETE",
   "canonical_reference_count": 8,
   "evidence_base": {
     "head_sha": "77a0e21bd40fc4a306fe75cc131e9c5740110db6",
@@ -22,17 +22,21 @@
     "Android semantic adaptation prototype/capture is present and accepted"
   ],
   "protected_truth": {
-    "p1_status": "IN_PROGRESS",
+    "p1_status": "APPROVED_BY_AL_MURTAKAZ",
     "authoritative_stage": "STAGE_7",
     "stage8_opened": false,
     "runtime_authority": false
   },
-  "final_p1_approval": false,
+  "final_p1_approval": true,
   "timestamp": "2026-10-21",
   "review_result": "state/command-center/living-operations-p1-b3-final-review-result.json",
   "return_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-return.json",
-  "blockers": [
-    "P1_MOTION_CAPTURE_MISSING",
-    "P1_ANDROID_SEMANTIC_ADAPTATION_MISSING"
-  ]
+  "blockers": [],
+  "resolution": {
+    "historical_return_preserved": true,
+    "remediation_receipt": "state/command-center/project-governance/approvals/2026-10-21-p1-exit-remediation-motion-android-post.json",
+    "final_post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-post.json",
+    "final_acceptance": "state/command-center/living-operations-p1-final-acceptance.json",
+    "evidence_head": "2736c4e9484e4b60c842ca69274fb93ddb16f739"
+  }
 }
