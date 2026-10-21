@@ -28,6 +28,7 @@ internal static partial class Program
         var sourceFramesArrived = 0L;
         var sourceFrameErrors = 0L;
         var sampleClockSeconds = 0d;
+        WgcHostGeometryDiagnostics? hostGeometry = null;
 
         MainWindow? window = null;
         try
@@ -51,6 +52,8 @@ internal static partial class Program
             {
                 throw new InvalidOperationException("Persistent WGC pilot could not obtain the real Command Center HWND.");
             }
+
+            hostGeometry = WgcHostGeometryProbe.Capture(hwnd);
 
             using IMotionEvidenceCaptureSource source =
                 new PersistentWgcWindowCaptureSource(hwnd);
@@ -171,6 +174,7 @@ internal static partial class Program
             scope = "EVIDENCE_CAPTURE_ONLY",
             source = sourceId,
             capture_strategy = "PERSISTENT_WGC_ONLY",
+            host_geometry = hostGeometry,
             silent_dxgi_fallback = false,
             fallback_used = false,
             architecture_reference = new

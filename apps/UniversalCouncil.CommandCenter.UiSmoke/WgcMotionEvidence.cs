@@ -62,6 +62,8 @@ internal static partial class Program
                     "WGC motion evidence could not obtain the real Command Center HWND.");
             }
 
+            var hostGeometry = WgcHostGeometryProbe.Capture(hwnd);
+
             using IMotionEvidenceCaptureSource captureSource =
                 new PersistentWgcWindowCaptureSource(hwnd);
 
@@ -77,6 +79,7 @@ internal static partial class Program
                 candidate_sha = candidateSha,
                 source = captureSource.SourceId,
                 hwnd = $"0x{hwnd.ToInt64():X}",
+                host_geometry = hostGeometry,
                 target_width = MotionWidth,
                 target_height = MotionHeight,
                 source_width = captureSource.Width,
