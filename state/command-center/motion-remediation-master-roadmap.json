@@ -11,7 +11,12 @@
     "phase": "W0.1",
     "classification": "IMPLEMENTATION_EXPERIMENT_NOT_FINAL",
     "pr_merge_allowed": false,
-    "latest_head": "27252eeeb13cf653a704c3b737b11fbef0ffecaa"
+    "audited_implementation_head": "9285da24be6bee97564f7f47cbcaf7dee1ad3989",
+    "phase_status": "MOTION_RETURN_BASELINE_LOCK",
+    "phase_gate_receipt": "state/command-center/project-governance/approvals/2026-10-21-motion-w0-1-baseline-lock.json",
+    "next_phase": "W0.2",
+    "next_phase_started": false,
+    "branch_head_source_of_truth": "GITHUB_DYNAMIC_DO_NOT_EMBED_AS_LATEST_HEAD"
   },
   "protected_truth": {
     "authoritative_stage": "STAGE_7",

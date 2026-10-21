@@ -12,7 +12,11 @@
     "latest_gate_result": "FAIL",
     "latest_failed_rule": "full motion capture does not contain enough visibly changing frames",
     "latest_pr": 72,
-    "latest_head": "27252eeeb13cf653a704c3b737b11fbef0ffecaa"
+    "latest_head": "9285da24be6bee97564f7f47cbcaf7dee1ad3989",
+    "latest_head_semantics": "LATEST_FAILED_EXACT_HEAD_EVIDENCE",
+    "latest_workflow_run_id": 39651044966,
+    "wpf_artifact_id": 12370411610,
+    "android_artifact_id": 12370516017
   },
   "requested_correction": "Execute CC-MOTION-REMEDIATION-MASTER-ROADMAP-2026-10-21 through W6 without lowering visual acceptance thresholds.",
   "do_not_change": [
@@ -32,5 +36,7 @@
   ],
   "return_target": "cc_motion_systems",
   "close_condition": "MOTION_SYSTEM_LOCKED",
-  "timestamp": "2026-10-21"
+  "timestamp": "2026-10-21",
+  "w0_1_baseline_gate": "MOTION_RETURN_BASELINE_LOCK",
+  "w0_1_inventory": "state/command-center/motion-implementation-inventory-w0-1.json"
 }

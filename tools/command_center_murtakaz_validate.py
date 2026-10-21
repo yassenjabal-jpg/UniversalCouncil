@@ -33,7 +33,7 @@ REPAIR_B3_FINAL_VALIDATOR = ROOT / "tools" / "command_center_repair_b3_final_val
 POST_P1_INTERACTION_MOTION_VALIDATOR = ROOT / "tools" / "command_center_post_p1_interaction_motion_validate.py"
 STAGE7_REAL_EVIDENCE_VALIDATOR = ROOT / "tools" / "command_center_stage7_real_evidence_validate.py"
 MOTION_VISIBILITY_VALIDATOR = ROOT / "tools" / "command_center_motion_visibility_validate.py"
-MOTION_ROADMAP_VALIDATOR = ROOT / "tools" / "command_center_motion_roadmap_validate.py"
+MOTION_ROADMAP_VALIDATOR = ROOT / "tools" / "command_center_motion_roadmap_validate.py"\nMOTION_W0_1_BASELINE_VALIDATOR = ROOT / "tools" / "command_center_motion_w0_1_baseline_validate.py"
 
 VISUAL_DIRECTION_ROOT = ROOT / "docs" / "operations" / "command-center" / "living-operations"
 VISUAL_DIRECTION_FILES = (
@@ -208,7 +208,7 @@ subprocess.run([__import__("sys").executable, str(REPAIR_B3_FINAL_VALIDATOR)], c
 subprocess.run([__import__("sys").executable, str(POST_P1_INTERACTION_MOTION_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(STAGE7_REAL_EVIDENCE_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(MOTION_VISIBILITY_VALIDATOR)], check=True)
-subprocess.run([__import__("sys").executable, str(MOTION_ROADMAP_VALIDATOR)], check=True)
+subprocess.run([__import__("sys").executable, str(MOTION_ROADMAP_VALIDATOR)], check=True)\nsubprocess.run([__import__("sys").executable, str(MOTION_W0_1_BASELINE_VALIDATOR)], check=True)
 
 for visual_file in VISUAL_DIRECTION_FILES:
     text = visual_file.read_text(encoding="utf-8").casefold()
