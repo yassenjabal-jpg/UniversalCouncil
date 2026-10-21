@@ -53,7 +53,7 @@ jobs:
         run: |
           $PSNativeCommandUseErrorActionPreference = $true
           dotnet restore apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --runtime win-x64
-          dotnet publish apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --runtime win-x64 --self-contained false --no-restore --output artifacts/yassin-wgc-host-kit/app
+          dotnet publish apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --runtime win-x64 --self-contained true --no-restore --output artifacts/yassin-wgc-host-kit/app
 
       - name: Assemble governed host kit
         shell: pwsh
@@ -69,6 +69,7 @@ jobs:
 
           Requirements on YASSIN:
           - Windows interactive desktop session
+          - No preinstalled .NET runtime is required; the app is published self-contained for win-x64.
           - ffmpeg + ffprobe on PATH
           - Python is optional for local validation; evidence can be validated later if absent
 
