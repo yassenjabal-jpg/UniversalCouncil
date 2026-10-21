@@ -16,6 +16,8 @@ SERVE_SCRIPT = ROOT / "tools" / "stage7_configure_tailscale_serve.ps1"
 PROBE_SCRIPT = ROOT / "tools" / "stage7_yassin_probe.ps1"
 START_SCRIPT = ROOT / "tools" / "stage7_start_remote_transport.ps1"
 STATE = ROOT / "state" / "command-center" / "command-center-state.json"
+REAL_EVIDENCE_INDEX = ROOT / "state" / "command-center" / "stage7-real-host-evidence-index.json"
+REAL_EVIDENCE_VALIDATOR = ROOT / "tools" / "command_center_stage7_real_evidence_validate.py"
 
 required = [
     APP / "MainWindow.xaml",
@@ -30,6 +32,8 @@ required = [
     PROBE_SCRIPT,
     START_SCRIPT,
     ROOT / "tools" / "build_command_center_stage7_projection.py",
+    REAL_EVIDENCE_INDEX,
+    REAL_EVIDENCE_VALIDATOR,
     STATE,
 ]
 
@@ -199,21 +203,39 @@ if state.get("execution_enabled") is not False:
     raise SystemExit("Command Center state may not enable execution")
 
 xaml = (APP / "MainWindow.xaml").read_text(encoding="utf-8")
-for label in (
-    "COMMAND CENTER / STAGE 7",
-    "Owner Device + Private Tailnet",
-    "ONLINE OBSERVED / HOST COMMANDS BLOCKED",
-    "FUNNEL / PUBLIC BIND: FORBIDDEN",
-    'Text="{Binding Stage7HostAccessLabel}"',
-    'Text="{Binding Stage7TailscaleLabel}"',
-    'Text="{Binding Stage7EnrollmentLabel}"',
-    'Text="{Binding Stage7PhoneLabel}"',
-    'Text="{Binding Stage7ExecutionLabel}"',
+viewmodel = (APP / "MainWindowViewModel.cs").read_text(encoding="utf-8")
+window_code = (APP / "MainWindow.xaml.cs").read_text(encoding="utf-8")
+
+for marker in (
+    "Stage7HostAccessLabel",
+    "Stage7TailscaleLabel",
+    "Stage7ServeLabel",
+    "Stage7EnrollmentLabel",
+    "Stage7SessionLabel",
+    "Stage7PhoneLabel",
+    "Stage7ExecutionLabel",
+    "YASSIN OFFLINE / REMOTE QUOTA 0%",
 ):
-    if label not in xaml:
-        raise SystemExit(f"Stage 7 UI truth label missing: {label}")
+    if marker not in viewmodel:
+        raise SystemExit(f"Stage 7 view-model truth marker missing: {marker}")
+
+for marker in (
+    "OpenStage7OwnerConnectivityInspector",
+    'tag is "yassin" or "tailscale" or "android-owner"',
+    "_viewModel.Stage7HostAccessLabel",
+    "_viewModel.Stage7TailscaleLabel",
+    "_viewModel.Stage7PhoneLabel",
+    "_viewModel.Stage7ExecutionLabel",
+):
+    if marker not in window_code:
+        raise SystemExit(f"Stage 7 Tool Dock inspector marker missing: {marker}")
 
 if xaml.count("<ScrollViewer") != 1:
     raise SystemExit("Stage 7 must preserve one root ScrollViewer")
+
+subprocess.run(
+    [__import__("sys").executable, str(REAL_EVIDENCE_VALIDATOR)],
+    check=True,
+)
 
 print("Command Center Stage 7 static validation: PASS")
