@@ -109,9 +109,7 @@ if old_review.get("record_status") != "HISTORICAL_SUPERSEDED":
     raise SystemExit("Old Agentic review still presents itself as current truth")
 if old_review.get("historical_verdict_preserved") is not True:
     raise SystemExit("Historical review preservation marker missing")
-if old_review.get("superseded_by") != (
-    "state/command-center/project-governance/agentic-os-current-review.json"
-):
+if old_review.get("superseded_by") != ("state/command-center/project-governance/agentic-os-current-review.json"):
     raise SystemExit("Historical review supersession pointer drifted")
 
 if current_review["record_status"] != "CURRENT_CANONICAL_REVIEW_SUMMARY":
@@ -192,8 +190,7 @@ if a2_pre["final_adoption_granted"] or a2_pre["merge_authorized"]:
     raise SystemExit("A2 pre-approval may not pre-authorize adoption/merge")
 
 if a2_change["pre_approval_receipt"] != (
-    "state/command-center/project-governance/approvals/"
-    "2026-10-21-repair-a2-governance-metadata-pre.json"
+    "state/command-center/project-governance/approvals/2026-10-21-repair-a2-governance-metadata-pre.json"
 ):
     raise SystemExit("A2 Change Envelope is not bound to its pre-approval")
 if a2_change["unplanned_scope_policy"] != "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE":
