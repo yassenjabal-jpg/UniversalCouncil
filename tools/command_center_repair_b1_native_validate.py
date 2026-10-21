@@ -244,12 +244,14 @@ else:
     r9_state = remainder["phases"]["R9_CROSS_SCREEN_CONSISTENCY_AUDIT"]["state"]
     if r9_state not in {"READY_TO_CONTINUE", "CLOSED"}:
         raise SystemExit("B1 lifecycle regressed: R9 must be ready or validly closed by B2")
-    if remainder["phases"]["R10_FINAL_MURTAKAZ_STUDIO_REVIEW"]["state"] != "NOT_OPENED":
-        raise SystemExit("B1/B2 lifecycle opened R10 before the governed B3 gate")
+    r10_state = remainder["phases"]["R10_FINAL_MURTAKAZ_STUDIO_REVIEW"]["state"]
+    if r10_state not in {"NOT_OPENED", "MURTAKAZ_STUDIO_REVIEW", "RETURNED_FOR_CHANGES"}:
+        raise SystemExit("B1 lifecycle advanced R10 outside the governed B3 review states")
 
     allowed_active_work = [
         ["REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"],
         ["REPAIR_WAVE_B3_FINAL_REVIEW_P1_ACCEPTANCE_PENDING"],
+        ["P1_EXIT_REMEDIATION_MOTION_AND_ANDROID"],
     ]
     if project_context["active_work"] not in allowed_active_work:
         raise SystemExit("B1 lifecycle active work is neither B2 nor the governed B3-pending successor")
@@ -257,6 +259,7 @@ else:
     allowed_screen_review_status = {
         "B1_NATIVE_COMPLETION_APPROVED_R9_READY",
         "B2_CROSS_SCREEN_APPROVED_B3_READY",
+        "B3_RETURNED_FOR_CHANGES_EXIT_EVIDENCE_PENDING",
     }
     if screen_review["status"] not in allowed_screen_review_status:
         raise SystemExit("B1 lifecycle screen review regressed or advanced outside the governed B2 successor")
@@ -264,6 +267,7 @@ else:
     allowed_screen_decisions = {
         "B1_NATIVE_COMPLETION_APPROVED",
         "B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+        "B3_DESKTOP_FINAL_FIDELITY_APPROVED",
     }
     if any(item["murtakaz_decision"] not in allowed_screen_decisions for item in screen_review["screens"]):
         raise SystemExit("B1 scoped per-screen Murtakaz decisions regressed or drifted")
