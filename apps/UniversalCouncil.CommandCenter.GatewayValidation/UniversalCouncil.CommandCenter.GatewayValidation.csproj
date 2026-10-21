@@ -24,5 +24,13 @@
              Link="state\gateway-routing-policy.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\state\command-center\capability-registry.json"
+             Link="state\capability-registry.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\state\command-center\model-broker-policy.json"
+             Link="state\model-broker-policy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
