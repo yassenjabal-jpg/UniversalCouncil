@@ -175,30 +175,18 @@ if capsule["source_revision"]["sha"] != state["canonical_base"]:
 if not capsule["immutable"]:
     raise SystemExit("Gateway bootstrap Context Capsule must remain immutable")
 
-gateway_source = (
-    ROOT
-    / "apps"
-    / "UniversalCouncil.CommandCenter.Application"
-    / "MurtakazCommandGateway.cs"
-).read_text(encoding="utf-8")
-routing_source = (
-    ROOT
-    / "apps"
-    / "UniversalCouncil.CommandCenter.Application"
-    / "RoutingCoordinator.cs"
-).read_text(encoding="utf-8")
-host_source = (
-    ROOT
-    / "apps"
-    / "UniversalCouncil.CommandCenter.Host"
-    / "CommandCenterComposition.cs"
-).read_text(encoding="utf-8")
-wpf_project = (
-    ROOT
-    / "apps"
-    / "UniversalCouncil.CommandCenter"
-    / "UniversalCouncil.CommandCenter.csproj"
-).read_text(encoding="utf-8")
+gateway_source = (ROOT / "apps" / "UniversalCouncil.CommandCenter.Application" / "MurtakazCommandGateway.cs").read_text(
+    encoding="utf-8"
+)
+routing_source = (ROOT / "apps" / "UniversalCouncil.CommandCenter.Application" / "RoutingCoordinator.cs").read_text(
+    encoding="utf-8"
+)
+host_source = (ROOT / "apps" / "UniversalCouncil.CommandCenter.Host" / "CommandCenterComposition.cs").read_text(
+    encoding="utf-8"
+)
+wpf_project = (ROOT / "apps" / "UniversalCouncil.CommandCenter" / "UniversalCouncil.CommandCenter.csproj").read_text(
+    encoding="utf-8"
+)
 
 if "IExecutionFabric" in gateway_source or "ExecutionFabricService" in gateway_source:
     raise SystemExit("Gateway may not call Execution Fabric in this slice")
