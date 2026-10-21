@@ -35,9 +35,7 @@ class CommandCenterRepairB1NativeTests(unittest.TestCase):
         cls.p1 = load(STATE / "living-operations-p1-visual-phase.json")
         cls.context = load(STATE / "project-context-map.json")
         cls.post_path = PROJECT / "approvals" / "2026-10-21-repair-b1-native-completion-post.json"
-        cls.stage7_post_path = (
-            PROJECT / "approvals" / "2026-10-21-stage7-real-host-evidence-readiness-post.json"
-        )
+        cls.stage7_post_path = PROJECT / "approvals" / "2026-10-21-stage7-real-host-evidence-readiness-post.json"
 
     def test_all_eight_canonical_roles_have_triple_evidence(self) -> None:
         self.assertEqual(
