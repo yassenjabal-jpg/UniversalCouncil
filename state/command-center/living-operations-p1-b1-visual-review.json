@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "review_id": "MRTKZ-WORKSHOP-B1-EIGHT-SCREEN-NATIVE-REVIEW-2026-10-21",
+  "change_id": "CC-REPAIR-B1-NATIVE-COMPLETION-2026-10-21",
+  "status": "MURTAKAZ_WORKSHOP_REVIEW_REQUIRED",
+  "material_evidence": {
+    "head_sha": "69dc13fa94928be292237f082e77e656f792222b",
+    "reference_ui_run_id": 39583770008,
+    "artifact_id": 12338007893,
+    "artifact_digest": "sha256:e69a99e1d19b8c764928a7464c70119aea3ad7c38424a53bb87f416804cc3391"
+  },
+  "review_method": [
+    "REFERENCE_NATIVE_SIDE_BY_SIDE",
+    "NATIVE_ONLY_WITH_REFERENCE_PIXELS_HIDDEN",
+    "BLEND_OVERLAY",
+    "WPF_BUILD_AND_RENDER_VALIDATION"
+  ],
+  "findings": [
+    {
+      "role": "home_owner_workspace",
+      "verdict": "NO_B1_BLOCKER",
+      "note": "Five-zone hierarchy, Council Pulse, Active Work, summary panels, right rail and tool dock are native and structurally complete."
+    },
+    {
+      "role": "living_project_workspace",
+      "verdict": "NO_B1_BLOCKER",
+      "note": "Custom project rail and central project workspace are complete; shared top/right/tool chrome is now native."
+    },
+    {
+      "role": "software_autopilot_project",
+      "verdict": "NO_B1_BLOCKER",
+      "note": "Autopilot status rail and shared global chrome are now native; central checkpoint/diff/branch/history surfaces remain intact."
+    },
+    {
+      "role": "studio_project",
+      "verdict": "NO_B1_BLOCKER",
+      "note": "Studio shared chrome is native and timeline/player/workflow remain structurally complete."
+    },
+    {
+      "role": "owner_decision_mode",
+      "verdict": "NO_B1_BLOCKER",
+      "note": "Decision mode now renders the originating native project workspace under the decision veil instead of relying on reference pixels."
+    },
+    {
+      "role": "checkpoint_recovery_fork",
+      "verdict": "NO_B1_BLOCKER",
+      "note": "Shared top/right/status chrome is native; recovery timeline, branches, evidence and actions remain structurally complete."
+    },
+    {
+      "role": "pulse_visual_project_story",
+      "verdict": "NO_B1_BLOCKER",
+      "note": "Shared top/right/status chrome is native; story timeline, before/after surface and pulse cards remain complete."
+    },
+    {
+      "role": "project_complete_work_receipt",
+      "verdict": "NO_B1_BLOCKER",
+      "note": "Shared chrome and tool dock are native; bottom panels were lifted to avoid dock overlap."
+    }
+  ],
+  "systemic_fixes": [
+    "native evidence now hides reference pixels completely",
+    "Home has an explicit native-only evidence file",
+    "secondary shared top/right chrome is native",
+    "shared status rail is native where required by canonical parents",
+    "Tool Dock is native only on canonical screens that contain it",
+    "Decision Mode has native project underlay",
+    "P1 screen inventory now contains exactly eight canonical roles"
+  ],
+  "deferred_to_b2": [
+    "cross-screen spacing consistency",
+    "shared glyph consistency",
+    "shared typography micro-alignment",
+    "shared chrome tint/border harmonization"
+  ],
+  "final_p1_approval": false,
+  "r9_cross_screen_audit_opened": false,
+  "r10_final_review_opened": false,
+  "proposed_b1_verdict": "APPROVE_B1_NATIVE_COMPLETION_ONLY"
+}
