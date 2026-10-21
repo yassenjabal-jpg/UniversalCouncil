@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "state_id": "murtakaz-gateway-routing",
-  "status": "IMPLEMENTED_VALIDATION_PENDING",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
   "canonical_base": "8cb72d3f04b6396d9d594924446dd8dc9c896aff",
   "components": {
     "typed_gateway_contract": "IMPLEMENTED",
@@ -31,10 +31,30 @@
     "gateway_does_not_call_execution_fabric": true
   },
   "evidence": {
-    "csharp_gateway_validation": "PENDING",
-    "company_stage0": "PENDING",
-    "codeql": "PENDING",
-    "reference_ui": "PENDING",
-    "murtakaz_post_review": "PENDING"
-  }
+    "csharp_gateway_validation": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39545041338,
+      "head_sha": "74f00eb100b70afe26757bf4c99a6c5621e06752"
+    },
+    "company_stage0": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39545041526,
+      "head_sha": "74f00eb100b70afe26757bf4c99a6c5621e06752"
+    },
+    "codeql": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39545041228,
+      "head_sha": "74f00eb100b70afe26757bf4c99a6c5621e06752"
+    },
+    "reference_ui": {
+      "status": "SUCCESS",
+      "workflow_run_id": 39545041338,
+      "head_sha": "74f00eb100b70afe26757bf4c99a6c5621e06752"
+    },
+    "murtakaz_post_review": {
+      "status": "APPROVED_BY_AL_MURTAKAZ",
+      "receipt": "state/command-center/project-governance/approvals/2026-10-21-gateway-routing-post.json"
+    }
+  },
+  "murtakaz_post_approval": "state/command-center/project-governance/approvals/2026-10-21-gateway-routing-post.json"
 }
