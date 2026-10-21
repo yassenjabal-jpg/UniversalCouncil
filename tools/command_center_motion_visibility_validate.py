@@ -67,7 +67,7 @@ required_gate_markers = (
     "changed_frames < 60",
     "longest_run < 6",
     "motion_runs < 8",
-    "reduced motion capture lost too much visible state-transition feedback",
+    "reduced motion capture lost required discrete state-transition feedback",\n    "longest_run > 3",
 )
 for marker in required_gate_markers:
     if marker not in p1_validator:
