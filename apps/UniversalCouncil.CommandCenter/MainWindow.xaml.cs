@@ -7680,7 +7680,11 @@ public partial class MainWindow : Window
             return;
         }
 
-        ShowNotice("Model & Reasoning غير متاح لهذا العنصر.");
+        OpenGenericRegion(
+            "Model & Reasoning",
+            "لا يوجد عنصر نشط",
+            "يفتح حالة الاستدلال الحالية بدل إعطاء إيحاء بوجود نموذج أو effort غير موثوق.",
+            "UNAVAILABLE / NO ACTIVE ROLE");
     }
 
     private void ContributionHistory_Click(object sender, RoutedEventArgs e) =>
