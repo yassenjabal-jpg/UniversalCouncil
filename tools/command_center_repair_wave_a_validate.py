@@ -213,8 +213,10 @@ if visual_p1["runtime_authority"]:
 refs = reference_manifest["references"]
 if len(refs) != 8:
     raise SystemExit("Canonical visual reference count drifted from eight")
-if len({item["id"] for item in refs}) != 8:
-    raise SystemExit("Canonical visual reference ids are not unique")
+if len({item["role"] for item in refs}) != 8:
+    raise SystemExit("Canonical visual reference roles are not unique")
+if [item["order"] for item in refs] != list(range(1, 9)):
+    raise SystemExit("Canonical visual reference order drifted")
 
 if ux_state["status"] != "APPROVED_BY_AL_MURTAKAZ":
     raise SystemExit("UX State Contract lost Murtakaz approval")
