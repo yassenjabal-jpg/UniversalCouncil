@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CTX-CC-CAPABILITY-MODEL-BROKER-2026-10-21",
+  "immutable": true,
+  "project_id": "universal-council-command-center",
+  "job_or_change_id": "CC-CAPABILITY-MODEL-BROKER-2026-10-21",
+  "created_at": "2026-10-21",
+  "source_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "ea35e6d24931e5981d164fed89b0d494f80c2b44"
+  },
+  "checkpoint_lock_id": "MRTKZ-GATEWAY-ROUTING-POST-2026-10-21",
+  "canonical_sources": [
+    {
+      "id": "agentic-os-policy",
+      "locator": "state/command-center/project-governance/agentic-os-policy.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "gateway-routing-state",
+      "locator": "state/command-center/gateway-routing-state.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "gateway-routing-policy",
+      "locator": "state/command-center/gateway-routing-policy.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "orchestration-catalog",
+      "locator": "state/command-center/orchestration-catalog.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "mandatory-approval",
+      "locator": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
+      "authority_class": "LOCKED_POLICY"
+    }
+  ],
+  "allowed_scope": "SEE_CHANGE_ENVELOPE_CC-CAPABILITY-MODEL-BROKER-2026-10-21",
+  "forbidden_scope": [
+    "model provider invocation",
+    "credential storage",
+    "live execution",
+    "active provider probe",
+    "Skill Registry",
+    "Job Engine",
+    "WPF UI",
+    "Android UI",
+    "Stage 8"
+  ],
+  "authority_policy_version": "al-murtakaz-mandatory-approval:1.0",
+  "risk_class": "MATERIAL_AI_RUNTIME_SELECTION_FOUNDATION",
+  "expected_outputs": [
+    "Capability Registry",
+    "Model Broker",
+    "Gateway preference contract",
+    "Routing integration",
+    "production policies",
+    "behavior validation",
+    "CI evidence",
+    "Murtakaz post-review"
+  ],
+  "acceptance_tests": [
+    "command_center_capability_model_validate.py",
+    "UniversalCouncil.CommandCenter.CapabilityModelValidation",
+    "command_center_gateway_routing_validate.py",
+    "command_center_murtakaz_validate.py",
+    "Company Stage 0",
+    "CodeQL",
+    "Reference UI"
+  ],
+  "freshness_rules": {
+    "baseline_must_match_pre_approval": true,
+    "material_baseline_move_result": "STALE_CONTEXT",
+    "conflicting_canonical_truth_result": "CONTEXT_CONFLICT"
+  }
+}
