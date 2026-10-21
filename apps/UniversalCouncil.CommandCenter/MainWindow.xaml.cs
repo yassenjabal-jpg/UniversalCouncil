@@ -30,6 +30,7 @@ public partial class MainWindow : Window
         public const string SharedBodyText = "#2D3748";
         public const string PrimaryBlue = "#2F75F3";
         public const string SuccessGreen = "#16A452";
+        public const string UnknownState = "#8A93A0";
         public const double TopChromeHeight = 49;
         public const double RightRailLeft = 1470;
         public const double RightRailWidth = 66;
@@ -293,6 +294,7 @@ public partial class MainWindow : Window
             Style = (Style)FindResource("HotspotButtonStyle"),
         };
         AutomationProperties.SetName(button, label);
+        AutomationProperties.SetHelpText(button, "يعرض حالة موثقة أو UNKNOWN ولا يفترض اتصالًا أو نجاحًا.");
         button.Click += handler;
         Place(NativeHomeChromeLayer, button, left, top, width, height);
         return button;
@@ -457,11 +459,19 @@ public partial class MainWindow : Window
             238,
             914);
 
+        var autopilotLive = _viewModel.ExecutionFabric.LiveDispatchEnabled;
+        var autopilotAccent = autopilotLive ? "#24C85A" : CrossScreenVisualTokens.UnknownState;
+        var autopilotWaveform = autopilotLive ? "#54E98A" : "#B8BEC7";
+        var autopilotLabel = autopilotLive ? "يعمل الآن" : "غير مفعّل";
+        var autopilotMessage = autopilotLive
+            ? "لا يوجد شيء مطلوب\nمنك الآن"
+            : "التنفيذ الحي متوقف\nلا توجد مهمة فعلية";
+
         var autoCard = ChromePanel(CrossScreenVisualTokens.SharedPanelBackground, CrossScreenVisualTokens.SharedCoolBorder, 14);
         Place(NativeHomeChromeLayer, autoCard, 16, 62, 215, 159);
         Place(
             NativeHomeChromeLayer,
-            new Ellipse { Fill = Brush("#24C85A"), IsHitTestVisible = false },
+            new Ellipse { Fill = Brush(autopilotAccent), IsHitTestVisible = false },
             31,
             79,
             13,
@@ -475,7 +485,7 @@ public partial class MainWindow : Window
             27);
         Place(
             NativeHomeChromeLayer,
-            ChromeText("يعمل الآن", 10, "#16A452", FontWeights.SemiBold),
+            ChromeText(autopilotLabel, 10, autopilotAccent, FontWeights.SemiBold),
             55,
             96,
             80,
@@ -483,9 +493,9 @@ public partial class MainWindow : Window
 
         var waveform = new Polyline
         {
-            Stroke = Brush("#54E98A"),
+            Stroke = Brush(autopilotWaveform),
             StrokeThickness = 2.3,
-            Opacity = 0.9,
+            Opacity = autopilotLive ? 0.9 : 0.28,
             IsHitTestVisible = false,
             Points = new PointCollection
             {
@@ -495,7 +505,7 @@ public partial class MainWindow : Window
             }
         };
         Place(NativeHomeChromeLayer, waveform, 46, 113, 150, 40);
-        var autoMessage = ChromeText("لا يوجد شيء مطلوب\nمنك الآن", 11.5, "#485161", FontWeights.SemiBold);
+        var autoMessage = ChromeText(autopilotMessage, 11.5, "#485161", FontWeights.SemiBold);
         autoMessage.TextAlignment = TextAlignment.Center;
         Place(NativeHomeChromeLayer, autoMessage, 45, 158, 155, 48);
         Place(
@@ -505,28 +515,28 @@ public partial class MainWindow : Window
             75,
             20,
             30);
-        AddChromeHotspot(16, 62, 215, 159, "autopilot", "Autopilot — يعمل الآن", NativeStatus_Click);
+        AddChromeHotspot(16, 62, 215, 159, "autopilot", "Autopilot — حالة التنفيذ", NativeStatus_Click);
 
         AddNativeStatusCard(
             228,
-            "3",
-            "#2F75F3",
+            "—",
+            CrossScreenVisualTokens.UnknownState,
             "المشاريع النشطة",
-            "جميع النظم تعمل بسلاسة",
+            "الحالة غير متحققة",
             "projects");
         AddNativeStatusCard(
             316,
-            "0",
-            "#E7A629",
+            "—",
+            CrossScreenVisualTokens.UnknownState,
             "المهام بانتظارك",
-            "لا توجد قرارات مطلوبة حالياً",
+            "تُعرض من بيانات فعلية فقط",
             "waiting");
         AddNativeStatusCard(
             404,
-            "0",
-            "#F06679",
+            "—",
+            CrossScreenVisualTokens.UnknownState,
             "تنبيهات مهمة",
-            "كل شيء تحت السيطرة",
+            "لا توجد حالة حية موثقة",
             "alerts");
 
         // Right global navigation rail.
@@ -575,14 +585,14 @@ public partial class MainWindow : Window
             25);
         Place(
             NativeHomeChromeLayer,
-            new Ellipse { Fill = Brush("#28C767"), IsHitTestVisible = false },
+            new Ellipse { Fill = Brush(CrossScreenVisualTokens.UnknownState), IsHitTestVisible = false },
             118,
             981,
             8,
             8);
         Place(
             NativeHomeChromeLayer,
-            ChromeText("نشط الآن", 9, "#15974C"),
+            ChromeText("UNKNOWN", 9, "#6B7280", FontWeights.SemiBold, FlowDirection.LeftToRight),
             128,
             976,
             53,
@@ -756,14 +766,14 @@ public partial class MainWindow : Window
                     "المهام بانتظارك",
                     "Owner queue",
                     "يعرض القرارات والمهام التي تحتاج تدخل المالك فقط عندما تكون موجودة فعليًا.",
-                    "REFERENCE FIXTURE");
+                    "UNKNOWN / REFERENCE FIXTURE");
                 break;
             default:
                 OpenGenericRegion(
                     "تنبيهات مهمة",
                     "Owner alerts",
                     "لا توجد تنبيهات حية مفترضة من المرجع؛ الحالة الفعلية تأتي من runtime.",
-                    "REFERENCE FIXTURE");
+                    "UNKNOWN / REFERENCE FIXTURE");
                 break;
         }
     }
@@ -1165,6 +1175,7 @@ public partial class MainWindow : Window
         NativeHomeReconstructionRoot.Opacity = _nativeReferenceBlendEnabled && isHome ? 0.46 : 1;
         RoleActivationRing.Visibility = Visibility.Collapsed;
         SecondaryNativeLayer.Visibility = isHome ? Visibility.Collapsed : Visibility.Visible;
+        SecondaryNativeLayer.Opacity = _nativeReferenceBlendEnabled && !isHome ? 0.46 : 1;
         SecondaryNativeLayer.Children.Clear();
         SecondaryInteractionCanvas.Visibility = isHome ? Visibility.Collapsed : Visibility.Visible;
         SecondaryInteractionCanvas.Children.Clear();
@@ -1445,6 +1456,14 @@ public partial class MainWindow : Window
             238,
             430);
 
+        var autopilotLive = _viewModel.ExecutionFabric.LiveDispatchEnabled;
+        var autopilotAccent = autopilotLive ? "#24C85A" : CrossScreenVisualTokens.UnknownState;
+        var autopilotWaveform = autopilotLive ? "#54E98A" : "#B8BEC7";
+        var autopilotLabel = autopilotLive ? "يعمل الآن" : "غير مفعّل";
+        var autopilotMessage = autopilotLive
+            ? "لا يوجد شيء مطلوب\nمنك الآن"
+            : "التنفيذ الحي متوقف\nلا توجد مهمة فعلية";
+
         var auto = ChromePanel(
             CrossScreenVisualTokens.SharedPanelBackground,
             CrossScreenVisualTokens.SharedCoolBorder,
@@ -1452,7 +1471,7 @@ public partial class MainWindow : Window
         Place(SecondaryNativeLayer, auto, 16, 62, 215, 159);
         Place(
             SecondaryNativeLayer,
-            new Ellipse { Fill = Brush("#24C85A"), IsHitTestVisible = false },
+            new Ellipse { Fill = Brush(autopilotAccent), IsHitTestVisible = false },
             31,
             79,
             13,
@@ -1466,7 +1485,7 @@ public partial class MainWindow : Window
             27);
         Place(
             SecondaryNativeLayer,
-            ChromeText("يعمل الآن", 10, CrossScreenVisualTokens.SuccessGreen, FontWeights.SemiBold),
+            ChromeText(autopilotLabel, 10, autopilotAccent, FontWeights.SemiBold),
             55,
             96,
             80,
@@ -1474,9 +1493,9 @@ public partial class MainWindow : Window
 
         var waveform = new Polyline
         {
-            Stroke = Brush("#54E98A"),
+            Stroke = Brush(autopilotWaveform),
             StrokeThickness = 2.3,
-            Opacity = 0.9,
+            Opacity = autopilotLive ? 0.9 : 0.28,
             IsHitTestVisible = false,
             Points = new PointCollection
             {
@@ -1486,7 +1505,7 @@ public partial class MainWindow : Window
             },
         };
         Place(SecondaryNativeLayer, waveform, 46, 113, 150, 40);
-        var autoMessage = ChromeText("لا يوجد شيء مطلوب\nمنك الآن", 11.5, "#485161", FontWeights.SemiBold);
+        var autoMessage = ChromeText(autopilotMessage, 11.5, "#485161", FontWeights.SemiBold);
         autoMessage.TextAlignment = TextAlignment.Center;
         Place(SecondaryNativeLayer, autoMessage, 45, 158, 155, 48);
         Place(
@@ -1497,9 +1516,9 @@ public partial class MainWindow : Window
             20,
             30);
 
-        AddSecondaryStatusVisual(228, "3", "المشاريع النشطة", "جميع النظم تعمل بسلاسة", CrossScreenVisualTokens.PrimaryBlue);
-        AddSecondaryStatusVisual(316, "0", "المهام بانتظارك", "لا توجد قرارات مطلوبة حالياً", "#E7A629");
-        AddSecondaryStatusVisual(404, "0", "تنبيهات مهمة", "كل شيء تحت السيطرة", "#F06679");
+        AddSecondaryStatusVisual(228, "—", "المشاريع النشطة", "الحالة غير متحققة", CrossScreenVisualTokens.UnknownState);
+        AddSecondaryStatusVisual(316, "—", "المهام بانتظارك", "تُعرض من بيانات فعلية فقط", CrossScreenVisualTokens.UnknownState);
+        AddSecondaryStatusVisual(404, "—", "تنبيهات مهمة", "لا توجد حالة حية موثقة", CrossScreenVisualTokens.UnknownState);
     }
 
     private void AddSecondaryStatusVisual(
@@ -1564,14 +1583,14 @@ public partial class MainWindow : Window
             25);
         Place(
             SecondaryNativeLayer,
-            new Ellipse { Fill = Brush("#28C767"), IsHitTestVisible = false },
+            new Ellipse { Fill = Brush(CrossScreenVisualTokens.UnknownState), IsHitTestVisible = false },
             118,
             981,
             8,
             8);
         Place(
             SecondaryNativeLayer,
-            ChromeText("نشط الآن", 9, "#15974C"),
+            ChromeText("UNKNOWN", 9, "#6B7280", FontWeights.SemiBold, FlowDirection.LeftToRight),
             128,
             976,
             53,
@@ -1648,7 +1667,7 @@ public partial class MainWindow : Window
 
         if (screen is not ScreenKind.ProjectWorkspace and not ScreenKind.DecisionMode)
         {
-            AddSecondarySharedHotspot(16, 62, 215, 159, "autopilot", "Autopilot — يعمل الآن", NativeStatus_Click);
+            AddSecondarySharedHotspot(16, 62, 215, 159, "autopilot", "Autopilot — حالة التنفيذ", NativeStatus_Click);
             AddSecondarySharedHotspot(16, 228, 215, 75, "projects", "المشاريع النشطة", NativeStatus_Click);
             AddSecondarySharedHotspot(16, 316, 215, 75, "waiting", "المهام بانتظارك", NativeStatus_Click);
             AddSecondarySharedHotspot(16, 404, 215, 75, "alerts", "تنبيهات مهمة", NativeStatus_Click);
@@ -1690,6 +1709,7 @@ public partial class MainWindow : Window
             Style = (Style)FindResource("HotspotButtonStyle"),
         };
         AutomationProperties.SetName(button, label);
+        AutomationProperties.SetHelpText(button, "يعرض حالة موثقة أو UNKNOWN ولا يفترض اتصالًا أو نجاحًا.");
         Canvas.SetLeft(button, left);
         Canvas.SetTop(button, top);
         button.Click += handler;
@@ -7587,15 +7607,33 @@ public partial class MainWindow : Window
         }
 
         if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) &&
-            e.Key == Key.O &&
-            _currentScreen == ScreenKind.Home)
+            e.Key == Key.O)
         {
             _nativeReferenceBlendEnabled = !_nativeReferenceBlendEnabled;
-            NativeHomeReconstructionRoot.Opacity = _nativeReferenceBlendEnabled ? 0.46 : 1;
+            if (_currentScreen == ScreenKind.Home)
+            {
+                NativeHomeReconstructionRoot.Opacity = _nativeReferenceBlendEnabled ? 0.46 : 1;
+            }
+            else
+            {
+                SecondaryNativeLayer.Opacity = _nativeReferenceBlendEnabled ? 0.46 : 1;
+            }
+
             ShowNotice(
                 _nativeReferenceBlendEnabled
-                    ? "وضع مقارنة Overlay مفعّل: المرجع الأصلي ظاهر تحت Council Pulse الـNative."
-                    : "وضع المقارنة متوقف: Council Pulse الـNative بكامل العتامة.");
+                    ? $"وضع مقارنة Overlay مفعّل — {ScreenLabels[_currentScreen]}."
+                    : $"وضع المقارنة متوقف — {ScreenLabels[_currentScreen]}.");
+            e.Handled = true;
+            return;
+        }
+
+        if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.K)
+        {
+            OpenGenericRegion(
+                "البحث العام",
+                "Ctrl+K",
+                "واجهة البحث قابلة للفحص، لكن موفر البحث الفعلي غير متصل في الحالة الحاكمة الحالية.",
+                "UNKNOWN / SEARCH PROVIDER NOT CONNECTED");
             e.Handled = true;
             return;
         }
