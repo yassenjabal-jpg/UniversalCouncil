@@ -278,6 +278,27 @@ public partial class MainWindow : Window
             IsHitTestVisible = false,
         };
 
+    private void AddFixtureTruthBadge(Canvas layer)
+    {
+        var badge = ChromePanel("#F4F5F7", "#D9DDE3", 7);
+        AutomationProperties.SetName(
+            badge,
+            "بيانات مرجعية للعرض فقط — ليست حالة تشغيل حية");
+        Place(layer, badge, 326, 11, 158, 26);
+
+        var text = ChromeText(
+            "REFERENCE FIXTURE · NOT LIVE",
+            7.7,
+            "#616B78",
+            FontWeights.SemiBold,
+            FlowDirection.LeftToRight);
+        text.TextAlignment = TextAlignment.Center;
+        AutomationProperties.SetName(
+            text,
+            "بيانات مرجعية للعرض فقط — ليست حالة تشغيل حية");
+        Place(layer, text, 334, 15, 142, 17);
+    }
+
     private Button AddChromeHotspot(
         double left,
         double top,
@@ -312,6 +333,7 @@ public partial class MainWindow : Window
             0,
             1536,
             49);
+        AddFixtureTruthBadge(NativeHomeChromeLayer);
 
         var mark = new Ellipse
         {
@@ -1268,6 +1290,7 @@ public partial class MainWindow : Window
             0,
             1536,
             CrossScreenVisualTokens.TopChromeHeight);
+        AddFixtureTruthBadge(SecondaryNativeLayer);
 
         var mark = new Ellipse
         {
@@ -1746,7 +1769,7 @@ public partial class MainWindow : Window
         Place(SecondaryNativeLayer, runningBadge, 548, 98, 93, 28);
         Place(
             SecondaryNativeLayer,
-            ChromeText("●  قيد التنفيذ", 10.5, "#1A9F52", FontWeights.SemiBold),
+            ChromeText("●  بيانات مرجعية", 10.5, "#6B7280", FontWeights.SemiBold),
             560,
             101,
             72,
@@ -2006,7 +2029,7 @@ public partial class MainWindow : Window
             27);
         Place(
             SecondaryNativeLayer,
-            ChromeText("يعمل الآن", 10, "#16A452", FontWeights.SemiBold),
+            ChromeText("مرجع بصري", 10, CrossScreenVisualTokens.UnknownState, FontWeights.SemiBold),
             55,
             96,
             80,
@@ -2101,7 +2124,7 @@ public partial class MainWindow : Window
         SecondaryNativeLayer.Children.Add(arc);
         Place(
             SecondaryNativeLayer,
-            ChromeText("68%", 17, "#263247", FontWeights.Bold, FlowDirection.LeftToRight),
+            ChromeText("—", 17, "#263247", FontWeights.Bold, FlowDirection.LeftToRight),
             59,
             745,
             48,
@@ -2611,7 +2634,7 @@ public partial class MainWindow : Window
             19);
         Place(
             SecondaryNativeLayer,
-            ChromeText("68%", 14, "#243049", FontWeights.Bold, FlowDirection.LeftToRight),
+            ChromeText("—", 14, "#243049", FontWeights.Bold, FlowDirection.LeftToRight),
             left + 14,
             top + 31,
             43,
