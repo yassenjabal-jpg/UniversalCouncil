@@ -32,6 +32,19 @@ class CommandCenterRepairWaveATruthLockTests(unittest.TestCase):
         )
         self.assertEqual(len(self.lock["lock_digest"]), 64)
 
+    def test_approved_lock_is_anchored_to_historical_merge(self) -> None:
+        self.assertEqual(self.lock["schema_version"], "1.1")
+        self.assertEqual(
+            self.lock["locked_revision"],
+            "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7",
+        )
+        self.assertEqual(
+            self.lock["validation_mode"],
+            "LOCKED_REVISION_SOURCE_BLOBS_MATCH_HISTORICAL_COMMIT",
+        )
+        self.assertTrue(self.lock["immutable_after_approval"])
+        self.assertTrue(self.lock["head_progression_allowed_after_lock"])
+
     def test_stage_and_execution_truth_remain_closed(self) -> None:
         self.assertEqual(
             self.stage["delivery"]["authoritative_current_stage"],
