@@ -172,8 +172,7 @@ if lock_fix_pre["live_execution_authorized"] or lock_fix_pre["stage8_opened"]:
 if lock_fix_pre["final_adoption_granted"] or lock_fix_pre["merge_authorized"]:
     raise SystemExit("Wave A historical-lock correction pre-approved adoption/merge")
 if lock_fix_change["pre_approval_receipt"] != (
-    "state/command-center/project-governance/approvals/"
-    "2026-10-21-wave-a-historical-lock-correction-pre.json"
+    "state/command-center/project-governance/approvals/2026-10-21-wave-a-historical-lock-correction-pre.json"
 ):
     raise SystemExit("Wave A historical-lock correction Change Envelope drifted")
 if lock_fix_change["evidence_precondition"]["mismatch_count"] != 0:
@@ -200,8 +199,7 @@ else:
     if anchor_correction.get("status") != "APPROVED_BY_AL_MURTAKAZ":
         raise SystemExit("Wave A truth lock historical correction did not finalize")
     if anchor_correction.get("post_approval") != (
-        "state/command-center/project-governance/approvals/"
-        "2026-10-21-wave-a-historical-lock-correction-post.json"
+        "state/command-center/project-governance/approvals/2026-10-21-wave-a-historical-lock-correction-post.json"
     ):
         raise SystemExit("Wave A truth lock historical correction post-review pointer drifted")
 
