@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-B1-NATIVE-COMPLETION-PRE-2026-10-21",
+  "change_id": "CC-REPAIR-B1-NATIVE-COMPLETION-2026-10-21",
+  "status": "APPROVE_TO_IMPLEMENT",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "requested_by": "OWNER_DIRECTIVE_REPAIR_ROADMAP_CONTINUATION",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7"
+  },
+  "scope": [
+    "complete bounded native micro-polish debt across all eight canonical desktop screens",
+    "retain R5-R8 as primary-screen phases while explicitly absorbing deferred micro-polish debt from R1-R4",
+    "repair P1 screen-review inventory so all eight canonical roles are represented consistently",
+    "reconcile Home native-shell/fidelity metadata with actual implemented-and-CI-validated state without granting final visual approval",
+    "preserve reference/native/blend comparison modes and canonical reference bytes",
+    "add B1 validators/tests that prevent any screen from being silently omitted or falsely marked final-approved",
+    "collect exact-head WPF render evidence before B1 closure"
+  ],
+  "explicitly_out_of_scope": [
+    "cross-screen consistency audit R9 / Wave B2",
+    "final Murtakaz + Workshop visual approval R10 / Wave B3",
+    "new visual direction",
+    "text-to-image or generated parent screens",
+    "macro layout redesign",
+    "Android visual artifact",
+    "repository cleanup Wave C",
+    "Skill Registry",
+    "live execution",
+    "Stage 8"
+  ],
+  "visual_authority": {
+    "source": "state/command-center/living-operations-reference-manifest.json",
+    "canonical_reference_count": 8,
+    "allowed_modes": [
+      "REFERENCE_EDIT",
+      "LAYER_RECONSTRUCTION",
+      "PIXEL_PRESERVING_REFINEMENT"
+    ],
+    "generated_parent_forbidden": true
+  },
+  "acceptance_criteria": [
+    "all eight canonical screen roles appear exactly once in P1 screen review",
+    "all eight native screen implementations retain canonical parent role/reference binding",
+    "all per-screen micro-polish debt is either closed with evidence or explicitly returned-for-changes; none remains silently deferred",
+    "Home five-zone geometry and eight-member Council Pulse remain structurally locked",
+    "reference/native/blend comparison remains available",
+    "truth-state semantics remain unchanged",
+    "no screen receives final APPROVED_BY_AL_MURTAKAZ in B1",
+    "P1 remains IN_PROGRESS after B1",
+    "Wave B2 becomes next active work only after B1 post-review",
+    "exact-head CI passes"
+  ],
+  "required_reviewers": [
+    "cc_experience_architect",
+    "cc_studio_producer",
+    "cc_visual_fidelity",
+    "cc_accessibility_clearance",
+    "cc_product_truth",
+    "cc_red_team"
+  ],
+  "implementation_authorized": true,
+  "final_p1_approval_granted": false,
+  "merge_authorized": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "timestamp": "2026-10-21"
+}
