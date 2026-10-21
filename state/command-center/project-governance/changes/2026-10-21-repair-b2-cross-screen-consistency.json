@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-2026-10-21",
+  "project_id": "universal-council-command-center",
+  "status": "MURTAKAZ_PRE_REVIEW_APPROVED",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "9352eada66776f1a87e7a10e599b7003c833b49d"
+  },
+  "implementation_branch": "command-center/repair-b2-cross-screen-consistency-20261021",
+  "scope": [
+    "cross-screen spacing and shared geometry harmonization across all eight canonical desktop screens",
+    "cross-screen typography hierarchy and glyph sizing/alignment harmonization",
+    "shared border thickness, radius, semantic tint and chrome consistency",
+    "RTL, keyboard focus, accessibility naming and truthful actionable-state consistency where shared surfaces differ",
+    "reference/native/blend evidence regeneration for all eight canonical screens",
+    "B2-specific validators and tests"
+  ],
+  "non_goals": [
+    "new visual direction or freeform redesign",
+    "macro-layout reconstruction already closed in B1",
+    "R10 / Wave B3 final P1 acceptance",
+    "P1 completion",
+    "Android artifact",
+    "Wave C repository cleanup",
+    "Skill Registry",
+    "Durable Project Store",
+    "Job Engine",
+    "live execution",
+    "Stage 8"
+  ],
+  "sub_slices": [
+    {
+      "id": "B2.1",
+      "name": "SHARED_VISUAL_TOKENS_AND_CHROME",
+      "state": "AUTHORIZED_TO_IMPLEMENT"
+    },
+    {
+      "id": "B2.2",
+      "name": "RTL_KEYBOARD_ACCESSIBILITY_TRUTH_STATES",
+      "state": "PENDING_B2_1_CHECK"
+    },
+    {
+      "id": "B2.3",
+      "name": "EIGHT_SCREEN_VISUAL_AUDIT_AND_B2_CLOSURE",
+      "state": "PENDING_B2_2_CHECK"
+    }
+  ],
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE",
+  "pre_approval_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b2-cross-screen-consistency-pre.json"
+}
