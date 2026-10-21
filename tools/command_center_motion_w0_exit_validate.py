@@ -61,7 +61,10 @@ if pre["decision"] != "APPROVE_TO_IMPLEMENT" or pre["final_adoption_granted"]:
     raise SystemExit("W1.1 pre-review approval is invalid")
 if capsule["status"] != "ACTIVE_FOR_IMPLEMENTATION":
     raise SystemExit("W1.1 context capsule is not active")
-if capsule["implementation_contract"]["reduced_motion"] != "no translation or scale travel; bounded crossfade/state handoff only":
+if (
+    capsule["implementation_contract"]["reduced_motion"]
+    != "no translation or scale travel; bounded crossfade/state handoff only"
+):
     raise SystemExit("W1.1 Reduced Motion contract drifted")
 
 position = roadmap["current_position"]
