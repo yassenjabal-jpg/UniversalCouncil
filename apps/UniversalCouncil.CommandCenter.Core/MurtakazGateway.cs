@@ -89,6 +89,7 @@ public sealed record MurtakazGatewayRequest(
     bool DestructiveOrIrreversible,
     bool PrivacySensitive,
     bool SpendOrSubscription,
+    ModelRoutingPreferences ModelPreferences,
     int MaxContextSources,
     DateTimeOffset RequestedAt);
 
@@ -171,6 +172,7 @@ public sealed record RoutingRequest(
     bool DestructiveOrIrreversible,
     bool PrivacySensitive,
     bool SpendOrSubscription,
+    ModelRoutingPreferences ModelPreferences,
     string ContextCapsuleId);
 
 public interface IMurtakazCommandGateway
