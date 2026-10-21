@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "contract_id": "living-operations-p1-home-fidelity",
   "screen_id": "home_owner_workspace",
-  "status": "NATIVE_REFERENCE_SHELL_CI_RENDERED_B1_REVIEW_REQUIRED",
+  "status": "NATIVE_REFERENCE_SHELL_B1_COMPLETION_APPROVED_R9_READY",
   "canonical_parent": {
     "role": "home_owner_workspace",
     "path": "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
@@ -21,7 +21,7 @@
     "WORKSHOP_REVIEW"
   ],
   "screen_final_approval": false,
-  "murtakaz_decision": "PENDING_B1_REVIEW",
+  "murtakaz_decision": "B1_NATIVE_COMPLETION_APPROVED",
   "p1_complete": false,
   "stage8_opened": false,
   "runtime_authority": false,
@@ -96,6 +96,8 @@
     "reference_sha256": "6b0266bfc1796ea768a1b851b673bfbf34799483a3a61992f296bf54624155be",
     "native_sha256": "35651f18563efb7c42e03ea5ebfa6b3558cc29de546b1301599e5d06d34e81f1",
     "blend_sha256": "b60a42d7d80f28e4b2247031c08f551937d73f079f0303ca13aeb94176f6065f",
-    "native_only_reference_pixels_hidden": true
+    "native_only_reference_pixels_hidden": true,
+    "b1_post_review": "APPROVED_BY_AL_MURTAKAZ",
+    "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b1-native-completion-post.json"
   }
 }
