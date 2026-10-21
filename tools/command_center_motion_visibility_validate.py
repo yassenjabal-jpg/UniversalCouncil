@@ -26,10 +26,10 @@ required_main_markers = (
     "private void AnimateForkSplitCue(",
     "private void AnimateRewindCue(",
     "private void AnimatePulseInteractionCue(",
-    "private void AnimateHandoffCue(",
-    "ScreenKind.DecisionMode => (620d",
-    "ScreenKind.RecoveryFork => (680d",
-    "ScreenKind.WorkReceipt => (680d",
+    "private void AnimateHandoffCue(",\n    "private void RunAfterSemanticMotion(",
+    "ScreenKind.DecisionMode => (700d",
+    "ScreenKind.RecoveryFork => (760d",
+    "ScreenKind.WorkReceipt => (760d",
 )
 for marker in required_main_markers:
     if marker not in main:
