@@ -140,7 +140,11 @@ for required_gate in (
 
 visual_phase = load(VISUAL_PHASE)
 final_p1_post = load(FINAL_P1_POST) if FINAL_P1_POST.exists() else None
-final_p1_approved = final_p1_post is not None and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ" and final_p1_post.get("p1_complete") is True
+final_p1_approved = (
+    final_p1_post is not None
+    and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ"
+    and final_p1_post.get("p1_complete") is True
+)
 if visual_phase["status"] not in {"IN_PROGRESS", "APPROVED_BY_AL_MURTAKAZ"}:
     raise SystemExit("P1 visual phase entered an unsupported lifecycle state")
 if visual_phase["status"] == "APPROVED_BY_AL_MURTAKAZ" and not final_p1_approved:
