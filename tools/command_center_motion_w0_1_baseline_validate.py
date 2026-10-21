@@ -11,7 +11,14 @@ ROADMAP = STATE / "motion-remediation-master-roadmap.json"
 TICKET = PROJECT / "return-tickets" / "CC-MOTION-RT-001-2026-10-21.json"
 GATE = PROJECT / "approvals" / "2026-10-21-motion-w0-1-baseline-lock.json"
 VISUAL = STATE / "living-operations-reference-manifest.json"
-DOC = ROOT / "docs" / "operations" / "command-center" / "living-operations" / "31_MOTION_IMPLEMENTATION_INVENTORY_W0_1_2026-10-21.md"
+DOC = (
+    ROOT
+    / "docs"
+    / "operations"
+    / "command-center"
+    / "living-operations"
+    / "31_MOTION_IMPLEMENTATION_INVENTORY_W0_1_2026-10-21.md"
+)
 
 AUDITED_HEAD = "9285da24be6bee97564f7f47cbcaf7dee1ad3989"
 SIGNATURES = {
