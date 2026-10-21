@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "state_id": "murtakaz-gateway-routing",
+  "status": "IMPLEMENTED_VALIDATION_PENDING",
+  "canonical_base": "8cb72d3f04b6396d9d594924446dd8dc9c896aff",
+  "components": {
+    "typed_gateway_contract": "IMPLEMENTED",
+    "command_gateway_facade": "IMPLEMENTED_SHADOW_PLANNING_ONLY",
+    "routing_coordinator": "IMPLEMENTED_DETERMINISTIC",
+    "routing_policy_reader": "IMPLEMENTED_READ_ONLY",
+    "host_composition": "WIRED",
+    "model_broker": "NOT_IMPLEMENTED",
+    "skill_registry": "NOT_IMPLEMENTED",
+    "capability_registry": "NOT_IMPLEMENTED",
+    "job_engine": "NOT_IMPLEMENTED",
+    "live_dispatch": "DISABLED"
+  },
+  "laws": {
+    "one_logical_gateway_contract": true,
+    "typed_intent_required": true,
+    "free_text_intent_inference": false,
+    "approval_is_not_execution_authority": true,
+    "execution_authorized": false,
+    "live_dispatch_allowed": false,
+    "role_is_not_model": true,
+    "silent_model_selection": false,
+    "stale_context_propagates": true,
+    "context_conflict_propagates": true,
+    "context_resolved_before_routing": true,
+    "route_reason_required": true,
+    "gateway_does_not_call_execution_fabric": true
+  },
+  "evidence": {
+    "csharp_gateway_validation": "PENDING",
+    "company_stage0": "PENDING",
+    "codeql": "PENDING",
+    "reference_ui": "PENDING",
+    "murtakaz_post_review": "PENDING"
+  }
+}
