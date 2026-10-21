@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "review_id": "MRTKZ-WORKSHOP-B1-EIGHT-SCREEN-NATIVE-REVIEW-2026-10-21",
   "change_id": "CC-REPAIR-B1-NATIVE-COMPLETION-2026-10-21",
-  "status": "MURTAKAZ_WORKSHOP_REVIEW_REQUIRED",
+  "status": "APPROVED_B1_NATIVE_COMPLETION_ONLY",
   "material_evidence": {
     "head_sha": "69dc13fa94928be292237f082e77e656f792222b",
     "reference_ui_run_id": 39583770008,
@@ -73,7 +73,10 @@
     "shared chrome tint/border harmonization"
   ],
   "final_p1_approval": false,
-  "r9_cross_screen_audit_opened": false,
+  "r9_cross_screen_audit_opened": true,
   "r10_final_review_opened": false,
-  "proposed_b1_verdict": "APPROVE_B1_NATIVE_COMPLETION_ONLY"
+  "proposed_b1_verdict": "ADOPTED_B1_NATIVE_COMPLETION_ONLY",
+  "murtakaz_decision": "B1_NATIVE_COMPLETION_APPROVED",
+  "workshop_decision": "B1_NATIVE_COMPLETION_APPROVED",
+  "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b1-native-completion-post.json"
 }
