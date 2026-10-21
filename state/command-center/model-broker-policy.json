@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "source_type": "project_local_repository_projection",
+  "policy_id": "murtakaz-model-broker",
+  "status": "SELECTION_ONLY",
+  "owner_controlled": true,
+  "silent_fallback_allowed": false,
+  "provider_calls_connected": false,
+  "selection_precedence": [
+    "TASK_OVERRIDE",
+    "ROLE_OVERRIDE",
+    "PROJECT_DEFAULT",
+    "GLOBAL_DEFAULT"
+  ],
+  "allowed_fallback_modes": [
+    "Disabled",
+    "ExplicitAllowlist"
+  ],
+  "quality_order": [
+    "STANDARD",
+    "HIGH",
+    "MAX"
+  ],
+  "cost_order": [
+    "FREE",
+    "LOW",
+    "MEDIUM",
+    "HIGH"
+  ],
+  "privacy_order": [
+    "LOCAL_ONLY",
+    "PRIVATE_PROVIDER",
+    "EXTERNAL_ALLOWED"
+  ],
+  "models": []
+}
