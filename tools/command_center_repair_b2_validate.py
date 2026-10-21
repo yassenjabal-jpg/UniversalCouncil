@@ -54,7 +54,11 @@ screen_review = load(SCREEN_REVIEW)
 remainder = load(REMAINDER)
 post = load(POST) if POST.exists() else None
 final_p1_post = load(FINAL_P1_POST) if FINAL_P1_POST.exists() else None
-final_p1_approved = final_p1_post is not None and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ" and final_p1_post.get("p1_complete") is True
+final_p1_approved = (
+    final_p1_post is not None
+    and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ"
+    and final_p1_post.get("p1_complete") is True
+)
 
 if change["change_id"] != "CC-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-2026-10-21":
     raise SystemExit("B2 change id drifted")
