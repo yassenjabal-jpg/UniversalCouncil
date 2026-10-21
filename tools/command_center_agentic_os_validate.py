@@ -192,8 +192,20 @@ for item in items:
 if all(item["applies_from"] == "NOW" for item in items):
     raise SystemExit("Invariant applicability regressed to globally blocking all future capabilities")
 
-if capsule["status"] != "DESIGN_CONTRACT_ACTIVE_RUNTIME_PENDING":
+if capsule["status"] not in {
+    "DESIGN_CONTRACT_ACTIVE_RUNTIME_PENDING",
+    "ACTIVE_RUNTIME_IMPLEMENTED_REPAIR_REVIEW_REQUIRED",
+    "ACTIVE_RUNTIME_IMPLEMENTED",
+}:
     raise SystemExit("Context Capsule contract status drifted")
+if capsule["status"] != "DESIGN_CONTRACT_ACTIVE_RUNTIME_PENDING":
+    if capsule.get("schema_version") != "1.1":
+        raise SystemExit("Implemented Context Capsule contract must use repaired schema 1.1")
+    if "baseline_revision" not in capsule["required_fields"]:
+        raise SystemExit("Implemented Context Capsule contract lost baseline provenance")
+    semantics = capsule.get("revision_semantics", {})
+    if "SHA256" not in semantics.get("source_revision", ""):
+        raise SystemExit("Implemented Context Capsule source revision semantics drifted")
 if not capsule["immutable_per_job"]:
     raise SystemExit("Context Capsule must be immutable per job")
 if capsule["conflict_result"] != "CONTEXT_CONFLICT" or capsule["stale_result"] != "STALE_CONTEXT":
