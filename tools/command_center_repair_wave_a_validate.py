@@ -91,7 +91,11 @@ model_policy = load(MODEL_POLICY)
 gateway_policy = load(GATEWAY_POLICY)
 visual_p1 = load(VISUAL_P1)
 final_p1_post = load(FINAL_P1_POST) if FINAL_P1_POST.exists() else None
-final_p1_approved = final_p1_post is not None and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ" and final_p1_post.get("p1_complete") is True
+final_p1_approved = (
+    final_p1_post is not None
+    and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ"
+    and final_p1_post.get("p1_complete") is True
+)
 reference_manifest = load(REFERENCE_MANIFEST)
 ux_state = load(UX_STATE)
 roadmap = ROADMAP.read_text(encoding="utf-8")
