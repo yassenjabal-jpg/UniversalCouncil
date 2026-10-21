@@ -23,6 +23,7 @@ B1_POST = PROJECT / "approvals" / "2026-10-21-repair-b1-native-completion-post.j
 B1_CHANGE = PROJECT / "changes" / "2026-10-21-repair-b1-native-completion.json"
 B1_CAPSULE = PROJECT / "context-capsules" / "2026-10-21-repair-b1-native-completion.json"
 FINAL_P1_POST = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json"
+STAGE7_READINESS_POST = PROJECT / "approvals" / "2026-10-21-stage7-real-host-evidence-readiness-post.json"
 
 MAIN_WINDOW = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "MainWindow.xaml.cs"
 UI_SMOKE = ROOT / "apps" / "UniversalCouncil.CommandCenter.UiSmoke" / "Program.cs"
@@ -78,6 +79,7 @@ post = load(B1_POST) if B1_POST.exists() else None
 change = load(B1_CHANGE)
 capsule = load(B1_CAPSULE)
 final_p1_post = load(FINAL_P1_POST) if FINAL_P1_POST.exists() else None
+stage7_readiness_post = load(STAGE7_READINESS_POST) if STAGE7_READINESS_POST.exists() else None
 final_p1_approved = (
     final_p1_post is not None
     and final_p1_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ"
@@ -263,8 +265,17 @@ else:
         ["P1_EXIT_REMEDIATION_MOTION_AND_ANDROID"],
         ["P1_COMPLETE_NEXT_PHASE_OWNER_DECISION_REQUIRED"],
     ]
+    if (
+        stage7_readiness_post is not None
+        and stage7_readiness_post.get("decision") == "APPROVED_BY_AL_MURTAKAZ"
+        and stage7_readiness_post.get("repository_readiness_complete") is True
+        and stage7_readiness_post.get("stage7_final_lock_granted") is False
+    ):
+        allowed_active_work.append(["STAGE7_REAL_HOST_EVIDENCE_PENDING"])
     if project_context["active_work"] not in allowed_active_work:
-        raise SystemExit("B1 lifecycle active work is neither B2 nor the governed B3-pending successor")
+        raise SystemExit(
+            "B1 lifecycle active work is outside the governed B2/B3/P1/Stage7 successor states"
+        )
 
     allowed_screen_review_status = {
         "B1_NATIVE_COMPLETION_APPROVED_R9_READY",
