@@ -14,12 +14,7 @@ APPROVAL = (
     / "2026-10-21-motion-remediation-roadmap-approval.json"
 )
 RETURN_TICKET = (
-    ROOT
-    / "state"
-    / "command-center"
-    / "project-governance"
-    / "return-tickets"
-    / "CC-MOTION-RT-001-2026-10-21.json"
+    ROOT / "state" / "command-center" / "project-governance" / "return-tickets" / "CC-MOTION-RT-001-2026-10-21.json"
 )
 DOC = (
     ROOT
