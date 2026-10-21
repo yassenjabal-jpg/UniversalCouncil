@@ -32,7 +32,7 @@ internal static partial class Program
         var window = App.CreateMainWindow(AppContext.BaseDirectory);
         ConfigureMotionEvidenceWindow(window);
 
-        var seconds = reducedMotion ? 18 : 28;
+        var seconds = reducedMotion ? 20 : 28;
         var frameCount = seconds * MotionFramesPerSecond;
         var steps = BuildMotionSteps(reducedMotion);
         var stepsByFrame = steps
