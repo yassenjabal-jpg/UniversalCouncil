@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-STAGE7-REAL-HOST-EVIDENCE-READINESS-POST-2026-10-21",
+  "change_id": "CC-STAGE7-REAL-HOST-EVIDENCE-READINESS-2026-10-21",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "scope": "STAGE7_REPOSITORY_READINESS_ONLY",
+  "repository_readiness_complete": true,
+  "real_host_gates_verified": 0,
+  "real_host_gates_total": 5,
+  "real_host_evidence_complete": false,
+  "stage7_final_lock_granted": false,
+  "stage8_opened": false,
+  "runtime_authority_added": false,
+  "live_execution_authorized": false,
+  "material_evidence": {
+    "head_sha": "53c4148430308b8b77f32cf92e01fa26979ff17e",
+    "stage7_run_id": 39628334396,
+    "stage7_ui_artifact_id": 12358556711,
+    "stage7_host_kit_artifact_id": 12357518196,
+    "stage7_host_kit_artifact_digest": "sha256:6f042487bb5c73ad6c817209dca3b1478fd04e8b12b89721fd5a23e13d53d68f",
+    "company_stage0_run_id": 39628334458,
+    "codeql_run_id": 39628334507,
+    "reference_ui_run_id": 39628334504,
+    "reference_ui_artifact_id": 12357983267,
+    "p1_regression_run_id": 39628334487,
+    "wpf_motion_artifact_id": 12358263336,
+    "android_semantic_artifact_id": 12357713015
+  },
+  "approved_state": {
+    "authoritative_stage": "STAGE_7",
+    "stage7_status": "OPEN_REAL_HOST_EVIDENCE_PENDING",
+    "target_host": "YASSIN",
+    "yassin_current_access": "OFFLINE_AND_REMOTE_QUOTA_0_PERCENT",
+    "next_work": "STAGE7_REAL_HOST_EVIDENCE_PENDING"
+  },
+  "merge_authorized": true,
+  "merge_condition": "FINAL_RECEIPT_EXACT_HEAD_CI_SUCCESS",
+  "owner_authority": "FINAL",
+  "timestamp": "2026-10-21"
+}
