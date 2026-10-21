@@ -60,8 +60,7 @@ if change["base_revision"]["sha"] != "9352eada66776f1a87e7a10e599b7003c833b49d":
 if change["unplanned_scope_policy"] != "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE":
     raise SystemExit("B2 scope-growth policy drifted")
 if change["pre_approval_receipt"] != (
-    "state/command-center/project-governance/approvals/"
-    "2026-10-21-repair-b2-cross-screen-consistency-pre.json"
+    "state/command-center/project-governance/approvals/2026-10-21-repair-b2-cross-screen-consistency-pre.json"
 ):
     raise SystemExit("B2 change envelope lost its pre-approval binding")
 
@@ -131,7 +130,11 @@ if 'AutomationProperties.Name="UniversalCouncil Command Center"' not in xaml_sou
 key_block = main_source.split("private void Window_PreviewKeyDown", 1)[1]
 if "e.Key == Key.K" not in key_block:
     raise SystemExit("Advertised Ctrl+K shortcut is still dead")
-if "e.Key == Key.O" not in key_block or "_currentScreen == ScreenKind.Home" in key_block.split("var screen =", 1)[0]:
+home_only_overlay_gate = (
+    "e.Key == Key.O &&\n"
+    "            _currentScreen == ScreenKind.Home"
+)
+if "e.Key == Key.O" not in key_block or home_only_overlay_gate in key_block:
     raise SystemExit("Reference/native overlay shortcut is still Home-only")
 
 if post is not None:
