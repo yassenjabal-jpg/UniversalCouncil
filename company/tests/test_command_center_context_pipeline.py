@@ -22,6 +22,7 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
         cls.a1_pre = load(PROJECT / "approvals" / "2026-10-21-repair-a1-context-baseline-pre.json")
         cls.a2_post_path = PROJECT / "approvals" / "2026-10-21-repair-a2-governance-metadata-post.json"
         cls.a3_post_path = PROJECT / "approvals" / "2026-10-21-repair-a3-truth-lock-post.json"
+        cls.b1_post_path = PROJECT / "approvals" / "2026-10-21-repair-b1-native-completion-post.json"
 
     def test_context_map_uses_repaired_provenance_schema(self) -> None:
         self.assertEqual(self.context_map["schema_version"], "2.0")
@@ -51,7 +52,9 @@ class CommandCenterContextPipelineTests(unittest.TestCase):
         )
 
     def test_context_map_tracks_current_repair_work(self) -> None:
-        if self.a3_post_path.exists():
+        if self.b1_post_path.exists():
+            expected = ["REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"]
+        elif self.a3_post_path.exists():
             expected = ["REPAIR_WAVE_B1_COMPLETE_REMAINING_NATIVE_WORK"]
         elif self.a2_post_path.exists():
             expected = ["REPAIR_WAVE_A3_TRUTH_LOCK_AND_MURTAKAZ_CLOSURE"]
