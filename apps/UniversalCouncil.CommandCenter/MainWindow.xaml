@@ -1182,11 +1182,11 @@
                                 Tag="start"
                                 Style="{StaticResource NativeComposerPrimaryStyle}"
                                 Click="Start_Click"
-                                AutomationProperties.Name="ابدأ التنفيذ">
+                                AutomationProperties.Name="فحص جاهزية التنفيذ">
                             <StackPanel Orientation="Horizontal"
                                         FlowDirection="LeftToRight"
                                         HorizontalAlignment="Center">
-                                <TextBlock Text="ابدأ التنفيذ"
+                                <TextBlock Text="فحص الجاهزية"
                                            FlowDirection="RightToLeft"
                                            Foreground="White"
                                            FontSize="15"
