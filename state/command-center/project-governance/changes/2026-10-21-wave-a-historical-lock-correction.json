@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-WAVE-A-HISTORICAL-LOCK-CORRECTION-2026-10-21",
+  "project_id": "universal-council-command-center",
+  "status": "IMPLEMENTING",
+  "canonical_base_revision": "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7",
+  "implementation_base_revision": "8b6596a8326d257947d91f5d2daf246e37af5b58",
+  "scope": [
+    "repair-wave-a-truth-lock schema/validation semantics",
+    "truth-lock builder/check tool",
+    "Wave A validator lifecycle decoupling from mutable B1/B2/B3 progress",
+    "Wave A repository tests"
+  ],
+  "evidence_precondition": {
+    "locked_source_count": 18,
+    "all_locked_blobs_match_revision": "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7",
+    "mismatch_count": 0
+  },
+  "non_goals": [
+    "historical source mutation",
+    "Visual B1 implementation",
+    "runtime changes",
+    "Stage 8"
+  ],
+  "pre_approval_receipt": "state/command-center/project-governance/approvals/2026-10-21-wave-a-historical-lock-correction-pre.json",
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE"
+}
