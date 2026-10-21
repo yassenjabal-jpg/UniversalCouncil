@@ -216,7 +216,8 @@ public sealed class RoutingCoordinator : IRoutingCoordinator
         GatewayRoutingPolicyDocument policy)
     {
         var arenaDomains = policy.ArenaDomains.ToHashSet(StringComparer.Ordinal);
-        if (request.RiskTier == GatewayRiskTier.T3HighImpact ||
+        if (request.Intent == GatewayIntent.Recover ||
+            request.RiskTier == GatewayRiskTier.T3HighImpact ||
             request.Domains.Any(arenaDomains.Contains) ||
             request.AuthorityExpansionRequested ||
             request.DestructiveOrIrreversible ||
@@ -227,7 +228,9 @@ public sealed class RoutingCoordinator : IRoutingCoordinator
         }
 
         var governanceDomains = policy.GovernanceDomains.ToHashSet(StringComparer.Ordinal);
-        if (request.ChangeOfTruthRequested ||
+        if (request.Intent is GatewayIntent.ExecuteHost or GatewayIntent.ExternalAction ||
+            request.ExternalConsequence ||
+            request.ChangeOfTruthRequested ||
             Rank(request.Materiality, MaterialityRank, "materiality") >=
                 MaterialityRank["HIGH"] ||
             Rank(request.Uncertainty, UncertaintyRank, "uncertainty") >=
