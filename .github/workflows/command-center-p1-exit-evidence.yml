@@ -1,0 +1,185 @@
+name: Command Center P1 Exit Evidence
+
+on:
+  pull_request:
+    paths:
+      - 'apps/UniversalCouncil.CommandCenter/**'
+      - 'apps/UniversalCouncil.CommandCenter.UiSmoke/**'
+      - 'prototypes/command-center-android-p1/**'
+      - 'tools/command_center_p1_exit_evidence_validate.py'
+      - 'state/command-center/**'
+      - '.github/workflows/command-center-p1-exit-evidence.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: command-center-p1-exit-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows-motion:
+    name: WPF Full + Reduced Motion Evidence
+    runs-on: windows-2025-vs2026
+    timeout-minutes: 35
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+      CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact candidate head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          fetch-depth: 1
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Ensure ffmpeg
+        shell: pwsh
+        run: |
+          if (-not (Get-Command ffmpeg -ErrorAction SilentlyContinue)) {
+            choco install ffmpeg -y --no-progress
+          }
+          ffmpeg -version
+          ffprobe -version
+
+      - name: Build WPF motion recorder
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          dotnet restore apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj
+          dotnet build apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-restore
+
+      - name: Record full and Reduced Motion frames
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          New-Item -ItemType Directory -Force artifacts/p1-exit-evidence/full | Out-Null
+          New-Item -ItemType Directory -Force artifacts/p1-exit-evidence/reduced | Out-Null
+          dotnet run --project apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-build -- artifacts/p1-exit-evidence/full --motion-evidence
+          dotnet run --project apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-build -- artifacts/p1-exit-evidence/reduced --motion-evidence --reduced-motion
+
+      - name: Encode and hash WPF motion videos
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          ffmpeg -y -framerate 6 -i artifacts/p1-exit-evidence/full/frames/frame-%04d.png -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p artifacts/p1-exit-evidence/full/p1-critical-path-motion.mp4
+          ffmpeg -y -framerate 6 -i artifacts/p1-exit-evidence/reduced/frames/frame-%04d.png -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p artifacts/p1-exit-evidence/reduced/p1-critical-path-reduced-motion.mp4
+
+          foreach ($mode in @("full","reduced")) {
+            $file = if ($mode -eq "full") { "p1-critical-path-motion.mp4" } else { "p1-critical-path-reduced-motion.mp4" }
+            $path = "artifacts/p1-exit-evidence/$mode/$file"
+            $duration = [double](ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 $path)
+            $hash = (Get-FileHash -Algorithm SHA256 $path).Hash.ToLowerInvariant()
+            @{
+              schema_version = "1.0"
+              file = $file
+              sha256 = $hash
+              bytes = (Get-Item $path).Length
+              duration_seconds = $duration
+            } | ConvertTo-Json | Set-Content -Encoding UTF8 "artifacts/p1-exit-evidence/$mode/motion-video-integrity.json"
+          }
+
+      - name: Upload WPF motion evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: UniversalCouncil-P1-WPF-Motion-${{ env.CANDIDATE_SHA }}
+          path: artifacts/p1-exit-evidence/
+          if-no-files-found: error
+          retention-days: 14
+
+  android-semantic:
+    name: Android Semantic Companion Evidence
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact candidate head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          fetch-depth: 1
+
+      - name: Setup Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+
+      - name: Install pinned Playwright and Chromium
+        working-directory: prototypes/command-center-android-p1
+        run: |
+          npm install --no-package-lock --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Capture Android touch prototype
+        run: |
+          mkdir -p artifacts/p1-exit-evidence/android
+          node prototypes/command-center-android-p1/capture.mjs artifacts/p1-exit-evidence/android
+
+      - name: Encode Android capture integrity
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -y -i artifacts/p1-exit-evidence/android/android-p1-interaction.webm -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p artifacts/p1-exit-evidence/android/android-p1-interaction.mp4
+          python - <<'PY'
+          import hashlib, json, pathlib, subprocess
+          path = pathlib.Path("artifacts/p1-exit-evidence/android/android-p1-interaction.mp4")
+          duration = float(subprocess.check_output([
+              "ffprobe","-v","error","-show_entries","format=duration",
+              "-of","default=noprint_wrappers=1:nokey=1",str(path)
+          ], text=True).strip())
+          payload = {
+              "schema_version":"1.0",
+              "file":path.name,
+              "sha256":hashlib.sha256(path.read_bytes()).hexdigest(),
+              "bytes":path.stat().st_size,
+              "duration_seconds":duration,
+          }
+          pathlib.Path("artifacts/p1-exit-evidence/android/android-video-integrity.json").write_text(
+              json.dumps(payload, indent=2), encoding="utf-8"
+          )
+          PY
+
+      - name: Upload Android semantic evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: UniversalCouncil-P1-Android-Semantic-${{ env.CANDIDATE_SHA }}
+          path: artifacts/p1-exit-evidence/android/
+          if-no-files-found: error
+          retention-days: 14
+
+  evidence-gate:
+    name: Al-Murtakaz P1 Exit Evidence Gate
+    needs: [windows-motion, android-semantic]
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    env:
+      CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact candidate head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          fetch-depth: 1
+
+      - name: Download WPF artifact
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: UniversalCouncil-P1-WPF-Motion-${{ env.CANDIDATE_SHA }}
+          path: artifacts/p1-exit-evidence
+
+      - name: Download Android artifact
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: UniversalCouncil-P1-Android-Semantic-${{ env.CANDIDATE_SHA }}
+          path: artifacts/p1-exit-evidence/android
+
+      - name: Validate all P1 exit evidence
+        run: python tools/command_center_p1_exit_evidence_validate.py --evidence-root artifacts/p1-exit-evidence

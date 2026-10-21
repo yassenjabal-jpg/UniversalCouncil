@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "review_id": "MRTKZ-P1-B3-FINAL-REVIEW-2026-10-21",
+  "change_id": "CC-REPAIR-B3-FINAL-P1-ACCEPTANCE-2026-10-21",
+  "status": "RETURNED_FOR_CHANGES_EXIT_EVIDENCE_PENDING",
+  "evidence": {
+    "head_sha": "77a0e21bd40fc4a306fe75cc131e9c5740110db6",
+    "company_stage0_run_id": 39600198879,
+    "codeql_run_id": 39600198990,
+    "reference_ui_run_id": 39600198955,
+    "reference_ui_artifact_id": 12345134475,
+    "artifact_digest": "sha256:f5315d0d705b4d7e660be628936516b96584a659e904feb47cd441d023216662",
+    "evidence_modes": [
+      "reference",
+      "native",
+      "blend"
+    ]
+  },
+  "desktop_screens": [
+    {
+      "id": "home_owner_workspace",
+      "verdict": "APPROVE_DESKTOP_FINAL_FIDELITY_ONLY"
+    },
+    {
+      "id": "living_project_workspace",
+      "verdict": "APPROVE_DESKTOP_FINAL_FIDELITY_ONLY"
+    },
+    {
+      "id": "software_autopilot_project",
+      "verdict": "APPROVE_DESKTOP_FINAL_FIDELITY_ONLY"
+    },
+    {
+      "id": "studio_project",
+      "verdict": "APPROVE_DESKTOP_FINAL_FIDELITY_ONLY"
+    },
+    {
+      "id": "owner_decision_mode",
+      "verdict": "APPROVE_DESKTOP_FINAL_FIDELITY_ONLY"
+    },
+    {
+      "id": "checkpoint_recovery_fork",
+      "verdict": "APPROVE_DESKTOP_FINAL_FIDELITY_ONLY"
+    },
+    {
+      "id": "pulse_visual_project_story",
+      "verdict": "APPROVE_DESKTOP_FINAL_FIDELITY_ONLY"
+    },
+    {
+      "id": "project_complete_work_receipt",
+      "verdict": "APPROVE_DESKTOP_FINAL_FIDELITY_ONLY"
+    }
+  ],
+  "accepted_findings": [
+    "All eight canonical desktop screens preserve the approved reference-first visual language.",
+    "B2 truth-state disclosure remains intact; UNKNOWN is not rendered as success.",
+    "No rejected generation was promoted as a visual parent.",
+    "The merge-head reference/native/blend hashes match the B2 approved visual evidence for all eight screens."
+  ],
+  "blockers": [
+    {
+      "id": "P1_MOTION_CAPTURE_MISSING",
+      "source": "docs/operations/command-center/living-operations/14_P1_VERTICAL_SLICE_SPEC.md",
+      "required": "20–40 second critical-path motion capture plus Reduced Motion capture",
+      "current_evidence": "No motion capture artifact exists in the repository/evidence artifact."
+    },
+    {
+      "id": "P1_ANDROID_SEMANTIC_ADAPTATION_MISSING",
+      "source": "docs/operations/command-center/living-operations/14_P1_VERTICAL_SLICE_SPEC.md and 17_P1_SCREEN_REVIEW_MATRIX.md",
+      "required": "Android semantic companion prototype/capture with explicit Murtakaz acceptance",
+      "current_evidence": "Only the Android screen-map contract exists; no Android implementation/capture artifact exists."
+    }
+  ],
+  "final_p1_approval": false,
+  "p1_complete": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "verdict": "RETURN_FOR_CHANGES_BUILD_REQUIRED_EXIT_EVIDENCE",
+  "timestamp": "2026-10-21"
+}

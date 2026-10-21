@@ -1,0 +1,229 @@
+{
+  "schema_version": "1.3",
+  "manifest_id": "living-operations-reference-only-visual-lock",
+  "status": "OWNER_ADOPTED_MURTAKAZ_ENFORCED",
+  "source_of_truth": "APPROVED_REFERENCE_IMAGES_ONLY",
+  "references": [
+    {
+      "order": 1,
+      "role": "home_owner_workspace",
+      "conversation_file_id": "file_00000000c2108210b73352f1e25dc070",
+      "path": "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+      "sha256": "7cb7d12f8819576ad4992158f6f0eb098ae3350a3684118ffc43192ea56749eb",
+      "uploaded_name": "1000062326.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
+    },
+    {
+      "order": 2,
+      "role": "living_project_workspace",
+      "conversation_file_id": "file_000000004288820abd9e66e799daf2d8",
+      "path": "docs/operations/command-center/living-operations/references/02-living_project_workspace.png",
+      "sha256": "6f412a1f11e9e9f32df810194dbd4df1c42b973be9dcfb80354f10fb1cf3b799",
+      "uploaded_name": "1000062324.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
+    },
+    {
+      "order": 3,
+      "role": "software_autopilot_project",
+      "conversation_file_id": "file_00000000cab081f5aadc27ca952849f1",
+      "path": "docs/operations/command-center/living-operations/references/03-software_autopilot_project.png",
+      "sha256": "cb2c26d0d54a0a0c6aef3d03cc65737d3a27084fe8228112b719379d7ab966ec",
+      "uploaded_name": "1000062328.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
+    },
+    {
+      "order": 4,
+      "role": "studio_project",
+      "conversation_file_id": "file_000000004e988246a3a00c53239c2aef",
+      "path": "docs/operations/command-center/living-operations/references/04-studio_project.png",
+      "sha256": "e2f012f6207006a5068152027ccbef8cd55f866b25e60899a113937ebe523664",
+      "uploaded_name": "1000062329.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
+    },
+    {
+      "order": 5,
+      "role": "owner_decision_mode",
+      "conversation_file_id": "file_00000000e98c820a89eddc854f40afd6",
+      "path": "docs/operations/command-center/living-operations/references/05-owner_decision_mode.png",
+      "sha256": "6351f755874fd9cec7cad4d8136d6c84eb8c3e8111a1d9ba219054f6d2488eeb",
+      "uploaded_name": "1000062331.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
+    },
+    {
+      "order": 6,
+      "role": "checkpoint_recovery_fork",
+      "conversation_file_id": "file_00000000780c820ab6814221ca74c81e",
+      "path": "docs/operations/command-center/living-operations/references/06-checkpoint_recovery_fork.png",
+      "sha256": "7b1ceb447bebb3e9d488749e1beb4f82bf03fb078e58a2035c3ed2a58fe69076",
+      "uploaded_name": "1000062327.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
+    },
+    {
+      "order": 7,
+      "role": "pulse_visual_project_story",
+      "conversation_file_id": "file_00000000bf8c8243874eb0e778b5b1f1",
+      "path": "docs/operations/command-center/living-operations/references/07-pulse_visual_project_story.png",
+      "sha256": "f92ff13312e11ac6e52914a8cb595e0c870027f45ea8161aadaf72217cb483ed",
+      "uploaded_name": "1000062325.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
+    },
+    {
+      "order": 8,
+      "role": "project_complete_work_receipt",
+      "conversation_file_id": "file_00000000d8c081f4b2695601a6fcc56c",
+      "path": "docs/operations/command-center/living-operations/references/08-project_complete_work_receipt.png",
+      "sha256": "f8db7163bc4e5396cd2d58563cf2d513504cef7863da299851142ce554e22b7f",
+      "uploaded_name": "1000062330.png",
+      "source": "OWNER_REATTACHED_2026_10_19",
+      "historical_identity_note": "Earlier conversation ID retained as history; byte identity with earlier upload not asserted."
+    }
+  ],
+  "rules": {
+    "reference_first": true,
+    "delta_only_generation": true,
+    "text_only_reinvention_forbidden": true,
+    "new_palette_without_review_forbidden": true,
+    "human_role_avatars_forbidden": true,
+    "dark_neon_cyberpunk_forbidden": true,
+    "generic_saas_dashboard_drift_forbidden": true,
+    "generated_output_requires_murtakaz_review": true,
+    "local_reference_bytes_required": true,
+    "sha256_verification_required": true,
+    "missing_reference_blocks_visual_work": true,
+    "unapproved_decorative_theme_forbidden": true,
+    "reference_observed_visual_language_only": true,
+    "screen_object_inventory_required_before_generation": true,
+    "member_sigil_interaction_inventory_required": true,
+    "freeform_text_to_image_for_canonical_ui_forbidden": true,
+    "multi_screen_composite_forbidden": true,
+    "generated_image_parent_forbidden": true,
+    "preflight_visual_job_registration_required": true,
+    "actual_reference_binding_receipt_required": true,
+    "eligible_tool_must_consume_reference_bytes": true,
+    "fail_closed_when_reference_capable_tool_unavailable": true,
+    "home_geometry_lock_required": true,
+    "structural_review_before_aesthetic_review": true,
+    "radial_home_reinterpretation_forbidden": true,
+    "product_brand_renaming_forbidden": true
+  },
+  "rejected_recent_generations": [
+    "f75c9844-03fb-4c7b-857b-95babf3e4269",
+    "176cb805-72ec-4b9f-b8f8-1f311f7d54ab",
+    "7a9017af-197a-4fed-8665-57ea317f2bd9",
+    "b3607b06-5137-4d4b-8126-43b9a4e64f68",
+    "bd25818f-6f59-4407-bec0-af476378df58",
+    "0289c00b-59de-422f-9532-5ed20d7b817a",
+    "79110079-3684-437e-9c29-825ac3f6cb4d",
+    "1d4d3194-a0ec-4f1e-8fc3-1db2b125d1af"
+  ],
+  "rejected_classification": "REJECTED_VISUAL_DRIFT",
+  "final_visual_phase_state": "IN_PROGRESS",
+  "final_approval_requires": "APPROVED_BY_AL_MURTAKAZ",
+  "owner_directive_2026_10_19": {
+    "directive": "DO_NOT_ADOPT_ANY_RECENT_GENERATED_DESIGNS_AFTER_THE_EIGHT_CANONICAL_REFERENCES",
+    "status": "ACTIVE",
+    "effect": "ALL_RECENT_GENERATED_DESIGNS_ARE_REJECTED_VISUAL_DRIFT_AND_MUST_NOT_BE_USED_AS_REFERENCE"
+  },
+  "visual_jobs": [],
+  "visual_job_contract": {
+    "allowed_states": [
+      "PREFLIGHT_REGISTERED",
+      "RENDERED_REVIEW_REQUIRED",
+      "RETURNED_FOR_CHANGES",
+      "REJECTED_VISUAL_DRIFT",
+      "APPROVED_BY_AL_MURTAKAZ"
+    ],
+    "preflight_required_fields": [
+      "job_id",
+      "state",
+      "parent_role",
+      "parent_sha256",
+      "production_mode",
+      "tool_name",
+      "single_screen_only",
+      "preflight_registered",
+      "screen_inventory_id",
+      "member_inventory_verified",
+      "allowed_delta",
+      "reference_binding_evidence"
+    ],
+    "rendered_required_fields": [
+      "output_path",
+      "output_sha256",
+      "comparison_evidence",
+      "render_started_after_preflight"
+    ],
+    "approval_requires": [
+      "governance_review",
+      "workshop_review"
+    ],
+    "allowed_production_modes": [
+      "REFERENCE_EDIT",
+      "LAYER_RECONSTRUCTION",
+      "PIXEL_PRESERVING_REFINEMENT"
+    ],
+    "forbidden_source_types": [
+      "TEXT_TO_IMAGE",
+      "TEXT_ONLY_RECONSTRUCTION",
+      "STYLE_TRANSFER",
+      "GENERATED_IMAGE_DERIVATIVE",
+      "MULTI_SCREEN_COMPOSITE",
+      "MOODBOARD_DERIVATION",
+      "FREEFORM_REDESIGN"
+    ],
+    "reference_binding_receipt_schema": {
+      "required_fields": [
+        "job_id",
+        "parent_role",
+        "parent_path",
+        "parent_sha256",
+        "tool_name",
+        "production_mode",
+        "tool_received_reference_bytes",
+        "single_screen",
+        "phase",
+        "render_not_started",
+        "tool_reference_locator",
+        "screen_inventory_id",
+        "member_inventory_verified"
+      ],
+      "phase": "PRE_RENDER"
+    },
+    "preflight_must_precede_render": true,
+    "one_job_one_screen": true,
+    "meaning": "A canonical UI job is registered and reference-bound before render; rendered output cannot exist as an approved/reviewable job without preflight evidence.",
+    "conditional_requirements": {
+      "home_owner_workspace": {
+        "preflight_required_fields": [
+          "geometry_lock_id"
+        ],
+        "rendered_required_fields": [
+          "structural_review_evidence"
+        ],
+        "geometry_lock_path": "state/command-center/living-operations-home-geometry-lock.json",
+        "structural_review_must_pass_before_aesthetic_review": true
+      }
+    }
+  },
+  "latest_rejected_generation": {
+    "generation_id": "1d4d3194-a0ec-4f1e-8fc3-1db2b125d1af",
+    "classification": "REJECTED_VISUAL_DRIFT",
+    "reason": "Improved member identity but re-authored canonical Home into a radial/glass dashboard, lost owner-composer hierarchy, changed rails/modules, renamed visible product identity and invented runtime-style facts."
+  },
+  "object_inventory_path": "state/command-center/living-operations-reference-object-inventory.json",
+  "object_inventory_contract": {
+    "status": "REQUIRED_BEFORE_VISUAL_GENERATION",
+    "screen_inventory_must_match_parent_role": true,
+    "member_inventory_verified_required_when_screen_has_members": true,
+    "purpose": "Prevent semantic compression and omission of reference-observed objects."
+  },
+  "production_protocol_path": "state/command-center/living-operations-visual-production-protocol.json",
+  "home_geometry_lock_path": "state/command-center/living-operations-home-geometry-lock.json"
+}

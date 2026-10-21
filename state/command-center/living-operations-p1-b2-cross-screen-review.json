@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0",
+  "review_id": "MRTKZ-P1-B2-EIGHT-SCREEN-CROSS-SCREEN-AUDIT-2026-10-21",
+  "change_id": "CC-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-2026-10-21",
+  "status": "B2_CLOSURE_APPROVED_B3_PENDING",
+  "material_evidence": {
+    "head_sha": "8fa47a8b7ffd7a7b79cded710500c4830aa59bbc",
+    "company_stage0_run_id": 39594694461,
+    "codeql_run_id": 39594694495,
+    "reference_ui_run_id": 39594694429,
+    "reference_ui_artifact_id": 12343191879,
+    "artifact_digest": "sha256:e43700c72b50eeaf126171f328ecea342c942b87c2d56419d06c33e04224b60f",
+    "canonical_screen_count": 8,
+    "evidence_modes": [
+      "reference",
+      "native",
+      "blend"
+    ],
+    "visual_review": "PASS_EIGHT_SCREEN_CROSS_SCREEN_AND_TRUTH_DISCLOSURE"
+  },
+  "visual_authority": "EIGHT_CANONICAL_REFERENCES_ONLY",
+  "audit_dimensions": [
+    "spacing",
+    "hierarchy",
+    "typography",
+    "title_and_global_chrome",
+    "interaction_consistency",
+    "component_consistency",
+    "semantic_tints_and_borders",
+    "RTL",
+    "keyboard_accessibility",
+    "truthful_shared_states",
+    "reference_fixture_disclosure"
+  ],
+  "screens": [
+    {
+      "id": "home_owner_workspace",
+      "verdict": "PASS_B2_CROSS_SCREEN_CONSISTENCY",
+      "evidence": {
+        "reference_sha256": "6b0266bfc1796ea768a1b851b673bfbf34799483a3a61992f296bf54624155be",
+        "native_sha256": "c3ad9374488a79a5ea1e47b83f78febc2f4b8a0eeb83db1db59d75d8a131e600",
+        "blend_sha256": "b2cddfb797bb7ed04731fac02782c491c2ad2c44868b7c435ef26a334923c3a6"
+      }
+    },
+    {
+      "id": "living_project_workspace",
+      "verdict": "PASS_B2_CROSS_SCREEN_CONSISTENCY",
+      "evidence": {
+        "reference_sha256": "d7517b1d2e631a2e7fa89c3f6859e07fb2633a754e6d55764f91fcf9e6b5fc5e",
+        "native_sha256": "e151bd956ff51427b992f58950f3d6be95c88fd1d378cdb0e7ad136a3da5ec0d",
+        "blend_sha256": "9ff8f3f528c2991959d19ffba7f84b71b95cdfdfc05012dcc7730459081953e8"
+      }
+    },
+    {
+      "id": "software_autopilot_project",
+      "verdict": "PASS_B2_CROSS_SCREEN_CONSISTENCY",
+      "evidence": {
+        "reference_sha256": "7c85da928088a5ef1c4beb5a368d0104c720ed1fcdeae099b99b55e4713ac655",
+        "native_sha256": "0128689dbbdacd1b2f873a93151e824cbc0926afea58818d6a577d3bbdef2bab",
+        "blend_sha256": "6774f0078585fc14f1fb4e7a57883e622b0c07293b770a4b719fd37662dfe781"
+      }
+    },
+    {
+      "id": "studio_project",
+      "verdict": "PASS_B2_CROSS_SCREEN_CONSISTENCY",
+      "evidence": {
+        "reference_sha256": "d07e01ab4c74e776e91bccaac730acc59008d03ca22202fc6b9f1203df33766c",
+        "native_sha256": "0de9f9ef19494cead7c9b9a5f4a0451c36b02e6ed20a6c70a1d20c029eadd925",
+        "blend_sha256": "736cc3647795b0d9c98e1fdfa382271a9c9fe7b903465ca33c57d0e5c81f4a27"
+      }
+    },
+    {
+      "id": "owner_decision_mode",
+      "verdict": "PASS_B2_CROSS_SCREEN_CONSISTENCY",
+      "evidence": {
+        "reference_sha256": "28ede06357eb78db027bb3e45c458a9d082a84e0a8833b9a69b225e1dccdc998",
+        "native_sha256": "2265c74cbbdc5ba24aecca5de3c87e115ff76cee5f5ca9e8dfe81e76198c1ff2",
+        "blend_sha256": "7a73214a2e6024cb9f0c1703f5be5b13d1df3f4f4f1712ccf518036ff8c0757f"
+      }
+    },
+    {
+      "id": "checkpoint_recovery_fork",
+      "verdict": "PASS_B2_CROSS_SCREEN_CONSISTENCY",
+      "evidence": {
+        "reference_sha256": "645c1029daaeaec24177c7d93d876604440dc567cba29931987a04ecdb86f419",
+        "native_sha256": "da630996118575dd5638299aaaa7dde483571274c00ff38591da234bf2f8056f",
+        "blend_sha256": "bb17ca997b936f8169a97636cb08047e0036eb437b21cb63137a4865623fa54f"
+      }
+    },
+    {
+      "id": "pulse_visual_project_story",
+      "verdict": "PASS_B2_CROSS_SCREEN_CONSISTENCY",
+      "evidence": {
+        "reference_sha256": "ab7e6e356d021b1c0fcb42f19ccc099f3f7741ceaa52d7e9a1d136d7f7fd8a47",
+        "native_sha256": "071d9b9d7c36ff26505cc3e381c3b821672f118d29d054e5a1d437565e89c64b",
+        "blend_sha256": "d749bca39ac67029363c21fcbcfa5009c8a4bb871121df230cda6b38fbe08523"
+      }
+    },
+    {
+      "id": "project_complete_work_receipt",
+      "verdict": "PASS_B2_CROSS_SCREEN_CONSISTENCY",
+      "evidence": {
+        "reference_sha256": "754be409d18386fd8d4661c049eaa89100f75fa030d6f12e10637dcfff207804",
+        "native_sha256": "364501fa25eaf4624d30d8b484c203cfe05441d90937df7b5d7497c48fb59725",
+        "blend_sha256": "79894ece4bb7e1f4c2258f5e264e7254f6f03a1b90a2b9f6f05dae791a8f64a3"
+      }
+    }
+  ],
+  "cross_screen_findings": [
+    "Shared top chrome, right navigation, status rail and Tool Dock use one bounded geometry/typography system.",
+    "Intentional per-reference content composition remains preserved; B2 did not redesign canonical screens.",
+    "Shared interactive hit targets align with visible geometry.",
+    "Reference/native overlay comparison works across all eight screens.",
+    "Visible shared runtime-like states fail closed to UNKNOWN/OFF unless backed by governed truth.",
+    "Reference fixture data is explicitly marked NOT LIVE and remains non-authoritative.",
+    "No B2 visual, accessibility or product-truth blocker remains."
+  ],
+  "deferred_to_b3": [
+    "final cross-screen P1 acceptance",
+    "final Murtakaz + Product Workshop acceptance",
+    "R10 final review",
+    "P1 COMPLETE decision"
+  ],
+  "b3_opened": false,
+  "r10_opened": false,
+  "final_p1_approval": false,
+  "p1_complete": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "verdict": "APPROVE_B2_ONLY_B3_REMAINS_PENDING",
+  "timestamp": "2026-10-21"
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-UX-IMPACT-STATE-CONTRACT-2026-10-21",
+  "project_id": "universal-council-command-center",
+  "status": "IMPLEMENTING",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "91aa5604fea04d6ddb9cc89769e5afa139e817d6"
+  },
+  "scope": [
+    "UX impact audit for all eight canonical reference screens",
+    "UX state semantics for Agentic Work OS states",
+    "cross-platform semantic mapping",
+    "progressive disclosure and owner-attention rules",
+    "validators/tests for UX state truth"
+  ],
+  "non_goals": [
+    "visual redesign",
+    "reference image mutation",
+    "WPF implementation",
+    "Android implementation",
+    "Context Resolver implementation",
+    "Context Capsule Compiler implementation",
+    "live execution",
+    "Stage 8"
+  ],
+  "affected_artifacts": [
+    "docs/operations/command-center/living-operations/28_*",
+    "docs/operations/command-center/living-operations/29_*",
+    "state/command-center/living-operations-agentic-ux-impact.json",
+    "state/command-center/living-operations-ux-state-contract.json",
+    "state/command-center/project-governance/project-council.json",
+    "state/command-center/project-governance/product-studio.json",
+    "tools/command_center_ux_state_validate.py",
+    "tools/command_center_murtakaz_validate.py",
+    "company/tests/test_command_center_ux_state_contract.py"
+  ],
+  "expected_behavior": [
+    "every canonical screen gets a KEEP/MODIFY/ADD_STATE/ADD_INTERACTION/NO_CHANGE classification",
+    "new runtime/context states get one consistent user-facing meaning",
+    "technical architecture remains hidden behind progressive disclosure",
+    "owner attention is raised only for actionable material states",
+    "existing visual reference lock remains unchanged"
+  ],
+  "risk_class": "MATERIAL_UX_TRUTH_CONTRACT",
+  "required_reviewers": [
+    "cc_owner_experience",
+    "cc_product_truth",
+    "cc_red_team",
+    "cc_cross_platform",
+    "cc_durable_autopilot",
+    "cc_ai_runtime"
+  ],
+  "required_workshop_reviewers": [
+    "cc_studio_producer",
+    "cc_experience_architect",
+    "cc_interaction_director",
+    "cc_android_experience",
+    "cc_accessibility_clearance",
+    "cc_visual_qa"
+  ],
+  "acceptance_criteria": [
+    "all eight canonical screens audited",
+    "no new visual language introduced",
+    "UNKNOWN never maps to success",
+    "STALE_CONTEXT and CONTEXT_CONFLICT are distinct and actionable",
+    "SUCCEEDED is shown only as verified completion",
+    "Windows and Android use identical semantic states",
+    "technical details use progressive disclosure",
+    "Murtakaz validator enforces the contract"
+  ],
+  "verification_plan": [
+    "static validator",
+    "unit tests",
+    "existing visual reference validator",
+    "existing Murtakaz validator",
+    "exact-head CI",
+    "Murtakaz post-review"
+  ],
+  "pre_approval_receipt": "state/command-center/project-governance/approvals/2026-10-21-ux-impact-state-contract-pre.json",
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE"
+}

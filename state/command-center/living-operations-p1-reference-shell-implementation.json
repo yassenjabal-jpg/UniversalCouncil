@@ -1,0 +1,277 @@
+{
+  "schema_version": "1.0",
+  "implementation_id": "p1-canonical-reference-shell-interactions-v1",
+  "status": "B1_NATIVE_COMPLETION_APPROVED_R9_READY",
+  "strategy": "CANONICAL_REFERENCE_PIXELS_PLUS_NATIVE_WPF_SEMANTIC_OVERLAY",
+  "canonical_reference_count": 8,
+  "reference_pixels_reauthored": false,
+  "wpf_native_interactions": true,
+  "screens": {
+    "home_owner_workspace": [
+      "role_context",
+      "reasoning",
+      "composer_routing",
+      "projects",
+      "owner_panels",
+      "tool_dock"
+    ],
+    "living_project_workspace": [
+      "active_roles",
+      "reasoning",
+      "autopilot_rail",
+      "filmstrip",
+      "decision_stack",
+      "tools",
+      "execution_info"
+    ],
+    "software_autopilot_project": [
+      "checkpoint_timeline",
+      "diff",
+      "branches",
+      "recovery",
+      "fork",
+      "tool_dock"
+    ],
+    "studio_project": [
+      "production_stages",
+      "artifact_viewer",
+      "timeline",
+      "tools_qc",
+      "handoff",
+      "active_team"
+    ],
+    "owner_decision_mode": [
+      "decision_context",
+      "member_ring",
+      "evidence_peek",
+      "approve",
+      "request_changes",
+      "reject",
+      "ask"
+    ],
+    "checkpoint_recovery_fork": [
+      "checkpoint_inspector",
+      "branch_compare",
+      "restore_request",
+      "fork",
+      "promote",
+      "destructive_guard"
+    ],
+    "pulse_visual_project_story": [
+      "story_timeline",
+      "pulse_details",
+      "before_after",
+      "truth_evidence_context"
+    ],
+    "project_complete_work_receipt": [
+      "work_receipt",
+      "final_artifacts",
+      "evidence",
+      "usage",
+      "fallbacks",
+      "checkpoints",
+      "council_decisions"
+    ]
+  },
+  "truth_constraints": {
+    "runtime_execution_claimed": false,
+    "reference_verified_labels_treated_as_live_truth": false,
+    "restore_success_requires_verified_event": true,
+    "decision_actions_do_not_resume_execution_without_state_event": true,
+    "unknown_never_rendered_as_success": true
+  },
+  "final_native_reconstruction_complete": false,
+  "stage8_opened": false,
+  "native_reconstruction": {
+    "strategy": "SLICE_BY_SLICE_WITH_REFERENCE_UNDERLAY_AND_OVERLAY_COMPARISON",
+    "current_slice": "r9_cross_screen_consistency_audit",
+    "current_slice_state": "READY_TO_CONTINUE",
+    "reference_underlay_retained": true,
+    "comparison_shortcut": "Ctrl+Shift+O",
+    "completed_slices": [
+      {
+        "id": "home_council_pulse",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "0f4e039b71d2ed4122634bc99ba3833b3a5199e3",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
+      },
+      {
+        "id": "home_command_composer",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "8ea15f5b452964889fbc8b1a65cbb9f436118c6a",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
+      },
+      {
+        "id": "home_active_work_cards",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "b65abd55d0d298c971fa9916b2e26a308efc9002",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
+      },
+      {
+        "id": "home_owner_summary_panels",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "c0da3e875cc34ea343f51d70ae4b10256c42050c",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
+      },
+      {
+        "id": "home_chrome_rails_hero_tool_dock",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "b909b93b7c9ad7015bdde5ee546768b6021d84ec",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
+      },
+      {
+        "id": "project_workspace_core",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "59f50f61d8751ecd4b569c432aa76abcb29a9585",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
+      },
+      {
+        "id": "project_workspace_full_native",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "28ef3ec70b1eab4ae6363d958cffdaedebe1015c",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
+      },
+      {
+        "id": "software_autopilot_native",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "ed4060afa9c9726d340148e286946d83272e528e",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
+      },
+      {
+        "id": "studio_project_native",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "79d90a62ffa0abaa94e3684f8db1686cd2faf1ce",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ]
+      },
+      {
+        "id": "owner_decision_native",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "a6d0a94b6a447899fdcd2c8d0851e1f75bf04461",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ],
+        "workflow_evidence": {
+          "company_stage0_run": 791,
+          "codeql_run": 708,
+          "reference_ui_run": 128,
+          "reference_ui_artifact_id": 12269146849
+        }
+      },
+      {
+        "id": "recovery_fork_native",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "b6b63a27bbda315b4abfc9e5a658606a1db66a9e",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ],
+        "workflow_evidence": {
+          "company_stage0_run": 799,
+          "codeql_run": 716,
+          "reference_ui_run": 143,
+          "reference_ui_artifact_id": 12270290657
+        }
+      },
+      {
+        "id": "pulse_story_native",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "ec56791ff1f4507c58fa4c45d0e165ec6384b61e",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ],
+        "workflow_evidence": {
+          "company_stage0_run": 812,
+          "codeql_run": 729,
+          "reference_ui_run": 166,
+          "reference_ui_artifact_id": 12285604936
+        }
+      },
+      {
+        "id": "work_receipt_native",
+        "state": "STRUCTURAL_FIDELITY_PASS_NATIVE_RUNTIME_PASS_MICRO_POLISH_COMPLETE",
+        "evidence_head": "8dce677662a509bedeb413ccb12399f178853993",
+        "comparison_modes": [
+          "reference",
+          "native",
+          "blend"
+        ],
+        "workflow_evidence": {
+          "company_stage0_run": 823,
+          "codeql_run": 740,
+          "reference_ui_run": 186,
+          "reference_ui_artifact_id": 12286807319
+        }
+      }
+    ],
+    "pending_slices": [
+      "cross_screen_consistency_audit",
+      "final_murtakaz_studio_review"
+    ],
+    "final_native_reconstruction_complete": false,
+    "home_macro_reconstruction_complete": true,
+    "current_phase": "R9_CROSS_SCREEN_CONSISTENCY_AUDIT",
+    "anti_stall_rule": true,
+    "phase_policy": "ONE_PRIMARY_SCREEN_PER_RECONSTRUCTION_PHASE",
+    "all_eight_macro_reconstruction_complete": true,
+    "b1_completion_candidate": {
+      "scope": "ALL_EIGHT_CANONICAL_DESKTOP_SCREENS",
+      "material_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "reference_ui_run_id": 39583770008,
+      "artifact_id": 12338007893,
+      "evidence_modes": [
+        "reference",
+        "native",
+        "blend"
+      ],
+      "native_only_reference_pixels_hidden": true,
+      "secondary_shared_chrome_completed": true,
+      "decision_native_project_underlay_completed": true,
+      "verdict": "APPROVED_B1_NATIVE_COMPLETION_ONLY",
+      "final_p1_approval": false,
+      "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b1-native-completion-post.json"
+    }
+  },
+  "remainder_phase_plan": "state/command-center/living-operations-p1-remainder-phases.json",
+  "remainder_phase_plan_document": "docs/operations/command-center/living-operations/27_P1_REMAINING_NATIVE_RECONSTRUCTION_PHASE_PLAN.md"
+}

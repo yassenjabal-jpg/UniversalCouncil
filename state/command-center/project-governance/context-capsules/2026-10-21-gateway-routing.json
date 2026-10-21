@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CTX-CC-GATEWAY-ROUTING-2026-10-21",
+  "immutable": true,
+  "project_id": "universal-council-command-center",
+  "job_or_change_id": "CC-GATEWAY-ROUTING-2026-10-21",
+  "created_at": "2026-10-21",
+  "source_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "8cb72d3f04b6396d9d594924446dd8dc9c896aff"
+  },
+  "checkpoint_lock_id": "MRTKZ-CONTEXT-RESOLVER-COMPILER-POST-2026-10-21",
+  "canonical_sources": [
+    {
+      "id": "agentic-os-policy",
+      "locator": "state/command-center/project-governance/agentic-os-policy.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "architecture-invariants",
+      "locator": "state/command-center/project-governance/architecture-invariants.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "context-pipeline-state",
+      "locator": "state/command-center/context-pipeline-state.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "ux-state-contract",
+      "locator": "state/command-center/living-operations-ux-state-contract.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "execution-fabric",
+      "locator": "state/command-center/execution-fabric.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "remote-owner-policy",
+      "locator": "state/command-center/remote-owner-policy.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "project-council",
+      "locator": "state/command-center/project-governance/project-council.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "orchestration-catalog",
+      "locator": "state/command-center/orchestration-catalog.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    }
+  ],
+  "allowed_scope": "SEE_CHANGE_ENVELOPE_CC-GATEWAY-ROUTING-2026-10-21",
+  "forbidden_scope": [
+    "model/provider calls",
+    "tool execution",
+    "live execution",
+    "free-text authority inference",
+    "WPF UI mutation",
+    "Android live transport",
+    "Job Engine",
+    "Automation",
+    "Stage 8"
+  ],
+  "authority_policy_version": "al-murtakaz-mandatory-approval:1.0",
+  "risk_class": "MATERIAL_APPLICATION_ARCHITECTURE_ROUTING_SHADOW_ONLY",
+  "expected_outputs": [
+    "Gateway contracts",
+    "Routing Coordinator",
+    "Host wiring",
+    "routing policy/state",
+    "behavior validation",
+    "CI evidence",
+    "Murtakaz post-review"
+  ],
+  "acceptance_tests": [
+    "command_center_gateway_routing_validate.py",
+    "UniversalCouncil.CommandCenter.GatewayValidation",
+    "command_center_murtakaz_validate.py",
+    "Company Stage 0",
+    "CodeQL",
+    "Reference UI"
+  ],
+  "freshness_rules": {
+    "baseline_must_match_pre_approval": true,
+    "material_baseline_move_result": "STALE_CONTEXT",
+    "conflicting_canonical_truth_result": "CONTEXT_CONFLICT"
+  }
+}

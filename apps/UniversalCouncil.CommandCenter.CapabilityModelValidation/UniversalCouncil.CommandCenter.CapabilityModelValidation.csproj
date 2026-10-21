@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyName>UniversalCouncil.CommandCenter.CapabilityModelValidation</AssemblyName>
+    <RootNamespace>UniversalCouncil.CommandCenter.CapabilityModelValidation</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalCouncil.CommandCenter.Core\UniversalCouncil.CommandCenter.Core.csproj" />
+    <ProjectReference Include="..\UniversalCouncil.CommandCenter.Application\UniversalCouncil.CommandCenter.Application.csproj" />
+    <ProjectReference Include="..\UniversalCouncil.CommandCenter.Infrastructure\UniversalCouncil.CommandCenter.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\state\command-center\capability-registry.json"
+             Link="state\capability-registry.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\state\command-center\model-broker-policy.json"
+             Link="state\model-broker-policy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

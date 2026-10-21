@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0",
+  "lock_id": "home-owner-workspace-geometry-v1",
+  "screen_id": "home_owner_workspace",
+  "parent_sha256": "7cb7d12f8819576ad4992158f6f0eb098ae3350a3684118ffc43192ea56749eb",
+  "composition_model": "LEFT_STATUS_RAIL__CENTRAL_STACK__RIGHT_GLOBAL_NAV__BOTTOM_TOOL_DOCK",
+  "primary_vertical_order": [
+    "owner_hero",
+    "command_composer",
+    "council_pulse",
+    "active_work_three_cards",
+    "bottom_owner_three_panel_row"
+  ],
+  "dominance": {
+    "primary": [
+      "owner_hero",
+      "command_composer"
+    ],
+    "secondary": [
+      "council_pulse",
+      "active_work_three_cards"
+    ],
+    "supporting": [
+      "bottom_owner_three_panel_row",
+      "left_status_rail",
+      "right_global_nav",
+      "bottom_tool_dock"
+    ]
+  },
+  "regions": {
+    "top_bar": {
+      "x": [
+        0,
+        100
+      ],
+      "y": [
+        0,
+        6
+      ]
+    },
+    "left_status_rail": {
+      "x": [
+        0,
+        15
+      ],
+      "y": [
+        6,
+        89
+      ]
+    },
+    "right_global_nav": {
+      "x": [
+        95,
+        100
+      ],
+      "y": [
+        0,
+        90
+      ]
+    },
+    "central_workspace": {
+      "x": [
+        15,
+        95
+      ],
+      "y": [
+        6,
+        89
+      ]
+    },
+    "owner_hero": {
+      "x": [
+        20,
+        92
+      ],
+      "y": [
+        6,
+        15
+      ]
+    },
+    "command_composer": {
+      "x": [
+        16,
+        94
+      ],
+      "y": [
+        15,
+        31
+      ]
+    },
+    "council_pulse": {
+      "x": [
+        16,
+        94
+      ],
+      "y": [
+        31,
+        45
+      ]
+    },
+    "active_work": {
+      "x": [
+        16,
+        94
+      ],
+      "y": [
+        45,
+        69
+      ]
+    },
+    "bottom_owner_row": {
+      "x": [
+        16,
+        94
+      ],
+      "y": [
+        69,
+        89
+      ]
+    },
+    "bottom_tool_dock": {
+      "x": [
+        0,
+        100
+      ],
+      "y": [
+        89,
+        100
+      ]
+    }
+  },
+  "council_pulse": {
+    "topology": "HORIZONTAL_STRIP",
+    "exact_member_count": 8,
+    "exact_sequence": [
+      "المالك",
+      "الاستراتيجية",
+      "البحث",
+      "التحقق",
+      "التنفيذ",
+      "الإبداع",
+      "البيانات",
+      "التعلم"
+    ],
+    "owner_may_be_giant_center_hub": false,
+    "forbidden_topologies": [
+      "RADIAL",
+      "ORBITAL",
+      "CENTRAL_HUB",
+      "HONEYCOMB",
+      "FREE_CONSTELLATION",
+      "VERTICAL_STACK"
+    ]
+  },
+  "active_work": {
+    "exact_major_card_count": 3,
+    "layout": "SINGLE_MAJOR_ROW",
+    "max_relative_area_ratio": 1.25
+  },
+  "bottom_owner_row": {
+    "exact_panel_count": 3,
+    "identities": [
+      "since_you_were_away",
+      "needs_your_decision",
+      "recent_results"
+    ],
+    "layout": "SINGLE_ROW"
+  },
+  "brand": {
+    "required": [
+      "UniversalCouncil",
+      "Command Center"
+    ],
+    "forbidden_renaming": true,
+    "governance_names_must_not_replace_product_brand": true
+  },
+  "forbidden_macro_motifs": [
+    "GIANT_CENTER_OWNER_MEDALLION",
+    "RADIAL_COUNCIL_HUB",
+    "SCI_FI_NETWORK_MAP",
+    "PRIMARY_GLASSMORPHISM",
+    "FULL_PAGE_GLOW_WEB",
+    "SYSTEM_HEALTH_DASHBOARD_AS_HOME_HERO"
+  ],
+  "truth_mode_allowed": [
+    "REFERENCE_FIXTURE",
+    "EXPLICIT_PROTOTYPE_FIXTURE"
+  ],
+  "structural_review_required": true,
+  "creativity_budget": "MICRO_ONLY"
+}

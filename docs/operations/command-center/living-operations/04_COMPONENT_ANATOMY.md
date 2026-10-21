@@ -2,6 +2,8 @@
 
 Status: IMPLEMENTATION COMPONENT CONTRACT
 
+Appearance must use the pinned parent image and the geometry in `19_REFERENCE_FIDELITY_AUDIT_AND_CONTRACT.md`. This semantic inventory does not authorize rearranging the screen or replacing the reference medallions.
+
 ## 1. Project Core
 
 Purpose:

@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-VISUAL-FIDELITY-REPAIR-FINAL",
+  "change_id": "VISUAL-FIDELITY-REPAIR-002",
+  "scope": "Documentation/reference integrity repair ONLY; no visual output or P1 completion approval",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "review_mode": "ROLE_BASED_ASSISTANT_REVIEW_NOT_PRODUCT_RUNTIME_COUNCIL",
+  "review_agent": "/root/murtakaz_review",
+  "governance_reviewers": [
+    "product truth / governance scoped review"
+  ],
+  "workshop_reviewers": [
+    "visual fidelity scoped review"
+  ],
+  "artifact_refs": [
+    "docs/operations/command-center/living-operations",
+    "state/command-center/living-operations-reference-manifest.json",
+    "tools/command_center_visual_reference_validate.py",
+    "tools/command_center_murtakaz_validate.py",
+    "company/tests/test_visual_reference_integrity.py"
+  ],
+  "evidence_refs": [
+    "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+    "docs/operations/command-center/living-operations/references/02-living_project_workspace.png",
+    "docs/operations/command-center/living-operations/references/03-software_autopilot_project.png",
+    "docs/operations/command-center/living-operations/references/04-studio_project.png",
+    "docs/operations/command-center/living-operations/references/05-owner_decision_mode.png",
+    "docs/operations/command-center/living-operations/references/06-checkpoint_recovery_fork.png",
+    "docs/operations/command-center/living-operations/references/07-pulse_visual_project_story.png",
+    "docs/operations/command-center/living-operations/references/08-project_complete_work_receipt.png"
+  ],
+  "approved_revision": {
+    "company/tests/test_visual_reference_integrity.py": "29a7d56e11fbc272252974251b5ef5e6964bb166f84618b16486e968f4e359ed",
+    "docs/operations/command-center/living-operations/19_REFERENCE_FIDELITY_AUDIT_AND_CONTRACT.md": "eb420bda85a56f1cf7cdebaea66b99e898aba6f6ac7b1f9b3f543ac6d9cdb0b4",
+    "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png": "7cb7d12f8819576ad4992158f6f0eb098ae3350a3684118ffc43192ea56749eb",
+    "docs/operations/command-center/living-operations/references/02-living_project_workspace.png": "6f412a1f11e9e9f32df810194dbd4df1c42b973be9dcfb80354f10fb1cf3b799",
+    "docs/operations/command-center/living-operations/references/03-software_autopilot_project.png": "cb2c26d0d54a0a0c6aef3d03cc65737d3a27084fe8228112b719379d7ab966ec",
+    "docs/operations/command-center/living-operations/references/04-studio_project.png": "e2f012f6207006a5068152027ccbef8cd55f866b25e60899a113937ebe523664",
+    "docs/operations/command-center/living-operations/references/05-owner_decision_mode.png": "6351f755874fd9cec7cad4d8136d6c84eb8c3e8111a1d9ba219054f6d2488eeb",
+    "docs/operations/command-center/living-operations/references/06-checkpoint_recovery_fork.png": "7b1ceb447bebb3e9d488749e1beb4f82bf03fb078e58a2035c3ed2a58fe69076",
+    "docs/operations/command-center/living-operations/references/07-pulse_visual_project_story.png": "f92ff13312e11ac6e52914a8cb595e0c870027f45ea8161aadaf72217cb483ed",
+    "docs/operations/command-center/living-operations/references/08-project_complete_work_receipt.png": "f8db7163bc4e5396cd2d58563cf2d513504cef7863da299851142ce554e22b7f",
+    "state/command-center/project-governance/approvals/2026-10-19-visual-fidelity-repair-pre.json": "6f73f2d793c03736c026945a65ae40195bf018c76a458f4884b738c3ce6b8127",
+    "tools/command_center_visual_reference_validate.py": "5273188d74402ea84a4535f3952acc6ed601e97ffc784682f6cb55e0172cf237",
+    "docs/operations/command-center/living-operations/01_VISUAL_BIBLE.md": "65a7d5deb171c621f4588e7ba0c214bcbc6ddadb363e644922946908d0aba626",
+    "docs/operations/command-center/living-operations/04_COMPONENT_ANATOMY.md": "c5ac078e6a4f12414a30c525628493de54cf3964c9e81044a959c07ebcded75e",
+    "docs/operations/command-center/living-operations/05_DESKTOP_SCREEN_MAP.md": "b19c8fcc8536b1300e98f106f0dc7ec8146e13312a30237792ba057e814c9d5d",
+    "docs/operations/command-center/living-operations/15_P1_VISUAL_DIRECTION_LOCK.md": "745347b46d78836f7f49c9706ef3c78fbb5666cf3738c36e9fbb4679fdb2a987",
+    "docs/operations/command-center/living-operations/18_REFERENCE_ONLY_VISUAL_LOCK.md": "bd19cebfc0b33f1a17ce8fc4a7c73483d76c4fdd4bb0632ef2ba0a3974eaf77a",
+    "state/command-center/living-operations-reference-manifest.json": "7ed05b84ccefef20dac04a4bbf622b2cb7f694622e1a6c21814bf3eb7a73921a",
+    "tools/command_center_murtakaz_validate.py": "cbd36bec33686b67cfabaaa28162353c1c6ee82687c4e0f02fd67df41cb5a237"
+  },
+  "timestamp": "2026-10-19T20:37:45.017399+00:00",
+  "reopen_triggers": [
+    "Any scope or visual identity change"
+  ],
+  "final_adoption_granted": true,
+  "stage8_opened": false,
+  "execution_authority_changed": false,
+  "validation": [
+    "4 targeted unittest tests PASS",
+    "ruff check and format PASS",
+    "command_center_murtakaz_validate PASS"
+  ],
+  "limitations": [
+    "No automatic aesthetic comparison",
+    "Attachment boolean requires reviewer verification",
+    "Unregistered visual jobs cannot be detected",
+    "Comparison evidence hash binding deferred until first visual approval job"
+  ]
+}

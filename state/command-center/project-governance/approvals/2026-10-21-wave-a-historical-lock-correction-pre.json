@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-WAVE-A-HISTORICAL-LOCK-CORRECTION-PRE-2026-10-21",
+  "change_id": "CC-WAVE-A-HISTORICAL-LOCK-CORRECTION-2026-10-21",
+  "status": "APPROVE_TO_IMPLEMENT",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "requested_by": "B1_BLOCKER_FOUND_BY_ANTI_DRIFT_REVIEW",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7"
+  },
+  "implementation_base": {
+    "branch": "command-center/repair-b1-native-completion-20261021",
+    "sha": "8b6596a8326d257947d91f5d2daf246e37af5b58"
+  },
+  "scope": [
+    "correct Repair Wave A truth-lock validation from mutable checkout HEAD to immutable historical A3 merge revision",
+    "prove all 18 locked source blobs match A3 merge commit before changing semantics",
+    "preserve existing lock digest and protected truth without rewriting historical source identities",
+    "allow future governed roadmap/project-context/current-review progression without mutating the historical Wave A lock",
+    "update Wave A validator/tests to validate historical lock plus current protected truth separately"
+  ],
+  "explicitly_out_of_scope": [
+    "changing any locked historical source blob",
+    "changing Wave A protected truth snapshot",
+    "Visual B1 native implementation",
+    "B1 visual verdict",
+    "B2 implementation",
+    "Skill Registry",
+    "live execution",
+    "Stage 8"
+  ],
+  "risk_class": "ANTI_DRIFT_HISTORICAL_LOCK_SEMANTICS_CORRECTION",
+  "implementation_authorized": true,
+  "final_adoption_granted": false,
+  "merge_authorized": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "timestamp": "2026-10-21"
+}

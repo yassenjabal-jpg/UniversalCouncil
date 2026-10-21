@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-P1-REFERENCE-OBJECT-INVENTORY-PRE",
+  "change_id": "P1-REFERENCE-OBJECT-INVENTORY-005",
+  "scope": "Create a complete reference-derived object inventory for all eight canonical screens and bind future visual jobs to that inventory. This is a fidelity/governance correction only; no screen artifact approval, no P1 completion, no Stage 8 or execution-authority change.",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "review_mode": "ROLE_BASED_ASSISTANT_REVIEW_NOT_PRODUCT_RUNTIME_COUNCIL",
+  "review_agent": "/root/murtakaz_review",
+  "governance_reviewers": [
+    "cc_product_truth",
+    "cc_owner_experience",
+    "cc_red_team"
+  ],
+  "workshop_reviewers": [
+    "cc_visual_systems",
+    "cc_interaction_director",
+    "cc_visual_qa"
+  ],
+  "artifact_refs": [
+    "docs/operations/command-center/living-operations/22_CANONICAL_SCREEN_OBJECT_INVENTORY.md",
+    "state/command-center/living-operations-reference-object-inventory.json",
+    "state/command-center/living-operations-reference-manifest.json"
+  ],
+  "evidence_refs": [
+    "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+    "docs/operations/command-center/living-operations/references/02-living_project_workspace.png",
+    "docs/operations/command-center/living-operations/references/03-software_autopilot_project.png",
+    "docs/operations/command-center/living-operations/references/04-studio_project.png",
+    "docs/operations/command-center/living-operations/references/05-owner_decision_mode.png",
+    "docs/operations/command-center/living-operations/references/06-checkpoint_recovery_fork.png",
+    "docs/operations/command-center/living-operations/references/07-pulse_visual_project_story.png",
+    "docs/operations/command-center/living-operations/references/08-project_complete_work_receipt.png"
+  ],
+  "approved_revision": "current PR #53 + bounded screen-object inventory correction",
+  "timestamp": "2026-10-20T00:12:00+03:00",
+  "reopen_triggers": [
+    "Any change to the canonical eight images",
+    "Any visual job started without matching screen inventory",
+    "Any omission of reference-observed member/Sigil groups or persistent chrome"
+  ],
+  "final_adoption_granted": false,
+  "p1_visual_phase_complete": false,
+  "stage8_opened": false,
+  "execution_authority_changed": false
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-APR-2026-10-19-002",
+  "change_id": "P1-VISUAL-CONTINUATION-001",
+  "scope": "MANDATORY_MURTAKAZ_APPROVAL_LAW_AND_P1_VISUAL_DIRECTION_CONTINUATION_PACKAGE",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "approved_revision": "36ab202423eb17ed41ef219655d106c4c7734e5f",
+  "governance_reviewers": [
+    "cc_project_chair",
+    "cc_product_truth",
+    "cc_owner_experience",
+    "cc_red_team"
+  ],
+  "workshop_reviewers": [
+    "cc_studio_producer",
+    "cc_experience_architect",
+    "cc_interaction_director",
+    "cc_visual_systems",
+    "cc_motion_systems"
+  ],
+  "evidence_refs": [
+    "Company Stage 0 run 39261888759 SUCCESS",
+    "CodeQL run 39261888836 SUCCESS",
+    "docs/operations/command-center/living-operations/15_P1_VISUAL_DIRECTION_LOCK.md",
+    "docs/operations/command-center/living-operations/16_P1_INTERACTION_MOTION_STORYBOARD.md",
+    "docs/operations/command-center/living-operations/17_P1_SCREEN_REVIEW_MATRIX.md",
+    "state/command-center/project-governance/al-murtakaz-approval-policy.json"
+  ],
+  "approved_artifacts": [
+    "mandatory_murtakaz_approval_law",
+    "p1_visual_direction_continuation_framework",
+    "p1_interaction_motion_storyboard",
+    "p1_screen_review_matrix",
+    "p1_visual_governance_state"
+  ],
+  "visual_phase_final_approval": false,
+  "visual_phase_state": "IN_PROGRESS",
+  "stage8_opened": false,
+  "execution_authority_changed": false,
+  "timestamp": "2026-10-19",
+  "reopen_triggers": [
+    "material_visual_change",
+    "interaction_semantics_change",
+    "motion_semantics_change",
+    "authority_change",
+    "platform_scope_change",
+    "evidence_failure",
+    "source_drift"
+  ],
+  "note": "The package establishing mandatory Murtakaz approval and continuing P1 visual work is approved. Final visual screens and motion remain pending separate Murtakaz acceptance."
+}

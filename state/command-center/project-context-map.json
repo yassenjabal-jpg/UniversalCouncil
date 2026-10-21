@@ -1,0 +1,354 @@
+{
+  "schema_version": "2.0",
+  "source_type": "project_local_repository_projection",
+  "project_id": "universal-council-command-center",
+  "baseline_branch": "command-center/project-local-council-studio-20261019",
+  "baseline_revision": "b3ef5d8f60e3f623371b40036bcea01f7a396d2a",
+  "source_revision": "45144c0ee0fb2e8599ea4dea201b320467d09c277f2dce36ac831a65f2d101c7",
+  "head_validation_mode": "BASELINE_ANCESTOR_AND_SOURCE_BLOBS_MATCH_HEAD",
+  "project_manifest": {
+    "display_name": "UniversalCouncil Command Center",
+    "governance_system": "al-murtakaz",
+    "owner_authority": "FINAL"
+  },
+  "current_state": {
+    "delivery_stage": "STAGE_7",
+    "visual_phase": "P1_APPROVED_BY_AL_MURTAKAZ",
+    "live_execution_authorized": false,
+    "stage8_opened": false
+  },
+  "canonical_decisions": [
+    "one_governed_brain_many_front_doors",
+    "role_is_not_model",
+    "unknown_is_never_success",
+    "no_silent_fallback",
+    "eight_reference_visual_lock",
+    "murtakaz_pre_post_review_required",
+    "context_baseline_is_provenance_not_currentness",
+    "context_currentness_is_source_blob_verified"
+  ],
+  "active_work": [
+    "STAGE7_REAL_HOST_EVIDENCE_PENDING"
+  ],
+  "relevant_skills": [
+    "project_local_murtakaz_review",
+    "architecture_boundary_review",
+    "anti_drift_truth_validation"
+  ],
+  "recent_events": [
+    "AGENTIC_OS_INTEGRATED",
+    "UX_STATE_CONTRACT_APPROVED",
+    "CONTEXT_RESOLVER_CAPSULE_COMPILER_APPROVED",
+    "GATEWAY_ROUTING_APPROVED",
+    "CAPABILITY_REGISTRY_MODEL_BROKER_APPROVED",
+    "REPAIR_INVENTORY_IDENTIFIED_STALE_CONTEXT_BASELINE",
+    "REPAIR_WAVE_A1_CONTEXT_BASELINE_APPROVED",
+    "REPAIR_WAVE_A2_GOVERNANCE_METADATA_APPROVED",
+    "REPAIR_WAVE_A3_TRUTH_LOCK_APPROVED",
+    "REPAIR_WAVE_B1_NATIVE_COMPLETION_APPROVED",
+    "REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY_APPROVED",
+    "REPAIR_WAVE_B3_RETURNED_FOR_EXIT_EVIDENCE",
+    "P1_FINAL_ACCEPTANCE_APPROVED_BY_AL_MURTAKAZ",
+    "POST_P1_INTERACTION_MOTION_HARDENING_APPROVED",
+    "STAGE7_REPOSITORY_READINESS_APPROVED_BY_AL_MURTAKAZ",
+    "STAGE7_REAL_HOST_EVIDENCE_PENDING"
+  ],
+  "blockers": [
+    "PHASE0_LIVE_EXECUTION_LOCK",
+    "REAL_AUTOPILOT_NOT_IMPLEMENTED",
+    "ANDROID_LIVE_CONNECTION_UNPROVEN",
+    "STAGE8_NOT_OPENED",
+    "YASSIN_DEVICE_OFFLINE",
+    "REMOTE_DESKTOP_COMMANDER_QUOTA_EXHAUSTED"
+  ],
+  "owner_directives": [
+    "al-murtakaz-mandatory-approval",
+    "owner-visual-reference-lock",
+    "owner-model-selection-control"
+  ],
+  "sources": [
+    {
+      "id": "agentic-os-policy",
+      "path": "state/command-center/project-governance/agentic-os-policy.json",
+      "blob_sha": "53e1d9c8b19ba26440f7ca9590d34e483226af94",
+      "authority_class": "LOCKED_POLICY",
+      "freshness": "CURRENT",
+      "domains": [
+        "architecture",
+        "context",
+        "execution",
+        "routing"
+      ],
+      "scopes": [
+        "project",
+        "context",
+        "orchestration"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "architecture-invariants",
+      "path": "state/command-center/project-governance/architecture-invariants.json",
+      "blob_sha": "457302e15e675f8644948ab71224f17118e7173c",
+      "authority_class": "LOCKED_POLICY",
+      "freshness": "CURRENT",
+      "domains": [
+        "architecture",
+        "context",
+        "governance"
+      ],
+      "scopes": [
+        "project",
+        "context",
+        "validation"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "context-capsule-contract",
+      "path": "state/command-center/project-governance/context-capsule-contract.json",
+      "blob_sha": "d6639502a6377aa2cc9fab868d4b8b635960f15a",
+      "authority_class": "LOCKED_POLICY",
+      "freshness": "CURRENT",
+      "domains": [
+        "context"
+      ],
+      "scopes": [
+        "project",
+        "context",
+        "capsule"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "ux-state-contract",
+      "path": "state/command-center/living-operations-ux-state-contract.json",
+      "blob_sha": "626662757d11e97f719c8a3b8fa006a112ae9937",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "context",
+        "ux"
+      ],
+      "scopes": [
+        "project",
+        "context",
+        "ux"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "murtakaz-approval-policy",
+      "path": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
+      "blob_sha": "6b54343313b8cb3080712ba5744888e83a53e458",
+      "authority_class": "LOCKED_POLICY",
+      "freshness": "CURRENT",
+      "domains": [
+        "authority",
+        "governance"
+      ],
+      "scopes": [
+        "project",
+        "approval",
+        "authority"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "stage-phase-map",
+      "path": "state/command-center/project-governance/stage-phase-map.json",
+      "blob_sha": "2abd1d9d4558eaae466a1038625728c6344c50c4",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "governance",
+        "project_state"
+      ],
+      "scopes": [
+        "project",
+        "stage",
+        "phase"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "visual-reference-manifest",
+      "path": "state/command-center/living-operations-reference-manifest.json",
+      "blob_sha": "bcd8ee23a5618c07919baa47971d83f86f908b69",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "ux",
+        "visual"
+      ],
+      "scopes": [
+        "project",
+        "visual",
+        "reference"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "project-council",
+      "path": "state/command-center/project-governance/project-council.json",
+      "blob_sha": "c74398013e550b360910d28ceb700f9fe6681265",
+      "authority_class": "LOCKED_POLICY",
+      "freshness": "CURRENT",
+      "domains": [
+        "governance",
+        "routing"
+      ],
+      "scopes": [
+        "project",
+        "review",
+        "routing"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "product-studio",
+      "path": "state/command-center/project-governance/product-studio.json",
+      "blob_sha": "d5fae36a2e501305415f985a3652932ed788ef8a",
+      "authority_class": "LOCKED_POLICY",
+      "freshness": "CURRENT",
+      "domains": [
+        "governance",
+        "ux",
+        "visual"
+      ],
+      "scopes": [
+        "project",
+        "review",
+        "ux",
+        "visual"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "phase0-execution-gates",
+      "path": "state/command-center/phase0-execution-gates.json",
+      "blob_sha": "6ca3d2827026d712933cabd11c8816967ae163af",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "execution",
+        "authority",
+        "project_state"
+      ],
+      "scopes": [
+        "project",
+        "execution",
+        "gates"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "gateway-routing-policy",
+      "path": "state/command-center/gateway-routing-policy.json",
+      "blob_sha": "635d3c4916e9b8a40be16bb6da79494c38465993",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "routing",
+        "authority",
+        "model"
+      ],
+      "scopes": [
+        "project",
+        "routing",
+        "planning"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "gateway-routing-state",
+      "path": "state/command-center/gateway-routing-state.json",
+      "blob_sha": "ea4c5d7317d1ae87eca0012ccab66add8bce50fb",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "routing",
+        "project_state"
+      ],
+      "scopes": [
+        "project",
+        "routing",
+        "state"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "capability-registry",
+      "path": "state/command-center/capability-registry.json",
+      "blob_sha": "c84f150bdad8391bca424709c1d17d6bcf67bcba",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "capability",
+        "execution",
+        "model"
+      ],
+      "scopes": [
+        "project",
+        "capability",
+        "health"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "model-broker-policy",
+      "path": "state/command-center/model-broker-policy.json",
+      "blob_sha": "52fa6436e837bec1e250dd79920a8b925b6d01c9",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "model",
+        "routing",
+        "authority"
+      ],
+      "scopes": [
+        "project",
+        "model",
+        "selection"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "capability-model-state",
+      "path": "state/command-center/capability-model-state.json",
+      "blob_sha": "2c45c0e695fcb6ebfafd84fb5c1fd536096d06e2",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "capability",
+        "model",
+        "project_state"
+      ],
+      "scopes": [
+        "project",
+        "capability",
+        "model",
+        "state"
+      ],
+      "untrusted": false
+    },
+    {
+      "id": "context-pipeline-state",
+      "path": "state/command-center/context-pipeline-state.json",
+      "blob_sha": "ff4f45fe43cdb51af0102657bda720ae301b3427",
+      "authority_class": "CANONICAL_ARTIFACT",
+      "freshness": "CURRENT",
+      "domains": [
+        "context",
+        "project_state"
+      ],
+      "scopes": [
+        "project",
+        "context",
+        "state"
+      ],
+      "untrusted": false
+    }
+  ],
+  "conflicts": []
+}

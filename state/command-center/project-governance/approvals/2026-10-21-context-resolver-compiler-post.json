@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-CONTEXT-RESOLVER-COMPILER-POST-2026-10-21",
+  "change_id": "CC-CONTEXT-RESOLVER-COMPILER-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "reviewed_revision": "ac0f174fdc64ba0d6985fba403a71d27f5ff13bb",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "379820e27e70609c724740e2e138baa8b8a92c7d"
+  },
+  "governance_review": {
+    "cc_architecture_execution": "PASS",
+    "cc_product_truth": "PASS",
+    "cc_ai_runtime": "PASS",
+    "cc_security_remote_trust": "PASS",
+    "cc_durable_autopilot": "PASS_FOR_READ_ONLY_CONTEXT_FOUNDATION",
+    "cc_red_team": "PASS_AFTER_CONFLICT_SCOPE_HARDENING",
+    "cc_owner_experience": "PASS_UX_STATE_REQUIREMENTS_SATISFIED"
+  },
+  "workshop_review": {
+    "cc_studio_producer": "PASS",
+    "cc_experience_architect": "PASS_NO_UI_COUPLING",
+    "cc_accessibility_clearance": "PASS_NO_USER_SURFACE_CHANGE"
+  },
+  "architecture_boundary_audit": {
+    "verdict": "PASS",
+    "core": "TYPES_AND_INTERFACES_ONLY",
+    "application": "CONTEXT_RESOLUTION_AND_CAPSULE_COMPILATION",
+    "infrastructure": "STRICT_READ_ONLY_JSON_READER",
+    "host": "COMPOSITION_ONLY",
+    "wpf": "NO_CONTEXT_FILE_OR_AUTHORITY_LOGIC"
+  },
+  "red_team_findings_resolved": [
+    "Domain conflict detection no longer depends on scope-selected candidate visibility.",
+    "Untrusted content is explicitly prevented from gaining governing authority.",
+    "Change-of-Truth is exposed as typed context metadata.",
+    "Native dotnet CI failures now fail the workflow immediately instead of being masked by later commands.",
+    "Nullable validation build errors were corrected rather than waived."
+  ],
+  "behavior_evidence": [
+    "CURRENT context resolves and compiles.",
+    "Identical context/request produces deterministic capsule id.",
+    "Source digest change produces a different capsule id.",
+    "STALE_CONTEXT blocks capsule compilation.",
+    "CONTEXT_CONFLICT blocks capsule compilation and preserves provenance.",
+    "Untrusted data may be included explicitly but cannot govern."
+  ],
+  "exact_head_evidence": [
+    {
+      "workflow": "Company Stage 0",
+      "run_id": 39511082225,
+      "conclusion": "SUCCESS",
+      "head_sha": "ac0f174fdc64ba0d6985fba403a71d27f5ff13bb"
+    },
+    {
+      "workflow": "CodeQL",
+      "run_id": 39511082228,
+      "conclusion": "SUCCESS",
+      "head_sha": "ac0f174fdc64ba0d6985fba403a71d27f5ff13bb"
+    },
+    {
+      "workflow": "Command Center Reference UI",
+      "run_id": 39511082305,
+      "conclusion": "SUCCESS",
+      "head_sha": "ac0f174fdc64ba0d6985fba403a71d27f5ff13bb",
+      "includes": "C# ContextValidation + WPF build/render"
+    }
+  ],
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "wpf_ux_changed": false,
+  "android_runtime_changed": false,
+  "model_provider_calls_added": false,
+  "adoption_authorized": true,
+  "merge_authorized": true,
+  "next_roadmap_slice_authorized": "MURTAKAZ_GATEWAY_INTERFACES_AND_ROUTING_COORDINATOR",
+  "reopen_triggers": [
+    "context authority classes change",
+    "source precedence changes",
+    "stale/conflict semantics change",
+    "capsule fingerprint semantics change",
+    "context becomes mutable",
+    "WPF begins reading context files directly",
+    "live execution or Stage 8 changes"
+  ],
+  "timestamp": "2026-10-21"
+}

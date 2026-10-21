@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-STUDIO-HOME-GEOMETRY-LOCK-PRE",
+  "change_id": "HOME-GEOMETRY-LOCK-008",
+  "scope": "Review the fifth generated Home candidate, reject structural drift, and add a canonical Home geometry/composition lock that constrains macro layout, region order, Council Pulse topology, brand identity and structural review evidence before any further visual generation.",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "review_mode": "ROLE_BASED_ASSISTANT_REVIEW_NOT_PRODUCT_RUNTIME_COUNCIL",
+  "review_agent": "/root/murtakaz_review",
+  "governance_reviewers": [
+    "cc_product_truth",
+    "cc_owner_experience",
+    "cc_red_team"
+  ],
+  "workshop_reviewers": [
+    "cc_visual_systems",
+    "cc_interaction_director",
+    "cc_visual_qa",
+    "cc_design_systems_engineer"
+  ],
+  "artifact_refs": [
+    "docs/operations/command-center/living-operations/25_FIFTH_GENERATION_MURTAKAZ_STUDIO_REVIEW.md",
+    "docs/operations/command-center/living-operations/26_HOME_GEOMETRY_AND_COMPOSITION_LOCK.md",
+    "state/command-center/living-operations-home-geometry-lock.json",
+    "state/command-center/living-operations-reference-manifest.json",
+    "state/command-center/living-operations-p1-home-fidelity.json"
+  ],
+  "evidence_refs": [
+    "canonical Home reference 01-home_owner_workspace.png",
+    "fifth candidate generation 1d4d3194-a0ec-4f1e-8fc3-1db2b125d1af",
+    "09_ROLE_SIGIL_SYSTEM.md",
+    "22_CANONICAL_SCREEN_OBJECT_INVENTORY.md"
+  ],
+  "approved_revision": "current PR #53 + bounded Home geometry/composition lock",
+  "timestamp": "2026-10-20T00:55:00+03:00",
+  "final_adoption_granted": false,
+  "rendered_artifact_approved": false,
+  "p1_visual_phase_complete": false,
+  "stage8_opened": false,
+  "execution_authority_changed": false
+}

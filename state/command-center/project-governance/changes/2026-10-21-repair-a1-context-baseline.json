@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-REPAIR-A1-CONTEXT-BASELINE-2026-10-21",
+  "project_id": "universal-council-command-center",
+  "status": "IMPLEMENTING",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "b3ef5d8f60e3f623371b40036bcea01f7a396d2a"
+  },
+  "scope": [
+    "project-context-map schema/projection repair",
+    "ProjectContext document/resolver compatibility update",
+    "Context Capsule provenance extension if required",
+    "dynamic HEAD/source-blob anti-drift validator",
+    "ContextValidation behavior tests",
+    "repository tests",
+    "Murtakaz validation binding"
+  ],
+  "non_goals": [
+    "A2 governance metadata reconciliation",
+    "Wave B visual completion",
+    "Wave C repository cleanup",
+    "Skill Registry",
+    "live execution",
+    "Stage 8"
+  ],
+  "acceptance_criteria": [
+    "project-context-map no longer pretends an old implementation SHA is current truth",
+    "baseline Git revision is provenance and is not required to equal HEAD",
+    "validator verifies baseline is an ancestor of checkout HEAD",
+    "validator verifies every canonical source blob matches checkout HEAD",
+    "source-set fingerprint changes when a canonical source blob changes",
+    "Context Resolver exposes both baseline revision and source-set fingerprint",
+    "Context Capsule binds to the exact source-set fingerprint",
+    "historical bootstrap receipts remain immutable history",
+    "live execution and Stage 8 remain disabled",
+    "exact-head CI passes"
+  ],
+  "verification_plan": [
+    "C# ContextValidation",
+    "Python context pipeline validator",
+    "Company Stage 0",
+    "CodeQL",
+    "Reference UI",
+    "Murtakaz post-review"
+  ],
+  "pre_approval_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-a1-context-baseline-pre.json",
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE"
+}

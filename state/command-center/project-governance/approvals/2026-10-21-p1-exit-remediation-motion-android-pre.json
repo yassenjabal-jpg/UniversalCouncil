@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-P1-EXIT-REMEDIATION-MOTION-ANDROID-PRE-2026-10-21",
+  "change_id": "CC-P1-EXIT-REMEDIATION-MOTION-ANDROID-2026-10-21",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "scope": "P1_EXIT_EVIDENCE_ONLY",
+  "implementation_authorized": true,
+  "evidence_generation_authorized": true,
+  "final_p1_approval_granted": false,
+  "merge_authorized": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "runtime_authority_added": false,
+  "owner_authority": "FINAL",
+  "reviewers": [
+    "cc_product_truth",
+    "cc_experience_architect",
+    "cc_accessibility_clearance",
+    "cc_motion_systems",
+    "cc_visual_qa",
+    "cc_red_team"
+  ],
+  "timestamp": "2026-10-21"
+}

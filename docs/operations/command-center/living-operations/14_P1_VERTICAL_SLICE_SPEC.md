@@ -1,6 +1,6 @@
 # Prototype Phase P1 — Living Project Workspace Vertical Slice
 
-Status: READY-TO-PROTOTYPE SPECIFICATION  
+Status: VISUAL DIRECTION CONTINUATION / MURTAKAZ-GATED  
 Execution authority: NONE / PROTOTYPE ONLY  
 Stage 8: NOT OPENED
 
@@ -225,6 +225,15 @@ Provide:
 - Reduced Motion capture;
 - Android interaction capture.
 
+## Murtakaz governance
+
+P1 is governed by:
+`state/command-center/project-governance/al-murtakaz-approval-policy.json`
+
+No visual, interaction, motion or prototype artifact becomes final without explicit Murtakaz approval.
+
+Material changes reopen review automatically.
+
 ## P1 exit criteria
 
 P1 exits only if:
@@ -235,5 +244,7 @@ P1 exits only if:
 - project current work remains obvious;
 - animations remain responsive;
 - Android and Windows show consistent semantic state;
-- Studio recommends ACCEPT or ACCEPT WITH MINOR FIXES.
+- مشغل المرتكز completes visual/motion/fidelity review;
+- هيئة المرتكز clears truth/UX/architecture/security domains as applicable;
+- final decision is explicitly `APPROVED_BY_AL_MURTAKAZ`.
 

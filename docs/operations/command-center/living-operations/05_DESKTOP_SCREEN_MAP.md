@@ -4,19 +4,17 @@ Status: DESKTOP INFORMATION ARCHITECTURE CONTRACT
 
 ## Top-level navigation
 
-Recommended compact RTL navigation:
-
+Reference-locked right rail:
 1. الرئيسية
-2. اليوم
-3. المشاريع
-4. المهام
-5. بانتظارك
-6. المجلس
-7. الاستوديو
-8. النتائج
-9. النظام
+2. المشاريع
+3. المجلس
+4. الاستوديو
+5. المعرفة
+6. الأدوات
+7. التقارير
+8. الإعدادات (bottom anchor)
 
-System is advanced operational truth and must not dominate onboarding.
+Today, tasks, waiting, results and diagnostics below are functional destinations, not permission to add top-level rail items. Preserve left contextual/status rail and bottom tool dock. New navigation requires an explicit reviewed delta.
 
 Global:
 - Ctrl+K Command Palette;
@@ -28,11 +26,9 @@ Global:
 
 Order:
 1. Command Composer — "ماذا تريد أن تنجز؟"
-2. Since You Were Away
-3. Needs Your Decision
-4. Pulse strip
-5. Active Work
-6. Recent Results
+2. Council Pulse strip
+3. Active Work
+4. Bottom row: Since You Were Away / Needs Your Decision / Recent Results
 
 Composer:
 - Council / Studio / Auto;
@@ -124,7 +120,7 @@ Center:
 - variants.
 
 Pipeline:
-Writing -> Pre-production -> Production.
+Writing -> Pre-production -> Production -> Review / Quality -> Delivery / Publish.
 
 Current production department emphasized.
 
@@ -192,7 +188,11 @@ Do not imply independent processes that do not exist.
 Pipeline view:
 - Writing;
 - Pre-production;
-- Production.
+- Production;
+- Review / Quality;
+- Delivery / Publish.
+
+These stages are visual workflow destinations, not authorization to publish.
 
 For active project:
 - current department;

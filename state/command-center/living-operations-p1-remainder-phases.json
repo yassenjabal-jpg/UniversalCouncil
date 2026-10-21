@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "p1-native-remainder-phases-v1",
+  "status": "P1_COMPLETE_R10_CLOSED",
+  "current_phase": "R10_CLOSED",
+  "anti_stall_rule": true,
+  "phase_order": [
+    "R1_OWNER_DECISION_MODE",
+    "R2_RECOVERY_FORK",
+    "R3_PULSE_STORY",
+    "R4_WORK_RECEIPT",
+    "R5_HOME_MICRO_POLISH",
+    "R6_PROJECT_WORKSPACE_MICRO_POLISH",
+    "R7_SOFTWARE_AUTOPILOT_MICRO_POLISH",
+    "R8_STUDIO_PROJECT_MICRO_POLISH",
+    "R9_CROSS_SCREEN_CONSISTENCY_AUDIT",
+    "R10_FINAL_MURTAKAZ_STUDIO_REVIEW"
+  ],
+  "phases": {
+    "R1_OWNER_DECISION_MODE": {
+      "state": "CLOSED",
+      "primary_screen": "owner_decision_mode",
+      "evidence_head": "a6d0a94b6a447899fdcd2c8d0851e1f75bf04461",
+      "review": "STRUCTURAL_FIDELITY_PASS_MICRO_POLISH_COMPLETE",
+      "ci": {
+        "company_stage0_run": 791,
+        "codeql_run": 708,
+        "reference_ui_run": 128,
+        "reference_ui_artifact_id": 12269146849
+      },
+      "b1_deferred_micro_polish": "COMPLETE",
+      "b1_evidence_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "b1_post_review": "APPROVED_BY_AL_MURTAKAZ"
+    },
+    "R2_RECOVERY_FORK": {
+      "state": "CLOSED",
+      "primary_screen": "checkpoint_recovery_fork",
+      "evidence_head": "b6b63a27bbda315b4abfc9e5a658606a1db66a9e",
+      "review": "STRUCTURAL_FIDELITY_PASS_MICRO_POLISH_COMPLETE",
+      "ci": {
+        "company_stage0_run": 799,
+        "codeql_run": 716,
+        "reference_ui_run": 143,
+        "reference_ui_artifact_id": 12270290657
+      },
+      "b1_deferred_micro_polish": "COMPLETE",
+      "b1_evidence_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "b1_post_review": "APPROVED_BY_AL_MURTAKAZ"
+    },
+    "R3_PULSE_STORY": {
+      "state": "CLOSED",
+      "primary_screen": "pulse_visual_project_story",
+      "evidence_head": "ec56791ff1f4507c58fa4c45d0e165ec6384b61e",
+      "review": "STRUCTURAL_FIDELITY_PASS_MICRO_POLISH_COMPLETE",
+      "ci": {
+        "company_stage0_run": 812,
+        "codeql_run": 729,
+        "reference_ui_run": 166,
+        "reference_ui_artifact_id": 12285604936
+      },
+      "b1_deferred_micro_polish": "COMPLETE",
+      "b1_evidence_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "b1_post_review": "APPROVED_BY_AL_MURTAKAZ"
+    },
+    "R4_WORK_RECEIPT": {
+      "state": "CLOSED",
+      "primary_screen": "project_complete_work_receipt",
+      "evidence_head": "8dce677662a509bedeb413ccb12399f178853993",
+      "review": "STRUCTURAL_FIDELITY_PASS_MICRO_POLISH_COMPLETE",
+      "ci": {
+        "company_stage0_run": 823,
+        "codeql_run": 740,
+        "reference_ui_run": 186,
+        "reference_ui_artifact_id": 12286807319
+      },
+      "b1_deferred_micro_polish": "COMPLETE",
+      "b1_evidence_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "b1_post_review": "APPROVED_BY_AL_MURTAKAZ"
+    },
+    "R5_HOME_MICRO_POLISH": {
+      "state": "CLOSED",
+      "primary_screen": "home_owner_workspace",
+      "evidence_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "review": "B1_NATIVE_COMPLETION_APPROVED",
+      "b1_post_review": "APPROVED_BY_AL_MURTAKAZ"
+    },
+    "R6_PROJECT_WORKSPACE_MICRO_POLISH": {
+      "state": "CLOSED",
+      "primary_screen": "living_project_workspace",
+      "evidence_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "review": "B1_NATIVE_COMPLETION_APPROVED",
+      "b1_post_review": "APPROVED_BY_AL_MURTAKAZ"
+    },
+    "R7_SOFTWARE_AUTOPILOT_MICRO_POLISH": {
+      "state": "CLOSED",
+      "primary_screen": "software_autopilot_project",
+      "evidence_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "review": "B1_NATIVE_COMPLETION_APPROVED",
+      "b1_post_review": "APPROVED_BY_AL_MURTAKAZ"
+    },
+    "R8_STUDIO_PROJECT_MICRO_POLISH": {
+      "state": "CLOSED",
+      "primary_screen": "studio_project",
+      "evidence_head": "69dc13fa94928be292237f082e77e656f792222b",
+      "review": "B1_NATIVE_COMPLETION_APPROVED",
+      "b1_post_review": "APPROVED_BY_AL_MURTAKAZ"
+    },
+    "R9_CROSS_SCREEN_CONSISTENCY_AUDIT": {
+      "state": "CLOSED",
+      "primary_screen": "all_eight",
+      "evidence_head": "8fa47a8b7ffd7a7b79cded710500c4830aa59bbc",
+      "review": "APPROVED_BY_AL_MURTAKAZ_B2_ONLY",
+      "reference_ui_run_id": 39594694429,
+      "artifact_id": 12343191879
+    },
+    "R10_FINAL_MURTAKAZ_STUDIO_REVIEW": {
+      "state": "CLOSED",
+      "primary_screen": "all_eight",
+      "review": "APPROVED_BY_AL_MURTAKAZ_FINAL_P1",
+      "evidence_head": "2736c4e9484e4b60c842ca69274fb93ddb16f739",
+      "company_stage0_run_id": 39611656803,
+      "codeql_run_id": 39611656919,
+      "reference_ui_run_id": 39611657006,
+      "reference_ui_artifact_id": 12350447617,
+      "p1_exit_evidence_run_id": 39611656911,
+      "wpf_motion_artifact_id": 12350871568,
+      "android_semantic_artifact_id": 12351625241,
+      "blockers": [],
+      "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-post.json"
+    }
+  },
+  "per_phase_gate": [
+    "BUILDING",
+    "IMPLEMENTED",
+    "CI_RENDER_VALIDATION",
+    "STRUCTURAL_FIDELITY_REVIEW",
+    "MURTAKAZ_STUDIO_REVIEW",
+    "CLOSED",
+    "NEXT_PHASE_OPENED"
+  ],
+  "rule": "ONE_PRIMARY_SCREEN_PER_RECONSTRUCTION_PHASE",
+  "final_native_reconstruction_complete": true,
+  "stage8_opened": false,
+  "b1_scope_correction": {
+    "reason": "R1-R4 closed structural reconstruction with micro-polish deferred while R5-R8 named only four screens; B1 explicitly closes native/micro-polish debt for all eight.",
+    "canonical_screen_count": 8,
+    "material_head": "69dc13fa94928be292237f082e77e656f792222b",
+    "post_review_required": false,
+    "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b1-native-completion-post.json",
+    "verdict": "APPROVED_B1_NATIVE_COMPLETION_ONLY"
+  },
+  "b2_closure": {
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "r10_opened": false,
+    "final_p1_approval": false,
+    "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b2-cross-screen-consistency-post.json"
+  },
+  "b3_review": {
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "final_p1_approval": true,
+    "p1_complete": true,
+    "historical_review_result": "state/command-center/living-operations-p1-b3-final-review-result.json",
+    "final_acceptance": "state/command-center/living-operations-p1-final-acceptance.json"
+  }
+}

@@ -1,4 +1,5 @@
 using System.IO;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Windows;
@@ -8,7 +9,7 @@ using UniversalCouncil.CommandCenter;
 
 namespace UniversalCouncil.CommandCenter.UiSmoke;
 
-internal static class Program
+internal static partial class Program
 {
     [STAThread]
     private static int Main(string[] args)
@@ -84,10 +85,167 @@ internal static class Program
         };
         app.InitializeComponent();
 
+        if (args.Any(arg => string.Equals(arg, "--motion-evidence", StringComparison.OrdinalIgnoreCase)))
+        {
+            var reducedMotion = args.Any(
+                arg => string.Equals(arg, "--reduced-motion", StringComparison.OrdinalIgnoreCase));
+            return RenderMotionEvidence(output, reducedMotion);
+        }
+
         var evidence = new[]
         {
-            Render(output, 1440, 900, "command-center-stage7-1440x900.png"),
-            Render(output, 1180, 720, "command-center-stage7-1180x720.png"),
+            Render(output, 1440, 900, "command-center-stage7-1440x900.png", "native"),
+            Render(output, 1180, 720, "command-center-stage7-1180x720.png", "native"),
+            Render(output, 1440, 900, "home-reference-only-1440x900.png", "reference"),
+            Render(output, 1440, 900, "home-native-1440x900.png", "native"),
+            Render(output, 1440, 900, "home-native-overlay-1440x900.png", "blend"),
+            Render(
+                output,
+                1440,
+                900,
+                "project-workspace-reference-1440x900.png",
+                "reference",
+                "ProjectWorkspace"),
+            Render(
+                output,
+                1440,
+                900,
+                "project-workspace-native-1440x900.png",
+                "native",
+                "ProjectWorkspace"),
+            Render(
+                output,
+                1440,
+                900,
+                "project-workspace-blend-1440x900.png",
+                "blend",
+                "ProjectWorkspace"),
+            Render(
+                output,
+                1440,
+                900,
+                "software-autopilot-reference-1440x900.png",
+                "reference",
+                "SoftwareAutopilot"),
+            Render(
+                output,
+                1440,
+                900,
+                "software-autopilot-native-1440x900.png",
+                "native",
+                "SoftwareAutopilot"),
+            Render(
+                output,
+                1440,
+                900,
+                "software-autopilot-blend-1440x900.png",
+                "blend",
+                "SoftwareAutopilot"),
+            Render(
+                output,
+                1440,
+                900,
+                "studio-project-reference-1440x900.png",
+                "reference",
+                "StudioProject"),
+            Render(
+                output,
+                1440,
+                900,
+                "studio-project-native-1440x900.png",
+                "native",
+                "StudioProject"),
+            Render(
+                output,
+                1440,
+                900,
+                "studio-project-blend-1440x900.png",
+                "blend",
+                "StudioProject"),
+            Render(
+                output,
+                1440,
+                900,
+                "owner-decision-reference-1440x900.png",
+                "reference",
+                "DecisionMode"),
+            Render(
+                output,
+                1440,
+                900,
+                "owner-decision-native-1440x900.png",
+                "native",
+                "DecisionMode"),
+            Render(
+                output,
+                1440,
+                900,
+                "owner-decision-blend-1440x900.png",
+                "blend",
+                "DecisionMode"),
+            Render(
+                output,
+                1440,
+                900,
+                "recovery-fork-reference-1440x900.png",
+                "reference",
+                "RecoveryFork"),
+            Render(
+                output,
+                1440,
+                900,
+                "recovery-fork-native-1440x900.png",
+                "native",
+                "RecoveryFork"),
+            Render(
+                output,
+                1440,
+                900,
+                "recovery-fork-blend-1440x900.png",
+                "blend",
+                "RecoveryFork"),
+            Render(
+                output,
+                1440,
+                900,
+                "pulse-story-reference-1440x900.png",
+                "reference",
+                "PulseStory"),
+            Render(
+                output,
+                1440,
+                900,
+                "pulse-story-native-1440x900.png",
+                "native",
+                "PulseStory"),
+            Render(
+                output,
+                1440,
+                900,
+                "pulse-story-blend-1440x900.png",
+                "blend",
+                "PulseStory"),
+            Render(
+                output,
+                1440,
+                900,
+                "work-receipt-reference-1440x900.png",
+                "reference",
+                "WorkReceipt"),
+            Render(
+                output,
+                1440,
+                900,
+                "work-receipt-native-1440x900.png",
+                "native",
+                "WorkReceipt"),
+            Render(
+                output,
+                1440,
+                900,
+                "work-receipt-blend-1440x900.png",
+                "blend",
+                "WorkReceipt"),
         };
 
         var manifestPath = Path.Combine(output, "ui-evidence-manifest.json");
@@ -114,9 +272,101 @@ internal static class Program
         return 0;
     }
 
-    private static object Render(string output, int width, int height, string fileName)
+    private static void NavigateForEvidence(MainWindow window, string screenName)
+    {
+        var windowType = typeof(MainWindow);
+        var screenType = windowType.GetNestedType(
+            "ScreenKind",
+            BindingFlags.NonPublic);
+        var navigate = windowType.GetMethod(
+            "NavigateTo",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        if (screenType is null || navigate is null)
+        {
+            throw new InvalidOperationException(
+                "Unable to locate private screen navigation for UI evidence.");
+        }
+
+        var screen = Enum.Parse(screenType, screenName, ignoreCase: false);
+        navigate.Invoke(window, new[] { screen });
+    }
+
+    private static object Render(
+        string output,
+        int width,
+        int height,
+        string fileName,
+        string variant,
+        string? screen = null)
     {
         var window = App.CreateMainWindow(AppContext.BaseDirectory);
+
+        if (!string.IsNullOrWhiteSpace(screen))
+        {
+            NavigateForEvidence(window, screen);
+        }
+
+        if (window.FindName("ReferenceImage") is UIElement referenceImage)
+        {
+            referenceImage.Visibility = variant == "native"
+                ? Visibility.Collapsed
+                : Visibility.Visible;
+        }
+
+        if (window.FindName("InteractionCanvas") is UIElement homeInteractionLayer)
+        {
+            homeInteractionLayer.Visibility = Visibility.Collapsed;
+        }
+
+        if (window.FindName("NativeHomeReconstructionRoot") is UIElement nativeHomeLayer)
+        {
+            if (!string.IsNullOrWhiteSpace(screen))
+            {
+                nativeHomeLayer.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                switch (variant)
+                {
+                    case "reference":
+                        nativeHomeLayer.Visibility = Visibility.Collapsed;
+                        break;
+                    case "blend":
+                        nativeHomeLayer.Visibility = Visibility.Visible;
+                        nativeHomeLayer.Opacity = 0.46;
+                        break;
+                    default:
+                        nativeHomeLayer.Visibility = Visibility.Visible;
+                        nativeHomeLayer.Opacity = 1;
+                        break;
+                }
+            }
+        }
+
+        if (window.FindName("SecondaryInteractionCanvas") is UIElement secondaryInteractionLayer)
+        {
+            secondaryInteractionLayer.Visibility = Visibility.Collapsed;
+        }
+
+        if (window.FindName("SecondaryNativeLayer") is UIElement secondaryNativeLayer &&
+            !string.IsNullOrWhiteSpace(screen))
+        {
+            switch (variant)
+            {
+                case "reference":
+                    secondaryNativeLayer.Visibility = Visibility.Collapsed;
+                    break;
+                case "blend":
+                    secondaryNativeLayer.Visibility = Visibility.Visible;
+                    secondaryNativeLayer.Opacity = 0.46;
+                    break;
+                default:
+                    secondaryNativeLayer.Visibility = Visibility.Visible;
+                    secondaryNativeLayer.Opacity = 1;
+                    break;
+            }
+        }
 
         if (window.Content is not FrameworkElement root)
         {
@@ -174,6 +424,7 @@ internal static class Program
             pixel_height = bitmap.PixelHeight,
             bytes = bytes.Length,
             sha256,
+            variant,
         };
     }
 }

@@ -1,0 +1,177 @@
+from __future__ import annotations
+
+import json
+import unittest
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[2]
+PROJECT_STATE = ROOT / "state" / "command-center" / "project-governance"
+
+
+def load_json(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+class CommandCenterProjectGovernanceTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.lock = load_json(PROJECT_STATE / "inheritance-lock.json")
+        self.council = load_json(PROJECT_STATE / "project-council.json")
+        self.studio = load_json(PROJECT_STATE / "product-studio.json")
+        self.parent_roles = load_json(ROOT / "config" / "roles.json")
+        self.parent_contracts = load_json(ROOT / "company" / "config" / "council_role_contracts.json")
+        self.parent_media = load_json(ROOT / "company" / "config" / "media_venture.json")
+        self.identity = load_json(PROJECT_STATE / "al-murtakaz.json")
+        self.review = load_json(PROJECT_STATE / "al-murtakaz-review.json")
+        self.approval_policy = load_json(PROJECT_STATE / "al-murtakaz-approval-policy.json")
+        self.visual_phase = load_json(ROOT / "state" / "command-center" / "living-operations-p1-visual-phase.json")
+        self.visual_approval = load_json(PROJECT_STATE / "approvals" / "2026-10-19-visual-direction-continuation.json")
+        self.final_p1_post_path = PROJECT_STATE / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json"
+
+    def test_parent_versions_are_explicit_and_read_only(self) -> None:
+        parents = self.lock["parent_sources"]
+        self.assertEqual(parents["roles"]["version"], self.parent_roles["version"])
+        self.assertEqual(parents["role_contracts"]["version"], self.parent_contracts["version"])
+        self.assertEqual(parents["media_studio"]["version"], self.parent_media["version"])
+        self.assertFalse(self.lock["rules"]["allow_parent_mutation"])
+        self.assertFalse(self.lock["rules"]["allow_parent_replacement"])
+
+    def test_project_profiles_cannot_expand_authority(self) -> None:
+        for profile in (self.council, self.studio):
+            authority = profile["authority"]
+            self.assertFalse(authority["may_modify_parent"])
+            self.assertFalse(authority["may_mutate_authority"])
+            self.assertFalse(authority["may_open_stage8"])
+            self.assertTrue(authority["owner_final_authority"])
+
+        self.assertFalse(self.council["authority"]["may_execute_tools_by_role_definition"])
+        self.assertFalse(self.studio["authority"]["execution_authority"])
+        self.assertFalse(self.studio["authority"]["live_publish_authority"])
+
+    def test_project_council_uses_local_ids_and_inherits_known_parent_capabilities(self) -> None:
+        known_parent = {item["id"] for item in self.parent_roles["core_roles"] + self.parent_roles["specialist_roles"]}
+        local_ids = {role["id"] for role in self.council["core_roles"]}
+        self.assertTrue(all(role_id.startswith("cc_") for role_id in local_ids))
+
+        for role in self.council["core_roles"]:
+            for parent_id in role["inherits_from"]:
+                self.assertIn(parent_id, known_parent)
+
+    def test_product_studio_is_not_media_studio_replacement(self) -> None:
+        self.assertEqual(
+            self.studio["parent"]["inheritance_mode"],
+            "PRINCIPLES_ONLY_READ_ONLY",
+        )
+        local_ids = {function["id"] for function in self.studio["functions"]}
+        self.assertTrue(all(function_id.startswith("cc_") for function_id in local_ids))
+        self.assertNotIn("media_producer", local_ids)
+        self.assertNotIn("editorial_director", local_ids)
+
+    def test_truth_and_prototype_safeguards_remain_fail_closed(self) -> None:
+        self.assertTrue(self.lock["rules"]["unknown_is_never_success"])
+        self.assertTrue(self.council["truth_rules"]["unknown_is_never_success"])
+
+        prototype = self.studio["prototype_rules"]
+        self.assertTrue(prototype["fixtures_must_be_labeled"])
+        self.assertTrue(prototype["fixtures_must_not_enter_runtime_truth"])
+        self.assertTrue(prototype["fixtures_must_not_enter_evidence_truth"])
+
+    def test_project_studio_has_clearance_and_handoff_rules(self) -> None:
+        clearances = set(self.studio["mandatory_clearance"])
+        self.assertIn("cc_accessibility_clearance", clearances)
+        self.assertIn("cc_visual_qa", clearances)
+
+        handoff = self.studio["handoff"]
+        self.assertTrue(handoff["acceptance_required"])
+        self.assertTrue(handoff["return_ticket_required_on_rejection"])
+        self.assertTrue(handoff["downstream_direct_repair_forbidden"])
+
+    def test_al_murtakaz_identity_is_canonical_and_project_local(self) -> None:
+        self.assertEqual(self.identity["id"], "al-murtakaz")
+        self.assertEqual(self.identity["name_ar"], "المرتكز")
+        self.assertEqual(self.identity["units"]["governance"]["name_ar"], "هيئة المرتكز")
+        self.assertEqual(self.identity["units"]["workshop"]["name_ar"], "مشغل المرتكز")
+        self.assertFalse(self.identity["authority"]["execution_authority"])
+        self.assertFalse(self.identity["authority"]["may_open_stage8"])
+        self.assertFalse(self.identity["authority"]["may_modify_parent_systems"])
+
+    def test_full_review_allows_non_authoritative_p1_and_keeps_stage8_closed(self) -> None:
+        self.assertEqual(
+            self.review["verdict"],
+            "STRONG_FOUNDATION_CONDITIONAL_GO_FOR_NON_AUTHORITATIVE_P1",
+        )
+        self.assertFalse(self.review["stage8_opened"])
+        self.assertFalse(self.review["execution_authority_changed"])
+        self.assertEqual(
+            self.review["pre_prototype_gate"]["decision"],
+            "GO_FOR_NON_AUTHORITATIVE_P1",
+        )
+        self.assertEqual(self.review["pre_prototype_gate"]["required"], [])
+        self.assertIn(
+            "MP-02_MURTAKAZ_ORCHESTRATION_PROJECTION",
+            self.review["pre_prototype_gate"]["completed"],
+        )
+        self.assertFalse(self.review["alignment_followup"]["stage8_opened"])
+        self.assertFalse(self.review["alignment_followup"]["execution_authority_changed"])
+
+    def test_murtakaz_approval_is_required_for_all_product_change(self) -> None:
+        policy = self.approval_policy
+        self.assertEqual(policy["status"], "OWNER_DIRECTIVE_ACTIVE")
+        self.assertTrue(policy["implicit_approval_forbidden"])
+        self.assertTrue(policy["material_change_invalidates_prior_approval"])
+
+        for key in (
+            "implementation_requires",
+            "adoption_requires",
+            "completion_requires",
+            "merge_requires",
+            "release_requires",
+            "next_phase_requires",
+        ):
+            self.assertTrue(policy[key])
+
+        mandatory = self.identity["mandatory_approval"]
+        self.assertTrue(mandatory["required_for_all_product_change"])
+        self.assertTrue(mandatory["required_before_material_implementation"])
+        self.assertTrue(mandatory["required_before_adoption"])
+        self.assertTrue(mandatory["required_before_completion"])
+        self.assertTrue(mandatory["required_before_merge"])
+        self.assertTrue(mandatory["required_before_release"])
+        self.assertTrue(mandatory["required_before_next_phase"])
+
+    def test_visual_phase_requires_murtakaz_for_final_state(self) -> None:
+        self.assertIn(self.visual_phase["status"], {"IN_PROGRESS", "APPROVED_BY_AL_MURTAKAZ"})
+        self.assertEqual(
+            self.visual_phase["exit_requires"],
+            "APPROVED_BY_AL_MURTAKAZ",
+        )
+        self.assertFalse(self.visual_phase["runtime_authority"])
+        self.assertFalse(self.visual_phase["stage8_opened"])
+        self.assertEqual(
+            self.visual_approval["decision"],
+            "APPROVE_TO_IMPLEMENT",
+        )
+        self.assertFalse(self.visual_approval["final_adoption_granted"])
+        if self.visual_phase["status"] == "APPROVED_BY_AL_MURTAKAZ":
+            final_post = load_json(self.final_p1_post_path)
+            self.assertEqual(final_post["decision"], "APPROVED_BY_AL_MURTAKAZ")
+            self.assertTrue(final_post["final_p1_approval_granted"])
+            self.assertTrue(final_post["p1_complete"])
+
+    def test_project_write_roots_do_not_include_parent_paths(self) -> None:
+        roots = self.lock["project_write_roots"]
+        self.assertEqual(
+            roots,
+            [
+                "docs/operations/command-center/project-governance/",
+                "state/command-center/project-governance/",
+            ],
+        )
+
+        parent_paths = set(self.lock["parent_files_read_only"])
+        for root in roots:
+            self.assertTrue(all(not parent.startswith(root) for parent in parent_paths))
+
+
+if __name__ == "__main__":
+    unittest.main()

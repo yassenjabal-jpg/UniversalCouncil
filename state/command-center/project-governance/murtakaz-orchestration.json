@@ -1,0 +1,760 @@
+{
+  "schema_version": "2.0",
+  "source_type": "project_local_repository_projection",
+  "project_id": "universal-council-command-center",
+  "source_files": [
+    {
+      "path": "state/command-center/project-governance/al-murtakaz.json",
+      "blob_sha": "ea1e10acfd6719f56a6cc5c9de4b34f16d6fc2ce"
+    },
+    {
+      "path": "state/command-center/project-governance/inheritance-lock.json",
+      "blob_sha": "8de3c39d9ce1bfdb247203133e2916248bd7aa7b"
+    },
+    {
+      "path": "state/command-center/project-governance/project-council.json",
+      "blob_sha": "c74398013e550b360910d28ceb700f9fe6681265"
+    },
+    {
+      "path": "state/command-center/project-governance/product-studio.json",
+      "blob_sha": "d5fae36a2e501305415f985a3652932ed788ef8a"
+    },
+    {
+      "path": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
+      "blob_sha": "6b54343313b8cb3080712ba5744888e83a53e458"
+    },
+    {
+      "path": "state/command-center/project-governance/agentic-os-policy.json",
+      "blob_sha": "53e1d9c8b19ba26440f7ca9590d34e483226af94"
+    },
+    {
+      "path": "state/command-center/project-governance/architecture-invariants.json",
+      "blob_sha": "457302e15e675f8644948ab71224f17118e7173c"
+    },
+    {
+      "path": "state/command-center/project-governance/context-capsule-contract.json",
+      "blob_sha": "d6639502a6377aa2cc9fab868d4b8b635960f15a"
+    },
+    {
+      "path": "state/command-center/project-governance/change-envelope-contract.json",
+      "blob_sha": "f16e53d4b752400ac9bb06d922dfe12a0d6384c5"
+    }
+  ],
+  "identity": {
+    "id": "al-murtakaz",
+    "name_ar": "المرتكز",
+    "governance_name_ar": "هيئة المرتكز",
+    "workshop_name_ar": "مشغل المرتكز"
+  },
+  "governance": {
+    "profile_id": "al-murtakaz-governance",
+    "status": "ACTIVE_FOR_PROJECT_REVIEW",
+    "core_roles": [
+      {
+        "id": "cc_project_chair",
+        "name": "Project Chair / Product Decision Controller",
+        "inherits_from": [
+          "chair"
+        ],
+        "owns": [
+          "project_framing",
+          "activation",
+          "decision_rights",
+          "review_expiry"
+        ]
+      },
+      {
+        "id": "cc_product_truth",
+        "name": "Product Truth & Evidence Lead",
+        "inherits_from": [
+          "evidence"
+        ],
+        "owns": [
+          "truth_state",
+          "evidence_provenance",
+          "fixture_isolation",
+          "completion_claims"
+        ]
+      },
+      {
+        "id": "cc_red_team",
+        "name": "Product Red Team",
+        "inherits_from": [
+          "redteam"
+        ],
+        "owns": [
+          "falsification",
+          "dead_surface_challenge",
+          "failure_modes",
+          "recovery_theater"
+        ]
+      },
+      {
+        "id": "cc_architecture_execution",
+        "name": "Architecture & Execution Reviewer",
+        "inherits_from": [
+          "execution",
+          "software"
+        ],
+        "owns": [
+          "feasibility",
+          "architecture_boundaries",
+          "reversibility",
+          "implementation_sequence"
+        ]
+      },
+      {
+        "id": "cc_security_remote_trust",
+        "name": "Security, Privacy & Remote Trust Reviewer",
+        "inherits_from": [
+          "risk",
+          "security"
+        ],
+        "owns": [
+          "remote_trust",
+          "privacy",
+          "secrets",
+          "authority_boundaries",
+          "destructive_effects"
+        ]
+      },
+      {
+        "id": "cc_owner_experience",
+        "name": "Owner Experience & Human Factors Reviewer",
+        "inherits_from": [
+          "human",
+          "design"
+        ],
+        "owns": [
+          "usability",
+          "cognitive_load",
+          "rtl",
+          "accessibility_burden",
+          "no_dead_surface"
+        ]
+      },
+      {
+        "id": "cc_durable_autopilot",
+        "name": "Durable Autopilot & Recovery Reviewer",
+        "inherits_from": [
+          "execution",
+          "risk",
+          "software"
+        ],
+        "owns": [
+          "checkpoint",
+          "recovery",
+          "fork",
+          "replay",
+          "retry",
+          "suspend_resume",
+          "loop_detection"
+        ]
+      },
+      {
+        "id": "cc_cross_platform",
+        "name": "Cross-Platform Client Semantics Reviewer",
+        "inherits_from": [
+          "software",
+          "design"
+        ],
+        "owns": [
+          "object_identity",
+          "event_ordering",
+          "snapshot_delta",
+          "windows_android_semantic_parity"
+        ]
+      },
+      {
+        "id": "cc_ai_runtime",
+        "name": "AI Runtime, Model, Memory & Eval Reviewer",
+        "inherits_from": [
+          "software",
+          "data",
+          "evidence"
+        ],
+        "owns": [
+          "model_routing",
+          "reasoning_effort",
+          "fallback",
+          "memory_scope",
+          "evals",
+          "tracing"
+        ]
+      },
+      {
+        "id": "cc_synthesis",
+        "name": "Project Synthesis & Alternatives",
+        "inherits_from": [
+          "synthesis"
+        ],
+        "owns": [
+          "alternatives",
+          "tradeoffs",
+          "hybrids",
+          "minority_preservation"
+        ]
+      }
+    ],
+    "on_demand_specialists": [
+      "windows_wpf",
+      "android_compose",
+      "motion_interaction",
+      "accessibility",
+      "performance",
+      "commercial_value"
+    ],
+    "mandatory_routes": {
+      "autopilot_recovery": [
+        "cc_durable_autopilot",
+        "cc_product_truth",
+        "cc_architecture_execution"
+      ],
+      "remote_owner": [
+        "cc_security_remote_trust",
+        "cc_cross_platform",
+        "cc_product_truth"
+      ],
+      "model_reasoning_fallback": [
+        "cc_ai_runtime",
+        "cc_owner_experience",
+        "cc_product_truth"
+      ],
+      "major_ux": [
+        "cc_owner_experience",
+        "cc_product_truth",
+        "cc_red_team"
+      ],
+      "cross_platform_state": [
+        "cc_cross_platform",
+        "cc_product_truth"
+      ],
+      "architecture_boundary": [
+        "cc_architecture_execution",
+        "cc_red_team"
+      ],
+      "agentic_os_architecture": [
+        "cc_architecture_execution",
+        "cc_ai_runtime",
+        "cc_security_remote_trust",
+        "cc_product_truth",
+        "cc_durable_autopilot",
+        "cc_owner_experience",
+        "cc_red_team"
+      ],
+      "context_memory_truth": [
+        "cc_product_truth",
+        "cc_ai_runtime",
+        "cc_security_remote_trust"
+      ],
+      "automation_authority": [
+        "cc_durable_autopilot",
+        "cc_security_remote_trust",
+        "cc_product_truth",
+        "cc_architecture_execution",
+        "cc_red_team"
+      ],
+      "agentic_ux_state": [
+        "cc_owner_experience",
+        "cc_product_truth",
+        "cc_red_team",
+        "cc_cross_platform",
+        "cc_durable_autopilot",
+        "cc_ai_runtime"
+      ]
+    },
+    "default_modes": {
+      "minor_reversible_craft": "LIGHT",
+      "material_product_change": "COUNCIL",
+      "authority_security_durability_governance": "ARENA"
+    },
+    "blockers": [
+      "TRUTH_BLOCKER",
+      "SECURITY_BLOCKER",
+      "AUTHORITY_BLOCKER",
+      "DURABILITY_BLOCKER",
+      "ACCESSIBILITY_BLOCKER",
+      "ARCHITECTURE_BOUNDARY_BLOCKER",
+      "CROSS_PLATFORM_TRUTH_BLOCKER"
+    ],
+    "owner_gates": [
+      "locked_art_direction_change",
+      "authority_expansion",
+      "destructive_or_irreversible_behavior",
+      "public_external_effect",
+      "credentials_spend_subscription",
+      "material_privacy_tradeoff",
+      "no_silent_fallback_policy_change",
+      "project_governance_replacement"
+    ],
+    "truth_rules": {
+      "unknown_is_never_success": true,
+      "recommendation_is_not_authority": true,
+      "role_is_not_independent_agent_without_runtime_evidence": true
+    }
+  },
+  "workshop": {
+    "profile_id": "al-murtakaz-workshop",
+    "status": "ACTIVE_FOR_PROJECT_DESIGN",
+    "operating_model": {
+      "mode": "PRODUCT_DESIGN_STUDIO_WITH_GATED_VERTICAL_SLICES",
+      "principle": "audit_then_experience_then_visual_motion_then_components_then_vertical_slices_then_assurance_then_handoff",
+      "one_authoritative_craft_owner_per_artifact": true,
+      "parallel_read_only_review_allowed": true,
+      "silent_cross_edit_forbidden": true,
+      "agentic_ux_rule": "KEEP_CANONICAL_VISUAL_SYSTEM_MODIFY_STATE_SEMANTICS_ONLY_UNLESS_SEPARATELY_APPROVED"
+    },
+    "functions": [
+      {
+        "id": "cc_studio_producer",
+        "name": "Product Studio Producer",
+        "status": "CONTROL_PLANE_ALWAYS_ACTIVE"
+      },
+      {
+        "id": "cc_experience_architect",
+        "name": "Experience Architect",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_interaction_director",
+        "name": "Interaction Choreography Director",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_visual_systems",
+        "name": "Visual Systems Director",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_motion_systems",
+        "name": "Motion Systems Director",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_sigil_iconography",
+        "name": "Role Sigil & Iconography Designer",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_design_systems_engineer",
+        "name": "Design Systems Engineer",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_windows_experience",
+        "name": "Windows Experience Lead",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_android_experience",
+        "name": "Android Experience Lead",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_prototype_engineer",
+        "name": "Prototype & Interaction Engineer",
+        "status": "PHASE_ROUTED_CRAFT"
+      },
+      {
+        "id": "cc_accessibility_clearance",
+        "name": "Accessibility Reviewer",
+        "status": "MANDATORY_CLEARANCE"
+      },
+      {
+        "id": "cc_visual_qa",
+        "name": "Visual Fidelity & QA Reviewer",
+        "status": "MANDATORY_CLEARANCE"
+      },
+      {
+        "id": "cc_human_assistance",
+        "name": "Human Assistance Pool",
+        "status": "ON_DEMAND_ASSISTANCE"
+      }
+    ],
+    "phases": [
+      {
+        "id": "PS0",
+        "name": "Project Audit",
+        "gate": "PROJECT_CONTEXT_LOCK"
+      },
+      {
+        "id": "PS1",
+        "name": "Experience Architecture",
+        "gate": "EXPERIENCE_ARCHITECTURE_LOCK"
+      },
+      {
+        "id": "PS2",
+        "name": "Living Visual + Motion System",
+        "gate": "VISUAL_MOTION_LOCK"
+      },
+      {
+        "id": "PS3",
+        "name": "Component System",
+        "gate": "COMPONENT_SYSTEM_LOCK"
+      },
+      {
+        "id": "PS4",
+        "name": "Windows Vertical Slice",
+        "gate": "WINDOWS_PROTOTYPE_ACCEPTED"
+      },
+      {
+        "id": "PS5",
+        "name": "Android Companion Vertical Slice",
+        "gate": "ANDROID_PROTOTYPE_ACCEPTED"
+      },
+      {
+        "id": "PS6",
+        "name": "Cross-Platform Semantics",
+        "gate": "CLIENT_SEMANTIC_PARITY_ACCEPTED"
+      },
+      {
+        "id": "PS7",
+        "name": "Accessibility + Performance + Fidelity",
+        "gate": "DESIGN_ASSURANCE_ACCEPTED"
+      },
+      {
+        "id": "PS8",
+        "name": "Engineering Handoff",
+        "gate": "IMPLEMENTATION_READY"
+      }
+    ],
+    "mandatory_clearance": [
+      "cc_accessibility_clearance",
+      "cc_visual_qa"
+    ],
+    "council_clearance_required_for": {
+      "truth_bearing_surface": [
+        "cc_product_truth"
+      ],
+      "remote_authority_surface": [
+        "cc_security_remote_trust"
+      ],
+      "autopilot_recovery_surface": [
+        "cc_durable_autopilot",
+        "cc_product_truth"
+      ],
+      "architecture_sensitive_surface": [
+        "cc_architecture_execution"
+      ],
+      "agentic_ux_state_surface": [
+        "cc_owner_experience",
+        "cc_product_truth",
+        "cc_cross_platform"
+      ]
+    },
+    "handoff": {
+      "acceptance_required": true,
+      "return_ticket_required_on_rejection": true,
+      "downstream_direct_repair_forbidden": true
+    },
+    "prototype_rules": {
+      "fixtures_must_be_labeled": true,
+      "fixtures_must_not_enter_runtime_truth": true,
+      "fixtures_must_not_enter_evidence_truth": true
+    },
+    "motion_rules": {
+      "motion_must_have_semantic_purpose": true,
+      "reduced_motion_required": true,
+      "no_fake_activity": true
+    }
+  },
+  "mandatory_approval": {
+    "policy_id": "al-murtakaz-mandatory-approval",
+    "status": "OWNER_DIRECTIVE_ACTIVE",
+    "rule": "NO_CHANGE_ADOPTION_COMPLETION_MERGE_RELEASE_OR_STAGE_TRANSITION_WITHOUT_EXPLICIT_AL_MURTAKAZ_APPROVAL",
+    "implementation_requires": "APPROVE_TO_IMPLEMENT",
+    "adoption_requires": "APPROVED_BY_AL_MURTAKAZ",
+    "completion_requires": "APPROVED_BY_AL_MURTAKAZ",
+    "merge_requires": "APPROVED_BY_AL_MURTAKAZ",
+    "release_requires": "APPROVED_BY_AL_MURTAKAZ",
+    "next_phase_requires": "APPROVED_BY_AL_MURTAKAZ",
+    "implicit_approval_forbidden": true,
+    "material_change_invalidates_prior_approval": true
+  },
+  "agentic_os": {
+    "policy_id": "al-murtakaz-agentic-work-os",
+    "status": "OWNER_ADOPTED_IMPLEMENTATION_GATED",
+    "logical_gateway": {
+      "id": "murtakaz-command-gateway",
+      "role": "LOGICAL_INGRESS_AND_COHERENCE_BOUNDARY",
+      "not_a_god_object": true,
+      "owns": [
+        "principal_session_handoff",
+        "request_normalization",
+        "project_selection_guard",
+        "correlation_id",
+        "orchestration_entry",
+        "result_projection"
+      ],
+      "delegates_to": [
+        "context_resolver",
+        "authority_policy_service",
+        "routing_coordinator",
+        "skill_resolver",
+        "model_broker",
+        "job_service",
+        "execution_fabric",
+        "verification_service",
+        "receipt_service"
+      ],
+      "front_doors": [
+        "windows",
+        "android",
+        "web_when_justified",
+        "chat_adapter",
+        "voice_optional"
+      ],
+      "front_door_business_logic_forbidden": true,
+      "one_logical_authority_boundary": true,
+      "remote_owner_transport_is_adapter": true
+    },
+    "orchestration_services": {
+      "context_resolver": {
+        "owns": [
+          "project_knowledge_map",
+          "context_capsule_compilation",
+          "canonical_conflict_detection",
+          "freshness_check"
+        ],
+        "may_grant_authority": false
+      },
+      "authority_policy_service": {
+        "owns": [
+          "risk_classification",
+          "authority_check",
+          "approval_requirement",
+          "effect_classification"
+        ],
+        "deterministic_policy_required": true
+      },
+      "routing_coordinator": {
+        "stages": [
+          "intent",
+          "project_context",
+          "authority_risk",
+          "skill",
+          "reasoning_path",
+          "model",
+          "execution",
+          "verification"
+        ],
+        "llm_may_propose": true,
+        "policy_authorizes": true,
+        "route_reason_receipt_required": true
+      },
+      "skill_resolver": {
+        "governed_contract_required": true,
+        "prompt_only_skill_for_material_work_forbidden": true
+      },
+      "model_broker": {
+        "selection_precedence": [
+          "TASK_OVERRIDE",
+          "ROLE_OVERRIDE",
+          "PROJECT_DEFAULT",
+          "GLOBAL_DEFAULT"
+        ],
+        "silent_fallback_allowed": false,
+        "owner_controlled": true,
+        "required_inputs": [
+          "capability",
+          "context",
+          "latency",
+          "cost",
+          "quality",
+          "availability",
+          "privacy",
+          "fallback_policy"
+        ]
+      },
+      "job_service": {
+        "durable_job_target": true,
+        "current_live_runtime_status": "DESIGN_CONTRACT_ONLY",
+        "resume_requires_verified_checkpoint": true
+      },
+      "verification_service": {
+        "provider_success_is_not_task_success": true,
+        "material_change_requires_independent_postcondition": true
+      },
+      "receipt_service": {
+        "work_receipt_required_for_material_results": true,
+        "raw_secret_persistence_forbidden": true
+      }
+    },
+    "change_cycle": [
+      "PROPOSED",
+      "MURTAKAZ_PRE_REVIEW",
+      "APPROVE_TO_IMPLEMENT",
+      "CONTEXT_CAPSULE",
+      "TYPED_PLAN",
+      "IMPLEMENT",
+      "VERIFY",
+      "MURTAKAZ_POST_REVIEW",
+      "APPROVED_BY_AL_MURTAKAZ"
+    ],
+    "result_model": {
+      "states": [
+        "QUEUED",
+        "PLANNING",
+        "WAITING_FOR_APPROVAL",
+        "EXECUTING",
+        "VERIFYING",
+        "BLOCKED",
+        "FAILED",
+        "UNKNOWN",
+        "STALE_CONTEXT",
+        "CONTEXT_CONFLICT",
+        "SUCCEEDED"
+      ],
+      "terminal": [
+        "BLOCKED",
+        "FAILED",
+        "UNKNOWN",
+        "CONTEXT_CONFLICT",
+        "SUCCEEDED"
+      ],
+      "resumable": [
+        "QUEUED",
+        "PLANNING",
+        "WAITING_FOR_APPROVAL",
+        "EXECUTING",
+        "VERIFYING",
+        "STALE_CONTEXT"
+      ],
+      "unknown_never_success": true,
+      "stale_context_requires_replan": true,
+      "context_conflict_requires_resolution": true
+    },
+    "context_security": {
+      "all_retrieved_content_is_data_by_default": true,
+      "governing_instruction_requires_typed_authority_metadata": true,
+      "retrieved_text_cannot_grant_permissions": true,
+      "tool_output_cannot_modify_policy": true,
+      "model_output_cannot_self_promote_to_canonical": true,
+      "instruction_data_separation_required": true,
+      "prompt_injection_classification": "UNTRUSTED_CONTENT_BOUNDARY"
+    },
+    "project_knowledge": {
+      "zones": [
+        "SOURCE",
+        "CANONICAL",
+        "WORKING",
+        "OUTPUT",
+        "ARCHIVE"
+      ],
+      "working_output_auto_promotion_forbidden": true,
+      "promotion_requires": [
+        "provenance",
+        "review",
+        "explicit_gate"
+      ],
+      "project_map": [
+        "PROJECT_MANIFEST",
+        "CURRENT_STATE",
+        "CANONICAL_DECISIONS",
+        "ACTIVE_WORK",
+        "RELEVANT_SKILLS",
+        "RECENT_EVENTS",
+        "BLOCKERS",
+        "OWNER_DIRECTIVES"
+      ],
+      "bounded_retrieval_default": true,
+      "conflict_policy": "FAIL_CLOSED"
+    },
+    "owner_directives": {
+      "chat_text_alone_does_not_silently_override_lock": true,
+      "typed_record_required_for_material_change": true,
+      "supersedes_chain_required": true,
+      "change_of_truth_gate_required_when_lock_or_reference_changes": true,
+      "history_is_append_not_rewrite": true
+    },
+    "visual_inheritance": {
+      "authority": "EXISTING_PROJECT_LOCAL_VISUAL_GATES",
+      "canonical_reference_manifest": "state/command-center/living-operations-reference-manifest.json",
+      "production_protocol": "state/command-center/living-operations-visual-production-protocol.json",
+      "governing_docs": [
+        "docs/operations/command-center/living-operations/18_REFERENCE_ONLY_VISUAL_LOCK.md",
+        "docs/operations/command-center/living-operations/23_VISUAL_PRODUCTION_HARD_GATE.md"
+      ],
+      "canonical_reference_count": 8,
+      "generic_visual_capsule_may_not_weaken_existing_gate": true,
+      "generated_output_parent_forbidden": true,
+      "actual_reference_bytes_required": true,
+      "preflight_required": true,
+      "one_screen_per_job": true,
+      "side_by_side_review_required": true,
+      "murtakaz_governance_and_workshop_review_required": true
+    },
+    "execution": {
+      "hybrid_policy": "GUI_PRIMARY_DC_SECONDARY",
+      "provider_does_not_decide_authority": true,
+      "interactive_order": [
+        "semantic_uia",
+        "visual_gui",
+        "bounded_physical_input",
+        "dc_explicit_recovery_support"
+      ],
+      "native_connector_preferred_for_external_service_when_safer": true,
+      "live_execution_authorized": false
+    },
+    "owner_experience": {
+      "mental_model": [
+        "START",
+        "UNDERSTAND",
+        "DECIDE",
+        "WORK",
+        "VERIFY"
+      ],
+      "primary_surfaces": [
+        "COMMAND_COMPOSER",
+        "ACTIVE_WORK",
+        "DECISION_STACK",
+        "PROJECT",
+        "WORK_RECEIPT"
+      ],
+      "infrastructure_detail_default_location": "SYSTEM_OR_EVIDENCE",
+      "progressive_disclosure_required": true,
+      "approval_fatigue_control_required": true,
+      "no_dead_surface": true
+    },
+    "cross_platform": {
+      "semantic_parity_required_for": [
+        "project_state",
+        "checkpoint",
+        "approval",
+        "artifact_version",
+        "truth_state",
+        "job_result"
+      ],
+      "layout_may_differ": true,
+      "android_is_authority_host": false,
+      "typed_commands_preferred_for_critical_actions": true
+    },
+    "invariant_policy_id": "al-murtakaz-agentic-os-invariants",
+    "context_capsule_contract": "murtakaz-context-capsule",
+    "change_envelope_contract": "murtakaz-change-envelope"
+  },
+  "model_control": {
+    "role_model_separation": true,
+    "owner_controlled_selection": true,
+    "silent_fallback_allowed": false,
+    "selection_precedence": [
+      "TASK_OVERRIDE",
+      "ROLE_OVERRIDE",
+      "PROJECT_DEFAULT",
+      "GLOBAL_DEFAULT"
+    ]
+  },
+  "authority": {
+    "execution_authority": false,
+    "stage8_opened": false,
+    "parent_mutation_allowed": false,
+    "owner_final_authority": true
+  },
+  "runtime": {
+    "task_state": "NO_LIVE_TASK",
+    "active_governance_roles": [],
+    "active_workshop_function": null,
+    "active_model": null,
+    "provider_call_in_flight": false
+  }
+}

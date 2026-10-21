@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "living-operations-p1-visual-production-hard-gate",
+  "status": "FAIL_CLOSED",
+  "canonical_scope": "P1_CANONICAL_UI_SCREENS",
+  "source_of_truth": "EIGHT_PINNED_CANONICAL_IMAGES",
+  "allowed_production_modes": [
+    "REFERENCE_EDIT",
+    "LAYER_RECONSTRUCTION",
+    "PIXEL_PRESERVING_REFINEMENT"
+  ],
+  "forbidden_production_modes": [
+    "TEXT_TO_IMAGE",
+    "TEXT_ONLY_RECONSTRUCTION",
+    "STYLE_TRANSFER",
+    "GENERATED_IMAGE_DERIVATIVE",
+    "MULTI_SCREEN_COMPOSITE",
+    "MOODBOARD_DERIVATION",
+    "FREEFORM_REDESIGN"
+  ],
+  "one_job_one_screen": true,
+  "preflight_registration_required": true,
+  "actual_reference_bytes_required": true,
+  "generated_image_parent_forbidden": true,
+  "rejected_generation_parent_forbidden": true,
+  "tool_must_accept_reference_bytes": true,
+  "reference_binding_receipt_required": true,
+  "inventory_gate_required": true,
+  "member_inventory_gate_required_when_present": true,
+  "fail_closed_when_tool_ineligible": true,
+  "current_invalidated_jobs": [
+    {
+      "job_id": "P1-HOME-ARTIFACT-001",
+      "reason": "Visual production path did not prove actual canonical reference bytes were bound to the rendering tool; result drifted and was rejected."
+    }
+  ],
+  "next_home_job_id": "P1-HOME-ARTIFACT-002",
+  "job_state_machine": {
+    "states": [
+      "PREFLIGHT_REGISTERED",
+      "RENDERED_REVIEW_REQUIRED",
+      "RETURNED_FOR_CHANGES",
+      "REJECTED_VISUAL_DRIFT",
+      "APPROVED_BY_AL_MURTAKAZ"
+    ],
+    "preflight_required_before_render": true,
+    "rendered_state_requires_preflight_ancestry": true
+  },
+  "reference_binding_receipt_phase": "PRE_RENDER",
+  "reference_binding_receipt_must_assert_render_not_started": true
+}

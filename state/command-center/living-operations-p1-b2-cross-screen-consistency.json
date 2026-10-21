@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "p1-b2-cross-screen-consistency-v1",
+  "change_id": "CC-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-2026-10-21",
+  "status": "B2_COMPLETE_APPROVED_B3_PENDING",
+  "canonical_reference_count": 8,
+  "current_slice": "B2.3_EIGHT_SCREEN_VISUAL_AUDIT_AND_B2_CLOSURE",
+  "slices": {
+    "B2.1_SHARED_VISUAL_TOKENS_AND_CHROME": {
+      "state": "APPROVED_TO_CONTINUE",
+      "scope": [
+        "inventory hard-coded shared visual values",
+        "introduce bounded shared visual tokens for native cross-screen chrome",
+        "harmonize shared typography, spacing, borders, radii, glyph sizing and semantic tints",
+        "preserve per-reference intentional differences"
+      ],
+      "gate": [
+        "BUILD",
+        "STATIC_VALIDATION",
+        "REFERENCE_UI_RENDER",
+        "MURTAKAZ_CHECK"
+      ],
+      "evidence": {
+        "head_sha": "37b838df92a2118e3b30fb617a7ac03a2bf8972e",
+        "company_stage0_run_id": 39592891867,
+        "reference_ui_run_id": 39592891739,
+        "codeql_run_id": 39592892692,
+        "reference_ui_artifact_id": 12341854446,
+        "artifact_digest": "sha256:c3eb807110264432fa1e315aef96d772e01923fb9fead6ec56ae9f1023e4bd60",
+        "visual_review": "PASS_NO_SHARED_CHROME_BREAKAGE"
+      }
+    },
+    "B2.2_RTL_KEYBOARD_ACCESSIBILITY_TRUTH_STATES": {
+      "state": "APPROVED_TO_CONTINUE",
+      "scope": [
+        "RTL and focus traversal consistency",
+        "keyboard affordance consistency",
+        "automation/accessibility labels",
+        "truthful enabled/disabled/navigation behavior on visible shared actions"
+      ],
+      "gate": [
+        "BUILD",
+        "STATIC_VALIDATION",
+        "REFERENCE_UI_RENDER",
+        "MURTAKAZ_CHECK"
+      ],
+      "evidence": {
+        "head_sha": "8fa47a8b7ffd7a7b79cded710500c4830aa59bbc",
+        "company_stage0_run_id": 39594694461,
+        "codeql_run_id": 39594694495,
+        "reference_ui_run_id": 39594694429,
+        "reference_ui_artifact_id": 12343191879,
+        "artifact_digest": "sha256:e43700c72b50eeaf126171f328ecea342c942b87c2d56419d06c33e04224b60f",
+        "canonical_screen_count": 8,
+        "evidence_modes": [
+          "reference",
+          "native",
+          "blend"
+        ],
+        "visual_review": "PASS_EIGHT_SCREEN_CROSS_SCREEN_AND_TRUTH_DISCLOSURE"
+      },
+      "review": "state/command-center/project-governance/approvals/2026-10-21-repair-b2-2-truth-a11y-check.json"
+    },
+    "B2.3_EIGHT_SCREEN_VISUAL_AUDIT_AND_B2_CLOSURE": {
+      "state": "APPROVED_B2_CLOSURE",
+      "scope": [
+        "side-by-side eight-screen audit",
+        "reference/native/blend evidence review",
+        "cross-screen residual findings",
+        "B2 post-review and bounded handoff to B3"
+      ],
+      "gate": [
+        "EXACT_HEAD_CI",
+        "VISUAL_EVIDENCE",
+        "MURTAKAZ_POST_REVIEW"
+      ],
+      "evidence": {
+        "head_sha": "8fa47a8b7ffd7a7b79cded710500c4830aa59bbc",
+        "company_stage0_run_id": 39594694461,
+        "codeql_run_id": 39594694495,
+        "reference_ui_run_id": 39594694429,
+        "reference_ui_artifact_id": 12343191879,
+        "artifact_digest": "sha256:e43700c72b50eeaf126171f328ecea342c942b87c2d56419d06c33e04224b60f",
+        "canonical_screen_count": 8,
+        "evidence_modes": [
+          "reference",
+          "native",
+          "blend"
+        ],
+        "visual_review": "PASS_EIGHT_SCREEN_CROSS_SCREEN_AND_TRUTH_DISCLOSURE"
+      },
+      "review": "state/command-center/living-operations-p1-b2-cross-screen-review.json"
+    }
+  },
+  "protected_truth": {
+    "p1_status": "IN_PROGRESS",
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "final_p1_approval": false,
+    "b3_opened": false
+  },
+  "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b2-cross-screen-consistency-post.json"
+}

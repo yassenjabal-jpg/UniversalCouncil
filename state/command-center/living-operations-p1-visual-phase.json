@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "phase_id": "living-operations-p1-visual-direction",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "scope": "VISUAL_INTERACTION_MOTION_ONLY",
+  "runtime_authority": false,
+  "stage8_opened": false,
+  "governance": {
+    "system": "al-murtakaz",
+    "mandatory_approval_policy": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
+    "final_approval_required": true,
+    "current_decision": "APPROVED_BY_AL_MURTAKAZ"
+  },
+  "required_flagship_surfaces": [
+    "home_owner_workspace",
+    "living_project_workspace",
+    "owner_decision_mode",
+    "fork_recovery",
+    "project_complete_work_receipt"
+  ],
+  "required_systems": [
+    "role_sigils",
+    "motion_language",
+    "interactive_semantic_objects",
+    "filmstrip",
+    "autopilot_visual_current",
+    "evidence_peek",
+    "tool_dock",
+    "reduced_motion"
+  ],
+  "android": {
+    "semantic_parity_required": true,
+    "desktop_layout_copy_forbidden": true
+  },
+  "exit_requires": "APPROVED_BY_AL_MURTAKAZ",
+  "material_change_reopens_review": true,
+  "current_repair_stage": "P1_COMPLETE_R10_CLOSED",
+  "b1_completion": {
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "final_p1_approval": false,
+    "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b1-native-completion-post.json"
+  },
+  "b2_completion": {
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "final_p1_approval": false,
+    "b3_opened": true,
+    "r10_opened": true,
+    "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b2-cross-screen-consistency-post.json"
+  },
+  "b3_review": {
+    "status": "APPROVED_BY_AL_MURTAKAZ_AFTER_EXIT_REMEDIATION",
+    "desktop_fidelity_accepted": true,
+    "motion_capture_accepted": true,
+    "android_semantic_adaptation_accepted": true,
+    "final_p1_approval": true,
+    "return_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-return.json",
+    "reduced_motion_capture_accepted": true,
+    "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-post.json",
+    "remediation_receipt": "state/command-center/project-governance/approvals/2026-10-21-p1-exit-remediation-motion-android-post.json"
+  },
+  "final_acceptance": "state/command-center/living-operations-p1-final-acceptance.json"
+}

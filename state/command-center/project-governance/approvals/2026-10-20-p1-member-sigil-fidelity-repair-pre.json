@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-P1-MEMBER-SIGIL-FIDELITY-REPAIR-PRE",
+  "change_id": "P1-MEMBER-SIGIL-FIDELITY-REPAIR-004",
+  "scope": "Reconcile the governing Role Sigil/member identity contract and Home fidelity blueprint with the eight canonical references, explicitly preserving member medallions, functional identity, interactive semantics, reasoning/state layers, routing paths and per-screen role sets. Register the most recent generated composite as rejected visual drift. No new visual artifact approval, no P1 completion, no Stage 8 or execution authority change.",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "review_mode": "ROLE_BASED_ASSISTANT_REVIEW_NOT_PRODUCT_RUNTIME_COUNCIL",
+  "review_agent": "/root/murtakaz_review",
+  "governance_reviewers": [
+    "cc_owner_experience",
+    "cc_product_truth",
+    "cc_red_team"
+  ],
+  "workshop_reviewers": [
+    "cc_visual_systems",
+    "cc_interaction_director",
+    "cc_design_systems_engineer"
+  ],
+  "artifact_refs": [
+    "docs/operations/command-center/living-operations/09_ROLE_SIGIL_SYSTEM.md",
+    "docs/operations/command-center/living-operations/20_HOME_OWNER_WORKSPACE_FIDELITY_BLUEPRINT.md",
+    "docs/operations/command-center/living-operations/21_MEMBER_SIGIL_REFERENCE_GAP_AUDIT.md",
+    "state/command-center/living-operations-reference-manifest.json"
+  ],
+  "evidence_refs": [
+    "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+    "docs/operations/command-center/living-operations/references/02-living_project_workspace.png",
+    "docs/operations/command-center/living-operations/references/05-owner_decision_mode.png",
+    "docs/operations/command-center/living-operations/03_INTERACTION_CHOREOGRAPHY.md",
+    "docs/operations/command-center/living-operations/02_MOTION_BIBLE.md"
+  ],
+  "approved_revision": "a5d4a0daaaef71ce17fab6a03ab3187fd5ea0b1a + bounded member/sigil fidelity correction",
+  "timestamp": "2026-10-20T00:05:00+03:00",
+  "reopen_triggers": [
+    "Any change to canonical reference role glyphs/medallions",
+    "Any new member identity not supported by canonical references or explicit reviewed product semantics",
+    "Any attempt to reuse rejected generation 79110079-3684-437e-9c29-825ac3f6cb4d"
+  ],
+  "final_adoption_granted": false,
+  "rendered_artifact_approved": false,
+  "p1_visual_phase_complete": false,
+  "stage8_opened": false,
+  "execution_authority_changed": false
+}

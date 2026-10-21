@@ -16,6 +16,33 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\01-home_owner_workspace.png">
+      <Link>Assets\VisualReferences\01-home_owner_workspace.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\02-living_project_workspace.png">
+      <Link>Assets\VisualReferences\02-living_project_workspace.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\03-software_autopilot_project.png">
+      <Link>Assets\VisualReferences\03-software_autopilot_project.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\04-studio_project.png">
+      <Link>Assets\VisualReferences\04-studio_project.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\05-owner_decision_mode.png">
+      <Link>Assets\VisualReferences\05-owner_decision_mode.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\06-checkpoint_recovery_fork.png">
+      <Link>Assets\VisualReferences\06-checkpoint_recovery_fork.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\07-pulse_visual_project_story.png">
+      <Link>Assets\VisualReferences\07-pulse_visual_project_story.png</Link>
+    </Resource>
+    <Resource Include="..\..\docs\operations\command-center\living-operations\references\08-project_complete_work_receipt.png">
+      <Link>Assets\VisualReferences\08-project_complete_work_receipt.png</Link>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="..\..\state\command-center\command-center-state.json"
              Link="state\command-center-state.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -28,6 +55,26 @@
     </Content>
     <Content Include="..\..\state\command-center\execution-fabric.json"
              Link="state\execution-fabric.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\state\command-center\project-context-map.json"
+             Link="state\project-context-map.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\state\command-center\gateway-routing-policy.json"
+             Link="state\gateway-routing-policy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\state\command-center\capability-registry.json"
+             Link="state\capability-registry.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\state\command-center\model-broker-policy.json"
+             Link="state\model-broker-policy.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

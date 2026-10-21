@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CTX-CC-REPAIR-A2-GOVERNANCE-METADATA-2026-10-21",
+  "immutable": true,
+  "project_id": "universal-council-command-center",
+  "job_or_change_id": "CC-REPAIR-A2-GOVERNANCE-METADATA-2026-10-21",
+  "created_at": "2026-10-21",
+  "source_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "f55d6f924d0e29a27eebead09e342e899615b38f"
+  },
+  "checkpoint_lock_id": "MRTKZ-REPAIR-A1-CONTEXT-BASELINE-POST-2026-10-21",
+  "canonical_sources": [
+    {
+      "id": "architecture-invariants",
+      "locator": "state/command-center/project-governance/architecture-invariants.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "agentic-os-latest-review",
+      "locator": "state/command-center/project-governance/agentic-os-latest-review.json",
+      "authority_class": "ACCEPTED_EVIDENCE"
+    },
+    {
+      "id": "agentic-os-policy",
+      "locator": "state/command-center/project-governance/agentic-os-policy.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "roadmap",
+      "locator": "docs/operations/command-center/COMMAND_CENTER_ROADMAP_2026-10-19.md",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "project-context-map",
+      "locator": "state/command-center/project-context-map.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    }
+  ],
+  "allowed_scope": "SEE_CHANGE_ENVELOPE_CC-REPAIR-A2-GOVERNANCE-METADATA-2026-10-21",
+  "forbidden_scope": [
+    "runtime mutation",
+    "visual implementation",
+    "repository cleanup",
+    "Skill Registry",
+    "live execution",
+    "Stage 8"
+  ],
+  "authority_policy_version": "al-murtakaz-mandatory-approval:1.0",
+  "risk_class": "MATERIAL_GOVERNANCE_METADATA_RECONCILIATION",
+  "expected_outputs": [
+    "reconciled invariant metadata",
+    "current Agentic OS review record",
+    "normalized Agentic OS post-review receipt",
+    "updated roadmap",
+    "metadata validator/tests",
+    "CI evidence",
+    "Murtakaz post-review"
+  ]
+}

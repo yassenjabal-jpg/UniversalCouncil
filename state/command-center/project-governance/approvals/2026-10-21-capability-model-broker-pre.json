@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-CAPABILITY-MODEL-BROKER-PRE-2026-10-21",
+  "change_id": "CC-CAPABILITY-MODEL-BROKER-2026-10-21",
+  "status": "APPROVE_TO_IMPLEMENT",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "requested_by": "OWNER_DIRECTIVE_ROADMAP_CONTINUATION",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "ea35e6d24931e5981d164fed89b0d494f80c2b44"
+  },
+  "scope": [
+    "implement read-only per-operation Capability Registry",
+    "implement Model Broker selection logic without provider invocation",
+    "enforce Task -> Role -> Project -> Global preference precedence",
+    "enforce explicit fallback modes and allowlists; silent fallback remains forbidden",
+    "extend typed Gateway request with owner-controlled model preferences",
+    "integrate Model Broker into Routing Coordinator model stage",
+    "record stale/blocked/unavailable capability truth without provider-level green status",
+    "wire Capability Registry and Model Broker through Host composition",
+    "add production capability/model policy projections with provider calls disconnected",
+    "add C# behavior validation, static validators and exact-head CI"
+  ],
+  "explicitly_out_of_scope": [
+    "actual model provider API calls",
+    "automatic provider authentication",
+    "secret/token storage",
+    "live model invocation",
+    "Capability Registry active probes",
+    "Skill Registry",
+    "Job Engine",
+    "Execution Fabric dispatch",
+    "live execution",
+    "WPF model settings UI",
+    "Android model settings UI",
+    "Stage 8"
+  ],
+  "risk_class": "MATERIAL_AI_RUNTIME_SELECTION_FOUNDATION",
+  "required_reviewers": [
+    "cc_ai_runtime",
+    "cc_architecture_execution",
+    "cc_product_truth",
+    "cc_security_remote_trust",
+    "cc_owner_experience",
+    "cc_red_team"
+  ],
+  "required_workshop_reviewers": [
+    "cc_studio_producer",
+    "cc_experience_architect"
+  ],
+  "architecture_boundaries": [
+    "Capability Registry reports operation-specific truth only",
+    "Model Broker selects but never invokes",
+    "Model selection cannot expand authority",
+    "Routing Coordinator consumes broker result but does not call providers",
+    "Infrastructure reads policy/catalog JSON only",
+    "Host composes services",
+    "front doors do not own model-routing policy"
+  ],
+  "implementation_authorized": true,
+  "final_adoption_granted": false,
+  "merge_authorized": false,
+  "provider_calls_authorized": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "timestamp": "2026-10-21"
+}

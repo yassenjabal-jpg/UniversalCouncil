@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "living-operations-p1-home-fidelity",
+  "screen_id": "home_owner_workspace",
+  "status": "NATIVE_REFERENCE_SHELL_B1_COMPLETION_APPROVED_R9_READY",
+  "canonical_parent": {
+    "role": "home_owner_workspace",
+    "path": "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+    "sha256": "7cb7d12f8819576ad4992158f6f0eb098ae3350a3684118ffc43192ea56749eb"
+  },
+  "source_of_truth": "CANONICAL_REFERENCE_IMAGE",
+  "blueprint": "docs/operations/command-center/living-operations/20_HOME_OWNER_WORKSPACE_FIDELITY_BLUEPRINT.md",
+  "visual_job_id": "P1-HOME-ARTIFACT-002",
+  "allowed_delta": "Implementation cleanup only; preserve canonical Home identity, five-zone composition, full eight-member Council Pulse identity/interaction system, composer hierarchy, Council Pulse routing paths, three Active Work cards with participant medallions, lower three-panel summary, right navigation rail and bottom tool dock.",
+  "required_proof": [
+    "REFERENCE_ATTACHED_TO_VISUAL_TOOL",
+    "PARENT_SHA256_VERIFIED",
+    "OUTPUT_SHA256_RECORDED",
+    "SIDE_BY_SIDE_COMPARISON",
+    "GOVERNANCE_REVIEW",
+    "WORKSHOP_REVIEW"
+  ],
+  "screen_final_approval": false,
+  "murtakaz_decision": "B1_NATIVE_COMPLETION_APPROVED",
+  "p1_complete": false,
+  "stage8_opened": false,
+  "runtime_authority": false,
+  "member_identity_requirements": {
+    "exact_home_sequence": [
+      "المالك",
+      "الاستراتيجية",
+      "البحث",
+      "التحقق",
+      "التنفيذ",
+      "الإبداع",
+      "البيانات",
+      "التعلم"
+    ],
+    "required_layers": [
+      "glyph",
+      "identity_tint",
+      "role_label",
+      "functional_subtitle",
+      "state_ring_or_badge",
+      "reasoning_rings_when_supported",
+      "routing_path",
+      "interactive_destination"
+    ],
+    "generic_icon_substitution_forbidden": true,
+    "unsupported_member_invention_forbidden": true
+  },
+  "rejected_generation_id": "79110079-3684-437e-9c29-825ac3f6cb4d",
+  "invalidated_visual_job_ids": [
+    {
+      "job_id": "P1-HOME-ARTIFACT-001",
+      "reason": "Reference binding to the actual rendering tool was not proven; output was rejected visual drift."
+    }
+  ],
+  "production_protocol": "state/command-center/living-operations-visual-production-protocol.json",
+  "allowed_production_modes": [
+    "REFERENCE_EDIT",
+    "LAYER_RECONSTRUCTION",
+    "PIXEL_PRESERVING_REFINEMENT"
+  ],
+  "forbidden_production_modes": [
+    "TEXT_TO_IMAGE",
+    "TEXT_ONLY_RECONSTRUCTION",
+    "STYLE_TRANSFER",
+    "GENERATED_IMAGE_DERIVATIVE",
+    "MULTI_SCREEN_COMPOSITE",
+    "FREEFORM_REDESIGN"
+  ],
+  "next_job_preconditions": [
+    "PRE_REGISTER_JOB_IN_MANIFEST",
+    "BIND_CANONICAL_HOME_REFERENCE_BYTES_TO_TOOL",
+    "VERIFY_PARENT_SHA256",
+    "LOAD_HOME_OBJECT_INVENTORY",
+    "VERIFY_MEMBER_SIGIL_INVENTORY",
+    "SINGLE_SCREEN_ONLY",
+    "CREATE_REFERENCE_BINDING_RECEIPT_BEFORE_RENDER",
+    "LOAD_HOME_GEOMETRY_LOCK",
+    "LOCK_COUNCIL_PULSE_TO_HORIZONTAL_STRIP",
+    "LOCK_OWNER_HERO_AND_COMMAND_COMPOSER_AS_PRIMARY",
+    "LOCK_PRODUCT_IDENTITY",
+    "STRUCTURAL_REVIEW_BEFORE_AESTHETIC_REVIEW"
+  ],
+  "geometry_lock": "state/command-center/living-operations-home-geometry-lock.json",
+  "fifth_generation_review": "docs/operations/command-center/living-operations/25_FIFTH_GENERATION_MURTAKAZ_STUDIO_REVIEW.md",
+  "rejected_generation_ids": [
+    "1d4d3194-a0ec-4f1e-8fc3-1db2b125d1af"
+  ],
+  "native_wpf_evidence": {
+    "head_sha": "69dc13fa94928be292237f082e77e656f792222b",
+    "reference_ui_run_id": 39583770008,
+    "artifact_id": 12338007893,
+    "reference_sha256": "6b0266bfc1796ea768a1b851b673bfbf34799483a3a61992f296bf54624155be",
+    "native_sha256": "35651f18563efb7c42e03ea5ebfa6b3558cc29de546b1301599e5d06d34e81f1",
+    "blend_sha256": "b60a42d7d80f28e4b2247031c08f551937d73f079f0303ca13aeb94176f6065f",
+    "native_only_reference_pixels_hidden": true,
+    "b1_post_review": "APPROVED_BY_AL_MURTAKAZ",
+    "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b1-native-completion-post.json"
+  }
+}

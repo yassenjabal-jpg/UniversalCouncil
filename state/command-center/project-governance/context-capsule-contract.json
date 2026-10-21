@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.1",
+  "contract_id": "murtakaz-context-capsule",
+  "status": "ACTIVE_RUNTIME_IMPLEMENTED",
+  "immutable_per_job": true,
+  "required_fields": [
+    "capsule_id",
+    "project_id",
+    "job_or_change_id",
+    "created_at",
+    "baseline_revision",
+    "source_revision",
+    "checkpoint_lock_id",
+    "owner_directive_ids",
+    "canonical_sources",
+    "domain_precedence",
+    "allowed_scope",
+    "forbidden_scope",
+    "required_skill_version",
+    "authority_policy_version",
+    "risk_class",
+    "expected_outputs",
+    "acceptance_tests",
+    "freshness_rules",
+    "visual_binding_when_applicable"
+  ],
+  "source_item_fields": [
+    "id",
+    "type",
+    "locator",
+    "hash_or_version",
+    "authority_class",
+    "freshness",
+    "scope"
+  ],
+  "authority_classes": [
+    "OWNER_DIRECTIVE_TYPED",
+    "LOCKED_POLICY",
+    "CANONICAL_ARTIFACT",
+    "ACCEPTED_EVIDENCE",
+    "WORKING_DATA",
+    "UNTRUSTED_EXTERNAL_DATA"
+  ],
+  "conflict_result": "CONTEXT_CONFLICT",
+  "stale_result": "STALE_CONTEXT",
+  "mutation_behavior": "CAPSULE_NEVER_MUTATES_IN_PLACE",
+  "change_behavior": "NEW_CANONICAL_TRUTH_REQUIRES_NEW_CAPSULE_AND_REPLAN",
+  "domain_precedence": {
+    "default": [
+      "TYPED_OWNER_DIRECTIVE",
+      "LOCKED_PROJECT_LOCAL_POLICY",
+      "CANONICAL_ARTIFACT",
+      "ACCEPTED_EVIDENCE",
+      "WORKING_DATA",
+      "CONVERSATION_CONTINUATION_CONTEXT",
+      "UNTRUSTED_EXTERNAL_DATA"
+    ],
+    "visual": [
+      "EIGHT_PINNED_CANONICAL_REFERENCE_IMAGES",
+      "TYPED_OWNER_VISUAL_DIRECTIVE",
+      "LIVING_INTERACTION_AND_MOTION_CONTRACTS",
+      "COMPONENT_AND_DESIGN_TOKEN_DOCS",
+      "GENERATED_EXPLORATION"
+    ]
+  },
+  "visual_binding": {
+    "inherit_existing_manifest": true,
+    "manifest": "state/command-center/living-operations-reference-manifest.json",
+    "protocol": "state/command-center/living-operations-visual-production-protocol.json",
+    "new_generic_visual_rules_may_not_weaken_existing_protocol": true
+  },
+  "revision_semantics": {
+    "baseline_revision": "IMMUTABLE_GIT_PROVENANCE_SHA40; MUST BE AN ANCESTOR OF THE VALIDATED CHECKOUT HEAD",
+    "source_revision": "SHA256_OF_SORTED_CANONICAL_SOURCE_ID_PATH_BLOB_TUPLES; REPRESENTS THE EXACT SOURCE SET USED BY THE CONTEXT MAP",
+    "head_validation": "VALIDATOR MUST VERIFY EVERY DECLARED SOURCE BLOB AGAINST THE ACTUAL CHECKOUT HEAD",
+    "self_reference_rule": "CONTEXT MAP DOES NOT CLAIM ITS OWN COMMIT AS SOURCE REVISION; CURRENTNESS IS PROVEN BY SOURCE BLOBS + SOURCE-SET DIGEST"
+  },
+  "a1_repair_approval": "state/command-center/project-governance/approvals/2026-10-21-repair-a1-context-baseline-post.json"
+}

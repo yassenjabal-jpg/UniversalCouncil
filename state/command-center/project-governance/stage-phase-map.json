@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "map_id": "command-center-stage-phase-map",
+  "status": "CANONICAL",
+  "historical_roadmap": {
+    "generation": "G1",
+    "unit": "PHASE",
+    "phases": [
+      {"id":"PHASE_0","name":"Feasibility & Adversarial Prototype"},
+      {"id":"PHASE_1","name":"Command Center Shell & Architecture Boundary"},
+      {"id":"PHASE_2","name":"Operational State, Evidence & Owner Desk"},
+      {"id":"PHASE_3","name":"Council & Studio Orchestration"},
+      {"id":"PHASE_4","name":"YASSIN Execution Service & Provider Fabric"},
+      {"id":"PHASE_5","name":"Remote Owner & ChatGPT Adapter"},
+      {"id":"PHASE_6","name":"Capability Hub & Third-Party Ecosystem"},
+      {"id":"PHASE_7","name":"Reliability, Release & Commercial Readiness"}
+    ]
+  },
+  "delivery": {
+    "unit": "STAGE",
+    "authoritative_current_stage": "STAGE_7",
+    "stages": [
+      {"id":"STAGE_1","name":"Shell Foundation","status":"HISTORICAL_LOCKED"},
+      {"id":"STAGE_2","name":"Operational State","status":"HISTORICAL_LOCKED"},
+      {"id":"STAGE_3","name":"Orchestration","status":"HISTORICAL_LOCKED"},
+      {"id":"STAGE_4","name":"Execution Fabric","status":"HISTORICAL_LOCKED"},
+      {"id":"STAGE_5","name":"Remote Owner Gateway","status":"HISTORICAL_LOCKED"},
+      {"id":"STAGE_6","name":"Authenticated Loopback Transport","status":"HISTORICAL_LOCKED"},
+      {"id":"STAGE_7","name":"Owner Device Enrollment + Private Tailnet","status":"OPEN_REAL_HOST_EVIDENCE_PENDING"},
+      {"id":"STAGE_8","name":"UNDEFINED","status":"NOT_OPENED"}
+    ]
+  },
+  "rules": {
+    "phase_number_is_not_stage_number": true,
+    "new_ui_must_name_taxonomy": true,
+    "new_stage_requires_owner_authorized_contract": true,
+    "stage8_opened": false
+  }
+}

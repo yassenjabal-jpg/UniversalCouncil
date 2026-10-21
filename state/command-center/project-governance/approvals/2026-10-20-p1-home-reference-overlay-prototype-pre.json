@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-P1-HOME-REFERENCE-OVERLAY-PROTOTYPE-PRE",
+  "change_id": "P1-HOME-REFERENCE-OVERLAY-PROTOTYPE-007",
+  "scope": "Create a non-authoritative interaction harness that renders the exact canonical Home reference image unchanged and overlays transparent semantic hotspots/drawers for Council members, reasoning, composer routing, project cards and persistent regions. The harness is for interaction/UX validation only and cannot satisfy visual artifact approval.",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "review_mode": "ROLE_BASED_ASSISTANT_REVIEW_NOT_PRODUCT_RUNTIME_COUNCIL",
+  "review_agent": "/root/murtakaz_review",
+  "governance_reviewers": [
+    "cc_owner_experience",
+    "cc_product_truth"
+  ],
+  "workshop_reviewers": [
+    "cc_interaction_director",
+    "cc_visual_qa"
+  ],
+  "artifact_refs": [
+    "docs/operations/command-center/living-operations/24_REFERENCE_OVERLAY_PROTOTYPE_WORKFLOW.md",
+    "docs/operations/command-center/living-operations/prototypes/home-reference-overlay/index.html",
+    "docs/operations/command-center/living-operations/prototypes/home-reference-overlay/styles.css",
+    "docs/operations/command-center/living-operations/prototypes/home-reference-overlay/app.js",
+    "docs/operations/command-center/living-operations/prototypes/home-reference-overlay/README.md",
+    "state/command-center/living-operations-p1-home-interaction-overlay.json",
+    "company/tests/test_home_reference_overlay.py"
+  ],
+  "evidence_refs": [
+    "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+    "docs/operations/command-center/living-operations/09_ROLE_SIGIL_SYSTEM.md",
+    "docs/operations/command-center/living-operations/22_CANONICAL_SCREEN_OBJECT_INVENTORY.md",
+    "docs/operations/command-center/living-operations/23_VISUAL_PRODUCTION_HARD_GATE.md"
+  ],
+  "approved_revision": "current PR #53 + bounded interaction-overlay harness",
+  "timestamp": "2026-10-20T00:40:00+03:00",
+  "reopen_triggers": [
+    "Any attempt to replace the canonical image with generated pixels",
+    "Any claim that the overlay prototype is a visually approved artifact",
+    "Any omission of the eight Home Council member identities"
+  ],
+  "final_adoption_granted": false,
+  "rendered_artifact_approved": false,
+  "p1_visual_phase_complete": false,
+  "stage8_opened": false,
+  "execution_authority_changed": false
+}

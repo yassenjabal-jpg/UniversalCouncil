@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-POST-2026-10-21",
+  "change_id": "CC-REPAIR-B2-CROSS-SCREEN-CONSISTENCY-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "scoped_verdict": "APPROVE_B2_CROSS_SCREEN_CONSISTENCY_ONLY",
+  "material_visual_review": {
+    "head_sha": "8fa47a8b7ffd7a7b79cded710500c4830aa59bbc",
+    "company_stage0_run_id": 39594694461,
+    "codeql_run_id": 39594694495,
+    "reference_ui_run_id": 39594694429,
+    "reference_ui_artifact_id": 12343191879,
+    "artifact_digest": "sha256:e43700c72b50eeaf126171f328ecea342c942b87c2d56419d06c33e04224b60f",
+    "canonical_screen_count": 8,
+    "evidence_modes": [
+      "reference",
+      "native",
+      "blend"
+    ],
+    "visual_review": "PASS_EIGHT_SCREEN_CROSS_SCREEN_AND_TRUTH_DISCLOSURE"
+  },
+  "b2_2_review": "state/command-center/project-governance/approvals/2026-10-21-repair-b2-2-truth-a11y-check.json",
+  "b2_3_audit": "state/command-center/living-operations-p1-b2-cross-screen-review.json",
+  "reviewer_decisions": {
+    "cc_experience_architect": "PASS_B2_ONLY",
+    "cc_studio_producer": "PASS_B2_ONLY",
+    "cc_visual_fidelity": "PASS_B2_REFERENCE_PARITY_WITH_TRUTH_DELTA",
+    "cc_accessibility_clearance": "PASS_B2",
+    "cc_product_truth": "PASS_B2_REFERENCE_FIXTURE_IS_NON_AUTHORITATIVE",
+    "cc_red_team": "PASS_B2_NO_SCOPE_OR_AUTHORITY_EXPANSION"
+  },
+  "findings": [
+    "B2.1 shared visual token/chrome harmonization passed.",
+    "B2.2 RTL, keyboard, accessibility and truthful-state consistency passed.",
+    "B2.3 audited all eight canonical screens in reference/native/blend evidence.",
+    "B2 approval is scoped only to cross-screen consistency and polish.",
+    "B3/R10 is not opened and P1 remains IN_PROGRESS."
+  ],
+  "adoption_authorized": true,
+  "merge_authorized": true,
+  "merge_condition": "EXACT_HEAD_CI_SUCCESS_AFTER_POST_REVIEW",
+  "b3_ready": true,
+  "b3_opened": false,
+  "r10_opened": false,
+  "final_p1_approval_granted": false,
+  "p1_complete": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "next_active_work": "REPAIR_WAVE_B3_FINAL_REVIEW_P1_ACCEPTANCE_PENDING",
+  "timestamp": "2026-10-21"
+}

@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "p1-exit-remediation-motion-android-v1",
+  "change_id": "CC-P1-EXIT-REMEDIATION-MOTION-ANDROID-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ_P1_EXIT_REMEDIATION_COMPLETE",
+  "base_sha": "f10ce1b44eabeb40167efadbadc11fa49f27a293",
+  "slices": {
+    "R10R1_DESKTOP_MOTION_EVIDENCE": {
+      "state": "APPROVED_BY_AL_MURTAKAZ",
+      "requirements": [
+        "20-40 second critical-path capture",
+        "actual WPF prototype interactions and state surfaces",
+        "separate Reduced Motion capture",
+        "manifest with duration, frame/video hashes, scenario steps and reduced-motion flag"
+      ],
+      "evidence": {
+        "head_sha": "2736c4e9484e4b60c842ca69274fb93ddb16f739",
+        "run_id": 39611656911,
+        "artifact_id": 12350871568,
+        "full_duration_seconds": 28,
+        "reduced_duration_seconds": 20
+      }
+    },
+    "R10R2_ANDROID_SEMANTIC_COMPANION_EVIDENCE": {
+      "state": "APPROVED_BY_AL_MURTAKAZ",
+      "requirements": [
+        "notification/deep-link semantic entry",
+        "Decision card with dissent and Evidence inspection",
+        "media/artifact preview feedback path",
+        "compact Autopilot state with bounded owner actions",
+        "platform-appropriate touch interaction",
+        "interaction capture and evidence manifest",
+        "no unrestricted host command or live authority"
+      ],
+      "evidence": {
+        "head_sha": "2736c4e9484e4b60c842ca69274fb93ddb16f739",
+        "run_id": 39611656911,
+        "artifact_id": 12351625241,
+        "duration_seconds": 19.36,
+        "prototype_fixture": true,
+        "runtime_authority": false
+      }
+    },
+    "R10R3_FINAL_R10_REVIEW_AND_P1_ACCEPTANCE": {
+      "state": "CLOSED_APPROVED_BY_AL_MURTAKAZ",
+      "prerequisite": "R10R1_AND_R10R2_VERIFIED",
+      "final_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-post.json"
+    }
+  },
+  "protected_truth": {
+    "p1_status": "APPROVED_BY_AL_MURTAKAZ",
+    "stage8_opened": false,
+    "runtime_authority": false
+  },
+  "timestamp": "2026-10-21",
+  "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-p1-exit-remediation-motion-android-post.json",
+  "final_p1_approval": true
+}

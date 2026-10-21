@@ -4,7 +4,7 @@
   "source_files": [
     {
       "path": "state/command-center/owner-device-tailnet-policy.json",
-      "blob_sha": "0a8d160ee9a6f5c8b9c8b1ad4f823df0cfedef28"
+      "blob_sha": "f5ffbba30b20b5cae0d6270e8742505fe804b762"
     },
     {
       "path": "state/command-center/remote-transport.json",
@@ -47,14 +47,14 @@
   },
   "host_evidence": {
     "yassin_remote_agent_seen_online": true,
-    "remote_command_channel_state": "PAIRED_ONLINE_BUT_TOOL_QUOTA_BLOCKED",
+    "remote_command_channel_state": "DEVICE_OFFLINE_AND_TOOL_QUOTA_BLOCKED",
     "tailscale_status_observed": false,
     "remote_transport_deployed_to_yassin": false,
     "remote_transport_running_on_yassin": false,
     "serve_running_on_yassin": false
   },
   "gates": {
-    "stage7_ci_foundation_passed": false,
+    "stage7_ci_foundation_passed": true,
     "yassin_host_probe_passed": false,
     "owner_device_enrollment_passed": false,
     "tailscale_private_serve_passed": false,

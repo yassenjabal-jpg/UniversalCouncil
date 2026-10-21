@@ -25,12 +25,14 @@ Required end-state evidence:
 
 ## Current external blocker
 
-At Stage 7 opening, YASSIN was observed in the authorized Remote Desktop Commander device list as:
-- device: `YASSIN`;
-- state: `Online`;
-- agent version: `0.3.0`.
+Historical opening evidence recorded YASSIN as Online with agent version `0.3.0`.
 
-A subsequent host command was rejected by the Remote Desktop Commander service because the monthly tool usage allowance is exhausted.
+Current access observation on 2026-10-21:
+- target device: `YASSIN`;
+- current state: `Offline`;
+- Remote Desktop Commander monthly calls remaining: `0%`.
+
+Therefore both device availability and remote-tool quota currently block real-host execution.
 
 The service explicitly instructed:
 - do not retry the side-effecting tool;

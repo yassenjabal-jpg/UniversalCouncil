@@ -6,6 +6,7 @@ import subprocess
 import tempfile
 import time
 from dataclasses import dataclass, field
+from datetime import datetime
 from enum import StrEnum
 from pathlib import Path
 from typing import Any, Protocol
@@ -441,6 +442,7 @@ def enforce_tool_authority(
     registry: dict[str, Any],
     *,
     principal: str | None = None,
+    as_of: datetime | None = None,
 ) -> dict[str, Any]:
     try:
         record = get_capability(registry, planned.authority_operation)
@@ -451,7 +453,7 @@ def enforce_tool_authority(
     if record["approval_policy"] == "BLOCKED":
         raise HybridExecutionError(f"authority is blocked: {planned.authority_operation}")
 
-    currentness = capability_currentness(record)
+    currentness = capability_currentness(record, as_of=as_of)
     if not currentness["current"]:
         raise HybridExecutionError(
             f"authority evidence is not current: {planned.authority_operation} ({currentness['reason']})"

@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-APR-2026-10-19-003",
+  "change_id": "VISUAL-REFERENCE-LOCK-001",
+  "scope": "LOCK_EIGHT_APPROVED_REFERENCE_IMAGES_AS_THE_ONLY_VISUAL_SOURCE_OF_TRUTH",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "governance_reviewers": [
+    "cc_project_chair",
+    "cc_product_truth",
+    "cc_owner_experience",
+    "cc_red_team"
+  ],
+  "workshop_reviewers": [
+    "cc_studio_producer",
+    "cc_experience_architect",
+    "cc_visual_systems",
+    "cc_interaction_director",
+    "cc_motion_systems"
+  ],
+  "final_adoption_granted": false,
+  "stage8_opened": false,
+  "execution_authority_changed": false,
+  "timestamp": "2026-10-19"
+}

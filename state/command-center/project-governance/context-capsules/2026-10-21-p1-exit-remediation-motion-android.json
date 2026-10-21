@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CC-CAPSULE-P1-EXIT-REMEDIATION-2026-10-21",
+  "job_or_change_id": "CC-P1-EXIT-REMEDIATION-MOTION-ANDROID-2026-10-21",
+  "immutable": true,
+  "canonical_branch": "command-center/project-local-council-studio-20261019",
+  "canonical_base_sha": "f10ce1b44eabeb40167efadbadc11fa49f27a293",
+  "governing_sources": [
+    "docs/operations/command-center/living-operations/02_MOTION_BIBLE.md",
+    "docs/operations/command-center/living-operations/06_ANDROID_OWNER_SCREEN_MAP.md",
+    "docs/operations/command-center/living-operations/10_STATE_MOTION_MATRIX.md",
+    "docs/operations/command-center/living-operations/14_P1_VERTICAL_SLICE_SPEC.md",
+    "docs/operations/command-center/living-operations/16_P1_INTERACTION_MOTION_STORYBOARD.md",
+    "docs/operations/command-center/living-operations/17_P1_SCREEN_REVIEW_MATRIX.md",
+    "state/command-center/living-operations-p1-b3-final-review-result.json",
+    "state/command-center/project-governance/approvals/2026-10-21-repair-b3-final-p1-acceptance-return.json",
+    "state/command-center/project-governance/approvals/2026-10-21-repair-b3-return-state-adoption.json"
+  ],
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "final_p1_approval": false
+  },
+  "timestamp": "2026-10-21"
+}

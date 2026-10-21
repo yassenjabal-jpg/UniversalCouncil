@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CTX-CC-CONTEXT-RESOLVER-COMPILER-2026-10-21",
+  "capsule_type": "BOOTSTRAP_CONTEXT_CAPSULE",
+  "immutable": true,
+  "project_id": "universal-council-command-center",
+  "job_or_change_id": "CC-CONTEXT-RESOLVER-COMPILER-2026-10-21",
+  "created_at": "2026-10-21",
+  "source_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "379820e27e70609c724740e2e138baa8b8a92c7d"
+  },
+  "checkpoint_lock_id": "MRTKZ-UX-IMPACT-STATE-CONTRACT-POST-2026-10-21",
+  "canonical_sources": [
+    {
+      "id": "agentic-os-policy",
+      "locator": "state/command-center/project-governance/agentic-os-policy.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "context-capsule-contract",
+      "locator": "state/command-center/project-governance/context-capsule-contract.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "ux-state-contract",
+      "locator": "state/command-center/living-operations-ux-state-contract.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "mandatory-approval",
+      "locator": "state/command-center/project-governance/al-murtakaz-approval-policy.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "stage-phase-map",
+      "locator": "state/command-center/project-governance/stage-phase-map.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "reference-manifest",
+      "locator": "state/command-center/living-operations-reference-manifest.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    }
+  ],
+  "allowed_scope": "SEE_CHANGE_ENVELOPE_CC-CONTEXT-RESOLVER-COMPILER-2026-10-21",
+  "forbidden_scope": [
+    "UI mutation",
+    "live execution",
+    "provider calls",
+    "job engine",
+    "automation",
+    "Stage 8",
+    "visual mutation"
+  ],
+  "authority_policy_version": "al-murtakaz-mandatory-approval:1.0",
+  "risk_class": "MATERIAL_APPLICATION_ARCHITECTURE_READ_ONLY",
+  "expected_outputs": [
+    "Core context contracts",
+    "Application resolver/compiler",
+    "Infrastructure reader",
+    "Host wiring",
+    "project context map",
+    "behavior validation",
+    "CI evidence",
+    "Murtakaz post-review"
+  ],
+  "acceptance_tests": [
+    "command_center_context_pipeline_validate.py",
+    "UniversalCouncil.CommandCenter.ContextValidation",
+    "command_center_murtakaz_validate.py",
+    "Company Stage 0",
+    "CodeQL",
+    "Reference UI"
+  ],
+  "freshness_rules": {
+    "baseline_must_match_pre_approval": true,
+    "material_baseline_move_result": "STALE_CONTEXT",
+    "conflicting_canonical_truth_result": "CONTEXT_CONFLICT"
+  }
+}

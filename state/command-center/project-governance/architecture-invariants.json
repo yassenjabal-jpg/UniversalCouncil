@@ -1,0 +1,330 @@
+{
+  "schema_version": "2.0",
+  "policy_id": "al-murtakaz-agentic-os-invariants",
+  "status": "ACTIVE",
+  "applicability_rule": "AN_INVARIANT_BLOCKS_ONLY_WHEN_ITS_APPLICABILITY_MATCHES_THE_CHANGE_OR_CAPABILITY",
+  "invariants": [
+    {
+      "id": "AO-001",
+      "rule": "project_local_murtakaz_terminology_governs_current_product",
+      "severity": "BLOCKING",
+      "applies_from": "NOW",
+      "change_classes": [
+        "governance",
+        "architecture",
+        "ux"
+      ],
+      "enforcement": "STATIC",
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_agentic_os_validate"
+    },
+    {
+      "id": "AO-002",
+      "rule": "material_change_requires_murtakaz_pre_and_post_review",
+      "severity": "BLOCKING",
+      "applies_from": "NOW",
+      "change_classes": [
+        "material_change"
+      ],
+      "enforcement": "STATIC_AND_PROCESS",
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_agentic_os_validate"
+    },
+    {
+      "id": "AO-003",
+      "rule": "logical_gateway_delegates_and_does_not_own_all_services",
+      "severity": "BLOCKING",
+      "applies_from": "GATEWAY_IMPLEMENTATION",
+      "change_classes": [
+        "runtime_architecture"
+      ],
+      "enforcement": "STATIC_ARCHITECTURE",
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_gateway_routing_validate + UniversalCouncil.CommandCenter.GatewayValidation"
+    },
+    {
+      "id": "AO-004",
+      "rule": "front_doors_do_not_own_business_logic_or_authority",
+      "severity": "BLOCKING",
+      "applies_from": "FRONT_DOOR_IMPLEMENTATION",
+      "change_classes": [
+        "windows",
+        "android",
+        "web",
+        "chat",
+        "voice"
+      ],
+      "enforcement": "STATIC_ARCHITECTURE",
+      "implementation_state": "CONTRACT_ACTIVE",
+      "validator": "future_boundary_tests"
+    },
+    {
+      "id": "AO-005",
+      "rule": "all_command_ingress_converges_on_one_logical_authority_boundary",
+      "severity": "BLOCKING",
+      "applies_from": "REMOTE_OR_MULTI_FRONT_DOOR_RUNTIME",
+      "change_classes": [
+        "remote_owner",
+        "android",
+        "web",
+        "chat"
+      ],
+      "enforcement": "INTEGRATION",
+      "implementation_state": "CONTRACT_ACTIVE",
+      "validator": "future_ingress_tests"
+    },
+    {
+      "id": "AO-006",
+      "rule": "retrieved_content_cannot_grant_authority_or_rewrite_policy",
+      "severity": "BLOCKING",
+      "applies_from": "CONTEXT_RESOLVER_OR_EXTERNAL_RETRIEVAL",
+      "change_classes": [
+        "context",
+        "research",
+        "plugins",
+        "files"
+      ],
+      "enforcement": "UNIT_AND_INTEGRATION",
+      "implementation_state": "ENFORCED_FOR_CONTEXT_RESOLVER_EXTERNAL_RETRIEVAL_FUTURE",
+      "validator": "command_center_context_pipeline_validate + UniversalCouncil.CommandCenter.ContextValidation"
+    },
+    {
+      "id": "AO-007",
+      "rule": "working_or_output_cannot_auto_promote_to_canonical",
+      "severity": "BLOCKING",
+      "applies_from": "NOW",
+      "change_classes": [
+        "knowledge",
+        "artifact",
+        "visual",
+        "ai_output"
+      ],
+      "enforcement": "STATIC_AND_RUNTIME",
+      "implementation_state": "CONTRACT_ACTIVE",
+      "validator": "command_center_agentic_os_validate"
+    },
+    {
+      "id": "AO-008",
+      "rule": "canonical_conflict_fails_closed",
+      "severity": "BLOCKING",
+      "applies_from": "CONTEXT_RESOLVER",
+      "change_classes": [
+        "context"
+      ],
+      "enforcement": "UNIT_AND_RUNTIME",
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_context_pipeline_validate + UniversalCouncil.CommandCenter.ContextValidation"
+    },
+    {
+      "id": "AO-009",
+      "rule": "owner_directive_material_change_requires_typed_record_and_supersedes_chain",
+      "severity": "BLOCKING",
+      "applies_from": "NOW",
+      "change_classes": [
+        "owner_directive",
+        "governance"
+      ],
+      "enforcement": "STATIC_AND_PROCESS",
+      "implementation_state": "CONTRACT_ACTIVE",
+      "validator": "command_center_agentic_os_validate"
+    },
+    {
+      "id": "AO-010",
+      "rule": "unknown_never_equals_succeeded",
+      "severity": "BLOCKING",
+      "applies_from": "NOW",
+      "change_classes": [
+        "all"
+      ],
+      "enforcement": "STATIC_AND_RUNTIME",
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "existing_murtakaz_and_execution_validators"
+    },
+    {
+      "id": "AO-011",
+      "rule": "stale_context_requires_replan_and_context_conflict_requires_resolution",
+      "severity": "BLOCKING",
+      "applies_from": "JOB_ENGINE",
+      "change_classes": [
+        "job"
+      ],
+      "enforcement": "UNIT_AND_RUNTIME",
+      "implementation_state": "CONTRACT_ACTIVE",
+      "validator": "future_job_tests"
+    },
+    {
+      "id": "AO-012",
+      "rule": "provider_success_is_not_task_success_without_postcondition_verification",
+      "severity": "BLOCKING",
+      "applies_from": "EXECUTION",
+      "change_classes": [
+        "execution"
+      ],
+      "enforcement": "RUNTIME",
+      "implementation_state": "EXISTING_PRINCIPLE",
+      "validator": "existing_execution_validators"
+    },
+    {
+      "id": "AO-013",
+      "rule": "role_is_not_model_and_model_strength_never_expands_authority",
+      "severity": "BLOCKING",
+      "applies_from": "NOW",
+      "change_classes": [
+        "model",
+        "routing"
+      ],
+      "enforcement": "STATIC_AND_RUNTIME",
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_capability_model_validate + command_center_gateway_routing_validate"
+    },
+    {
+      "id": "AO-014",
+      "rule": "silent_model_or_provider_fallback_forbidden",
+      "severity": "BLOCKING",
+      "applies_from": "NOW",
+      "change_classes": [
+        "model",
+        "provider",
+        "routing"
+      ],
+      "enforcement": "STATIC_AND_RUNTIME",
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_capability_model_validate + UniversalCouncil.CommandCenter.CapabilityModelValidation"
+    },
+    {
+      "id": "AO-015",
+      "rule": "automation_requires_reliability_and_authority_review_not_run_count_only",
+      "severity": "BLOCKING",
+      "applies_from": "AUTOMATION_ENGINE",
+      "change_classes": [
+        "automation"
+      ],
+      "enforcement": "UNIT_AND_RUNTIME",
+      "implementation_state": "CONTRACT_ACTIVE",
+      "validator": "future_automation_tests"
+    },
+    {
+      "id": "AO-016",
+      "rule": "existing_eight_reference_visual_lock_cannot_be_weakened",
+      "severity": "BLOCKING",
+      "applies_from": "NOW",
+      "change_classes": [
+        "visual",
+        "ux",
+        "design"
+      ],
+      "enforcement": "STATIC",
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_visual_reference_validate"
+    },
+    {
+      "id": "AO-017",
+      "rule": "generated_visual_output_never_becomes_canonical_parent_automatically",
+      "severity": "BLOCKING",
+      "applies_from": "NOW",
+      "change_classes": [
+        "visual"
+      ],
+      "enforcement": "STATIC_AND_PROCESS",
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_visual_reference_validate"
+    },
+    {
+      "id": "AO-018",
+      "rule": "canonical_visual_job_requires_actual_reference_bytes_preflight_and_single_screen_parent",
+      "severity": "BLOCKING",
+      "applies_from": "NOW",
+      "change_classes": [
+        "visual"
+      ],
+      "enforcement": "STATIC_AND_PROCESS",
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_visual_reference_validate"
+    },
+    {
+      "id": "AO-019",
+      "rule": "high_risk_or_high_drift_executor_cannot_self_approve",
+      "severity": "BLOCKING",
+      "applies_from": "REVIEW_RUNTIME",
+      "change_classes": [
+        "security",
+        "authority",
+        "visual_identity",
+        "architecture",
+        "automation"
+      ],
+      "enforcement": "PROCESS_AND_RUNTIME",
+      "implementation_state": "CONTRACT_ACTIVE",
+      "validator": "future_review_tests"
+    },
+    {
+      "id": "AO-020",
+      "rule": "immutable_audit_trace_must_redact_secrets_before_append",
+      "severity": "BLOCKING",
+      "applies_from": "AUDIT_LEDGER_RUNTIME",
+      "change_classes": [
+        "audit",
+        "receipt"
+      ],
+      "enforcement": "UNIT_AND_RUNTIME",
+      "implementation_state": "CONTRACT_ACTIVE",
+      "validator": "future_privacy_tests"
+    },
+    {
+      "id": "AO-021",
+      "rule": "capability_health_is_operation_specific_and_freshness_bound",
+      "severity": "BLOCKING",
+      "applies_from": "CAPABILITY_REGISTRY",
+      "change_classes": [
+        "provider",
+        "capability"
+      ],
+      "enforcement": "UNIT_AND_RUNTIME",
+      "implementation_state": "ENFORCED_NOW",
+      "validator": "command_center_capability_model_validate + UniversalCouncil.CommandCenter.CapabilityModelValidation"
+    },
+    {
+      "id": "AO-022",
+      "rule": "data_fabric_consistency_model_required_before_real_autopilot",
+      "severity": "BLOCKING",
+      "applies_from": "REAL_AUTOPILOT",
+      "change_classes": [
+        "autopilot",
+        "persistence"
+      ],
+      "enforcement": "ARCHITECTURE_AND_RUNTIME",
+      "implementation_state": "FUTURE_BLOCKER",
+      "validator": "future_durability_tests"
+    },
+    {
+      "id": "AO-023",
+      "rule": "critical_mobile_actions_use_typed_semantic_commands_and_server_reauthorization",
+      "severity": "BLOCKING",
+      "applies_from": "ANDROID_LIVE",
+      "change_classes": [
+        "android",
+        "remote_owner"
+      ],
+      "enforcement": "INTEGRATION",
+      "implementation_state": "FUTURE_BLOCKER",
+      "validator": "future_mobile_tests"
+    },
+    {
+      "id": "AO-024",
+      "rule": "owner_primary_workflow_uses_progressive_disclosure_not_infrastructure_first",
+      "severity": "BLOCKING",
+      "applies_from": "OWNER_UI_IMPLEMENTATION",
+      "change_classes": [
+        "ux",
+        "windows",
+        "android"
+      ],
+      "enforcement": "STUDIO_REVIEW",
+      "implementation_state": "CONTRACT_ACTIVE",
+      "validator": "murtakaz_workshop_review"
+    }
+  ],
+  "last_reconciled_at": "2026-10-21",
+  "last_reconciled_change_id": "CC-REPAIR-A2-GOVERNANCE-METADATA-2026-10-21",
+  "reconciliation_rule": "IMPLEMENTATION_STATE_MUST_MATCH_MERGED_AND_VALIDATED_CAPABILITY_SCOPE_WITHOUT_PRETENDING_FUTURE_SURFACES_EXIST"
+}

@@ -3,6 +3,8 @@
 Status: IMPLEMENTATION DESIGN CONTRACT  
 Platform scope: Windows + Android
 
+The eight pinned images in `living-operations-reference-manifest.json` govern appearance. See `19_REFERENCE_FIDELITY_AUDIT_AND_CONTRACT.md` for the screen-by-screen mapping and correction rationale. Tokens below are implementation approximations, not measured image samples.
+
 ## 1. Visual principle
 
 UniversalCouncil should feel like a living operational system in which work, evidence, decisions, tools and roles are tangible objects.
@@ -35,7 +37,7 @@ Dark mode may be designed later using the same semantic hierarchy; it must not b
 
 ## 3. Semantic colors
 
-Color is state, not decoration.
+Color has two explicit layers: stable role/branch identity and operational state badges. Preserve the reference multicolor medallions, pastel panels, blue actions, violet reasoning and green verified states. Identity color alone never proves activity or success.
 
 - Active / Execution: Blue #2F6BFF
 - Verified / Accepted / Completed: Green #16A36E
@@ -46,7 +48,7 @@ Color is state, not decoration.
 
 Rules:
 - one object may have one primary semantic state at a time;
-- do not assign every role a loud unique rainbow color;
+- retain the distinct reference role colors at the same restrained coverage;
 - secondary role identity may tint a Sigil while state color remains authoritative;
 - red is not used for ordinary negative sentiment; reserve it for real blocker/risk/destructive context.
 
@@ -62,7 +64,7 @@ Android:
 - platform-native Noto/Sans Arabic-compatible system typography.
 
 Hierarchy:
-- Screen title: restrained, not billboard scale.
+- Screen title: match the parent image; Home and completion use prominent bold Arabic headlines, while project titles follow their reference hierarchy.
 - Project title: strongest contextual label.
 - Section heading: compact.
 - Body: readable at normal desktop distance.
@@ -98,7 +100,7 @@ Depth comes primarily from:
 3. focus/contrast;
 4. overlap when functionally meaningful.
 
-Use shadows sparingly.
+Preserve the references’ soft card shadows, pastel gradients, luminous circular medallions, subtle halo layers and rounded bordered panels. Do not flatten these into monochrome admin cards.
 
 Decision Mode is the strongest elevated surface.
 
@@ -106,7 +108,7 @@ Hover/focus may use subtle border/intensity change before shadow.
 
 ## 7. Role Sigil language
 
-Role Sigils are abstract operational marks, not cartoon characters.
+Role Sigils use the reference pictograms inside colored circular medallions (database, user symbol, shield, crown, lock, branching paths). The generic user glyph is allowed; photographic portraits and invented human mascots are not.
 
 Family traits:
 - geometric;
@@ -115,6 +117,8 @@ Family traits:
 - expressive at 48–72px;
 - supports rings, badges and state layers;
 - no face/avatar dependency.
+
+Semantic descriptions only; do not replace the visible reference glyphs with newly invented geometry:
 
 Concept families:
 - Evidence — lens/layer verification geometry;
@@ -209,13 +213,13 @@ Do not hide truth state behind color alone.
 
 Reject:
 - neon cyberpunk;
-- architecture decorative motifs;
+- any decorative theme, scenic motif or background language not directly observable in the eight pinned references;
 - cartoon room scenes;
 - mascot-heavy UI;
 - generic KPI tile dashboard;
 - glassmorphism as a primary system;
-- gradients without semantic purpose;
+- gradients or glows that restyle the reference; subtle reference gradients and halos are required where present;
 - glowing every active object simultaneously;
-- every role having a different saturated color;
+- excessive saturated color coverage beyond the reference medallions;
 - copying the reference video's character/layout/card system.
 

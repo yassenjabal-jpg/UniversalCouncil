@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-WAVE-A-HISTORICAL-LOCK-CORRECTION-POST-2026-10-21",
+  "change_id": "CC-WAVE-A-HISTORICAL-LOCK-CORRECTION-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "reviewed_revision": "38c33e85d1aa191c00dd07054e5e1f1128788860",
+  "canonical_history_anchor": "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7",
+  "findings": [
+    "All 18 source blobs in the approved Wave A truth lock were proven byte-identical to the A3 merge revision before semantics were changed.",
+    "The historical lock now validates immutable source identities at the A3 merge revision instead of mutable checkout HEAD.",
+    "The original source list and SHA-256 lock digest remain unchanged.",
+    "Approved historical locks cannot be refreshed.",
+    "Governed post-lock project progression is allowed without rewriting historical truth."
+  ],
+  "exact_head_evidence": [
+    {
+      "workflow": "Company Stage 0",
+      "run_id": 39585992772,
+      "conclusion": "SUCCESS",
+      "head_sha": "38c33e85d1aa191c00dd07054e5e1f1128788860"
+    },
+    {
+      "workflow": "CodeQL",
+      "run_id": 39585993003,
+      "conclusion": "SUCCESS",
+      "head_sha": "38c33e85d1aa191c00dd07054e5e1f1128788860"
+    },
+    {
+      "workflow": "Command Center Reference UI",
+      "run_id": 39585992788,
+      "conclusion": "SUCCESS",
+      "head_sha": "38c33e85d1aa191c00dd07054e5e1f1128788860"
+    }
+  ],
+  "locked_source_count": 18,
+  "historical_blob_mismatch_count": 0,
+  "lock_digest_preserved": "6f1e3059353f37ef0e64f7556cf4333823ad88880f7ae3dea0eaa1ad63297ffe",
+  "runtime_behavior_changed": false,
+  "visual_artifact_changed": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "adoption_authorized": true,
+  "merge_authorized": true,
+  "timestamp": "2026-10-21"
+}

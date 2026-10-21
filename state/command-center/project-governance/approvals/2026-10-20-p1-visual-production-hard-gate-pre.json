@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-P1-VISUAL-PRODUCTION-HARD-GATE-PRE",
+  "change_id": "P1-VISUAL-PRODUCTION-HARD-GATE-006",
+  "scope": "Replace the permissive visual-generation workflow with a fail-closed production gate for canonical UI screens: forbid freeform text-to-image, style-transfer reinterpretation, generated-image derivatives and multi-screen composites; permit only single-screen reference editing/layer reconstruction/pixel-preserving refinement with preflight registration and machine-verifiable reference-binding evidence. Invalidate P1-HOME-ARTIFACT-001 and authorize no rendered artifact yet.",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "review_mode": "ROLE_BASED_ASSISTANT_REVIEW_NOT_PRODUCT_RUNTIME_COUNCIL",
+  "review_agent": "/root/murtakaz_review",
+  "governance_reviewers": [
+    "cc_product_truth",
+    "cc_owner_experience",
+    "cc_red_team"
+  ],
+  "workshop_reviewers": [
+    "cc_visual_systems",
+    "cc_interaction_director",
+    "cc_visual_qa",
+    "cc_design_systems_engineer"
+  ],
+  "artifact_refs": [
+    "docs/operations/command-center/living-operations/23_VISUAL_PRODUCTION_HARD_GATE.md",
+    "state/command-center/living-operations-visual-production-protocol.json",
+    "state/command-center/living-operations-reference-manifest.json",
+    "state/command-center/living-operations-p1-home-fidelity.json",
+    "tools/command_center_visual_reference_validate.py",
+    "company/tests/test_visual_reference_integrity.py"
+  ],
+  "evidence_refs": [
+    "fourth repeated visual-drift incident reported by Owner",
+    "rejected generation 79110079-3684-437e-9c29-825ac3f6cb4d",
+    "eight pinned canonical references",
+    "docs/operations/command-center/living-operations/22_CANONICAL_SCREEN_OBJECT_INVENTORY.md"
+  ],
+  "approved_revision": "current PR #53 + bounded fail-closed visual production gate",
+  "timestamp": "2026-10-20T00:25:00+03:00",
+  "reopen_triggers": [
+    "Any request to re-enable freeform UI generation during P1",
+    "Any production mode outside the approved allow-list",
+    "Any visual job whose tool cannot consume the actual canonical reference bytes",
+    "Any multi-screen composite generation"
+  ],
+  "final_adoption_granted": false,
+  "rendered_artifact_approved": false,
+  "p1_visual_phase_complete": false,
+  "stage8_opened": false,
+  "execution_authority_changed": false
+}

@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "policy_id": "al-murtakaz-mandatory-approval",
+  "status": "OWNER_DIRECTIVE_ACTIVE",
+  "scope": "UNIVERSAL_COUNCIL_COMMAND_CENTER_ALL_PRODUCT_CHANGE",
+  "rule": "NO_CHANGE_ADOPTION_COMPLETION_MERGE_RELEASE_OR_STAGE_TRANSITION_WITHOUT_EXPLICIT_AL_MURTAKAZ_APPROVAL",
+  "applies_to": [
+    "product_requirements",
+    "ux",
+    "visual_design",
+    "motion_animation",
+    "role_sigils_iconography",
+    "components",
+    "windows_wpf",
+    "android",
+    "autopilot",
+    "model_reasoning_fallback",
+    "memory",
+    "evidence",
+    "security_privacy",
+    "remote_owner",
+    "tool_integrations",
+    "project_state",
+    "runtime_architecture",
+    "tests_and_gates",
+    "behavior_changing_documentation",
+    "release_and_deployment",
+    "stage_transition"
+  ],
+  "pre_change_states": [
+    "PROPOSED",
+    "MURTAKAZ_REVIEW_REQUIRED",
+    "MURTAKAZ_REVIEWING"
+  ],
+  "review_outcomes": [
+    "APPROVED_BY_AL_MURTAKAZ",
+    "RETURNED_FOR_CHANGES",
+    "BLOCKED_BY_AL_MURTAKAZ",
+    "OWNER_DECISION_REQUIRED"
+  ],
+  "implementation_requires": "APPROVE_TO_IMPLEMENT",
+  "adoption_requires": "APPROVED_BY_AL_MURTAKAZ",
+  "completion_requires": "APPROVED_BY_AL_MURTAKAZ",
+  "merge_requires": "APPROVED_BY_AL_MURTAKAZ",
+  "release_requires": "APPROVED_BY_AL_MURTAKAZ",
+  "next_phase_requires": "APPROVED_BY_AL_MURTAKAZ",
+  "implicit_approval_forbidden": true,
+  "material_change_invalidates_prior_approval": true,
+  "owner_directive_still_requires_impact_review": true,
+  "emergency": {
+    "silent_bypass_allowed": false,
+    "minimum_harm_action_only": true,
+    "retrospective_review_required": true,
+    "cannot_be_marked_complete_before_review": true
+  },
+  "approval_receipt_required_fields": [
+    "approval_id",
+    "change_id",
+    "scope",
+    "artifact_refs",
+    "decision",
+    "governance_reviewers",
+    "workshop_reviewers",
+    "evidence_refs",
+    "approved_revision",
+    "timestamp",
+    "reopen_triggers"
+  ],
+  "authority": {
+    "owner_final_authority": true,
+    "approval_does_not_grant_execution_authority": true,
+    "approval_does_not_open_stage8": true,
+    "unknown_is_never_success": true
+  }
+}

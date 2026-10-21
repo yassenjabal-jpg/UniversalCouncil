@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CTX-CC-WAVE-A-HISTORICAL-LOCK-CORRECTION-2026-10-21",
+  "immutable": true,
+  "project_id": "universal-council-command-center",
+  "job_or_change_id": "CC-WAVE-A-HISTORICAL-LOCK-CORRECTION-2026-10-21",
+  "created_at": "2026-10-21",
+  "source_revision": {
+    "canonical_merge_sha": "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7",
+    "implementation_head": "8b6596a8326d257947d91f5d2daf246e37af5b58"
+  },
+  "checkpoint_lock_id": "MRTKZ-REPAIR-WAVE-A-TRUTH-LOCK-2026-10-21",
+  "allowed_scope": "TRUTH_LOCK_VALIDATION_SEMANTICS_ONLY",
+  "forbidden_scope": [
+    "locked source content changes",
+    "B1 visual implementation",
+    "B2 implementation",
+    "live execution",
+    "Stage 8"
+  ],
+  "expected_outputs": [
+    "historically anchored immutable Wave A truth lock",
+    "validator that permits future governed state progression",
+    "CI evidence",
+    "Murtakaz post-review"
+  ]
+}

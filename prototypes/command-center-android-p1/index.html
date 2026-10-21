@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>UniversalCouncil Owner — P1 Prototype</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="phone-shell" aria-label="UniversalCouncil Owner Android semantic prototype">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">PROTOTYPE_FIXTURE · STAGE 7</div>
+        <h1>UniversalCouncil Owner</h1>
+      </div>
+      <button id="motion-toggle" class="icon-button" aria-pressed="false">تقليل الحركة</button>
+    </header>
+
+    <section id="notification-banner" class="notification" data-testid="notification">
+      <div>
+        <strong>مشروع Atlas يحتاج قرارك</strong>
+        <span>اعتراض خصوصية بانتظار المراجعة.</span>
+      </div>
+      <button data-action="open-decision">فتح</button>
+    </section>
+
+    <section id="screen-home" class="screen active" data-screen="home">
+      <div class="truth-row"><span class="truth unknown">UNKNOWN</span><span>الاتصال الحي غير مثبت</span></div>
+      <article class="hero-card">
+        <p class="eyebrow">منذ آخر زيارة</p>
+        <h2>تقدم بصري موثّق، ولا تنفيذ حي مفترض</h2>
+        <p>الشاشات المكتبية الثماني اجتازت fidelity. P1 ما زال مفتوحًا لأدلة Motion وAndroid.</p>
+      </article>
+      <article class="decision-teaser">
+        <div>
+          <p class="eyebrow">يحتاج قرارك</p>
+          <h3>سياسة الخصوصية للفرع A</h3>
+          <p>Red Team: نطاق البيانات أوسع من المطلوب.</p>
+        </div>
+        <button data-action="open-decision">راجع القرار</button>
+      </article>
+      <article class="project-card" data-action="open-project" role="button" tabindex="0">
+        <div><span class="dot"></span><strong>Atlas</strong></div>
+        <span>Project Workspace</span>
+        <small>Autopilot: UNKNOWN / PROTOTYPE</small>
+      </article>
+    </section>
+
+    <section id="screen-pulse" class="screen" data-screen="pulse">
+      <p class="eyebrow">Pulse</p>
+      <article class="pulse-card">
+        <div class="media-placeholder">BEFORE → AFTER</div>
+        <span class="truth evidence">EVIDENCE-BACKED</span>
+        <h2>تم تقليص نطاق الوصول المقترح</h2>
+        <p>السبب: اعتراض الخصوصية. التالي: مراجعة المالك ثم طلب تعديلات.</p>
+        <button data-action="open-project">افتح المشروع</button>
+      </article>
+    </section>
+
+    <section id="screen-project" class="screen" data-screen="project">
+      <p class="eyebrow">Project · Atlas</p>
+      <article class="state-card">
+        <div class="state-line"><span>المرحلة الحالية</span><strong>Decision Review</strong></div>
+        <div class="state-line"><span>Autopilot</span><strong class="unknown-text">UNKNOWN / NOT LIVE</strong></div>
+        <div class="state-line"><span>آخر Checkpoint</span><strong>CP-07 · PROTOTYPE</strong></div>
+      </article>
+      <article class="artifact-card">
+        <div class="media-placeholder compact">Artifact Preview</div>
+        <h3>Privacy Scope Revision</h3>
+        <span class="truth evidence">EVIDENCE-BACKED</span>
+        <button data-action="open-evidence">فحص الدليل</button>
+      </article>
+      <div class="action-grid">
+        <button data-action="pause-intent">إيقاف مؤقت</button>
+        <button data-action="open-activity">مراجعة النشاط</button>
+        <button data-action="ask">اسأل</button>
+      </div>
+    </section>
+
+    <section id="screen-decisions" class="screen" data-screen="decisions">
+      <p class="eyebrow">Decision Inbox</p>
+      <article class="decision-card">
+        <span class="truth proposal">OWNER DECISION</span>
+        <h2>هل نقلص نطاق البيانات للفرع A؟</h2>
+        <dl>
+          <div><dt>التوصية</dt><dd>تقليص النطاق قبل المتابعة.</dd></div>
+          <div><dt>أقوى اعتراض</dt><dd>التصميم الحالي يجمع أكثر من الحاجة.</dd></div>
+          <div><dt>الأثر</dt><dd>تأخير بسيط مقابل خصوصية أوضح.</dd></div>
+        </dl>
+        <button class="secondary" data-action="open-evidence">فحص الأدلة</button>
+        <div class="decision-actions">
+          <button data-action="approve-intent">موافقة</button>
+          <button class="primary" data-action="changes-intent">طلب تعديلات</button>
+          <button data-action="reject-intent">رفض</button>
+        </div>
+        <p class="authority-note">كل إجراء هنا نية مالك فقط؛ لا يوجد dispatch حي في هذا prototype.</p>
+      </article>
+    </section>
+
+    <section id="screen-more" class="screen" data-screen="more">
+      <p class="eyebrow">More / System</p>
+      <article class="state-card">
+        <div class="state-line"><span>Device enrollment</span><strong>PROTOTYPE</strong></div>
+        <div class="state-line"><span>Connection</span><strong class="unknown-text">UNKNOWN</strong></div>
+        <div class="state-line"><span>Reduce Motion</span><strong id="reduce-motion-state">OFF</strong></div>
+      </article>
+    </section>
+
+    <aside id="evidence-sheet" class="sheet" aria-hidden="true" data-testid="evidence-sheet">
+      <div class="grabber"></div>
+      <div class="sheet-head">
+        <h2>Evidence Peek</h2>
+        <button data-action="close-sheet" aria-label="إغلاق">×</button>
+      </div>
+      <p><strong>المصدر:</strong> Prototype fixture / Red Team review</p>
+      <p><strong>التصنيف:</strong> EVIDENCE-BACKED</p>
+      <p><strong>الوقت:</strong> غير حي — مثال دلالي</p>
+      <p class="authority-note">هذا الدليل لا يثبت اتصال provider أو نجاح runtime.</p>
+    </aside>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+      <button data-nav="home" class="active">الرئيسية</button>
+      <button data-nav="pulse">النبض</button>
+      <button data-nav="project">المشاريع</button>
+      <button data-nav="decisions">القرارات</button>
+      <button data-nav="more">المزيد</button>
+    </nav>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
