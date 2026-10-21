@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-REPAIR-B1-NATIVE-COMPLETION-2026-10-21",
+  "project_id": "universal-council-command-center",
+  "status": "IMPLEMENTING",
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7"
+  },
+  "scope": [
+    "P1 native micro-polish implementation",
+    "P1 remainder-plan reconciliation",
+    "P1 screen-review inventory completion",
+    "Home state metadata reconciliation",
+    "B1 visual/native validators and tests",
+    "WPF exact-head render evidence"
+  ],
+  "non_goals": [
+    "R9 cross-screen consistency closure",
+    "R10 final P1 approval",
+    "new visual language",
+    "Android artifact",
+    "Wave C cleanup",
+    "Skill Registry",
+    "live execution",
+    "Stage 8"
+  ],
+  "unplanned_scope_policy": "RETURN_TICKET_OR_NEW_CHANGE_ENVELOPE",
+  "pre_approval_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-b1-native-completion-pre.json"
+}

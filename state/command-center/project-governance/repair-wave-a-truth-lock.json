@@ -1,12 +1,12 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "lock_id": "MRTKZ-REPAIR-WAVE-A-TRUTH-LOCK-2026-10-21",
   "status": "APPROVED_BY_AL_MURTAKAZ",
   "project_id": "universal-council-command-center",
   "repair_wave": "A_TRUTH_AND_ANTI_DRIFT",
   "baseline_branch": "command-center/project-local-council-studio-20261019",
   "baseline_revision": "76eeca02b79790c28a181520cc019d3586769b26",
-  "validation_mode": "BASELINE_ANCESTOR_PLUS_LOCKED_SOURCE_BLOBS_MATCH_HEAD",
+  "validation_mode": "LOCKED_REVISION_SOURCE_BLOBS_MATCH_HISTORICAL_COMMIT",
   "self_reference_excluded": true,
   "lock_digest_algorithm": "SHA256_SORTED_ID_PATH_BLOB_TUPLES",
   "lock_digest": "6f1e3059353f37ef0e64f7556cf4333823ad88880f7ae3dea0eaa1ad63297ffe",
@@ -121,5 +121,16 @@
     "A3": "APPROVED_BY_AL_MURTAKAZ"
   },
   "post_review_receipt": "state/command-center/project-governance/approvals/2026-10-21-repair-a3-truth-lock-post.json",
-  "next_active_work_after_approval": "REPAIR_WAVE_B1_COMPLETE_REMAINING_NATIVE_WORK"
+  "next_active_work_after_approval": "REPAIR_WAVE_B1_COMPLETE_REMAINING_NATIVE_WORK",
+  "locked_revision": "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7",
+  "immutable_after_approval": true,
+  "head_progression_allowed_after_lock": true,
+  "historical_anchor_correction": {
+    "change_id": "CC-WAVE-A-HISTORICAL-LOCK-CORRECTION-2026-10-21",
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "pre_approval": "state/command-center/project-governance/approvals/2026-10-21-wave-a-historical-lock-correction-pre.json",
+    "proof": "ALL_18_LOCKED_SOURCE_BLOBS_MATCH_A3_MERGE_REVISION",
+    "post_approval": "state/command-center/project-governance/approvals/2026-10-21-wave-a-historical-lock-correction-post.json",
+    "reviewed_head": "38c33e85d1aa191c00dd07054e5e1f1128788860"
+  }
 }

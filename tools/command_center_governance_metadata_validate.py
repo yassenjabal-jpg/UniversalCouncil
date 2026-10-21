@@ -15,6 +15,7 @@ AGENTIC_POST = PROJECT / "approvals" / "2026-10-21-agentic-os-integration-post.j
 A2_PRE = PROJECT / "approvals" / "2026-10-21-repair-a2-governance-metadata-pre.json"
 A2_POST = PROJECT / "approvals" / "2026-10-21-repair-a2-governance-metadata-post.json"
 A3_POST = PROJECT / "approvals" / "2026-10-21-repair-a3-truth-lock-post.json"
+B1_POST = PROJECT / "approvals" / "2026-10-21-repair-b1-native-completion-post.json"
 A2_CHANGE = PROJECT / "changes" / "2026-10-21-repair-a2-governance-metadata.json"
 A2_CAPSULE = PROJECT / "context-capsules" / "2026-10-21-repair-a2-governance-metadata.json"
 STAGE_MAP = PROJECT / "stage-phase-map.json"
@@ -45,6 +46,7 @@ agentic_post = load(AGENTIC_POST)
 a2_pre = load(A2_PRE)
 a2_post = load(A2_POST) if A2_POST.exists() else None
 a3_post = load(A3_POST) if A3_POST.exists() else None
+b1_post = load(B1_POST) if B1_POST.exists() else None
 a2_change = load(A2_CHANGE)
 a2_capsule = load(A2_CAPSULE)
 stage_map = load(STAGE_MAP)
@@ -148,8 +150,14 @@ else:
         raise SystemExit("Current review did not close A3 after approval")
     if repair["wave_a"].get("status") != "COMPLETE_APPROVED":
         raise SystemExit("Current review did not close Repair Wave A")
-    if repair["wave_b"] != "ACTIVE" or repair.get("wave_b_current_stage") != "B1_COMPLETE_REMAINING_NATIVE_WORK":
-        raise SystemExit("Current review did not activate Wave B/B1 after A3 approval")
+    if b1_post is None:
+        if repair["wave_b"] != "ACTIVE" or repair.get("wave_b_current_stage") != "B1_COMPLETE_REMAINING_NATIVE_WORK":
+            raise SystemExit("Current review did not activate Wave B/B1 after A3 approval")
+    else:
+        if repair["wave_b"] != "ACTIVE" or repair.get("wave_b_current_stage") != "B2_CROSS_SCREEN_CONSISTENCY":
+            raise SystemExit("Current review did not advance to Wave B/B2 after B1 approval")
+        if repair.get("wave_b_b1") != "COMPLETE_APPROVED":
+            raise SystemExit("Current review lost B1 completion truth")
 if current_review["next_engineering_after_repairs"] != "SKILL_REGISTRY":
     raise SystemExit("Current review engineering continuation drifted")
 
@@ -258,8 +266,28 @@ if a3_post is not None:
         raise SystemExit("A3 post-review inflated runtime authority")
     if "**Wave status: COMPLETE / APPROVED_BY_AL_MURTAKAZ**" not in roadmap:
         raise SystemExit("Roadmap did not mark Repair Wave A complete")
-    if "**B1 Complete Remaining Native Work — ACTIVE**" not in roadmap:
-        raise SystemExit("Roadmap did not activate Wave B/B1")
+    if b1_post is None:
+        if "**B1 Complete Remaining Native Work — ACTIVE**" not in roadmap:
+            raise SystemExit("Roadmap did not activate Wave B/B1")
+    else:
+        if "**B1 Complete Remaining Native Work — COMPLETE / APPROVED_BY_AL_MURTAKAZ**" not in roadmap:
+            raise SystemExit("Roadmap did not close B1 after scoped approval")
+        if "**B2 Cross-Screen Consistency & Polish — ACTIVE**" not in roadmap:
+            raise SystemExit("Roadmap did not activate B2 after B1 approval")
+
+if b1_post is not None:
+    if b1_post.get("decision") != "APPROVED_BY_AL_MURTAKAZ":
+        raise SystemExit("B1 post-review receipt exists with non-approved decision")
+    if b1_post.get("scoped_verdict") != "APPROVE_B1_NATIVE_COMPLETION_ONLY":
+        raise SystemExit("B1 post-review scope drifted")
+    if not b1_post["adoption_authorized"] or not b1_post["merge_authorized"]:
+        raise SystemExit("B1 post-review did not authorize scoped adoption/merge")
+    if b1_post["final_p1_approval_granted"] or b1_post["p1_complete"]:
+        raise SystemExit("B1 post-review falsely granted final P1 approval")
+    if b1_post["live_execution_authorized"] or b1_post["stage8_opened"]:
+        raise SystemExit("B1 post-review inflated runtime authority")
+    if not b1_post["b2_r9_authorized"] or b1_post["r10_opened"]:
+        raise SystemExit("B1 post-review did not preserve R9/R10 sequencing")
 
 if a2_post is not None:
     if a2_post.get("decision") != "APPROVED_BY_AL_MURTAKAZ":

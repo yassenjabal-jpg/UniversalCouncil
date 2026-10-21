@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-B1-NATIVE-COMPLETION-POST-2026-10-21",
+  "change_id": "CC-REPAIR-B1-NATIVE-COMPLETION-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "scoped_verdict": "APPROVE_B1_NATIVE_COMPLETION_ONLY",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7"
+  },
+  "material_visual_review": {
+    "head_sha": "69dc13fa94928be292237f082e77e656f792222b",
+    "reference_ui_run_id": 39583770008,
+    "artifact_id": 12338007893,
+    "finding": "NO_B1_STRUCTURAL_BLOCKER",
+    "canonical_screen_count": 8,
+    "evidence_modes": [
+      "reference",
+      "native",
+      "blend"
+    ],
+    "native_only_reference_pixels_hidden": true
+  },
+  "exact_head_visual_identity_evidence": {
+    "head_sha": "8b6596a8326d257947d91f5d2daf246e37af5b58",
+    "reference_ui_run_id": 39585172494,
+    "artifact_id": 12338429006,
+    "result": "ALL_RENDERED_PNG_HASHES_BYTE_IDENTICAL_TO_MATERIAL_VISUAL_REVIEW_ARTIFACT"
+  },
+  "governed_validation_evidence": {
+    "head_sha": "38c33e85d1aa191c00dd07054e5e1f1128788860",
+    "company_stage0_run_id": 39585992772,
+    "codeql_run_id": 39585993003,
+    "reference_ui_run_id": 39585992788,
+    "all_conclusions": "SUCCESS"
+  },
+  "reviewer_decisions": {
+    "cc_experience_architect": "PASS_B1_NATIVE_COMPLETION_ONLY",
+    "cc_studio_producer": "PASS_B1_NATIVE_COMPLETION_ONLY",
+    "cc_visual_fidelity": "PASS_WITH_R9_CROSS_SCREEN_POLISH_DEFERRED",
+    "cc_accessibility_clearance": "PASS_NO_B1_BLOCKER",
+    "cc_product_truth": "PASS",
+    "cc_red_team": "PASS_AFTER_HISTORICAL_TRUTH_LOCK_CORRECTION"
+  },
+  "findings": [
+    "All eight canonical desktop roles have explicit reference/native/blend evidence.",
+    "Native-only evidence hides canonical reference pixels.",
+    "Shared secondary chrome is native where required.",
+    "Owner Decision uses a native project underlay rather than reference pixels.",
+    "No B1 structural blocker remains.",
+    "Cross-screen spacing, glyph, typography, tint and border harmonization remain explicitly deferred to B2/R9.",
+    "B1 approval does not constitute final P1 visual approval."
+  ],
+  "adoption_authorized": true,
+  "merge_authorized": true,
+  "b2_r9_authorized": true,
+  "r10_opened": false,
+  "final_p1_approval_granted": false,
+  "p1_complete": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "next_active_work": "REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY",
+  "timestamp": "2026-10-21"
+}

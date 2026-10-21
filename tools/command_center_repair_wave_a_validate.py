@@ -16,6 +16,10 @@ A3_PRE = PROJECT / "approvals" / "2026-10-21-repair-a3-truth-lock-pre.json"
 A3_POST = PROJECT / "approvals" / "2026-10-21-repair-a3-truth-lock-post.json"
 A3_CHANGE = PROJECT / "changes" / "2026-10-21-repair-a3-truth-lock.json"
 A3_CAPSULE = PROJECT / "context-capsules" / "2026-10-21-repair-a3-truth-lock.json"
+LOCK_FIX_PRE = PROJECT / "approvals" / "2026-10-21-wave-a-historical-lock-correction-pre.json"
+LOCK_FIX_POST = PROJECT / "approvals" / "2026-10-21-wave-a-historical-lock-correction-post.json"
+LOCK_FIX_CHANGE = PROJECT / "changes" / "2026-10-21-wave-a-historical-lock-correction.json"
+LOCK_FIX_CAPSULE = PROJECT / "context-capsules" / "2026-10-21-wave-a-historical-lock-correction.json"
 
 CURRENT_REVIEW = PROJECT / "agentic-os-current-review.json"
 HISTORICAL_REVIEW = PROJECT / "agentic-os-latest-review.json"
@@ -44,6 +48,9 @@ for required in (
     A3_PRE,
     A3_CHANGE,
     A3_CAPSULE,
+    LOCK_FIX_PRE,
+    LOCK_FIX_CHANGE,
+    LOCK_FIX_CAPSULE,
     CURRENT_REVIEW,
     HISTORICAL_REVIEW,
     STAGE_MAP,
@@ -68,6 +75,10 @@ a3_pre = load(A3_PRE)
 a3_post = load(A3_POST) if A3_POST.exists() else None
 a3_change = load(A3_CHANGE)
 a3_capsule = load(A3_CAPSULE)
+lock_fix_pre = load(LOCK_FIX_PRE)
+lock_fix_post = load(LOCK_FIX_POST) if LOCK_FIX_POST.exists() else None
+lock_fix_change = load(LOCK_FIX_CHANGE)
+lock_fix_capsule = load(LOCK_FIX_CAPSULE)
 current_review = load(CURRENT_REVIEW)
 historical_review = load(HISTORICAL_REVIEW)
 stage_map = load(STAGE_MAP)
@@ -112,8 +123,18 @@ if a3_capsule["job_or_change_id"] != a3_change["change_id"] or not a3_capsule["i
 
 if lock["lock_id"] != "MRTKZ-REPAIR-WAVE-A-TRUTH-LOCK-2026-10-21":
     raise SystemExit("Wave A truth lock id drifted")
+if lock["schema_version"] != "1.1":
+    raise SystemExit("Wave A truth lock must use historical-anchor schema 1.1")
 if lock["baseline_revision"] != a3_pre["canonical_base"]["sha"]:
     raise SystemExit("Wave A truth lock baseline differs from A3 pre-approval")
+if lock["locked_revision"] != "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7":
+    raise SystemExit("Wave A historical locked revision drifted")
+if lock["validation_mode"] != "LOCKED_REVISION_SOURCE_BLOBS_MATCH_HISTORICAL_COMMIT":
+    raise SystemExit("Wave A truth lock validation mode is not historical")
+if lock["immutable_after_approval"] is not True:
+    raise SystemExit("Wave A approved truth lock must be immutable")
+if lock["head_progression_allowed_after_lock"] is not True:
+    raise SystemExit("Wave A truth lock blocks governed post-lock progression")
 if lock["repair_lineage"]["A1"] != "APPROVED_BY_AL_MURTAKAZ":
     raise SystemExit("Wave A truth lock lost A1 approval")
 if lock["repair_lineage"]["A2"] != "APPROVED_BY_AL_MURTAKAZ":
@@ -141,6 +162,46 @@ else:
         raise SystemExit("A3 post-review did not authorize adoption/merge")
     if a3_post["live_execution_authorized"] or a3_post["stage8_opened"]:
         raise SystemExit("A3 post-review inflated runtime authority")
+
+if lock_fix_pre["decision"] != "APPROVE_TO_IMPLEMENT":
+    raise SystemExit("Wave A historical-lock correction lacks Murtakaz pre-approval")
+if lock_fix_pre["canonical_base"]["sha"] != "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7":
+    raise SystemExit("Wave A historical-lock correction canonical base drifted")
+if lock_fix_pre["live_execution_authorized"] or lock_fix_pre["stage8_opened"]:
+    raise SystemExit("Wave A historical-lock correction inflated authority")
+if lock_fix_pre["final_adoption_granted"] or lock_fix_pre["merge_authorized"]:
+    raise SystemExit("Wave A historical-lock correction pre-approved adoption/merge")
+if lock_fix_change["pre_approval_receipt"] != (
+    "state/command-center/project-governance/approvals/2026-10-21-wave-a-historical-lock-correction-pre.json"
+):
+    raise SystemExit("Wave A historical-lock correction Change Envelope drifted")
+if lock_fix_change["evidence_precondition"]["mismatch_count"] != 0:
+    raise SystemExit("Wave A historical-lock correction did not prove historical blob identity")
+if lock_fix_capsule["job_or_change_id"] != lock_fix_change["change_id"] or not lock_fix_capsule["immutable"]:
+    raise SystemExit("Wave A historical-lock correction capsule drifted")
+
+anchor_correction = lock.get("historical_anchor_correction") or {}
+if anchor_correction.get("change_id") != "CC-WAVE-A-HISTORICAL-LOCK-CORRECTION-2026-10-21":
+    raise SystemExit("Wave A truth lock historical correction identity drifted")
+if anchor_correction.get("proof") != "ALL_18_LOCKED_SOURCE_BLOBS_MATCH_A3_MERGE_REVISION":
+    raise SystemExit("Wave A truth lock historical correction proof drifted")
+
+if lock_fix_post is None:
+    if anchor_correction.get("status") != "MURTAKAZ_REVIEW_REQUIRED":
+        raise SystemExit("Wave A historical-lock correction must remain review-required before post-review")
+else:
+    if lock_fix_post.get("decision") != "APPROVED_BY_AL_MURTAKAZ":
+        raise SystemExit("Wave A historical-lock correction post-review is not approved")
+    if not lock_fix_post["adoption_authorized"] or not lock_fix_post["merge_authorized"]:
+        raise SystemExit("Wave A historical-lock correction post-review did not authorize adoption/merge")
+    if lock_fix_post["live_execution_authorized"] or lock_fix_post["stage8_opened"]:
+        raise SystemExit("Wave A historical-lock correction post-review inflated authority")
+    if anchor_correction.get("status") != "APPROVED_BY_AL_MURTAKAZ":
+        raise SystemExit("Wave A truth lock historical correction did not finalize")
+    if anchor_correction.get("post_approval") != (
+        "state/command-center/project-governance/approvals/2026-10-21-wave-a-historical-lock-correction-post.json"
+    ):
+        raise SystemExit("Wave A truth lock historical correction post-review pointer drifted")
 
 delivery = stage_map["delivery"]
 if delivery["authoritative_current_stage"] != "STAGE_7":
@@ -275,7 +336,9 @@ if a3_post is None:
 else:
     if "A3 Truth Lock + Murtakaz Closure — COMPLETE / APPROVED_BY_AL_MURTAKAZ" not in roadmap:
         raise SystemExit("Roadmap did not close A3")
-    if "B1 Complete Remaining Native Work — ACTIVE" not in roadmap:
-        raise SystemExit("Roadmap did not activate Wave B / B1")
+    if "**Wave status: COMPLETE / APPROVED_BY_AL_MURTAKAZ**" not in roadmap:
+        raise SystemExit("Roadmap lost Wave A closure")
+    if "### Wave B — Visual P1 Completion" not in roadmap:
+        raise SystemExit("Roadmap lost governed Wave B continuation")
 
 print("Al-Murtakaz Repair Wave A truth-lock validation: PASS")

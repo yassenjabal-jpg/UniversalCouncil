@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CTX-CC-REPAIR-B1-NATIVE-COMPLETION-2026-10-21",
+  "immutable": true,
+  "project_id": "universal-council-command-center",
+  "job_or_change_id": "CC-REPAIR-B1-NATIVE-COMPLETION-2026-10-21",
+  "created_at": "2026-10-21",
+  "source_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "49a013f5fe653c40b43e7a0ca4dd68fc98845fc7"
+  },
+  "checkpoint_lock_id": "MRTKZ-REPAIR-WAVE-A-TRUTH-LOCK-2026-10-21",
+  "canonical_sources": [
+    {
+      "id": "visual-reference-manifest",
+      "locator": "state/command-center/living-operations-reference-manifest.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "visual-object-inventory",
+      "locator": "state/command-center/living-operations-reference-object-inventory.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "visual-production-protocol",
+      "locator": "state/command-center/living-operations-visual-production-protocol.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "visual-p1-state",
+      "locator": "state/command-center/living-operations-p1-visual-phase.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "p1-reference-shell",
+      "locator": "state/command-center/living-operations-p1-reference-shell-implementation.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "p1-remainder-plan",
+      "locator": "state/command-center/living-operations-p1-remainder-phases.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "p1-screen-review",
+      "locator": "state/command-center/living-operations-p1-screen-review.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "home-geometry-lock",
+      "locator": "state/command-center/living-operations-home-geometry-lock.json",
+      "authority_class": "LOCKED_POLICY"
+    }
+  ],
+  "forbidden_scope": [
+    "new visual direction",
+    "generated parent screen",
+    "R9 closure",
+    "R10 final P1 approval",
+    "Android artifact",
+    "Skill Registry",
+    "live execution",
+    "Stage 8"
+  ],
+  "risk_class": "MATERIAL_VISUAL_NATIVE_COMPLETION",
+  "expected_outputs": [
+    "eight-screen native completion state",
+    "B1 validation evidence",
+    "exact-head render evidence",
+    "Murtakaz post-review",
+    "B2 handoff"
+  ]
+}

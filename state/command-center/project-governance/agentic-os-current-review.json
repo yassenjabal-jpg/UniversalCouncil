@@ -17,7 +17,9 @@
     "state/command-center/project-governance/approvals/2026-10-21-capability-model-broker-post.json",
     "state/command-center/project-governance/approvals/2026-10-21-repair-a1-context-baseline-post.json",
     "state/command-center/project-governance/approvals/2026-10-21-repair-a2-governance-metadata-post.json",
-    "state/command-center/project-governance/approvals/2026-10-21-repair-a3-truth-lock-post.json"
+    "state/command-center/project-governance/approvals/2026-10-21-repair-a3-truth-lock-post.json",
+    "state/command-center/project-governance/approvals/2026-10-21-wave-a-historical-lock-correction-post.json",
+    "state/command-center/project-governance/approvals/2026-10-21-repair-b1-native-completion-post.json"
   ],
   "merged_lineage": [
     {
@@ -75,7 +77,8 @@
     },
     "wave_b": "ACTIVE",
     "wave_c": "PENDING",
-    "wave_b_current_stage": "B1_COMPLETE_REMAINING_NATIVE_WORK"
+    "wave_b_current_stage": "B2_CROSS_SCREEN_CONSISTENCY",
+    "wave_b_b1": "COMPLETE_APPROVED"
   },
   "next_engineering_after_repairs": "SKILL_REGISTRY",
   "protected_truth": {
@@ -101,5 +104,13 @@
     "reviewed_head": "aad78756da7ce050a7ca8f45817574e78689860b",
     "post_approval": "state/command-center/project-governance/approvals/2026-10-21-repair-a3-truth-lock-post.json",
     "next_active_work": "REPAIR_WAVE_B1_COMPLETE_REMAINING_NATIVE_WORK"
+  },
+  "latest_visual_repair": {
+    "change_id": "CC-REPAIR-B1-NATIVE-COMPLETION-2026-10-21",
+    "status": "APPROVED_BY_AL_MURTAKAZ",
+    "scope": "B1_NATIVE_COMPLETION_ONLY",
+    "final_p1_approval": false,
+    "post_approval": "state/command-center/project-governance/approvals/2026-10-21-repair-b1-native-completion-post.json",
+    "next_active_work": "REPAIR_WAVE_B2_CROSS_SCREEN_CONSISTENCY"
   }
 }
