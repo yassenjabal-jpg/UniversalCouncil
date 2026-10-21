@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-REPAIR-A3-TRUTH-LOCK-POST-2026-10-21",
+  "change_id": "CC-REPAIR-A3-TRUTH-LOCK-2026-10-21",
+  "status": "APPROVED_BY_AL_MURTAKAZ",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "reviewed_revision": "aad78756da7ce050a7ca8f45817574e78689860b",
+  "canonical_base": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "76eeca02b79790c28a181520cc019d3586769b26"
+  },
+  "governance_review": {
+    "cc_product_truth": "PASS",
+    "cc_architecture_execution": "PASS",
+    "cc_red_team": "PASS_AFTER_VISUAL_MANIFEST_SCHEMA_CORRECTION",
+    "cc_durable_autopilot": "PASS",
+    "cc_ai_runtime": "PASS",
+    "cc_owner_experience": "PASS_NO_USER_SURFACE_CHANGE"
+  },
+  "findings": [
+    "Wave A truth lock is non-self-referential and validates canonical source blobs against actual checkout HEAD.",
+    "Truth-lock digest changes if any locked source blob changes.",
+    "Stage 7 remains authoritative and Stage 8 remains NOT_OPENED.",
+    "Phase0 has not fully passed and live execution remains disabled.",
+    "Visual P1 remains IN_PROGRESS and requires final Murtakaz approval.",
+    "Model provider calls remain disconnected.",
+    "Skill Registry, Job Engine and real Autopilot remain NOT_IMPLEMENTED.",
+    "Historical Agentic review remains preserved as RETURN_FOR_ALIGNMENT while the current review remains canonical.",
+    "A1 and A2 approval lineage is intact."
+  ],
+  "exact_head_evidence": [
+    {
+      "workflow": "Company Stage 0",
+      "run_id": 39579287463,
+      "conclusion": "SUCCESS",
+      "head_sha": "aad78756da7ce050a7ca8f45817574e78689860b"
+    },
+    {
+      "workflow": "CodeQL",
+      "run_id": 39579287477,
+      "conclusion": "SUCCESS",
+      "head_sha": "aad78756da7ce050a7ca8f45817574e78689860b"
+    },
+    {
+      "workflow": "Command Center Reference UI",
+      "run_id": 39579287436,
+      "conclusion": "SUCCESS",
+      "head_sha": "aad78756da7ce050a7ca8f45817574e78689860b",
+      "includes": "WPF build + ContextValidation + GatewayValidation + CapabilityModelValidation + reference render"
+    }
+  ],
+  "repair_wave_a_authorized_complete": true,
+  "next_active_work_authorized": "REPAIR_WAVE_B1_COMPLETE_REMAINING_NATIVE_WORK",
+  "runtime_behavior_changed": false,
+  "visual_p1_changed": false,
+  "live_execution_authorized": false,
+  "stage8_opened": false,
+  "adoption_authorized": true,
+  "merge_authorized": true,
+  "reopen_triggers": [
+    "any locked source blob changes without truth-lock refresh",
+    "Stage 8 opens",
+    "live execution becomes authorized",
+    "Visual P1 is falsely marked complete",
+    "model provider calls become connected without governed change",
+    "Skill Registry or Job Engine is implemented before governed roadmap progression",
+    "historical/current review separation regresses"
+  ],
+  "timestamp": "2026-10-21"
+}
