@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "evaluation_id": "CC-MOTION-W1-1-PERSISTENT-WGC-CI-EVALUATION-2026-10-22",
+  "phase": "W1.1",
+  "candidate_sha": "80c1b91a2ca73b7096cdf74fa833091aa3065ef1",
+  "workflow_run_id": 39694752756,
+  "artifact": {
+    "id": 12390012608,
+    "name": "UniversalCouncil-W1-1-WGC-Pilot-80c1b91a2ca73b7096cdf74fa833091aa3065ef1",
+    "digest": "sha256:3ce76c58bca6a7ee9c728bb60bd02b299dd5cd40f3280502360e3189d6634d20"
+  },
+  "source": "RAW_WGC_PERSISTENT/WKI_CLIPPER_PATTERN",
+  "result": {
+    "successful_samples": 60,
+    "target_seconds": 2,
+    "sample_elapsed_seconds": 2.006,
+    "achieved_sample_fps": 29.909,
+    "source_frames_arrived": 9,
+    "source_arrival_fps": 4.486,
+    "distinct_source_sequences": 7,
+    "distinct_pixel_hashes": 7,
+    "fresh_source_sample_ratio": 0.1167,
+    "source_frame_errors": 0,
+    "first_frame_latency_ms": 265.83,
+    "dimensions_exact_1440x900": false
+  },
+  "decision": "FAIL_PERSISTENT_WGC_ON_CURRENT_CI_HOST",
+  "interpretation": "WGC_IS_FUNCTIONAL_BUT_CI_COMPOSITOR_CADENCE_AND_GEOMETRY_ARE_NOT_YET_ACCEPTABLE_FOR_MOTION_EVIDENCE",
+  "next_action": "REAL_YASSIN_HOST_PERSISTENT_WGC_VALIDATION",
+  "motion_failure": false,
+  "motion_dna_changed": false,
+  "thresholds_changed": false,
+  "w1_2_started": false,
+  "stage8_opened": false,
+  "runtime_authority": false,
+  "merge_authorized": false,
+  "timestamp": "2026-10-22"
+}
