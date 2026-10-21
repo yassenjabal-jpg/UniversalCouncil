@@ -154,6 +154,111 @@ Require(explicitFallback.ModelId == "model-fallback", "Broker selected a model o
 Require(explicitFallback.FallbackUsed, "Fallback use must be visible in the result");
 Require(!explicitFallback.ProviderInvocationAuthorized, "Fallback selection cannot authorize invocation");
 
+var fallbackNotEligible = broker.Select(
+    new(
+        GatewayReasoningPath.SingleAgent,
+        Preferences(
+            task: "model-unavailable",
+            role: "",
+            project: "",
+            global: "",
+            fallbackMode: ModelFallbackMode.ExplicitAllowlist,
+            fallbacks: ["model-no-fallback"])));
+
+Require(
+    fallbackNotEligible.State == ModelSelectionState.Unavailable,
+    "Explicit fallback must still respect capability fallback eligibility");
+
+var insufficientContext = broker.Select(
+    new(
+        GatewayReasoningPath.SingleAgent,
+        Preferences(
+            task: "model-task",
+            role: "",
+            project: "",
+            global: "",
+            fallbackMode: ModelFallbackMode.Disabled,
+            fallbacks: []) with
+        {
+            MinimumContextWindow = 256000
+        }));
+
+Require(
+    insufficientContext.State == ModelSelectionState.Unavailable,
+    "Model below the requested context window must be rejected");
+
+var disallowedLatency = broker.Select(
+    new(
+        GatewayReasoningPath.SingleAgent,
+        Preferences(
+            task: "model-task",
+            role: "",
+            project: "",
+            global: "",
+            fallbackMode: ModelFallbackMode.Disabled,
+            fallbacks: []) with
+        {
+            AllowedLatencyCosts = ["LOCAL_LOW"]
+        }));
+
+Require(
+    disallowedLatency.State == ModelSelectionState.Unavailable,
+    "Model with a disallowed latency/cost class must be rejected");
+
+var insufficientQuality = broker.Select(
+    new(
+        GatewayReasoningPath.SingleAgent,
+        Preferences(
+            task: "model-task",
+            role: "",
+            project: "",
+            global: "",
+            fallbackMode: ModelFallbackMode.Disabled,
+            fallbacks: []) with
+        {
+            MinimumQualityTier = "MAX"
+        }));
+
+Require(
+    insufficientQuality.State == ModelSelectionState.Unavailable,
+    "Model below the requested quality floor must be rejected");
+
+var excessiveCost = broker.Select(
+    new(
+        GatewayReasoningPath.SingleAgent,
+        Preferences(
+            task: "model-task",
+            role: "",
+            project: "",
+            global: "",
+            fallbackMode: ModelFallbackMode.Disabled,
+            fallbacks: []) with
+        {
+            MaximumCostTier = "LOW"
+        }));
+
+Require(
+    excessiveCost.State == ModelSelectionState.Unavailable,
+    "Model above the requested cost ceiling must be rejected");
+
+var privacyMismatch = broker.Select(
+    new(
+        GatewayReasoningPath.SingleAgent,
+        Preferences(
+            task: "model-task",
+            role: "",
+            project: "",
+            global: "",
+            fallbackMode: ModelFallbackMode.Disabled,
+            fallbacks: []) with
+        {
+            RequiredPrivacyClass = "PRIVATE_PROVIDER"
+        }));
+
+Require(
+    privacyMismatch.State == ModelSelectionState.Unavailable,
+    "Model outside the requested privacy boundary must be rejected");
+
 var staleRegistry = new CapabilityRegistryService(
     new StaticCapabilityRegistryReader(capabilityDocument),
     () => now.AddHours(2));
@@ -313,6 +418,14 @@ static CapabilityRegistryDocument SyntheticCapabilities(DateTimeOffset now) =>
                 now,
                 3600),
             Capability(
+                "cap-no-fallback",
+                "provider-no-fallback",
+                "model.invoke.no-fallback",
+                "HEALTHY",
+                now,
+                3600,
+                fallbackEligible: false),
+            Capability(
                 "cap-unavailable",
                 "provider-unavailable",
                 "model.invoke.unavailable",
@@ -337,7 +450,8 @@ static CapabilityEntryDocument Capability(
     string health,
     DateTimeOffset verifiedAt,
     int ttl,
-    string failureReason = "") =>
+    string failureReason = "",
+    bool fallbackEligible = true) =>
     new(
         id,
         provider,
@@ -352,7 +466,7 @@ static CapabilityEntryDocument Capability(
         ttl,
         "EXTERNAL",
         "SYNTHETIC_TEST",
-        true,
+        fallbackEligible,
         failureReason);
 
 static ModelBrokerPolicyDocument SyntheticModelPolicy() =>
@@ -382,6 +496,7 @@ static ModelBrokerPolicyDocument SyntheticModelPolicy() =>
             Model("model-project", "provider-project", "model.invoke.project"),
             Model("model-global", "provider-global", "model.invoke.global"),
             Model("model-fallback", "provider-fallback", "model.invoke.fallback"),
+            Model("model-no-fallback", "provider-no-fallback", "model.invoke.no-fallback"),
             Model("model-unavailable", "provider-unavailable", "model.invoke.unavailable")
         ]);
 
