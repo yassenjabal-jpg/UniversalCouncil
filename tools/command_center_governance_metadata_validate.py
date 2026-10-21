@@ -128,6 +128,7 @@ expected_lineage = {
     59: "ea35e6d24931e5981d164fed89b0d494f80c2b44",
     60: "b3ef5d8f60e3f623371b40036bcea01f7a396d2a",
     61: "f55d6f924d0e29a27eebead09e342e899615b38f",
+    62: "76eeca02b79790c28a181520cc019d3586769b26",
 }
 actual_lineage = {item["pr"]: item["merge_sha"] for item in current_review["merged_lineage"]}
 if actual_lineage != expected_lineage:
