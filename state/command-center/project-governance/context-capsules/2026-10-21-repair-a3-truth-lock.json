@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CTX-CC-REPAIR-A3-TRUTH-LOCK-2026-10-21",
+  "immutable": true,
+  "project_id": "universal-council-command-center",
+  "job_or_change_id": "CC-REPAIR-A3-TRUTH-LOCK-2026-10-21",
+  "created_at": "2026-10-21",
+  "source_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "76eeca02b79790c28a181520cc019d3586769b26"
+  },
+  "checkpoint_lock_id": "MRTKZ-REPAIR-A2-GOVERNANCE-METADATA-POST-2026-10-21",
+  "canonical_sources": [
+    {
+      "id": "project-context-map",
+      "locator": "state/command-center/project-context-map.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "architecture-invariants",
+      "locator": "state/command-center/project-governance/architecture-invariants.json",
+      "authority_class": "LOCKED_POLICY"
+    },
+    {
+      "id": "agentic-os-current-review",
+      "locator": "state/command-center/project-governance/agentic-os-current-review.json",
+      "authority_class": "ACCEPTED_EVIDENCE"
+    },
+    {
+      "id": "stage-phase-map",
+      "locator": "state/command-center/project-governance/stage-phase-map.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "phase0-gates",
+      "locator": "state/command-center/phase0-execution-gates.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "visual-p1-state",
+      "locator": "state/command-center/living-operations-p1-visual-phase.json",
+      "authority_class": "CANONICAL_ARTIFACT"
+    },
+    {
+      "id": "roadmap",
+      "locator": "docs/operations/command-center/COMMAND_CENTER_ROADMAP_2026-10-19.md",
+      "authority_class": "CANONICAL_ARTIFACT"
+    }
+  ],
+  "allowed_scope": "SEE_CHANGE_ENVELOPE_CC-REPAIR-A3-TRUTH-LOCK-2026-10-21",
+  "forbidden_scope": [
+    "Visual P1 implementation",
+    "repository cleanup",
+    "Skill Registry",
+    "live execution",
+    "Stage 8"
+  ],
+  "authority_policy_version": "al-murtakaz-mandatory-approval:1.0",
+  "risk_class": "MATERIAL_TRUTH_LOCK_AND_REPAIR_WAVE_CLOSURE",
+  "expected_outputs": [
+    "Wave A truth lock",
+    "cross-file closure validator/tests",
+    "exact-head evidence",
+    "Murtakaz post-review",
+    "Wave A closure state"
+  ]
+}
