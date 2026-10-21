@@ -10,6 +10,7 @@ PROJECT = STATE / "project-governance"
 CHANGE = PROJECT / "changes" / "2026-10-21-repair-b3-final-p1-acceptance.json"
 PRE = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-pre.json"
 RETURN = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-return.json"
+RETURN_ADOPTION = PROJECT / "approvals" / "2026-10-21-repair-b3-return-state-adoption.json"
 POST = PROJECT / "approvals" / "2026-10-21-repair-b3-final-p1-acceptance-post.json"
 CAPSULE = PROJECT / "context-capsules" / "2026-10-21-repair-b3-final-p1-acceptance.json"
 PLAN = STATE / "living-operations-p1-b3-final-review.json"
@@ -34,13 +35,14 @@ def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-for required in (CHANGE, PRE, RETURN, CAPSULE, PLAN, RESULT, P1, SCREEN_REVIEW, REMAINDER):
+for required in (CHANGE, PRE, RETURN, RETURN_ADOPTION, CAPSULE, PLAN, RESULT, P1, SCREEN_REVIEW, REMAINDER):
     if not required.exists():
         raise SystemExit(f"missing B3 artifact: {required.relative_to(ROOT)}")
 
 change = load(CHANGE)
 pre = load(PRE)
 returned = load(RETURN)
+return_adoption = load(RETURN_ADOPTION)
 capsule = load(CAPSULE)
 plan = load(PLAN)
 result = load(RESULT)
@@ -93,6 +95,14 @@ if returned["final_p1_approval_granted"] or returned["p1_complete"]:
     raise SystemExit("B3 return receipt falsely closes P1")
 if returned["live_execution_authorized"] or returned["stage8_opened"]:
     raise SystemExit("B3 return receipt inflated runtime authority")
+if return_adoption["decision"] != "APPROVED_BY_AL_MURTAKAZ":
+    raise SystemExit("B3 return state lacks Murtakaz adoption approval")
+if not return_adoption["adoption_authorized"] or not return_adoption["merge_authorized"]:
+    raise SystemExit("B3 return state adoption is not merge-authorized")
+if return_adoption["final_p1_approval_granted"] or return_adoption["p1_complete"]:
+    raise SystemExit("B3 return-state adoption falsely grants final P1 approval")
+if return_adoption["live_execution_authorized"] or return_adoption["stage8_opened"]:
+    raise SystemExit("B3 return-state adoption inflated runtime authority")
 
 if remainder["phases"]["R9_CROSS_SCREEN_CONSISTENCY_AUDIT"]["state"] != "CLOSED":
     raise SystemExit("B3 final review requires R9/B2 to be closed first")
