@@ -297,7 +297,7 @@ internal static partial class Program
     {
         if (window.FindName("ReferenceImage") is UIElement referenceImage)
         {
-            referenceImage.Visibility = Visibility.Collapsed;
+            referenceImage.Visibility = Visibility.Visible;
         }
 
         if (window.Content is not FrameworkElement root)
