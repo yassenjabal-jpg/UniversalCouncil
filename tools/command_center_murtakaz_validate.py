@@ -35,6 +35,7 @@ STAGE7_REAL_EVIDENCE_VALIDATOR = ROOT / "tools" / "command_center_stage7_real_ev
 MOTION_VISIBILITY_VALIDATOR = ROOT / "tools" / "command_center_motion_visibility_validate.py"
 MOTION_ROADMAP_VALIDATOR = ROOT / "tools" / "command_center_motion_roadmap_validate.py"
 MOTION_W0_1_BASELINE_VALIDATOR = ROOT / "tools" / "command_center_motion_w0_1_baseline_validate.py"
+MOTION_W0_2_COVERAGE_VALIDATOR = ROOT / "tools" / "command_center_motion_w0_2_coverage_validate.py"
 
 VISUAL_DIRECTION_ROOT = ROOT / "docs" / "operations" / "command-center" / "living-operations"
 VISUAL_DIRECTION_FILES = (
@@ -93,6 +94,7 @@ for required in (
     MOTION_VISIBILITY_VALIDATOR,
     MOTION_ROADMAP_VALIDATOR,
     MOTION_W0_1_BASELINE_VALIDATOR,
+    MOTION_W0_2_COVERAGE_VALIDATOR,
 ):
     if not required.exists():
         raise SystemExit(f"missing Murtakaz alignment artifact: {required.relative_to(ROOT)}")
@@ -212,6 +214,7 @@ subprocess.run([__import__("sys").executable, str(STAGE7_REAL_EVIDENCE_VALIDATOR
 subprocess.run([__import__("sys").executable, str(MOTION_VISIBILITY_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(MOTION_ROADMAP_VALIDATOR)], check=True)
 subprocess.run([__import__("sys").executable, str(MOTION_W0_1_BASELINE_VALIDATOR)], check=True)
+subprocess.run([__import__("sys").executable, str(MOTION_W0_2_COVERAGE_VALIDATOR)], check=True)
 
 for visual_file in VISUAL_DIRECTION_FILES:
     text = visual_file.read_text(encoding="utf-8").casefold()

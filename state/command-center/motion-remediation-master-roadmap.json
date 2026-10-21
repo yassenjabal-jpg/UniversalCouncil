@@ -8,13 +8,13 @@
   "pull_request": 72,
   "current_position": {
     "wave": "W0",
-    "phase": "W0.1",
+    "phase": "W0.2",
     "classification": "IMPLEMENTATION_EXPERIMENT_NOT_FINAL",
     "pr_merge_allowed": false,
     "audited_implementation_head": "9285da24be6bee97564f7f47cbcaf7dee1ad3989",
-    "phase_status": "MOTION_RETURN_BASELINE_LOCK",
-    "phase_gate_receipt": "state/command-center/project-governance/approvals/2026-10-21-motion-w0-1-baseline-lock.json",
-    "next_phase": "W0.2",
+    "phase_status": "MOTION_STORYBOARD_CODE_COVERAGE_LOCK",
+    "phase_gate_receipt": "state/command-center/project-governance/approvals/2026-10-21-motion-w0-2-coverage-lock.json",
+    "next_phase": "W0.3",
     "next_phase_started": false,
     "branch_head_source_of_truth": "GITHUB_DYNAMIC_DO_NOT_EMBED_AS_LATEST_HEAD"
   },
