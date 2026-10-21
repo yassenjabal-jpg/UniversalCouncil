@@ -7876,22 +7876,25 @@ public partial class MainWindow : Window
         PrototypeNotice.Visibility = Visibility.Visible;
         PrototypeNotice.Opacity = 1;
 
-        await Task.Delay(2600);
+        await Task.Delay(2600).ConfigureAwait(false);
 
-        if (!IsLoaded)
+        await Dispatcher.InvokeAsync(() =>
         {
-            return;
-        }
+            if (!IsLoaded && Visibility != Visibility.Visible)
+            {
+                return;
+            }
 
-        if (!MotionEnabled)
-        {
-            PrototypeNotice.Visibility = Visibility.Collapsed;
-            return;
-        }
+            if (!MotionEnabled)
+            {
+                PrototypeNotice.Visibility = Visibility.Collapsed;
+                return;
+            }
 
-        var fade = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(180));
-        fade.Completed += (_, _) => PrototypeNotice.Visibility = Visibility.Collapsed;
-        PrototypeNotice.BeginAnimation(OpacityProperty, fade);
+            var fade = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(180));
+            fade.Completed += (_, _) => PrototypeNotice.Visibility = Visibility.Collapsed;
+            PrototypeNotice.BeginAnimation(OpacityProperty, fade);
+        });
     }
 
     private static ScreenKind ParseScreen(string id) => id switch
