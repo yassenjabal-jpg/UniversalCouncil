@@ -95,7 +95,10 @@ if phase0["live_execution_authorized"]:
 
 if policy["host_evidence"]["remote_command_channel_state"] != "DEVICE_OFFLINE_AND_TOOL_QUOTA_BLOCKED":
     raise SystemExit("Stage 7 policy no longer reflects the current YASSIN access blocker")
-if projection["host_evidence"]["remote_command_channel_state"] != policy["host_evidence"]["remote_command_channel_state"]:
+if (
+    projection["host_evidence"]["remote_command_channel_state"]
+    != policy["host_evidence"]["remote_command_channel_state"]
+):
     raise SystemExit("Stage 7 projection/policy host-access truth diverged")
 
 gates = index["gates"]
