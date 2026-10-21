@@ -85,9 +85,12 @@ required_recorder_markers = (
     "semantic_event_timestamps = true",
     "referenceImage.Visibility = Visibility.Visible;",
     "Stopwatch.StartNew()",
-    "ExtractRawFramesWithFfmpeg(",
+    "Channel.CreateBounded<byte[]>(",
+    "frameEncoder.Queue(capture.Pixels)",
     'clock = "STOPWATCH_REALTIME_WPF"',
-    "png_encoding_during_capture = false",
+    'pipeline = "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG"',
+    'background_encoder = "FFMPEG_LOSSLESS_PNG"',
+    "png_encoding_on_wpf_capture_thread = false",
 )
 for marker in required_recorder_markers:
     if marker not in recorder:
@@ -95,6 +98,9 @@ for marker in required_recorder_markers:
 
 if "new PngBitmapEncoder" in recorder:
     raise SystemExit("WPF recorder reintroduced synchronous PNG encoding and time dilation")
+
+if "wpf-{mode}-capture.bgra" in recorder or "ExtractRawFramesWithFfmpeg(" in recorder:
+    raise SystemExit("WPF recorder reintroduced synchronous raw-disk frame persistence")
 
 if workflow.count("-framerate 30") < 2:
     raise SystemExit("WPF full/reduced owner-review motion videos are not both encoded at 30fps")
@@ -109,6 +115,9 @@ required_gate_markers = (
     "reduced motion capture lost required discrete state-transition feedback",
     "math.ceil(3 * fps_scale)",
     'timing.get("clock") != "STOPWATCH_REALTIME_WPF"',
+    'timing.get("pipeline") != "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG"',
+    'timing.get("background_encoder") != "FFMPEG_LOSSLESS_PNG"',
+    'timing.get("png_encoding_on_wpf_capture_thread") is not False',
     "abs(actual_capture - target_capture) > 1.25",
     'float(timing.get("max_capture_lateness_ms", 999999)) > 100',
 )

@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Threading.Channels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -67,19 +68,11 @@ internal static partial class Program
         var totalCaptureLatenessMs = 0d;
         var maxCaptureLatenessMs = 0d;
         var lateFrameCount = 0;
-        var rawCapturePath = Path.Combine(output, $"wpf-{mode}-capture.bgra");
+        using var frameEncoder = new BackgroundPngFrameEncoder(framesDirectory, frameCount);
         var captureClock = Stopwatch.StartNew();
 
-        using (var rawCapture = new FileStream(
-            rawCapturePath,
-            FileMode.Create,
-            FileAccess.Write,
-            FileShare.None,
-            1024 * 1024,
-            FileOptions.SequentialScan))
+        for (var frame = 0; frame < frameCount; frame++)
         {
-            for (var frame = 0; frame < frameCount; frame++)
-            {
                 if (stepsByFrame.TryGetValue(frame, out var frameSteps))
                 {
                     foreach (var step in frameSteps)
@@ -104,10 +97,10 @@ internal static partial class Program
                     lateFrameCount++;
                 }
 
-                var capture = CaptureMotionFrame(window);
-                rawCapture.Write(capture.Pixels, 0, capture.Pixels.Length);
+            var capture = CaptureMotionFrame(window);
+            frameEncoder.Queue(capture.Pixels);
 
-                var (meanDelta, changedRatio) = previousPixels is null
+            var (meanDelta, changedRatio) = previousPixels is null
                     ? (0d, 0d)
                     : ComputeFrameDelta(previousPixels, capture.Pixels);
                 var visiblyChanged = meanDelta >= 0.20 || changedRatio >= 0.004;
@@ -134,24 +127,12 @@ internal static partial class Program
                     Math.Round(meanDelta, 4),
                     Math.Round(changedRatio, 6),
                     visiblyChanged));
-                previousPixels = capture.Pixels;
-            }
+            previousPixels = capture.Pixels;
         }
 
         captureClock.Stop();
         var actualCaptureDurationSeconds = captureClock.Elapsed.TotalSeconds;
-
-        try
-        {
-            ExtractRawFramesWithFfmpeg(rawCapturePath, framesDirectory, frameCount);
-        }
-        finally
-        {
-            if (File.Exists(rawCapturePath))
-            {
-                File.Delete(rawCapturePath);
-            }
-        }
+        frameEncoder.CompleteAndVerify();
 
         var frameEvidence = frameSamples
             .Select(sample =>
@@ -196,7 +177,7 @@ internal static partial class Program
                     capture_timing = new
                     {
                         clock = "STOPWATCH_REALTIME_WPF",
-                        pipeline = "RENDERTARGETBITMAP_BGRA_STREAM_THEN_POST_CAPTURE_PNG_EXTRACTION",
+                        pipeline = "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG",
                         target_capture_duration_seconds = (double)frameCount / MotionFramesPerSecond,
                         actual_capture_duration_seconds = Math.Round(actualCaptureDurationSeconds, 3),
                         max_capture_lateness_ms = Math.Round(maxCaptureLatenessMs, 3),
@@ -204,7 +185,9 @@ internal static partial class Program
                             totalCaptureLatenessMs / Math.Max(1, frameCount),
                             3),
                         late_frame_count_over_one_frame = lateFrameCount,
-                        png_encoding_during_capture = false,
+                        background_encoder = "FFMPEG_LOSSLESS_PNG",
+                        encoder_queue_capacity_frames = BackgroundPngFrameEncoder.QueueCapacityFrames,
+                        png_encoding_on_wpf_capture_thread = false,
                     },
                     motion_visibility = new
                     {
@@ -481,68 +464,153 @@ internal static partial class Program
         return new MotionCapture(pixels);
     }
 
-    private static void ExtractRawFramesWithFfmpeg(
-        string rawCapturePath,
-        string framesDirectory,
-        int frameCount)
+    private sealed class BackgroundPngFrameEncoder : IDisposable
     {
-        var outputPattern = Path.Combine(framesDirectory, "frame-%04d.png");
-        var startInfo = new ProcessStartInfo
-        {
-            FileName = "ffmpeg",
-            UseShellExecute = false,
-            RedirectStandardError = true,
-            RedirectStandardOutput = true,
-            CreateNoWindow = true,
-        };
+        internal const int QueueCapacityFrames = 60;
 
-        foreach (var argument in new[]
+        private readonly string _framesDirectory;
+        private readonly int _frameCount;
+        private readonly Process _process;
+        private readonly Channel<byte[]> _frames;
+        private readonly Task _writerTask;
+        private readonly Task<string> _stdoutTask;
+        private readonly Task<string> _stderrTask;
+        private bool _completed;
+
+        internal BackgroundPngFrameEncoder(string framesDirectory, int frameCount)
         {
-            "-hide_banner",
-            "-loglevel",
-            "error",
-            "-y",
-            "-f",
-            "rawvideo",
-            "-pixel_format",
-            "bgra",
-            "-video_size",
-            $"{MotionWidth}x{MotionHeight}",
-            "-framerate",
-            MotionFramesPerSecond.ToString(),
-            "-i",
-            rawCapturePath,
-            "-start_number",
-            "0",
-            "-frames:v",
-            frameCount.ToString(),
-            "-compression_level",
-            "6",
-            outputPattern,
-        })
-        {
-            startInfo.ArgumentList.Add(argument);
+            _framesDirectory = framesDirectory;
+            _frameCount = frameCount;
+
+            var outputPattern = Path.Combine(framesDirectory, "frame-%04d.png");
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "ffmpeg",
+                UseShellExecute = false,
+                RedirectStandardInput = true,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true,
+            };
+
+            foreach (var argument in new[]
+            {
+                "-hide_banner",
+                "-loglevel",
+                "error",
+                "-y",
+                "-f",
+                "rawvideo",
+                "-pixel_format",
+                "bgra",
+                "-video_size",
+                $"{MotionWidth}x{MotionHeight}",
+                "-framerate",
+                MotionFramesPerSecond.ToString(),
+                "-i",
+                "pipe:0",
+                "-start_number",
+                "0",
+                "-frames:v",
+                frameCount.ToString(),
+                "-compression_level",
+                "6",
+                outputPattern,
+            })
+            {
+                startInfo.ArgumentList.Add(argument);
+            }
+
+            _process = Process.Start(startInfo)
+                ?? throw new InvalidOperationException(
+                    "Unable to start background ffmpeg WPF frame encoder.");
+            _stdoutTask = _process.StandardOutput.ReadToEndAsync();
+            _stderrTask = _process.StandardError.ReadToEndAsync();
+
+            _frames = Channel.CreateBounded<byte[]>(
+                new BoundedChannelOptions(QueueCapacityFrames)
+                {
+                    SingleReader = true,
+                    SingleWriter = true,
+                    FullMode = BoundedChannelFullMode.Wait,
+                });
+
+            _writerTask = Task.Run(async () =>
+            {
+                await foreach (var pixels in _frames.Reader.ReadAllAsync())
+                {
+                    await _process.StandardInput.BaseStream.WriteAsync(pixels);
+                }
+
+                await _process.StandardInput.BaseStream.FlushAsync();
+                _process.StandardInput.Close();
+            });
         }
 
-        using var process = Process.Start(startInfo)
-            ?? throw new InvalidOperationException("Unable to start ffmpeg for WPF frame extraction.");
-        var stdoutTask = process.StandardOutput.ReadToEndAsync();
-        var stderrTask = process.StandardError.ReadToEndAsync();
-        process.WaitForExit();
-        var stdout = stdoutTask.GetAwaiter().GetResult();
-        var stderr = stderrTask.GetAwaiter().GetResult();
-
-        if (process.ExitCode != 0)
+        internal void Queue(byte[] pixels)
         {
-            throw new InvalidOperationException(
-                $"ffmpeg WPF frame extraction failed ({process.ExitCode}). {stderr} {stdout}");
+            if (!_frames.Writer.TryWrite(pixels))
+            {
+                throw new InvalidOperationException(
+                    "Background PNG encoder fell behind the real-time WPF capture by more than " +
+                    $"{QueueCapacityFrames} frames.");
+            }
         }
 
-        var extractedFrameCount = Directory.GetFiles(framesDirectory, "frame-*.png").Length;
-        if (extractedFrameCount != frameCount)
+        internal void CompleteAndVerify()
         {
-            throw new InvalidOperationException(
-                $"WPF raw-frame extraction mismatch: expected {frameCount}, got {extractedFrameCount}.");
+            if (_completed)
+            {
+                return;
+            }
+
+            _completed = true;
+            _frames.Writer.TryComplete();
+            _writerTask.GetAwaiter().GetResult();
+            _process.WaitForExit();
+
+            var stdout = _stdoutTask.GetAwaiter().GetResult();
+            var stderr = _stderrTask.GetAwaiter().GetResult();
+            if (_process.ExitCode != 0)
+            {
+                throw new InvalidOperationException(
+                    $"background ffmpeg WPF PNG encoding failed ({_process.ExitCode}). " +
+                    $"{stderr} {stdout}");
+            }
+
+            var encodedFrameCount = Directory.GetFiles(
+                _framesDirectory,
+                "frame-*.png").Length;
+            if (encodedFrameCount != _frameCount)
+            {
+                throw new InvalidOperationException(
+                    $"WPF background-frame encoding mismatch: expected {_frameCount}, " +
+                    $"got {encodedFrameCount}.");
+            }
+        }
+
+        public void Dispose()
+        {
+            if (!_completed)
+            {
+                _frames.Writer.TryComplete(
+                    new OperationCanceledException(
+                        "WPF evidence capture disposed before encoder completion."));
+            }
+
+            if (!_process.HasExited)
+            {
+                try
+                {
+                    _process.Kill(entireProcessTree: true);
+                }
+                catch (InvalidOperationException)
+                {
+                    // Process already exited between the check and kill request.
+                }
+            }
+
+            _process.Dispose();
         }
     }
 

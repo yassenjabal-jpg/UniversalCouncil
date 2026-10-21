@@ -97,8 +97,14 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
         raise SystemExit(f"{mode} capture timing evidence is missing")
     if timing.get("clock") != "STOPWATCH_REALTIME_WPF":
         raise SystemExit(f"{mode} capture clock is not real-time WPF")
-    if timing.get("png_encoding_during_capture") is not False:
-        raise SystemExit(f"{mode} recorder reintroduced PNG encoding during animation capture")
+    if timing.get("pipeline") != "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG":
+        raise SystemExit(f"{mode} recorder pipeline is not the governed background encoder")
+    if timing.get("background_encoder") != "FFMPEG_LOSSLESS_PNG":
+        raise SystemExit(f"{mode} background frame encoder drifted")
+    if timing.get("png_encoding_on_wpf_capture_thread") is not False:
+        raise SystemExit(f"{mode} recorder reintroduced PNG encoding on the WPF capture thread")
+    if int(timing.get("encoder_queue_capacity_frames", 0)) != 60:
+        raise SystemExit(f"{mode} recorder queue capacity drifted")
     target_capture = float(timing.get("target_capture_duration_seconds", 0))
     actual_capture = float(timing.get("actual_capture_duration_seconds", 0))
     if abs(actual_capture - target_capture) > 1.25:

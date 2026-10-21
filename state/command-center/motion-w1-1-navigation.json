@@ -108,10 +108,13 @@
     "detector_thresholds_changed": false,
     "reduced_motion_changed": false,
     "recorder_clock": "STOPWATCH_REALTIME_WPF",
-    "recorder_pipeline": "RENDERTARGETBITMAP_BGRA_STREAM_THEN_POST_CAPTURE_PNG_EXTRACTION",
-    "png_encoding_during_capture": false,
+    "recorder_pipeline": "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG",
     "capture_duration_tolerance_seconds": 1.25,
     "max_capture_lateness_ms": 100,
-    "review_artifact_split": true
+    "review_artifact_split": true,
+    "background_encoder": "FFMPEG_LOSSLESS_PNG",
+    "encoder_queue_capacity_frames": 60,
+    "png_encoding_on_wpf_capture_thread": false,
+    "synchronous_raw_disk_persistence": false
   }
 }
