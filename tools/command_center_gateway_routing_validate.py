@@ -13,6 +13,7 @@ AGENTIC = PROJECT / "agentic-os-policy.json"
 UX = STATE / "living-operations-ux-state-contract.json"
 CONTEXT_PIPELINE = STATE / "context-pipeline-state.json"
 PRE = PROJECT / "approvals" / "2026-10-21-gateway-routing-pre.json"
+POST = PROJECT / "approvals" / "2026-10-21-gateway-routing-post.json"
 CHANGE = PROJECT / "changes" / "2026-10-21-gateway-routing.json"
 CAPSULE = PROJECT / "context-capsules" / "2026-10-21-gateway-routing.json"
 
@@ -28,6 +29,7 @@ for required in (
     UX,
     CONTEXT_PIPELINE,
     PRE,
+    POST,
     CHANGE,
     CAPSULE,
 ):
@@ -40,6 +42,7 @@ agentic = load(AGENTIC)
 ux = load(UX)
 context_pipeline = load(CONTEXT_PIPELINE)
 pre = load(PRE)
+post = load(POST)
 change = load(CHANGE)
 capsule = load(CAPSULE)
 
@@ -149,6 +152,23 @@ if not logical_gateway["one_logical_authority_boundary"]:
     raise SystemExit("Murtakaz Gateway lost its single logical authority boundary")
 if not logical_gateway["front_door_business_logic_forbidden"]:
     raise SystemExit("Front-door business logic boundary was weakened")
+
+if state["status"] != "APPROVED_BY_AL_MURTAKAZ":
+    raise SystemExit("Gateway/Routing state is not Murtakaz-approved")
+if post["decision"] != "APPROVED_BY_AL_MURTAKAZ":
+    raise SystemExit("Gateway/Routing work lacks Murtakaz post-approval")
+if not post["adoption_authorized"] or not post["merge_authorized"]:
+    raise SystemExit("Gateway/Routing post-approval must authorize adoption and merge")
+if post["live_execution_authorized"] or post["stage8_opened"]:
+    raise SystemExit("Gateway/Routing post-approval may not enable live execution or Stage 8")
+if post["model_broker_implemented"] or post["skill_registry_implemented"] or post["capability_registry_implemented"] or post["job_engine_implemented"]:
+    raise SystemExit("Gateway/Routing approval fabricated later roadmap components")
+if post["next_roadmap_slice_authorized"] != "CAPABILITY_REGISTRY_AND_MODEL_BROKER":
+    raise SystemExit("Gateway/Routing next roadmap slice drifted")
+if state.get("murtakaz_post_approval") != (
+    "state/command-center/project-governance/approvals/2026-10-21-gateway-routing-post.json"
+):
+    raise SystemExit("Gateway/Routing state is not bound to its post-approval receipt")
 
 if pre["decision"] != "APPROVE_TO_IMPLEMENT":
     raise SystemExit("Gateway/Routing work lacks Murtakaz pre-approval")
