@@ -115,6 +115,9 @@
     "background_encoder": "FFMPEG_LOSSLESS_PNG",
     "encoder_queue_capacity_frames": 60,
     "png_encoding_on_wpf_capture_thread": false,
-    "synchronous_raw_disk_persistence": false
+    "synchronous_raw_disk_persistence": false,
+    "capture_surface_cache": "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE",
+    "synchronous_layout_per_frame": false,
+    "png_compression_level": 1
   }
 }

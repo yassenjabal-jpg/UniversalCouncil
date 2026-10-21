@@ -105,6 +105,12 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
         raise SystemExit(f"{mode} recorder reintroduced PNG encoding on the WPF capture thread")
     if int(timing.get("encoder_queue_capacity_frames", 0)) != 60:
         raise SystemExit(f"{mode} recorder queue capacity drifted")
+    if timing.get("capture_surface_cache") != "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE":
+        raise SystemExit(f"{mode} governed WPF capture cache drifted")
+    if timing.get("synchronous_layout_per_frame") is not False:
+        raise SystemExit(f"{mode} recorder reintroduced synchronous layout per frame")
+    if int(timing.get("png_compression_level", -1)) != 1:
+        raise SystemExit(f"{mode} background PNG compression level drifted")
     target_capture = float(timing.get("target_capture_duration_seconds", 0))
     actual_capture = float(timing.get("actual_capture_duration_seconds", 0))
     if abs(actual_capture - target_capture) > 1.25:

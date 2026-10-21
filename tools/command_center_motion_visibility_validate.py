@@ -91,6 +91,11 @@ required_recorder_markers = (
     'pipeline = "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG"',
     'background_encoder = "FFMPEG_LOSSLESS_PNG"',
     "png_encoding_on_wpf_capture_thread = false",
+    'capture_surface_cache = "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE"',
+    "synchronous_layout_per_frame = false",
+    "png_compression_level = 1",
+    "referenceHost.CacheMode = new BitmapCache(1.0)",
+    "contextDrawer.CacheMode = new BitmapCache(1.0)",
 )
 for marker in required_recorder_markers:
     if marker not in recorder:
@@ -101,6 +106,9 @@ if "new PngBitmapEncoder" in recorder:
 
 if "wpf-{mode}-capture.bgra" in recorder or "ExtractRawFramesWithFfmpeg(" in recorder:
     raise SystemExit("WPF recorder reintroduced synchronous raw-disk frame persistence")
+
+if recorder.count("root.UpdateLayout();") != 1:
+    raise SystemExit("WPF recorder must perform layout only during initial evidence-window setup")
 
 if workflow.count("-framerate 30") < 2:
     raise SystemExit("WPF full/reduced owner-review motion videos are not both encoded at 30fps")
@@ -118,6 +126,9 @@ required_gate_markers = (
     'timing.get("pipeline") != "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG"',
     'timing.get("background_encoder") != "FFMPEG_LOSSLESS_PNG"',
     'timing.get("png_encoding_on_wpf_capture_thread") is not False',
+    'timing.get("capture_surface_cache") != "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE"',
+    'timing.get("synchronous_layout_per_frame") is not False',
+    'int(timing.get("png_compression_level", -1)) != 1',
     "abs(actual_capture - target_capture) > 1.25",
     'float(timing.get("max_capture_lateness_ms", 999999)) > 100',
 )
