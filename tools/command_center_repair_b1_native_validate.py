@@ -273,9 +273,7 @@ else:
     ):
         allowed_active_work.append(["STAGE7_REAL_HOST_EVIDENCE_PENDING"])
     if project_context["active_work"] not in allowed_active_work:
-        raise SystemExit(
-            "B1 lifecycle active work is outside the governed B2/B3/P1/Stage7 successor states"
-        )
+        raise SystemExit("B1 lifecycle active work is outside the governed B2/B3/P1/Stage7 successor states")
 
     allowed_screen_review_status = {
         "B1_NATIVE_COMPLETION_APPROVED_R9_READY",
