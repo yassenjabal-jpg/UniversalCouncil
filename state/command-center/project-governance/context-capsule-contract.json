@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1",
   "contract_id": "murtakaz-context-capsule",
-  "status": "ACTIVE_RUNTIME_IMPLEMENTED_REPAIR_REVIEW_REQUIRED",
+  "status": "ACTIVE_RUNTIME_IMPLEMENTED",
   "immutable_per_job": true,
   "required_fields": [
     "capsule_id",
@@ -74,5 +74,6 @@
     "source_revision": "SHA256_OF_SORTED_CANONICAL_SOURCE_ID_PATH_BLOB_TUPLES; REPRESENTS THE EXACT SOURCE SET USED BY THE CONTEXT MAP",
     "head_validation": "VALIDATOR MUST VERIFY EVERY DECLARED SOURCE BLOB AGAINST THE ACTUAL CHECKOUT HEAD",
     "self_reference_rule": "CONTEXT MAP DOES NOT CLAIM ITS OWN COMMIT AS SOURCE REVISION; CURRENTNESS IS PROVEN BY SOURCE BLOBS + SOURCE-SET DIGEST"
-  }
+  },
+  "a1_repair_approval": "state/command-center/project-governance/approvals/2026-10-21-repair-a1-context-baseline-post.json"
 }
