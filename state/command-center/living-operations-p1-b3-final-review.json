@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "p1-b3-final-review-v1",
+  "change_id": "CC-REPAIR-B3-FINAL-P1-ACCEPTANCE-2026-10-21",
+  "status": "R10_FINAL_REVIEW_IN_PROGRESS",
+  "canonical_reference_count": 8,
+  "evidence_base": {
+    "head_sha": "77a0e21bd40fc4a306fe75cc131e9c5740110db6",
+    "company_stage0_run_id": 39600198879,
+    "codeql_run_id": 39600198990,
+    "reference_ui_run_id": 39600198955,
+    "reference_ui_artifact_id": 12345134475,
+    "artifact_digest": "sha256:f5315d0d705b4d7e660be628936516b96584a659e904feb47cd441d023216662"
+  },
+  "exit_checks": [
+    "all eight canonical desktop screens receive final approval",
+    "interaction additions preserve canonical visual language",
+    "truth-state rules pass",
+    "no rejected generation is a visual parent",
+    "required shared motion capture is present and accepted",
+    "required Reduced Motion capture is present and accepted",
+    "Android semantic adaptation prototype/capture is present and accepted"
+  ],
+  "protected_truth": {
+    "p1_status": "IN_PROGRESS",
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false
+  },
+  "final_p1_approval": false,
+  "timestamp": "2026-10-21"
+}
