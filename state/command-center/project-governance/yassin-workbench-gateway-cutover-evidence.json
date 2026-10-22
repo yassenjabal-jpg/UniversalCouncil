@@ -3,11 +3,11 @@
   "date": "2026-10-22",
   "branch": "infra/yassin-engineering-mcp-profile-20261022",
   "profile_pr": 74,
-  "profile_pr_head": "fdc0155ce1cb1307f4bca18366eb2538e16fd352",
+  "profile_pr_head": "fbcb38c665e520402df94ffcfb16a48e93f4519e",
   "gateway": {
     "version": "1.0.0",
     "host_path": "E:\\GPT\\Tools\\DC-Replacement-20261022\\gateway-v1\\server.py",
-    "host_sha256": "009333a3280bd6191eef85517d09c3ee7c7af480ad594ec4a016d3e61f8e95a0",
+    "host_sha256": "d2064de4a8a41e4e60f01ee3b7146017be99c18c9ae86516cbd6955c952ab5fd",
     "repository_path": "tools/yassin-engineering/gateway/server.py",
     "authority": "ROUTING_ONLY",
     "child_boundaries": [
@@ -19,7 +19,8 @@
       "OPENAI_ADMIN_KEY",
       "OPENAI_API_KEY"
     ],
-    "duplicate_tool_name_policy": "FAIL_CLOSED"
+    "duplicate_tool_name_policy": "FAIL_CLOSED",
+    "post_lint_fix_local_smoke": "PASS"
   },
   "local_gateway_validation": {
     "result": "PASS",
@@ -28,6 +29,8 @@
     "windows_probe": "GuardrailStatus PASS",
     "desktop_snapshot": "PASS",
     "capture_evidence": "PASS",
+    "post_lint_fix_toolstatus": "PASS",
+    "post_lint_fix_snapshot": "PASS",
     "capture_png_sha256": "043c4a628a14754b3e171b0f55d4da05a6a90ff74d7eef74c1bfe78ecbc8810a",
     "local_report_path": "E:\\GPT\\Tools\\DC-Replacement-20261022\\evidence\\gateway-v1\\report.json",
     "local_report_sha256": "302412f187714f2581a8281c53778b51c809db3e570822040a1f426c3e1ac521"
