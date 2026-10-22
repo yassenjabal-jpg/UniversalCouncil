@@ -31,3 +31,5 @@ jobs:
       - run: python tools/command_center_murtakaz_validate.py
       - run: dotnet run --project apps/UniversalCouncil.CommandCenter.SupervisionValidation -c Release
       - run: dotnet build apps/UniversalCouncil.CommandCenter -c Release --nologo
+
+      - run: dotnet run --project apps/UniversalCouncil.CommandCenter.SupervisionUiValidation -c Release

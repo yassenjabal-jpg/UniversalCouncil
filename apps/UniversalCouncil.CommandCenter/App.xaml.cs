@@ -10,6 +10,7 @@ public partial class App : System.Windows.Application
         base.OnStartup(e);
 
         MainWindow = CreateMainWindow(AppContext.BaseDirectory);
+        SupervisionInspectorEntry.Install(MainWindow);
         MainWindow.Show();
     }
 
