@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.IO;
 using System.Diagnostics;
 using System.Security.Cryptography;
@@ -64,8 +65,7 @@ internal static partial class Program
 
             var hostGeometry = WgcHostGeometryProbe.Capture(hwnd);
 
-            using IMotionEvidenceCaptureSource captureSource =
-                new PersistentWgcWindowCaptureSource(hwnd);
+            using var captureSource = new PersistentWgcWindowCaptureSource(hwnd);
 
             if (!captureSource.WaitForFirstFrame(TimeSpan.FromSeconds(5)))
             {
@@ -127,90 +127,184 @@ internal static partial class Program
             var totalCaptureLatenessMs = 0d;
             var maxCaptureLatenessMs = 0d;
             var lateFrameCount = 0;
+            const double FullMotionFreshFrameWaitBudgetMs = 18;
+            var freshFrameWaitSuccessCount = 0;
+            var freshFrameWaitTimeoutCount = 0;
 
             using var frameEncoder =
                 new BackgroundPngFrameEncoder(framesDirectory, frameCount);
+            var frameByteLength = checked(MotionWidth * MotionHeight * 4);
+            var lastCapturedFrameIndex = -1;
             var captureClock = Stopwatch.StartNew();
+            var samplingTask = Task.Factory.StartNew(
+                () =>
+                {
+                    try
+                    {
+                        Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
+                    }
+                    catch
+                    {
+                        // Scheduling priority is a best-effort evidence-capture hardening only.
+                    }
 
-            for (var frameIndex = 0; frameIndex < frameCount; frameIndex++)
+                    try
+                    {
+                        for (var frameIndex = 0; frameIndex < frameCount; frameIndex++)
+                        {
+                            var targetCaptureTime = TimeSpan.FromSeconds(
+                                (frameIndex + 1d) / MotionFramesPerSecond);
+                            PaceWorkerToCaptureTime(captureClock, targetCaptureTime);
+
+                            if (!reducedMotion && previousSourceSequence is long previousSequence)
+                            {
+                                if (captureSource.WaitForFrameAfter(
+                                    previousSequence,
+                                    TimeSpan.FromMilliseconds(FullMotionFreshFrameWaitBudgetMs)))
+                                {
+                                    freshFrameWaitSuccessCount++;
+                                }
+                                else
+                                {
+                                    freshFrameWaitTimeoutCount++;
+                                }
+                            }
+
+                            var captureTime = captureClock.Elapsed;
+                            var latenessMs = Math.Max(
+                                0,
+                                (captureTime - targetCaptureTime).TotalMilliseconds);
+                            totalCaptureLatenessMs += latenessMs;
+                            maxCaptureLatenessMs = Math.Max(maxCaptureLatenessMs, latenessMs);
+                            if (latenessMs > (1000d / MotionFramesPerSecond))
+                            {
+                                lateFrameCount++;
+                            }
+
+                            var pixels = ArrayPool<byte>.Shared.Rent(frameByteLength);
+                            var retainPixels = false;
+                            try
+                            {
+                                var sourceFrameSequence = captureSource.CopyLatestFrameTo(pixels);
+                                var sourceFresh =
+                                    previousSourceSequence is null ||
+                                    sourceFrameSequence != previousSourceSequence.Value;
+                                if (sourceFresh)
+                                {
+                                    freshSourceSampleCount++;
+                                }
+                                else
+                                {
+                                    staleSourceSampleCount++;
+                                }
+
+                                var (meanDelta, changedRatio) = previousPixels is null
+                                    ? (0d, 0d)
+                                    : ComputeFrameDelta(
+                                        previousPixels,
+                                        pixels,
+                                        frameByteLength);
+                                var visiblyChanged =
+                                    meanDelta >= 0.20 || changedRatio >= 0.004;
+
+                                if (visiblyChanged)
+                                {
+                                    changedFrameCount++;
+                                    currentChangedRun++;
+                                    longestChangedRun =
+                                        Math.Max(longestChangedRun, currentChangedRun);
+                                    if (!wasChanged)
+                                    {
+                                        motionRunCount++;
+                                    }
+                                }
+                                else
+                                {
+                                    currentChangedRun = 0;
+                                }
+
+                                wasChanged = visiblyChanged;
+                                samples.Add(new WgcMotionFrameSample(
+                                    frameIndex,
+                                    $"frame-{frameIndex:D4}.png",
+                                    "",
+                                    sourceFrameSequence,
+                                    sourceFresh,
+                                    Math.Round(meanDelta, 4),
+                                    Math.Round(changedRatio, 6),
+                                    visiblyChanged));
+
+                                var frameToQueue = previousPixels;
+                                previousPixels = pixels;
+                                previousSourceSequence = sourceFrameSequence;
+                                retainPixels = true;
+
+                                if (frameToQueue is not null)
+                                {
+                                    frameEncoder.QueuePooled(frameToQueue, frameByteLength);
+                                }
+
+                                Volatile.Write(ref lastCapturedFrameIndex, frameIndex);
+                            }
+                            finally
+                            {
+                                if (!retainPixels)
+                                {
+                                    ArrayPool<byte>.Shared.Return(pixels);
+                                }
+                            }
+                        }
+
+                        var finalFrame = previousPixels;
+                        previousPixels = null;
+                        if (finalFrame is not null)
+                        {
+                            frameEncoder.QueuePooled(finalFrame, frameByteLength);
+                        }
+                    }
+                    finally
+                    {
+                        if (previousPixels is not null)
+                        {
+                            ArrayPool<byte>.Shared.Return(previousPixels);
+                            previousPixels = null;
+                        }
+                    }
+                },
+                CancellationToken.None,
+                TaskCreationOptions.LongRunning,
+                TaskScheduler.Default);
+
+            foreach (var frameSteps in stepsByFrame.OrderBy(item => item.Key))
             {
-                if (stepsByFrame.TryGetValue(frameIndex, out var frameSteps))
+                var frameIndex = frameSteps.Key;
+                var targetStepTime = TimeSpan.FromSeconds(
+                    (double)frameIndex / MotionFramesPerSecond);
+                PumpDispatcherUntil(captureClock, targetStepTime, samplingTask);
+
+                var requiredPreviousFrame = frameIndex - 1;
+                while (
+                    requiredPreviousFrame >= 0 &&
+                    Volatile.Read(ref lastCapturedFrameIndex) < requiredPreviousFrame &&
+                    !samplingTask.IsCompleted)
                 {
-                    foreach (var step in frameSteps)
-                    {
-                        step.Execute(window);
-                        Console.WriteLine(
-                            $"WGC motion evidence [{mode}] step @{frameIndex}: {step.Name}");
-                    }
+                    PumpDispatcher(TimeSpan.FromMilliseconds(1));
                 }
 
-                var targetCaptureTime = TimeSpan.FromSeconds(
-                    (frameIndex + 1d) / MotionFramesPerSecond);
-                PaceDispatcherToCaptureTime(captureClock, targetCaptureTime);
-
-                var captureTime = captureClock.Elapsed;
-                var latenessMs = Math.Max(
-                    0,
-                    (captureTime - targetCaptureTime).TotalMilliseconds);
-                totalCaptureLatenessMs += latenessMs;
-                maxCaptureLatenessMs = Math.Max(maxCaptureLatenessMs, latenessMs);
-                if (latenessMs > (1000d / MotionFramesPerSecond))
+                if (samplingTask.IsFaulted || samplingTask.IsCanceled)
                 {
-                    lateFrameCount++;
+                    samplingTask.GetAwaiter().GetResult();
                 }
 
-                var capture = captureSource.CaptureFrame();
-                frameEncoder.Queue(capture.Pixels);
-
-                var sourceFresh =
-                    previousSourceSequence is null ||
-                    capture.SourceFrameSequence != previousSourceSequence.Value;
-                if (sourceFresh)
+                foreach (var step in frameSteps.Value)
                 {
-                    freshSourceSampleCount++;
+                    step.Execute(window);
+                    Console.WriteLine(
+                        $"WGC motion evidence [{mode}] step @{frameIndex}: {step.Name}");
                 }
-                else
-                {
-                    staleSourceSampleCount++;
-                }
-
-                var (meanDelta, changedRatio) = previousPixels is null
-                    ? (0d, 0d)
-                    : ComputeFrameDelta(previousPixels, capture.Pixels);
-                var visiblyChanged =
-                    meanDelta >= 0.20 || changedRatio >= 0.004;
-
-                if (visiblyChanged)
-                {
-                    changedFrameCount++;
-                    currentChangedRun++;
-                    longestChangedRun =
-                        Math.Max(longestChangedRun, currentChangedRun);
-                    if (!wasChanged)
-                    {
-                        motionRunCount++;
-                    }
-                }
-                else
-                {
-                    currentChangedRun = 0;
-                }
-
-                wasChanged = visiblyChanged;
-                samples.Add(new WgcMotionFrameSample(
-                    frameIndex,
-                    $"frame-{frameIndex:D4}.png",
-                    "",
-                    capture.SourceFrameSequence,
-                    sourceFresh,
-                    Math.Round(meanDelta, 4),
-                    Math.Round(changedRatio, 6),
-                    visiblyChanged));
-
-                previousPixels = capture.Pixels;
-                previousSourceSequence = capture.SourceFrameSequence;
             }
 
+            PumpDispatcherUntilComplete(samplingTask);
             captureClock.Stop();
             var actualCaptureDurationSeconds = captureClock.Elapsed.TotalSeconds;
             var sourceFramesArrived = captureSource.FramesArrived;
@@ -269,6 +363,11 @@ internal static partial class Program
                         frameEvidence.Select(item => item.SourceFrameSequence).Distinct().Count(),
                     fresh_source_sample_count = freshSourceSampleCount,
                     stale_source_sample_count = staleSourceSampleCount,
+                    fresh_frame_wait_budget_ms = reducedMotion
+                        ? 0
+                        : FullMotionFreshFrameWaitBudgetMs,
+                    fresh_frame_wait_success_count = freshFrameWaitSuccessCount,
+                    fresh_frame_wait_timeout_count = freshFrameWaitTimeoutCount,
                     target_capture_duration_seconds =
                         (double)frameCount / MotionFramesPerSecond,
                     actual_capture_duration_seconds =

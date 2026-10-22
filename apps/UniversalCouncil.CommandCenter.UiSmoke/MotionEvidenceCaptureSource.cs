@@ -58,6 +58,7 @@ internal sealed class PersistentWgcWindowCaptureSource : IMotionEvidenceCaptureS
     private readonly object _frameLock = new();
     private readonly byte[] _latestPixels;
     private readonly ManualResetEventSlim _firstFrame = new(false);
+    private readonly AutoResetEvent _frameArrived = new(false);
     private readonly Stopwatch _lifetime = Stopwatch.StartNew();
 
     private bool _hasFrame;
@@ -168,6 +169,13 @@ internal sealed class PersistentWgcWindowCaptureSource : IMotionEvidenceCaptureS
 
     public MotionEvidenceCapturedFrame CaptureFrame()
     {
+        var pixels = GC.AllocateUninitializedArray<byte>(_latestPixels.Length);
+        var sequence = CopyLatestFrameTo(pixels);
+        return new MotionEvidenceCapturedFrame(Width, Height, pixels, sequence);
+    }
+
+    internal long CopyLatestFrameTo(byte[] destination)
+    {
         lock (_frameLock)
         {
             if (!_hasFrame)
@@ -175,10 +183,36 @@ internal sealed class PersistentWgcWindowCaptureSource : IMotionEvidenceCaptureS
                 throw new InvalidOperationException("Persistent WGC session has not delivered a frame.");
             }
 
-            var pixels = GC.AllocateUninitializedArray<byte>(_latestPixels.Length);
-            Buffer.BlockCopy(_latestPixels, 0, pixels, 0, pixels.Length);
-            return new MotionEvidenceCapturedFrame(Width, Height, pixels, _frameSequence);
+            if (destination.Length < _latestPixels.Length)
+            {
+                throw new ArgumentException(
+                    "Destination buffer is smaller than the persistent WGC frame.",
+                    nameof(destination));
+            }
+
+            Buffer.BlockCopy(_latestPixels, 0, destination, 0, _latestPixels.Length);
+            return _frameSequence;
         }
+    }
+
+    internal bool WaitForFrameAfter(long sourceFrameSequence, TimeSpan timeout)
+    {
+        var clock = Stopwatch.StartNew();
+        while (clock.Elapsed < timeout)
+        {
+            if (Interlocked.Read(ref _frameSequence) > sourceFrameSequence)
+            {
+                return true;
+            }
+
+            var remaining = timeout - clock.Elapsed;
+            if (remaining <= TimeSpan.Zero || !_frameArrived.WaitOne(remaining))
+            {
+                break;
+            }
+        }
+
+        return Interlocked.Read(ref _frameSequence) > sourceFrameSequence;
     }
 
     private void OnFrameArrived(Direct3D11CaptureFramePool sender, object args)
@@ -236,6 +270,7 @@ internal sealed class PersistentWgcWindowCaptureSource : IMotionEvidenceCaptureS
                 }
 
                 _firstFrame.Set();
+                _frameArrived.Set();
             }
             finally
             {
@@ -312,6 +347,7 @@ internal sealed class PersistentWgcWindowCaptureSource : IMotionEvidenceCaptureS
         {
         }
 
+        _frameArrived.Dispose();
         _firstFrame.Dispose();
     }
 }

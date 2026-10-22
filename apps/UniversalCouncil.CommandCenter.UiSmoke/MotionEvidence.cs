@@ -1,3 +1,5 @@
+using System.Buffers;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
@@ -460,6 +462,63 @@ internal static partial class Program
         PumpDispatcher(TimeSpan.FromMilliseconds(1));
     }
 
+    private static void PaceWorkerToCaptureTime(
+        Stopwatch captureClock,
+        TimeSpan targetCaptureTime)
+    {
+        while (true)
+        {
+            var remaining = targetCaptureTime - captureClock.Elapsed;
+            if (remaining <= TimeSpan.Zero)
+            {
+                return;
+            }
+
+            if (remaining > TimeSpan.FromMilliseconds(2))
+            {
+                Thread.Sleep(1);
+                continue;
+            }
+
+            Thread.SpinWait(64);
+        }
+    }
+
+    private static void PumpDispatcherUntil(
+        Stopwatch captureClock,
+        TimeSpan targetTime,
+        Task worker)
+    {
+        while (captureClock.Elapsed < targetTime && !worker.IsCompleted)
+        {
+            var remaining = targetTime - captureClock.Elapsed;
+            var slice = remaining > TimeSpan.FromMilliseconds(4)
+                ? TimeSpan.FromMilliseconds(4)
+                : remaining;
+            if (slice <= TimeSpan.Zero)
+            {
+                break;
+            }
+
+            PumpDispatcher(slice);
+        }
+
+        if (worker.IsFaulted || worker.IsCanceled)
+        {
+            worker.GetAwaiter().GetResult();
+        }
+    }
+
+    private static void PumpDispatcherUntilComplete(Task worker)
+    {
+        while (!worker.IsCompleted)
+        {
+            PumpDispatcher(TimeSpan.FromMilliseconds(4));
+        }
+
+        worker.GetAwaiter().GetResult();
+    }
+
     private static MotionCapture CaptureMotionFrame(MainWindow window)
     {
         if (window.Content is not FrameworkElement root)
@@ -492,6 +551,7 @@ internal static partial class Program
         private readonly int _frameCount;
         private readonly Process _process;
         private readonly Channel<byte[]> _frames;
+        private readonly ConcurrentDictionary<byte[], byte> _pooledFrames = new();
         private readonly Task _writerTask;
         private readonly Task<string> _stdoutTask;
         private readonly Task<string> _stderrTask;
@@ -559,7 +619,18 @@ internal static partial class Program
             {
                 await foreach (var pixels in _frames.Reader.ReadAllAsync())
                 {
-                    await _process.StandardInput.BaseStream.WriteAsync(pixels);
+                    try
+                    {
+                        await _process.StandardInput.BaseStream.WriteAsync(
+                            pixels.AsMemory(0, MotionWidth * MotionHeight * 4));
+                    }
+                    finally
+                    {
+                        if (_pooledFrames.TryRemove(pixels, out _))
+                        {
+                            ArrayPool<byte>.Shared.Return(pixels);
+                        }
+                    }
                 }
 
                 await _process.StandardInput.BaseStream.FlushAsync();
@@ -569,8 +640,36 @@ internal static partial class Program
 
         internal void Queue(byte[] pixels)
         {
+            QueueFrame(pixels, returnToPool: false);
+        }
+
+        internal void QueuePooled(byte[] pixels, int length)
+        {
+            var expectedLength = MotionWidth * MotionHeight * 4;
+            if (length != expectedLength || pixels.Length < length)
+            {
+                ArrayPool<byte>.Shared.Return(pixels);
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
+
+            if (!_pooledFrames.TryAdd(pixels, 0))
+            {
+                ArrayPool<byte>.Shared.Return(pixels);
+                throw new InvalidOperationException("Pooled frame buffer was queued more than once.");
+            }
+
+            QueueFrame(pixels, returnToPool: true);
+        }
+
+        private void QueueFrame(byte[] pixels, bool returnToPool)
+        {
             if (!_frames.Writer.TryWrite(pixels))
             {
+                if (returnToPool && _pooledFrames.TryRemove(pixels, out _))
+                {
+                    ArrayPool<byte>.Shared.Return(pixels);
+                }
+
                 throw new InvalidOperationException(
                     "Background PNG encoder fell behind the real-time WPF capture by more than " +
                     $"{QueueCapacityFrames} frames.");
@@ -642,9 +741,11 @@ internal static partial class Program
 
     private static (double MeanSampleDelta, double ChangedSampleRatio) ComputeFrameDelta(
         byte[] previous,
-        byte[] current)
+        byte[] current,
+        int length = -1)
     {
-        if (previous.Length != current.Length)
+        var effectiveLength = length < 0 ? current.Length : length;
+        if (effectiveLength < 0 || previous.Length < effectiveLength || current.Length < effectiveLength)
         {
             return (255, 1);
         }
@@ -655,7 +756,7 @@ internal static partial class Program
 
         // Sample one BGRA pixel out of every sixteen pixels. This is dense enough to
         // catch region motion while keeping evidence capture affordable in CI.
-        for (var index = 0; index + 2 < current.Length; index += 64)
+        for (var index = 0; index + 2 < effectiveLength; index += 64)
         {
             var blue = Math.Abs(current[index] - previous[index]);
             var green = Math.Abs(current[index + 1] - previous[index + 1]);
