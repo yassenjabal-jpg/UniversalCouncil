@@ -31,8 +31,8 @@ Excluded from the Windows MCP boundary:
   MultiSelect, MultiEdit
 - system helpers: Clipboard, Process, Notification
 - administrative/system mutation: Registry, ScheduledTask
-- broad execution/data access: PowerShell, FileSystem, Scrape, Package,
-  Credentials
+- broad execution/data access: PowerShell, LaunchExecutable, FileSystem, Scrape,
+  Package, Credentials
 
 This leaves a compact semantic QA surface centered on Snapshot, Invoke,
 WaitFor, Assert and CaptureEvidence.
