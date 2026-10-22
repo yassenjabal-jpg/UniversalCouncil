@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "CC-MOTION-W1-1-RECORDER-DECOUPLING-REVIEW-2026-10-22",
+  "change_id": "CC-MOTION-W1-1-WGC-RECORDER-DECOUPLING",
+  "phase": "W1.1",
+  "review_type": "AL_MURTAKAZ_EVIDENCE_RECORDER_POST_DIAGNOSTIC_REVIEW",
+  "scope": "EVIDENCE_RECORDER_ONLY",
+  "artifact_refs": [
+    "apps/UniversalCouncil.CommandCenter.UiSmoke/WgcMotionEvidence.cs",
+    "apps/UniversalCouncil.CommandCenter.UiSmoke/MotionEvidence.cs",
+    "apps/UniversalCouncil.CommandCenter.UiSmoke/MotionEvidenceCaptureSource.cs"
+  ],
+  "decision": "APPROVE_TO_IMPLEMENT_NO_WAIT_DECOUPLED_SAMPLER",
+  "current_revision_disposition": "RETURNED_FOR_CHANGES",
+  "approved_revision": {
+    "baseline_head": "98bfb772af8fb6d1195da2d1d06c0e18ae62709a",
+    "required_delta": "REMOVE_FULL_MOTION_FRESH_FRAME_WAIT_BUDGET_KEEP_DECOUPLING_AND_BUFFER_POOLING"
+  },
+  "governance_reviewers": [
+    "cc_project_chair",
+    "cc_product_truth",
+    "cc_architecture_execution",
+    "cc_red_team"
+  ],
+  "workshop_reviewers": [
+    "cc_motion_systems",
+    "cc_windows_experience",
+    "cc_prototype_engineer",
+    "cc_visual_qa",
+    "cc_accessibility_clearance"
+  ],
+  "evidence_refs": [
+    {
+      "kind": "EXACT_HEAD_REAL_HOST",
+      "candidate_sha": "98bfb772af8fb6d1195da2d1d06c0e18ae62709a",
+      "host": "YASSIN",
+      "bundle_sha256": "c7a48fa7d241508418caaaeac5311d94bb94eb9e8525bfc4d7acad8d20181de6",
+      "full": {
+        "changed_frames": 186,
+        "longest_changed_run": 18,
+        "motion_runs": 44,
+        "max_capture_lateness_ms": 43.175,
+        "mean_capture_lateness_ms": 27.997,
+        "late_frame_count_over_one_frame": 420,
+        "fresh_frame_wait_budget_ms": 18
+      },
+      "reduced": {
+        "changed_frames": 27,
+        "longest_changed_run": 3,
+        "motion_runs": 17,
+        "max_capture_lateness_ms": 14.555,
+        "mean_capture_lateness_ms": 5.331,
+        "late_frame_count_over_one_frame": 0
+      },
+      "validator": "PASS"
+    },
+    {
+      "kind": "RED_TEAM_DIAGNOSTIC_NOT_ACCEPTANCE_EVIDENCE",
+      "base_sha": "98bfb772af8fb6d1195da2d1d06c0e18ae62709a",
+      "local_delta": "FullMotionFreshFrameWaitBudgetMs 18 -> 0",
+      "host": "YASSIN",
+      "full": {
+        "changed_frames": 174,
+        "longest_changed_run": 10,
+        "motion_runs": 53,
+        "max_capture_lateness_ms": 13.794,
+        "mean_capture_lateness_ms": 5.365,
+        "late_frame_count_over_one_frame": 0,
+        "fresh_frame_wait_budget_ms": 0
+      }
+    }
+  ],
+  "findings": {
+    "root_cause": "Recorder work was coupled to the WPF UI dispatcher and per-frame large-buffer allocation pressure. Decoupling the sampler and pooling buffers removes the recorder-induced motion fragmentation and cadence jitter.",
+    "fresh_frame_wait": "NOT_REQUIRED_AND_NOT_APPROVED_FOR_FINAL_EVIDENCE. The 18ms wait biases sampling toward fresh compositor frames and creates 420 samples later than one 30fps frame on the reviewed exact head.",
+    "motion_dna": "UNCHANGED",
+    "thresholds": "UNCHANGED",
+    "capture_source": "RAW_WGC_PERSISTENT/WKI_CLIPPER_PATTERN",
+    "architecture_boundary": "PASS_EVIDENCE_INFRASTRUCTURE_ONLY"
+  },
+  "implementation_requirements": [
+    "Keep WGC sampling on a dedicated worker independent of the WPF dispatcher.",
+    "Keep bounded pooled BGRA buffers and background FFmpeg PNG encoding.",
+    "Set Full Motion fresh-frame wait budget to zero; do not wait for a new source frame after the governed sample deadline.",
+    "Keep absolute Stopwatch 30Hz targets and existing max lateness <= 100ms gate.",
+    "Do not change motion choreography, motion duration classes, frame-change thresholds, Reduced Motion rules, or validator floors.",
+    "Record actual HWND pixels at exactly 1440x900 with no fallback, interpolation, optical flow or post-production.",
+    "Rerun Full and Reduced Motion on YASSIN from the new exact PR head.",
+    "Require visual review after objective validator PASS before W1.1 acceptance."
+  ],
+  "acceptance_conditions": {
+    "full_changed_frames_min": 90,
+    "full_longest_changed_run_min": 9,
+    "full_motion_runs_min": 8,
+    "max_capture_lateness_ms": 100,
+    "duration_tolerance_seconds": 1.25,
+    "reduced_thresholds_unchanged": true,
+    "actual_hwnd": true,
+    "geometry": "1440x900",
+    "source_frame_errors": 0,
+    "fallback_used": false,
+    "silent_dxgi_fallback": false,
+    "fresh_frame_wait_budget_ms": 0
+  },
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution": false,
+    "w1_2_started": false,
+    "pr72_merge": false
+  },
+  "final_w1_1_acceptance_granted": false,
+  "owner_acceptance": false,
+  "timestamp": "2026-10-22",
+  "reopen_triggers": [
+    "Any fresh-frame wait greater than zero.",
+    "Any threshold reduction.",
+    "Any product motion change made solely to improve recorder metrics.",
+    "Any capture-source or fallback change.",
+    "Any Stage 8, runtime-authority, W1.2 or merge-state change.",
+    "Full longest_changed_run below 9 after no-wait exact-head capture."
+  ]
+}
