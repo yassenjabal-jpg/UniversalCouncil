@@ -38,7 +38,7 @@ Explicitly excluded:
 - `Type`, `Move`, `Shortcut`, `MultiSelect`, `MultiEdit`
 - `Clipboard`, `Process`, `Notification`
 - `Registry`, `ScheduledTask`
-- `PowerShell`, `FileSystem`, `Scrape`, `Package`, `Credentials`
+- `PowerShell`, `LaunchExecutable`, `FileSystem`, `Scrape`, `Package`, `Credentials`
 
 Expected callable tools:
 
