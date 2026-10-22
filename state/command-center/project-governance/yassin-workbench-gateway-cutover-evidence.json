@@ -1,0 +1,61 @@
+{
+  "evidence_id": "YASSIN-WORKBENCH-GATEWAY-CUTOVER-2026-10-22",
+  "date": "2026-10-22",
+  "branch": "infra/yassin-engineering-mcp-profile-20261022",
+  "profile_pr": 74,
+  "profile_pr_head": "fdc0155ce1cb1307f4bca18366eb2538e16fd352",
+  "gateway": {
+    "version": "1.0.0",
+    "host_path": "E:\\GPT\\Tools\\DC-Replacement-20261022\\gateway-v1\\server.py",
+    "host_sha256": "009333a3280bd6191eef85517d09c3ee7c7af480ad594ec4a016d3e61f8e95a0",
+    "repository_path": "tools/yassin-engineering/gateway/server.py",
+    "authority": "ROUTING_ONLY",
+    "child_boundaries": [
+      "YASSIN Verified Files v2.0.0",
+      "YASSIN-ENGINEERING Windows MCP v1.4.0 AUDIT"
+    ],
+    "secret_environment_removed_before_child_start": [
+      "CONTROL_PLANE_API_KEY",
+      "OPENAI_ADMIN_KEY",
+      "OPENAI_API_KEY"
+    ],
+    "duplicate_tool_name_policy": "FAIL_CLOSED"
+  },
+  "local_gateway_validation": {
+    "result": "PASS",
+    "tool_count": 29,
+    "verified_files_probe": "ToolStatus PASS",
+    "windows_probe": "GuardrailStatus PASS",
+    "desktop_snapshot": "PASS",
+    "capture_evidence": "PASS",
+    "capture_png_sha256": "043c4a628a14754b3e171b0f55d4da05a6a90ff74d7eef74c1bfe78ecbc8810a",
+    "local_report_path": "E:\\GPT\\Tools\\DC-Replacement-20261022\\evidence\\gateway-v1\\report.json",
+    "local_report_sha256": "302412f187714f2581a8281c53778b51c809db3e570822040a1f426c3e1ac521"
+  },
+  "tunnel_cutover": {
+    "tunnel_profile": "yassin-code-files",
+    "profile_path": "E:\\GPT\\Tools\\DC-Replacement-20261022\\config\\tunnel-profiles\\yassin-code-files.yaml",
+    "patched_profile_sha256": "a4f4c7ccc6a633110fa02889ca9d9074c04ad0182013e9d28a3e3ca794f45817",
+    "rollback_backup_id": "1f11c47382fa46968de5bf81af7b779f",
+    "next_start_target": "E:\\GPT\\Tools\\DC-Replacement-20261022\\gateway-v1\\server.py",
+    "currently_running_tunnel_target": "Verified Files direct child from pre-cutover process state",
+    "restart_required": true,
+    "hot_reload_supported": false,
+    "same_tunnel_parallel_stdio_instance_supported": false,
+    "runtime_key_available_to_current_tool_environment": false,
+    "credential_extraction_attempted": false,
+    "safe_restart_path": "Existing Start-YASSIN-Code-Tunnel.ps1 launcher; owner supplies runtime key once when prompted."
+  },
+  "codex_local": {
+    "verified_code_files_enabled": true,
+    "legacy_yassin_windows_enabled": true,
+    "yassin_windows_engineering_enabled": true,
+    "fresh_client_session_required_for_new_tool_catalog": true
+  },
+  "remote_chatgpt_verdict": "PREPARED_LOCAL_PASS_AWAITING_OWNER_KEYED_TUNNEL_RESTART_AND_FRESH_SESSION",
+  "w1_1_boundary": {
+    "changed": false,
+    "windows_mcp_recording_is_acceptance_evidence": false,
+    "governed_30fps_wgc_remains_authoritative": true
+  }
+}
