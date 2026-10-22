@@ -1,3 +1,4 @@
+import importlib.util
 import json
 import os
 import pathlib
@@ -6,9 +7,21 @@ import threading
 
 ROOT = pathlib.Path(r"E:\GPT\Tools\DC-Replacement-20261022")
 VERIFIED = ROOT / "verified-files-v2"
-sys.path.insert(0, str(VERIFIED))
 
-from protocol_client import Client
+
+def load_client_class():
+    spec = importlib.util.spec_from_file_location(
+        "yassin_protocol_client",
+        VERIFIED / "protocol_client.py",
+    )
+    if spec is None or spec.loader is None:
+        raise RuntimeError("could not load Verified Files protocol client")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.Client
+
+
+Client = load_client_class()
 
 VERSION = "1.0.0"
 
@@ -165,7 +178,12 @@ def main():
             except Exception as exc:
                 req_id = request.get("id") if isinstance(request, dict) else None
                 if req_id is not None:
-                    error(req_id, -32603, "gateway internal error", {"type": type(exc).__name__, "message": str(exc)})
+                    error(
+                        req_id,
+                        -32603,
+                        "gateway internal error",
+                        {"type": type(exc).__name__, "message": str(exc)},
+                    )
     finally:
         for client in children.values():
             try:
