@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261022-045019-heis0b",
+  "created_at": "2026-10-22T04:50:19+03:00",
+  "scope": "council",
+  "level": "L3_CANONICAL",
+  "kind": "architecture",
+  "subject": "council.yassin_local_execution.boundary",
+  "summary": "YASSIN local execution is being split into two bounded capabilities: Windows MCP for constrained GUI/QA automation and YASSIN Verified Files for SHA-backed source/file edits plus authorized shell/process work; the replacement is prepared but not yet runtime-accepted because the private YASSIN tunnel is currently terminated.",
+  "details": {
+    "profile": "YASSIN-ENGINEERING",
+    "windows_mcp_upstream": "deploymenttheory/windows-mcp-server v1.4.0",
+    "windows_mcp_role": "screen, interaction, apps and testing only with dangerous tools explicitly excluded",
+    "verified_files_role": "verified source/file mutations and authorized command/process lifecycle",
+    "security_ancestry_verified": ["PR #71", "PR #73", "PR #75"],
+    "infra_branch": "infra/yassin-engineering-mcp-profile-20261022",
+    "draft_pr": 74,
+    "deployment_state": "PREPARED_NOT_DEPLOYED",
+    "local_blocker": "YASSIN Verified Files returns Session terminated",
+    "motion_boundary": "Windows MCP session recording is not W1.1 acceptance evidence; governed 30fps WGC remains authoritative",
+    "does_not_supersede_existing_gui_primary_contract_until_runtime_verified": true
+  },
+  "supersedes": [],
+  "confidence": "evidence_backed",
+  "sensitivity": "normal",
+  "tags": ["council", "yassin", "mcp", "windows", "verified-files", "architecture", "desktop-control"],
+  "source": {
+    "type": "github_pr",
+    "ref": "yassenjabal-jpg/UniversalCouncil#74",
+    "commit": "4bfa3df6f2a60a408fa1fd561afa1bc495d6b437"
+  }
+}
