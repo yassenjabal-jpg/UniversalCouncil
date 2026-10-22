@@ -9,7 +9,7 @@ internal static class EvidenceChecks
 {
     public static void Run(Action<bool,string> check)
     {
-        foreach (var bad in new[] { "--verify-evidence", "--unknown-command" })
+        foreach (var bad in new[] { "--verify-evidence", "--unknown-command", "--inspect-session" })
         {
             var start = new ProcessStartInfo("dotnet") {
                 UseShellExecute = false, CreateNoWindow = true,
