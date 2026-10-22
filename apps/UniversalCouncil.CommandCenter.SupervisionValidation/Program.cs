@@ -19,6 +19,8 @@ if (args.Length == 2 && args[0] == "--plan")
     Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
     return result.Status == "PLANNED" ? 0 : 1;
 }
+if (args.Length == 3 && args[0] == "--session-probe")
+    return SessionChecks.Probe(planner, args[1], args[2]);
 var passed = 0;
 void Check(bool condition, string name)
 {

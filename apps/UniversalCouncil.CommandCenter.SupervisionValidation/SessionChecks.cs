@@ -14,11 +14,51 @@ internal sealed class DriftPlanner(ILocalReviewPlanner inner) : ILocalReviewPlan
 }
 internal static class SessionChecks
 {
+    // Validation fixture: callers must provide an isolated directory; no production path is selected.
+    public static int Probe(ILocalReviewPlanner planner, string operation, string directory)
+    {
+        var service = new LocalReviewSessionService(planner, new JsonLocalReviewSessionStore(directory));
+        var revision = new string('a', 40);
+        var hash = new string('b', 64);
+        var idPath = Path.Combine(directory, "probe-id.txt");
+        if (operation == "write")
+        {
+            var request = new LocalReviewRequest("process-fixture", "universal-council-command-center",
+                revision, "material_product_change", ["architecture_boundary"], [], []);
+            var session = service.Create(request, hash, TimeSpan.FromHours(1));
+            service.Record(session.Id, 0, revision, hash, session.Plan.Assignments[0].RoleId,
+                "fixture-process", "BLOCKED", "unverified fixture report", []);
+            File.WriteAllText(idPath, session.Id.ToString("D"));
+            return 0;
+        }
+        if (operation != "read") throw new InvalidDataException("Unknown validation probe");
+        var saved = service.Read(Guid.Parse(File.ReadAllText(idPath)), revision, hash);
+        return saved.State == "BLOCKED" && saved.Results.Length == 1 &&
+            saved.Results[0].Actor == "fixture-process" && !saved.ApprovalGranted ? 0 : 1;
+    }
     public static void Run(ILocalReviewPlanner planner, Action<bool,string> check)
     {
         var root = Path.Combine(Path.GetTempPath(), "murtakaz-session-" + Guid.NewGuid());
         try
         {
+            var probeDirectory = Path.Combine(root, "process-probe");
+            foreach (var operation in new[] { "write", "read" })
+            {
+                var start = new System.Diagnostics.ProcessStartInfo("dotnet") {
+                    UseShellExecute = false,
+                    ArgumentList = { typeof(SessionChecks).Assembly.Location,
+                        "--session-probe", operation, probeDirectory }
+                };
+                using var child = System.Diagnostics.Process.Start(start)
+                    ?? throw new InvalidOperationException("Probe process unavailable");
+                if (!child.WaitForExit(30000))
+                {
+                    child.Kill(true);
+                    child.WaitForExit();
+                    throw new TimeoutException("Probe process timeout");
+                }
+                check(child.ExitCode == 0, "separate process durable " + operation);
+            }
             var clock = new ReviewTestClock();
             LocalReviewSessionService Service() => new(planner, new JsonLocalReviewSessionStore(root), clock);
             var service = Service();
