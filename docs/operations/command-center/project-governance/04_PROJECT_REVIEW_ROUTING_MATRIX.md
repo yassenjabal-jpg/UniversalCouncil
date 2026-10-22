@@ -4,7 +4,7 @@ Status: PROJECT-LOCAL ROUTING CONTRACT
 
 | Change / Question | هيئة المرتكز المطلوبة | مشغل المرتكز المطلوب | Mode |
 |---|---|---|---|
-| Copy / spacing / local polish | none unless truth changes | Visual / UX owner | LIGHT |
+| Copy / spacing / local polish | Minimal recorded governance review; add Product Truth if truth changes | Visual / UX owner | LIGHT |
 | Navigation hierarchy | Owner Experience, Architecture | Experience Architect, Interaction | COUNCIL |
 | Role Sigil behavior | Product Truth, Owner Experience | Sigil, Interaction, Visual | COUNCIL |
 | Motion semantics | Product Truth, Owner Experience | Motion, Interaction | COUNCIL |
@@ -36,7 +36,7 @@ Status: PROJECT-LOCAL ROUTING CONTRACT
 
 If a change touches both craft and authoritative truth, route to both systems.
 
-If it is purely craft and reversible, keep it inside مشغل المرتكز.
+For purely reversible craft, retain a minimal recorded governance review plus the relevant مشغل المرتكز owner. LIGHT does not skip governance.
 
 If it changes project/cross-project governance, escalate beyond the project-local Council.
 

@@ -19,7 +19,8 @@ public sealed record CommandCenterHostServices(
     IExecutionManifestValidator ExecutionManifestValidator,
     IRemoteOwnerGatewayProvider RemoteOwnerGateway,
     IRemoteTransportProjectionProvider RemoteTransport,
-    IOwnerTailnetProjectionProvider OwnerTailnet);
+    IOwnerTailnetProjectionProvider OwnerTailnet,
+    ILocalReviewPlanner LocalReviewPlanner);
 
 public static class CommandCenterComposition
 {
@@ -125,6 +126,8 @@ public static class CommandCenterComposition
             executionService,
             remoteOwnerService,
             remoteTransportService,
-            ownerTailnetService);
+            ownerTailnetService,
+            new LocalReviewPlanner(new JsonLocalReviewPolicyReader(
+                Path.Combine(baseDirectory, "state", "project-governance"))));
     }
 }
