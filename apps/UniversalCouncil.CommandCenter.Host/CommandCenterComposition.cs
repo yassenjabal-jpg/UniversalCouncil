@@ -30,6 +30,11 @@ public static class CommandCenterComposition
         new(Create(baseDirectory).LocalReviewPlanner,
             new JsonLocalReviewSessionStore(storageDirectory), clock);
 
+    public static EvidenceVerifier CreateEvidenceVerifier(string repositoryDirectory,
+        string artifactDirectory, bool allowFixtures = false) =>
+        new(new GitEvidenceManifestReader(repositoryDirectory),
+            new WindowsEvidenceContentReader(artifactDirectory), allowFixtures);
+
     public static CommandCenterHostServices Create(string baseDirectory)
     {
         var statePath = Path.Combine(

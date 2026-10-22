@@ -21,6 +21,14 @@ if (args.Length == 2 && args[0] == "--plan")
 }
 if (args.Length == 3 && args[0] == "--session-probe")
     return SessionChecks.Probe(planner, args[1], args[2]);
+if (args.Length is 8 or 9 && args[0] == "--verify-evidence")
+{
+    if (args.Length == 9 && args[8] != "--allow-fixtures") return 2;
+    var verifier = CommandCenterComposition.CreateEvidenceVerifier(args[1], args[2], args.Length == 9);
+    var result = verifier.Verify(new EvidenceVerificationRequest(args[6], args[7], args[3], args[4], args[5]));
+    Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
+    return result.ContentMatchesDeclaration ? 0 : 1;
+}
 var passed = 0;
 void Check(bool condition, string name)
 {
@@ -132,5 +140,6 @@ try
 }
 finally { Directory.Delete(temp, true); }
 SessionChecks.Run(planner, Check);
+EvidenceChecks.Run(Check);
 Console.WriteLine($"PASS {passed} supervision behavioral checks");
 return 0;
