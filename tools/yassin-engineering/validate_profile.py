@@ -10,15 +10,39 @@ AUDIT = ROOT / "YASSIN_ENGINEERING_AUDIT_POLICY.json"
 ENFORCE = ROOT / "YASSIN_ENGINEERING_ENFORCE_POLICY.json"
 
 DANGEROUS = {
-    "Type", "Move", "Shortcut", "MultiSelect", "MultiEdit",
-    "Clipboard", "Process", "Notification", "Registry", "ScheduledTask",
-    "PowerShell", "FileSystem", "Scrape", "Package", "Credentials",
+    "Type",
+    "Move",
+    "Shortcut",
+    "MultiSelect",
+    "MultiEdit",
+    "Clipboard",
+    "Process",
+    "Notification",
+    "Registry",
+    "ScheduledTask",
+    "PowerShell",
+    "FileSystem",
+    "Scrape",
+    "Package",
+    "Credentials",
 }
 
 EXPECTED = {
-    "App", "Assert", "CaptureEvidence", "Click", "DisplayInventory",
-    "GetText", "GuardrailStatus", "Invoke", "Kill", "Recording",
-    "Screenshot", "Scroll", "Snapshot", "Wait", "WaitFor",
+    "App",
+    "Assert",
+    "CaptureEvidence",
+    "Click",
+    "DisplayInventory",
+    "GetText",
+    "GuardrailStatus",
+    "Invoke",
+    "Kill",
+    "Recording",
+    "Screenshot",
+    "Scroll",
+    "Snapshot",
+    "Wait",
+    "WaitFor",
 }
 
 
@@ -75,9 +99,7 @@ def main() -> int:
         if not rules:
             errors.append(f"{name} policy has no rules")
         if not any(
-            rule.get("match", {}).get("toolset") == "*"
-            and "run-context" in rule.get("require", [])
-            for rule in rules
+            rule.get("match", {}).get("toolset") == "*" and "run-context" in rule.get("require", []) for rule in rules
         ):
             errors.append(f"{name} policy lost interactive-session baseline")
 
