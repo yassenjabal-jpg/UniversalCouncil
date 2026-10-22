@@ -34,6 +34,22 @@ if (args.Length is 8 or 9 && args[0] == "--verify-evidence")
     Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
     return result.ContentMatchesDeclaration ? 0 : 1;
 }
+if (args.Length == 5 && args[0] == "--inspect-session")
+{
+    try
+    {
+        var snapshot = CommandCenterComposition.CreateLocalSupervisionReader(
+            AppContext.BaseDirectory, args[1]).Read(Guid.Parse(args[2]), args[3], args[4]);
+        Console.WriteLine(JsonSerializer.Serialize(snapshot, new JsonSerializerOptions { WriteIndented = true }));
+        return 0;
+    }
+    catch (Exception error) when (error is InvalidDataException or IOException or UnauthorizedAccessException or
+        ArgumentException or FormatException or System.Text.Json.JsonException)
+    {
+        Console.Error.WriteLine("SESSION_UNAVAILABLE");
+        return 1;
+    }
+}
 if (args.Length != 0)
 {
     Console.Error.WriteLine("Unknown or malformed validation command.");

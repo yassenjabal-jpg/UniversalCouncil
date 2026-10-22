@@ -30,6 +30,10 @@ public static class CommandCenterComposition
         new(Create(baseDirectory).LocalReviewPlanner,
             new JsonLocalReviewSessionStore(storageDirectory), clock);
 
+    public static LocalSupervisionReader CreateLocalSupervisionReader(
+        string baseDirectory, string storageDirectory, TimeProvider? clock = null) =>
+        new(CreateLocalReviewSessions(baseDirectory, storageDirectory, clock));
+
     public static EvidenceVerifier CreateEvidenceVerifier(string repositoryDirectory,
         string artifactDirectory, bool allowFixtures = false) =>
         new(new GitEvidenceManifestReader(repositoryDirectory),
