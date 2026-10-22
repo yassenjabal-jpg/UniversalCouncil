@@ -38,6 +38,16 @@ public sealed class LocalReviewSessionService(
     public LocalReviewSession Read(Guid id, string currentRevision, string currentArtifactSha256) =>
         store.Transact(id, null, s => Refresh(s, currentRevision, currentArtifactSha256));
 
+    public LocalReviewSession ReadForProject(Guid id, string projectId, string changeId,
+        string currentRevision, string currentArtifactSha256) =>
+        store.Transact(id, null, s => {
+            Validate(s);
+            if (string.IsNullOrWhiteSpace(projectId) || string.IsNullOrWhiteSpace(changeId) ||
+                s.Request.ProjectId != projectId || s.Request.ChangeId != changeId)
+                throw new InvalidDataException("WORKSPACE_SESSION_PROJECT_MISMATCH");
+            return Refresh(s, currentRevision, currentArtifactSha256);
+        });
+
     public LocalReviewSession Record(Guid id, int expectedVersion, string currentRevision,
         string currentArtifactSha256, string roleId, string actor, string outcome,
         string rationale, string[] evidenceRefs)

@@ -8,6 +8,10 @@ public sealed class LocalSupervisionReader(LocalReviewSessionService sessions)
     public LocalSupervisionSnapshot Read(Guid id, string currentRevision, string currentArtifactSha256)
     {
         var session = sessions.Read(id, currentRevision, currentArtifactSha256);
+        return Project(session);
+    }
+    internal static LocalSupervisionSnapshot Project(LocalReviewSession session)
+    {
         var reports = session.Results.Select(r => new ReviewerReportView(r.RoleId,
             r.Actor, r.Outcome, r.Rationale, Array.AsReadOnly(r.EvidenceRefs.ToArray()),
             r.RecordedAt)).ToArray();
