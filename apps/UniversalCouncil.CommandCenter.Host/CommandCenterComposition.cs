@@ -24,6 +24,12 @@ public sealed record CommandCenterHostServices(
 
 public static class CommandCenterComposition
 {
+    // Opt-in local recording only; default application startup creates no session storage.
+    public static LocalReviewSessionService CreateLocalReviewSessions(
+        string baseDirectory, string storageDirectory, TimeProvider? clock = null) =>
+        new(Create(baseDirectory).LocalReviewPlanner,
+            new JsonLocalReviewSessionStore(storageDirectory), clock);
+
     public static CommandCenterHostServices Create(string baseDirectory)
     {
         var statePath = Path.Combine(

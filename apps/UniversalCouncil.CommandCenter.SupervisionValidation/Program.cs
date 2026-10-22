@@ -129,5 +129,6 @@ try
         "missing policy fails closed");
 }
 finally { Directory.Delete(temp, true); }
+SessionChecks.Run(planner, Check);
 Console.WriteLine($"PASS {passed} supervision behavioral checks");
 return 0;
