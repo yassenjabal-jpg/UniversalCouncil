@@ -6,7 +6,7 @@ command = "E:\\GPT\\Tools\\DC-Replacement-20261022\\windows-mcp-server\\windows-
 args = [
   "stdio",
   "--toolsets", "screen,interaction,apps,testing",
-  "--exclude-tools", "Type,Move,Shortcut,MultiSelect,MultiEdit,Clipboard,Process,Notification,Registry,ScheduledTask,PowerShell,FileSystem,Scrape,Package,Credentials",
+  "--exclude-tools", "Type,Move,Shortcut,MultiSelect,MultiEdit,Clipboard,Process,Notification,Registry,ScheduledTask,PowerShell,LaunchExecutable,FileSystem,Scrape,Package,Credentials",
   "--policy-config", "E:\\GPT\\Tools\\DC-Replacement-20261022\\profiles\\YASSIN-ENGINEERING\\YASSIN_ENGINEERING_AUDIT_POLICY.json",
   "--record-codec", "h264",
   "--record-fps", "4",
