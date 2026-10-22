@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-23 Asia/Baghdad",
+  "verifier_source_revision": "35de187aad906c3ebd3554086ba88767fbcd0065",
+  "integrated_revision": "9c328910e5340c2aba8414a77a249b4432db4154",
+  "execution": {
+    "session_id": "bcb8d7289cb243d29c4c677d05ba00e5",
+    "pid": 31512,
+    "running": false,
+    "exit_code": 0,
+    "output": "{\r\n  \"Status\": \"CONTENT_MATCH\",\r\n  \"ProjectId\": \"universal-council-command-center\",\r\n  \"ChangeId\": \"w1-1-c8dfc241-archive-integrity\",\r\n  \"SourceRevision\": \"c8dfc2415e6e81ec05d85378a64520196e871c15\",\r\n  \"ManifestRevision\": \"dd3bfd43304caa5eb5a82099813cdf1779d562e8\",\r\n  \"ManifestBlobId\": \"1d2b65670d519ed657cfcb09a706f503b0c64e01\",\r\n  \"ManifestSha256\": \"556E4AC09352A5841DA668D1346199EB5758E828EE4FB89CF0ECAD667BA8F3AB\",\r\n  \"EvidenceKind\": \"REAL\",\r\n  \"Files\": [\r\n    {\r\n      \"Path\": \"W1-1-Evidence-c8dfc241.zip\",\r\n      \"Sha256\": \"7F8C8E428F334EE7D370652B40181E4BA2C35EB22CE3FB71AC0FDB6F9CCF15AE\",\r\n      \"SizeBytes\": 1008242257\r\n    }\r\n  ],\r\n  \"Errors\": [],\r\n  \"ContentMatchesDeclaration\": true,\r\n  \"BindingKind\": \"COMMITTED_DECLARATION_NOT_CAPTURE_ATTESTATION\",\r\n  \"CaptureRevisionIndependentlyVerified\": false,\r\n  \"SemanticEvidenceAccepted\": false,\r\n  \"ApprovalGranted\": false,\r\n  \"ExecutionAuthority\": false,\r\n  \"Stage8Opened\": false\r\n}\r\n",
+    "next_offset": 942,
+    "has_more": false,
+    "output_bytes": 942,
+    "output_truncated": false,
+    "decode_replacements": 0,
+    "stream_error": null,
+    "audit_error": false,
+    "timed_out": false,
+    "cancelled": false
+  },
+  "previous_attempts": [
+    "UNAVAILABLE / ARTIFACT_READ_TIMEOUT",
+    "UNAVAILABLE / ARTIFACT_READ_TIMEOUT"
+  ],
+  "interpretation": "Current bytes match committed declaration. Earlier timeouts retained. No source or deadline changes; previous slowness not reproduced, root cause unresolved. Not capture attestation, semantic acceptance or approval. P1 gate on integrated revision still failed; Stage8 closed."
+}
