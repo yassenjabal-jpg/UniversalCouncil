@@ -1,0 +1,14 @@
+# Static MCP registration for YASSIN-ENGINEERING.
+# Validate locally first, then start a fresh Codex/ChatGPT session.
+
+[mcp_servers.YASSIN_Windows_Engineering]
+command = "E:\\GPT\\Tools\\DC-Replacement-20261022\\windows-mcp-server\\windows-mcp-server.exe"
+args = [
+  "stdio",
+  "--toolsets", "screen,interaction,apps,testing",
+  "--exclude-tools", "Type,Move,Shortcut,MultiSelect,MultiEdit,Clipboard,Process,Notification,Registry,ScheduledTask,PowerShell,FileSystem,Scrape,Package,Credentials",
+  "--policy-config", "E:\\GPT\\Tools\\DC-Replacement-20261022\\profiles\\YASSIN-ENGINEERING\\YASSIN_ENGINEERING_AUDIT_POLICY.json",
+  "--record-codec", "h264",
+  "--record-fps", "4",
+  "--log-file", "E:\\GPT\\Tools\\DC-Replacement-20261022\\logs\\windows-engineering.log"
+]
