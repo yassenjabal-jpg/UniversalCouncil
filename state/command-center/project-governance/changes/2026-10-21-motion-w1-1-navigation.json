@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-MOTION-W1-1-NAVIGATION-2026-10-21",
+  "phase": "W1.1",
+  "title": "Eight-Screen Navigation Choreography",
+  "lifecycle": [
+    "PROPOSED",
+    "MURTAKAZ_PRE_REVIEW",
+    "APPROVE_TO_IMPLEMENT",
+    "CONTEXT_CAPSULE",
+    "IMPLEMENT",
+    "VERIFY"
+  ],
+  "current_state": "VERIFY",
+  "baseline_sha": "5bf76e46990f7a44e0f7ff733d065933174c9752",
+  "scope": [
+    "Add visible source-exit -> target-entry choreography across the eight canonical screens.",
+    "Animate the actual reference surface and native reconstruction together so motion is perceptible.",
+    "Preserve all visual assets, layout, typography, colors, and interaction semantics at rest.",
+    "Keep Reduced Motion free of travel while preserving source/destination state feedback.",
+    "Expand deterministic exact-head evidence to visit all eight canonical screens."
+  ],
+  "forbidden": [
+    "visual identity redesign",
+    "new screens",
+    "decorative looping motion",
+    "threshold lowering",
+    "fake runtime activity",
+    "Stage 8",
+    "PR merge"
+  ],
+  "architecture_delta": {
+    "boundary": "WPF presentation/navigation only",
+    "baseline_state": "MainWindow.xaml.cs owns navigation and is already large.",
+    "introduced_delta": "Navigation transition orchestration plus a small presentation-only helper.",
+    "smallest_safe_extraction": "Extract pure WPF transition mechanics to ScreenTransitionMotion.cs; keep business/runtime truth out of it.",
+    "direct_data_access_added": false,
+    "mutable_global_state_added": false,
+    "live_host_dependency_added": false,
+    "status": "APPROVED_WITH_SMALL_EXTRACTION"
+  },
+  "final_adoption_granted": false,
+  "implementation": {
+    "helper": "apps/UniversalCouncil.CommandCenter/ScreenTransitionMotion.cs",
+    "orchestrator": "apps/UniversalCouncil.CommandCenter/MainWindow.xaml.cs",
+    "evidence": "apps/UniversalCouncil.CommandCenter.UiSmoke/MotionEvidence.cs",
+    "validator": "tools/command_center_motion_w1_1_navigation_validate.py",
+    "architecture_boundary": "PRESENTATION_ONLY_EXTRACTION_APPLIED"
+  }
+}

@@ -85,6 +85,18 @@ internal static partial class Program
         };
         app.InitializeComponent();
 
+        if (args.Any(arg => string.Equals(arg, "--wgc-motion-evidence", StringComparison.OrdinalIgnoreCase)))
+        {
+            var reducedMotion = args.Any(
+                arg => string.Equals(arg, "--reduced-motion", StringComparison.OrdinalIgnoreCase));
+            return RenderWgcMotionEvidence(output, reducedMotion);
+        }
+
+        if (args.Any(arg => string.Equals(arg, "--wgc-pilot", StringComparison.OrdinalIgnoreCase)))
+        {
+            return RunWindowsGraphicsCapturePilot(output);
+        }
+
         if (args.Any(arg => string.Equals(arg, "--motion-evidence", StringComparison.OrdinalIgnoreCase)))
         {
             var reducedMotion = args.Any(

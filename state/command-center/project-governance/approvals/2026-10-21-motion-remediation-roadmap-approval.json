@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-MOTION-REMEDIATION-ROADMAP-2026-10-21",
+  "roadmap_id": "CC-MOTION-REMEDIATION-MASTER-ROADMAP-2026-10-21",
+  "decision": "APPROVED_BY_AL_MURTAKAZ_AS_GOVERNING_PLAN",
+  "scope": "MOTION_REMEDIATION_EXECUTION_SEQUENCE_ONLY",
+  "activated_studio_roles": [
+    "cc_studio_producer",
+    "cc_experience_architect",
+    "cc_interaction_director",
+    "cc_visual_systems",
+    "cc_motion_systems",
+    "cc_design_systems_engineer",
+    "cc_windows_experience",
+    "cc_android_experience",
+    "cc_prototype_engineer",
+    "cc_accessibility_clearance",
+    "cc_visual_qa"
+  ],
+  "activated_murtakaz_reviewers": [
+    "cc_owner_experience",
+    "cc_product_truth",
+    "cc_durable_autopilot",
+    "cc_architecture_execution",
+    "cc_cross_platform"
+  ],
+  "findings": [
+    "Owner rejection is valid evidence of a perceptual acceptance failure.",
+    "The defect spans implementation coverage, evidence quality and acceptance governance.",
+    "Current PR #72 is useful as a Wave 0 experiment but is not final motion acceptance.",
+    "The visual identity must remain locked while motion choreography is rebuilt.",
+    "Automated metrics may reject but may not overrule owner-visible failure.",
+    "Signature motion must be sparse, semantic and quiet at rest."
+  ],
+  "roadmap_structure": {
+    "wave_count": 7,
+    "phases_per_wave": 3,
+    "current_wave": "W0",
+    "final_gate": "MOTION_SYSTEM_LOCKED"
+  },
+  "execution_rules": {
+    "phase_order_enforced": true,
+    "wave_gate_required": true,
+    "owner_visual_review_required_at": [
+      "W3",
+      "W5"
+    ],
+    "no_threshold_gaming": true,
+    "no_post_produced_acceptance_video": true,
+    "no_merge_before_w6": true,
+    "exact_head_evidence_required": true
+  },
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution_authorized": false,
+    "visual_identity_locked": true
+  },
+  "implementation_status": "ROADMAP_APPROVED_EXECUTION_NOT_COMPLETED",
+  "merge_authorized": false,
+  "owner_final_authority": true,
+  "timestamp": "2026-10-21"
+}

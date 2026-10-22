@@ -19,10 +19,22 @@ public sealed record CommandCenterHostServices(
     IExecutionManifestValidator ExecutionManifestValidator,
     IRemoteOwnerGatewayProvider RemoteOwnerGateway,
     IRemoteTransportProjectionProvider RemoteTransport,
-    IOwnerTailnetProjectionProvider OwnerTailnet);
+    IOwnerTailnetProjectionProvider OwnerTailnet,
+    ILocalReviewPlanner LocalReviewPlanner);
 
 public static class CommandCenterComposition
 {
+    // Opt-in local recording only; default application startup creates no session storage.
+    public static LocalReviewSessionService CreateLocalReviewSessions(
+        string baseDirectory, string storageDirectory, TimeProvider? clock = null) =>
+        new(Create(baseDirectory).LocalReviewPlanner,
+            new JsonLocalReviewSessionStore(storageDirectory), clock);
+
+    public static EvidenceVerifier CreateEvidenceVerifier(string repositoryDirectory,
+        string artifactDirectory, bool allowFixtures = false) =>
+        new(new GitEvidenceManifestReader(repositoryDirectory),
+            new WindowsEvidenceContentReader(artifactDirectory), allowFixtures);
+
     public static CommandCenterHostServices Create(string baseDirectory)
     {
         var statePath = Path.Combine(
@@ -125,6 +137,8 @@ public static class CommandCenterComposition
             executionService,
             remoteOwnerService,
             remoteTransportService,
-            ownerTailnetService);
+            ownerTailnetService,
+            new LocalReviewPlanner(new JsonLocalReviewPolicyReader(
+                Path.Combine(baseDirectory, "state", "project-governance"))));
     }
 }

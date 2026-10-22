@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-MOTION-VISIBILITY-REMEDIATION-2026-10-21",
+  "status": "ROADMAP_APPROVED_REMEDIATION_ACTIVE",
+  "trigger": {
+    "type": "OWNER_VISUAL_REJECTION",
+    "statement": "Recorded P1 video shows no materially visible motion/animation.",
+    "evidence": {
+      "prior_video": "p1-critical-path-motion.mp4",
+      "prior_capture_fps": 6,
+      "observed_visible_change_frames": 22,
+      "observed_total_transitions": 167,
+      "visible_change_ratio_percent": 13.2
+    }
+  },
+  "base_revision": {
+    "branch": "command-center/project-local-council-studio-20261019",
+    "sha": "4b2a7bffe93e1defc93080906f87d7f8d123d66f"
+  },
+  "findings": [
+    "Motion Bible/Storyboard materially exceed implemented visual motion.",
+    "Implemented motion is limited primarily to drawer slide/fade, micro pulses/rings and small fades.",
+    "Canonical screen transitions are effectively state swaps with only a 220ms reference-image fade.",
+    "6 FPS evidence capture undersamples 120-300ms interaction motion.",
+    "Handoff, recovery rewind, fork growth and completion gather are storyboarded but not visually implemented."
+  ],
+  "scope": [
+    "add visibly legible semantic screen-entry motion to all eight canonical screens",
+    "add visible fork/recovery/handoff/decision interaction cues without fabricating runtime success",
+    "strengthen role/secondary activation cues",
+    "preserve Reduced Motion semantic parity",
+    "raise WPF motion capture frame rate from 6 FPS to a visually reviewable rate",
+    "add a validator that rejects low-motion captures and missing semantic motion implementations",
+    "produce a new owner-reviewable motion video before restoring motion acceptance"
+  ],
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution_authorized": false,
+    "real_host_gates_verified": 0
+  },
+  "non_goals": [
+    "opening Stage 8",
+    "simulating live runtime success",
+    "decorative infinite loops",
+    "changing the approved visual identity",
+    "using generated concept animation as evidence"
+  ],
+  "timestamp": "2026-10-21",
+  "governing_roadmap": {
+    "id": "CC-MOTION-REMEDIATION-MASTER-ROADMAP-2026-10-21",
+    "path": "state/command-center/motion-remediation-master-roadmap.json",
+    "current_wave": "W0",
+    "current_phase": "W0.1",
+    "final_gate": "MOTION_SYSTEM_LOCKED"
+  },
+  "merge_authorized": false,
+  "current_pr_classification": "WAVE_0_IMPLEMENTATION_EXPERIMENT_NOT_FINAL"
+}

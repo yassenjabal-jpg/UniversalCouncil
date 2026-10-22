@@ -1,0 +1,334 @@
+{
+  "schema_version": "1.0",
+  "inventory_id": "CC-MOTION-W0-1-IMPLEMENTATION-INVENTORY-2026-10-21",
+  "phase": "W0.1",
+  "phase_name": "Formal Return + Baseline Freeze",
+  "status": "MOTION_RETURN_BASELINE_LOCK",
+  "audited_implementation_head": "9285da24be6bee97564f7f47cbcaf7dee1ad3989",
+  "canonical_base_sha": "4b2a7bffe93e1defc93080906f87d7f8d123d66f",
+  "pull_request": 72,
+  "pull_request_classification": "WAVE_0_IMPLEMENTATION_EXPERIMENT_NOT_FINAL",
+  "pull_request_merge_allowed": false,
+  "owner_rejection_retained": true,
+  "return_ticket_id": "CC-MOTION-RT-001-2026-10-21",
+  "return_ticket_status_required": "OPEN",
+  "visual_baseline": {
+    "policy": "REFERENCE_FIRST_DELTA_SECOND_NO_VISUAL_REINVENTION",
+    "manifest_path": "state/command-center/living-operations-reference-manifest.json",
+    "screen_count": 8,
+    "references": [
+      {
+        "order": 1,
+        "role": "home_owner_workspace",
+        "path": "docs/operations/command-center/living-operations/references/01-home_owner_workspace.png",
+        "git_blob_sha": "9a76a1f6a7465efd7cd4c2a4dc22675884472416",
+        "sha256": "7cb7d12f8819576ad4992158f6f0eb098ae3350a3684118ffc43192ea56749eb"
+      },
+      {
+        "order": 2,
+        "role": "living_project_workspace",
+        "path": "docs/operations/command-center/living-operations/references/02-living_project_workspace.png",
+        "git_blob_sha": "c2f3f70892a6ed63ba651398a4cd522810d9644b",
+        "sha256": "6f412a1f11e9e9f32df810194dbd4df1c42b973be9dcfb80354f10fb1cf3b799"
+      },
+      {
+        "order": 3,
+        "role": "software_autopilot_project",
+        "path": "docs/operations/command-center/living-operations/references/03-software_autopilot_project.png",
+        "git_blob_sha": "1a24721098bf11dfd3b87ca7ad7ec2a64967d6eb",
+        "sha256": "cb2c26d0d54a0a0c6aef3d03cc65737d3a27084fe8228112b719379d7ab966ec"
+      },
+      {
+        "order": 4,
+        "role": "studio_project",
+        "path": "docs/operations/command-center/living-operations/references/04-studio_project.png",
+        "git_blob_sha": "0e146dfa224b7c91a0f42aedc3d2c82b897bbd03",
+        "sha256": "e2f012f6207006a5068152027ccbef8cd55f866b25e60899a113937ebe523664"
+      },
+      {
+        "order": 5,
+        "role": "owner_decision_mode",
+        "path": "docs/operations/command-center/living-operations/references/05-owner_decision_mode.png",
+        "git_blob_sha": "488b1f468c82adc38cc8095f547e9bba6ef0000b",
+        "sha256": "6351f755874fd9cec7cad4d8136d6c84eb8c3e8111a1d9ba219054f6d2488eeb"
+      },
+      {
+        "order": 6,
+        "role": "checkpoint_recovery_fork",
+        "path": "docs/operations/command-center/living-operations/references/06-checkpoint_recovery_fork.png",
+        "git_blob_sha": "fa8b40914e39c02b1ff7552a837297b9f59d8ef0",
+        "sha256": "7b1ceb447bebb3e9d488749e1beb4f82bf03fb078e58a2035c3ed2a58fe69076"
+      },
+      {
+        "order": 7,
+        "role": "pulse_visual_project_story",
+        "path": "docs/operations/command-center/living-operations/references/07-pulse_visual_project_story.png",
+        "git_blob_sha": "1936832c57e1ec7422a4236d20627780a4868e01",
+        "sha256": "f92ff13312e11ac6e52914a8cb595e0c870027f45ea8161aadaf72217cb483ed"
+      },
+      {
+        "order": 8,
+        "role": "project_complete_work_receipt",
+        "path": "docs/operations/command-center/living-operations/references/08-project_complete_work_receipt.png",
+        "git_blob_sha": "fbf62d916d66e7a8a97dedf2aea4923a70ad90a2",
+        "sha256": "f8db7163bc4e5396cd2d58563cf2d513504cef7863da299851142ce554e22b7f"
+      }
+    ]
+  },
+  "governing_sources": [
+    "docs/operations/command-center/living-operations/02_MOTION_BIBLE.md",
+    "docs/operations/command-center/living-operations/10_STATE_MOTION_MATRIX.md",
+    "docs/operations/command-center/living-operations/11_EVENT_ANIMATION_MAPPING.md",
+    "docs/operations/command-center/living-operations/16_P1_INTERACTION_MOTION_STORYBOARD.md",
+    "docs/operations/command-center/living-operations/18_REFERENCE_ONLY_VISUAL_LOCK.md",
+    "docs/operations/command-center/living-operations/30_MOTION_REMEDIATION_MASTER_ROADMAP_2026-10-21.md",
+    "apps/UniversalCouncil.CommandCenter/MainWindow.xaml.cs",
+    "apps/UniversalCouncil.CommandCenter.UiSmoke/MotionEvidence.cs"
+  ],
+  "signature_motion_inventory": [
+    {
+      "family": "ROLE_ACTIVATION",
+      "classification": "PARTIAL",
+      "screens": [
+        "Home / Owner Workspace",
+        "Living Project Workspace",
+        "Owner Decision Mode",
+        "Studio Project"
+      ],
+      "code_paths": [
+        "ShowRoleActivation",
+        "AnimateNativeRoleButton",
+        "ShowSecondaryActivation",
+        "AnimateRoleRouteCue"
+      ],
+      "implemented": [
+        "bounded activation ring/pulse",
+        "480ms route line from a screen-specific hard-coded origin to clicked role"
+      ],
+      "missing": [
+        "ROLE_ACTIVATED semantic-event consumption",
+        "event-backed participating-role set",
+        "route identity/provenance bound to a real routing event"
+      ],
+      "reduced_motion": "PARTIAL_CURRENT_IMPLEMENTATION_ONLY"
+    },
+    {
+      "family": "ARTIFACT_HANDOFF_RETURN",
+      "classification": "PARTIAL",
+      "screens": [
+        "Living Project Workspace",
+        "Pulse / Visual Project Story"
+      ],
+      "code_paths": [
+        "AnimatePulseInteractionCue",
+        "AnimateHandoffCue",
+        "OpenPulseDetail"
+      ],
+      "implemented": [
+        "620ms local artifact travel inside the Handoff Pulse target"
+      ],
+      "missing": [
+        "real source object highlight",
+        "semantic source-to-destination route",
+        "destination acceptance highlight",
+        "ARTIFACT_HANDOFF_STARTED/ACCEPTED event backing",
+        "ARTIFACT_RETURNED reverse route",
+        "inspectable Return Ticket transition"
+      ],
+      "reduced_motion": "SPEC_EQUIVALENT_NOT_COMPLETE_BECAUSE_FULL_SEQUENCE_IS_INCOMPLETE"
+    },
+    {
+      "family": "OWNER_DECISION_FOCUS",
+      "classification": "PARTIAL",
+      "screens": [
+        "Owner Decision Mode"
+      ],
+      "code_paths": [
+        "RunScreenEntranceMotion",
+        "AnimateDecisionIntentCue",
+        "AnimateSemanticRegionCue",
+        "HandleDecisionAction"
+      ],
+      "implemented": [
+        "700ms generic Decision screen entrance",
+        "static background de-emphasis in native reconstruction",
+        "bounded local action cue",
+        "truthful owner intent preview"
+      ],
+      "missing": [
+        "OWNER_DECISION_REQUIRED event-backed hierarchy transition",
+        "decision-card elevation choreography distinct from generic screen entry",
+        "OWNER_DECISION_RECORDED resolution-to-history transition"
+      ],
+      "reduced_motion": "PARTIAL_CURRENT_IMPLEMENTATION_ONLY"
+    },
+    {
+      "family": "RECOVERY",
+      "classification": "PARTIAL",
+      "screens": [
+        "Checkpoint / Recovery / Fork"
+      ],
+      "code_paths": [
+        "AnimateRecoveryIntentCue",
+        "AnimateRewindCue",
+        "HandleRecoveryAction"
+      ],
+      "implemented": [
+        "620ms bounded rewind marker",
+        "truthful RECOVERY INTENT PREVIEW with no fake restored state"
+      ],
+      "missing": [
+        "forward-flow stop tied to recovery state",
+        "focus actual last VERIFIED checkpoint",
+        "pending restored-state hold",
+        "CHECKPOINT_RESTORED_VERIFIED settlement",
+        "failure-to-UNKNOWN/HOLD choreography"
+      ],
+      "reduced_motion": "SPEC_EQUIVALENT_NOT_COMPLETE_BECAUSE_FULL_SEQUENCE_IS_INCOMPLETE"
+    },
+    {
+      "family": "FORK_BRANCH",
+      "classification": "PARTIAL",
+      "screens": [
+        "Checkpoint / Recovery / Fork"
+      ],
+      "code_paths": [
+        "AnimateRecoveryIntentCue",
+        "AnimateForkSplitCue",
+        "HandleRecoveryAction"
+      ],
+      "implemented": [
+        "640ms temporary line split cue",
+        "static branch comparison visuals",
+        "truthful non-authoritative intent preview"
+      ],
+      "missing": [
+        "FORK_CREATED event backing",
+        "source rail pause",
+        "A/B identity emergence as part of motion",
+        "original-preserved transition",
+        "equal-weight compare transition",
+        "explicit BRANCH_SELECTED settlement"
+      ],
+      "reduced_motion": "SPEC_EQUIVALENT_NOT_COMPLETE_BECAUSE_FULL_SEQUENCE_IS_INCOMPLETE"
+    },
+    {
+      "family": "VERIFIED_COMPLETION_WORK_RECEIPT",
+      "classification": "PARTIAL",
+      "screens": [
+        "Project Complete / Work Receipt"
+      ],
+      "code_paths": [
+        "BuildNativeWorkReceipt",
+        "RunScreenEntranceMotion"
+      ],
+      "implemented": [
+        "static Work Receipt reconstruction",
+        "760ms generic screen entrance"
+      ],
+      "missing": [
+        "PROJECT_COMPLETED_VERIFIED event consumption",
+        "verified-stage settle sequence",
+        "final-artifact gather",
+        "active-motion stop as completion semantics",
+        "restrained completion cue",
+        "event-backed next-action reveal"
+      ],
+      "reduced_motion": "SPEC_EQUIVALENT_NOT_IMPLEMENTED_FOR_SIGNATURE_SEQUENCE"
+    }
+  ],
+  "secondary_motion_inventory": [
+    {
+      "motion": "EIGHT_SCREEN_ENTRY",
+      "classification": "IMPLEMENTED_EXPERIMENT",
+      "note": "Per-screen opacity/scale/translate 420-760ms; no matching exit choreography."
+    },
+    {
+      "motion": "DRAWER_OPEN_CLOSE",
+      "classification": "IMPLEMENTED",
+      "note": "240ms open slide + fade; 190ms close; immediate Reduced Motion state."
+    },
+    {
+      "motion": "REFERENCE_IMAGE_FADE",
+      "classification": "IMPLEMENTED_MICRO",
+      "note": "220ms fade; not accepted as signature motion."
+    },
+    {
+      "motion": "FILMSTRIP_VERSION_ENTRY",
+      "classification": "MISSING",
+      "note": "Version cards are static; inspector is interactive."
+    },
+    {
+      "motion": "PULSE_REVEAL",
+      "classification": "PARTIAL",
+      "note": "Generic bounded region cue exists; story-to-action transfer is absent."
+    },
+    {
+      "motion": "PULSE_TO_TASK_DECISION_RESEARCH",
+      "classification": "SPEC_ONLY",
+      "note": "Drawer text describes semantic actions; no creation transition."
+    },
+    {
+      "motion": "AUTOPILOT_CURRENT_STATE_CHOREOGRAPHY",
+      "classification": "SPEC_ONLY",
+      "note": "No WAITING_OWNER or RECOVERING event-state animation path in MainWindow."
+    },
+    {
+      "motion": "ARTIFACT_RETURN",
+      "classification": "MISSING",
+      "note": "No reverse route / Return Ticket animation in MainWindow."
+    }
+  ],
+  "evidence_baseline": {
+    "workflow_run_id": 39651044966,
+    "full_reduced_capture_job": 119399680764,
+    "android_job": 119399681191,
+    "gate_job": 119401865606,
+    "gate_result": "FAIL",
+    "failed_rule": "full motion capture does not contain enough visibly changing frames",
+    "full_motion_known_metrics": {
+      "duration_seconds": 28,
+      "frames": 560,
+      "fps": 20,
+      "changed_frames": 52,
+      "longest_continuous_changed_run": 6,
+      "motion_events": 15,
+      "unchanged_acceptance_threshold_changed_frames": 60
+    },
+    "wpf_artifact_id": 12370411610,
+    "wpf_artifact_digest": "sha256:8340cc88fa283b78d7e1165813e63694ead3e8ad4141590b7d098ad11dbac665",
+    "android_artifact_id": 12370516017,
+    "android_artifact_digest": "sha256:0525470bafde1a33fd9a2bf62dfbb786599b7e633a7a029dd75634930813cb67"
+  },
+  "defects": [
+    {
+      "id": "W0.1-D01",
+      "severity": "BLOCKING_LATER_WAVES",
+      "finding": "All six signature families are incomplete; current implementations are partial cues or generic screen entry rather than complete semantic choreography."
+    },
+    {
+      "id": "W0.1-D02",
+      "severity": "BLOCKING_LATER_WAVES",
+      "finding": "MainWindow does not consume PROJECT_COMPLETED_VERIFIED and does not implement ARTIFACT_RETURNED reverse-route behavior."
+    },
+    {
+      "id": "W0.1-D03",
+      "severity": "PROCESS",
+      "finding": "The previous state files embedded stale latest_head 27252eeeb13cf653a704c3b737b11fbef0ffecaa while GitHub branch head was 9285da24be6bee97564f7f47cbcaf7dee1ad3989."
+    },
+    {
+      "id": "W0.1-D04",
+      "severity": "ACCEPTANCE",
+      "finding": "Exact-head P1 evidence run 39651044966 failed the unchanged 60 changed-frame threshold; capture generation itself succeeded."
+    }
+  ],
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution_authorized": false,
+    "visual_identity_locked": true
+  },
+  "w0_2_started": false,
+  "gate": "MOTION_RETURN_BASELINE_LOCK"
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "CC-OWNER-MOTION-INTENT-CLARIFICATION-2026-10-22",
+  "authority": "OWNER",
+  "project": "UniversalCouncil Command Center / Al-Murtakaz",
+  "decision": "OWNER_MOTION_INTENT_CLARIFIED",
+  "primary_motion_target": "IN_SCREEN_SEMANTIC_ELEMENT_MOTION",
+  "secondary_motion_target": "NAVIGATION_CONTINUITY",
+  "reference_video": {
+    "sha256": "64ecb6d501aec1fd3dbead54d3330db447539bfc508a8442839cb969c150b00f",
+    "allowed_use": "MOTION_BEHAVIOR_REFERENCE_ONLY",
+    "forbidden_use": [
+      "VISUAL_STYLE",
+      "COLOR",
+      "LAYOUT",
+      "TYPOGRAPHY",
+      "ICONOGRAPHY",
+      "COMPOSITION",
+      "BRANDING",
+      "VISUAL_IDENTITY"
+    ]
+  },
+  "reclassification": {
+    "existing_w1_1_navigation_wgc": "RECORDER_AND_NAVIGATION_BASELINE_ONLY",
+    "final_owner_motion_acceptance": false
+  },
+  "required_inventory_contract": "element -> semantic trigger -> motion -> function/result -> reduced-motion equivalent",
+  "required_element_families": [
+    "ROLE_SIGILS",
+    "ROUTES_CONNECTIONS",
+    "STATUS_CURRENT_INDICATORS",
+    "INTERACTIVE_ICONS_VECTORS",
+    "ARTIFACT_SEMANTIC_OBJECTS",
+    "MICRO_STATE_FEEDBACK"
+  ],
+  "anti_decoration": true,
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution": false,
+    "pr72_merge_authorized": false
+  },
+  "timestamp": "2026-10-22"
+}

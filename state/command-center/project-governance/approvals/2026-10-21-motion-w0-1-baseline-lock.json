@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-MOTION-W0-1-BASELINE-LOCK-2026-10-21",
+  "roadmap_id": "CC-MOTION-REMEDIATION-MASTER-ROADMAP-2026-10-21",
+  "phase": "W0.1",
+  "gate": "MOTION_RETURN_BASELINE_LOCK",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "scope": "W0_1_TRUTH_BASELINE_ONLY",
+  "audited_implementation_head": "9285da24be6bee97564f7f47cbcaf7dee1ad3989",
+  "findings": [
+    "Owner-visible rejection remains authoritative and the Return Ticket remains OPEN.",
+    "PR #72 remains an implementation experiment and is not mergeable by this receipt.",
+    "All six signature motion families are incomplete at the audited implementation baseline.",
+    "The eight canonical visual references are frozen; visual identity is not reopened.",
+    "The 60 changed-frame evidence threshold remains unchanged.",
+    "Stage 7 truth is preserved and Stage 8 remains closed."
+  ],
+  "deliverables": {
+    "implementation_inventory": "state/command-center/motion-implementation-inventory-w0-1.json",
+    "human_inventory": "docs/operations/command-center/living-operations/31_MOTION_IMPLEMENTATION_INVENTORY_W0_1_2026-10-21.md",
+    "return_ticket": "state/command-center/project-governance/return-tickets/CC-MOTION-RT-001-2026-10-21.json",
+    "visual_manifest": "state/command-center/living-operations-reference-manifest.json"
+  },
+  "reviews": {
+    "studio_producer": "PASS",
+    "visual_qa": "PASS_BASELINE_TRUTH_ONLY",
+    "product_truth": "PASS",
+    "murtakaz_post_review": "APPROVED_PHASE_GATE_ONLY"
+  },
+  "next_phase": "W0.2",
+  "next_phase_allowed": true,
+  "next_phase_started": false,
+  "owner_visual_motion_acceptance": false,
+  "merge_authorized": false,
+  "stage8_opened": false,
+  "runtime_authority_added": false,
+  "live_execution_authorized": false,
+  "return_ticket_close_authorized": false,
+  "timestamp": "2026-10-21"
+}

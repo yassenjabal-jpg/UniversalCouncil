@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0",
+  "state_id": "CC-MOTION-W1-1-NAVIGATION-2026-10-21",
+  "phase": "W1.1",
+  "status": "VERIFY",
+  "choreography": "SOURCE_EXIT_TARGET_COMMIT_TARGET_ENTRY_SETTLE",
+  "canonical_screen_count": 8,
+  "animated_surface": "ReferenceHost",
+  "composite_scope": [
+    "canonical reference image",
+    "native reconstruction",
+    "interaction surface"
+  ],
+  "same_screen_navigation_noop": true,
+  "reentrant_policy": "QUEUE_LATEST_TARGET_NO_OVERLAP",
+  "interaction_during_transition": "DISABLED",
+  "full_motion_policy": "BOUNDED_TRANSLATE_SCALE_OPACITY_THEN_CANONICAL_SETTLE",
+  "reduced_motion_policy": "CROSSFADE_ONLY_NO_TRANSLATE_OR_SCALE",
+  "profiles": {
+    "home": {
+      "exit_ms": 180,
+      "entry_ms": 400,
+      "entry_x": 0,
+      "entry_y": 42,
+      "entry_scale": 0.985
+    },
+    "project": {
+      "exit_ms": 185,
+      "entry_ms": 415,
+      "entry_x": 64,
+      "entry_y": 0,
+      "entry_scale": 0.978
+    },
+    "autopilot": {
+      "exit_ms": 185,
+      "entry_ms": 415,
+      "entry_x": 68,
+      "entry_y": 0,
+      "entry_scale": 0.978
+    },
+    "studio": {
+      "exit_ms": 190,
+      "entry_ms": 410,
+      "entry_x": 0,
+      "entry_y": 54,
+      "entry_scale": 0.978
+    },
+    "decision": {
+      "exit_ms": 210,
+      "entry_ms": 450,
+      "entry_x": 0,
+      "entry_y": 62,
+      "entry_scale": 0.968
+    },
+    "recovery": {
+      "exit_ms": 210,
+      "entry_ms": 450,
+      "entry_x": -68,
+      "entry_y": 0,
+      "entry_scale": 0.972
+    },
+    "pulse": {
+      "exit_ms": 190,
+      "entry_ms": 410,
+      "entry_x": 64,
+      "entry_y": 0,
+      "entry_scale": 0.978
+    },
+    "receipt": {
+      "exit_ms": 210,
+      "entry_ms": 450,
+      "entry_x": 0,
+      "entry_y": 64,
+      "entry_scale": 0.968
+    }
+  },
+  "evidence": {
+    "fps": 30,
+    "resolution": "1440x900",
+    "exact_head": true,
+    "all_eight_screens_required": true,
+    "full_and_reduced_required": true,
+    "post_production": false
+  },
+  "architecture_boundary": {
+    "helper": "apps/UniversalCouncil.CommandCenter/ScreenTransitionMotion.cs",
+    "presentation_only": true,
+    "direct_data_access_added": false,
+    "mutable_global_state_added": false,
+    "live_host_dependency_added": false
+  },
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution_authorized": false,
+    "visual_identity_locked": true
+  },
+  "w1_2_started": false,
+  "merge_authorized": false,
+  "visibility_remediation": {
+    "reason": "TRUTHFUL_COMPOSITE_CAPTURE_SHOWED_FRONT_LOADED_MOTION_AS_EFFECTIVELY_STATIC",
+    "full_motion_easing": "QUADRATIC_STANDARD_DIRECTIONAL",
+    "source_exit_travel_ratio": 0.42,
+    "source_exit_opacity_target": 0.1,
+    "entry_opacity_start": 0.1,
+    "timing_policy": "M3_580_600MS_ROUTINE_M4_660MS_DECISION_RECOVERY_COMPLETION",
+    "detector_thresholds_changed": false,
+    "reduced_motion_changed": false,
+    "recorder_clock": "STOPWATCH_REALTIME_WPF",
+    "recorder_pipeline": "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG",
+    "capture_duration_tolerance_seconds": 1.25,
+    "max_capture_lateness_ms": 100,
+    "review_artifact_split": true,
+    "background_encoder": "FFMPEG_LOSSLESS_PNG",
+    "encoder_queue_capacity_frames": 60,
+    "png_encoding_on_wpf_capture_thread": false,
+    "synchronous_raw_disk_persistence": false,
+    "capture_surface_cache": "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE",
+    "synchronous_layout_per_frame": false,
+    "png_compression_level": 1
+  }
+}

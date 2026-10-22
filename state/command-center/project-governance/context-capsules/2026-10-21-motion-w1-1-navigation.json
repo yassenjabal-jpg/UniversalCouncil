@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "capsule_id": "CC-MOTION-W1-1-NAVIGATION-CONTEXT-2026-10-21",
+  "change_id": "CC-MOTION-W1-1-NAVIGATION-2026-10-21",
+  "phase": "W1.1",
+  "status": "ACTIVE_FOR_IMPLEMENTATION",
+  "source_truth": {
+    "baseline_sha": "5bf76e46990f7a44e0f7ff733d065933174c9752",
+    "canonical_screen_count": 8,
+    "visual_manifest": "state/command-center/living-operations-reference-manifest.json",
+    "motion_bible": "docs/operations/command-center/living-operations/02_MOTION_BIBLE.md",
+    "storyboard": "docs/operations/command-center/living-operations/16_P1_INTERACTION_MOTION_STORYBOARD.md",
+    "coverage_contract": "state/command-center/motion-storyboard-code-coverage-w0-2.json"
+  },
+  "implementation_contract": {
+    "sequence": "SOURCE_EXIT -> TARGET_COMMIT -> TARGET_ENTRY -> SETTLE",
+    "full_motion": "bounded exit and entry on actual composite screen content",
+    "reduced_motion": "no translation or scale travel; bounded crossfade/state handoff only",
+    "same_screen_navigation": "no transition",
+    "reentrant_navigation": "queue latest target; never overlap transitions",
+    "interaction_during_transition": "disabled until settle",
+    "visual_rest_state": "pixel/layout geometry returns to canonical reference state"
+  },
+  "evidence_contract": {
+    "exact_head": true,
+    "actual_wpf": true,
+    "fps": 30,
+    "all_eight_screens": true,
+    "post_production": false
+  },
+  "protected_truth": {
+    "stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution": false,
+    "merge": false
+  }
+}

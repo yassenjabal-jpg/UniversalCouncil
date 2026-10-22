@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-MOTION-VISIBILITY-REMEDIATION-PRE-2026-10-21",
+  "change_id": "CC-MOTION-VISIBILITY-REMEDIATION-2026-10-21",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "implementation_authorized": true,
+  "motion_acceptance_reopened": true,
+  "desktop_fidelity_reopened": false,
+  "requirements": {
+    "semantic_only": true,
+    "decorative_only_motion_forbidden": true,
+    "reduced_motion_parity_required": true,
+    "owner_review_video_required": true,
+    "capture_fps_minimum": 20
+  },
+  "stage8_opened": false,
+  "runtime_authority_added": false,
+  "live_execution_authorized": false,
+  "merge_authorized": false,
+  "timestamp": "2026-10-21"
+}

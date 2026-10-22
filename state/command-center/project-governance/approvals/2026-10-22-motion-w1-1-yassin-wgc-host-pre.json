@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "CC-MOTION-W1-1-YASSIN-WGC-HOST-PRE-2026-10-22",
+  "phase": "W1.1",
+  "review_type": "AL_MURTAKAZ_REAL_HOST_EVIDENCE_PRE_CHANGE",
+  "trigger": "Persistent WGC captures actual frames on GitHub Actions but current CI compositor cadence/geometry does not satisfy the governed W1.1 evidence contract.",
+  "decision": "APPROVE_YASSIN_HOST_EVIDENCE_VALIDATION",
+  "implementation_authorized": true,
+  "scope": "EVIDENCE CAPTURE ONLY",
+  "host": "YASSIN",
+  "source": "RAW_WGC_PERSISTENT/WKI_CLIPPER_PATTERN",
+  "requirements": {
+    "exact_candidate_sha": true,
+    "actual_command_center_hwnd": true,
+    "full_motion_and_reduced_motion_required_before_acceptance": true,
+    "target": "1440x900@30fps",
+    "no_optical_flow": true,
+    "no_frame_interpolation": true,
+    "no_post_production": true,
+    "no_silent_dxgi_fallback": true,
+    "hashes_required": true,
+    "capture_timing_required": true,
+    "source_cadence_diagnostics_required": true
+  },
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution": false,
+    "w1_2_started": false,
+    "pr72_merge": false
+  },
+  "reviewers": {
+    "al_murtakaz": "PASS_REAL_HOST_EVIDENCE_ONLY",
+    "windows_experience": "PASS_USE_REAL_INTERACTIVE_WINDOWS_HOST",
+    "architecture_execution": "PASS_NO_PRODUCT_DEPENDENCY",
+    "product_truth_evidence": "PASS_EXACT_HEAD_AND_HASH_REQUIRED",
+    "motion_systems": "PASS_NO_MOTION_CHANGE",
+    "visual_qa": "PASS_GEOMETRY_MUST_BE_MEASURED"
+  },
+  "final_adoption_granted": false,
+  "owner_acceptance": false,
+  "timestamp": "2026-10-22"
+}

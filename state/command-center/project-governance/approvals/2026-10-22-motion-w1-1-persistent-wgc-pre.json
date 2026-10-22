@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "CC-MOTION-W1-1-PERSISTENT-WGC-PRE-2026-10-22",
+  "phase": "W1.1",
+  "review_type": "AL_MURTAKAZ_FALLBACK_PRE_CHANGE",
+  "trigger": "WgcSharp 1.1.1 WGC_ONLY exact-head pilot produced 0/30 frames on GitHub-hosted Windows runner.",
+  "decision": "APPROVE_TO_IMPLEMENT_PERSISTENT_RAW_WGC_PILOT_ONLY",
+  "implementation_authorized": true,
+  "scope": "EVIDENCE CAPTURE ONLY",
+  "architecture_reference": {
+    "repository": "WKImods/WKI-Clipper",
+    "pattern": "persistent WgcWindowCapture + latest-frame buffer + D3D11 staging readback",
+    "import_policy": "PRINCIPLES_AND_MINIMAL_ADAPTED_INTEROP_ONLY",
+    "license": "MIT"
+  },
+  "constraints": {
+    "product_motion_change": false,
+    "thresholds_change": false,
+    "visual_identity_change": false,
+    "silent_dxgi_fallback": false,
+    "monitor_surface_substitution": false,
+    "w1_2_start": false,
+    "pr72_merge": false,
+    "stage8_open": false,
+    "runtime_authority": false,
+    "business_or_data_dependency": false
+  },
+  "required_diagnostics": [
+    "actual frame count",
+    "actual cadence",
+    "first-frame latency",
+    "missed samples",
+    "content dimensions",
+    "capture duration",
+    "exact candidate SHA",
+    "capture source identity",
+    "fallback_used=false"
+  ],
+  "reviewers": {
+    "al_murtakaz": "PASS_FALLBACK_PRE_IMPLEMENTATION",
+    "windows_experience": "PASS_PERSISTENT_SESSION_PILOT",
+    "prototype_engineer": "PASS_BOUNDED_EVIDENCE_ADAPTER",
+    "architecture_execution": "PASS_EVIDENCE_INFRA_ONLY",
+    "product_truth_evidence": "PASS_NO_SURFACE_SUBSTITUTION",
+    "visual_qa": "PASS_NO_VISUAL_CHANGE",
+    "accessibility": "PASS_NO_MOTION_CHANGE"
+  },
+  "final_adoption_granted": false,
+  "owner_acceptance": false,
+  "timestamp": "2026-10-22"
+}

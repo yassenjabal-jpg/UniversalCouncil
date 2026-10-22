@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "return_ticket_id": "CC-MOTION-RT-001-2026-10-21",
+  "status": "OPEN",
+  "source_function": "cc_motion_systems",
+  "detecting_reviewer": "OWNER_PLUS_VISUAL_QA",
+  "artifact": "P1 WPF Full Motion Capture",
+  "problem": "Motion capture appeared effectively static to the owner; implemented motion materially lagged the governing Motion Bible and storyboard.",
+  "evidence": {
+    "original_capture_fps": 6,
+    "remediation_capture_fps": 20,
+    "latest_gate_result": "FAIL",
+    "latest_failed_rule": "full motion capture does not contain enough visibly changing frames",
+    "latest_pr": 72,
+    "latest_head": "9285da24be6bee97564f7f47cbcaf7dee1ad3989",
+    "latest_head_semantics": "LATEST_FAILED_EXACT_HEAD_EVIDENCE",
+    "latest_workflow_run_id": 39651044966,
+    "wpf_artifact_id": 12370411610,
+    "android_artifact_id": 12370516017
+  },
+  "requested_correction": "Execute CC-MOTION-REMEDIATION-MASTER-ROADMAP-2026-10-21 through W6 without lowering visual acceptance thresholds.",
+  "do_not_change": [
+    "canonical visual identity",
+    "eight canonical screen composition law",
+    "Stage 7 truth",
+    "Stage 8 closed state",
+    "runtime/live execution authority"
+  ],
+  "acceptance_criteria": [
+    "six signature motion families implemented and event-backed",
+    "owner-visible Full Motion accepted",
+    "Reduced Motion semantic parity accepted",
+    "technical/performance/accessibility gates accepted",
+    "Al-Murtakaz final approval",
+    "exact approved candidate tree merged"
+  ],
+  "return_target": "cc_motion_systems",
+  "close_condition": "MOTION_SYSTEM_LOCKED",
+  "timestamp": "2026-10-21",
+  "w0_1_baseline_gate": "MOTION_RETURN_BASELINE_LOCK",
+  "w0_1_inventory": "state/command-center/motion-implementation-inventory-w0-1.json"
+}

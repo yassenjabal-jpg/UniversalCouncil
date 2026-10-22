@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-MOTION-W0-EXIT-EVIDENCE-VERIFICATION-2026-10-21",
+  "roadmap_id": "CC-MOTION-REMEDIATION-MASTER-ROADMAP-2026-10-21",
+  "wave": "W0",
+  "gate": "MOTION_EVIDENCE_PIPELINE_LOCK",
+  "decision": "APPROVED_BY_AL_MURTAKAZ",
+  "scope": "EVIDENCE_PIPELINE_MECHANISM_ONLY",
+  "verified_candidate_sha": "5bf76e46990f7a44e0f7ff733d065933174c9752",
+  "workflow_run_id": 39660684213,
+  "evidence": {
+    "wpf_job_id": 119432565765,
+    "wpf_job_result": "SUCCESS",
+    "android_job_id": 119432566364,
+    "android_job_result": "SUCCESS",
+    "evidence_gate_job_id": 119435228047,
+    "evidence_gate_result": "FAIL_EXPECTED_PRODUCT_MOTION_THRESHOLD",
+    "full_motion_result": "65_CHANGED_LT_90_REQUIRED_AT_30FPS",
+    "full_longest_run": "8_LT_9_REQUIRED_AT_30FPS",
+    "reduced_motion_result": "9_CHANGED_LONGEST_1_RUNS_9",
+    "wpf_artifact_id": 12372734406,
+    "wpf_artifact_digest": "sha256:00823e976d95d2d4be1ee97be5b79ae94fec7e2963bcb0348500a20acf5ee9f1",
+    "android_artifact_id": 12373956797,
+    "android_artifact_digest": "sha256:6899c24f0066d897d4f37383712494eab842bc10de4db33fd33f807e54639917"
+  },
+  "interpretation": {
+    "evidence_mechanism": "PASS",
+    "product_motion": "FAIL",
+    "owner_motion_acceptance": false,
+    "threshold_lowered": false,
+    "false_positive_prevented": true
+  },
+  "next_phase": "W1.1",
+  "next_phase_allowed": true,
+  "merge_authorized": false,
+  "stage8_opened": false,
+  "runtime_authority_added": false,
+  "live_execution_authorized": false,
+  "return_ticket_close_authorized": false,
+  "timestamp": "2026-10-21"
+}

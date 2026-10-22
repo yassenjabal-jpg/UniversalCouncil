@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "change_id": "CC-MOTION-W1-1-WGC-PILOT-2026-10-22",
+  "phase": "W1.1",
+  "title": "Windows Graphics Capture Evidence Pilot",
+  "current_state": "APPROVE_TO_IMPLEMENT",
+  "baseline_sha": "f2974d852e9634a9d4668782a995390b85edf571",
+  "scope": [
+    "EVIDENCE CAPTURE ONLY",
+    "Introduce an evidence-only capture boundary behind the UiSmoke recorder.",
+    "Probe Windows.Graphics.Capture against the actual Command Center HWND without changing product motion.",
+    "Preserve exact-head, 1440x900, 30 FPS target, raw-frame hashing, semantic event timeline, Full/Reduced separation and current timing tolerance."
+  ],
+  "forbidden": [
+    "motion DNA changes",
+    "90/9 threshold reduction",
+    "screen redesign",
+    "W1.2 start",
+    "PR #72 merge",
+    "Stage 8 open",
+    "runtime authority expansion",
+    "optical flow",
+    "frame interpolation",
+    "post-production animation",
+    "silent DXGI fallback"
+  ],
+  "candidate_dependency": {
+    "project": "Giltanas/WgcSharp",
+    "nuget_version": "1.1.1",
+    "upstream_commit": "16450f1fade51ed13bcfaa2555bcb4ddd4019dd3",
+    "license": "MIT",
+    "status": "PILOT_CANDIDATE_ONLY",
+    "source_audit_note": "The public CaptureWindow API creates a new D3D/WGC session per screenshot, skips the first frame, then waits 50ms before the accepted frame; therefore direct per-frame use must not be assumed capable of sustained 30 FPS."
+  },
+  "architecture_delta": {
+    "boundary": "UiSmoke evidence/test infrastructure only",
+    "proposed_contract": "IMotionEvidenceCaptureSource",
+    "product_dependency_added": false,
+    "business_runtime_dependency_added": false,
+    "database_or_network_dependency_added": false,
+    "global_product_state_added": false,
+    "wpf_render_target_path": "DIAGNOSTIC_FALLBACK_ONLY_DURING_PILOT"
+  },
+  "evidence_required": [
+    "actual capture duration within existing tolerance",
+    "actual 30 FPS cadence",
+    "actual HWND pixels",
+    "exact candidate SHA binding",
+    "dropped-frame diagnostics",
+    "visual dimensions/crop diagnostics",
+    "Full Motion existing thresholds",
+    "Reduced Motion existing limits",
+    "hash integrity"
+  ],
+  "final_adoption_granted": false,
+  "merge_authorized": false,
+  "w1_2_started": false,
+  "stage8_opened": false,
+  "timestamp": "2026-10-22"
+}

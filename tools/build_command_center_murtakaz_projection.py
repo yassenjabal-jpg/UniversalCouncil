@@ -21,28 +21,31 @@ SOURCES = [
 ]
 
 
-def load(relative: str) -> dict[str, Any]:
-    return json.loads((ROOT / relative).read_text(encoding="utf-8"))
-
-
-def git_blob_sha(relative: str) -> str:
-    return subprocess.check_output(
-        ["git", "rev-parse", f"HEAD:{relative}"],
-        cwd=ROOT,
-        text=True,
-    ).strip()
+def committed_snapshot() -> tuple[dict[str, Any], list[dict[str, str]]]:
+    """Bind projected data and metadata to the same immutable Git snapshot."""
+    revision = subprocess.check_output(["git", "rev-parse", "--verify", "HEAD^{commit}"], cwd=ROOT, text=True).strip()
+    for comparison in (["--cached", revision], []):
+        status = subprocess.run(["git", "diff", "--quiet", *comparison, "--", *SOURCES], cwd=ROOT).returncode
+        if status != 0:
+            reason = "uncommitted governing sources" if status == 1 else "source preflight failed"
+            raise SystemExit(f"Murtakaz projection refused: {reason}")
+    documents: dict[str, Any] = {}
+    sources: list[dict[str, str]] = []
+    for relative in SOURCES:
+        raw = subprocess.check_output(["git", "cat-file", "blob", f"{revision}:{relative}"], cwd=ROOT)
+        documents[relative] = json.loads(raw)
+        blob_sha = (
+            subprocess.check_output(["git", "hash-object", "--stdin"], cwd=ROOT, input=raw).decode("ascii").strip()
+        )
+        sources.append({"path": relative, "blob_sha": blob_sha})
+    return documents, sources
 
 
 def build() -> dict[str, Any]:
-    identity = load(SOURCES[0])
-    lock = load(SOURCES[1])
-    council = load(SOURCES[2])
-    studio = load(SOURCES[3])
-    approval = load(SOURCES[4])
-    agentic = load(SOURCES[5])
-    invariants = load(SOURCES[6])
-    capsule = load(SOURCES[7])
-    envelope = load(SOURCES[8])
+    documents, source_files = committed_snapshot()
+    identity, lock, council, studio, approval, agentic, invariants, capsule, envelope = (
+        documents[relative] for relative in SOURCES
+    )
 
     if identity["id"] != "al-murtakaz":
         raise SystemExit("Murtakaz identity drifted")
@@ -79,7 +82,7 @@ def build() -> dict[str, Any]:
         "schema_version": "2.0",
         "source_type": "project_local_repository_projection",
         "project_id": council["project_id"],
-        "source_files": [{"path": path, "blob_sha": git_blob_sha(path)} for path in SOURCES],
+        "source_files": source_files,
         "identity": {
             "id": identity["id"],
             "name_ar": identity["name_ar"],

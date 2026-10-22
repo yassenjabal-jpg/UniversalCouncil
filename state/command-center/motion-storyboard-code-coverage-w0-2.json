@@ -1,0 +1,185 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "CC-MOTION-W0-2-STORYBOARD-CODE-COVERAGE-2026-10-21",
+  "phase": "W0.2",
+  "status": "MOTION_STORYBOARD_CODE_COVERAGE_LOCK",
+  "based_on_w0_1_gate": "MOTION_RETURN_BASELINE_LOCK",
+  "baseline_head": "9285da24be6bee97564f7f47cbcaf7dee1ad3989",
+  "contract_authoring_head": "bc32d5f897aff273a0db6addd3adafe5392a6552",
+  "source_event_contract": "docs/operations/command-center/living-operations/11_EVENT_ANIMATION_MAPPING.md",
+  "source_storyboard": "docs/operations/command-center/living-operations/16_P1_INTERACTION_MOTION_STORYBOARD.md",
+  "signature_families": [
+    "ROLE_ACTIVATION",
+    "ARTIFACT_HANDOFF_RETURN",
+    "OWNER_DECISION_FOCUS",
+    "RECOVERY",
+    "FORK_BRANCH",
+    "VERIFIED_COMPLETION_WORK_RECEIPT"
+  ],
+  "required_columns": [
+    "semantic_event",
+    "semantic_object",
+    "screen",
+    "full_motion",
+    "reduced_motion",
+    "code_path",
+    "evidence_step"
+  ],
+  "rows": [
+    {
+      "signature_family": "ROLE_ACTIVATION",
+      "semantic_event": "ROLE_ACTIVATED",
+      "semantic_object": "Role Sigil + route from Project Core",
+      "screen": "Home / Owner Workspace; Living Project Workspace; Studio Project; Owner Decision Mode",
+      "full_motion": "Project Core remains fixed; semantic route grows to only the participating Sigil; target Sigil resolves into active state; unrelated roles remain still.",
+      "reduced_motion": "Source focus -> crossfade/state emphasis -> destination Sigil focus; no route travel.",
+      "code_path": "ApplyMotionEvent -> AnimateRoleActivationEvent",
+      "evidence_step": "role-activated: capture source frame, route-growth run, active-Sigil settle; assert unrelated-role pixels remain stable outside bounded tolerance."
+    },
+    {
+      "signature_family": "ROLE_ACTIVATION",
+      "semantic_event": "ROLE_STATE_CHANGED",
+      "semantic_object": "Active Role Sigil state",
+      "screen": "Same role-bearing screens",
+      "full_motion": "Bounded role-state transition only when the role state changes; stop immediately on idle/unknown.",
+      "reduced_motion": "Immediate state/icon/text update with short crossfade only.",
+      "code_path": "ApplyMotionEvent -> ApplyRoleStateMotion",
+      "evidence_step": "role-state-changed: record ACTIVE->IDLE and ACTIVE->UNKNOWN; assert motion stops on UNKNOWN."
+    },
+    {
+      "signature_family": "ARTIFACT_HANDOFF_RETURN",
+      "semantic_event": "ARTIFACT_HANDOFF_STARTED",
+      "semantic_object": "Artifact + source role/stage + destination role/stage",
+      "screen": "Living Project Workspace; Studio Project; Pulse / Visual Project Story",
+      "full_motion": "Source highlight -> artifact detaches -> follows semantic route -> destination highlights while artifact arrives; source and destination identities remain visible.",
+      "reduced_motion": "Source focus -> artifact state crossfade -> destination focus; no travel.",
+      "code_path": "ApplyMotionEvent -> AnimateArtifactHandoffStarted",
+      "evidence_step": "handoff-started: timestamp source highlight, detach, route, destination focus; verify object identity persists."
+    },
+    {
+      "signature_family": "ARTIFACT_HANDOFF_RETURN",
+      "semantic_event": "ARTIFACT_HANDOFF_ACCEPTED",
+      "semantic_object": "Arrived artifact + destination",
+      "screen": "Living Project Workspace; Studio Project",
+      "full_motion": "Destination resolves accepted/verified state only after accepted event; route fades after settlement.",
+      "reduced_motion": "Destination accepted badge/state appears with short crossfade.",
+      "code_path": "ApplyMotionEvent -> AnimateArtifactHandoffAccepted",
+      "evidence_step": "handoff-accepted: prove accepted state appears only after accepted event timestamp."
+    },
+    {
+      "signature_family": "ARTIFACT_HANDOFF_RETURN",
+      "semantic_event": "ARTIFACT_RETURNED",
+      "semantic_object": "Artifact + reverse route + Return Ticket",
+      "screen": "Living Project Workspace; Studio Project; Pulse / Visual Project Story",
+      "full_motion": "Destination de-emphasizes -> artifact follows reverse semantic route -> source highlights -> Return Ticket becomes inspectable.",
+      "reduced_motion": "Destination focus -> crossfade returned artifact/source focus -> Return Ticket visible.",
+      "code_path": "ApplyMotionEvent -> AnimateArtifactReturned",
+      "evidence_step": "artifact-returned: prove reverse direction, source settlement, and visible Return Ticket with no accepted-state residue."
+    },
+    {
+      "signature_family": "OWNER_DECISION_FOCUS",
+      "semantic_event": "OWNER_DECISION_REQUIRED",
+      "semantic_object": "Originating project context + Decision Card + evidence/dissent paths",
+      "screen": "Owner Decision Mode",
+      "full_motion": "Project context de-emphasizes without disappearing; Decision Card elevates; evidence/dissent paths become readable; motion settles into inspectable state.",
+      "reduced_motion": "Project context de-emphasis crossfade -> Decision Card focus -> evidence/dissent indicators visible.",
+      "code_path": "ApplyMotionEvent -> AnimateOwnerDecisionRequired",
+      "evidence_step": "decision-required: verify hierarchy shift and retained project context from pre-event to settled frame."
+    },
+    {
+      "signature_family": "OWNER_DECISION_FOCUS",
+      "semantic_event": "OWNER_DECISION_RECORDED",
+      "semantic_object": "Decision Card + decision history",
+      "screen": "Owner Decision Mode",
+      "full_motion": "Decision Card resolves into recorded state/history; no downstream running animation until a separate project/autopilot event arrives.",
+      "reduced_motion": "Recorded state/history crossfade only.",
+      "code_path": "ApplyMotionEvent -> AnimateOwnerDecisionRecorded",
+      "evidence_step": "decision-recorded: prove recorded state and prove autopilot remains unchanged absent a resume event."
+    },
+    {
+      "signature_family": "RECOVERY",
+      "semantic_event": "AUTOPILOT_RECOVERY_STARTED",
+      "semantic_object": "Current flow + last VERIFIED checkpoint",
+      "screen": "Software Autopilot Project; Checkpoint / Recovery / Fork",
+      "full_motion": "Forward flow stops -> current work de-emphasizes -> last VERIFIED checkpoint focuses -> bounded rewind toward that checkpoint -> pending recovery hold.",
+      "reduced_motion": "Forward activity stops -> last VERIFIED checkpoint focus -> pending recovery label/state; no rewind travel.",
+      "code_path": "ApplyMotionEvent -> AnimateRecoveryStarted",
+      "evidence_step": "recovery-started: assert running motion stops before rewind and pending state remains after rewind."
+    },
+    {
+      "signature_family": "RECOVERY",
+      "semantic_event": "CHECKPOINT_RESTORE_REQUESTED",
+      "semantic_object": "Selected checkpoint + pending restore state",
+      "screen": "Checkpoint / Recovery / Fork",
+      "full_motion": "Intent cue only; selected checkpoint focuses and restore remains pending. Never animate success.",
+      "reduced_motion": "Selected checkpoint focus + pending label.",
+      "code_path": "ApplyMotionEvent -> AnimateRestoreRequested",
+      "evidence_step": "restore-requested: assert no RESTORED/VERIFIED visual before verified event."
+    },
+    {
+      "signature_family": "RECOVERY",
+      "semantic_event": "CHECKPOINT_RESTORED_VERIFIED",
+      "semantic_object": "Verified restored checkpoint + project current state",
+      "screen": "Checkpoint / Recovery / Fork; Living Project Workspace",
+      "full_motion": "Pending hold resolves -> verified restored checkpoint settles -> project state reconciles -> only then may normal flow resume on a later running event.",
+      "reduced_motion": "Verified restored state crossfade; no travel.",
+      "code_path": "ApplyMotionEvent -> AnimateCheckpointRestoredVerified",
+      "evidence_step": "restore-verified: assert VERIFIED settle occurs after event and no fake running state is introduced."
+    },
+    {
+      "signature_family": "FORK_BRANCH",
+      "semantic_event": "FORK_CREATED",
+      "semantic_object": "Parent checkpoint + preserved original + Branch A/B",
+      "screen": "Checkpoint / Recovery / Fork",
+      "full_motion": "Source checkpoint pauses -> branch grows from parent -> A/B identities emerge -> original remains visibly preserved -> equal compare state settles.",
+      "reduced_motion": "Parent focus -> A/B cards appear together -> original-preserved indicator remains.",
+      "code_path": "ApplyMotionEvent -> AnimateForkCreated",
+      "evidence_step": "fork-created: verify branch origin, simultaneous A/B availability, and preserved original."
+    },
+    {
+      "signature_family": "FORK_BRANCH",
+      "semantic_event": "BRANCH_SELECTED",
+      "semantic_object": "Selected branch + unselected branch + original",
+      "screen": "Checkpoint / Recovery / Fork",
+      "full_motion": "Explicit selection emphasis resolves on chosen branch; unselected branch remains inspectable; original remains preserved.",
+      "reduced_motion": "Selected state/icon emphasis with no travel.",
+      "code_path": "ApplyMotionEvent -> AnimateBranchSelected",
+      "evidence_step": "branch-selected: prove only chosen branch gains selected state and comparison remains available."
+    },
+    {
+      "signature_family": "VERIFIED_COMPLETION_WORK_RECEIPT",
+      "semantic_event": "PROJECT_COMPLETED_VERIFIED",
+      "semantic_object": "Verified stage rail + final artifacts + Work Receipt",
+      "screen": "Project Complete / Work Receipt",
+      "full_motion": "Verified stages settle -> final artifacts gather into receipt context -> active motion stops -> Work Receipt appears -> one restrained completion cue -> next actions become inspectable.",
+      "reduced_motion": "Verified states settle -> artifacts/receipt crossfade into final arrangement -> final status shown; no gather travel.",
+      "code_path": "ApplyMotionEvent -> AnimateProjectCompletedVerified",
+      "evidence_step": "project-completed-verified: prove event gating, artifact gather/settle, stopped activity, receipt appearance, and single restrained cue."
+    }
+  ],
+  "laws": {
+    "runtime_emits_facts_client_chooses_presentation": true,
+    "unknown_event_must_not_fabricate_motion": true,
+    "destructive_side_effect_replay_forbidden": true,
+    "full_and_reduced_share_semantics": true,
+    "metrics_can_reject_not_approve": true,
+    "owner_visible_review_required_later": true
+  },
+  "implementation_contract": {
+    "required_router": "ApplyMotionEvent",
+    "event_backing_required": true,
+    "no_hotspot_only_signature_acceptance": true,
+    "state_snapshot_reconciliation_required": true,
+    "event_sequence_idempotence_required": true,
+    "visual_identity_change_forbidden": true
+  },
+  "protected_truth": {
+    "authoritative_stage": "STAGE_7",
+    "stage8_opened": false,
+    "runtime_authority": false,
+    "live_execution_authorized": false,
+    "visual_identity_locked": true
+  },
+  "w0_3_started": false,
+  "gate": "MOTION_STORYBOARD_CODE_COVERAGE_LOCK"
+}

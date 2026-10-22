@@ -1,6 +1,10 @@
+using System.Buffers;
+using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Threading.Channels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,13 +18,28 @@ internal static partial class Program
 {
     private const int MotionWidth = 1440;
     private const int MotionHeight = 900;
-    private const int MotionFramesPerSecond = 6;
+    private const int MotionFramesPerSecond = 30;
 
     private sealed record MotionStep(int Frame, string Name, Action<MainWindow> Execute);
+    private sealed record MotionCapture(byte[] Pixels);
+    private sealed record MotionFrameSample(
+        int Frame,
+        string File,
+        double MeanSampleDelta,
+        double ChangedSampleRatio,
+        bool VisiblyChanged);
+    private sealed record MotionFrameEvidence(
+        int Frame,
+        string File,
+        string Sha256,
+        double MeanSampleDelta,
+        double ChangedSampleRatio,
+        bool VisiblyChanged);
 
     private static int RenderMotionEvidence(string output, bool reducedMotion)
     {
         var mode = reducedMotion ? "reduced" : "full";
+        var candidateSha = Environment.GetEnvironmentVariable("CANDIDATE_SHA")?.Trim().ToLowerInvariant() ?? "unknown";
         Environment.SetEnvironmentVariable(
             "UNIVERSALCOUNCIL_MOTION_EVIDENCE",
             reducedMotion ? "reduced" : "full");
@@ -30,37 +49,106 @@ internal static partial class Program
         Directory.CreateDirectory(framesDirectory);
 
         var window = App.CreateMainWindow(AppContext.BaseDirectory);
+        SynchronizationContext.SetSynchronizationContext(
+            new DispatcherSynchronizationContext(window.Dispatcher));
         ConfigureMotionEvidenceWindow(window);
 
-        var seconds = reducedMotion ? 20 : 28;
+        var seconds = reducedMotion ? 28 : 38;
         var frameCount = seconds * MotionFramesPerSecond;
         var steps = BuildMotionSteps(reducedMotion);
         var stepsByFrame = steps
             .GroupBy(step => step.Frame)
             .ToDictionary(group => group.Key, group => group.ToArray());
 
-        var frameEvidence = new List<object>(frameCount);
+        var frameSamples = new List<MotionFrameSample>(frameCount);
+        byte[]? previousPixels = null;
+        var changedFrameCount = 0;
+        var currentChangedRun = 0;
+        var longestChangedRun = 0;
+        var motionRunCount = 0;
+        var wasChanged = false;
+        var totalCaptureLatenessMs = 0d;
+        var maxCaptureLatenessMs = 0d;
+        var lateFrameCount = 0;
+        using var frameEncoder = new BackgroundPngFrameEncoder(framesDirectory, frameCount);
+        var captureClock = Stopwatch.StartNew();
+
         for (var frame = 0; frame < frameCount; frame++)
         {
-            if (stepsByFrame.TryGetValue(frame, out var frameSteps))
-            {
-                foreach (var step in frameSteps)
+                if (stepsByFrame.TryGetValue(frame, out var frameSteps))
                 {
-                    step.Execute(window);
-                    Console.WriteLine($"Motion evidence [{mode}] step @{frame}: {step.Name}");
+                    foreach (var step in frameSteps)
+                    {
+                        step.Execute(window);
+                        Console.WriteLine($"Motion evidence [{mode}] step @{frame}: {step.Name}");
+                    }
                 }
-            }
 
-            PumpDispatcher(TimeSpan.FromMilliseconds(1000d / MotionFramesPerSecond));
-            var path = Path.Combine(framesDirectory, $"frame-{frame:D4}.png");
-            var sha256 = CaptureMotionFrame(window, path);
-            frameEvidence.Add(new
-            {
-                frame,
-                file = Path.GetFileName(path),
-                sha256,
-            });
+                var targetCaptureTime = TimeSpan.FromSeconds(
+                    (frame + 1d) / MotionFramesPerSecond);
+                PaceDispatcherToCaptureTime(captureClock, targetCaptureTime);
+
+                var captureTime = captureClock.Elapsed;
+                var latenessMs = Math.Max(
+                    0,
+                    (captureTime - targetCaptureTime).TotalMilliseconds);
+                totalCaptureLatenessMs += latenessMs;
+                maxCaptureLatenessMs = Math.Max(maxCaptureLatenessMs, latenessMs);
+                if (latenessMs > (1000d / MotionFramesPerSecond))
+                {
+                    lateFrameCount++;
+                }
+
+            var capture = CaptureMotionFrame(window);
+            frameEncoder.Queue(capture.Pixels);
+
+            var (meanDelta, changedRatio) = previousPixels is null
+                    ? (0d, 0d)
+                    : ComputeFrameDelta(previousPixels, capture.Pixels);
+                var visiblyChanged = meanDelta >= 0.20 || changedRatio >= 0.004;
+
+                if (visiblyChanged)
+                {
+                    changedFrameCount++;
+                    currentChangedRun++;
+                    longestChangedRun = Math.Max(longestChangedRun, currentChangedRun);
+                    if (!wasChanged)
+                    {
+                        motionRunCount++;
+                    }
+                }
+                else
+                {
+                    currentChangedRun = 0;
+                }
+
+                wasChanged = visiblyChanged;
+                frameSamples.Add(new MotionFrameSample(
+                    frame,
+                    $"frame-{frame:D4}.png",
+                    Math.Round(meanDelta, 4),
+                    Math.Round(changedRatio, 6),
+                    visiblyChanged));
+            previousPixels = capture.Pixels;
         }
+
+        captureClock.Stop();
+        var actualCaptureDurationSeconds = captureClock.Elapsed.TotalSeconds;
+        frameEncoder.CompleteAndVerify();
+
+        var frameEvidence = frameSamples
+            .Select(sample =>
+            {
+                var path = Path.Combine(framesDirectory, sample.File);
+                return new MotionFrameEvidence(
+                    sample.Frame,
+                    sample.File,
+                    HashMotionFrame(path),
+                    sample.MeanSampleDelta,
+                    sample.ChangedSampleRatio,
+                    sample.VisiblyChanged);
+            })
+            .ToList();
 
         var manifestPath = Path.Combine(output, "motion-evidence-manifest.json");
         File.WriteAllText(
@@ -70,6 +158,14 @@ internal static partial class Program
                 {
                     schema_version = "1.0",
                     evidence_type = "WPF_P1_CRITICAL_PATH_MOTION",
+                    candidate_sha = candidateSha,
+                    source_surface = "ACTUAL_WPF",
+                    unedited = true,
+                    optical_flow = false,
+                    frame_interpolation = false,
+                    post_produced_animation = false,
+                    raw_frames_included = true,
+                    semantic_event_timestamps = true,
                     mode,
                     reduced_motion = reducedMotion,
                     runtime_authority = false,
@@ -80,13 +176,43 @@ internal static partial class Program
                     frame_rate = MotionFramesPerSecond,
                     frame_count = frameCount,
                     encoded_duration_seconds = (double)frameCount / MotionFramesPerSecond,
+                    capture_timing = new
+                    {
+                        clock = "STOPWATCH_REALTIME_WPF",
+                        pipeline = "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG",
+                        capture_surface_cache = "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE",
+                        synchronous_layout_per_frame = false,
+                        png_compression_level = 1,
+                        target_capture_duration_seconds = (double)frameCount / MotionFramesPerSecond,
+                        actual_capture_duration_seconds = Math.Round(actualCaptureDurationSeconds, 3),
+                        max_capture_lateness_ms = Math.Round(maxCaptureLatenessMs, 3),
+                        mean_capture_lateness_ms = Math.Round(
+                            totalCaptureLatenessMs / Math.Max(1, frameCount),
+                            3),
+                        late_frame_count_over_one_frame = lateFrameCount,
+                        background_encoder = "FFMPEG_LOSSLESS_PNG",
+                        encoder_queue_capacity_frames = BackgroundPngFrameEncoder.QueueCapacityFrames,
+                        png_encoding_on_wpf_capture_thread = false,
+                    },
+                    motion_visibility = new
+                    {
+                        changed_frame_count = changedFrameCount,
+                        changed_frame_ratio = Math.Round((double)changedFrameCount / Math.Max(1, frameCount - 1), 4),
+                        longest_changed_run = longestChangedRun,
+                        motion_run_count = motionRunCount,
+                        frame_change_rule = "mean_sample_delta>=0.20 OR changed_sample_ratio>=0.004",
+                    },
                     expected_video_file = reducedMotion
                         ? "p1-critical-path-reduced-motion.mp4"
                         : "p1-critical-path-motion.mp4",
-                    steps = steps.Select(step => new
+                    steps = steps.Select((step, index) => new
                     {
+                        evidence_step_id = $"step-{index + 1:D2}",
                         frame = step.Frame,
                         second = (double)step.Frame / MotionFramesPerSecond,
+                        occurred_at_seconds = (double)step.Frame / MotionFramesPerSecond,
+                        event_type = EvidenceEventType(step.Name),
+                        semantic_object = EvidenceSemanticObject(step.Name),
                         step.Name,
                     }),
                     frames = frameEvidence,
@@ -94,8 +220,101 @@ internal static partial class Program
                 new JsonSerializerOptions { WriteIndented = true }));
 
         Console.WriteLine(
-            $"Command Center P1 {mode} motion evidence frames: PASS ({frameCount} frames, {seconds}s)");
+            $"Command Center P1 {mode} motion evidence frames: PASS " +
+            $"({frameCount} frames, {seconds}s, visible={changedFrameCount}, " +
+            $"longest-run={longestChangedRun}, runs={motionRunCount})");
         return 0;
+    }
+
+    private static string EvidenceEventType(string name)
+    {
+        if (name.Contains("Activate Evidence role", StringComparison.Ordinal))
+        {
+            return "ROLE_ACTIVATED";
+        }
+
+        if (name.Contains("Request Changes intent", StringComparison.Ordinal))
+        {
+            return "OWNER_INTENT_PREVIEW";
+        }
+
+        if (name.Contains("Fork intent", StringComparison.Ordinal))
+        {
+            return "FORK_INTENT_PREVIEW";
+        }
+
+        if (name.Contains("Handoff Pulse context", StringComparison.Ordinal))
+        {
+            return "HANDOFF_CONTEXT_PREVIEW";
+        }
+
+        if (name.StartsWith("Navigate ", StringComparison.Ordinal))
+        {
+            return "EVIDENCE_NAVIGATION";
+        }
+
+        if (name.StartsWith("Close ", StringComparison.Ordinal))
+        {
+            return "CONTEXT_CLOSED";
+        }
+
+        return "EVIDENCE_INSPECTION";
+    }
+
+    private static string EvidenceSemanticObject(string name)
+    {
+        if (name.Contains("Evidence role", StringComparison.Ordinal))
+        {
+            return "role:evidence";
+        }
+
+        if (name.Contains("-> Project Workspace", StringComparison.Ordinal))
+        {
+            return "screen:living-project-workspace";
+        }
+
+        if (name.Contains("-> Software Autopilot", StringComparison.Ordinal))
+        {
+            return "screen:software-autopilot-project";
+        }
+
+        if (name.Contains("-> Studio Project", StringComparison.Ordinal))
+        {
+            return "screen:studio-project";
+        }
+
+        if (name.Contains("-> Decision Mode", StringComparison.Ordinal) ||
+            name.Contains("Decision", StringComparison.Ordinal))
+        {
+            return "screen:owner-decision-mode";
+        }
+
+        if (name.Contains("-> Recovery/Fork", StringComparison.Ordinal) ||
+            name.Contains("Fork", StringComparison.Ordinal) ||
+            name.Contains("Recovery", StringComparison.Ordinal))
+        {
+            return "screen:checkpoint-recovery-fork";
+        }
+
+        if (name.Contains("-> Pulse Story", StringComparison.Ordinal) ||
+            name.Contains("Handoff", StringComparison.Ordinal) ||
+            name.Contains("Pulse", StringComparison.Ordinal))
+        {
+            return "screen:pulse-visual-project-story";
+        }
+
+        if (name.Contains("-> Work Receipt", StringComparison.Ordinal) ||
+            name.Contains("Work Receipt", StringComparison.Ordinal))
+        {
+            return "screen:project-complete-work-receipt";
+        }
+
+        if (name.Contains("-> Home", StringComparison.Ordinal))
+        {
+            return "screen:home-owner-workspace";
+        }
+
+        return "command-center:wpf";
     }
 
     private static IReadOnlyList<MotionStep> BuildMotionSteps(bool reducedMotion)
@@ -107,14 +326,14 @@ internal static partial class Program
             return
             [
                 new(At(1), "Navigate Home -> Project Workspace", window => NavigateForEvidence(window, "ProjectWorkspace")),
-                new(At(3), "Open Evidence role context", window => ClickSecondaryHotspot(window, "evidence", "Evidence")),
-                new(At(4.5), "Close role context", CloseMotionDrawer),
-                new(At(6), "Navigate Project -> Decision Mode", window => NavigateForEvidence(window, "DecisionMode")),
-                new(At(8), "Inspect Decision evidence", window => ClickSecondaryHotspot(window, "inspect-evidence")),
-                new(At(9.5), "Close evidence context", CloseMotionDrawer),
-                new(At(11), "Navigate Decision -> Recovery/Fork", window => NavigateForEvidence(window, "RecoveryFork")),
-                new(At(13), "Exercise non-authoritative Fork intent", window => ClickSecondaryHotspot(window, "fork")),
-                new(At(15), "Navigate Recovery -> Work Receipt", window => NavigateForEvidence(window, "WorkReceipt")),
+                new(At(4), "Navigate Project -> Software Autopilot", window => NavigateForEvidence(window, "SoftwareAutopilot")),
+                new(At(7), "Navigate Autopilot -> Studio Project", window => NavigateForEvidence(window, "StudioProject")),
+                new(At(10), "Navigate Studio -> Decision Mode", window => NavigateForEvidence(window, "DecisionMode")),
+                new(At(13), "Navigate Decision -> Recovery/Fork", window => NavigateForEvidence(window, "RecoveryFork")),
+                new(At(16), "Exercise non-authoritative Fork intent", window => ClickSecondaryHotspot(window, "fork")),
+                new(At(18), "Navigate Recovery -> Pulse Story", window => NavigateForEvidence(window, "PulseStory")),
+                new(At(21), "Navigate Pulse -> Work Receipt", window => NavigateForEvidence(window, "WorkReceipt")),
+                new(At(24), "Navigate Receipt -> Home", window => NavigateForEvidence(window, "Home")),
             ];
         }
 
@@ -122,19 +341,20 @@ internal static partial class Program
         [
             new(At(2), "Navigate Home -> Project Workspace", window => NavigateForEvidence(window, "ProjectWorkspace")),
             new(At(4), "Activate Evidence role and open context", window => ClickSecondaryHotspot(window, "evidence", "Evidence")),
-            new(At(6), "Close role context", CloseMotionDrawer),
-            new(At(7), "Open Evidence reasoning context", window => ClickSecondaryHotspot(window, "evidence", "Reasoning")),
-            new(At(9), "Close reasoning context", CloseMotionDrawer),
-            new(At(10), "Navigate Project -> Decision Mode", window => NavigateForEvidence(window, "DecisionMode")),
-            new(At(12), "Inspect Decision evidence", window => ClickSecondaryHotspot(window, "inspect-evidence")),
-            new(At(14), "Close Decision evidence", CloseMotionDrawer),
-            new(At(15), "Exercise non-authoritative Request Changes intent", window => ClickSecondaryHotspot(window, "request-changes")),
-            new(At(17), "Navigate Decision -> Recovery/Fork", window => NavigateForEvidence(window, "RecoveryFork")),
-            new(At(19), "Exercise non-authoritative Fork intent", window => ClickSecondaryHotspot(window, "fork")),
-            new(At(21), "Navigate Recovery -> Pulse Story", window => NavigateForEvidence(window, "PulseStory")),
-            new(At(22), "Open Handoff Pulse context", window => ClickSecondaryHotspot(window, "handoff")),
-            new(At(24), "Close Handoff context", CloseMotionDrawer),
-            new(At(25), "Navigate Pulse -> Work Receipt", window => NavigateForEvidence(window, "WorkReceipt")),
+            new(At(5.5), "Close role context", CloseMotionDrawer),
+            new(At(7), "Navigate Project -> Software Autopilot", window => NavigateForEvidence(window, "SoftwareAutopilot")),
+            new(At(10), "Navigate Autopilot -> Studio Project", window => NavigateForEvidence(window, "StudioProject")),
+            new(At(13), "Navigate Studio -> Decision Mode", window => NavigateForEvidence(window, "DecisionMode")),
+            new(At(16), "Inspect Decision evidence", window => ClickSecondaryHotspot(window, "inspect-evidence")),
+            new(At(17.5), "Close Decision evidence", CloseMotionDrawer),
+            new(At(19), "Exercise non-authoritative Request Changes intent", window => ClickSecondaryHotspot(window, "request-changes")),
+            new(At(21), "Navigate Decision -> Recovery/Fork", window => NavigateForEvidence(window, "RecoveryFork")),
+            new(At(24), "Exercise non-authoritative Fork intent", window => ClickSecondaryHotspot(window, "fork")),
+            new(At(26), "Navigate Recovery -> Pulse Story", window => NavigateForEvidence(window, "PulseStory")),
+            new(At(29), "Open Handoff Pulse context", window => ClickSecondaryHotspot(window, "handoff")),
+            new(At(30.5), "Close Handoff context", CloseMotionDrawer),
+            new(At(32), "Navigate Pulse -> Work Receipt", window => NavigateForEvidence(window, "WorkReceipt")),
+            new(At(35), "Navigate Receipt -> Home", window => NavigateForEvidence(window, "Home")),
         ];
     }
 
@@ -142,7 +362,7 @@ internal static partial class Program
     {
         if (window.FindName("ReferenceImage") is UIElement referenceImage)
         {
-            referenceImage.Visibility = Visibility.Collapsed;
+            referenceImage.Visibility = Visibility.Visible;
         }
 
         if (window.Content is not FrameworkElement root)
@@ -155,6 +375,22 @@ internal static partial class Program
         root.Measure(new Size(MotionWidth, MotionHeight));
         root.Arrange(new Rect(0, 0, MotionWidth, MotionHeight));
         root.UpdateLayout();
+
+        if (window.FindName("ReferenceHost") is FrameworkElement referenceHost)
+        {
+            referenceHost.CacheMode = new BitmapCache(1.0)
+            {
+                EnableClearType = true,
+            };
+        }
+
+        if (window.FindName("ContextDrawer") is FrameworkElement contextDrawer)
+        {
+            contextDrawer.CacheMode = new BitmapCache(1.0)
+            {
+                EnableClearType = true,
+            };
+        }
     }
 
     private static void ClickSecondaryHotspot(MainWindow window, string tag, string? tooltipContains = null)
@@ -209,15 +445,90 @@ internal static partial class Program
         Dispatcher.PushFrame(frame);
     }
 
-    private static string CaptureMotionFrame(MainWindow window, string path)
+    private static void PaceDispatcherToCaptureTime(
+        Stopwatch captureClock,
+        TimeSpan targetCaptureTime)
+    {
+        var remaining = targetCaptureTime - captureClock.Elapsed;
+        if (remaining > TimeSpan.Zero)
+        {
+            PumpDispatcher(remaining);
+            return;
+        }
+
+        // The capture is already behind its target. Pump one render turn without
+        // adding a synthetic delay so WPF animation clocks and queued continuations
+        // can advance before the actual RenderTargetBitmap sample.
+        PumpDispatcher(TimeSpan.FromMilliseconds(1));
+    }
+
+    private static void PaceWorkerToCaptureTime(
+        Stopwatch captureClock,
+        TimeSpan targetCaptureTime)
+    {
+        while (true)
+        {
+            var remaining = targetCaptureTime - captureClock.Elapsed;
+            if (remaining <= TimeSpan.Zero)
+            {
+                return;
+            }
+
+            if (remaining > TimeSpan.FromMilliseconds(2))
+            {
+                Thread.Sleep(1);
+                continue;
+            }
+
+            Thread.SpinWait(64);
+        }
+    }
+
+    private static void PumpDispatcherUntil(
+        Stopwatch captureClock,
+        TimeSpan targetTime,
+        Task worker)
+    {
+        while (captureClock.Elapsed < targetTime && !worker.IsCompleted)
+        {
+            var remaining = targetTime - captureClock.Elapsed;
+            var slice = remaining > TimeSpan.FromMilliseconds(4)
+                ? TimeSpan.FromMilliseconds(4)
+                : remaining;
+            if (slice <= TimeSpan.Zero)
+            {
+                break;
+            }
+
+            PumpDispatcher(slice);
+        }
+
+        if (worker.IsFaulted || worker.IsCanceled)
+        {
+            worker.GetAwaiter().GetResult();
+        }
+    }
+
+    private static void PumpDispatcherUntilComplete(Task worker)
+    {
+        while (!worker.IsCompleted)
+        {
+            PumpDispatcher(TimeSpan.FromMilliseconds(4));
+        }
+
+        worker.GetAwaiter().GetResult();
+    }
+
+    private static MotionCapture CaptureMotionFrame(MainWindow window)
     {
         if (window.Content is not FrameworkElement root)
         {
             throw new InvalidOperationException("MainWindow root content is not a FrameworkElement.");
         }
 
-        root.UpdateLayout();
-
+        // Dispatcher pacing already services layout/render work before each sample.
+        // Re-running a full synchronous layout pass here turns evidence capture into
+        // a CPU benchmark and dilates WPF animation time.
         var bitmap = new RenderTargetBitmap(
             MotionWidth,
             MotionHeight,
@@ -226,15 +537,248 @@ internal static partial class Program
             PixelFormats.Pbgra32);
         bitmap.Render(root);
 
-        var encoder = new PngBitmapEncoder();
-        encoder.Frames.Add(BitmapFrame.Create(bitmap));
+        var stride = MotionWidth * 4;
+        var pixels = new byte[stride * MotionHeight];
+        bitmap.CopyPixels(pixels, stride, 0);
+        return new MotionCapture(pixels);
+    }
 
-        using (var stream = File.Create(path))
+    private sealed class BackgroundPngFrameEncoder : IDisposable
+    {
+        internal const int QueueCapacityFrames = 60;
+
+        private readonly string _framesDirectory;
+        private readonly int _frameCount;
+        private readonly Process _process;
+        private readonly Channel<byte[]> _frames;
+        private readonly ConcurrentDictionary<byte[], byte> _pooledFrames = new();
+        private readonly Task _writerTask;
+        private readonly Task<string> _stdoutTask;
+        private readonly Task<string> _stderrTask;
+        private bool _completed;
+
+        internal BackgroundPngFrameEncoder(string framesDirectory, int frameCount)
         {
-            encoder.Save(stream);
+            _framesDirectory = framesDirectory;
+            _frameCount = frameCount;
+
+            var outputPattern = Path.Combine(framesDirectory, "frame-%04d.png");
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "ffmpeg",
+                UseShellExecute = false,
+                RedirectStandardInput = true,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true,
+            };
+
+            foreach (var argument in new[]
+            {
+                "-hide_banner",
+                "-loglevel",
+                "error",
+                "-y",
+                "-f",
+                "rawvideo",
+                "-pixel_format",
+                "bgra",
+                "-video_size",
+                $"{MotionWidth}x{MotionHeight}",
+                "-framerate",
+                MotionFramesPerSecond.ToString(),
+                "-i",
+                "pipe:0",
+                "-start_number",
+                "0",
+                "-frames:v",
+                frameCount.ToString(),
+                "-compression_level",
+                "1",
+                outputPattern,
+            })
+            {
+                startInfo.ArgumentList.Add(argument);
+            }
+
+            _process = Process.Start(startInfo)
+                ?? throw new InvalidOperationException(
+                    "Unable to start background ffmpeg WPF frame encoder.");
+            _stdoutTask = _process.StandardOutput.ReadToEndAsync();
+            _stderrTask = _process.StandardError.ReadToEndAsync();
+
+            _frames = Channel.CreateBounded<byte[]>(
+                new BoundedChannelOptions(QueueCapacityFrames)
+                {
+                    SingleReader = true,
+                    SingleWriter = true,
+                    FullMode = BoundedChannelFullMode.Wait,
+                });
+
+            _writerTask = Task.Run(async () =>
+            {
+                await foreach (var pixels in _frames.Reader.ReadAllAsync())
+                {
+                    try
+                    {
+                        await _process.StandardInput.BaseStream.WriteAsync(
+                            pixels.AsMemory(0, MotionWidth * MotionHeight * 4));
+                    }
+                    finally
+                    {
+                        if (_pooledFrames.TryRemove(pixels, out _))
+                        {
+                            ArrayPool<byte>.Shared.Return(pixels);
+                        }
+                    }
+                }
+
+                await _process.StandardInput.BaseStream.FlushAsync();
+                _process.StandardInput.Close();
+            });
         }
 
-        var bytes = File.ReadAllBytes(path);
-        return Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant();
+        internal void Queue(byte[] pixels)
+        {
+            QueueFrame(pixels, returnToPool: false);
+        }
+
+        internal void QueuePooled(byte[] pixels, int length)
+        {
+            var expectedLength = MotionWidth * MotionHeight * 4;
+            if (length != expectedLength || pixels.Length < length)
+            {
+                ArrayPool<byte>.Shared.Return(pixels);
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
+
+            if (!_pooledFrames.TryAdd(pixels, 0))
+            {
+                ArrayPool<byte>.Shared.Return(pixels);
+                throw new InvalidOperationException("Pooled frame buffer was queued more than once.");
+            }
+
+            QueueFrame(pixels, returnToPool: true);
+        }
+
+        private void QueueFrame(byte[] pixels, bool returnToPool)
+        {
+            if (!_frames.Writer.TryWrite(pixels))
+            {
+                if (returnToPool && _pooledFrames.TryRemove(pixels, out _))
+                {
+                    ArrayPool<byte>.Shared.Return(pixels);
+                }
+
+                throw new InvalidOperationException(
+                    "Background PNG encoder fell behind the real-time WPF capture by more than " +
+                    $"{QueueCapacityFrames} frames.");
+            }
+        }
+
+        internal void CompleteAndVerify()
+        {
+            if (_completed)
+            {
+                return;
+            }
+
+            _completed = true;
+            _frames.Writer.TryComplete();
+            _writerTask.GetAwaiter().GetResult();
+            _process.WaitForExit();
+
+            var stdout = _stdoutTask.GetAwaiter().GetResult();
+            var stderr = _stderrTask.GetAwaiter().GetResult();
+            if (_process.ExitCode != 0)
+            {
+                throw new InvalidOperationException(
+                    $"background ffmpeg WPF PNG encoding failed ({_process.ExitCode}). " +
+                    $"{stderr} {stdout}");
+            }
+
+            var encodedFrameCount = Directory.GetFiles(
+                _framesDirectory,
+                "frame-*.png").Length;
+            if (encodedFrameCount != _frameCount)
+            {
+                throw new InvalidOperationException(
+                    $"WPF background-frame encoding mismatch: expected {_frameCount}, " +
+                    $"got {encodedFrameCount}.");
+            }
+        }
+
+        public void Dispose()
+        {
+            if (!_completed)
+            {
+                _frames.Writer.TryComplete(
+                    new OperationCanceledException(
+                        "WPF evidence capture disposed before encoder completion."));
+            }
+
+            if (!_process.HasExited)
+            {
+                try
+                {
+                    _process.Kill(entireProcessTree: true);
+                }
+                catch (InvalidOperationException)
+                {
+                    // Process already exited between the check and kill request.
+                }
+            }
+
+            _process.Dispose();
+        }
+    }
+
+    private static string HashMotionFrame(string path)
+    {
+        using var stream = File.OpenRead(path);
+        return Convert.ToHexString(SHA256.HashData(stream)).ToLowerInvariant();
+    }
+
+    private static (double MeanSampleDelta, double ChangedSampleRatio) ComputeFrameDelta(
+        byte[] previous,
+        byte[] current,
+        int length = -1)
+    {
+        var effectiveLength = length < 0 ? current.Length : length;
+        if (effectiveLength < 0 || previous.Length < effectiveLength || current.Length < effectiveLength)
+        {
+            return (255, 1);
+        }
+
+        long totalDelta = 0;
+        var changedSamples = 0;
+        var samples = 0;
+
+        // Sample one BGRA pixel out of every sixteen pixels. This is dense enough to
+        // catch region motion while keeping evidence capture affordable in CI.
+        for (var index = 0; index + 2 < effectiveLength; index += 64)
+        {
+            var blue = Math.Abs(current[index] - previous[index]);
+            var green = Math.Abs(current[index + 1] - previous[index + 1]);
+            var red = Math.Abs(current[index + 2] - previous[index + 2]);
+            var delta = blue + green + red;
+
+            totalDelta += delta;
+            if (delta >= 18)
+            {
+                changedSamples++;
+            }
+
+            samples++;
+        }
+
+        if (samples == 0)
+        {
+            return (0, 0);
+        }
+
+        return (
+            (double)totalDelta / (samples * 3),
+            (double)changedSamples / samples);
     }
 }

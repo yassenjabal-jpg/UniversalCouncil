@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "MRTKZ-MOTION-W1-1-NAVIGATION-PRE-2026-10-21",
+  "change_id": "CC-MOTION-W1-1-NAVIGATION-2026-10-21",
+  "phase": "W1.1",
+  "decision": "APPROVE_TO_IMPLEMENT",
+  "reviews": {
+    "al_murtakaz": "PASS_PRE_IMPLEMENTATION",
+    "motion_systems": "PASS",
+    "interaction_director": "PASS",
+    "visual_qa": "PASS_REFERENCE_LOCK",
+    "architecture_boundary_audit": "PASS_WITH_PRESENTATION_EXTRACTION"
+  },
+  "constraints": {
+    "visual_identity_locked": true,
+    "eight_screens_only": true,
+    "at_rest_almost_still": true,
+    "reduced_motion_no_travel": true,
+    "threshold_reduction_forbidden": true,
+    "merge_authorized": false
+  },
+  "final_adoption_granted": false,
+  "timestamp": "2026-10-21"
+}
