@@ -21,6 +21,7 @@ DANGEROUS = {
     "Registry",
     "ScheduledTask",
     "PowerShell",
+    "LaunchExecutable",
     "FileSystem",
     "Scrape",
     "Package",
