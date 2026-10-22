@@ -9,6 +9,21 @@ internal static class EvidenceChecks
 {
     public static void Run(Action<bool,string> check)
     {
+        foreach (var bad in new[] { "--verify-evidence", "--unknown-command" })
+        {
+            var start = new ProcessStartInfo("dotnet") {
+                UseShellExecute = false, CreateNoWindow = true,
+                ArgumentList = { typeof(EvidenceChecks).Assembly.Location, bad }
+            };
+            using var child = Process.Start(start)!;
+            if (!child.WaitForExit(10000))
+            {
+                child.Kill(true);
+                child.WaitForExit();
+                throw new TimeoutException("Invalid CLI probe did not terminate");
+            }
+            check(child.ExitCode == 2, "malformed CLI cannot fall through to green test suite");
+        }
         var root = Path.Combine(Path.GetTempPath(), "murtakaz-evidence-" + Guid.NewGuid());
         var repo = Path.Combine(root, "repo");
         var artifacts = Path.Combine(root, "artifacts");

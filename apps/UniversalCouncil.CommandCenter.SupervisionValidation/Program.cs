@@ -4,6 +4,11 @@ using UniversalCouncil.CommandCenter.Host;
 using UniversalCouncil.CommandCenter.Infrastructure;
 using UniversalCouncil.CommandCenter.Application;
 
+if (args.Length > 0 && args[0] == "--verify-evidence" && args.Length is not (8 or 9))
+{
+    Console.Error.WriteLine("Invalid evidence verification arguments.");
+    return 2;
+}
 var root = Path.Combine(AppContext.BaseDirectory, "state", "project-governance");
 var reader = new JsonLocalReviewPolicyReader(root);
 var planner = CommandCenterComposition.Create(AppContext.BaseDirectory).LocalReviewPlanner;
@@ -28,6 +33,11 @@ if (args.Length is 8 or 9 && args[0] == "--verify-evidence")
     var result = verifier.Verify(new EvidenceVerificationRequest(args[6], args[7], args[3], args[4], args[5]));
     Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
     return result.ContentMatchesDeclaration ? 0 : 1;
+}
+if (args.Length != 0)
+{
+    Console.Error.WriteLine("Unknown or malformed validation command.");
+    return 2;
 }
 var passed = 0;
 void Check(bool condition, string name)
