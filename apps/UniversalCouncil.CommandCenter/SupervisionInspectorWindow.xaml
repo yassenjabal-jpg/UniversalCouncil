@@ -1,0 +1,27 @@
+<Window x:Class="UniversalCouncil.CommandCenter.SupervisionInspectorWindow"
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ Title="المرتكز — فحص جلسة المراجعة" Width="900" Height="760" MinWidth="580" MinHeight="450"
+ FlowDirection="RightToLeft" Background="{DynamicResource CanvasBrush}" WindowStartupLocation="CenterOwner">
+ <ScrollViewer VerticalScrollBarVisibility="Auto">
+ <StackPanel Margin="24">
+  <TextBlock Text="جلسة المراجعة" FontSize="24" FontWeight="SemiBold"/>
+  <TextBlock Margin="0,8,0,16" TextWrapping="Wrap" Text="فحص محلي للجلسة المحفوظة. قد يسجل وقت الملاحظة أو يبطل جلسة قديمة. التقارير وأسماء أصحابها غير موثقة الهوية؛ لا تمنح موافقة أو صلاحية تنفيذ."/>
+  <StackPanel x:Name="Inputs">
+   <Label Target="{Binding ElementName=Storage}" Content="_مجلد الجلسات المحلي"/>
+   <TextBox x:Name="Storage" FlowDirection="LeftToRight" AutomationProperties.Name="مجلد الجلسات المحلي" MinHeight="28"/>
+   <Label Target="{Binding ElementName=SessionId}" Content="معرّف ال_جلسة"/>
+   <TextBox x:Name="SessionId" FlowDirection="LeftToRight" AutomationProperties.Name="معرف الجلسة" MinHeight="28"/>
+   <Label Target="{Binding ElementName=Revision}" Content="_نسخة المصدر الحالية — SHA"/>
+   <TextBox x:Name="Revision" FlowDirection="LeftToRight" AutomationProperties.Name="نسخة المصدر الحالية" MinHeight="28"/>
+   <Label Target="{Binding ElementName=Artifact}" Content="_بصمة المخرج الحالية — SHA256"/>
+   <TextBox x:Name="Artifact" FlowDirection="LeftToRight" AutomationProperties.Name="بصمة المخرج الحالية" MinHeight="28"/>
+  </StackPanel>
+  <Button x:Name="LoadButton" Content="_فحص الجلسة" Click="Load_Click" HorizontalAlignment="Right" Padding="20,8" Margin="0,14,0,8"/>
+  <TextBlock x:Name="Status" Text="أدخل بيانات الجلسة ثم افحصها." TextWrapping="Wrap" FontWeight="SemiBold" AutomationProperties.LiveSetting="Polite"/>
+  <TextBox x:Name="Details" Margin="0,12,0,0" MinHeight="240" IsReadOnly="True" TextWrapping="Wrap"
+   VerticalScrollBarVisibility="Auto" AcceptsReturn="True" AutomationProperties.Name="تفاصيل جلسة المراجعة"
+   Background="{DynamicResource SurfaceBrush}" Foreground="{DynamicResource TextPrimaryBrush}" Padding="12"/>
+  <Button Content="إغلاق" Click="Close_Click" IsCancel="True" HorizontalAlignment="Left" Padding="16,6" Margin="0,12,0,0"/>
+ </StackPanel>
+ </ScrollViewer>
+</Window>
