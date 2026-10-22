@@ -11,6 +11,7 @@ public partial class SupervisionInspectorWindow : Window
 {
     private bool loading;
     private bool closed;
+    private string? workspacePath;
     public SupervisionInspectorWindow()
     {
         InitializeComponent();
@@ -21,6 +22,7 @@ public partial class SupervisionInspectorWindow : Window
     private async void Load_Click(object sender, RoutedEventArgs e)
     {
         if (loading || closed) return;
+        if (workspacePath is not null) { await InspectWorkspaceAsync(workspacePath); return; }
         Details.Clear();
         Status.Text = "جارٍ فحص الجلسة…";
         var storage = Storage.Text.Trim();
@@ -35,7 +37,7 @@ public partial class SupervisionInspectorWindow : Window
             return;
         }
         loading = true;
-        Inputs.IsEnabled = LoadButton.IsEnabled = false;
+        Inputs.IsEnabled = LoadButton.IsEnabled = WorkspaceActions.IsEnabled = false;
         try
         {
             var snapshot = await Task.Run(() => CommandCenterComposition.CreateLocalSupervisionReader(
@@ -52,7 +54,69 @@ public partial class SupervisionInspectorWindow : Window
         finally
         {
             loading = false;
-            if (!closed) { Inputs.IsEnabled = LoadButton.IsEnabled = true; LoadButton.Focus(); }
+            if (!closed) { Inputs.IsEnabled = LoadButton.IsEnabled = WorkspaceActions.IsEnabled = true; LoadButton.Focus(); }
+        }
+    }
+    private void ResetManual()
+    {
+        workspacePath = null;
+        Inputs.Visibility = Visibility.Visible;
+        Details.Clear();
+        Storage.Clear(); SessionId.Clear(); Revision.Clear(); Artifact.Clear();
+        Storage.IsReadOnly = SessionId.IsReadOnly = Revision.IsReadOnly = Artifact.IsReadOnly = false;
+        WorkspaceLabel.Text = "الفحص اليدوي — لم تربط مساحة مشروع.";
+        Status.Text = "أدخل بيانات الجلسة ثم افحصها.";
+    }
+    private void Manual_Click(object sender, RoutedEventArgs e)
+    {
+        if (!loading && !closed) ResetManual();
+    }
+    private async void OpenWorkspace_Click(object sender, RoutedEventArgs e)
+    {
+        if (loading || closed) return;
+        ResetManual();
+        var dialog = new Microsoft.Win32.OpenFileDialog {
+            Title = "فتح مساحة مشروع محلية", Filter = "ملف مساحة مشروع (*.json)|*.json", CheckFileExists = true };
+        if (dialog.ShowDialog(this) == true) await InspectWorkspaceAsync(dialog.FileName);
+    }
+    public async Task InspectWorkspaceAsync(string configurationPath)
+    {
+        if (loading || closed) return;
+        workspacePath = configurationPath;
+        Inputs.Visibility = Visibility.Collapsed;
+        Details.Clear();
+        Storage.Clear(); SessionId.Clear(); Revision.Clear(); Artifact.Clear();
+        WorkspaceLabel.Text = "مساحة مشروع محلية محددة — جارٍ التحقق من الربط.";
+        Status.Text = "جارٍ قراءة نسخة Git وبصمة المخرج الفعليتين…";
+        Storage.IsReadOnly = SessionId.IsReadOnly = Revision.IsReadOnly = Artifact.IsReadOnly = true;
+        loading = true;
+        Inputs.IsEnabled = LoadButton.IsEnabled = WorkspaceActions.IsEnabled = false;
+        try
+        {
+            var observed = await Task.Run(() => CommandCenterComposition.CreateWorkspaceSupervisionReader(
+                AppContext.BaseDirectory).Read(configurationPath));
+            if (closed) return;
+            var snapshot = observed.Session;
+            SessionId.Text = snapshot.Id.ToString();
+            Revision.Text = observed.ObservedSourceRevision;
+            Artifact.Text = observed.ObservedArtifactSha256;
+            WorkspaceLabel.Text = $"المشروع: {snapshot.ProjectId} | التغيير: {snapshot.ChangeId} | الجلسة: {snapshot.Id}";
+            Status.Text = StateLabel(snapshot.State);
+            Details.Text = $"نسخة Git المقاسة: {observed.ObservedSourceRevision}\nبصمة المخرج المقاسة: {observed.ObservedArtifactSha256}\nملاحظة ملفات محلية عند UTC: {observed.ObservedAt:O}\nالربط إعداد محلي وليس إثبات هوية المشروع. يعاد القياس عند كل فحص.\n\n" + Describe(snapshot);
+        }
+        catch (Exception error) when (error is InvalidDataException or IOException or
+            UnauthorizedAccessException or ArgumentException or System.Text.Json.JsonException or System.ComponentModel.Win32Exception)
+        {
+            if (!closed)
+            {
+                WorkspaceLabel.Text = "تعذر ربط مساحة المشروع.";
+                Status.Text = "المشروع غير متاح: تحقق من إعداد المساحة ونظافة مستودع Git والمخرج وربط الجلسة.";
+            }
+        }
+        finally
+        {
+            loading = false;
+            if (!closed) { Inputs.IsEnabled = LoadButton.IsEnabled = WorkspaceActions.IsEnabled = true; LoadButton.Focus(); }
         }
     }
     public static string StateLabel(string state) => state switch {

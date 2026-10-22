@@ -6,6 +6,11 @@
  <StackPanel Margin="24">
   <TextBlock Text="جلسة المراجعة" FontSize="24" FontWeight="SemiBold"/>
   <TextBlock Margin="0,8,0,16" TextWrapping="Wrap" Text="فحص محلي للجلسة المحفوظة. قد يسجل وقت الملاحظة أو يبطل جلسة قديمة. التقارير وأسماء أصحابها غير موثقة الهوية؛ لا تمنح موافقة أو صلاحية تنفيذ."/>
+  <StackPanel x:Name="WorkspaceActions" Orientation="Horizontal" Margin="0,0,0,12">
+   <Button Content="فتح مساحة _مشروع…" Click="OpenWorkspace_Click" Padding="12,6" Margin="0,0,0,6"/>
+   <Button x:Name="ManualButton" Content="فحص _يدوي" Click="Manual_Click" Padding="12,6"/>
+  </StackPanel>
+  <TextBlock x:Name="WorkspaceLabel" Text="الفحص اليدوي — لم تربط مساحة مشروع." TextWrapping="Wrap" Margin="0,0,0,8"/>
   <StackPanel x:Name="Inputs">
    <Label Target="{Binding ElementName=Storage}" Content="_مجلد الجلسات المحلي"/>
    <TextBox x:Name="Storage" FlowDirection="LeftToRight" AutomationProperties.Name="مجلد الجلسات المحلي" MinHeight="28"/>

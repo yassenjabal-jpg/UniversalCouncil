@@ -34,6 +34,9 @@ public static class CommandCenterComposition
         string baseDirectory, string storageDirectory, TimeProvider? clock = null) =>
         new(CreateLocalReviewSessions(baseDirectory, storageDirectory, clock));
 
+    public static WorkspaceSupervisionReader CreateWorkspaceSupervisionReader(string baseDirectory) =>
+        new(new LocalWorkspaceObserver(), storage => CreateLocalReviewSessions(baseDirectory, storage));
+
     public static EvidenceVerifier CreateEvidenceVerifier(string repositoryDirectory,
         string artifactDirectory, bool allowFixtures = false) =>
         new(new GitEvidenceManifestReader(repositoryDirectory),

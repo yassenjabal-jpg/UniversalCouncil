@@ -167,5 +167,6 @@ try
 finally { Directory.Delete(temp, true); }
 SessionChecks.Run(planner, Check);
 EvidenceChecks.Run(Check);
+WorkspaceChecks.Run(planner, Check);
 Console.WriteLine($"PASS {passed} supervision behavioral checks");
 return 0;

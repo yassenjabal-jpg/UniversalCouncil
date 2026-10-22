@@ -91,6 +91,7 @@ internal static class Program
             window.Close();
             for (var i = 0; i < 100; i++) { Pump(); Thread.Sleep(5); }
             Check(!window.IsVisible, "close during asynchronous inspection does not reopen window");
+            WorkspaceUiChecks.Run(Check);
             Console.WriteLine($"PASS {count} actual WPF inspector checks (isolated fixtures)");
             return 0;
         }

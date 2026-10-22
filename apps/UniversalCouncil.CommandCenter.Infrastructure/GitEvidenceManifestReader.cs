@@ -48,12 +48,34 @@ public sealed class GitEvidenceManifestReader(string repository) : ICommittedEvi
             Convert.ToHexString(SHA256.HashData(raw)));
     }
 
+    public string ReadCurrentRevision()
+    {
+        if (!Path.IsPathFullyQualified(repository)) throw new InvalidDataException("ABSOLUTE_REPOSITORY_REQUIRED");
+        var top=Encoding.UTF8.GetString(Run("rev-parse","--show-toplevel")).Trim();
+        if(!string.Equals(Path.GetFullPath(top),Path.GetFullPath(repository),
+            OperatingSystem.IsWindows()?StringComparison.OrdinalIgnoreCase:StringComparison.Ordinal))
+            throw new InvalidDataException("REPOSITORY_ROOT_MISMATCH");
+        var revision=Encoding.UTF8.GetString(Run("rev-parse","--verify","HEAD")).Trim();
+        if(!EvidenceRules.Hex(revision,40)||Encoding.UTF8.GetString(Run("cat-file","-t",revision)).Trim()!="commit")
+            throw new InvalidDataException("HEAD_COMMIT_REQUIRED");
+        if(Run("status","--porcelain=v1","-z","--untracked-files=all","--ignore-submodules=none").Length!=0)
+            throw new InvalidDataException("WORKSPACE_REPOSITORY_DIRTY");
+        var index=Encoding.UTF8.GetString(Run("ls-files","-v","-z"));
+        if(index.Split('\0',StringSplitOptions.RemoveEmptyEntries).Any(entry =>
+            entry.Length<3 || entry[0]!='H' || entry[1]!=' '))
+            throw new InvalidDataException("UNSUPPORTED_WORKSPACE_INDEX_FLAGS");
+        if(Encoding.UTF8.GetString(Run("rev-parse","--verify","HEAD")).Trim()!=revision)
+            throw new InvalidDataException("WORKSPACE_CHANGED_DURING_OBSERVATION");
+        return revision.ToLowerInvariant();
+    }
+
     private byte[] Run(params string[] args)
     {
         var start = new ProcessStartInfo("git") {
             WorkingDirectory = repository, UseShellExecute = false,
             RedirectStandardOutput = true, RedirectStandardError = true, CreateNoWindow = true
         };
+        start.ArgumentList.Add("-c"); start.ArgumentList.Add("core.fsmonitor=false");
         start.ArgumentList.Add("--no-replace-objects");
         start.ArgumentList.Add("--literal-pathspecs");
         foreach (var arg in args) start.ArgumentList.Add(arg);
