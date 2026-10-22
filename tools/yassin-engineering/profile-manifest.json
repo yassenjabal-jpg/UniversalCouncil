@@ -1,0 +1,57 @@
+{
+  "profile_id": "YASSIN-ENGINEERING",
+  "schema_version": 1,
+  "prepared_date": "2026-10-22",
+  "upstream": {
+    "repository": "deploymenttheory/windows-mcp-server",
+    "release": "v1.4.0",
+    "tag_commit": "375f40265cb02ae47d2ba0078991b0d4fce3ab31",
+    "official_windows_amd64_zip_sha256": "6d44fea16d6bac9a17076dd7770970ad0ca93c8cb06bc9b86eaf6aa8b5b77055"
+  },
+  "surface": {
+    "toolsets": ["screen", "interaction", "apps", "testing"],
+    "excluded_tools": [
+      "Type",
+      "Move",
+      "Shortcut",
+      "MultiSelect",
+      "MultiEdit",
+      "Clipboard",
+      "Process",
+      "Notification",
+      "Registry",
+      "ScheduledTask",
+      "PowerShell",
+      "LaunchExecutable",
+      "FileSystem",
+      "Scrape",
+      "Package",
+      "Credentials"
+    ],
+    "expected_tools": [
+      "App",
+      "Assert",
+      "CaptureEvidence",
+      "Click",
+      "DisplayInventory",
+      "GetText",
+      "GuardrailStatus",
+      "Invoke",
+      "Kill",
+      "Recording",
+      "Screenshot",
+      "Scroll",
+      "Snapshot",
+      "Wait",
+      "WaitFor"
+    ]
+  },
+  "separation_of_duties": {
+    "windows_mcp": "GUI perception, constrained UI automation, assertions, screenshots and evidence only",
+    "verified_files": "source/file mutations plus authorized command and process lifecycle with SHA and backup verification"
+  },
+  "w1_1_boundary": {
+    "session_recording_is_acceptance_evidence": false,
+    "governed_30fps_wgc_remains_authoritative": true
+  }
+}

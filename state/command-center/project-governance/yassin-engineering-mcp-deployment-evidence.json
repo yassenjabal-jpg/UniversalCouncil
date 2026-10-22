@@ -1,0 +1,84 @@
+{
+  "evidence_id": "YASSIN-ENGINEERING-DEPLOYMENT-2026-10-22",
+  "date": "2026-10-22",
+  "profile_head": "4bfa3df6f2a60a408fa1fd561afa1bc495d6b437",
+  "host": {
+    "hostname": "YASSIN",
+    "user": "alnaseem",
+    "session_id": 2,
+    "elevated": false,
+    "display": {
+      "width": 1920,
+      "height": 1080,
+      "dpi": 96,
+      "scale_percent": 100
+    }
+  },
+  "binary_identity": {
+    "official_release": "deploymenttheory/windows-mcp-server v1.4.0",
+    "official_zip_sha256": "6d44fea16d6bac9a17076dd7770970ad0ca93c8cb06bc9b86eaf6aa8b5b77055",
+    "installed_exe_sha256": "6cd490edcd393c2021f2136860737b92f393c18c9e6a5199d4f2b389085e71cb",
+    "official_extracted_exe_sha256": "6cd490edcd393c2021f2136860737b92f393c18c9e6a5199d4f2b389085e71cb",
+    "byte_identity_confirmed": true
+  },
+  "profile_validation": {
+    "static_validator": "PASS",
+    "audit_policy_validate": "PASS",
+    "enforce_policy_validate": "PASS",
+    "expected_tool_count": 15,
+    "actual_tool_count": 15,
+    "actual_tools": [
+      "App",
+      "Assert",
+      "CaptureEvidence",
+      "Click",
+      "DisplayInventory",
+      "GetText",
+      "GuardrailStatus",
+      "Invoke",
+      "Kill",
+      "Recording",
+      "Screenshot",
+      "Scroll",
+      "Snapshot",
+      "Wait",
+      "WaitFor"
+    ],
+    "forbidden_tool_leakage": false
+  },
+  "audit_smoke": {
+    "guardrail_mode": "audit",
+    "admit": true,
+    "snapshot": "PASS",
+    "app_switch": "PASS",
+    "wait_for_active_window": "PASS",
+    "semantic_invoke_maximize": "PASS",
+    "assert_after_maximize": "PASS",
+    "capture_evidence": "PASS",
+    "semantic_restore": "PASS",
+    "assert_after_restore": "PASS"
+  },
+  "codex_registration": {
+    "name": "yassin_windows_engineering",
+    "enabled": true,
+    "transport": "stdio",
+    "legacy_registration_retained_as_fallback": "yassin_windows",
+    "fresh_session_required_for_tool_exposure": true
+  },
+  "audit_chain": {
+    "initial_file_mode_result": "FAIL_SEQUENCE_GAP",
+    "cause": "multiple short-lived MCP sessions appended independent sequence-0 chains into one audit file",
+    "legacy_file_preserved_as": "E:\\GPT\\Tools\\DC-Replacement-20261022\\logs\\windows-mcp-audit.legacy-sequence-gap-20261022",
+    "corrective_action": "convert audit_destination path to a pre-existing directory so the server uses per-session files plus manifest chaining",
+    "strict_verify_after_correction": "PASS",
+    "verified_session": "session-20261022-124630.audit.jsonl",
+    "verified_entries": 11,
+    "sealed": true,
+    "manifest_chain_intact": true
+  },
+  "w1_1_boundary": {
+    "windows_mcp_recording_is_acceptance_evidence": false,
+    "governed_30fps_wgc_remains_authoritative": true
+  },
+  "deployment_verdict": "DEPLOYED_AUDIT_VERIFIED_AWAITING_FRESH_CLIENT_SESSION"
+}
