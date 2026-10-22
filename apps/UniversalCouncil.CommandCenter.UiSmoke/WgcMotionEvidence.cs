@@ -127,7 +127,7 @@ internal static partial class Program
             var totalCaptureLatenessMs = 0d;
             var maxCaptureLatenessMs = 0d;
             var lateFrameCount = 0;
-            const double FullMotionFreshFrameWaitBudgetMs = 18;
+            const double FullMotionFreshFrameWaitBudgetMs = 0;
             var freshFrameWaitSuccessCount = 0;
             var freshFrameWaitTimeoutCount = 0;
 
