@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "mode": "audit",
+  "signals": {
+    "run-context": { "ttl": "0s" }
+  },
+  "rules": [
+    {
+      "name": "interactive-session-only",
+      "match": { "toolset": "*" },
+      "require": ["run-context"],
+      "on_fail": "deny"
+    }
+  ],
+  "transparency": {
+    "audit_destination": "E:\\GPT\\Tools\\DC-Replacement-20261022\\logs\\windows-mcp-audit",
+    "heartbeat": "30s",
+    "recording_dir": "E:\\GPT\\Tools\\DC-Replacement-20261022\\logs\\windows-mcp-recordings",
+    "banner": true
+  },
+  "inflight": {
+    "interval": "60s"
+  },
+  "enforce_https": true
+}
