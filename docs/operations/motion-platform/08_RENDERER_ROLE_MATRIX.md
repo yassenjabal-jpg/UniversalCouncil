@@ -14,9 +14,9 @@ Each renderer is evaluated only for the motion families it can execute truthfull
 | Candidate | Highest evidence | Current role | WPF path | Current verdict |
 | --- | --- | --- | --- | --- |
 | SkiaSharp 4.153.1 | RUNTIME_EVIDENCE | dynamic drawing, paths, diagrams, data-driven 2D | owned core Skia -> BitmapSource bridge | VALIDATED_SPECIALIST_CANDIDATE |
-| Windows Composition / WASDK 2.5.1 | COMPILE_EVIDENCE | Windows-native property/micro motion | WPF + unpackaged Windows App SDK; runtime host still unproven | COMPILE_FEASIBLE_RUNTIME_PENDING |
+| Windows Composition / WASDK 2.5.1 | COMPILE_EVIDENCE | Windows-native property/micro motion | WPF + unpackaged Windows App SDK; headless runtime deferred to interactive Windows | COMPILE_PROVEN_RUNTIME_DEFERRED_INTERACTIVE_WINDOWS |
 | Rive runtime @ f4da8fa42ed2c256d3d672e3828d18a328528f50 | SOURCE_EVIDENCE | stateful/interactable vector scenes | native C++ interop required | SOURCE_VALIDATED_NATIVE_INTEROP_RESEARCH |
-| Lottie-Windows / LottieGen | SOURCE_EVIDENCE | pre-authored timelines and AE/codegen handoff | WinUI/generated Composition interop research | SOURCE_VALIDATED_WINUI_CODEGEN_SPECIALIST |
+| Lottie-Windows / LottieGen | RUNTIME_EVIDENCE (tooling) | pre-authored timelines and AE/codegen handoff | deterministic LottieGen C# codegen proven; renderer host still pending | TOOLING_RUNTIME_VALIDATED_WINUI_CODEGEN_SPECIALIST |
 
 ## SkiaSharp
 
@@ -43,13 +43,18 @@ Validated:
 - WPF and `Microsoft.UI.Composition` coexist at compile time;
 - `Compositor`, `SpriteVisual`, and scalar keyframe animation APIs compile.
 
+Observed:
+- compile/API coexistence is proven;
+- two bounded headless runtime attempts exceeded the shutdown budget even after explicit queue ownership/event-loop work;
+- no MotionKit-specific workaround will be invented for headless CI.
+
 What is still missing:
-- creating/owning a compositor in the actual WPF runtime;
-- attaching a Composition visual tree to the WPF HWND/surface;
-- cancellation/lifetime evidence under window close/recreate;
+- interactive/reference-Windows runtime hosting;
+- attachment of the Composition visual tree to the WPF HWND/surface;
+- cancellation/lifetime evidence under real window close/recreate;
 - frame pacing and GPU cost.
 
-Therefore Composition is a strong Windows-native candidate, but compile evidence is not runtime evidence.
+Therefore Composition remains a Windows-native candidate, but its runtime path is deferred rather than allowed to block MP3.
 
 ## Rive
 
@@ -77,13 +82,15 @@ Source evidence confirms:
 - WinUI/UWP-oriented Windows rendering;
 - LottieGen .NET global tool capable of generating C#/C++ and other output from Lottie/Bodymovin JSON.
 
-This makes Lottie primarily an authored-animation/codegen candidate. It is not considered a direct WPF control.
+The pinned LottieGen tool now executes successfully in our Windows lab with strict parsing and TestMode; two independent generations produce byte-identical C# and identical SHA-256 output.
+
+This validates the authored-animation/codegen workflow as tooling runtime evidence. It still does not prove WinUI/WPF renderer runtime integration, and Lottie is not considered a direct WPF control.
 
 ## Next evidence order
 
-1. Windows Composition WPF runtime host probe.
-2. LottieGen tool execution/code generation probe.
-3. Rive exact-commit Windows native build feasibility.
-4. Reference-Windows performance methodology and measurements.
+1. Rive exact-commit Windows native build-system feasibility.
+2. Windows Composition interactive/reference-Windows runtime host evidence.
+3. Reference-Windows performance methodology and measurements.
+4. Command Center reference-integration preparation.
 
 None of these probes authorize production adoption or Command Center integration.
