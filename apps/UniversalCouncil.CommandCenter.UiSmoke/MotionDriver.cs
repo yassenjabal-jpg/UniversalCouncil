@@ -98,59 +98,54 @@ internal static partial class Program
 
             var clock = Stopwatch.StartNew();
             var evidence = new List<MotionDriverStepEvidence>(steps.Count);
-
-            foreach (var step in steps)
-            {
-                var target = TimeSpan.FromSeconds(
-                    (double)step.Frame / MotionFramesPerSecond);
-
-                while (clock.Elapsed < target)
+            var targetDuration = TimeSpan.FromSeconds(targetSeconds);
+            var scheduler = Task.Factory.StartNew(
+                () =>
                 {
-                    var remaining = target - clock.Elapsed;
-                    var slice = remaining > TimeSpan.FromMilliseconds(4)
-                        ? TimeSpan.FromMilliseconds(4)
-                        : remaining;
-                    if (slice <= TimeSpan.Zero)
+                    try
                     {
-                        break;
+                        Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
+                    }
+                    catch
+                    {
+                        // Timing hardening only; lack of priority elevation is not fatal.
                     }
 
-                    PumpDispatcher(slice);
-                }
+                    foreach (var step in steps)
+                    {
+                        var target = TimeSpan.FromSeconds(
+                            (double)step.Frame / MotionFramesPerSecond);
+                        PaceWorkerToCaptureTime(clock, target);
 
-                step.Execute(window);
-                var actualSeconds = clock.Elapsed.TotalSeconds;
-                var targetStepSeconds = target.TotalSeconds;
-                evidence.Add(
-                    new MotionDriverStepEvidence(
-                        step.Frame,
-                        step.Name,
-                        Math.Round(targetStepSeconds, 6),
-                        Math.Round(actualSeconds, 6),
-                        Math.Round(
-                            Math.Max(0, actualSeconds - targetStepSeconds) * 1000,
-                            3)));
+                        window.Dispatcher.Invoke(
+                            DispatcherPriority.Send,
+                            new Action(() =>
+                            {
+                                step.Execute(window);
+                                var actualSeconds = clock.Elapsed.TotalSeconds;
+                                var targetStepSeconds = target.TotalSeconds;
+                                evidence.Add(
+                                    new MotionDriverStepEvidence(
+                                        step.Frame,
+                                        step.Name,
+                                        Math.Round(targetStepSeconds, 6),
+                                        Math.Round(actualSeconds, 6),
+                                        Math.Round(
+                                            Math.Max(0, actualSeconds - targetStepSeconds) * 1000,
+                                            3)));
 
-                Console.WriteLine(
-                    $"Motion driver [{mode}] step @{step.Frame}: {step.Name}");
-                PumpDispatcher(TimeSpan.FromMilliseconds(1));
-            }
+                                Console.WriteLine(
+                                    $"Motion driver [{mode}] step @{step.Frame}: {step.Name}");
+                            }));
+                    }
 
-            var targetDuration = TimeSpan.FromSeconds(targetSeconds);
-            while (clock.Elapsed < targetDuration)
-            {
-                var remaining = targetDuration - clock.Elapsed;
-                var slice = remaining > TimeSpan.FromMilliseconds(4)
-                    ? TimeSpan.FromMilliseconds(4)
-                    : remaining;
-                if (slice <= TimeSpan.Zero)
-                {
-                    break;
-                }
+                    PaceWorkerToCaptureTime(clock, targetDuration);
+                },
+                CancellationToken.None,
+                TaskCreationOptions.LongRunning,
+                TaskScheduler.Default);
 
-                PumpDispatcher(slice);
-            }
-
+            PumpDispatcherUntilComplete(scheduler);
             clock.Stop();
             var maxLateness = evidence.Count == 0
                 ? 0
@@ -167,6 +162,9 @@ internal static partial class Program
                         clock = "STOPWATCH_REALTIME_WPF_DRIVER",
                         timing_authority = true,
                         capture_observer = false,
+                        scheduler = "DEDICATED_STOPWATCH_WORKER_TO_DISPATCHER_SEND",
+                        dispatcher_timer_timing_authority = false,
+                        scheduler_thread_priority = "ABOVE_NORMAL_BEST_EFFORT",
                         mode,
                         reduced_motion = reducedMotion,
                         mp4_reference = mp4Reference,

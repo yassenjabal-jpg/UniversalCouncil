@@ -41,6 +41,12 @@ def validate_motion_driver_timing(
         raise SystemExit(f"{mode} motion-driver clock drifted")
     if driver.get("timing_authority") is not True or driver.get("capture_observer") is not False:
         raise SystemExit(f"{mode} motion-driver timing authority drifted")
+    if driver.get("scheduler") != "DEDICATED_STOPWATCH_WORKER_TO_DISPATCHER_SEND":
+        raise SystemExit(f"{mode} motion-driver scheduler drifted")
+    if driver.get("dispatcher_timer_timing_authority") is not False:
+        raise SystemExit(f"{mode} motion-driver restored DispatcherTimer timing authority")
+    if driver.get("scheduler_thread_priority") != "ABOVE_NORMAL_BEST_EFFORT":
+        raise SystemExit(f"{mode} motion-driver scheduler priority evidence drifted")
     if driver.get("mode") != mode or driver.get("reduced_motion") is not (mode == "reduced"):
         raise SystemExit(f"{mode} motion-driver mode drifted")
     if driver.get("mp4_reference") is not False:
