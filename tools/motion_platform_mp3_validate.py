@@ -5,7 +5,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STATE = ROOT / "state" / "motion-platform" / "mp3-compatibility-lab.json"
+MATRIX = ROOT / "state" / "motion-platform" / "renderer-role-matrix.json"
 SPEC = ROOT / "docs" / "operations" / "motion-platform" / "07_COMPATIBILITY_LAB_EXECUTION.md"
+MATRIX_DOC = ROOT / "docs" / "operations" / "motion-platform" / "08_RENDERER_ROLE_MATRIX.md"
 SKIA_PROJECT = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaLab" / "UniversalCouncil.MotionKit.SkiaLab.csproj"
 SKIA_ADAPTER = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaLab" / "SkiaOffscreenLabAdapter.cs"
 SKIA_VALIDATION = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaLabValidation" / "Program.cs"
@@ -26,7 +28,9 @@ COMPOSITION_PROBE = ROOT / "apps" / "UniversalCouncil.MotionKit.CompositionWpfCo
 
 for path in (
     STATE,
+    MATRIX,
     SPEC,
+    MATRIX_DOC,
     SKIA_PROJECT,
     SKIA_ADAPTER,
     SKIA_VALIDATION,
@@ -39,12 +43,42 @@ for path in (
         raise SystemExit(f"missing MP3 artifact: {path.relative_to(ROOT)}")
 
 state = json.loads(STATE.read_text(encoding="utf-8"))
+matrix = json.loads(MATRIX.read_text(encoding="utf-8"))
 if state["candidate_id"] != "motionkit-mp3-compatibility-lab-20261023":
     raise SystemExit("MP3 identity drifted")
 if state["parent_mp2_sha"] != "8b9e3a20ca407fff6734c945db59708d2718c2b5":
     raise SystemExit("MP3 parent MP2 binding drifted")
 if state["status"] != "LAB_ACTIVE_NOT_ACCEPTED":
     raise SystemExit("MP3 may not self-promote")
+
+
+if matrix["matrix_id"] != "motionkit-mp3-renderer-role-matrix-20261023":
+    raise SystemExit("MP3 renderer role matrix identity drifted")
+if matrix["status"] != "EVIDENCE_MATRIX_NOT_ADOPTION_DECISION":
+    raise SystemExit("renderer role matrix may not become an adoption decision")
+rules = matrix["rules"]
+if rules["single_renderer_winner_required"]:
+    raise SystemExit("MP3 must not force a single renderer winner")
+if rules["production_adoption_authorized"]:
+    raise SystemExit("renderer role matrix inflated production authority")
+if not rules["evidence_class_must_match_claim"]:
+    raise SystemExit("renderer role matrix weakened evidence-class discipline")
+if rules["product_truth_may_enter_renderer"]:
+    raise SystemExit("renderer role matrix weakened the truth firewall")
+
+matrix_renderers = matrix["renderers"]
+if set(matrix_renderers) != {"SKIASHARP", "WINDOWS_COMPOSITION", "RIVE", "LOTTIE_WINDOWS"}:
+    raise SystemExit("renderer role matrix candidate set drifted")
+if matrix_renderers["SKIASHARP"]["highest_evidence_class"] != "RUNTIME_EVIDENCE":
+    raise SystemExit("SkiaSharp role matrix evidence class drifted")
+if matrix_renderers["WINDOWS_COMPOSITION"]["highest_evidence_class"] != "COMPILE_EVIDENCE":
+    raise SystemExit("Composition role matrix over- or under-claimed evidence")
+for candidate_id in ("RIVE", "LOTTIE_WINDOWS"):
+    if matrix_renderers[candidate_id]["highest_evidence_class"] != "SOURCE_EVIDENCE":
+        raise SystemExit(f"{candidate_id} role matrix over-claimed evidence")
+for candidate_id, entry in matrix_renderers.items():
+    if entry["production_adoption"]:
+        raise SystemExit(f"{candidate_id} was promoted to production inside MP3")
 
 expected_evidence = [
     "SOURCE_EVIDENCE",
@@ -181,6 +215,7 @@ for marker in (
         raise SystemExit(f"Composition WPF compile marker missing: {marker}")
 
 spec = SPEC.read_text(encoding="utf-8")
+matrix_doc = MATRIX_DOC.read_text(encoding="utf-8")
 for marker in (
     "A lower evidence class must never be described as a higher one.",
     "Skia headless probe",
@@ -193,4 +228,17 @@ for marker in (
     if marker not in spec:
         raise SystemExit(f"MP3 specification drifted: {marker}")
 
-print("Motion Platform MP3 validation: PASS (compatibility lab boundaries + Skia probes)")
+for marker in (
+    "VALIDATED_SPECIALIST_CANDIDATE",
+    "COMPILE_FEASIBLE_RUNTIME_PENDING",
+    "SOURCE_VALIDATED_NATIVE_INTEROP_RESEARCH",
+    "SOURCE_VALIDATED_WINUI_CODEGEN_SPECIALIST",
+    "None of these probes authorize production adoption",
+):
+    if marker not in matrix_doc:
+        raise SystemExit(f"renderer role matrix documentation drifted: {marker}")
+
+print(
+    "Motion Platform MP3 validation: PASS "
+    "(compatibility lab boundaries + evidence-class renderer matrix)"
+)
