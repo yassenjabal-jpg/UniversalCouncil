@@ -47,6 +47,10 @@ def validate_motion_driver_timing(
         raise SystemExit(f"{mode} motion-driver restored DispatcherTimer timing authority")
     if driver.get("scheduler_thread_priority") != "ABOVE_NORMAL_BEST_EFFORT":
         raise SystemExit(f"{mode} motion-driver scheduler priority evidence drifted")
+    if driver.get("lateness_semantics") != "DISPATCH_START_MINUS_TARGET":
+        raise SystemExit(f"{mode} motion-driver lateness semantics drifted")
+    if driver.get("execution_duration_reported_separately") is not True:
+        raise SystemExit(f"{mode} motion-driver stopped separating execution duration")
     if driver.get("mode") != mode or driver.get("reduced_motion") is not (mode == "reduced"):
         raise SystemExit(f"{mode} motion-driver mode drifted")
     if driver.get("mp4_reference") is not False:
@@ -67,6 +71,17 @@ def validate_motion_driver_timing(
     driver_steps = driver.get("steps")
     if not isinstance(driver_steps, list) or not driver_steps:
         raise SystemExit(f"{mode} motion-driver semantic timeline is missing")
+    for item in driver_steps:
+        for key in ("ActualSeconds", "CompletedSeconds", "LatenessMs", "ExecutionMs"):
+            if key not in item:
+                raise SystemExit(f"{mode} motion-driver step timing field is missing: {key}")
+        if float(item["CompletedSeconds"]) < float(item["ActualSeconds"]):
+            raise SystemExit(f"{mode} motion-driver step completed before dispatch start")
+        if float(item["ExecutionMs"]) < 0:
+            raise SystemExit(f"{mode} motion-driver step execution duration is invalid")
+    computed_max_execution = max(float(item["ExecutionMs"]) for item in driver_steps)
+    if abs(float(driver.get("max_step_execution_ms", -1)) - computed_max_execution) > 0.01:
+        raise SystemExit(f"{mode} motion-driver max execution duration evidence drifted")
     driver_bindings = [(int(item.get("Frame", -1)), item.get("Name")) for item in driver_steps]
     manifest_bindings = [(int(item.get("frame", -1)), item.get("Name")) for item in timeline]
     if driver_bindings != manifest_bindings:

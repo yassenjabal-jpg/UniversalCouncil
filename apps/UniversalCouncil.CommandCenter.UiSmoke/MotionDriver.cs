@@ -14,7 +14,9 @@ internal static partial class Program
         string Name,
         double TargetSeconds,
         double ActualSeconds,
-        double LatenessMs);
+        double LatenessMs,
+        double CompletedSeconds,
+        double ExecutionMs);
 
     private static int RunMotionDriver(
         string output,
@@ -121,9 +123,12 @@ internal static partial class Program
                             DispatcherPriority.Send,
                             new Action(() =>
                             {
-                                step.Execute(window);
                                 var actualSeconds = clock.Elapsed.TotalSeconds;
                                 var targetStepSeconds = target.TotalSeconds;
+                                var executionClock = Stopwatch.StartNew();
+                                step.Execute(window);
+                                executionClock.Stop();
+                                var completedSeconds = clock.Elapsed.TotalSeconds;
                                 evidence.Add(
                                     new MotionDriverStepEvidence(
                                         step.Frame,
@@ -132,7 +137,9 @@ internal static partial class Program
                                         Math.Round(actualSeconds, 6),
                                         Math.Round(
                                             Math.Max(0, actualSeconds - targetStepSeconds) * 1000,
-                                            3)));
+                                            3),
+                                        Math.Round(completedSeconds, 6),
+                                        Math.Round(executionClock.Elapsed.TotalMilliseconds, 3)));
 
                                 Console.WriteLine(
                                     $"Motion driver [{mode}] step @{step.Frame}: {step.Name}");
@@ -150,6 +157,9 @@ internal static partial class Program
             var maxLateness = evidence.Count == 0
                 ? 0
                 : evidence.Max(item => item.LatenessMs);
+            var maxExecution = evidence.Count == 0
+                ? 0
+                : evidence.Max(item => item.ExecutionMs);
 
             File.WriteAllText(
                 Path.Combine(output, "motion-driver-timing.json"),
@@ -165,6 +175,8 @@ internal static partial class Program
                         scheduler = "DEDICATED_STOPWATCH_WORKER_TO_DISPATCHER_SEND",
                         dispatcher_timer_timing_authority = false,
                         scheduler_thread_priority = "ABOVE_NORMAL_BEST_EFFORT",
+                        lateness_semantics = "DISPATCH_START_MINUS_TARGET",
+                        execution_duration_reported_separately = true,
                         mode,
                         reduced_motion = reducedMotion,
                         mp4_reference = mp4Reference,
@@ -175,6 +187,7 @@ internal static partial class Program
                         width = MotionWidth,
                         height = MotionHeight,
                         max_step_lateness_ms = Math.Round(maxLateness, 3),
+                        max_step_execution_ms = Math.Round(maxExecution, 3),
                         steps = evidence,
                     },
                     new JsonSerializerOptions { WriteIndented = true }));
