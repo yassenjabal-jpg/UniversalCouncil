@@ -11,6 +11,7 @@ public sealed class MotionCoordinator
     private readonly Func<Guid> _idFactory;
     private readonly Dictionary<string, List<MotionLease>> _active = new(StringComparer.Ordinal);
     private readonly Dictionary<string, Queue<PendingMotion>> _queued = new(StringComparer.Ordinal);
+    private readonly Dictionary<(string TargetId, string RequirementId), MotionTruthSnapshot> _latestTruth = new();
     private readonly HashSet<Guid> _issuedIds = [];
 
     public MotionCoordinator(Func<Guid>? idFactory = null)
@@ -28,11 +29,20 @@ public sealed class MotionCoordinator
                 return Transition(MotionDisposition.RejectedInvalid, invalid);
             }
 
+            var truthOrder = ObserveTruthLocked(request.TargetId, request.Truth);
+            if (truthOrder is not null)
+            {
+                return truthOrder;
+            }
+
             if (!request.Truth.Satisfied)
             {
-                return Transition(
-                    MotionDisposition.RejectedTruth,
-                    $"Truth requirement is not satisfied: {request.Contract.TruthRequirementId}");
+                var revoked = RevokeTruthLocked(request.TargetId, request.Truth);
+                return revoked with
+                {
+                    Disposition = MotionDisposition.RejectedTruth,
+                    Reason = $"Motion rejected because backing truth is false. {revoked.Reason}"
+                };
             }
 
             if (RequestExists(request.RequestId))
@@ -141,6 +151,12 @@ public sealed class MotionCoordinator
                 return Transition(MotionDisposition.RejectedInvalid, invalid);
             }
 
+            var truthOrder = ObserveTruthLocked(targetId, truth);
+            if (truthOrder is not null)
+            {
+                return truthOrder;
+            }
+
             if (truth.Satisfied)
             {
                 return Transition(
@@ -148,70 +164,7 @@ public sealed class MotionCoordinator
                     $"Truth remains satisfied: {truth.RequirementId}");
             }
 
-            var cancelled = new List<Guid>();
-            if (_active.TryGetValue(targetId, out var active))
-            {
-                for (var index = active.Count - 1; index >= 0; index--)
-                {
-                    var lease = active[index];
-                    if (string.Equals(
-                            lease.TruthRequirementId,
-                            truth.RequirementId,
-                            StringComparison.Ordinal)
-                        && truth.ObservedAt >= lease.TruthObservedAt)
-                    {
-                        cancelled.Add(lease.InstanceId);
-                        active.RemoveAt(index);
-                    }
-                }
-
-                if (active.Count == 0)
-                {
-                    _active.Remove(targetId);
-                }
-            }
-
-            if (_queued.TryGetValue(targetId, out var queued))
-            {
-                var retained = queued
-                    .Where(item => !string.Equals(
-                        item.Contract.TruthRequirementId,
-                        truth.RequirementId,
-                        StringComparison.Ordinal))
-                    .ToArray();
-
-                if (retained.Length == 0)
-                {
-                    _queued.Remove(targetId);
-                }
-                else if (retained.Length != queued.Count)
-                {
-                    _queued[targetId] = new Queue<PendingMotion>(retained);
-                }
-            }
-
-            PendingMotion? released = null;
-            if (!_active.ContainsKey(targetId)
-                && _queued.TryGetValue(targetId, out var remaining)
-                && remaining.Count > 0)
-            {
-                released = remaining.Dequeue();
-                if (remaining.Count == 0)
-                {
-                    _queued.Remove(targetId);
-                }
-            }
-
-            return new MotionTransition(
-                MotionDisposition.TruthRevoked,
-                StartedLease: null,
-                ReleasedPending: released,
-                CancelledInstances: cancelled,
-                released is not null
-                    ? $"Truth revoked; matching motion stopped and next intent released for fresh truth: {truth.RequirementId}"
-                    : cancelled.Count == 0
-                        ? $"Truth revoked with no eligible active instance: {truth.RequirementId}"
-                        : $"Truth revoked; matching motion stopped: {truth.RequirementId}");
+            return RevokeTruthLocked(targetId, truth);
         }
     }
 
@@ -230,6 +183,13 @@ public sealed class MotionCoordinator
 
             _active.Remove(targetId);
             _queued.Remove(targetId);
+
+            foreach (var key in _latestTruth.Keys
+                         .Where(key => string.Equals(key.TargetId, targetId, StringComparison.Ordinal))
+                         .ToArray())
+            {
+                _latestTruth.Remove(key);
+            }
 
             return new MotionTransition(
                 MotionDisposition.TargetCancelled,
@@ -254,6 +214,107 @@ public sealed class MotionCoordinator
         {
             return _queued.TryGetValue(targetId, out var queue) ? queue.Count : 0;
         }
+    }
+
+    private MotionTransition? ObserveTruthLocked(
+        string targetId,
+        MotionTruthSnapshot truth)
+    {
+        var key = (targetId, truth.RequirementId);
+        if (_latestTruth.TryGetValue(key, out var latest))
+        {
+            if (truth.ObservedAt < latest.ObservedAt)
+            {
+                return Transition(
+                    MotionDisposition.StaleTruthIgnored,
+                    $"Truth snapshot is older than the latest observation for {truth.RequirementId}.");
+            }
+
+            if (truth.ObservedAt == latest.ObservedAt
+                && (!string.Equals(
+                        truth.SourceVersion,
+                        latest.SourceVersion,
+                        StringComparison.Ordinal)
+                    || truth.Satisfied != latest.Satisfied))
+            {
+                return Transition(
+                    MotionDisposition.RejectedInvalid,
+                    $"Conflicting truth snapshots share the same observation time for {truth.RequirementId}.");
+            }
+        }
+
+        _latestTruth[key] = truth;
+        return null;
+    }
+
+    private MotionTransition RevokeTruthLocked(
+        string targetId,
+        MotionTruthSnapshot truth)
+    {
+        var cancelled = new List<Guid>();
+        if (_active.TryGetValue(targetId, out var active))
+        {
+            for (var index = active.Count - 1; index >= 0; index--)
+            {
+                var lease = active[index];
+                if (string.Equals(
+                        lease.TruthRequirementId,
+                        truth.RequirementId,
+                        StringComparison.Ordinal)
+                    && truth.ObservedAt >= lease.TruthObservedAt)
+                {
+                    cancelled.Add(lease.InstanceId);
+                    active.RemoveAt(index);
+                }
+            }
+
+            if (active.Count == 0)
+            {
+                _active.Remove(targetId);
+            }
+        }
+
+        if (_queued.TryGetValue(targetId, out var queued))
+        {
+            var retained = queued
+                .Where(item => !string.Equals(
+                    item.Contract.TruthRequirementId,
+                    truth.RequirementId,
+                    StringComparison.Ordinal))
+                .ToArray();
+
+            if (retained.Length == 0)
+            {
+                _queued.Remove(targetId);
+            }
+            else if (retained.Length != queued.Count)
+            {
+                _queued[targetId] = new Queue<PendingMotion>(retained);
+            }
+        }
+
+        PendingMotion? released = null;
+        if (!_active.ContainsKey(targetId)
+            && _queued.TryGetValue(targetId, out var remaining)
+            && remaining.Count > 0)
+        {
+            released = remaining.Dequeue();
+            if (remaining.Count == 0)
+            {
+                _queued.Remove(targetId);
+            }
+        }
+
+        return new MotionTransition(
+            MotionDisposition.TruthRevoked,
+            StartedLease: null,
+            ReleasedPending: released,
+            CancelledInstances: cancelled,
+            released is not null
+                ? $"Truth revoked; matching motion stopped and next intent released for fresh truth: {truth.RequirementId}"
+                : cancelled.Count == 0
+                    ? $"Truth revoked with no eligible active instance: {truth.RequirementId}"
+                    : $"Truth revoked; matching motion stopped: {truth.RequirementId}");
     }
 
     private MotionTransition Replace(
@@ -438,9 +499,9 @@ public sealed class MotionCoordinator
             return "Truth snapshot does not match the semantic contract requirement.";
         }
 
-        if (string.IsNullOrWhiteSpace(request.Contract.ReducedMotionEquivalent))
+        if (!ValidIdentifier(request.Contract.ReducedMotionEquivalent))
         {
-            return "Reduced Motion equivalent is required.";
+            return "Reduced Motion equivalent is invalid.";
         }
 
         return null;
