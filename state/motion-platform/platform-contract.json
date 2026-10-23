@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "platform_id": "motionkit",
+  "display_name": "Motion Platform / MotionKit",
+  "date": "2026-10-23",
+  "status": "FOUNDATION_DRAFT",
+  "reference_application": "UniversalCouncil Command Center",
+  "scope": "MULTI_PROJECT",
+  "governing_equation": "Motion = State + Meaning + Interaction + Function",
+  "protected_truth": {
+    "motion_creates_operational_truth": false,
+    "unknown_is_success": false,
+    "reduced_motion_semantic_parity_required": true,
+    "fake_activity_allowed": false,
+    "renderer_may_own_product_state": false,
+    "owner_visible_rejection_overrides_numeric_pass": true
+  },
+  "purposes": [
+    "NAVIGATION",
+    "STATE",
+    "FEEDBACK",
+    "ROUTING",
+    "HANDOFF",
+    "RECOVERY"
+  ],
+  "layers": [
+    "SEMANTIC_CONTRACT",
+    "ORCHESTRATOR",
+    "CHOREOGRAPHY_TOKENS",
+    "PRODUCT_MOTION_PROFILE",
+    "RENDERER_ADAPTER",
+    "EVIDENCE_QA"
+  ],
+  "interruption_modes": [
+    "REPLACE",
+    "QUEUE",
+    "COALESCE",
+    "IGNORE_DUPLICATE",
+    "PARALLEL_SAFE"
+  ],
+  "candidate_renderers": {
+    "WINDOWS_COMPOSITION": "LAB_ONLY",
+    "RIVE": "LAB_ONLY",
+    "LOTTIE": "LAB_ONLY",
+    "SKIASHARP": "LAB_ONLY",
+    "ANDROID_COMPOSE": "LAB_ONLY"
+  },
+  "architecture_references": {
+    "AVALONIA_COMPOSITION": "REFERENCE_ONLY"
+  },
+  "qa_candidates": {
+    "FLAUI": "LAB_ONLY",
+    "BENCHMARKDOTNET": "LAB_ONLY"
+  },
+  "mandatory_lab_scenarios": [
+    "INTERACTIVE_ICON",
+    "STATEFUL_SIGIL",
+    "ROUTE_TRANSFER",
+    "SEMANTIC_OBJECT_HANDOFF",
+    "DENSE_SCREEN_STRESS"
+  ],
+  "adoption_policy": {
+    "single_renderer_required": false,
+    "direct_product_dependency_on_renderer_allowed": false,
+    "adapter_isolation_required": true,
+    "license_review_required": true,
+    "performance_evidence_required": true,
+    "reduced_motion_evidence_required": true,
+    "interruption_evidence_required": true,
+    "weak_hardware_fallback_required": true
+  },
+  "authority": {
+    "architecture_research_authorized": true,
+    "isolated_prototype_authorized": true,
+    "production_renderer_adoption_authorized": false,
+    "command_center_refactor_authorized": false,
+    "pr72_merge_authorized": false,
+    "stage8_opened": false,
+    "runtime_authority_expanded": false
+  },
+  "roadmap": {
+    "current_wave": "MP0",
+    "ordered_waves": [
+      "MP0",
+      "MP1",
+      "MP2",
+      "MP3",
+      "MP4",
+      "MP5",
+      "MP6"
+    ],
+    "final_gate": "MOTION_PLATFORM_GENERAL_ADOPTION_APPROVED"
+  }
+}

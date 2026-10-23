@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0",
+  "catalog_id": "motionkit-semantic-catalog",
+  "status": "FOUNDATION_DRAFT",
+  "events": [
+    {
+      "id": "ROLE_ACTIVATED",
+      "purpose": ["STATE", "ROUTING"],
+      "default_interruption": "REPLACE",
+      "truth_requirement": "ROLE_STATE_ACTIVE",
+      "reduced_motion": "STATIC_ACTIVE_EMPHASIS",
+      "quiet_when_false": true
+    },
+    {
+      "id": "ROUTE_TRANSFER",
+      "purpose": ["ROUTING", "HANDOFF"],
+      "default_interruption": "REPLACE",
+      "truth_requirement": "ROUTE_EVENT_EXISTS",
+      "reduced_motion": "SOURCE_FOCUS_THEN_DESTINATION_FOCUS",
+      "quiet_when_false": true
+    },
+    {
+      "id": "WAITING_OWNER",
+      "purpose": ["STATE"],
+      "default_interruption": "REPLACE",
+      "truth_requirement": "PRODUCT_STATE_WAITING_OWNER",
+      "reduced_motion": "STATIC_WAITING_OWNER_STATE",
+      "quiet_when_false": true
+    },
+    {
+      "id": "BLOCKED",
+      "purpose": ["STATE"],
+      "default_interruption": "REPLACE",
+      "truth_requirement": "PRODUCT_STATE_BLOCKED",
+      "reduced_motion": "STATIC_BLOCKED_STATE",
+      "quiet_when_false": true
+    },
+    {
+      "id": "VERIFIED_COMPLETE",
+      "purpose": ["STATE", "FEEDBACK"],
+      "default_interruption": "REPLACE",
+      "truth_requirement": "VERIFIED_COMPLETION_EVENT",
+      "reduced_motion": "STATIC_VERIFIED_COMPLETE_STATE",
+      "quiet_when_false": true
+    },
+    {
+      "id": "EXPAND",
+      "purpose": ["FEEDBACK"],
+      "default_interruption": "REPLACE",
+      "truth_requirement": "LOCAL_UI_EXPAND_INTENT",
+      "reduced_motion": "INSTANT_EXPANDED_STATE",
+      "quiet_when_false": true
+    },
+    {
+      "id": "COLLAPSE",
+      "purpose": ["FEEDBACK"],
+      "default_interruption": "REPLACE",
+      "truth_requirement": "LOCAL_UI_COLLAPSE_INTENT",
+      "reduced_motion": "INSTANT_COLLAPSED_STATE",
+      "quiet_when_false": true
+    },
+    {
+      "id": "SELECT",
+      "purpose": ["FEEDBACK", "STATE"],
+      "default_interruption": "COALESCE",
+      "truth_requirement": "LOCAL_SELECTION_STATE",
+      "reduced_motion": "STATIC_SELECTED_STATE",
+      "quiet_when_false": true
+    },
+    {
+      "id": "INSPECT",
+      "purpose": ["NAVIGATION", "FEEDBACK"],
+      "default_interruption": "IGNORE_DUPLICATE",
+      "truth_requirement": "REAL_INSPECTABLE_TARGET",
+      "reduced_motion": "DIRECT_INSPECTOR_OPEN",
+      "quiet_when_false": true
+    },
+    {
+      "id": "HANDOFF",
+      "purpose": ["HANDOFF", "ROUTING"],
+      "default_interruption": "REPLACE",
+      "truth_requirement": "HANDOFF_EVENT_EXISTS",
+      "reduced_motion": "SOURCE_FOCUS_THEN_DESTINATION_FOCUS",
+      "quiet_when_false": true
+    },
+    {
+      "id": "RETURN",
+      "purpose": ["HANDOFF", "ROUTING"],
+      "default_interruption": "REPLACE",
+      "truth_requirement": "RETURN_EVENT_EXISTS",
+      "reduced_motion": "DESTINATION_FOCUS_THEN_SOURCE_FOCUS",
+      "quiet_when_false": true
+    },
+    {
+      "id": "RECOVERY_FOCUS",
+      "purpose": ["RECOVERY", "STATE"],
+      "default_interruption": "REPLACE",
+      "truth_requirement": "VERIFIED_RECOVERY_TARGET_EXISTS",
+      "reduced_motion": "DIRECT_CHECKPOINT_FOCUS",
+      "quiet_when_false": true
+    },
+    {
+      "id": "FORK",
+      "purpose": ["STATE", "NAVIGATION"],
+      "default_interruption": "IGNORE_DUPLICATE",
+      "truth_requirement": "FORK_STATE_EXISTS",
+      "reduced_motion": "STATIC_A_B_BRANCH_STATE",
+      "quiet_when_false": true
+    }
+  ]
+}
