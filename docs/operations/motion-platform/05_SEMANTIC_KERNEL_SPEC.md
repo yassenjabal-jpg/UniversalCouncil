@@ -20,6 +20,9 @@ The kernel must:
 - prevent a replaced/stale instance from completing a newer visual state;
 - support bounded interruption modes;
 - never auto-start queued work from a stale truth snapshot;
+- stop matching active motion when its backing truth is revoked;
+- reject stale truth revocation from cancelling motion backed by newer truth;
+- snapshot mutable contract inputs before retention;
 - expose deterministic results that can be unit/console tested.
 
 ## Interruption semantics
@@ -58,6 +61,27 @@ Queued motion never carries authority to start later from an old truth observati
 
 The queue stores semantic intent only. After the active instance completes, the queued item is released and requires a newly observed truth snapshot before start.
 
+## Truth revocation law
+
+Product truth remains external to MotionKit.
+
+When a newer false truth snapshot is reconciled for a target:
+- matching active motion is cancelled;
+- queued intents requiring the revoked truth are removed;
+- if another queued intent becomes eligible for consideration, it is released only as semantic intent;
+- released intent MUST be resubmitted with fresh truth before it can start.
+
+An older false truth observation MUST NOT cancel a lease backed by a newer truth observation.
+
+## Contract snapshot law
+
+MotionKit snapshots retained semantic contracts at submission time.
+
+Caller mutation of a previously supplied collection MUST NOT change:
+- active semantics;
+- queued semantic intent;
+- later released pending intent.
+
 ## Bounds
 
 - IDs are bounded text;
@@ -91,6 +115,9 @@ MP1 candidate must pass:
 - queue release requiring fresh truth;
 - parallel-safe instances;
 - Reduced Motion lease preservation;
+- truth revocation stops matching motion;
+- stale truth revocation cannot cancel newer motion;
+- contract snapshot immutability;
 - bounded queue;
 - cancel-target cleanup.
 
