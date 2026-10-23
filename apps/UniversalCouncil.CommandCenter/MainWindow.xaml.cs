@@ -7986,7 +7986,7 @@ public partial class MainWindow : Window
             origin,
             destination,
             Color.FromArgb(210, 47, 131, 238),
-            durationMs: 480,
+            durationMs: 760,
             zIndex: 18);
     }
 
@@ -8220,7 +8220,7 @@ public partial class MainWindow : Window
             new Point(startX, y),
             new Point(endX, y),
             Color.FromArgb(150, 31, 166, 196),
-            durationMs: 620,
+            durationMs: 900,
             zIndex: 26);
     }
 
