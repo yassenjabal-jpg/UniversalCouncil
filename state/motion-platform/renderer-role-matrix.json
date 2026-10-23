@@ -36,7 +36,7 @@
       "production_adoption": false
     },
     "WINDOWS_COMPOSITION": {
-      "current_verdict": "COMPILE_FEASIBLE_RUNTIME_PENDING",
+      "current_verdict": "COMPILE_PROVEN_RUNTIME_DEFERRED_INTERACTIVE_WINDOWS",
       "highest_evidence_class": "COMPILE_EVIDENCE",
       "validated_roles": [
         "WPF_NET10_API_COEXISTENCE",
@@ -45,6 +45,7 @@
         "SPRITE_VISUAL_API_COMPILE"
       ],
       "not_validated": [
+        "HEADLESS_RUNTIME_SHUTDOWN_LIFECYCLE",
         "WPF_VISUAL_HOST_RUNTIME",
         "FRAME_PACING",
         "LIFETIME_RECOVERY",
@@ -83,18 +84,19 @@
       "production_adoption": false
     },
     "LOTTIE_WINDOWS": {
-      "current_verdict": "SOURCE_VALIDATED_WINUI_CODEGEN_SPECIALIST",
-      "highest_evidence_class": "SOURCE_EVIDENCE",
+      "current_verdict": "TOOLING_RUNTIME_VALIDATED_WINUI_CODEGEN_SPECIALIST",
+      "highest_evidence_class": "RUNTIME_EVIDENCE",
       "validated_roles": [
         "SOURCE_PREAUTHORED_TIMELINE",
         "SOURCE_LOTTIEGEN_CODEGEN_PATH",
-        "SOURCE_MIT_LICENSE"
+        "SOURCE_MIT_LICENSE",
+        "LOTTIEGEN_PINNED_TOOL_EXECUTION",
+        "STRICT_CODEGEN",
+        "DETERMINISTIC_CSHARP_OUTPUT"
       ],
       "not_validated": [
-        "LOTTIEGEN_CURRENT_TOOL_EXECUTION",
-        "WINUI_COMPILE_IN_OUR_LAB",
+        "WINUI_RENDERER_RUNTIME_IN_OUR_LAB",
         "WPF_HOST",
-        "WINDOW_RUNTIME",
         "OWNER_VISUAL_QUALITY"
       ],
       "wpf_integration": {
@@ -107,9 +109,9 @@
     }
   },
   "next_probe_order": [
-    "WINDOWS_COMPOSITION_WPF_RUNTIME",
-    "LOTTIEGEN_TOOL_EXECUTION",
-    "RIVE_WINDOWS_NATIVE_BUILD",
-    "WINDOW_REFERENCE_PERFORMANCE"
+    "RIVE_WINDOWS_NATIVE_PREMAKE_GENERATION",
+    "WINDOWS_COMPOSITION_INTERACTIVE_WPF_RUNTIME",
+    "WINDOW_REFERENCE_PERFORMANCE",
+    "COMMAND_CENTER_REFERENCE_INTEGRATION_PREP"
   ]
 }
