@@ -66,7 +66,7 @@
       "repository": "microsoft/WindowsAppSDK",
       "version": "2.5.1",
       "license": "MIT",
-      "status": "LAB_ONLY",
+      "status": "COMPILE_PROVEN_RUNTIME_DEFERRED",
       "role": [
         "WINDOWS_MICRO_MOTION",
         "VISUAL_PROPERTY_ANIMATION",
@@ -74,7 +74,7 @@
       ],
       "authorized_probes": [
         "WINDOWS_WPF_COMPOSITION_COMPILE",
-        "WINDOWS_COMPOSITION_RUNTIME_API",
+        "WINDOWS_COMPOSITION_RUNTIME_API_DEFERRED_INTERACTIVE_WINDOWS",
         "WINDOWS_WPF_VISUAL_HOST_LATER"
       ],
       "source_evidence": [
@@ -106,13 +106,13 @@
       ],
       "observed_findings": [
         {
-          "id": "WINDOWS_COMPOSITION_UNOWNED_QUEUE_SHUTDOWN_TIMEOUT",
+          "id": "WINDOWS_COMPOSITION_HEADLESS_RUNTIME_SHUTDOWN_TIMEOUT",
           "evidence_class": "RUNTIME_EVIDENCE",
-          "source_head_sha": "fca3b7fa89ce7e06d940a8792ecabd5805d2c117",
-          "workflow_run_id": 39926268596,
-          "job_id": 120323310173,
-          "status": "BLOCKED_PROBE_LIFECYCLE",
-          "detail": "The bounded Composition runtime process exceeded the 15 second shutdown budget when the probe created Compositor without explicitly owning a Microsoft.UI.Dispatching.DispatcherQueueController. The probe is being corrected to own the current-thread queue and call ShutdownQueue synchronously."
+          "source_head_sha": "0f291592acd6c76caf81ed513af8515ffd5ccca4",
+          "workflow_run_id": 39928447175,
+          "job_id": 120330505147,
+          "status": "DEFERRED_INTERACTIVE_WINDOWS",
+          "detail": "The probe owned a Microsoft.UI DispatcherQueueController, ran an explicit DispatcherQueue event loop, created/used Composition API objects, then still exceeded the 15 second process shutdown budget on the headless GitHub Windows runner. Runtime lifecycle is deferred to an interactive/reference Windows environment; no custom workaround will be invented in shared MotionKit."
         }
       ]
     },
