@@ -34,6 +34,8 @@ public enum MotionDisposition
     IgnoredDuplicate,
     RejectedTruth,
     RejectedInvalid,
+    TruthObserved,
+    TruthRevoked,
     Completed,
     CompletedQueueReleased,
     StaleCompletionIgnored,
@@ -72,6 +74,9 @@ public sealed record MotionLease(
     string RequestId,
     string TargetId,
     string SemanticEventId,
+    string TruthRequirementId,
+    string TruthSourceVersion,
+    DateTimeOffset TruthObservedAt,
     MotionAccessibilityMode AccessibilityMode,
     DateTimeOffset StartedAt);
 
