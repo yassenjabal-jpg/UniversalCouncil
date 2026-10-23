@@ -8,6 +8,8 @@ STATE = ROOT / "state" / "motion-platform" / "mp3-compatibility-lab.json"
 MATRIX = ROOT / "state" / "motion-platform" / "renderer-role-matrix.json"
 SPEC = ROOT / "docs" / "operations" / "motion-platform" / "07_COMPATIBILITY_LAB_EXECUTION.md"
 MATRIX_DOC = ROOT / "docs" / "operations" / "motion-platform" / "08_RENDERER_ROLE_MATRIX.md"
+LOTTIE_FIXTURE = ROOT / "lab" / "motion-platform" / "lottie" / "MotionKitProbe.json"
+LOTTIE_CHECKER = ROOT / "tools" / "motion_platform_lottiegen_check.py"
 SKIA_PROJECT = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaLab" / "UniversalCouncil.MotionKit.SkiaLab.csproj"
 SKIA_ADAPTER = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaLab" / "SkiaOffscreenLabAdapter.cs"
 SKIA_VALIDATION = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaLabValidation" / "Program.cs"
@@ -38,6 +40,8 @@ for path in (
     MATRIX,
     SPEC,
     MATRIX_DOC,
+    LOTTIE_FIXTURE,
+    LOTTIE_CHECKER,
     SKIA_PROJECT,
     SKIA_ADAPTER,
     SKIA_VALIDATION,
@@ -126,8 +130,15 @@ if set(composition["authorized_probes"]) != {
 
 if candidates["RIVE"]["status"] != "NATIVE_INTEROP_RESEARCH":
     raise SystemExit("Rive was promoted without native interop evidence")
-if candidates["LOTTIE_WINDOWS"]["status"] != "WINUI_SPECIALIST_RESEARCH":
+lottie = candidates["LOTTIE_WINDOWS"]
+if lottie["status"] != "WINUI_SPECIALIST_RESEARCH":
     raise SystemExit("Lottie-Windows was promoted beyond WinUI specialist research")
+if lottie["license"] != "MIT":
+    raise SystemExit("Lottie-Windows MIT license evidence drifted")
+if lottie["lottiegen_tool_version"] != "8.2.250604":
+    raise SystemExit("LottieGen tool version pin drifted")
+if set(lottie["authorized_probes"]) != {"LOTTIEGEN_CODEGEN_RUNTIME", "WINUI_COMPILE_LATER"}:
+    raise SystemExit("Lottie-Windows probe authority drifted")
 
 policy = state["performance_policy"]
 if policy["shared_ci_wall_clock_is_gating"]:
@@ -235,6 +246,24 @@ for marker in (
     if marker not in composition_probe:
         raise SystemExit(f"Composition WPF compile marker missing: {marker}")
 
+lottie_fixture = json.loads(LOTTIE_FIXTURE.read_text(encoding="utf-8"))
+for key in ("v", "fr", "ip", "op", "w", "h", "layers"):
+    if key not in lottie_fixture:
+        raise SystemExit(f"owned Lottie fixture missing required key: {key}")
+if lottie_fixture["nm"] != "MotionKitProbe":
+    raise SystemExit("owned Lottie fixture identity drifted")
+
+lottie_checker = LOTTIE_CHECKER.read_text(encoding="utf-8")
+for marker in (
+    "hashlib.sha256",
+    "expected exactly one generated C# file per run",
+    "MotionKit.Lab",
+    "MotionKitProbe",
+    "not deterministic across two runs",
+):
+    if marker not in lottie_checker:
+        raise SystemExit(f"LottieGen determinism checker marker missing: {marker}")
+
 composition_runtime = COMPOSITION_RUNTIME_PROGRAM.read_text(encoding="utf-8")
 for marker in (
     "[STAThread]",
@@ -259,6 +288,7 @@ for marker in (
     "shared CI runners are not stable performance reference hardware",
     "Rive is NOT treated as a .NET/WPF drop-in dependency.",
     "Lottie-Windows is NOT treated as a direct WPF control.",
+    "LottieGen deterministic codegen probe",
 ):
     if marker not in spec:
         raise SystemExit(f"MP3 specification drifted: {marker}")
