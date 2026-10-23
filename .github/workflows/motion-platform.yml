@@ -131,6 +131,9 @@ jobs:
           $riveDir = Join-Path $env:GITHUB_WORKSPACE "build\rive-runtime"
           Remove-Item -Recurse -Force $riveDir -ErrorAction SilentlyContinue
 
+          git config --global core.longpaths true
+          if ($LASTEXITCODE -ne 0) { throw "Failed to enable Windows Git long paths for Rive dependencies." }
+
           git clone --filter=blob:none --no-checkout https://github.com/rive-app/rive-runtime.git $riveDir
           if ($LASTEXITCODE -ne 0) { throw "Rive clone failed." }
 
