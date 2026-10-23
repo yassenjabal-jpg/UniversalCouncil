@@ -86,8 +86,8 @@ if matrix_renderers["SKIASHARP"]["highest_evidence_class"] != "RUNTIME_EVIDENCE"
     raise SystemExit("SkiaSharp role matrix evidence class drifted")
 if matrix_renderers["WINDOWS_COMPOSITION"]["highest_evidence_class"] != "COMPILE_EVIDENCE":
     raise SystemExit("Composition role matrix over- or under-claimed evidence")
-if matrix_renderers["RIVE"]["highest_evidence_class"] != "SOURCE_EVIDENCE":
-    raise SystemExit("RIVE role matrix over-claimed evidence")
+if matrix_renderers["RIVE"]["highest_evidence_class"] != "COMPILE_EVIDENCE":
+    raise SystemExit("RIVE role matrix evidence class drifted")
 if matrix_renderers["LOTTIE_WINDOWS"]["highest_evidence_class"] != "RUNTIME_EVIDENCE":
     raise SystemExit("Lottie tooling runtime evidence class drifted")
 for candidate_id, entry in matrix_renderers.items():
@@ -130,8 +130,8 @@ if set(composition["authorized_probes"]) != {
     raise SystemExit("Windows Composition probe authority drifted")
 
 rive = candidates["RIVE"]
-if rive["status"] != "NATIVE_INTEROP_RESEARCH":
-    raise SystemExit("Rive was promoted without native interop evidence")
+if rive["status"] != "COMPILE_FEASIBLE_NATIVE_INTEROP_RESEARCH":
+    raise SystemExit("Rive compile-feasible research status drifted")
 if set(rive["authorized_probes"]) != {
     "WINDOWS_NATIVE_PREMAKE_GENERATION",
     "INTEROP_BOUNDARY_LATER",
@@ -144,6 +144,16 @@ if rive_probe.get("expected_artifact") != "tests/out/release/rive.sln":
     raise SystemExit("Rive native probe expected artifact drifted")
 if rive_probe.get("production_adoption"):
     raise SystemExit("Rive feasibility probe inflated production authority")
+rive_evidence = {item["id"]: item for item in rive.get("observed_evidence", [])}
+rive_pass = rive_evidence.get("RIVE_WINDOWS_NATIVE_PREMAKE_GENERATION_PASS")
+if (
+    not rive_pass
+    or rive_pass["status"] != "PASS"
+    or rive_pass["evidence_class"] != "COMPILE_EVIDENCE"
+):
+    raise SystemExit("Rive Windows build-generation evidence missing")
+if "RIVE_NO_OFFICIAL_CSHARP_BINDING_IN_PINNED_RUNTIME" not in rive_evidence:
+    raise SystemExit("Rive C# binding absence observation missing")
 lottie = candidates["LOTTIE_WINDOWS"]
 if lottie["status"] != "WINUI_SPECIALIST_RESEARCH":
     raise SystemExit("Lottie-Windows was promoted beyond WinUI specialist research")
@@ -342,7 +352,7 @@ for marker in (
 for marker in (
     "VALIDATED_SPECIALIST_CANDIDATE",
     "COMPILE_PROVEN_RUNTIME_DEFERRED_INTERACTIVE_WINDOWS",
-    "SOURCE_VALIDATED_NATIVE_INTEROP_RESEARCH",
+    "COMPILE_FEASIBLE_NATIVE_INTEROP_SPECIALIST",
     "TOOLING_RUNTIME_VALIDATED_WINUI_CODEGEN_SPECIALIST",
     "None of these probes authorize production adoption",
 ):
