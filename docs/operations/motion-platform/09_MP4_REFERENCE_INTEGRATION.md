@@ -5,6 +5,12 @@ Status: REFERENCE_INTEGRATION_CANDIDATE
 Parent MP3 exact head: `602639dbc10a25824aa0b1f131fd6fc184771ac0`
 Parent gate: `RENDERER_ROLE_MATRIX_ACCEPTED = true`
 
+## Restack record
+
+- accepted MP3 parent: `602639dbc10a25824aa0b1f131fd6fc184771ac0`;
+- previous MP4 head preserved at `motion-platform/mp4-reference-integration-pre-rebase-20261023` / `0813a617f3ad1db0c67387c196fc965d44f8ce41`;
+- restack is history-reversible and did not merge PR #83 or #84.
+
 ## Goal
 
 Prove that the Open-Source-First strategy reduces bespoke in-screen motion code in the actual Command Center.
