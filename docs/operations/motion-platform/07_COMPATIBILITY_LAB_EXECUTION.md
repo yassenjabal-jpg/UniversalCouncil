@@ -100,9 +100,18 @@ Important:
 Lottie-Windows is NOT treated as a direct WPF control.
 
 Empirical probe sequence:
-1. codegen/package compatibility;
-2. Windows/WinUI isolated host;
-3. only if justified, WPF island/interop study.
+1. execute pinned `LottieGen 8.2.250604` as a .NET tool against an owned minimal Lottie fixture;
+2. generate C# twice with `-StrictMode -TestMode` and require byte-identical output;
+3. Windows/WinUI isolated host later;
+4. only if justified, WPF island/interop study.
+
+NuGet evidence reviewed on 2026-10-23:
+- latest stable `LottieGen` package is `8.2.250604`;
+- it targets .NET 9 and is compatible with .NET 10;
+- the package reports no dependencies;
+- NuGet describes code generation as the most efficient Windows rendering path.
+
+A successful codegen probe proves the authoring/tooling path only. It does NOT prove Windows renderer runtime integration.
 
 Status: WINUI_SPECIALIST_RESEARCH.
 
@@ -224,6 +233,20 @@ It still does NOT prove:
 - owner-visible quality.
 
 The actual WPF visual-host probe remains separate.
+
+## LottieGen deterministic codegen probe
+
+The lab owns `lab/motion-platform/lottie/MotionKitProbe.json`.
+
+CI installs exactly `LottieGen 8.2.250604` into an isolated tool directory, then runs code generation twice with:
+- C# output;
+- strict parsing;
+- test mode;
+- explicit namespace/output folder.
+
+The two generated C# outputs must be byte-identical and SHA-256-identical.
+
+This is tooling runtime evidence, not renderer runtime evidence.
 
 ## Stop conditions
 
