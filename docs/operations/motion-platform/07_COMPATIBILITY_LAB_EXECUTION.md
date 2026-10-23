@@ -207,6 +207,24 @@ It does NOT prove:
 
 Those claims require later WINDOW_EVIDENCE.
 
+## Windows Composition runtime API probe
+
+After compile feasibility is established, a separate Windows-only WPF process exercises the pinned Windows App SDK runtime by:
+- creating a `Compositor`;
+- creating a `SpriteVisual`;
+- creating and starting/stopping a scalar keyframe animation;
+- creating a Composition property set.
+
+A pass is classified as RUNTIME_EVIDENCE for the Composition API surface in our unpackaged WPF process model.
+
+It still does NOT prove:
+- attachment of the Composition visual tree to an actual WPF HWND;
+- visible pixels inside the Command Center;
+- frame pacing, GPU cost, or lifecycle during real window recreation;
+- owner-visible quality.
+
+The actual WPF visual-host probe remains separate.
+
 ## Stop conditions
 
 MP3 stops a candidate immediately if:
