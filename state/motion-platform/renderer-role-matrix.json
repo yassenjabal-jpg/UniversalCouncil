@@ -11,8 +11,8 @@
   },
   "renderers": {
     "SKIASHARP": {
-      "current_verdict": "REFERENCE_WINDOWS_TECHNICALLY_ACCEPTED_SPECIALIST_CANDIDATE",
-      "highest_evidence_class": "WINDOW_EVIDENCE",
+      "current_verdict": "REFERENCE_WINDOWS_ACCEPTED_SPECIALIST_CANDIDATE",
+      "highest_evidence_class": "OWNER_VISUAL_EVIDENCE",
       "validated_roles": [
         "PATH_GEOMETRY",
         "DYNAMIC_DRAWING",
@@ -24,10 +24,10 @@
         "S4_HANDOFF_DETERMINISTIC_FALLBACK",
         "S5_DENSE_REFERENCE_STRESS",
         "WPF_NATIVE_KEYBOARD_ACCESSIBILITY_SURFACE",
-        "RENDERER_DISPOSAL_REENTRY"
+        "RENDERER_DISPOSAL_REENTRY",
+        "OWNER_VISUAL_QUALITY"
       ],
       "not_validated": [
-        "OWNER_VISUAL_QUALITY",
         "STATEFUL_VECTOR",
         "PREAUTHORED_TIMELINE",
         "HIT_TESTING",
@@ -122,14 +122,13 @@
     }
   },
   "next_probe_order": [
-    "OWNER_VISUAL_ACCEPTANCE",
     "MP4_EXACT_HEAD_REFERENCE_INTEGRATION_EVIDENCE",
     "RIVE_INTEROP_ONLY_IF_REFERENCE_USE_CASE_REQUIRES_STATEFUL_VECTOR"
   ],
   "mp3_gate": {
     "gate": "RENDERER_ROLE_MATRIX_ACCEPTED",
     "technical_bakeoff_passed": true,
-    "owner_visual_acceptance": false,
-    "gate_passed": false
+    "owner_visual_acceptance": true,
+    "gate_passed": true
   }
 }
