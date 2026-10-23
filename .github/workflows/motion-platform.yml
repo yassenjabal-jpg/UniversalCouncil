@@ -34,16 +34,18 @@ jobs:
         run: |
           if [ -f tools/motion_platform_mp1_validate.py ]; then
             python tools/motion_platform_mp1_validate.py
-          else
-            echo "MP1 validator not present."
           fi
       - name: Validate MP2 contract when present
         shell: bash
         run: |
           if [ -f tools/motion_platform_mp2_validate.py ]; then
             python tools/motion_platform_mp2_validate.py
-          else
-            echo "MP2 validator not present."
+          fi
+      - name: Validate MP3 contract when present
+        shell: bash
+        run: |
+          if [ -f tools/motion_platform_mp3_validate.py ]; then
+            python tools/motion_platform_mp3_validate.py
           fi
       - run: python -m unittest discover -s company/tests -p 'test_motion_platform*.py' -v
       - name: Validate semantic kernel when present
@@ -58,3 +60,25 @@ jobs:
           if [ -f apps/UniversalCouncil.MotionKit.RendererValidation/UniversalCouncil.MotionKit.RendererValidation.csproj ]; then
             dotnet run --project apps/UniversalCouncil.MotionKit.RendererValidation -c Release
           fi
+      - name: Run Skia compatibility lab when present
+        shell: bash
+        run: |
+          if [ -f apps/UniversalCouncil.MotionKit.SkiaLabValidation/UniversalCouncil.MotionKit.SkiaLabValidation.csproj ]; then
+            dotnet run --project apps/UniversalCouncil.MotionKit.SkiaLabValidation -c Release
+          fi
+
+  windows-lab-probes:
+    name: Windows Lab Compile Probes
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
+        with:
+          dotnet-version: '10.0.x'
+      - name: Build Skia WPF compile probe
+        shell: pwsh
+        run: |
+          dotnet build apps/UniversalCouncil.MotionKit.SkiaWpfCompileProbe/UniversalCouncil.MotionKit.SkiaWpfCompileProbe.csproj -c Release --nologo
