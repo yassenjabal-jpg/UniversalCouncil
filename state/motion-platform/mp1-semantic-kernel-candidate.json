@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "motionkit-mp1-semantic-kernel-20261023",
+  "parent_foundation_sha": "faf610d24b26cd0f566272c96d8e047f8a3eebcd",
+  "status": "IMPLEMENTATION_CANDIDATE_NOT_ACCEPTED",
+  "scope": [
+    "RENDERER_FREE_CONTRACTS",
+    "TRUTH_GATING",
+    "INTERRUPTION",
+    "INSTANCE_OWNERSHIP",
+    "STALE_COMPLETION_REJECTION",
+    "QUEUE_FRESHNESS",
+    "REDUCED_MOTION_MODE_PRESERVATION",
+    "TRUTH_REVOCATION",
+    "IMMUTABLE_CONTRACT_SNAPSHOT",
+    "MONOTONIC_TRUTH_ORDERING",
+    "THREAD_SAFE_COORDINATION",
+    "INSTANCE_ID_NON_REUSE",
+    "TARGET_LIFECYCLE"
+  ],
+  "out_of_scope": [
+    "WPF",
+    "RIVE",
+    "LOTTIE",
+    "SKIASHARP",
+    "ANDROID",
+    "PRODUCTION_INTEGRATION",
+    "PR72_MERGE",
+    "STAGE8"
+  ],
+  "authority": {
+    "production_use_authorized": false,
+    "renderer_adoption_authorized": false,
+    "command_center_integration_authorized": false,
+    "runtime_authority_expanded": false
+  }
+}
