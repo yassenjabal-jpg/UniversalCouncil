@@ -12,6 +12,7 @@ CheckParallelSafe();
 CheckReducedMotionPreserved();
 CheckFutureTruthRejected();
 CheckMissingReducedEquivalentRejected();
+CheckUnknownEnumInputsRejected();
 CheckQueueBound();
 CheckCancelTarget();
 
@@ -249,6 +250,57 @@ void CheckMissingReducedEquivalentRejected()
         now);
 
     Check(result.Disposition == MotionDisposition.RejectedInvalid, "Reduced Motion equivalent must be mandatory");
+}
+
+
+void CheckUnknownEnumInputsRejected()
+{
+    var unknownInterruption = (MotionInterruptionMode)999;
+    var unknownAccessibility = (MotionAccessibilityMode)999;
+    var unknownPurpose = (MotionPurpose)999;
+
+    var coordinator = NewCoordinator(16);
+    var badInterruption = coordinator.Submit(
+        Request(
+            "r-bad-interruption",
+            "enum:interruption",
+            Contract("SELECT", unknownInterruption, "LOCAL_SELECTION_STATE"),
+            Truth("LOCAL_SELECTION_STATE", true),
+            MotionAccessibilityMode.Full),
+        now);
+    Check(
+        badInterruption.Disposition == MotionDisposition.RejectedInvalid,
+        "unknown interruption mode must fail closed even when target is idle");
+
+    var badAccessibility = coordinator.Submit(
+        Request(
+            "r-bad-accessibility",
+            "enum:accessibility",
+            Contract("SELECT", MotionInterruptionMode.Replace, "LOCAL_SELECTION_STATE"),
+            Truth("LOCAL_SELECTION_STATE", true),
+            unknownAccessibility),
+        now);
+    Check(
+        badAccessibility.Disposition == MotionDisposition.RejectedInvalid,
+        "unknown accessibility mode must fail closed");
+
+    var badPurposeContract = new MotionContract(
+        "SELECT",
+        new HashSet<MotionPurpose> { unknownPurpose },
+        MotionInterruptionMode.Replace,
+        "LOCAL_SELECTION_STATE",
+        "STATIC_EQUIVALENT");
+    var badPurpose = coordinator.Submit(
+        Request(
+            "r-bad-purpose",
+            "enum:purpose",
+            badPurposeContract,
+            Truth("LOCAL_SELECTION_STATE", true),
+            MotionAccessibilityMode.Full),
+        now);
+    Check(
+        badPurpose.Disposition == MotionDisposition.RejectedInvalid,
+        "unknown motion purpose must fail closed");
 }
 
 void CheckQueueBound()
