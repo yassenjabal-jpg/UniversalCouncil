@@ -36,7 +36,7 @@ internal static partial class Program
         double ChangedSampleRatio,
         bool VisiblyChanged);
 
-    private static int RenderMotionEvidence(string output, bool reducedMotion)
+    private static int RenderMotionEvidence(string output, bool reducedMotion, bool mp4Reference = false)
     {
         var mode = reducedMotion ? "reduced" : "full";
         var candidateSha = Environment.GetEnvironmentVariable("CANDIDATE_SHA")?.Trim().ToLowerInvariant() ?? "unknown";
@@ -53,9 +53,9 @@ internal static partial class Program
             new DispatcherSynchronizationContext(window.Dispatcher));
         ConfigureMotionEvidenceWindow(window);
 
-        var seconds = reducedMotion ? 28 : 38;
+        var seconds = mp4Reference ? 12 : reducedMotion ? 28 : 38;
         var frameCount = seconds * MotionFramesPerSecond;
-        var steps = BuildMotionSteps(reducedMotion);
+        var steps = mp4Reference ? BuildMp4MotionSteps() : BuildMotionSteps(reducedMotion);
         var stepsByFrame = steps
             .GroupBy(step => step.Frame)
             .ToDictionary(group => group.Key, group => group.ToArray());
@@ -157,7 +157,8 @@ internal static partial class Program
                 new
                 {
                     schema_version = "1.0",
-                    evidence_type = "WPF_P1_CRITICAL_PATH_MOTION",
+                    evidence_type = mp4Reference ? "MOTION_PLATFORM_MP4_REFERENCE" : "WPF_P1_CRITICAL_PATH_MOTION",
+                    evidence_scope = mp4Reference ? "MP4_REFERENCE_INTEGRATION" : "P1_CRITICAL_PATH",
                     candidate_sha = candidateSha,
                     source_surface = "ACTUAL_WPF",
                     unedited = true,
@@ -202,9 +203,13 @@ internal static partial class Program
                         motion_run_count = motionRunCount,
                         frame_change_rule = "mean_sample_delta>=0.20 OR changed_sample_ratio>=0.004",
                     },
-                    expected_video_file = reducedMotion
-                        ? "p1-critical-path-reduced-motion.mp4"
-                        : "p1-critical-path-motion.mp4",
+                    expected_video_file = mp4Reference
+                        ? reducedMotion
+                            ? "mp4-reference-reduced-motion.mp4"
+                            : "mp4-reference-full-motion.mp4"
+                        : reducedMotion
+                            ? "p1-critical-path-reduced-motion.mp4"
+                            : "p1-critical-path-motion.mp4",
                     steps = steps.Select((step, index) => new
                     {
                         evidence_step_id = $"step-{index + 1:D2}",
@@ -315,6 +320,22 @@ internal static partial class Program
         }
 
         return "command-center:wpf";
+    }
+
+    private static IReadOnlyList<MotionStep> BuildMp4MotionSteps()
+    {
+        int At(double seconds) => (int)Math.Round(seconds * MotionFramesPerSecond);
+
+        return
+        [
+            new(At(1), "Navigate Home -> Project Workspace", window => NavigateForEvidence(window, "ProjectWorkspace")),
+            new(At(3), "Activate Evidence role and open context", window => ClickSecondaryHotspot(window, "evidence", "Evidence")),
+            new(At(4.5), "Close role context", CloseMotionDrawer),
+            new(At(6), "Navigate Project -> Pulse Story", window => NavigateForEvidence(window, "PulseStory")),
+            new(At(8), "Open Handoff Pulse context", window => ClickSecondaryHotspot(window, "handoff")),
+            new(At(9.5), "Close Handoff context", CloseMotionDrawer),
+            new(At(11), "Navigate Pulse -> Home", window => NavigateForEvidence(window, "Home")),
+        ];
     }
 
     private static IReadOnlyList<MotionStep> BuildMotionSteps(bool reducedMotion)

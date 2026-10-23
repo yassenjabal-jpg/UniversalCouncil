@@ -10,8 +10,21 @@ COMMAND_PROJECT = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "UniversalC
 MAIN_WINDOW = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "MainWindow.xaml.cs"
 SKIA_ANIMATOR = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "SkiaMotionCueAnimator.cs"
 SCREEN_TRANSITIONS = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "ScreenTransitionMotion.cs"
+UI_SMOKE_PROGRAM = ROOT / "apps" / "UniversalCouncil.CommandCenter.UiSmoke" / "Program.cs"
+UI_SMOKE_MOTION = ROOT / "apps" / "UniversalCouncil.CommandCenter.UiSmoke" / "MotionEvidence.cs"
+UI_SMOKE_WGC = ROOT / "apps" / "UniversalCouncil.CommandCenter.UiSmoke" / "WgcMotionEvidence.cs"
 
-for path in (STATE, SPEC, COMMAND_PROJECT, MAIN_WINDOW, SKIA_ANIMATOR, SCREEN_TRANSITIONS):
+for path in (
+    STATE,
+    SPEC,
+    COMMAND_PROJECT,
+    MAIN_WINDOW,
+    SKIA_ANIMATOR,
+    SCREEN_TRANSITIONS,
+    UI_SMOKE_PROGRAM,
+    UI_SMOKE_MOTION,
+    UI_SMOKE_WGC,
+):
     if not path.exists():
         raise SystemExit(f"missing MP4 artifact: {path.relative_to(ROOT)}")
 
@@ -114,6 +127,34 @@ for shared_path in (
     for file in shared_path.glob("*.csproj"):
         if "SkiaSharp" in file.read_text(encoding="utf-8"):
             raise SystemExit(f"Skia package leaked into shared MotionKit layer: {file.relative_to(ROOT)}")
+
+ui_smoke_program = UI_SMOKE_PROGRAM.read_text(encoding="utf-8")
+ui_smoke_motion = UI_SMOKE_MOTION.read_text(encoding="utf-8")
+ui_smoke_wgc = UI_SMOKE_WGC.read_text(encoding="utf-8")
+
+for marker in (
+    "--mp4-motion-evidence",
+    "RenderMotionEvidence(output, reducedMotion, mp4Reference: true)",
+):
+    if marker not in ui_smoke_program:
+        raise SystemExit(f"MP4 focused evidence entry point missing: {marker}")
+
+for marker in (
+    "BuildMp4MotionSteps",
+    "MOTION_PLATFORM_MP4_REFERENCE",
+    "MP4_REFERENCE_INTEGRATION",
+    "Activate Evidence role and open context",
+    "Open Handoff Pulse context",
+):
+    if marker not in ui_smoke_motion:
+        raise SystemExit(f"MP4 focused evidence marker missing: {marker}")
+
+for marker in (
+    "Persistent WGC evidence is stale",
+    "Persistent WGC evidence observed no visible frame changes; refusing a false PASS.",
+):
+    if marker not in ui_smoke_wgc:
+        raise SystemExit(f"MP4 evidence fail-closed guard missing: {marker}")
 
 spec = SPEC.read_text(encoding="utf-8")
 for marker in (

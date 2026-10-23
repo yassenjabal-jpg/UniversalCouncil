@@ -312,6 +312,18 @@ internal static partial class Program
             var firstFrameLatencyMs = captureSource.FirstFrameLatencyMs;
             frameEncoder.CompleteAndVerify();
 
+            if (sourceFramesArrived <= 1 || freshSourceSampleCount <= 1)
+            {
+                throw new InvalidOperationException(
+                    $"Persistent WGC evidence is stale: sourceFramesArrived={sourceFramesArrived}, freshSamples={freshSourceSampleCount}.");
+            }
+
+            if (changedFrameCount == 0)
+            {
+                throw new InvalidOperationException(
+                    "Persistent WGC evidence observed no visible frame changes; refusing a false PASS.");
+            }
+
             var frameEvidence = samples
                 .Select(sample =>
                 {

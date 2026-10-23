@@ -97,6 +97,13 @@ internal static partial class Program
             return RunWindowsGraphicsCapturePilot(output);
         }
 
+        if (args.Any(arg => string.Equals(arg, "--mp4-motion-evidence", StringComparison.OrdinalIgnoreCase)))
+        {
+            var reducedMotion = args.Any(
+                arg => string.Equals(arg, "--reduced-motion", StringComparison.OrdinalIgnoreCase));
+            return RenderMotionEvidence(output, reducedMotion, mp4Reference: true);
+        }
+
         if (args.Any(arg => string.Equals(arg, "--motion-evidence", StringComparison.OrdinalIgnoreCase)))
         {
             var reducedMotion = args.Any(
