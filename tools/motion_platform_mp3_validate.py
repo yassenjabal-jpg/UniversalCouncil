@@ -135,7 +135,10 @@ if set(composition["authorized_probes"]) != {
 rive = candidates["RIVE"]
 if rive["status"] != "NATIVE_INTEROP_RESEARCH":
     raise SystemExit("Rive was promoted without native interop evidence")
-if set(rive["authorized_probes"]) != {"WINDOWS_NATIVE_PREMAKE_GENERATION", "INTEROP_BOUNDARY_LATER"}:
+if set(rive["authorized_probes"]) != {
+    "WINDOWS_NATIVE_PREMAKE_GENERATION",
+    "INTEROP_BOUNDARY_LATER",
+}:
     raise SystemExit("Rive probe authority drifted")
 rive_probe = rive.get("probe_definition") or {}
 if rive_probe.get("source_commit") != "f4da8fa42ed2c256d3d672e3828d18a328528f50":
