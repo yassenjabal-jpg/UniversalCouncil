@@ -1,3 +1,5 @@
+using System.Collections.Frozen;
+
 namespace UniversalCouncil.MotionKit.Core;
 
 public sealed class MotionCoordinator
@@ -39,6 +41,8 @@ public sealed class MotionCoordinator
                     MotionDisposition.IgnoredDuplicate,
                     $"Request already exists: {request.RequestId}");
             }
+
+            request = request with { Contract = SnapshotContract(request.Contract) };
 
             if (!_active.TryGetValue(request.TargetId, out var active) || active.Count == 0)
             {
@@ -115,6 +119,85 @@ public sealed class MotionCoordinator
                 released is null
                     ? "Motion instance completed."
                     : "Motion instance completed; queued semantic intent released and requires fresh truth.");
+        }
+    }
+
+
+    public MotionTransition ReconcileTruth(
+        string targetId,
+        MotionTruthSnapshot truth,
+        DateTimeOffset now)
+    {
+        lock (_gate)
+        {
+            if (!ValidIdentifier(targetId))
+            {
+                return Transition(MotionDisposition.RejectedInvalid, "Target ID is invalid.");
+            }
+
+            var invalid = ValidateTruthSnapshot(truth, now);
+            if (invalid is not null)
+            {
+                return Transition(MotionDisposition.RejectedInvalid, invalid);
+            }
+
+            if (truth.Satisfied)
+            {
+                return Transition(
+                    MotionDisposition.TruthObserved,
+                    $"Truth remains satisfied: {truth.RequirementId}");
+            }
+
+            var cancelled = new List<Guid>();
+            if (_active.TryGetValue(targetId, out var active))
+            {
+                for (var index = active.Count - 1; index >= 0; index--)
+                {
+                    var lease = active[index];
+                    if (string.Equals(
+                            lease.TruthRequirementId,
+                            truth.RequirementId,
+                            StringComparison.Ordinal)
+                        && truth.ObservedAt >= lease.TruthObservedAt)
+                    {
+                        cancelled.Add(lease.InstanceId);
+                        active.RemoveAt(index);
+                    }
+                }
+
+                if (active.Count == 0)
+                {
+                    _active.Remove(targetId);
+                }
+            }
+
+            if (_queued.TryGetValue(targetId, out var queued))
+            {
+                var retained = queued
+                    .Where(item => !string.Equals(
+                        item.Contract.TruthRequirementId,
+                        truth.RequirementId,
+                        StringComparison.Ordinal))
+                    .ToArray();
+
+                if (retained.Length == 0)
+                {
+                    _queued.Remove(targetId);
+                }
+                else if (retained.Length != queued.Count)
+                {
+                    _queued[targetId] = new Queue<PendingMotion>(retained);
+                }
+            }
+
+            return new MotionTransition(
+                MotionDisposition.TruthRevoked,
+                StartedLease: null,
+                ReleasedPending: null,
+                CancelledInstances: cancelled,
+                cancelled.Count == 0
+                    ? $"Truth revoked with no eligible active instance: {truth.RequirementId}"
+                    : $"Truth revoked; matching motion stopped: {truth.RequirementId}");
         }
     }
 
@@ -236,6 +319,9 @@ public sealed class MotionCoordinator
             request.RequestId,
             request.TargetId,
             request.Contract.SemanticEventId,
+            request.Contract.TruthRequirementId,
+            request.Truth.SourceVersion,
+            request.Truth.ObservedAt,
             request.AccessibilityMode,
             now);
 
@@ -324,22 +410,18 @@ public sealed class MotionCoordinator
             return "Truth requirement ID is invalid.";
         }
 
+        var truthInvalid = ValidateTruthSnapshot(request.Truth, now);
+        if (truthInvalid is not null)
+        {
+            return truthInvalid;
+        }
+
         if (!string.Equals(
                 request.Contract.TruthRequirementId,
                 request.Truth.RequirementId,
                 StringComparison.Ordinal))
         {
             return "Truth snapshot does not match the semantic contract requirement.";
-        }
-
-        if (!ValidIdentifier(request.Truth.SourceVersion))
-        {
-            return "Truth source version is invalid.";
-        }
-
-        if (request.Truth.ObservedAt > now)
-        {
-            return "Truth snapshot is future-dated.";
         }
 
         if (string.IsNullOrWhiteSpace(request.Contract.ReducedMotionEquivalent))
@@ -349,6 +431,35 @@ public sealed class MotionCoordinator
 
         return null;
     }
+
+
+    private static string? ValidateTruthSnapshot(
+        MotionTruthSnapshot truth,
+        DateTimeOffset now)
+    {
+        if (!ValidIdentifier(truth.RequirementId))
+        {
+            return "Truth requirement ID is invalid.";
+        }
+
+        if (!ValidIdentifier(truth.SourceVersion))
+        {
+            return "Truth source version is invalid.";
+        }
+
+        if (truth.ObservedAt > now)
+        {
+            return "Truth snapshot is future-dated.";
+        }
+
+        return null;
+    }
+
+    private static MotionContract SnapshotContract(MotionContract contract) =>
+        contract with
+        {
+            Purposes = contract.Purposes.ToFrozenSet()
+        };
 
     private static bool ValidIdentifier(string? value)
     {
