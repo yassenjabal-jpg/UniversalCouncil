@@ -9,6 +9,13 @@ internal static class Program
     private static int Main()
     {
         var queueController = DispatcherQueueController.CreateOnCurrentThread();
+        var dispatcherQueue = queueController.DispatcherQueue;
+
+        if (!dispatcherQueue.HasThreadAccess)
+        {
+            throw new InvalidOperationException(
+                "Owned DispatcherQueue does not have access to the probe thread.");
+        }
 
         try
         {
@@ -28,9 +35,14 @@ internal static class Program
             var propertySet = compositor.CreatePropertySet();
             propertySet.InsertScalar("MotionKitProbe", 1f);
 
+            // CreateOnCurrentThread requires the owner to run a USER32/message loop.
+            // Queue an explicit exit, run the owned loop, then synchronously shut it down.
+            dispatcherQueue.EnqueueEventLoopExit();
+            dispatcherQueue.RunEventLoop();
+
             Console.WriteLine(
                 "MotionKit Windows Composition runtime probe: PASS "
-                + "(owned DispatcherQueue + Compositor + SpriteVisual + ScalarKeyFrameAnimation)");
+                + "(owned DispatcherQueue loop + Compositor + SpriteVisual + ScalarKeyFrameAnimation)");
         }
         finally
         {
