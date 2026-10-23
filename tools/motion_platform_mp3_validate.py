@@ -79,8 +79,8 @@ if state["candidate_id"] != "motionkit-mp3-compatibility-lab-20261023":
     raise SystemExit("MP3 identity drifted")
 if state["parent_mp2_sha"] != "8b9e3a20ca407fff6734c945db59708d2718c2b5":
     raise SystemExit("MP3 parent MP2 binding drifted")
-if state["status"] != "LAB_ACTIVE_NOT_ACCEPTED":
-    raise SystemExit("MP3 may not self-promote")
+if state["status"] != "REFERENCE_ACCEPTED_NOT_PRODUCTION_ADOPTED":
+    raise SystemExit("MP3 owner-accepted status drifted")
 
 
 if matrix["matrix_id"] != "motionkit-mp3-renderer-role-matrix-20261023":
@@ -100,8 +100,8 @@ if rules["product_truth_may_enter_renderer"]:
 matrix_renderers = matrix["renderers"]
 if set(matrix_renderers) != {"SKIASHARP", "WINDOWS_COMPOSITION", "RIVE", "LOTTIE_WINDOWS"}:
     raise SystemExit("renderer role matrix candidate set drifted")
-if matrix_renderers["SKIASHARP"]["highest_evidence_class"] != "WINDOW_EVIDENCE":
-    raise SystemExit("SkiaSharp role matrix evidence class drifted")
+if matrix_renderers["SKIASHARP"]["highest_evidence_class"] != "OWNER_VISUAL_EVIDENCE":
+    raise SystemExit("SkiaSharp owner-visual evidence class drifted")
 if matrix_renderers["WINDOWS_COMPOSITION"]["highest_evidence_class"] != "WINDOW_EVIDENCE":
     raise SystemExit("Composition role matrix over- or under-claimed evidence")
 if matrix_renderers["RIVE"]["highest_evidence_class"] != "COMPILE_EVIDENCE":
@@ -518,23 +518,32 @@ if "if (_renderer is null)" not in acceptance_window:
     raise SystemExit("reference acceptance lifecycle gap guard missing")
 
 qualification = state["reference_windows_qualification"]
-if qualification["status"] != "TECHNICAL_BAKEOFF_COMPLETE_OWNER_VISUAL_ACCEPTANCE_PENDING":
+if qualification["status"] != "REFERENCE_ACCEPTED_OWNER_APPROVED":
     raise SystemExit("reference Windows qualification status drifted")
 if not qualification.get("technical_bakeoff_passed"):
     raise SystemExit("technical bake-off completion was not recorded")
-if qualification.get("remaining") != ["Owner visual acceptance"]:
-    raise SystemExit("MP3 remaining gate set drifted")
-if qualification["acceptance_gate_passed"]:
-    raise SystemExit("MP3 may not claim formal acceptance before owner visual acceptance")
+if qualification.get("remaining") != []:
+    raise SystemExit("MP3 accepted gate must have no remaining owner-review item")
+if not qualification.get("owner_visual_acceptance"):
+    raise SystemExit("MP3 owner visual acceptance was not recorded")
+owner_decision = qualification.get("owner_visual_decision") or {}
+if owner_decision.get("status") != "APPROVED" or owner_decision.get("source") != "OWNER_CHAT_APPROVAL":
+    raise SystemExit("MP3 owner approval provenance drifted")
+if not qualification["acceptance_gate_passed"]:
+    raise SystemExit("MP3 formal renderer role matrix gate was not passed after owner approval")
 
 matrix_gate = matrix.get("mp3_gate") or {}
 if not matrix_gate.get("technical_bakeoff_passed"):
     raise SystemExit("renderer role matrix did not record technical bake-off")
-if matrix_gate.get("owner_visual_acceptance") or matrix_gate.get("gate_passed"):
-    raise SystemExit("renderer role matrix self-promoted owner/formal acceptance")
-if matrix_renderers["SKIASHARP"]["current_verdict"] != "REFERENCE_WINDOWS_TECHNICALLY_ACCEPTED_SPECIALIST_CANDIDATE":
-    raise SystemExit("Skia reference technical verdict drifted")
+if not matrix_gate.get("owner_visual_acceptance") or not matrix_gate.get("gate_passed"):
+    raise SystemExit("renderer role matrix did not record explicit owner/formal acceptance")
+if matrix_renderers["SKIASHARP"]["current_verdict"] != "REFERENCE_WINDOWS_ACCEPTED_SPECIALIST_CANDIDATE":
+    raise SystemExit("Skia reference accepted verdict drifted")
+if "OWNER_VISUAL_QUALITY" not in matrix_renderers["SKIASHARP"].get("validated_roles", []):
+    raise SystemExit("Skia owner visual quality acceptance missing")
+if "OWNER_VISUAL_QUALITY" in matrix_renderers["SKIASHARP"].get("not_validated", []):
+    raise SystemExit("Skia owner visual quality remains incorrectly unvalidated")
 if matrix_renderers["RIVE"].get("role_assignment") != "UNASSIGNED_RESEARCH_ONLY":
     raise SystemExit("Rive role must remain unassigned research only")
 
-print("Motion Platform MP3 validation: PASS (technical bake-off complete; owner visual acceptance pending)")
+print("Motion Platform MP3 validation: PASS (renderer role matrix accepted; no production adoption)")
