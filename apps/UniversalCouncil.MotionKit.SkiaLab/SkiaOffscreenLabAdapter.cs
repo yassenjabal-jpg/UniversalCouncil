@@ -226,10 +226,11 @@ public sealed class SkiaOffscreenLabAdapter : IMotionRendererAdapter
             Style = SKPaintStyle.Stroke,
             StrokeWidth = 2f
         };
-        using var path = new SKPath();
-        path.MoveTo(4, 60);
-        path.LineTo(20 + tokenBytes[9] % 20, 8 + tokenBytes[10] % 24);
-        path.LineTo(60, 56);
+        using var pathBuilder = new SKPathBuilder();
+        pathBuilder.MoveTo(4, 60);
+        pathBuilder.LineTo(20 + tokenBytes[9] % 20, 8 + tokenBytes[10] % 24);
+        pathBuilder.LineTo(60, 56);
+        using var path = pathBuilder.Detach();
         canvas.DrawPath(path, stroke);
         canvas.Flush();
 
