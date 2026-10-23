@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'apps/UniversalCouncil.MotionKit*/**'
+      - 'apps/UniversalCouncil.CommandCenter/**'
       - 'docs/operations/motion-platform/**'
       - 'state/motion-platform/**'
       - 'tools/motion_platform*_validate.py'
@@ -48,6 +49,12 @@ jobs:
         run: |
           if [ -f tools/motion_platform_mp3_validate.py ]; then
             python tools/motion_platform_mp3_validate.py
+          fi
+      - name: Validate MP4 contract when present
+        shell: bash
+        run: |
+          if [ -f tools/motion_platform_mp4_validate.py ]; then
+            python tools/motion_platform_mp4_validate.py
           fi
       - run: python -m unittest discover -s company/tests -p 'test_motion_platform*.py' -v
       - name: Validate semantic kernel when present
@@ -124,6 +131,10 @@ jobs:
 
           python tools/motion_platform_lottiegen_check.py $outputA $outputB
           if ($LASTEXITCODE -ne 0) { throw "LottieGen determinism check failed." }
+      - name: Build Command Center MP4 reference integration
+        shell: pwsh
+        run: |
+          dotnet build apps/UniversalCouncil.CommandCenter/UniversalCouncil.CommandCenter.csproj -c Release --nologo
       - name: Probe pinned Rive native Windows build generation
         shell: pwsh
         timeout-minutes: 8
