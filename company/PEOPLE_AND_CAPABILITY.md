@@ -22,6 +22,19 @@ The HR & Capability Director is the company's strict reviewer of the team and wo
 
 ## Proactive capability scouting
 
+### Mandatory G0 research/reuse gate
+Capability scouting is also the enforcement owner for **G0 — Research / Reuse Before Build**. G0 applies before material custom construction, framework or renderer selection, workflow/automation engine work, testing/capture subsystems, integrations and large refactors.
+
+The required order is **SEARCH → STUDY → COMPARE → REUSE → INTEGRATE → ADAPT → BUILD LAST**. A work packet that proposes construction without a G0 dossier is invalid and must be returned before implementation.
+
+A valid G0 dossier records official or maintainer sources, open-source candidates, specialist/practitioner community evidence, known production failure modes, overlap with current capabilities, expected custom LOC, estimated LOC avoided, and an exit/rollback plan.
+
+Permitted decisions are **ADOPT, ADAPT, COMPOSE, PILOT, REJECT, CUSTOM_BUILD_JUSTIFIED**. Custom build is never the default. `CUSTOM_BUILD_JUSTIFIED` requires explicit rejected alternatives and a written reason why they cannot satisfy the required product, authority, platform, accessibility, performance, maintenance or safety constraints.
+
+If a material unexpected implementation failure begins to create repeated trial-and-error work, the work packet returns to G0 to inspect maintainer issues/discussions and specialist evidence before further redesign.
+
+G0 changes the order of work; it does not expand HR authority. Installation, credentials, permissions, purchases and external writes remain governed by the existing downstream gates and Owner authority.
+
 ### Event triggers
 HR opens a capability gap when one or more of the following is observed:
 - a required capability is unavailable;
