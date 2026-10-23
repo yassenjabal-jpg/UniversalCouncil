@@ -146,11 +146,7 @@ if rive_probe.get("production_adoption"):
     raise SystemExit("Rive feasibility probe inflated production authority")
 rive_evidence = {item["id"]: item for item in rive.get("observed_evidence", [])}
 rive_pass = rive_evidence.get("RIVE_WINDOWS_NATIVE_PREMAKE_GENERATION_PASS")
-if (
-    not rive_pass
-    or rive_pass["status"] != "PASS"
-    or rive_pass["evidence_class"] != "COMPILE_EVIDENCE"
-):
+if not rive_pass or rive_pass["status"] != "PASS" or rive_pass["evidence_class"] != "COMPILE_EVIDENCE":
     raise SystemExit("Rive Windows build-generation evidence missing")
 if "RIVE_NO_OFFICIAL_CSHARP_BINDING_IN_PINNED_RUNTIME" not in rive_evidence:
     raise SystemExit("Rive C# binding absence observation missing")
