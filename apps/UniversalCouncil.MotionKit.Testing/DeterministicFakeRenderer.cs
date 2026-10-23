@@ -16,19 +16,26 @@ public sealed class DeterministicFakeRenderer : IMotionRendererAdapter
 
     public DeterministicFakeRenderer(
         string adapterId,
+        string adapterVersion,
         MotionRenderCapability capabilities)
     {
-        var invalid = MotionRendererContractGuard.ValidateAdapter(adapterId, capabilities);
+        var invalid = MotionRendererContractGuard.ValidateAdapter(
+            adapterId,
+            adapterVersion,
+            capabilities);
         if (invalid is not null)
         {
             throw new ArgumentException(invalid, nameof(adapterId));
         }
 
         AdapterId = adapterId;
+        AdapterVersion = adapterVersion;
         Capabilities = capabilities;
     }
 
     public string AdapterId { get; }
+
+    public string AdapterVersion { get; }
 
     public MotionRenderCapability Capabilities { get; }
 
@@ -139,7 +146,7 @@ public sealed class DeterministicFakeRenderer : IMotionRendererAdapter
                     "Settle request is invalid."));
             }
 
-            if (!_active.Remove(instanceId))
+            if (!_active.ContainsKey(instanceId))
             {
                 return ValueTask.FromResult(Result(
                     MotionRenderStatus.NotActive,
@@ -147,6 +154,19 @@ public sealed class DeterministicFakeRenderer : IMotionRendererAdapter
                     "Motion instance is not active."));
             }
 
+            if (mode == MotionSettleMode.StaticFallback
+                && !MotionRendererContractGuard.Supports(
+                    Capabilities,
+                    MotionRenderCapability.StaticSettle))
+            {
+                _unsupported++;
+                return ValueTask.FromResult(Result(
+                    MotionRenderStatus.NotSupported,
+                    instanceId,
+                    "Static fallback requires StaticSettle capability."));
+            }
+
+            _active.Remove(instanceId);
             _settled++;
             return ValueTask.FromResult(Result(
                 MotionRenderStatus.Settled,
@@ -162,6 +182,7 @@ public sealed class DeterministicFakeRenderer : IMotionRendererAdapter
             ThrowIfDisposed();
             return new MotionRendererDiagnostics(
                 AdapterId,
+                AdapterVersion,
                 _active.Count,
                 _started,
                 _cancelled,
@@ -190,7 +211,7 @@ public sealed class DeterministicFakeRenderer : IMotionRendererAdapter
         MotionRenderStatus status,
         Guid instanceId,
         string reason) =>
-        new(status, instanceId, AdapterId, reason);
+        new(status, instanceId, AdapterId, AdapterVersion, reason);
 
     private void ThrowIfDisposed() =>
         ObjectDisposedException.ThrowIf(_disposed, this);
