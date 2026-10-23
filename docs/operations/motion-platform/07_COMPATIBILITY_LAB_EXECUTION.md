@@ -240,9 +240,15 @@ The lab owns `lab/motion-platform/lottie/MotionKitProbe.json`.
 
 CI installs exactly `LottieGen 8.2.250604` into an isolated tool directory, then runs code generation twice with:
 - C# output;
-- strict parsing;
+- strict parsing via `-Strict`;
 - test mode;
 - explicit namespace/output folder.
+
+Observed tooling discrepancy:
+- the tool's help text advertises `-StrictMode`;
+- the pinned source parser registers `Keyword.Strict`;
+- actual execution rejected `-StrictMode` as unexpected;
+- the lab therefore uses `-Strict`, preserving strict parsing rather than weakening the test.
 
 The two generated C# outputs must be byte-identical and SHA-256-identical.
 
