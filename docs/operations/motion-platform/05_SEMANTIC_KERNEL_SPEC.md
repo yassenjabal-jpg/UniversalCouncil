@@ -25,6 +25,8 @@ The kernel must:
 - reject stale true snapshots from restarting motion after a newer false truth;
 - reject conflicting snapshots that claim the same observation time;
 - snapshot mutable contract inputs before retention;
+- serialize coordinator mutations safely under concurrent callers;
+- distinguish visual cancellation from semantic target disposal;
 - expose deterministic results that can be unit/console tested.
 
 ## Interruption semantics
@@ -90,6 +92,26 @@ Caller mutation of a previously supplied collection MUST NOT change:
 - queued semantic intent;
 - later released pending intent.
 
+## Target lifecycle law
+
+CancelTarget:
+- stops active and queued motion for the target;
+- preserves latest truth chronology;
+- therefore cannot make stale truth fresh again.
+
+ForgetTarget:
+- explicitly ends the semantic identity of a target;
+- clears active/queued motion;
+- clears retained truth chronology for that target;
+- permits a future object using that target ID to establish a new chronology.
+
+## Concurrency law
+
+Coordinator state mutation is serialized.
+Parallel-safe semantic contracts may own multiple independent leases on one target.
+Concurrent completion must settle only the addressed instance.
+Instance IDs are not reused within a coordinator lifetime.
+
 ## Bounds
 
 - IDs are bounded text;
@@ -129,7 +151,10 @@ MP1 candidate must pass:
 - equal-time conflicting truth fails closed;
 - false-truth submit revokes matching active motion;
 - contract snapshot immutability;
+- concurrent parallel-safe submit/complete;
+- instance ID non-reuse;
 - bounded queue;
-- cancel-target cleanup.
+- cancel-target cleanup without truth reset;
+- explicit target-forget lifecycle reset.
 
 Only after this passes may MP2 introduce a renderer adapter boundary.
