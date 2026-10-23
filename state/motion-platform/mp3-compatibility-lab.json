@@ -91,11 +91,22 @@
           "source": "microsoft/WindowsAppSDK-Samples",
           "detail": "Official samples repository includes Windows Composition, Input and SceneGraph samples."
         }
+      ],
+      "observed_evidence": [
+        {
+          "id": "WINDOWS_COMPOSITION_WPF_COMPILE_PASS",
+          "evidence_class": "COMPILE_EVIDENCE",
+          "source_head_sha": "f7cb8790127297bd6642ebdafe098adb27d5245b",
+          "workflow_run_id": 39924907499,
+          "job_id": 120318791027,
+          "status": "PASS",
+          "detail": "Microsoft.WindowsAppSDK 2.5.1 restored and a net10.0-windows WPF compile probe using WindowsPackageType=None compiled Compositor, SpriteVisual, ScalarKeyFrameAnimation, and WPF WindowInteropHelper access."
+        }
       ]
     },
     "RIVE": {
       "repository": "rive-app/rive-runtime",
-      "version": "PIN_COMMIT_BEFORE_BUILD",
+      "version": "f4da8fa42ed2c256d3d672e3828d18a328528f50",
       "license": "MIT",
       "status": "NATIVE_INTEROP_RESEARCH",
       "role": [
@@ -106,12 +117,28 @@
       "authorized_probes": [
         "WINDOWS_NATIVE_BUILD_LATER",
         "INTEROP_BOUNDARY_LATER"
+      ],
+      "source_head_sha": "f4da8fa42ed2c256d3d672e3828d18a328528f50",
+      "source_reviewed_on": "2026-10-23",
+      "source_evidence": [
+        {
+          "id": "RIVE_RUNTIME_MIT_PIN",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "status": "PASS",
+          "detail": "Exact rive-runtime source commit pinned; repository LICENSE is MIT."
+        },
+        {
+          "id": "RIVE_WINDOWS_NATIVE_TOOLCHAIN",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "status": "PASS",
+          "detail": "Repository documents Windows native C++ build/toolchain and D3D11/D3D12 renderer backends; this does not prove .NET/WPF integration."
+        }
       ]
     },
     "LOTTIE_WINDOWS": {
       "repository": "CommunityToolkit/Lottie-Windows",
       "version": "8.1.240821.1",
-      "license": "REVIEW_REQUIRED",
+      "license": "MIT",
       "status": "WINUI_SPECIALIST_RESEARCH",
       "role": [
         "PREAUTHORED_TIMELINE",
@@ -120,6 +147,22 @@
       "authorized_probes": [
         "WINUI_COMPILE_LATER",
         "CODEGEN_LATER"
+      ],
+      "source_head_sha": "dce2d4ac945b7d8d400c19bca440907315901b5f",
+      "source_reviewed_on": "2026-10-23",
+      "source_evidence": [
+        {
+          "id": "LOTTIE_WINDOWS_MIT_PIN",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "status": "PASS",
+          "detail": "Repository LICENSE.md is MIT; current source head pinned separately from release tag."
+        },
+        {
+          "id": "LOTTIEGEN_TOOLING_PATH",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "status": "PASS",
+          "detail": "Repository contains LottieGen .NET global tool for generating C#/C++ and other outputs from Lottie/Bodymovin JSON; README states .NET 7 SDK or later."
+        }
       ]
     }
   },
