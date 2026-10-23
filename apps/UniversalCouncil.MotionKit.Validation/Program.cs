@@ -20,8 +20,12 @@ CheckEqualTimeConflictingTruthRejected();
 CheckFalseTruthSubmissionRevokesMatchingMotion();
 CheckTruthRevocationReleasesNextQueuedIntent();
 CheckContractSnapshotIsImmutable();
+CheckInstanceIdsNeverReuse();
+CheckConcurrentParallelSafeSubmissions();
 CheckQueueBound();
 CheckCancelTarget();
+CheckCancelPreservesTruthChronology();
+CheckForgetTargetResetsTruthChronology();
 
 Console.WriteLine("MotionKit semantic kernel validation: PASS");
 
@@ -561,6 +565,71 @@ void CheckContractSnapshotIsImmutable()
     Check(!released.Contract.Purposes.Contains(MotionPurpose.Feedback), "external mutation must not alter queued contract");
 }
 
+
+void CheckInstanceIdsNeverReuse()
+{
+    var coordinator = NewCoordinator(28, 28, 29);
+    var contract = Contract("SELECT", MotionInterruptionMode.Replace, "LOCAL_SELECTION_STATE");
+    var truth = Truth("LOCAL_SELECTION_STATE", true);
+
+    var first = coordinator.Submit(
+        Request("r-instance-1", "instance:1", contract, truth, MotionAccessibilityMode.Full),
+        now);
+    var firstLease = first.StartedLease
+        ?? throw new InvalidOperationException("first instance-ID test lease should start");
+    _ = coordinator.Complete(firstLease.InstanceId);
+
+    var second = coordinator.Submit(
+        Request("r-instance-2", "instance:2", contract, truth, MotionAccessibilityMode.Full),
+        now);
+    var secondLease = second.StartedLease
+        ?? throw new InvalidOperationException("second instance-ID test lease should start");
+
+    Check(firstLease.InstanceId != secondLease.InstanceId, "motion instance IDs must never be reused within a coordinator lifetime");
+}
+
+void CheckConcurrentParallelSafeSubmissions()
+{
+    var coordinator = new MotionCoordinator();
+    const string target = "parallel:stress";
+    var contract = Contract("ROLE_ACTIVATED", MotionInterruptionMode.ParallelSafe, "ROLE_STATE_ACTIVE");
+    var truth = Truth("ROLE_STATE_ACTIVE", true);
+    var leases = new System.Collections.Concurrent.ConcurrentBag<Guid>();
+
+    Parallel.For(0, 32, index =>
+    {
+        var result = coordinator.Submit(
+            Request(
+                $"r-parallel-{index:D2}",
+                target,
+                contract,
+                truth,
+                MotionAccessibilityMode.Full),
+            now);
+
+        if (result.Disposition != MotionDisposition.Started || result.StartedLease is null)
+        {
+            throw new InvalidOperationException($"parallel submission failed at {index}");
+        }
+
+        leases.Add(result.StartedLease.InstanceId);
+    });
+
+    Check(coordinator.ActiveCount(target) == 32, "parallel-safe concurrent submissions must preserve every lease");
+    Check(leases.Distinct().Count() == 32, "concurrent leases must have unique instance IDs");
+
+    Parallel.ForEach(leases, instanceId =>
+    {
+        var completed = coordinator.Complete(instanceId);
+        if (completed.Disposition != MotionDisposition.Completed)
+        {
+            throw new InvalidOperationException($"parallel completion failed for {instanceId}");
+        }
+    });
+
+    Check(coordinator.ActiveCount(target) == 0, "concurrent completion must settle every lease");
+}
+
 void CheckQueueBound()
 {
     var coordinator = NewCoordinator(15);
@@ -625,6 +694,73 @@ void CheckCancelTarget()
     Check(cancelled.Disposition == MotionDisposition.TargetCancelled, "target cancellation must be explicit");
     Check(cancelled.CancelledInstances.Contains(cancelLease.InstanceId), "cancel result must identify active instance");
     Check(coordinator.ActiveCount("fork:1") == 0, "target cancellation must clear active motion");
+}
+
+
+void CheckCancelPreservesTruthChronology()
+{
+    var coordinator = NewCoordinator(30);
+    const string target = "target:cancel-truth";
+
+    _ = coordinator.ReconcileTruth(
+        target,
+        new MotionTruthSnapshot(
+            "PRODUCT_STATE_BLOCKED",
+            false,
+            "state-v3",
+            now.AddMilliseconds(100)),
+        now.AddMilliseconds(100));
+
+    var cancelled = coordinator.CancelTarget(target, "visual cancel only");
+    Check(cancelled.Disposition == MotionDisposition.TargetCancelled, "cancel must remain a motion lifecycle operation");
+
+    var stale = coordinator.Submit(
+        Request(
+            "r-after-cancel-stale",
+            target,
+            Contract("BLOCKED", MotionInterruptionMode.Replace, "PRODUCT_STATE_BLOCKED"),
+            new MotionTruthSnapshot(
+                "PRODUCT_STATE_BLOCKED",
+                true,
+                "state-v2",
+                now.AddMilliseconds(50)),
+            MotionAccessibilityMode.Full),
+        now.AddMilliseconds(110));
+
+    Check(stale.Disposition == MotionDisposition.StaleTruthIgnored, "CancelTarget must not erase truth chronology");
+}
+
+void CheckForgetTargetResetsTruthChronology()
+{
+    var coordinator = NewCoordinator(31);
+    const string target = "target:forgotten";
+
+    _ = coordinator.ReconcileTruth(
+        target,
+        new MotionTruthSnapshot(
+            "PRODUCT_STATE_BLOCKED",
+            false,
+            "old-lifecycle-v3",
+            now.AddMilliseconds(100)),
+        now.AddMilliseconds(100));
+
+    var forgotten = coordinator.ForgetTarget(target, "semantic object disposed");
+    Check(forgotten.Disposition == MotionDisposition.TargetForgotten, "ForgetTarget must explicitly end target identity");
+
+    var restarted = coordinator.Submit(
+        Request(
+            "r-new-lifecycle",
+            target,
+            Contract("BLOCKED", MotionInterruptionMode.Replace, "PRODUCT_STATE_BLOCKED"),
+            new MotionTruthSnapshot(
+                "PRODUCT_STATE_BLOCKED",
+                true,
+                "new-lifecycle-v1",
+                now.AddMilliseconds(50)),
+            MotionAccessibilityMode.Full),
+        now.AddMilliseconds(110));
+
+    Check(restarted.Disposition == MotionDisposition.Started, "forgotten target may start a new truth chronology");
 }
 
 MotionCoordinator NewCoordinator(params int[] ids)
