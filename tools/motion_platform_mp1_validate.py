@@ -44,6 +44,7 @@ required_scope = {
     "REDUCED_MOTION_MODE_PRESERVATION",
     "TRUTH_REVOCATION",
     "IMMUTABLE_CONTRACT_SNAPSHOT",
+    "MONOTONIC_TRUTH_ORDERING",
 }
 if set(candidate["scope"]) != required_scope:
     raise SystemExit("MP1 scope drifted")
@@ -90,6 +91,8 @@ required_coordinator_markers = (
     "Enum.IsDefined",
     "NextUniqueInstanceId",
     "ReconcileTruth",
+    "StaleTruthIgnored",
+    "_latestTruth",
     "ToFrozenSet",
 )
 for marker in required_coordinator_markers:
@@ -111,6 +114,9 @@ required_validation_markers = (
     "CheckUnknownEnumInputsRejected",
     "CheckTruthRevocationStopsMotion",
     "CheckStaleTruthRevocationCannotCancelNewerMotion",
+    "CheckStaleTrueCannotRestartAfterNewerFalse",
+    "CheckEqualTimeConflictingTruthRejected",
+    "CheckFalseTruthSubmissionRevokesMatchingMotion",
     "CheckTruthRevocationReleasesNextQueuedIntent",
     "CheckContractSnapshotIsImmutable",
     "CheckQueueBound",
@@ -125,6 +131,7 @@ required_spec_markers = (
     "Stale completion law",
     "Queue freshness law",
     "Truth revocation law",
+    "Truth observations are monotonic per target + requirement",
     "Contract snapshot law",
     "MP1 does not:",
 )
