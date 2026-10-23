@@ -128,8 +128,18 @@ if set(composition["authorized_probes"]) != {
 }:
     raise SystemExit("Windows Composition probe authority drifted")
 
-if candidates["RIVE"]["status"] != "NATIVE_INTEROP_RESEARCH":
+rive = candidates["RIVE"]
+if rive["status"] != "NATIVE_INTEROP_RESEARCH":
     raise SystemExit("Rive was promoted without native interop evidence")
+if set(rive["authorized_probes"]) != {"WINDOWS_NATIVE_PREMAKE_GENERATION", "INTEROP_BOUNDARY_LATER"}:
+    raise SystemExit("Rive probe authority drifted")
+rive_probe = rive.get("probe_definition") or {}
+if rive_probe.get("source_commit") != "f4da8fa42ed2c256d3d672e3828d18a328528f50":
+    raise SystemExit("Rive native probe source pin drifted")
+if rive_probe.get("expected_artifact") != "tests/out/release/rive.sln":
+    raise SystemExit("Rive native probe expected artifact drifted")
+if rive_probe.get("production_adoption"):
+    raise SystemExit("Rive feasibility probe inflated production authority")
 lottie = candidates["LOTTIE_WINDOWS"]
 if lottie["status"] != "WINUI_SPECIALIST_RESEARCH":
     raise SystemExit("Lottie-Windows was promoted beyond WinUI specialist research")
@@ -298,6 +308,9 @@ for marker in (
     'StopAnimation("Opacity"',
     "CreatePropertySet",
     "DispatcherQueueController.CreateOnCurrentThread",
+    "HasThreadAccess",
+    "EnqueueEventLoopExit",
+    "RunEventLoop",
     "ShutdownQueue()",
 ):
     if marker not in composition_runtime:
