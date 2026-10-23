@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "motionkit-mp3-compatibility-lab-20261023",
+  "parent_mp2_sha": "8b9e3a20ca407fff6734c945db59708d2718c2b5",
+  "status": "LAB_ACTIVE_NOT_ACCEPTED",
+  "evidence_classes": [
+    "SOURCE_EVIDENCE",
+    "COMPILE_EVIDENCE",
+    "RUNTIME_EVIDENCE",
+    "WINDOW_EVIDENCE",
+    "OWNER_VISUAL_EVIDENCE"
+  ],
+  "candidates": {
+    "SKIASHARP": {
+      "repository": "mono/SkiaSharp",
+      "version": "4.153.1",
+      "license": "MIT",
+      "status": "LAB_ONLY",
+      "role": [
+        "PATH_GEOMETRY",
+        "DYNAMIC_DRAWING",
+        "DATA_DRIVEN_2D"
+      ],
+      "authorized_probes": [
+        "LINUX_HEADLESS_RUNTIME",
+        "WINDOWS_WPF_COMPILE"
+      ]
+    },
+    "WINDOWS_COMPOSITION": {
+      "repository": "microsoft/WindowsAppSDK",
+      "version": "2.5.1",
+      "license": "MIT",
+      "status": "LAB_ONLY",
+      "role": [
+        "WINDOWS_MICRO_MOTION",
+        "VISUAL_PROPERTY_ANIMATION",
+        "COMPOSITION_SCENE"
+      ],
+      "authorized_probes": [
+        "WINDOWS_COMPILE",
+        "WINDOWS_RUNTIME_LATER"
+      ]
+    },
+    "RIVE": {
+      "repository": "rive-app/rive-runtime",
+      "version": "PIN_COMMIT_BEFORE_BUILD",
+      "license": "MIT",
+      "status": "NATIVE_INTEROP_RESEARCH",
+      "role": [
+        "STATEFUL_VECTOR",
+        "INTERACTIVE_VECTOR",
+        "VECTOR_STATE_MACHINE"
+      ],
+      "authorized_probes": [
+        "WINDOWS_NATIVE_BUILD_LATER",
+        "INTEROP_BOUNDARY_LATER"
+      ]
+    },
+    "LOTTIE_WINDOWS": {
+      "repository": "CommunityToolkit/Lottie-Windows",
+      "version": "8.1.240821.1",
+      "license": "REVIEW_REQUIRED",
+      "status": "WINUI_SPECIALIST_RESEARCH",
+      "role": [
+        "PREAUTHORED_TIMELINE",
+        "AFTER_EFFECTS_HANDOFF"
+      ],
+      "authorized_probes": [
+        "WINUI_COMPILE_LATER",
+        "CODEGEN_LATER"
+      ]
+    }
+  },
+  "performance_policy": {
+    "shared_ci_wall_clock_is_gating": false,
+    "correctness_is_gating": true,
+    "reference_windows_hardware_required_before_performance_gate": true
+  },
+  "authority": {
+    "production_renderer_adoption_authorized": false,
+    "command_center_integration_authorized": false,
+    "automatic_fallback_authorized": false,
+    "pr72_merge_authorized": false,
+    "stage8_opened": false,
+    "runtime_authority_expanded": false
+  }
+}
