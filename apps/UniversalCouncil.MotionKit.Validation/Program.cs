@@ -15,6 +15,9 @@ CheckMissingReducedEquivalentRejected();
 CheckUnknownEnumInputsRejected();
 CheckTruthRevocationStopsMotion();
 CheckStaleTruthRevocationCannotCancelNewerMotion();
+CheckStaleTrueCannotRestartAfterNewerFalse();
+CheckEqualTimeConflictingTruthRejected();
+CheckFalseTruthSubmissionRevokesMatchingMotion();
 CheckTruthRevocationReleasesNextQueuedIntent();
 CheckContractSnapshotIsImmutable();
 CheckQueueBound();
@@ -367,9 +370,104 @@ void CheckStaleTruthRevocationCannotCancelNewerMotion()
             now.AddMilliseconds(10)),
         now.AddMilliseconds(30));
 
-    Check(staleRevoke.Disposition == MotionDisposition.TruthRevoked, "stale false truth is observed but not authoritative over newer lease");
+    Check(staleRevoke.Disposition == MotionDisposition.StaleTruthIgnored, "stale false truth must be ignored");
     Check(!staleRevoke.CancelledInstances.Contains(lease.InstanceId), "older truth must not cancel motion backed by newer truth");
     Check(coordinator.ActiveCount(target) == 1, "newer active motion must survive stale truth revocation");
+}
+
+
+void CheckStaleTrueCannotRestartAfterNewerFalse()
+{
+    var coordinator = NewCoordinator(22);
+    const string target = "status:stale-restart";
+
+    var falseTruth = coordinator.ReconcileTruth(
+        target,
+        new MotionTruthSnapshot(
+            "PRODUCT_STATE_BLOCKED",
+            false,
+            "state-v3",
+            now.AddMilliseconds(30)),
+        now.AddMilliseconds(30));
+    Check(falseTruth.Disposition == MotionDisposition.TruthRevoked, "newer false truth should be recorded");
+
+    var staleStart = coordinator.Submit(
+        Request(
+            "r-stale-restart",
+            target,
+            Contract("BLOCKED", MotionInterruptionMode.Replace, "PRODUCT_STATE_BLOCKED"),
+            new MotionTruthSnapshot(
+                "PRODUCT_STATE_BLOCKED",
+                true,
+                "state-v2",
+                now.AddMilliseconds(20)),
+            MotionAccessibilityMode.Full),
+        now.AddMilliseconds(40));
+
+    Check(staleStart.Disposition == MotionDisposition.StaleTruthIgnored, "older true truth must not restart motion");
+    Check(coordinator.ActiveCount(target) == 0, "stale true truth must not create an active lease");
+}
+
+void CheckEqualTimeConflictingTruthRejected()
+{
+    var coordinator = NewCoordinator(23);
+    const string target = "status:equal-time-conflict";
+    var observedAt = now.AddMilliseconds(50);
+
+    var first = coordinator.ReconcileTruth(
+        target,
+        new MotionTruthSnapshot(
+            "PRODUCT_STATE_WAITING_OWNER",
+            true,
+            "state-v1",
+            observedAt),
+        observedAt);
+    Check(first.Disposition == MotionDisposition.TruthObserved, "first truth observation should be accepted");
+
+    var conflict = coordinator.ReconcileTruth(
+        target,
+        new MotionTruthSnapshot(
+            "PRODUCT_STATE_WAITING_OWNER",
+            false,
+            "state-v2",
+            observedAt),
+        observedAt.AddMilliseconds(1));
+
+    Check(conflict.Disposition == MotionDisposition.RejectedInvalid, "same-time conflicting truth must fail closed");
+}
+
+void CheckFalseTruthSubmissionRevokesMatchingMotion()
+{
+    var coordinator = NewCoordinator(24);
+    const string target = "status:false-submit-revoke";
+
+    var started = coordinator.Submit(
+        Request(
+            "r-false-submit-active",
+            target,
+            Contract("WAITING_OWNER", MotionInterruptionMode.Replace, "PRODUCT_STATE_WAITING_OWNER"),
+            Truth("PRODUCT_STATE_WAITING_OWNER", true),
+            MotionAccessibilityMode.Full),
+        now);
+    var lease = started.StartedLease
+        ?? throw new InvalidOperationException("false-submit revocation test must start");
+
+    var rejected = coordinator.Submit(
+        Request(
+            "r-false-submit",
+            target,
+            Contract("WAITING_OWNER", MotionInterruptionMode.Replace, "PRODUCT_STATE_WAITING_OWNER"),
+            new MotionTruthSnapshot(
+                "PRODUCT_STATE_WAITING_OWNER",
+                false,
+                "state-v2",
+                now.AddMilliseconds(5)),
+            MotionAccessibilityMode.Full),
+        now.AddMilliseconds(5));
+
+    Check(rejected.Disposition == MotionDisposition.RejectedTruth, "false truth submission must be rejected");
+    Check(rejected.CancelledInstances.Contains(lease.InstanceId), "false truth submission must revoke matching active motion");
+    Check(coordinator.ActiveCount(target) == 0, "false truth submission must leave no matching active motion");
 }
 
 void CheckTruthRevocationReleasesNextQueuedIntent()
