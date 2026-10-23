@@ -2,7 +2,7 @@
 
 Date: 2026-10-23
 Gate: OWNER_VISUAL_EVIDENCE
-Current decision: PENDING_OWNER_REVIEW
+Current decision: APPROVED_BY_OWNER
 
 ## Review artifact
 
@@ -41,10 +41,12 @@ This limitation does not grant or deny owner visual approval; it is recorded so 
 
 ## Decision rule
 
-Until the owner explicitly accepts this package, MP3 remains:
+Owner approval was explicitly received on 2026-10-23 in the project conversation: `اكمل العمل انا موافق`.
 
-TECHNICAL_BAKEOFF_COMPLETE_OWNER_VISUAL_ACCEPTANCE_PENDING
+Decision:
 
-and RENDERER_ROLE_MATRIX_ACCEPTED remains false.
+REFERENCE_ACCEPTED_OWNER_APPROVED
 
-No renderer becomes production-adopted by viewing or generating this package.
+RENDERER_ROLE_MATRIX_ACCEPTED = true.
+
+This approval closes the MP3 owner-visual gate only. It does not authorize production renderer adoption, Stage8, automatic fallback, or PR merges.
