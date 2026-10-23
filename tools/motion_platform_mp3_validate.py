@@ -86,9 +86,10 @@ if matrix_renderers["SKIASHARP"]["highest_evidence_class"] != "RUNTIME_EVIDENCE"
     raise SystemExit("SkiaSharp role matrix evidence class drifted")
 if matrix_renderers["WINDOWS_COMPOSITION"]["highest_evidence_class"] != "COMPILE_EVIDENCE":
     raise SystemExit("Composition role matrix over- or under-claimed evidence")
-for candidate_id in ("RIVE", "LOTTIE_WINDOWS"):
-    if matrix_renderers[candidate_id]["highest_evidence_class"] != "SOURCE_EVIDENCE":
-        raise SystemExit(f"{candidate_id} role matrix over-claimed evidence")
+if matrix_renderers["RIVE"]["highest_evidence_class"] != "SOURCE_EVIDENCE":
+    raise SystemExit("RIVE role matrix over-claimed evidence")
+if matrix_renderers["LOTTIE_WINDOWS"]["highest_evidence_class"] != "RUNTIME_EVIDENCE":
+    raise SystemExit("Lottie tooling runtime evidence class drifted")
 for candidate_id, entry in matrix_renderers.items():
     if entry["production_adoption"]:
         raise SystemExit(f"{candidate_id} was promoted to production inside MP3")
@@ -340,9 +341,9 @@ for marker in (
 
 for marker in (
     "VALIDATED_SPECIALIST_CANDIDATE",
-    "COMPILE_FEASIBLE_RUNTIME_PENDING",
+    "COMPILE_PROVEN_RUNTIME_DEFERRED_INTERACTIVE_WINDOWS",
     "SOURCE_VALIDATED_NATIVE_INTEROP_RESEARCH",
-    "SOURCE_VALIDATED_WINUI_CODEGEN_SPECIALIST",
+    "TOOLING_RUNTIME_VALIDATED_WINUI_CODEGEN_SPECIALIST",
     "None of these probes authorize production adoption",
 ):
     if marker not in matrix_doc:
