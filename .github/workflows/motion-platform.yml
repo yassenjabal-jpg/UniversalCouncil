@@ -68,15 +68,6 @@ jobs:
           if [ -f apps/UniversalCouncil.MotionKit.SkiaLabValidation/UniversalCouncil.MotionKit.SkiaLabValidation.csproj ]; then
             dotnet run --project apps/UniversalCouncil.MotionKit.SkiaLabValidation -c Release
           fi
-      - name: Run deterministic LottieGen codegen probe
-        shell: bash
-        run: |
-          rm -rf build/motion-lottiegen build/motion-lottie-a build/motion-lottie-b
-          mkdir -p build/motion-lottiegen build/motion-lottie-a build/motion-lottie-b
-          dotnet tool install --tool-path build/motion-lottiegen LottieGen --version 8.2.250604
-          build/motion-lottiegen/LottieGen             -InputFile lab/motion-platform/lottie/MotionKitProbe.json             -Language cs             -OutputFolder build/motion-lottie-a             -Namespace MotionKit.Lab             -Public             -Strict             -TestMode
-          build/motion-lottiegen/LottieGen             -InputFile lab/motion-platform/lottie/MotionKitProbe.json             -Language cs             -OutputFolder build/motion-lottie-b             -Namespace MotionKit.Lab             -Public             -Strict             -TestMode
-          python tools/motion_platform_lottiegen_check.py             build/motion-lottie-a             build/motion-lottie-b
 
   windows-lab-probes:
     name: Windows Lab Probes
@@ -86,9 +77,14 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
       - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: |
+            9.0.x
+            10.0.x
       - name: Build Skia WPF core bridge compile probe
         shell: pwsh
         run: |
@@ -97,6 +93,37 @@ jobs:
         shell: pwsh
         run: |
           dotnet build apps/UniversalCouncil.MotionKit.CompositionWpfCompileProbe/UniversalCouncil.MotionKit.CompositionWpfCompileProbe.csproj -c Release --nologo
+      - name: Run deterministic LottieGen codegen probe on Windows
+        shell: pwsh
+        run: |
+          $toolDir = Join-Path $env:GITHUB_WORKSPACE "build\motion-lottiegen"
+          $outputA = Join-Path $env:GITHUB_WORKSPACE "build\motion-lottie-a"
+          $outputB = Join-Path $env:GITHUB_WORKSPACE "build\motion-lottie-b"
+          $input = Join-Path $env:GITHUB_WORKSPACE "lab\motion-platform\lottie\MotionKitProbe.json"
+
+          if (-not (Test-Path -LiteralPath $input -PathType Leaf)) {
+            throw "Owned Lottie fixture is missing: $input"
+          }
+
+          Remove-Item -Recurse -Force $toolDir,$outputA,$outputB -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Force $toolDir,$outputA,$outputB | Out-Null
+
+          dotnet tool install --tool-path $toolDir LottieGen --version 8.2.250604
+          if ($LASTEXITCODE -ne 0) { throw "LottieGen install failed." }
+
+          $tool = Join-Path $toolDir "LottieGen.exe"
+          if (-not (Test-Path -LiteralPath $tool -PathType Leaf)) {
+            throw "Pinned LottieGen executable missing: $tool"
+          }
+
+          & $tool -InputFile $input -Language cs -OutputFolder $outputA -Namespace MotionKit.Lab -Public -Strict -TestMode
+          if ($LASTEXITCODE -ne 0) { throw "First strict LottieGen pass failed." }
+
+          & $tool -InputFile $input -Language cs -OutputFolder $outputB -Namespace MotionKit.Lab -Public -Strict -TestMode
+          if ($LASTEXITCODE -ne 0) { throw "Second strict LottieGen pass failed." }
+
+          python tools/motion_platform_lottiegen_check.py $outputA $outputB
+          if ($LASTEXITCODE -ne 0) { throw "LottieGen determinism check failed." }
       - name: Run Windows Composition runtime API probe
         shell: pwsh
         timeout-minutes: 2
