@@ -103,6 +103,17 @@
           "status": "PASS",
           "detail": "Microsoft.WindowsAppSDK 2.5.1 restored and a net10.0-windows WPF compile probe using WindowsPackageType=None compiled Compositor, SpriteVisual, ScalarKeyFrameAnimation, and WPF WindowInteropHelper access."
         }
+      ],
+      "observed_findings": [
+        {
+          "id": "WINDOWS_COMPOSITION_UNOWNED_QUEUE_SHUTDOWN_TIMEOUT",
+          "evidence_class": "RUNTIME_EVIDENCE",
+          "source_head_sha": "fca3b7fa89ce7e06d940a8792ecabd5805d2c117",
+          "workflow_run_id": 39926268596,
+          "job_id": 120323310173,
+          "status": "BLOCKED_PROBE_LIFECYCLE",
+          "detail": "The bounded Composition runtime process exceeded the 15 second shutdown budget when the probe created Compositor without explicitly owning a Microsoft.UI.Dispatching.DispatcherQueueController. The probe is being corrected to own the current-thread queue and call ShutdownQueue synchronously."
+        }
       ]
     },
     "RIVE": {
@@ -146,7 +157,7 @@
         "AFTER_EFFECTS_HANDOFF"
       ],
       "authorized_probes": [
-        "LOTTIEGEN_CODEGEN_RUNTIME",
+        "LOTTIEGEN_WINDOWS_CODEGEN_RUNTIME",
         "WINUI_COMPILE_LATER"
       ],
       "source_head_sha": "dce2d4ac945b7d8d400c19bca440907315901b5f",
@@ -181,6 +192,15 @@
           "job_id": 120322205508,
           "status": "OBSERVED",
           "detail": "LottieGen 8.2.250604 help text advertises -StrictMode, but the command-line parser accepts Keyword.Strict; -StrictMode failed as Unexpected while -Strict is the source-backed strict parsing switch. The lab keeps strict parsing by using -Strict rather than weakening the probe."
+        },
+        {
+          "id": "LOTTIEGEN_GLOB_WINDOWS_SEPARATOR_ON_LINUX",
+          "evidence_class": "RUNTIME_EVIDENCE",
+          "source_head_sha": "fca3b7fa89ce7e06d940a8792ecabd5805d2c117",
+          "workflow_run_id": 39926268596,
+          "job_id": 120323310515,
+          "status": "PLATFORM_TOOLING_LIMITATION",
+          "detail": "Pinned LottieGen 8.2.250604 accepted -Strict but failed to find a repository-relative fixture on Ubuntu. Pinned Glob.cs appends a literal backslash to its directory path, so the deterministic codegen probe is moved to Windows rather than weakening Strict/TestMode."
         }
       ]
     }
