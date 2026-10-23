@@ -86,6 +86,7 @@ public sealed class MotionProfileResolver
                 lease.TargetId,
                 lease.SemanticEventId,
                 lease.AccessibilityMode),
+            _profileId,
             variant.VisualToken,
             variant.Duration,
             variant.RequiredCapabilities);
