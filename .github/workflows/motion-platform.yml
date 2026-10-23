@@ -124,6 +124,40 @@ jobs:
 
           python tools/motion_platform_lottiegen_check.py $outputA $outputB
           if ($LASTEXITCODE -ne 0) { throw "LottieGen determinism check failed." }
+      - name: Probe pinned Rive native Windows toolchain/build generation
+        shell: pwsh
+        timeout-minutes: 8
+        run: |
+          $riveDir = Join-Path $env:GITHUB_WORKSPACE "build\rive-runtime"
+          Remove-Item -Recurse -Force $riveDir -ErrorAction SilentlyContinue
+
+          git clone --filter=blob:none --no-checkout https://github.com/rive-app/rive-runtime.git $riveDir
+          if ($LASTEXITCODE -ne 0) { throw "Rive clone failed." }
+
+          Push-Location $riveDir
+          git checkout f4da8fa42ed2c256d3d672e3828d18a328528f50
+          if ($LASTEXITCODE -ne 0) { throw "Rive pinned commit checkout failed." }
+
+          $clang = Get-Command clang-cl.exe -ErrorAction SilentlyContinue
+          $msbuild = Get-Command msbuild.exe -ErrorAction SilentlyContinue
+          $bash = Get-Command sh.exe -ErrorAction SilentlyContinue
+          if (-not $clang -or -not $msbuild -or -not $bash) {
+            throw "Rive native prerequisites missing (clang-cl/msbuild/sh)."
+          }
+
+          Push-Location tests
+          $env:RIVE_PREMAKE_ARGS = "--with_rive_text --with_rive_layout --with_rive_canvas"
+          sh ../build/build_rive.sh nobuild release
+          if ($LASTEXITCODE -ne 0) { throw "Rive pinned Windows premake generation failed." }
+          Pop-Location
+
+          if (-not (Test-Path -LiteralPath "tests\out\release\rive.sln" -PathType Leaf)) {
+            throw "Rive premake generation completed without tests/out/release/rive.sln."
+          }
+
+          Write-Host "MotionKit Rive native feasibility probe: PASS (pinned source + Windows prerequisites + VS solution generation)"
+          Pop-Location
+
       - name: Run Windows Composition runtime API probe
         shell: pwsh
         timeout-minutes: 2
