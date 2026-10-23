@@ -71,3 +71,20 @@ No threshold was lowered and no UNKNOWN was promoted to SUCCESS.
 6. Lottie stays an authored-codegen specialist until a host is proven. Rive interop is deferred until a concrete stateful-vector asset justifies native complexity.
 
 MP4 preparation is ready; this document grants no product integration, merge or runtime authority.
+
+## Technical acceptance continuation
+
+The earlier feasibility evidence above remains historical and valid for its original claims. It is now superseded only for the statement that S1..S5 technical bake-off was still wholly unexecuted.
+
+The follow-on reference probe is recorded under lab/motion-platform/evidence/yassin-20261023-acceptance/ and is defined by 10_MP3_REFERENCE_ACCEPTANCE.md.
+
+Technical disposition:
+- S1: PASS Full + Reduced for hover-state handler, focus, keyboard press, selected/deselected and accessibility; hardware-pointer injection is explicitly not claimed because the active game reclaims the OS cursor.
+- S2: NOT_APPLICABLE_CURRENT_ACCEPTED_ROLE_SET; no accepted role is assigned STATEFUL_VECTOR.
+- S3: PASS Full + Reduced, including RETURN during transfer.
+- S4: PASS Full + Reduced, including destination-unavailable fallback.
+- S5: PASS Full + Reduced, with reference-host CPU/allocation/memory/input/presentation-loop observations.
+- renderer disposal/re-entry: PASS.
+- formal gate: still NOT PASSED because owner visual acceptance is not yet recorded.
+
+The original headless Composition shutdown timeout remains historical evidence. Nothing in this continuation claims it was reproduced or repaired on headless CI.

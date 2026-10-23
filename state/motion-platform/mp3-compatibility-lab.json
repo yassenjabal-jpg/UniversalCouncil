@@ -24,7 +24,8 @@
       "authorized_probes": [
         "LINUX_HEADLESS_RUNTIME",
         "WINDOWS_WPF_CORE_BRIDGE_COMPILE",
-        "WINDOWS_WPF_CORE_BRIDGE_RUNTIME"
+        "WINDOWS_WPF_CORE_BRIDGE_RUNTIME",
+        "WINDOWS_WPF_REFERENCE_ACCEPTANCE"
       ],
       "observed_findings": [
         {
@@ -61,12 +62,41 @@
           "status": "PASS",
           "detail": "600 core-Skia BitmapSource updates in visible WPF window, session 5, normal process exit 0. Static bridge fixture, not product animation.",
           "evidence": "lab/motion-platform/evidence/yassin-20261023/skia-window.json"
+        },
+        {
+          "id": "SKIA_YASSIN_S1_S3_S4_S5_REFERENCE_ACCEPTANCE_PASS",
+          "evidence_class": "WINDOW_EVIDENCE",
+          "status": "PASS",
+          "detail": "Reference Windows probe passed S1, S3, S4 and S5 in Full and Reduced Motion with native WPF keyboard/accessibility surface, deterministic RETURN/fallback, renderer disposal/re-entry and dense-screen measurements. S2 remains unassigned because no accepted role currently claims STATEFUL_VECTOR.",
+          "evidence": "lab/motion-platform/evidence/yassin-20261023-acceptance/skia-acceptance.json"
         }
       ],
       "informational_measurement": {
         "environment": "ubuntu-latest shared CI",
         "sample": "100 offscreen 64x64 frames",
         "elapsed_ms": 91.85,
+        "gating": false
+      },
+      "reference_windows_acceptance_measurement": {
+        "host": "YASSIN",
+        "objects": 64,
+        "frames": 240,
+        "frame_interval_median_ms": 3.2257999999999356,
+        "frame_interval_p95_ms": 7.03670000000011,
+        "frame_interval_p99_ms": 32.85370000000012,
+        "frames_over_33_333_ms": 2,
+        "cpu_percent_process_normalized": 12.490380174942029,
+        "allocated_bytes_delta": 3201208,
+        "working_set_bytes_delta": 4157440,
+        "input_dispatch_latency_median_ms": 0.0336,
+        "input_dispatch_latency_p95_ms": 2.0019,
+        "actual_keyboard_interactions": 3,
+        "actual_keyboard_activation_latency_median_ms": 10.2973,
+        "actual_keyboard_activation_latency_p95_ms": 15.4295,
+        "hover_state_path": true,
+        "hardware_pointer_injection": false,
+        "reduced_actual_keyboard_interactions": 1,
+        "gpu_present_telemetry": false,
         "gating": false
       }
     },
@@ -201,7 +231,11 @@
           "status": "OBSERVED",
           "detail": "Search of the pinned rive-runtime source found no C# source binding/runtime project; .NET/WPF use would require a deliberately bounded native interop layer or another officially supported route."
         }
-      ]
+      ],
+      "role_assignment": "UNASSIGNED_RESEARCH_ONLY",
+      "scenario_disposition": {
+        "S2_STATEFUL_SIGIL": "NOT_APPLICABLE_CURRENT_ACCEPTED_ROLE_SET"
+      }
     },
     "LOTTIE_WINDOWS": {
       "repository": "CommunityToolkit/Lottie-Windows",
@@ -286,17 +320,30 @@
     "runtime_authority_expanded": false
   },
   "reference_windows_qualification": {
-    "status": "FEASIBILITY_EVIDENCE_COMPLETE_ACCEPTANCE_PENDING",
+    "status": "TECHNICAL_BAKEOFF_COMPLETE_OWNER_VISUAL_ACCEPTANCE_PENDING",
     "host": "YASSIN",
     "date": "2026-10-23",
     "evidence_directory": "lab/motion-platform/evidence/yassin-20261023",
     "acceptance_gate": "RENDERER_ROLE_MATRIX_ACCEPTED",
     "acceptance_gate_passed": false,
     "remaining": [
-      "S1..S5 scenario acceptance and accessibility bake-off",
-      "GPU frame pacing, CPU and allocation qualification",
       "Owner visual acceptance"
     ],
-    "mp4_preparation_ready": true
+    "mp4_preparation_ready": true,
+    "technical_bakeoff_passed": true,
+    "scenario_disposition": {
+      "S1_INTERACTIVE_ICON": "PASS_FULL_AND_REDUCED",
+      "S2_STATEFUL_SIGIL": "NOT_APPLICABLE_CURRENT_ACCEPTED_ROLE_SET",
+      "S3_ROUTE_TRANSFER": "PASS_FULL_AND_REDUCED",
+      "S4_SEMANTIC_OBJECT_HANDOFF": "PASS_FULL_AND_REDUCED",
+      "S5_DENSE_SCREEN_STRESS": "PASS_FULL_AND_REDUCED"
+    },
+    "performance_disposition": {
+      "reference_measurement_recorded": true,
+      "gpu_present_telemetry": false,
+      "threshold_gate_defined": false,
+      "reason": "Reference-host WPF presentation-loop, CPU, allocation, memory and input observations are recorded; no post-hoc performance threshold is invented."
+    },
+    "input_evidence_limit": "Keyboard activation is actual WPF input; hover exercises the shared WPF hover-state handler. Hardware pointer injection is not claimed because the active reference-host game reclaims the OS cursor."
   }
 }

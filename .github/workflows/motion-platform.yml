@@ -90,6 +90,10 @@ jobs:
         shell: pwsh
         run: |
           dotnet build apps/UniversalCouncil.MotionKit.SkiaWpfCompileProbe/UniversalCouncil.MotionKit.SkiaWpfCompileProbe.csproj -c Release --nologo
+      - name: Build Skia WPF reference acceptance probe
+        shell: pwsh
+        run: |
+          dotnet build apps/UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe/UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe.csproj -c Release --nologo
       - name: Build Windows Composition WPF compile probe
         shell: pwsh
         run: |

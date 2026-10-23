@@ -11,21 +11,27 @@
   },
   "renderers": {
     "SKIASHARP": {
-      "current_verdict": "VALIDATED_SPECIALIST_CANDIDATE",
+      "current_verdict": "REFERENCE_WINDOWS_TECHNICALLY_ACCEPTED_SPECIALIST_CANDIDATE",
       "highest_evidence_class": "WINDOW_EVIDENCE",
       "validated_roles": [
         "PATH_GEOMETRY",
         "DYNAMIC_DRAWING",
         "DATA_DRIVEN_2D",
         "WPF_CORE_PIXEL_BRIDGE_COMPILE",
-        "WPF_CORE_PIXEL_BRIDGE_WINDOW_RUNTIME"
+        "WPF_CORE_PIXEL_BRIDGE_WINDOW_RUNTIME",
+        "S1_INTERACTIVE_ICON_VISUAL",
+        "S3_ROUTE_TRANSFER_RETURN",
+        "S4_HANDOFF_DETERMINISTIC_FALLBACK",
+        "S5_DENSE_REFERENCE_STRESS",
+        "WPF_NATIVE_KEYBOARD_ACCESSIBILITY_SURFACE",
+        "RENDERER_DISPOSAL_REENTRY"
       ],
       "not_validated": [
-        "WINDOW_RUNTIME_FRAME_PACING",
         "OWNER_VISUAL_QUALITY",
         "STATEFUL_VECTOR",
         "PREAUTHORED_TIMELINE",
-        "HIT_TESTING"
+        "HIT_TESTING",
+        "GPU_PRESENT_FRAME_PACING"
       ],
       "wpf_integration": {
         "route": "OWNED_CORE_SKIA_TO_BITMAPSOURCE_BRIDGE",
@@ -86,7 +92,9 @@
       },
       "android_parity": "OFFICIAL_ANDROID_RUNTIME_EXISTS_SOURCE_EVIDENCE_ONLY",
       "reduced_motion_strategy": "REQUIRES_PROFILE_OR_STATE_MACHINE_VARIANT_PROOF",
-      "production_adoption": false
+      "production_adoption": false,
+      "role_assignment": "UNASSIGNED_RESEARCH_ONLY",
+      "s2_disposition": "NOT_APPLICABLE_CURRENT_ACCEPTED_ROLE_SET"
     },
     "LOTTIE_WINDOWS": {
       "current_verdict": "TOOLING_RUNTIME_VALIDATED_WINUI_CODEGEN_SPECIALIST",
@@ -114,8 +122,14 @@
     }
   },
   "next_probe_order": [
-    "MP4_IN_SCREEN_INVENTORY_AND_BOUNDED_ADAPTER_DESIGN",
-    "S1_S5_ACCEPTANCE_ACCESSIBILITY_AND_REFERENCE_PERFORMANCE",
+    "OWNER_VISUAL_ACCEPTANCE",
+    "MP4_EXACT_HEAD_REFERENCE_INTEGRATION_EVIDENCE",
     "RIVE_INTEROP_ONLY_IF_REFERENCE_USE_CASE_REQUIRES_STATEFUL_VECTOR"
-  ]
+  ],
+  "mp3_gate": {
+    "gate": "RENDERER_ROLE_MATRIX_ACCEPTED",
+    "technical_bakeoff_passed": true,
+    "owner_visual_acceptance": false,
+    "gate_passed": false
+  }
 }

@@ -100,3 +100,20 @@ None of these probes authorize production adoption or Command Center integration
 ## Reference Windows evidence
 
 See [YASSIN evidence and MP4 handoff](09_YASSIN_REFERENCE_EVIDENCE_AND_MP4_HANDOFF.md). The mandatory S1..S5 acceptance bake-off is not claimed by these feasibility probes.
+
+## 2026-10-23 reference acceptance addendum
+
+YASSIN reference testing now closes the technical bake-off for the currently assigned roles:
+
+| Scenario | Assigned renderer path | Full | Reduced | Disposition |
+| --- | --- | --- | --- | --- |
+| S1 Interactive Icon | SkiaSharp core pixels + native WPF input/accessibility surface | PASS | PASS | shared WPF hover-state handler, keyboard Space/Enter parity, selected/deselected, accessible name and Invoke pattern verified; hardware pointer injection not claimed on the active-game host |
+| S2 Stateful Sigil | none | N/A | N/A | NOT_APPLICABLE_CURRENT_ACCEPTED_ROLE_SET; Rive remains compile-evidence research only |
+| S3 Route Transfer | SkiaSharp core pixels -> WPF BitmapSource | PASS | PASS | RETURN at mid-transfer settles at source with identity preserved |
+| S4 Semantic Object Handoff | SkiaSharp core pixels -> WPF BitmapSource | PASS | PASS | unavailable destination settles deterministically to source fallback |
+| S5 Dense Screen Stress | SkiaSharp core pixels -> WPF BitmapSource | PASS | PASS | 64 independent objects; reference CPU/allocation/memory/input observations recorded |
+
+SkiaSharp's current technical verdict is REFERENCE_WINDOWS_TECHNICALLY_ACCEPTED_SPECIALIST_CANDIDATE.
+This is still not production adoption. OWNER_VISUAL_EVIDENCE is absent, GPU-present telemetry was not measured, and no post-hoc performance threshold was invented.
+
+Rive remains COMPILE_FEASIBLE_NATIVE_INTEROP_SPECIALIST / UNASSIGNED_RESEARCH_ONLY. No native wrapper was created to manufacture an S2 pass.

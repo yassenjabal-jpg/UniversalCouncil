@@ -121,8 +121,10 @@ Gate: MOTION_PLATFORM_GENERAL_ADOPTION_APPROVED
 MP0 foundation validated.
 MP1 semantic kernel validated and frozen for expansion.
 MP2 renderer boundary validated and frozen for expansion.
-MP3 reference-Windows feasibility evidence is complete on YASSIN; formal acceptance remains ACTIVE.
-See 09_YASSIN_REFERENCE_EVIDENCE_AND_MP4_HANDOFF.md for evidence and the unpassed S1..S5/acceptance gates.
-Execution priority: integrate/prove open-source and platform renderers, not expand MotionKit abstractions.
+MP3 reference-Windows technical bake-off is complete on YASSIN for the currently assigned renderer roles.
+S1, S3, S4 and S5 pass in Full and Reduced Motion; S2 is explicitly unassigned because no accepted renderer role currently claims STATEFUL_VECTOR.
+Formal RENDERER_ROLE_MATRIX_ACCEPTED remains pending owner visual acceptance; no renderer is production-adopted.
+See 10_MP3_REFERENCE_ACCEPTANCE.md for the exact scenario disposition, measurements and limits.
+Execution priority: owner visual review, then exact-head MP4 reference evidence; do not expand MotionKit abstractions.
 Production renderer adoption is not authorized.
 Command Center refactor is not authorized by this roadmap alone.

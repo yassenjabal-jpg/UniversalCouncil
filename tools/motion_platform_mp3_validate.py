@@ -21,6 +21,17 @@ WPF_PROJECT = (
     / "UniversalCouncil.MotionKit.SkiaWpfCompileProbe.csproj"
 )
 WPF_PROBE = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaWpfCompileProbe" / "SkiaWpfProbe.cs"
+ACCEPTANCE_PROJECT = (
+    ROOT
+    / "apps"
+    / "UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe"
+    / "UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe.csproj"
+)
+ACCEPTANCE_PROGRAM = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe" / "Program.cs"
+ACCEPTANCE_WINDOW = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe" / "AcceptanceWindow.cs"
+ACCEPTANCE_RENDERER = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe" / "SkiaAcceptanceRenderer.cs"
+ACCEPTANCE_CAPTURE = ROOT / "lab" / "motion-platform" / "capture-acceptance-reference.ps1"
+ACCEPTANCE_DOC = ROOT / "docs" / "operations" / "motion-platform" / "10_MP3_REFERENCE_ACCEPTANCE.md"
 COMPOSITION_PROJECT = (
     ROOT
     / "apps"
@@ -48,6 +59,12 @@ for path in (
     SKIA_VALIDATION,
     WPF_PROJECT,
     WPF_PROBE,
+    ACCEPTANCE_PROJECT,
+    ACCEPTANCE_PROGRAM,
+    ACCEPTANCE_WINDOW,
+    ACCEPTANCE_RENDERER,
+    ACCEPTANCE_CAPTURE,
+    ACCEPTANCE_DOC,
     COMPOSITION_PROJECT,
     COMPOSITION_PROBE,
     COMPOSITION_RUNTIME_PROJECT,
@@ -117,6 +134,7 @@ if set(skia["authorized_probes"]) != {
     "LINUX_HEADLESS_RUNTIME",
     "WINDOWS_WPF_CORE_BRIDGE_COMPILE",
     "WINDOWS_WPF_CORE_BRIDGE_RUNTIME",
+    "WINDOWS_WPF_REFERENCE_ACCEPTANCE",
 }:
     raise SystemExit("SkiaSharp probe authority drifted")
 findings = {item["id"]: item for item in skia.get("observed_findings", [])}
@@ -238,6 +256,7 @@ for path in (ROOT / "apps").glob("UniversalCouncil.MotionKit.*/*.csproj"):
     if has_skia and path.parent.name not in {
         "UniversalCouncil.MotionKit.SkiaLab",
         "UniversalCouncil.MotionKit.SkiaWpfCompileProbe",
+        "UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe",
     }:
         raise SystemExit(f"SkiaSharp leaked outside MP3 lab boundary: {path.relative_to(ROOT)}")
     has_winappsdk = "Microsoft.WindowsAppSDK" in text
@@ -283,6 +302,45 @@ probe = WPF_PROBE.read_text(encoding="utf-8")
 for marker in ("BitmapSource.Create", "bitmap.GetPixels()", "PixelFormats.Bgra32"):
     if marker not in probe:
         raise SystemExit(f"Skia WPF core bridge marker missing: {marker}")
+
+acceptance_project = ACCEPTANCE_PROJECT.read_text(encoding="utf-8")
+if 'PackageReference Include="SkiaSharp" Version="4.153.1"' not in acceptance_project:
+    raise SystemExit("Skia reference acceptance package pin drifted")
+if "SkiaSharp.Views.WPF" in acceptance_project:
+    raise SystemExit("blocked SkiaSharp.Views.WPF path entered reference acceptance probe")
+
+acceptance_window = ACCEPTANCE_WINDOW.read_text(encoding="utf-8")
+for marker in (
+    "RunS1Async",
+    "RunS3Async",
+    "RunS4Async",
+    "RunS5Async",
+    "MotionKit interactive icon",
+    "PatternInterface.Invoke",
+    "VirtualKeySpace",
+    "VirtualKeyReturn",
+    "SetPointerHoverState",
+    "PreviewMouseLeftButtonDown",
+    "actualKeyboardInteractions",
+    "CompositionTarget.Rendering",
+    "GC.GetTotalAllocatedBytes",
+    "DispatcherPriority.Input",
+    "RendererReentryCount",
+):
+    if marker not in acceptance_window:
+        raise SystemExit(f"Skia reference acceptance marker missing: {marker}")
+
+acceptance_program = ACCEPTANCE_PROGRAM.read_text(encoding="utf-8")
+for marker in (
+    "S2_STATEFUL_SIGIL",
+    "NOT_APPLICABLE_CURRENT_ACCEPTED_ROLE_SET",
+    "Rive remains research-only and unassigned",
+    "owner_visual_acceptance = false",
+    "production_adoption = false",
+    "stage8_opened = false",
+):
+    if marker not in acceptance_program:
+        raise SystemExit(f"Skia reference acceptance policy marker missing: {marker}")
 
 composition_probe = COMPOSITION_PROBE.read_text(encoding="utf-8")
 for marker in (
@@ -381,8 +439,102 @@ for name in ("composition", "skia"):
 pixels = json.loads((evidence_dir / "pixel-check.json").read_text(encoding="utf-8"))
 if pixels["full_unique_sprite_colors"] < 10 or pixels["reduced_unique_sprite_colors"] != 1:
     raise SystemExit("reference Full/Reduced visible pixel evidence failed")
-qualification = state["reference_windows_qualification"]
-if qualification["acceptance_gate_passed"]:
-    raise SystemExit("feasibility evidence must not self-promote S1..S5 acceptance")
+acceptance_dir = ROOT / "lab/motion-platform/evidence/yassin-20261023-acceptance"
+acceptance_manifest = json.loads((acceptance_dir / "manifest.json").read_text(encoding="utf-8"))
+for relative, expected in acceptance_manifest["sha256"].items():
+    path = (ROOT / relative).resolve()
+    if not path.is_relative_to(ROOT.resolve()):
+        raise SystemExit("acceptance manifest path escaped repository")
+    data = path.read_bytes()
+    if path.suffix != ".png":
+        data = data.replace(b"\r\n", b"\n")
+    if hashlib.sha256(data).hexdigest() != expected:
+        raise SystemExit(f"acceptance evidence/source hash mismatch: {relative}")
+if acceptance_manifest["acceptance_exit_code"] != 0:
+    raise SystemExit("reference acceptance process did not exit cleanly")
+if (acceptance_dir / "skia-acceptance.stderr.txt").read_text(encoding="utf-8").strip():
+    raise SystemExit("reference acceptance stderr is not empty")
 
-print("Motion Platform MP3 validation: PASS (compatibility lab boundaries + evidence-class renderer matrix)")
+acceptance = json.loads((acceptance_dir / "skia-acceptance.json").read_text(encoding="utf-8"))
+if acceptance["owner_visual_acceptance"] or acceptance["production_adoption"] or acceptance["stage8_opened"]:
+    raise SystemExit("reference acceptance inflated owner/production/Stage8 authority")
+if acceptance["renderer_reentry_count"] < 1:
+    raise SystemExit("reference acceptance did not prove renderer disposal/re-entry")
+
+results = {(item["Scenario"], item["Mode"]): item for item in acceptance["results"]}
+for scenario in (
+    "S1_INTERACTIVE_ICON",
+    "S3_ROUTE_TRANSFER",
+    "S4_SEMANTIC_OBJECT_HANDOFF",
+    "S5_DENSE_SCREEN_STRESS",
+):
+    for mode in ("FULL", "REDUCED"):
+        item = results.get((scenario, mode))
+        if not item or item["Status"] != "PASS":
+            raise SystemExit(f"reference acceptance scenario missing/failing: {scenario} {mode}")
+
+for mode in ("FULL", "REDUCED"):
+    s1 = results[("S1_INTERACTIVE_ICON", mode)]["Metrics"]
+    if not s1.get("hover_state_path") or not s1.get("focus_path"):
+        raise SystemExit(f"S1 hover/focus path missing in {mode}")
+    if s1.get("hardware_pointer_injection"):
+        raise SystemExit("S1 must not claim hardware pointer injection on the active-game reference host")
+    if not s1.get("keyboard_space") or not s1.get("keyboard_enter"):
+        raise SystemExit(f"S1 keyboard parity missing in {mode}")
+    if not s1.get("selected_then_deselected"):
+        raise SystemExit(f"S1 semantic toggle path missing in {mode}")
+    if not s1.get("accessible_name") or not s1.get("invoke_pattern"):
+        raise SystemExit(f"S1 accessibility evidence missing in {mode}")
+
+s2 = results.get(("S2_STATEFUL_SIGIL", "ROLE_MATRIX"))
+if not s2 or s2["Status"] != "NOT_APPLICABLE_CURRENT_ACCEPTED_ROLE_SET":
+    raise SystemExit("S2 role disposition drifted")
+if s2["Metrics"]["accepted_stateful_vector_renderer"]:
+    raise SystemExit("S2 fabricated an accepted stateful-vector renderer")
+if s2["Metrics"]["unknown_forward_progress_allowed"]:
+    raise SystemExit("S2 permits fake UNKNOWN forward progress")
+
+s5 = results[("S5_DENSE_SCREEN_STRESS", "FULL")]["Metrics"]
+for metric in (
+    "frame_interval_median_ms",
+    "frame_interval_p95_ms",
+    "frame_interval_p99_ms",
+    "cpu_percent_process_normalized",
+    "allocated_bytes_delta",
+    "working_set_bytes_delta",
+    "input_dispatch_latency_median_ms",
+    "input_dispatch_latency_p95_ms",
+):
+    if metric not in s5:
+        raise SystemExit(f"S5 reference metric missing: {metric}")
+if s5["performance_gating"]:
+    raise SystemExit("reference performance observation may not become a post-hoc threshold gate")
+if s5.get("actual_keyboard_interactions", 0) < 3:
+    raise SystemExit("S5 Full did not include actual keyboard interaction under load")
+reduced_s5 = results[("S5_DENSE_SCREEN_STRESS", "REDUCED")]["Metrics"]
+if reduced_s5.get("actual_keyboard_interactions", 0) < 1:
+    raise SystemExit("S5 Reduced did not include actual keyboard interaction before static settle")
+if "if (_renderer is null)" not in acceptance_window:
+    raise SystemExit("reference acceptance lifecycle gap guard missing")
+
+qualification = state["reference_windows_qualification"]
+if qualification["status"] != "TECHNICAL_BAKEOFF_COMPLETE_OWNER_VISUAL_ACCEPTANCE_PENDING":
+    raise SystemExit("reference Windows qualification status drifted")
+if not qualification.get("technical_bakeoff_passed"):
+    raise SystemExit("technical bake-off completion was not recorded")
+if qualification.get("remaining") != ["Owner visual acceptance"]:
+    raise SystemExit("MP3 remaining gate set drifted")
+if qualification["acceptance_gate_passed"]:
+    raise SystemExit("MP3 may not claim formal acceptance before owner visual acceptance")
+
+matrix_gate = matrix.get("mp3_gate") or {}
+if not matrix_gate.get("technical_bakeoff_passed"):
+    raise SystemExit("renderer role matrix did not record technical bake-off")
+if matrix_gate.get("owner_visual_acceptance") or matrix_gate.get("gate_passed"):
+    raise SystemExit("renderer role matrix self-promoted owner/formal acceptance")
+if matrix_renderers["SKIASHARP"]["current_verdict"] != "REFERENCE_WINDOWS_TECHNICALLY_ACCEPTED_SPECIALIST_CANDIDATE":
+    raise SystemExit("Skia reference technical verdict drifted")
+if matrix_renderers["RIVE"].get("role_assignment") != "UNASSIGNED_RESEARCH_ONLY":
+    raise SystemExit("Rive role must remain unassigned research only")
+
+print("Motion Platform MP3 validation: PASS (technical bake-off complete; owner visual acceptance pending)")
