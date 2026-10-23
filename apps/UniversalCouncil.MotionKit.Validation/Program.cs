@@ -13,6 +13,10 @@ CheckReducedMotionPreserved();
 CheckFutureTruthRejected();
 CheckMissingReducedEquivalentRejected();
 CheckUnknownEnumInputsRejected();
+CheckTruthRevocationStopsMotion();
+CheckStaleTruthRevocationCannotCancelNewerMotion();
+CheckTruthRevocationReleasesNextQueuedIntent();
+CheckContractSnapshotIsImmutable();
 CheckQueueBound();
 CheckCancelTarget();
 
@@ -301,6 +305,158 @@ void CheckUnknownEnumInputsRejected()
     Check(
         badPurpose.Disposition == MotionDisposition.RejectedInvalid,
         "unknown motion purpose must fail closed");
+}
+
+
+void CheckTruthRevocationStopsMotion()
+{
+    var coordinator = NewCoordinator(17);
+    const string target = "status:truth-revoke";
+
+    var started = coordinator.Submit(
+        Request(
+            "r-truth-revoke",
+            target,
+            Contract("WAITING_OWNER", MotionInterruptionMode.Replace, "PRODUCT_STATE_WAITING_OWNER"),
+            Truth("PRODUCT_STATE_WAITING_OWNER", true),
+            MotionAccessibilityMode.Full),
+        now);
+    var lease = started.StartedLease
+        ?? throw new InvalidOperationException("truth revocation test must start");
+
+    var revoked = coordinator.ReconcileTruth(
+        target,
+        new MotionTruthSnapshot(
+            "PRODUCT_STATE_WAITING_OWNER",
+            false,
+            "state-v2",
+            now.AddMilliseconds(10)),
+        now.AddMilliseconds(10));
+
+    Check(revoked.Disposition == MotionDisposition.TruthRevoked, "false truth must produce explicit revocation");
+    Check(revoked.CancelledInstances.Contains(lease.InstanceId), "truth revocation must cancel matching active motion");
+    Check(coordinator.ActiveCount(target) == 0, "revoked truth must stop matching active motion");
+}
+
+void CheckStaleTruthRevocationCannotCancelNewerMotion()
+{
+    var coordinator = NewCoordinator(18);
+    const string target = "status:truth-freshness";
+
+    var started = coordinator.Submit(
+        Request(
+            "r-newer-truth",
+            target,
+            Contract("BLOCKED", MotionInterruptionMode.Replace, "PRODUCT_STATE_BLOCKED"),
+            new MotionTruthSnapshot(
+                "PRODUCT_STATE_BLOCKED",
+                true,
+                "state-v2",
+                now.AddMilliseconds(20)),
+            MotionAccessibilityMode.Full),
+        now.AddMilliseconds(20));
+    var lease = started.StartedLease
+        ?? throw new InvalidOperationException("freshness test must start");
+
+    var staleRevoke = coordinator.ReconcileTruth(
+        target,
+        new MotionTruthSnapshot(
+            "PRODUCT_STATE_BLOCKED",
+            false,
+            "state-v1",
+            now.AddMilliseconds(10)),
+        now.AddMilliseconds(30));
+
+    Check(staleRevoke.Disposition == MotionDisposition.TruthRevoked, "stale false truth is observed but not authoritative over newer lease");
+    Check(!staleRevoke.CancelledInstances.Contains(lease.InstanceId), "older truth must not cancel motion backed by newer truth");
+    Check(coordinator.ActiveCount(target) == 1, "newer active motion must survive stale truth revocation");
+}
+
+void CheckTruthRevocationReleasesNextQueuedIntent()
+{
+    var coordinator = NewCoordinator(19, 20);
+    const string target = "handoff:truth-release";
+
+    var active = coordinator.Submit(
+        Request(
+            "r-active-handoff",
+            target,
+            Contract("HANDOFF", MotionInterruptionMode.Replace, "HANDOFF_EVENT_EXISTS"),
+            Truth("HANDOFF_EVENT_EXISTS", true),
+            MotionAccessibilityMode.Full),
+        now);
+    _ = active.StartedLease
+        ?? throw new InvalidOperationException("truth release test must start active handoff");
+
+    var queued = coordinator.Submit(
+        Request(
+            "r-queued-return",
+            target,
+            Contract("RETURN", MotionInterruptionMode.Queue, "RETURN_EVENT_EXISTS"),
+            Truth("RETURN_EVENT_EXISTS", true),
+            MotionAccessibilityMode.Full),
+        now);
+    Check(queued.Disposition == MotionDisposition.QueuedAwaitingFreshTruth, "return intent should queue");
+
+    var revoked = coordinator.ReconcileTruth(
+        target,
+        new MotionTruthSnapshot(
+            "HANDOFF_EVENT_EXISTS",
+            false,
+            "state-v2",
+            now.AddMilliseconds(5)),
+        now.AddMilliseconds(5));
+
+    Check(revoked.Disposition == MotionDisposition.TruthRevoked, "handoff truth must revoke active motion");
+    var released = revoked.ReleasedPending
+        ?? throw new InvalidOperationException("next queued intent must be released after active truth revocation");
+    Check(released.RequestId == "r-queued-return", "released queued intent identity must be preserved");
+    Check(coordinator.ActiveCount(target) == 0, "released intent must not auto-start");
+    Check(coordinator.QueuedCount(target) == 0, "released intent must leave queue and await fresh resubmission");
+}
+
+void CheckContractSnapshotIsImmutable()
+{
+    var coordinator = NewCoordinator(21);
+    const string target = "route:immutable-contract";
+
+    var active = coordinator.Submit(
+        Request(
+            "r-snapshot-active",
+            target,
+            Contract("ROUTE_TRANSFER", MotionInterruptionMode.Replace, "ROUTE_EVENT_EXISTS"),
+            Truth("ROUTE_EVENT_EXISTS", true),
+            MotionAccessibilityMode.Full),
+        now);
+    var activeLease = active.StartedLease
+        ?? throw new InvalidOperationException("contract snapshot test must start active motion");
+
+    var mutablePurposes = new HashSet<MotionPurpose> { MotionPurpose.Handoff };
+    var mutableContract = new MotionContract(
+        "RETURN",
+        mutablePurposes,
+        MotionInterruptionMode.Queue,
+        "RETURN_EVENT_EXISTS",
+        "STATIC_RETURN");
+
+    var queued = coordinator.Submit(
+        Request(
+            "r-snapshot-queued",
+            target,
+            mutableContract,
+            Truth("RETURN_EVENT_EXISTS", true),
+            MotionAccessibilityMode.Full),
+        now);
+    Check(queued.Disposition == MotionDisposition.QueuedAwaitingFreshTruth, "mutable contract should queue after snapshot");
+
+    mutablePurposes.Clear();
+    mutablePurposes.Add(MotionPurpose.Feedback);
+
+    var completed = coordinator.Complete(activeLease.InstanceId);
+    var released = completed.ReleasedPending
+        ?? throw new InvalidOperationException("snapshotted queued contract should be released");
+    Check(released.Contract.Purposes.Contains(MotionPurpose.Handoff), "queued contract must retain snapshotted original purpose");
+    Check(!released.Contract.Purposes.Contains(MotionPurpose.Feedback), "external mutation must not alter queued contract");
 }
 
 void CheckQueueBound()
