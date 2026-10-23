@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="4.153.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\UniversalCouncil.CommandCenter.Core\UniversalCouncil.CommandCenter.Core.csproj" />
     <ProjectReference Include="..\UniversalCouncil.CommandCenter.Host\UniversalCouncil.CommandCenter.Host.csproj" />
   </ItemGroup>
