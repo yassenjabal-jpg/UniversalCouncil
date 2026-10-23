@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "profile_id": "command-center-reference",
+  "product_id": "universal-council-command-center",
+  "status": "REFERENCE_PROFILE_DRAFT",
+  "inherits_platform_semantics": true,
+  "visual_identity_source": "LOCKED_COMMAND_CENTER_VISUAL_SYSTEM",
+  "personality": {
+    "name": "restrained_semantic",
+    "at_rest": "QUIET",
+    "density": "LOW_TO_MEDIUM",
+    "overshoot": "RARE",
+    "decorative_loops": "FORBIDDEN"
+  },
+  "duration_classes_ms": {
+    "M1_FEEDBACK": [80, 160],
+    "M2_MICRO_STATE": [120, 240],
+    "M3_OBJECT_TRANSFER": [220, 480],
+    "M4_SIGNATURE": [320, 680]
+  },
+  "reduced_motion": {
+    "travel_removed": true,
+    "pulse_removed": true,
+    "spring_removed": true,
+    "state_labels_preserved": true,
+    "focus_preserved": true,
+    "direct_fade_allowed": true
+  },
+  "adapter_hypotheses": {
+    "MICRO_INTERACTION": ["WINDOWS_COMPOSITION"],
+    "STATEFUL_SIGIL": ["RIVE", "WINDOWS_COMPOSITION"],
+    "ROUTE_TRANSFER": ["SKIASHARP", "WINDOWS_COMPOSITION", "RIVE"],
+    "PREAUTHORED_ILLUSTRATION": ["LOTTIE_ANDROID", "RIVE"]
+  },
+  "authority": {
+    "production_binding_authorized": false,
+    "visual_identity_change_authorized": false,
+    "stage8_opened": false
+  }
+}
