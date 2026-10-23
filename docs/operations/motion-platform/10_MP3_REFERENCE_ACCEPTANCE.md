@@ -2,7 +2,7 @@
 
 Date: 2026-10-23
 Host: YASSIN
-Status: TECHNICAL_BAKEOFF_COMPLETE_OWNER_VISUAL_ACCEPTANCE_PENDING
+Status: REFERENCE_ACCEPTED_OWNER_APPROVED
 
 ## Scope
 
@@ -66,9 +66,9 @@ It contains the structured JSON run record, stdout/stderr/exit-code evidence and
 
 Technical bake-off for currently assigned roles: PASS.
 
-Formal MP3 gate RENDERER_ROLE_MATRIX_ACCEPTED: NOT PASSED.
+Formal MP3 gate RENDERER_ROLE_MATRIX_ACCEPTED: PASSED.
 
-Only owner visual acceptance remains. This document does not infer or manufacture that approval.
+Owner visual acceptance was explicitly granted on 2026-10-23 after review of the MP3 visual package. The approval is recorded in `11_MP3_OWNER_VISUAL_REVIEW.md`. This does not promote any renderer to production adoption.
 
 ## MP4 transition
 
