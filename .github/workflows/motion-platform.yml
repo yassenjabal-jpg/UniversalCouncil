@@ -82,3 +82,7 @@ jobs:
         shell: pwsh
         run: |
           dotnet build apps/UniversalCouncil.MotionKit.SkiaWpfCompileProbe/UniversalCouncil.MotionKit.SkiaWpfCompileProbe.csproj -c Release --nologo
+      - name: Build Windows Composition WPF compile probe
+        shell: pwsh
+        run: |
+          dotnet build apps/UniversalCouncil.MotionKit.CompositionWpfCompileProbe/UniversalCouncil.MotionKit.CompositionWpfCompileProbe.csproj -c Release --nologo
