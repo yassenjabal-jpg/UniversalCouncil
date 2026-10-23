@@ -127,7 +127,7 @@
         "VECTOR_STATE_MACHINE"
       ],
       "authorized_probes": [
-        "WINDOWS_NATIVE_BUILD_LATER",
+        "WINDOWS_NATIVE_PREMAKE_GENERATION",
         "INTEROP_BOUNDARY_LATER"
       ],
       "source_head_sha": "f4da8fa42ed2c256d3d672e3828d18a328528f50",
@@ -145,7 +145,19 @@
           "status": "PASS",
           "detail": "Repository documents Windows native C++ build/toolchain and D3D11/D3D12 renderer backends; this does not prove .NET/WPF integration."
         }
-      ]
+      ],
+      "probe_definition": {
+        "source_commit": "f4da8fa42ed2c256d3d672e3828d18a328528f50",
+        "required_tools": [
+          "clang-cl",
+          "msbuild",
+          "sh"
+        ],
+        "command": "tests -> sh ../build/build_rive.sh nobuild release",
+        "expected_artifact": "tests/out/release/rive.sln",
+        "evidence_if_passes": "COMPILE_EVIDENCE",
+        "production_adoption": false
+      }
     },
     "LOTTIE_WINDOWS": {
       "repository": "CommunityToolkit/Lottie-Windows",
