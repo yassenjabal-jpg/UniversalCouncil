@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   platform:
-    name: Contract and Semantic Kernel
+    name: Contracts and Runtime Boundaries
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -35,7 +35,15 @@ jobs:
           if [ -f tools/motion_platform_mp1_validate.py ]; then
             python tools/motion_platform_mp1_validate.py
           else
-            echo "MP1 validator not present; foundation contract only."
+            echo "MP1 validator not present."
+          fi
+      - name: Validate MP2 contract when present
+        shell: bash
+        run: |
+          if [ -f tools/motion_platform_mp2_validate.py ]; then
+            python tools/motion_platform_mp2_validate.py
+          else
+            echo "MP2 validator not present."
           fi
       - run: python -m unittest discover -s company/tests -p 'test_motion_platform*.py' -v
       - name: Validate semantic kernel when present
@@ -43,6 +51,10 @@ jobs:
         run: |
           if [ -f apps/UniversalCouncil.MotionKit.Validation/UniversalCouncil.MotionKit.Validation.csproj ]; then
             dotnet run --project apps/UniversalCouncil.MotionKit.Validation -c Release
-          else
-            echo "MotionKit semantic kernel not present; foundation contract only."
+          fi
+      - name: Validate renderer boundary when present
+        shell: bash
+        run: |
+          if [ -f apps/UniversalCouncil.MotionKit.RendererValidation/UniversalCouncil.MotionKit.RendererValidation.csproj ]; then
+            dotnet run --project apps/UniversalCouncil.MotionKit.RendererValidation -c Release
           fi
