@@ -171,7 +171,11 @@ void CheckQueueRequiresFreshTruth()
             releasedPending.RequestId,
             target,
             releasedPending.Contract,
-            Truth("RETURN_EVENT_EXISTS", true, "state-v2"),
+            new MotionTruthSnapshot(
+                "RETURN_EVENT_EXISTS",
+                true,
+                "state-v2",
+                now.AddSeconds(1)),
             releasedPending.AccessibilityMode),
         now.AddSeconds(1));
 
