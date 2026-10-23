@@ -120,10 +120,7 @@ if not finding or finding["status"] != "BLOCKED" or finding["evidence_class"] !=
     raise SystemExit("SkiaSharp Views.WPF net10 compatibility finding missing")
 
 composition = candidates["WINDOWS_COMPOSITION"]
-if (
-    composition["version"] != "2.5.1"
-    or composition["status"] != "COMPILE_PROVEN_RUNTIME_DEFERRED"
-):
+if composition["version"] != "2.5.1" or composition["status"] != "COMPILE_PROVEN_RUNTIME_DEFERRED":
     raise SystemExit("Windows Composition research pin/status drifted")
 if set(composition["authorized_probes"]) != {
     "WINDOWS_WPF_COMPOSITION_COMPILE",
