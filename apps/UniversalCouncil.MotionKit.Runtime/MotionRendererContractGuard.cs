@@ -44,6 +44,11 @@ public static class MotionRendererContractGuard
             return "Accessibility mode is unknown.";
         }
 
+        if (!ValidIdentifier(command.ProfileId))
+        {
+            return "Motion profile ID is invalid.";
+        }
+
         if (!ValidIdentifier(command.VisualToken))
         {
             return "Visual token is invalid.";
@@ -62,11 +67,19 @@ public static class MotionRendererContractGuard
         return null;
     }
 
-    public static string? ValidateAdapter(string adapterId, MotionRenderCapability capabilities)
+    public static string? ValidateAdapter(
+        string adapterId,
+        string adapterVersion,
+        MotionRenderCapability capabilities)
     {
         if (!ValidIdentifier(adapterId))
         {
             return "Adapter ID is invalid.";
+        }
+
+        if (!ValidIdentifier(adapterVersion))
+        {
+            return "Adapter version is invalid.";
         }
 
         if (!KnownCapabilitySet(capabilities))
