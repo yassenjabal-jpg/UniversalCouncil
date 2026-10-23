@@ -88,7 +88,17 @@ Empirical probe sequence:
 
 The active probe deliberately stops at official build-system generation. It does not build a custom wrapper and does not claim runtime integration.
 
-Status: NATIVE_INTEROP_RESEARCH.
+Observed compile evidence:
+- the pinned exact commit successfully ran the repository's official Windows build-generation path and produced `tests/out/release/rive.sln`;
+- an initial HarfBuzz checkout failed only because Windows Git long paths were disabled; enabling `core.longpaths=true` resolved that environment limitation;
+- the pinned low-level runtime repository contains no official C# runtime/binding project.
+
+Decision:
+- Rive is COMPILE_FEASIBLE_NATIVE_INTEROP_RESEARCH;
+- no general .NET wrapper will be invented now;
+- native interop work is allowed only if a concrete MP4 stateful-vector use case shows enough visual/product value to justify the cost.
+
+Status: COMPILE_FEASIBLE_NATIVE_INTEROP_RESEARCH.
 
 ### Lottie-Windows
 Repository: CommunityToolkit/Lottie-Windows
