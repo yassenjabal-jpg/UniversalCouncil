@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "candidate_id": "motionkit-mp4-command-center-reference-integration-20261023",
   "parent_mp3_sha": "602639dbc10a25824aa0b1f131fd6fc184771ac0",
-  "status": "REFERENCE_INTEGRATION_CANDIDATE_NOT_VISUALLY_ACCEPTED",
+  "status": "REFERENCE_RUNTIME_EVIDENCE_COMPLETE_OWNER_VISUAL_REVIEW_PENDING",
   "strategy": "OPEN_SOURCE_FIRST_INTEGRATION_OVER_INVENTION",
   "reference_application": "UniversalCouncil Command Center",
   "renderer": {
@@ -34,6 +34,36 @@
       "visual_acceptance": false
     }
   ],
+  "reference_runtime_evidence": {
+    "candidate_sha": "c13fa2ad069075e21f35b3970b388b5922826ee8",
+    "host": "YASSIN",
+    "evidence_directory": "lab/motion-platform/evidence/yassin-20261023-mp4",
+    "source_surface": "ACTUAL_WPF_RENDER_TARGET_BITMAP",
+    "full": {
+      "frame_count": 360,
+      "duration_seconds": 12,
+      "changed_frame_count": 32,
+      "longest_changed_run": 9,
+      "motion_run_count": 9
+    },
+    "reduced": {
+      "frame_count": 360,
+      "duration_seconds": 12,
+      "changed_frame_count": 11,
+      "longest_changed_run": 3,
+      "motion_run_count": 7
+    },
+    "same_semantic_steps": true,
+    "wgc_diagnostic": {
+      "status": "REJECTED_STALE_SOURCE",
+      "source_frames_arrived": 1,
+      "fresh_source_sample_count": 1,
+      "stale_source_sample_count": 1139,
+      "changed_frame_count": 0,
+      "fail_closed_guard_added": true
+    },
+    "owner_visual_acceptance": false
+  },
   "shared_motionkit_changes": false,
   "authority": {
     "production_adoption_authorized": false,

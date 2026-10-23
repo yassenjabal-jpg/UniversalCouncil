@@ -1,7 +1,7 @@
 # Motion Platform MP4 — Command Center Reference Integration
 
 Date: 2026-10-23
-Status: REFERENCE_INTEGRATION_CANDIDATE
+Status: REFERENCE_RUNTIME_EVIDENCE_COMPLETE_OWNER_VISUAL_REVIEW_PENDING
 Parent MP3 exact head: `602639dbc10a25824aa0b1f131fd6fc184771ac0`
 Parent gate: `RENDERER_ROLE_MATRIX_ACCEPTED = true`
 
@@ -113,6 +113,33 @@ When Windows/user Reduced Motion disables the cue:
 - route travel is not started;
 - semantic click behavior and inspector/drawer behavior remain available.
 
+## Reference runtime evidence
+
+Focused MP4 evidence was captured on YASSIN from source SHA `c13fa2ad069075e21f35b3970b388b5922826ee8`.
+
+Evidence directory: `lab/motion-platform/evidence/yassin-20261023-mp4`.
+
+Full and Reduced recordings execute the exact same seven semantic steps at the same frame numbers:
+- ROLE_ACTIVATION opens the same role context;
+- ARTIFACT_HANDOFF opens the same handoff context;
+- Full preserves route/handoff travel;
+- Reduced preserves semantic state changes while removing the longer travel sequence.
+
+Focused capture results:
+- Full: 360 frames / 12 s, 32 visibly changed frames, longest changed run 9, motion runs 9;
+- Reduced: 360 frames / 12 s, 11 visibly changed frames, longest changed run 3, motion runs 7.
+
+Owner-review artifacts:
+- `mp4-reference-full-motion.mp4`;
+- `mp4-reference-reduced-motion.mp4`;
+- `mp4-owner-review-contact-sheet.png`;
+- selected ROLE_ACTIVATION / ARTIFACT_HANDOFF PNG frames;
+- Full/Reduced evidence manifests and SHA-256 summary.
+
+An exploratory persistent WGC run was rejected because it delivered only one fresh source frame and zero visible changes. The WGC path was hardened fail-closed so stale one-frame capture can no longer report PASS.
+
+Owner visual acceptance remains pending. This evidence does not authorize production renderer adoption, Stage 8, or PR merge.
+
 ## Acceptance before any merge
 
 1. exact-head Command Center build succeeds on Windows;
@@ -120,6 +147,6 @@ When Windows/user Reduced Motion disables the cue:
 3. existing Motion Platform MP0-MP3 validators remain green;
 4. no SkiaSharp.Views.WPF dependency enters the product;
 5. source audit confirms the two manual WPF route/handoff animations are replaced rather than duplicated;
-6. actual owner-visible/reference-Windows evidence is still required before visual acceptance.
+6. owner reviews the committed Full/Reduced reference-Windows package and explicitly approves visual acceptance.
 
 This branch is an integration candidate only, not production adoption.

@@ -70,7 +70,17 @@ internal static partial class Program
         var totalCaptureLatenessMs = 0d;
         var maxCaptureLatenessMs = 0d;
         var lateFrameCount = 0;
+        var frameByteLength = checked(MotionWidth * MotionHeight * 4);
         using var frameEncoder = new BackgroundPngFrameEncoder(framesDirectory, frameCount);
+        var captureSession = new MotionCaptureSession();
+        try
+        {
+            Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
+        }
+        catch
+        {
+            // Best-effort evidence scheduling only.
+        }
         var captureClock = Stopwatch.StartNew();
 
         for (var frame = 0; frame < frameCount; frame++)
@@ -99,12 +109,13 @@ internal static partial class Program
                     lateFrameCount++;
                 }
 
-            var capture = CaptureMotionFrame(window);
-            frameEncoder.Queue(capture.Pixels);
-
-            var (meanDelta, changedRatio) = previousPixels is null
+            var pixels = captureSession.Capture(window);
+            var retained = false;
+            try
+            {
+                var (meanDelta, changedRatio) = previousPixels is null
                     ? (0d, 0d)
-                    : ComputeFrameDelta(previousPixels, capture.Pixels);
+                    : ComputeFrameDelta(previousPixels, pixels, frameByteLength);
                 var visiblyChanged = meanDelta >= 0.20 || changedRatio >= 0.004;
 
                 if (visiblyChanged)
@@ -129,7 +140,29 @@ internal static partial class Program
                     Math.Round(meanDelta, 4),
                     Math.Round(changedRatio, 6),
                     visiblyChanged));
-            previousPixels = capture.Pixels;
+
+                var frameToQueue = previousPixels;
+                previousPixels = pixels;
+                retained = true;
+                if (frameToQueue is not null)
+                {
+                    frameEncoder.QueuePooled(frameToQueue, frameByteLength);
+                }
+            }
+            finally
+            {
+                if (!retained)
+                {
+                    ArrayPool<byte>.Shared.Return(pixels);
+                }
+            }
+        }
+
+        var finalFrame = previousPixels;
+        previousPixels = null;
+        if (finalFrame is not null)
+        {
+            frameEncoder.QueuePooled(finalFrame, frameByteLength);
         }
 
         captureClock.Stop();
@@ -180,8 +213,14 @@ internal static partial class Program
                     capture_timing = new
                     {
                         clock = "STOPWATCH_REALTIME_WPF",
+                        timing_authority = "COMPANION_MOTION_DRIVER",
+                        observer_effect = "RENDER_CAPTURE_DIAGNOSTIC_NOT_REALTIME_AUTHORITY",
                         pipeline = "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG",
                         capture_surface_cache = "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE",
+                        render_target_bitmap_reused = true,
+                        pixel_buffers_pooled = true,
+                        capture_thread_priority = "ABOVE_NORMAL_BEST_EFFORT",
+                        encoder_process_priority = "BELOW_NORMAL_BEST_EFFORT",
                         synchronous_layout_per_frame = false,
                         png_compression_level = 1,
                         target_capture_duration_seconds = (double)frameCount / MotionFramesPerSecond,
@@ -540,28 +579,39 @@ internal static partial class Program
         worker.GetAwaiter().GetResult();
     }
 
-    private static MotionCapture CaptureMotionFrame(MainWindow window)
+    private sealed class MotionCaptureSession
     {
-        if (window.Content is not FrameworkElement root)
-        {
-            throw new InvalidOperationException("MainWindow root content is not a FrameworkElement.");
-        }
-
-        // Dispatcher pacing already services layout/render work before each sample.
-        // Re-running a full synchronous layout pass here turns evidence capture into
-        // a CPU benchmark and dilates WPF animation time.
-        var bitmap = new RenderTargetBitmap(
+        private readonly RenderTargetBitmap _bitmap = new(
             MotionWidth,
             MotionHeight,
             96,
             96,
             PixelFormats.Pbgra32);
-        bitmap.Render(root);
+        private readonly int _stride = MotionWidth * 4;
+        private readonly int _byteLength = checked(MotionWidth * MotionHeight * 4);
 
-        var stride = MotionWidth * 4;
-        var pixels = new byte[stride * MotionHeight];
-        bitmap.CopyPixels(pixels, stride, 0);
-        return new MotionCapture(pixels);
+        internal byte[] Capture(MainWindow window)
+        {
+            if (window.Content is not FrameworkElement root)
+            {
+                throw new InvalidOperationException("MainWindow root content is not a FrameworkElement.");
+            }
+
+            _bitmap.Clear();
+            _bitmap.Render(root);
+
+            var pixels = ArrayPool<byte>.Shared.Rent(_byteLength);
+            try
+            {
+                _bitmap.CopyPixels(pixels, _stride, 0);
+                return pixels;
+            }
+            catch
+            {
+                ArrayPool<byte>.Shared.Return(pixels);
+                throw;
+            }
+        }
     }
 
     private sealed class BackgroundPngFrameEncoder : IDisposable
@@ -625,6 +675,14 @@ internal static partial class Program
             _process = Process.Start(startInfo)
                 ?? throw new InvalidOperationException(
                     "Unable to start background ffmpeg WPF frame encoder.");
+            try
+            {
+                _process.PriorityClass = ProcessPriorityClass.BelowNormal;
+            }
+            catch
+            {
+                // Best-effort evidence hardening: WPF rendering retains scheduling priority.
+            }
             _stdoutTask = _process.StandardOutput.ReadToEndAsync();
             _stderrTask = _process.StandardError.ReadToEndAsync();
 
