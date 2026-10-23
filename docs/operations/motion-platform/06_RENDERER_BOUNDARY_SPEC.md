@@ -43,6 +43,7 @@ Must never become product truth or production visual evidence.
 
 A renderer command receives:
 - motion instance ID;
+- product Motion Profile ID;
 - target ID;
 - semantic event ID;
 - accessibility mode;
@@ -100,6 +101,7 @@ Caller mutation after creation must not affect resolved commands.
 
 Every adapter exposes:
 - stable adapter ID;
+- explicit adapter version;
 - capability set;
 - BeginAsync;
 - CancelAsync;
@@ -112,6 +114,9 @@ Required behavior:
 - invalid command => REJECTED_INVALID;
 - duplicate active instance => DUPLICATE_INSTANCE;
 - missing instance on cancel/settle => NOT_ACTIVE;
+- StaticFallback requires STATIC_SETTLE capability;
+- unsupported StaticFallback leaves the active instance intact for an explicit caller decision;
+- adapter ID + version are returned in result/diagnostics evidence;
 - no silent fallback;
 - no product truth mutation.
 
@@ -160,10 +165,14 @@ MP2 must prove:
 - missing-rule fail closed;
 - invalid-profile fail closed;
 - renderer command contains no truth object;
+- renderer command carries Motion Profile identity;
+- render results/diagnostics carry adapter version identity;
 - supported fake begin;
 - unsupported capability rejection;
 - duplicate instance rejection;
 - settle/cancel/not-active behavior;
+- StaticFallback capability enforcement without silent destruction;
+- invalid adapter version rejection;
 - unknown capability rejection;
 - concurrent fake renderer behavior;
 - disposal cleanup.
