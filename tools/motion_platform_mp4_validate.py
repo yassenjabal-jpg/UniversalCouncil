@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 
+
 def evidence_sha256(path: Path) -> str:
     if path.suffix.lower() in {".json", ".md", ".txt"}:
         text = path.read_text(encoding="utf-8-sig")
