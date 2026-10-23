@@ -34,7 +34,33 @@
           "status": "BLOCKED",
           "detail": "SkiaSharp.Views.WPF 4.153.1 restored OpenTK/OpenTK.GLWpfControl through .NET Framework compatibility under net10.0-windows and emitted NU1701; warning suppression is not accepted."
         }
-      ]
+      ],
+      "observed_evidence": [
+        {
+          "id": "SKIA_HEADLESS_RUNTIME_PASS",
+          "evidence_class": "RUNTIME_EVIDENCE",
+          "source_head_sha": "2e672860fa0de2c09042343575d48cfff9761701",
+          "workflow_run_id": 39924176096,
+          "job_id": 120316395474,
+          "status": "PASS",
+          "detail": "SkiaSharp 4.153.1 offscreen adapter executed through MotionKit runtime; deterministic frame hash, Full/Reduced distinction, lifecycle, unsupported capability and 100-frame batch observation passed."
+        },
+        {
+          "id": "SKIA_WPF_CORE_BRIDGE_COMPILE_PASS",
+          "evidence_class": "COMPILE_EVIDENCE",
+          "source_head_sha": "2e672860fa0de2c09042343575d48cfff9761701",
+          "workflow_run_id": 39924176096,
+          "job_id": 120316395189,
+          "status": "PASS",
+          "detail": "net10.0-windows WPF project using core SkiaSharp 4.153.1 and SKBitmap-to-BitmapSource bridge built successfully without suppressing NU1701."
+        }
+      ],
+      "informational_measurement": {
+        "environment": "ubuntu-latest shared CI",
+        "sample": "100 offscreen 64x64 frames",
+        "elapsed_ms": 91.85,
+        "gating": false
+      }
     },
     "WINDOWS_COMPOSITION": {
       "repository": "microsoft/WindowsAppSDK",
