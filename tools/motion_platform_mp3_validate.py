@@ -155,12 +155,8 @@ if (
 ):
     raise SystemExit("LottieGen Linux glob limitation finding missing")
 
-composition_findings = {
-    item["id"]: item for item in composition.get("observed_findings", [])
-}
-queue_finding = composition_findings.get(
-    "WINDOWS_COMPOSITION_UNOWNED_QUEUE_SHUTDOWN_TIMEOUT"
-)
+composition_findings = {item["id"]: item for item in composition.get("observed_findings", [])}
+queue_finding = composition_findings.get("WINDOWS_COMPOSITION_UNOWNED_QUEUE_SHUTDOWN_TIMEOUT")
 if (
     not queue_finding
     or queue_finding["status"] != "BLOCKED_PROBE_LIFECYCLE"
