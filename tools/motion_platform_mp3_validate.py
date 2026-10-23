@@ -137,16 +137,36 @@ if lottie["license"] != "MIT":
     raise SystemExit("Lottie-Windows MIT license evidence drifted")
 if lottie["lottiegen_tool_version"] != "8.2.250604":
     raise SystemExit("LottieGen tool version pin drifted")
-if set(lottie["authorized_probes"]) != {"LOTTIEGEN_CODEGEN_RUNTIME", "WINUI_COMPILE_LATER"}:
+if set(lottie["authorized_probes"]) != {"LOTTIEGEN_WINDOWS_CODEGEN_RUNTIME", "WINUI_COMPILE_LATER"}:
     raise SystemExit("Lottie-Windows probe authority drifted")
 lottie_findings = {item["id"]: item for item in lottie.get("observed_findings", [])}
 strict_finding = lottie_findings.get("LOTTIEGEN_STRICTMODE_HELP_PARSER_MISMATCH")
+glob_finding = lottie_findings.get("LOTTIEGEN_GLOB_WINDOWS_SEPARATOR_ON_LINUX")
 if (
     not strict_finding
     or strict_finding["status"] != "OBSERVED"
     or strict_finding["evidence_class"] != "RUNTIME_EVIDENCE"
 ):
     raise SystemExit("LottieGen strict-switch runtime finding missing")
+if (
+    not glob_finding
+    or glob_finding["status"] != "PLATFORM_TOOLING_LIMITATION"
+    or glob_finding["evidence_class"] != "RUNTIME_EVIDENCE"
+):
+    raise SystemExit("LottieGen Linux glob limitation finding missing")
+
+composition_findings = {
+    item["id"]: item for item in composition.get("observed_findings", [])
+}
+queue_finding = composition_findings.get(
+    "WINDOWS_COMPOSITION_UNOWNED_QUEUE_SHUTDOWN_TIMEOUT"
+)
+if (
+    not queue_finding
+    or queue_finding["status"] != "BLOCKED_PROBE_LIFECYCLE"
+    or queue_finding["evidence_class"] != "RUNTIME_EVIDENCE"
+):
+    raise SystemExit("Composition unowned-queue lifecycle finding missing")
 
 policy = state["performance_policy"]
 if policy["shared_ci_wall_clock_is_gating"]:
@@ -281,6 +301,8 @@ for marker in (
     'StartAnimation("Opacity"',
     'StopAnimation("Opacity"',
     "CreatePropertySet",
+    "DispatcherQueueController.CreateOnCurrentThread",
+    "ShutdownQueue()",
 ):
     if marker not in composition_runtime:
         raise SystemExit(f"Composition runtime API marker missing: {marker}")
@@ -298,6 +320,8 @@ for marker in (
     "Lottie-Windows is NOT treated as a direct WPF control.",
     "LottieGen deterministic codegen probe",
     "Observed tooling discrepancy:",
+    "Observed platform limitation:",
+    "first bounded runtime probe",
 ):
     if marker not in spec:
         raise SystemExit(f"MP3 specification drifted: {marker}")
