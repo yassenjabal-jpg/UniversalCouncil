@@ -40,7 +40,8 @@ public enum MotionDisposition
     Completed,
     CompletedQueueReleased,
     StaleCompletionIgnored,
-    TargetCancelled
+    TargetCancelled,
+    TargetForgotten
 }
 
 public sealed record MotionTruthSnapshot(
