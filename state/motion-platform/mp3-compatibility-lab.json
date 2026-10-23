@@ -23,7 +23,17 @@
       ],
       "authorized_probes": [
         "LINUX_HEADLESS_RUNTIME",
-        "WINDOWS_WPF_COMPILE"
+        "WINDOWS_WPF_CORE_BRIDGE_COMPILE"
+      ],
+      "observed_findings": [
+        {
+          "id": "SKIA_VIEWS_WPF_NET10_NU1701",
+          "evidence_class": "COMPILE_EVIDENCE",
+          "source_run_id": 39923552349,
+          "source_job_id": 120314313619,
+          "status": "BLOCKED",
+          "detail": "SkiaSharp.Views.WPF 4.153.1 restored OpenTK/OpenTK.GLWpfControl through .NET Framework compatibility under net10.0-windows and emitted NU1701; warning suppression is not accepted."
+        }
       ]
     },
     "WINDOWS_COMPOSITION": {
