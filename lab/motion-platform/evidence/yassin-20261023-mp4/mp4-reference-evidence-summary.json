@@ -4,6 +4,7 @@
     "candidate_sha":  "c13fa2ad069075e21f35b3970b388b5922826ee8",
     "host":  "YASSIN",
     "source_surface":  "ACTUAL_WPF_RENDER_TARGET_BITMAP",
+    "hash_mode":  "CANONICAL_LF_TEXT_OR_RAW_BINARY",
     "renderer":  "SkiaSharp 4.153.1",
     "full":  {
                  "frame_count":  360,
@@ -55,7 +56,7 @@
                   {
                       "name":  "full-motion-evidence-manifest.json",
                       "bytes":  92569,
-                      "sha256":  "cc54e7c985e5fc4d60c2a02d1fb5a8869937ab8dadb5cb547aed9f1c687fef25"
+                      "sha256":  "4d966501c00f86c9dc394fc8d4c23911477e06a7b4a5edc9efcbe56add526132"
                   },
                   {
                       "name":  "full-role-activation-mid.png",
@@ -90,7 +91,7 @@
                   {
                       "name":  "reduced-motion-evidence-manifest.json",
                       "bytes":  92224,
-                      "sha256":  "0a7dd3f2a50c75972db6f57bf56892f105e559d69d373170334288cf3f8924e5"
+                      "sha256":  "894fc407e616a47905ac364585c6a2d5af6f959c3a9d3e8fb8823d79a2128079"
                   },
                   {
                       "name":  "reduced-role-settled.png",

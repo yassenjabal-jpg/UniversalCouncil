@@ -61,10 +61,7 @@ def validate_motion_driver_timing(
     if abs(target - target_seconds) > 0.001:
         raise SystemExit(f"{mode} motion-driver target duration drifted")
     if abs(actual - target) > 1.25:
-        raise SystemExit(
-            f"{mode} real WPF timing exceeded tolerance "
-            f"({actual:.3f}s actual vs {target:.3f}s target)"
-        )
+        raise SystemExit(f"{mode} real WPF timing exceeded tolerance ({actual:.3f}s actual vs {target:.3f}s target)")
     if float(driver.get("max_step_lateness_ms", 999999)) > 100:
         raise SystemExit(f"{mode} real WPF semantic timing missed cadence by more than 100ms")
 

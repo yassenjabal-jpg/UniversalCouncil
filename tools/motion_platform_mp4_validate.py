@@ -4,6 +4,14 @@ import hashlib
 import json
 from pathlib import Path
 
+def evidence_sha256(path: Path) -> str:
+    if path.suffix.lower() in {".json", ".md", ".txt"}:
+        text = path.read_text(encoding="utf-8-sig")
+        canonical = text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
+        return hashlib.sha256(canonical).hexdigest()
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
 ROOT = Path(__file__).resolve().parents[1]
 STATE = ROOT / "state" / "motion-platform" / "mp4-reference-integration.json"
 SPEC = ROOT / "docs" / "operations" / "motion-platform" / "09_MP4_REFERENCE_INTEGRATION.md"
@@ -76,6 +84,8 @@ if not wgc_diagnostic.get("fail_closed_guard_added"):
 if not EVIDENCE_SUMMARY.exists():
     raise SystemExit("MP4 owner-review evidence summary is missing")
 summary = json.loads(EVIDENCE_SUMMARY.read_text(encoding="utf-8-sig"))
+if summary.get("hash_mode") != "CANONICAL_LF_TEXT_OR_RAW_BINARY":
+    raise SystemExit("MP4 evidence summary hash mode drifted")
 if summary.get("candidate_sha") != runtime_evidence.get("candidate_sha"):
     raise SystemExit("MP4 evidence summary candidate SHA drifted")
 if not summary.get("same_semantic_steps"):
@@ -103,7 +113,7 @@ for name, entry in listed_files.items():
     path = EVIDENCE_ROOT / name
     if not path.exists():
         raise SystemExit(f"MP4 evidence file missing: {name}")
-    actual = hashlib.sha256(path.read_bytes()).hexdigest()
+    actual = evidence_sha256(path)
     if actual != entry.get("sha256"):
         raise SystemExit(f"MP4 evidence hash mismatch: {name}")
 
