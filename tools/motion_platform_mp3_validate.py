@@ -25,6 +25,15 @@ COMPOSITION_PROJECT = (
     / "UniversalCouncil.MotionKit.CompositionWpfCompileProbe.csproj"
 )
 COMPOSITION_PROBE = ROOT / "apps" / "UniversalCouncil.MotionKit.CompositionWpfCompileProbe" / "CompositionWpfProbe.cs"
+COMPOSITION_RUNTIME_PROJECT = (
+    ROOT
+    / "apps"
+    / "UniversalCouncil.MotionKit.CompositionRuntimeProbe"
+    / "UniversalCouncil.MotionKit.CompositionRuntimeProbe.csproj"
+)
+COMPOSITION_RUNTIME_PROGRAM = (
+    ROOT / "apps" / "UniversalCouncil.MotionKit.CompositionRuntimeProbe" / "Program.cs"
+)
 
 for path in (
     STATE,
@@ -38,6 +47,8 @@ for path in (
     WPF_PROBE,
     COMPOSITION_PROJECT,
     COMPOSITION_PROBE,
+    COMPOSITION_RUNTIME_PROJECT,
+    COMPOSITION_RUNTIME_PROGRAM,
 ):
     if not path.exists():
         raise SystemExit(f"missing MP3 artifact: {path.relative_to(ROOT)}")
@@ -110,7 +121,8 @@ if composition["version"] != "2.5.1" or composition["status"] != "LAB_ONLY":
     raise SystemExit("Windows Composition research pin drifted")
 if set(composition["authorized_probes"]) != {
     "WINDOWS_WPF_COMPOSITION_COMPILE",
-    "WINDOWS_RUNTIME_LATER",
+    "WINDOWS_COMPOSITION_RUNTIME_API",
+    "WINDOWS_WPF_VISUAL_HOST_LATER",
 }:
     raise SystemExit("Windows Composition probe authority drifted")
 
@@ -153,6 +165,17 @@ if "<WindowsPackageType>None</WindowsPackageType>" not in composition_project:
 if 'PackageReference Include="Microsoft.WindowsAppSDK" Version="2.5.1"' not in composition_project:
     raise SystemExit("Windows App SDK pin drifted in Composition probe")
 
+composition_runtime_project = COMPOSITION_RUNTIME_PROJECT.read_text(encoding="utf-8")
+if "<UseWPF>true</UseWPF>" not in composition_runtime_project:
+    raise SystemExit("Composition runtime probe stopped using WPF process model")
+if "<WindowsPackageType>None</WindowsPackageType>" not in composition_runtime_project:
+    raise SystemExit("Composition runtime probe lost unpackaged Windows App SDK contract")
+if (
+    'PackageReference Include="Microsoft.WindowsAppSDK" Version="2.5.1"'
+    not in composition_runtime_project
+):
+    raise SystemExit("Windows App SDK pin drifted in Composition runtime probe")
+
 # External renderer packages must remain isolated to explicit lab/probe projects.
 for path in (ROOT / "apps").glob("UniversalCouncil.MotionKit.*/*.csproj"):
     text = path.read_text(encoding="utf-8")
@@ -163,8 +186,11 @@ for path in (ROOT / "apps").glob("UniversalCouncil.MotionKit.*/*.csproj"):
     }:
         raise SystemExit(f"SkiaSharp leaked outside MP3 lab boundary: {path.relative_to(ROOT)}")
     has_winappsdk = "Microsoft.WindowsAppSDK" in text
-    if has_winappsdk and path.parent.name != "UniversalCouncil.MotionKit.CompositionWpfCompileProbe":
-        raise SystemExit(f"Windows App SDK leaked outside MP3 Composition probe: {path.relative_to(ROOT)}")
+    if has_winappsdk and path.parent.name not in {
+        "UniversalCouncil.MotionKit.CompositionWpfCompileProbe",
+        "UniversalCouncil.MotionKit.CompositionRuntimeProbe",
+    }:
+        raise SystemExit(f"Windows App SDK leaked outside MP3 Composition probes: {path.relative_to(ROOT)}")
 
 adapter = SKIA_ADAPTER.read_text(encoding="utf-8")
 for marker in (
@@ -214,6 +240,19 @@ for marker in (
     if marker not in composition_probe:
         raise SystemExit(f"Composition WPF compile marker missing: {marker}")
 
+composition_runtime = COMPOSITION_RUNTIME_PROGRAM.read_text(encoding="utf-8")
+for marker in (
+    "[STAThread]",
+    "new Compositor()",
+    "CreateSpriteVisual",
+    "CreateScalarKeyFrameAnimation",
+    'StartAnimation("Opacity"',
+    'StopAnimation("Opacity"',
+    "CreatePropertySet",
+):
+    if marker not in composition_runtime:
+        raise SystemExit(f"Composition runtime API marker missing: {marker}")
+
 spec = SPEC.read_text(encoding="utf-8")
 matrix_doc = MATRIX_DOC.read_text(encoding="utf-8")
 for marker in (
@@ -221,6 +260,7 @@ for marker in (
     "Skia headless probe",
     "Windows WPF core-bridge compile probe",
     "Windows Composition WPF compile probe",
+    "Windows Composition runtime API probe",
     "shared CI runners are not stable performance reference hardware",
     "Rive is NOT treated as a .NET/WPF drop-in dependency.",
     "Lottie-Windows is NOT treated as a direct WPF control.",
