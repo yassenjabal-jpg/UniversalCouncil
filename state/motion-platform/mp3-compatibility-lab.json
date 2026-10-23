@@ -120,7 +120,7 @@
       "repository": "rive-app/rive-runtime",
       "version": "f4da8fa42ed2c256d3d672e3828d18a328528f50",
       "license": "MIT",
-      "status": "NATIVE_INTEROP_RESEARCH",
+      "status": "COMPILE_FEASIBLE_NATIVE_INTEROP_RESEARCH",
       "role": [
         "STATEFUL_VECTOR",
         "INTERACTIVE_VECTOR",
@@ -157,7 +157,35 @@
         "expected_artifact": "tests/out/release/rive.sln",
         "evidence_if_passes": "COMPILE_EVIDENCE",
         "production_adoption": false
-      }
+      },
+      "observed_findings": [
+        {
+          "id": "RIVE_WINDOWS_GIT_LONGPATH_DEPENDENCY_CHECKOUT",
+          "evidence_class": "COMPILE_EVIDENCE",
+          "source_head_sha": "0e99eb2a698fbc204534eab156796f2cfca345c2",
+          "workflow_run_id": 39928820555,
+          "job_id": 120331725802,
+          "status": "RESOLVED_ENVIRONMENT_LIMITATION",
+          "detail": "Initial official build generation reached Rive dependency checkout and failed on a HarfBuzz filename exceeding default Windows Git path limits. Enabling core.longpaths resolved the environment limitation without MotionKit code changes."
+        }
+      ],
+      "observed_evidence": [
+        {
+          "id": "RIVE_WINDOWS_NATIVE_PREMAKE_GENERATION_PASS",
+          "evidence_class": "COMPILE_EVIDENCE",
+          "source_head_sha": "2a9e8063576e6dee7440ec9bdf905934f61ba159",
+          "workflow_run_id": 39929273294,
+          "job_id": 120333222329,
+          "status": "PASS",
+          "detail": "Pinned rive-runtime commit used the repository's official build_rive.ps1/build_rive.sh path and successfully generated tests/out/release/rive.sln on the Windows GitHub runner."
+        },
+        {
+          "id": "RIVE_NO_OFFICIAL_CSHARP_BINDING_IN_PINNED_RUNTIME",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "status": "OBSERVED",
+          "detail": "Search of the pinned rive-runtime source found no C# source binding/runtime project; .NET/WPF use would require a deliberately bounded native interop layer or another officially supported route."
+        }
+      ]
     },
     "LOTTIE_WINDOWS": {
       "repository": "CommunityToolkit/Lottie-Windows",
