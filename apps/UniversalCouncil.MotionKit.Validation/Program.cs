@@ -10,6 +10,9 @@ CheckIgnoreDuplicate();
 CheckQueueRequiresFreshTruth();
 CheckParallelSafe();
 CheckReducedMotionPreserved();
+CheckFutureTruthRejected();
+CheckMissingReducedEquivalentRejected();
+CheckQueueBound();
 CheckCancelTarget();
 
 Console.WriteLine("MotionKit semantic kernel validation: PASS");
@@ -193,6 +196,97 @@ void CheckReducedMotionPreserved()
     Check(
         result.StartedLease.AccessibilityMode == MotionAccessibilityMode.Reduced,
         "reduced mode must survive coordination");
+}
+
+
+void CheckFutureTruthRejected()
+{
+    var coordinator = NewCoordinator(13);
+    var contract = Contract("WAITING_OWNER", MotionInterruptionMode.Replace, "PRODUCT_STATE_WAITING_OWNER");
+    var futureTruth = new MotionTruthSnapshot(
+        "PRODUCT_STATE_WAITING_OWNER",
+        true,
+        "state-v1",
+        now.AddMilliseconds(1));
+
+    var result = coordinator.Submit(
+        Request(
+            "r-future",
+            "status:future",
+            contract,
+            futureTruth,
+            MotionAccessibilityMode.Full),
+        now);
+
+    Check(result.Disposition == MotionDisposition.RejectedInvalid, "future-dated truth must fail closed");
+    Check(coordinator.ActiveCount("status:future") == 0, "future truth must not create a lease");
+}
+
+void CheckMissingReducedEquivalentRejected()
+{
+    var coordinator = NewCoordinator(14);
+    var invalidContract = new MotionContract(
+        "SELECT",
+        new HashSet<MotionPurpose> { MotionPurpose.Feedback },
+        MotionInterruptionMode.Replace,
+        "LOCAL_SELECTION_STATE",
+        ReducedMotionEquivalent: "");
+
+    var result = coordinator.Submit(
+        Request(
+            "r-no-reduced",
+            "item:no-reduced",
+            invalidContract,
+            Truth("LOCAL_SELECTION_STATE", true),
+            MotionAccessibilityMode.Full),
+        now);
+
+    Check(result.Disposition == MotionDisposition.RejectedInvalid, "Reduced Motion equivalent must be mandatory");
+}
+
+void CheckQueueBound()
+{
+    var coordinator = NewCoordinator(15);
+    const string target = "route:queue-bound";
+
+    var active = coordinator.Submit(
+        Request(
+            "r-queue-active",
+            target,
+            Contract("ROUTE_TRANSFER", MotionInterruptionMode.Replace, "ROUTE_EVENT_EXISTS"),
+            Truth("ROUTE_EVENT_EXISTS", true),
+            MotionAccessibilityMode.Full),
+        now);
+    Check(active.Disposition == MotionDisposition.Started, "queue-bound test must start an active motion");
+
+    var queuedContract = Contract("RETURN", MotionInterruptionMode.Queue, "RETURN_EVENT_EXISTS");
+    for (var index = 0; index < 32; index++)
+    {
+        var queued = coordinator.Submit(
+            Request(
+                $"r-queue-{index:D2}",
+                target,
+                queuedContract,
+                Truth("RETURN_EVENT_EXISTS", true),
+                MotionAccessibilityMode.Full),
+            now);
+
+        Check(
+            queued.Disposition == MotionDisposition.QueuedAwaitingFreshTruth,
+            $"queue item {index} should remain within the bounded queue");
+    }
+
+    var overflow = coordinator.Submit(
+        Request(
+            "r-queue-overflow",
+            target,
+            queuedContract,
+            Truth("RETURN_EVENT_EXISTS", true),
+            MotionAccessibilityMode.Full),
+        now);
+
+    Check(overflow.Disposition == MotionDisposition.RejectedInvalid, "queue overflow must fail closed");
+    Check(coordinator.QueuedCount(target) == 32, "queue overflow must not mutate the bounded queue");
 }
 
 void CheckCancelTarget()
