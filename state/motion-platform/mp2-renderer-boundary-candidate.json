@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "motionkit-mp2-renderer-boundary-20261023",
+  "parent_mp1_sha": "cfd965afca6c12383333c81c15a76ac6376bc05c",
+  "status": "IMPLEMENTATION_CANDIDATE_NOT_ACCEPTED",
+  "scope": [
+    "RENDERER_NEUTRAL_CAPABILITIES",
+    "TRUTH_FIREWALL",
+    "PRODUCT_MOTION_PROFILE_RESOLUTION",
+    "FULL_REDUCED_VARIANTS",
+    "ADAPTER_CONTRACT",
+    "DETERMINISTIC_FAKE_RENDERER",
+    "RENDERER_DIAGNOSTICS"
+  ],
+  "out_of_scope": [
+    "REAL_RENDERER_ADOPTION",
+    "WPF_INTEGRATION",
+    "RIVE_INTEGRATION",
+    "LOTTIE_INTEGRATION",
+    "SKIASHARP_INTEGRATION",
+    "ANDROID_INTEGRATION",
+    "COMMAND_CENTER_PRODUCTION_INTEGRATION",
+    "PR72_MERGE",
+    "STAGE8"
+  ],
+  "authority": {
+    "production_use_authorized": false,
+    "renderer_adoption_authorized": false,
+    "fallback_selection_authorized": false,
+    "command_center_integration_authorized": false,
+    "runtime_authority_expanded": false
+  }
+}
