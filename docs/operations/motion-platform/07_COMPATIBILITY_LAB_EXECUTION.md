@@ -80,9 +80,13 @@ MP3 role hypothesis:
 - complex vector state machines.
 
 Empirical probe sequence:
-1. native Windows toolchain/build feasibility;
-2. interop boundary prototype;
-3. only then WPF host integration.
+1. clone the exact pinned runtime commit;
+2. verify clang-cl + MSBuild + sh on the Windows runner;
+3. run Rive's own `build_rive.sh nobuild release` from `tests` to generate the official Visual Studio solution;
+4. only if that succeeds, consider an interop boundary prototype;
+5. only after interop evidence, consider WPF host integration.
+
+The active probe deliberately stops at official build-system generation. It does not build a custom wrapper and does not claim runtime integration.
 
 Status: NATIVE_INTEROP_RESEARCH.
 
