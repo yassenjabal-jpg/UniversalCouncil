@@ -73,8 +73,24 @@
         "COMPOSITION_SCENE"
       ],
       "authorized_probes": [
-        "WINDOWS_COMPILE",
+        "WINDOWS_WPF_COMPOSITION_COMPILE",
         "WINDOWS_RUNTIME_LATER"
+      ],
+      "source_evidence": [
+        {
+          "id": "WINAPPSDK_EXISTING_WPF_SUPPORTED",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "reviewed_on": "2026-10-23",
+          "source": "Microsoft Learn: Use the Windows App SDK in an existing project",
+          "detail": "Microsoft documents installing Windows App SDK into existing WPF/WinForms/Win32 projects and configuring unpackaged projects with WindowsPackageType=None."
+        },
+        {
+          "id": "WINAPPSDK_COMPOSITION_SAMPLES",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "reviewed_on": "2026-10-23",
+          "source": "microsoft/WindowsAppSDK-Samples",
+          "detail": "Official samples repository includes Windows Composition, Input and SceneGraph samples."
+        }
       ]
     },
     "RIVE": {
