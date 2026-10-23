@@ -90,5 +90,19 @@
       "MP6"
     ],
     "final_gate": "MOTION_PLATFORM_GENERAL_ADOPTION_APPROVED"
+  },
+  "implementation_strategy": {
+    "policy": "OPEN_SOURCE_FIRST",
+    "mode": "INTEGRATION_OVER_INVENTION",
+    "active_execution_wave": "MP3",
+    "shared_layers_frozen_for_expansion": [
+      "MP1",
+      "MP2"
+    ],
+    "shared_change_requires_real_integration_gap": true,
+    "custom_renderer_engine_allowed": false,
+    "custom_timeline_engine_allowed": false,
+    "custom_vector_engine_allowed": false,
+    "adapter_local_solution_preferred": true
   }
 }
