@@ -80,6 +80,7 @@ if "SkiaMotionCueAnimator.AnimateRouteReveal" not in main_window:
 if "SkiaMotionCueAnimator.AnimateArtifactHandoff" not in main_window:
     raise SystemExit("ARTIFACT_HANDOFF is not routed through Skia adapter")
 
+
 def method_body(source: str, method_name: str) -> str:
     marker = f"    private void {method_name}"
     start = source.find(marker)
@@ -87,6 +88,7 @@ def method_body(source: str, method_name: str) -> str:
         raise SystemExit(f"MP4 target method missing: {method_name}")
     next_method = source.find("\n    private ", start + len(marker))
     return source[start:] if next_method < 0 else source[start:next_method]
+
 
 role_body = method_body(main_window, "AnimateRoleRouteCue")
 handoff_body = method_body(main_window, "AnimateHandoffCue")
