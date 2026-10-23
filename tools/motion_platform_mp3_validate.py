@@ -42,8 +42,12 @@ if set(candidates) != required:
 skia = candidates["SKIASHARP"]
 if skia["version"] != "4.153.1" or skia["license"] != "MIT" or skia["status"] != "LAB_ONLY":
     raise SystemExit("SkiaSharp pin/license/status drifted")
-if set(skia["authorized_probes"]) != {"LINUX_HEADLESS_RUNTIME", "WINDOWS_WPF_COMPILE"}:
+if set(skia["authorized_probes"]) != {"LINUX_HEADLESS_RUNTIME", "WINDOWS_WPF_CORE_BRIDGE_COMPILE"}:
     raise SystemExit("SkiaSharp probe authority drifted")
+findings = {item["id"]: item for item in skia.get("observed_findings", [])}
+finding = findings.get("SKIA_VIEWS_WPF_NET10_NU1701")
+if not finding or finding["status"] != "BLOCKED" or finding["evidence_class"] != "COMPILE_EVIDENCE":
+    raise SystemExit("SkiaSharp Views.WPF net10 compatibility finding missing")
 
 composition = candidates["WINDOWS_COMPOSITION"]
 if composition["version"] != "2.5.1" or composition["status"] != "LAB_ONLY":
@@ -75,8 +79,10 @@ if 'PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="4.153.1"' n
 wpf_project = WPF_PROJECT.read_text(encoding="utf-8")
 if "<UseWPF>true</UseWPF>" not in wpf_project:
     raise SystemExit("Skia WPF compile probe stopped being WPF")
-if 'PackageReference Include="SkiaSharp.Views.WPF" Version="4.153.1"' not in wpf_project:
-    raise SystemExit("SkiaSharp.Views.WPF pin drifted")
+if 'PackageReference Include="SkiaSharp" Version="4.153.1"' not in wpf_project:
+    raise SystemExit("SkiaSharp core WPF bridge pin drifted")
+if "SkiaSharp.Views.WPF" in wpf_project:
+    raise SystemExit("blocked SkiaSharp.Views.WPF path re-entered .NET 10 probe")
 
 # External renderer packages must remain isolated to explicit lab/probe projects.
 for path in (ROOT / "apps").glob("UniversalCouncil.MotionKit.*/*.csproj"):
@@ -121,14 +127,15 @@ for marker in (
         raise SystemExit(f"Skia lab validation marker missing: {marker}")
 
 probe = WPF_PROBE.read_text(encoding="utf-8")
-if "typeof(SKElement)" not in probe or "new()" not in probe:
-    raise SystemExit("Skia WPF compile probe no longer touches SKElement")
+for marker in ("BitmapSource.Create", "bitmap.GetPixels()", "PixelFormats.Bgra32"):
+    if marker not in probe:
+        raise SystemExit(f"Skia WPF core bridge marker missing: {marker}")
 
 spec = SPEC.read_text(encoding="utf-8")
 for marker in (
     "A lower evidence class must never be described as a higher one.",
     "Skia headless probe",
-    "Windows WPF compile probe",
+    "Windows WPF core-bridge compile probe",
     "shared CI runners are not stable performance reference hardware",
     "Rive is NOT treated as a .NET/WPF drop-in dependency.",
     "Lottie-Windows is NOT treated as a direct WPF control.",
