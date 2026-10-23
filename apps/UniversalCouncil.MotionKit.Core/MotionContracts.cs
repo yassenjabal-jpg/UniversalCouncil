@@ -36,6 +36,7 @@ public enum MotionDisposition
     RejectedInvalid,
     TruthObserved,
     TruthRevoked,
+    StaleTruthIgnored,
     Completed,
     CompletedQueueReleased,
     StaleCompletionIgnored,
