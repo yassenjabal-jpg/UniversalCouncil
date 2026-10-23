@@ -219,10 +219,14 @@ Those claims require later WINDOW_EVIDENCE.
 ## Windows Composition runtime API probe
 
 After compile feasibility is established, a separate Windows-only WPF process exercises the pinned Windows App SDK runtime by:
+- explicitly creating and owning a current-thread `DispatcherQueueController`;
 - creating a `Compositor`;
 - creating a `SpriteVisual`;
 - creating and starting/stopping a scalar keyframe animation;
-- creating a Composition property set.
+- creating a Composition property set;
+- synchronously calling `DispatcherQueueController.ShutdownQueue()` before thread exit.
+
+The first bounded runtime probe created a Compositor without explicitly owning the Windows App SDK DispatcherQueue and exceeded the 15-second shutdown budget. That result is retained as a lifecycle finding rather than hidden. Microsoft documents that the owner of the current-thread DispatcherQueue must shut it down before thread exit, so the corrected probe owns and shuts down that queue explicitly.
 
 A pass is classified as RUNTIME_EVIDENCE for the Composition API surface in our unpackaged WPF process model.
 
@@ -238,7 +242,7 @@ The actual WPF visual-host probe remains separate.
 
 The lab owns `lab/motion-platform/lottie/MotionKitProbe.json`.
 
-CI installs exactly `LottieGen 8.2.250604` into an isolated tool directory, then runs code generation twice with:
+CI installs exactly `LottieGen 8.2.250604` into an isolated tool directory on Windows, then runs code generation twice with:
 - C# output;
 - strict parsing via `-Strict`;
 - test mode;
@@ -249,6 +253,12 @@ Observed tooling discrepancy:
 - the pinned source parser registers `Keyword.Strict`;
 - actual execution rejected `-StrictMode` as unexpected;
 - the lab therefore uses `-Strict`, preserving strict parsing rather than weakening the test.
+
+Observed platform limitation:
+- after the strict-switch correction, the Ubuntu run still failed to locate a valid repository-relative fixture;
+- pinned `Glob.cs` appends a literal Windows backslash to its internal directory path;
+- the code-generation probe is therefore executed on Windows with absolute input/output paths;
+- Strict and TestMode remain mandatory.
 
 The two generated C# outputs must be byte-identical and SHA-256-identical.
 
