@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "motionkit-mp4-command-center-reference-integration-20261023",
+  "parent_mp3_sha": "f7e2db143898e4f1d1a43e8d43dc875632c2ed0a",
+  "status": "REFERENCE_INTEGRATION_CANDIDATE_NOT_VISUALLY_ACCEPTED",
+  "strategy": "OPEN_SOURCE_FIRST_INTEGRATION_OVER_INVENTION",
+  "reference_application": "UniversalCouncil Command Center",
+  "renderer": {
+    "id": "SKIASHARP",
+    "version": "4.153.1",
+    "scope": "COMMAND_CENTER_ADAPTER_LOCAL",
+    "package": "SkiaSharp",
+    "blocked_package": "SkiaSharp.Views.WPF"
+  },
+  "targets": [
+    {
+      "family": "ROLE_ACTIVATION",
+      "method": "AnimateRoleRouteCue",
+      "external_capabilities": [
+        "PATH_GEOMETRY",
+        "DYNAMIC_DRAWING"
+      ],
+      "truth_class": "UI_INTERACTION_REFERENCE_FIXTURE",
+      "visual_acceptance": false
+    },
+    {
+      "family": "ARTIFACT_HANDOFF_RETURN",
+      "method": "AnimateHandoffCue",
+      "external_capabilities": [
+        "PATH_GEOMETRY",
+        "DYNAMIC_DRAWING"
+      ],
+      "truth_class": "UI_INTERACTION_REFERENCE_FIXTURE",
+      "visual_acceptance": false
+    }
+  ],
+  "shared_motionkit_changes": false,
+  "authority": {
+    "production_adoption_authorized": false,
+    "pr72_merge_authorized": false,
+    "stage8_opened": false,
+    "runtime_authority_expanded": false
+  }
+}
