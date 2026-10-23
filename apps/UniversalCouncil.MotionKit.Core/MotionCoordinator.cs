@@ -190,14 +190,28 @@ public sealed class MotionCoordinator
                 }
             }
 
+            PendingMotion? released = null;
+            if (!_active.ContainsKey(targetId)
+                && _queued.TryGetValue(targetId, out var remaining)
+                && remaining.Count > 0)
+            {
+                released = remaining.Dequeue();
+                if (remaining.Count == 0)
+                {
+                    _queued.Remove(targetId);
+                }
+            }
+
             return new MotionTransition(
                 MotionDisposition.TruthRevoked,
                 StartedLease: null,
-                ReleasedPending: null,
+                ReleasedPending: released,
                 CancelledInstances: cancelled,
-                cancelled.Count == 0
-                    ? $"Truth revoked with no eligible active instance: {truth.RequirementId}"
-                    : $"Truth revoked; matching motion stopped: {truth.RequirementId}");
+                released is not null
+                    ? $"Truth revoked; matching motion stopped and next intent released for fresh truth: {truth.RequirementId}"
+                    : cancelled.Count == 0
+                        ? $"Truth revoked with no eligible active instance: {truth.RequirementId}"
+                        : $"Truth revoked; matching motion stopped: {truth.RequirementId}");
         }
     }
 
