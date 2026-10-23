@@ -219,6 +219,7 @@ async Task CheckUnknownCapabilityRejectedAsync()
 {
     await using var renderer = new DeterministicFakeRenderer(
         "fake:known",
+        "test-1.0",
         MotionRendererContractGuard.KnownCapabilities);
 
     var command = FullCommand(
