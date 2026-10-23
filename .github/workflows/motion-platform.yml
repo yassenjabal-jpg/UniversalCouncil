@@ -68,7 +68,7 @@ jobs:
           fi
 
   windows-lab-probes:
-    name: Windows Lab Compile Probes
+    name: Windows Lab Probes
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -86,3 +86,7 @@ jobs:
         shell: pwsh
         run: |
           dotnet build apps/UniversalCouncil.MotionKit.CompositionWpfCompileProbe/UniversalCouncil.MotionKit.CompositionWpfCompileProbe.csproj -c Release --nologo
+      - name: Run Windows Composition runtime API probe
+        shell: pwsh
+        run: |
+          dotnet run --project apps/UniversalCouncil.MotionKit.CompositionRuntimeProbe/UniversalCouncil.MotionKit.CompositionRuntimeProbe.csproj -c Release
