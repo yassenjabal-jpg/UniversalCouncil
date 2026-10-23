@@ -1,0 +1,1 @@
+Skia WPF bridge: PASS (600 pixel bridge updates; normal window close)

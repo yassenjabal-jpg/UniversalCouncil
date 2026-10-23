@@ -1,0 +1,354 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "motionkit-mp3-compatibility-lab-20261023",
+  "parent_mp2_sha": "8b9e3a20ca407fff6734c945db59708d2718c2b5",
+  "status": "REFERENCE_ACCEPTED_NOT_PRODUCTION_ADOPTED",
+  "evidence_classes": [
+    "SOURCE_EVIDENCE",
+    "COMPILE_EVIDENCE",
+    "RUNTIME_EVIDENCE",
+    "WINDOW_EVIDENCE",
+    "OWNER_VISUAL_EVIDENCE"
+  ],
+  "candidates": {
+    "SKIASHARP": {
+      "repository": "mono/SkiaSharp",
+      "version": "4.153.1",
+      "license": "MIT",
+      "status": "LAB_ONLY",
+      "role": [
+        "PATH_GEOMETRY",
+        "DYNAMIC_DRAWING",
+        "DATA_DRIVEN_2D"
+      ],
+      "authorized_probes": [
+        "LINUX_HEADLESS_RUNTIME",
+        "WINDOWS_WPF_CORE_BRIDGE_COMPILE",
+        "WINDOWS_WPF_CORE_BRIDGE_RUNTIME",
+        "WINDOWS_WPF_REFERENCE_ACCEPTANCE"
+      ],
+      "observed_findings": [
+        {
+          "id": "SKIA_VIEWS_WPF_NET10_NU1701",
+          "evidence_class": "COMPILE_EVIDENCE",
+          "source_run_id": 39923552349,
+          "source_job_id": 120314313619,
+          "status": "BLOCKED",
+          "detail": "SkiaSharp.Views.WPF 4.153.1 restored OpenTK/OpenTK.GLWpfControl through .NET Framework compatibility under net10.0-windows and emitted NU1701; warning suppression is not accepted."
+        }
+      ],
+      "observed_evidence": [
+        {
+          "id": "SKIA_HEADLESS_RUNTIME_PASS",
+          "evidence_class": "RUNTIME_EVIDENCE",
+          "source_head_sha": "2e672860fa0de2c09042343575d48cfff9761701",
+          "workflow_run_id": 39924176096,
+          "job_id": 120316395474,
+          "status": "PASS",
+          "detail": "SkiaSharp 4.153.1 offscreen adapter executed through MotionKit runtime; deterministic frame hash, Full/Reduced distinction, lifecycle, unsupported capability and 100-frame batch observation passed."
+        },
+        {
+          "id": "SKIA_WPF_CORE_BRIDGE_COMPILE_PASS",
+          "evidence_class": "COMPILE_EVIDENCE",
+          "source_head_sha": "2e672860fa0de2c09042343575d48cfff9761701",
+          "workflow_run_id": 39924176096,
+          "job_id": 120316395189,
+          "status": "PASS",
+          "detail": "net10.0-windows WPF project using core SkiaSharp 4.153.1 and SKBitmap-to-BitmapSource bridge built successfully without suppressing NU1701."
+        },
+        {
+          "id": "SKIA_YASSIN_WPF_WINDOW_PASS",
+          "evidence_class": "WINDOW_EVIDENCE",
+          "status": "PASS",
+          "detail": "600 core-Skia BitmapSource updates in visible WPF window, session 5, normal process exit 0. Static bridge fixture, not product animation.",
+          "evidence": "lab/motion-platform/evidence/yassin-20261023/skia-window.json"
+        },
+        {
+          "id": "SKIA_YASSIN_S1_S3_S4_S5_REFERENCE_ACCEPTANCE_PASS",
+          "evidence_class": "WINDOW_EVIDENCE",
+          "status": "PASS",
+          "detail": "Reference Windows probe passed S1, S3, S4 and S5 in Full and Reduced Motion with native WPF keyboard/accessibility surface, deterministic RETURN/fallback, renderer disposal/re-entry and dense-screen measurements. S2 remains unassigned because no accepted role currently claims STATEFUL_VECTOR.",
+          "evidence": "lab/motion-platform/evidence/yassin-20261023-acceptance/skia-acceptance.json"
+        }
+      ],
+      "informational_measurement": {
+        "environment": "ubuntu-latest shared CI",
+        "sample": "100 offscreen 64x64 frames",
+        "elapsed_ms": 91.85,
+        "gating": false
+      },
+      "reference_windows_acceptance_measurement": {
+        "host": "YASSIN",
+        "objects": 64,
+        "frames": 240,
+        "frame_interval_median_ms": 3.2257999999999356,
+        "frame_interval_p95_ms": 7.03670000000011,
+        "frame_interval_p99_ms": 32.85370000000012,
+        "frames_over_33_333_ms": 2,
+        "cpu_percent_process_normalized": 12.490380174942029,
+        "allocated_bytes_delta": 3201208,
+        "working_set_bytes_delta": 4157440,
+        "input_dispatch_latency_median_ms": 0.0336,
+        "input_dispatch_latency_p95_ms": 2.0019,
+        "actual_keyboard_interactions": 3,
+        "actual_keyboard_activation_latency_median_ms": 10.2973,
+        "actual_keyboard_activation_latency_p95_ms": 15.4295,
+        "hover_state_path": true,
+        "hardware_pointer_injection": false,
+        "reduced_actual_keyboard_interactions": 1,
+        "gpu_present_telemetry": false,
+        "gating": false
+      }
+    },
+    "WINDOWS_COMPOSITION": {
+      "repository": "microsoft/WindowsAppSDK",
+      "version": "2.5.1",
+      "license": "MIT",
+      "status": "INTERACTIVE_WPF_WINDOW_PROVEN_LAB_ONLY",
+      "role": [
+        "WINDOWS_MICRO_MOTION",
+        "VISUAL_PROPERTY_ANIMATION",
+        "COMPOSITION_SCENE"
+      ],
+      "authorized_probes": [
+        "WINDOWS_WPF_COMPOSITION_COMPILE",
+        "WINDOWS_COMPOSITION_RUNTIME_API_REFERENCE_WINDOWS",
+        "WINDOWS_WPF_VISUAL_HOST_RUNTIME"
+      ],
+      "source_evidence": [
+        {
+          "id": "WINAPPSDK_EXISTING_WPF_SUPPORTED",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "reviewed_on": "2026-10-23",
+          "source": "Microsoft Learn: Use the Windows App SDK in an existing project",
+          "detail": "Microsoft documents installing Windows App SDK into existing WPF/WinForms/Win32 projects and configuring unpackaged projects with WindowsPackageType=None."
+        },
+        {
+          "id": "WINAPPSDK_COMPOSITION_SAMPLES",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "reviewed_on": "2026-10-23",
+          "source": "microsoft/WindowsAppSDK-Samples",
+          "detail": "Official samples repository includes Windows Composition, Input and SceneGraph samples."
+        }
+      ],
+      "observed_evidence": [
+        {
+          "id": "WINDOWS_COMPOSITION_WPF_COMPILE_PASS",
+          "evidence_class": "COMPILE_EVIDENCE",
+          "source_head_sha": "f7cb8790127297bd6642ebdafe098adb27d5245b",
+          "workflow_run_id": 39924907499,
+          "job_id": 120318791027,
+          "status": "PASS",
+          "detail": "Microsoft.WindowsAppSDK 2.5.1 restored and a net10.0-windows WPF compile probe using WindowsPackageType=None compiled Compositor, SpriteVisual, ScalarKeyFrameAnimation, and WPF WindowInteropHelper access."
+        },
+        {
+          "id": "COMPOSITION_YASSIN_WPF_WINDOW_PASS",
+          "evidence_class": "WINDOW_EVIDENCE",
+          "status": "PASS",
+          "detail": "WASDK ContentIsland + DesktopChildSiteBridge attached to WPF HWND. Full opacity pixel changes, Reduced static settle, normal process exit 0. Original API probe also exits 0.",
+          "evidence": "lab/motion-platform/evidence/yassin-20261023/composition-window.json"
+        }
+      ],
+      "observed_findings": [
+        {
+          "id": "WINDOWS_COMPOSITION_HEADLESS_RUNTIME_SHUTDOWN_TIMEOUT",
+          "evidence_class": "RUNTIME_EVIDENCE",
+          "source_head_sha": "0f291592acd6c76caf81ed513af8515ffd5ccca4",
+          "workflow_run_id": 39928447175,
+          "job_id": 120330505147,
+          "status": "DEFERRED_INTERACTIVE_WINDOWS",
+          "detail": "The probe owned a Microsoft.UI DispatcherQueueController, ran an explicit DispatcherQueue event loop, created/used Composition API objects, then still exceeded the 15 second process shutdown budget on the headless GitHub Windows runner. Runtime lifecycle is deferred to an interactive/reference Windows environment; no custom workaround will be invented in shared MotionKit.",
+          "superseded_for": "Interactive/reference Windows deferral resolved by COMPOSITION_YASSIN_WPF_WINDOW_PASS; original headless timeout remains historical."
+        }
+      ]
+    },
+    "RIVE": {
+      "repository": "rive-app/rive-runtime",
+      "version": "f4da8fa42ed2c256d3d672e3828d18a328528f50",
+      "license": "MIT",
+      "status": "COMPILE_FEASIBLE_NATIVE_INTEROP_RESEARCH",
+      "role": [
+        "STATEFUL_VECTOR",
+        "INTERACTIVE_VECTOR",
+        "VECTOR_STATE_MACHINE"
+      ],
+      "authorized_probes": [
+        "WINDOWS_NATIVE_PREMAKE_GENERATION",
+        "INTEROP_BOUNDARY_LATER"
+      ],
+      "source_head_sha": "f4da8fa42ed2c256d3d672e3828d18a328528f50",
+      "source_reviewed_on": "2026-10-23",
+      "source_evidence": [
+        {
+          "id": "RIVE_RUNTIME_MIT_PIN",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "status": "PASS",
+          "detail": "Exact rive-runtime source commit pinned; repository LICENSE is MIT."
+        },
+        {
+          "id": "RIVE_WINDOWS_NATIVE_TOOLCHAIN",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "status": "PASS",
+          "detail": "Repository documents Windows native C++ build/toolchain and D3D11/D3D12 renderer backends; this does not prove .NET/WPF integration."
+        }
+      ],
+      "probe_definition": {
+        "source_commit": "f4da8fa42ed2c256d3d672e3828d18a328528f50",
+        "required_tools": [
+          "clang-cl",
+          "msbuild",
+          "sh"
+        ],
+        "command": "tests -> sh ../build/build_rive.sh nobuild release",
+        "expected_artifact": "tests/out/release/rive.sln",
+        "evidence_if_passes": "COMPILE_EVIDENCE",
+        "production_adoption": false
+      },
+      "observed_findings": [
+        {
+          "id": "RIVE_WINDOWS_GIT_LONGPATH_DEPENDENCY_CHECKOUT",
+          "evidence_class": "COMPILE_EVIDENCE",
+          "source_head_sha": "0e99eb2a698fbc204534eab156796f2cfca345c2",
+          "workflow_run_id": 39928820555,
+          "job_id": 120331725802,
+          "status": "RESOLVED_ENVIRONMENT_LIMITATION",
+          "detail": "Initial official build generation reached Rive dependency checkout and failed on a HarfBuzz filename exceeding default Windows Git path limits. Enabling core.longpaths resolved the environment limitation without MotionKit code changes."
+        }
+      ],
+      "observed_evidence": [
+        {
+          "id": "RIVE_WINDOWS_NATIVE_PREMAKE_GENERATION_PASS",
+          "evidence_class": "COMPILE_EVIDENCE",
+          "source_head_sha": "2a9e8063576e6dee7440ec9bdf905934f61ba159",
+          "workflow_run_id": 39929273294,
+          "job_id": 120333222329,
+          "status": "PASS",
+          "detail": "Pinned rive-runtime commit used the repository's official build_rive.ps1/build_rive.sh path and successfully generated tests/out/release/rive.sln on the Windows GitHub runner."
+        },
+        {
+          "id": "RIVE_NO_OFFICIAL_CSHARP_BINDING_IN_PINNED_RUNTIME",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "status": "OBSERVED",
+          "detail": "Search of the pinned rive-runtime source found no C# source binding/runtime project; .NET/WPF use would require a deliberately bounded native interop layer or another officially supported route."
+        }
+      ],
+      "role_assignment": "UNASSIGNED_RESEARCH_ONLY",
+      "scenario_disposition": {
+        "S2_STATEFUL_SIGIL": "NOT_APPLICABLE_CURRENT_ACCEPTED_ROLE_SET"
+      }
+    },
+    "LOTTIE_WINDOWS": {
+      "repository": "CommunityToolkit/Lottie-Windows",
+      "version": "8.1.240821.1",
+      "license": "MIT",
+      "status": "WINUI_SPECIALIST_RESEARCH",
+      "role": [
+        "PREAUTHORED_TIMELINE",
+        "AFTER_EFFECTS_HANDOFF"
+      ],
+      "authorized_probes": [
+        "LOTTIEGEN_WINDOWS_CODEGEN_RUNTIME",
+        "WINUI_COMPILE_LATER"
+      ],
+      "source_head_sha": "dce2d4ac945b7d8d400c19bca440907315901b5f",
+      "source_reviewed_on": "2026-10-23",
+      "source_evidence": [
+        {
+          "id": "LOTTIE_WINDOWS_MIT_PIN",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "status": "PASS",
+          "detail": "Repository LICENSE.md is MIT; current source head pinned separately from release tag."
+        },
+        {
+          "id": "LOTTIEGEN_TOOLING_PATH",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "status": "PASS",
+          "detail": "Repository contains LottieGen .NET global tool for generating C#/C++ and other outputs from Lottie/Bodymovin JSON; README states .NET 7 SDK or later."
+        },
+        {
+          "id": "LOTTIEGEN_NUGET_8_2_250604",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "status": "PASS",
+          "detail": "NuGet stable LottieGen 8.2.250604 targets .NET 9, is compatible with .NET 10, has no package dependencies, and is documented as the efficient Windows code-generation path."
+        }
+      ],
+      "lottiegen_tool_version": "8.2.250604",
+      "observed_findings": [
+        {
+          "id": "LOTTIEGEN_STRICTMODE_HELP_PARSER_MISMATCH",
+          "evidence_class": "RUNTIME_EVIDENCE",
+          "source_head_sha": "c543906fb7e04db36a3927f351b97135325a5548",
+          "workflow_run_id": 39925941169,
+          "job_id": 120322205508,
+          "status": "OBSERVED",
+          "detail": "LottieGen 8.2.250604 help text advertises -StrictMode, but the command-line parser accepts Keyword.Strict; -StrictMode failed as Unexpected while -Strict is the source-backed strict parsing switch. The lab keeps strict parsing by using -Strict rather than weakening the probe."
+        },
+        {
+          "id": "LOTTIEGEN_GLOB_WINDOWS_SEPARATOR_ON_LINUX",
+          "evidence_class": "RUNTIME_EVIDENCE",
+          "source_head_sha": "fca3b7fa89ce7e06d940a8792ecabd5805d2c117",
+          "workflow_run_id": 39926268596,
+          "job_id": 120323310515,
+          "status": "PLATFORM_TOOLING_LIMITATION",
+          "detail": "Pinned LottieGen 8.2.250604 accepted -Strict but failed to find a repository-relative fixture on Ubuntu. Pinned Glob.cs appends a literal backslash to its directory path, so the deterministic codegen probe is moved to Windows rather than weakening Strict/TestMode."
+        }
+      ],
+      "observed_evidence": [
+        {
+          "id": "LOTTIEGEN_BASELINE_CI_REFERENCE",
+          "evidence_class": "RUNTIME_EVIDENCE",
+          "status": "PASS",
+          "source_head_sha": "f7e2db143898e4f1d1a43e8d43dc875632c2ed0a",
+          "workflow_run_id": 39929833512,
+          "job_id": 120335079367,
+          "detail": "Verified successful strict deterministic LottieGen Windows step; tooling only."
+        }
+      ]
+    }
+  },
+  "performance_policy": {
+    "shared_ci_wall_clock_is_gating": false,
+    "correctness_is_gating": true,
+    "reference_windows_hardware_required_before_performance_gate": true
+  },
+  "authority": {
+    "production_renderer_adoption_authorized": false,
+    "command_center_integration_authorized": false,
+    "automatic_fallback_authorized": false,
+    "pr72_merge_authorized": false,
+    "stage8_opened": false,
+    "runtime_authority_expanded": false
+  },
+  "reference_windows_qualification": {
+    "status": "REFERENCE_ACCEPTED_OWNER_APPROVED",
+    "host": "YASSIN",
+    "date": "2026-10-23",
+    "evidence_directory": "lab/motion-platform/evidence/yassin-20261023-acceptance",
+    "acceptance_gate": "RENDERER_ROLE_MATRIX_ACCEPTED",
+    "acceptance_gate_passed": true,
+    "remaining": [],
+    "mp4_preparation_ready": true,
+    "technical_bakeoff_passed": true,
+    "scenario_disposition": {
+      "S1_INTERACTIVE_ICON": "PASS_FULL_AND_REDUCED",
+      "S2_STATEFUL_SIGIL": "NOT_APPLICABLE_CURRENT_ACCEPTED_ROLE_SET",
+      "S3_ROUTE_TRANSFER": "PASS_FULL_AND_REDUCED",
+      "S4_SEMANTIC_OBJECT_HANDOFF": "PASS_FULL_AND_REDUCED",
+      "S5_DENSE_SCREEN_STRESS": "PASS_FULL_AND_REDUCED"
+    },
+    "performance_disposition": {
+      "reference_measurement_recorded": true,
+      "gpu_present_telemetry": false,
+      "threshold_gate_defined": false,
+      "reason": "Reference-host WPF presentation-loop, CPU, allocation, memory and input observations are recorded; no post-hoc performance threshold is invented."
+    },
+    "input_evidence_limit": "Keyboard activation is actual WPF input; hover exercises the shared WPF hover-state handler. Hardware pointer injection is not claimed because the active reference-host game reclaims the OS cursor.",
+    "owner_visual_acceptance": true,
+    "owner_visual_decision": {
+      "status": "APPROVED",
+      "date": "2026-10-23",
+      "source": "OWNER_CHAT_APPROVAL",
+      "statement": "اكمل العمل انا موافق"
+    }
+  }
+}

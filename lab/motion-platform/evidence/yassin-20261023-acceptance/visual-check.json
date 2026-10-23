@@ -1,0 +1,50 @@
+﻿[
+    {
+        "file":  "s1-full-selected.png",
+        "width":  900,
+        "height":  620,
+        "sampled_unique_colors":  41
+    },
+    {
+        "file":  "s1-reduced-selected.png",
+        "width":  900,
+        "height":  620,
+        "sampled_unique_colors":  41
+    },
+    {
+        "file":  "s3-full-return-mid-transfer.png",
+        "width":  900,
+        "height":  620,
+        "sampled_unique_colors":  40
+    },
+    {
+        "file":  "s3-reduced-return-static.png",
+        "width":  900,
+        "height":  620,
+        "sampled_unique_colors":  40
+    },
+    {
+        "file":  "s4-full-destination-unavailable.png",
+        "width":  900,
+        "height":  620,
+        "sampled_unique_colors":  43
+    },
+    {
+        "file":  "s4-reduced-fallback-static.png",
+        "width":  900,
+        "height":  620,
+        "sampled_unique_colors":  42
+    },
+    {
+        "file":  "s5-full-dense-midrun.png",
+        "width":  900,
+        "height":  620,
+        "sampled_unique_colors":  40
+    },
+    {
+        "file":  "s5-reduced-static.png",
+        "width":  900,
+        "height":  620,
+        "sampled_unique_colors":  123
+    }
+]

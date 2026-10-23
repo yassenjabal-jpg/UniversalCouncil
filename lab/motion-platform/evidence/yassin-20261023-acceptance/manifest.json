@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.1",
+  "evidence_class": "WINDOW_EVIDENCE",
+  "host": "YASSIN",
+  "source_branch": "motion-platform/compatibility-lab-20261023",
+  "source_probe": "apps/UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe",
+  "acceptance_exit_code": 0,
+  "interactive": true,
+  "process_session": 6,
+  "owner_visual_acceptance": false,
+  "production_adoption": false,
+  "visual_capture_count": 8,
+  "visual_capture_dimensions": "900x620",
+  "contact_sheet": "lab/motion-platform/evidence/yassin-20261023-acceptance/mp3-owner-review-contact-sheet.png",
+  "hash_policy": {
+    "png": "raw_bytes",
+    "text": "crlf_normalized_to_lf"
+  },
+  "sha256": {
+    "apps/UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe/UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe.csproj": "5fa49ae255265b35100fd54166853b32a812d31ddd9d1efe863b0fed2e1b42ca",
+    "apps/UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe/SkiaAcceptanceRenderer.cs": "d0b45d8d3e9ed9d2bdea5e85f890b59c49f9ac9671fbf83a134200c6781e7698",
+    "apps/UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe/AcceptanceWindow.cs": "10180222c5b45df6c6948bf3f93f3ceaf69b2325aab014903616f54b6a197cdf",
+    "apps/UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe/Program.cs": "b78c5d81d02525c1232143190798c8c1e61d689fcb335d6e0a741413cc679bdb",
+    "lab/motion-platform/capture-acceptance-reference.ps1": "97167fdb818ac3f9af47c9315a53bdb0ea7f14cac0304a8d2348877494cfc98d",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/skia-acceptance.json": "4fab4c8e306fb72b5121ac1ed6aad078f86c68da6ca232a47f9189cc240f0edf",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/skia-acceptance.stdout.txt": "13ea5283a278547274bc0d1974ec2fd9529b2373e17c27a4806295fed18b1a9c",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/skia-acceptance.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/skia-acceptance.exitcode.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/visual-check.json": "d68bcb1dd00c02937585e93299aa70d40fb562b105e090eefa054355b118c31d",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/mp3-owner-review-contact-sheet.png": "d0f93ee08618fc20ec56bd9e399e59d0a6aaa9c350607a14a6bdcbedad5d585e",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/s1-full-selected.png": "433c7da39567082aef4f19bc0f6d7c0e67e42de40de35fde7fdc4ef28e08bf4d",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/s1-reduced-selected.png": "33ad63bd44709574e73cd7b5d6d4eb04f9c1f1c5f4d1666758fc1dde6df907e0",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/s3-full-return-mid-transfer.png": "34c9381228e80ad210ba9371f624444abc960f88331ec15294cadd50485ad6bb",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/s3-reduced-return-static.png": "f6949ec745608d4bc026a9079579efe02a8a37fda4cb3b52583884e17526f63b",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/s4-full-destination-unavailable.png": "5905d047441ffc6616eaa7f8da140fd3b4c08735bb277d48f200adc0b6f770eb",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/s4-reduced-fallback-static.png": "cacee87a5720fce0231eb549037ec9461fa0edd6fc433f072351ab20565d663d",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/s5-full-dense-midrun.png": "9caa1c06889300f248e1af07a1e5e666b7063eb2745bb88acfd6bf1830f4f45a",
+    "lab/motion-platform/evidence/yassin-20261023-acceptance/s5-reduced-static.png": "9221576a057f2e3d88104afffd6f10cdf8ee4a7cf157cdbed30ae75c300a88b0"
+  }
+}

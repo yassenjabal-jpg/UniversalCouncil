@@ -6,6 +6,7 @@ on:
       - 'apps/UniversalCouncil.MotionKit*/**'
       - 'docs/operations/motion-platform/**'
       - 'state/motion-platform/**'
+      - 'lab/motion-platform/**'
       - 'tools/motion_platform*_validate.py'
       - 'company/tests/test_motion_platform*.py'
       - '.github/workflows/motion-platform.yml'
@@ -27,23 +28,27 @@ jobs:
           python-version: '3.13'
       - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: |
+            9.0.x
+            10.0.x
       - run: python tools/motion_platform_contract_validate.py
       - name: Validate MP1 contract when present
         shell: bash
         run: |
           if [ -f tools/motion_platform_mp1_validate.py ]; then
             python tools/motion_platform_mp1_validate.py
-          else
-            echo "MP1 validator not present."
           fi
       - name: Validate MP2 contract when present
         shell: bash
         run: |
           if [ -f tools/motion_platform_mp2_validate.py ]; then
             python tools/motion_platform_mp2_validate.py
-          else
-            echo "MP2 validator not present."
+          fi
+      - name: Validate MP3 contract when present
+        shell: bash
+        run: |
+          if [ -f tools/motion_platform_mp3_validate.py ]; then
+            python tools/motion_platform_mp3_validate.py
           fi
       - run: python -m unittest discover -s company/tests -p 'test_motion_platform*.py' -v
       - name: Validate semantic kernel when present
@@ -58,3 +63,99 @@ jobs:
           if [ -f apps/UniversalCouncil.MotionKit.RendererValidation/UniversalCouncil.MotionKit.RendererValidation.csproj ]; then
             dotnet run --project apps/UniversalCouncil.MotionKit.RendererValidation -c Release
           fi
+      - name: Run Skia compatibility lab when present
+        shell: bash
+        run: |
+          if [ -f apps/UniversalCouncil.MotionKit.SkiaLabValidation/UniversalCouncil.MotionKit.SkiaLabValidation.csproj ]; then
+            dotnet run --project apps/UniversalCouncil.MotionKit.SkiaLabValidation -c Release
+          fi
+
+  windows-lab-probes:
+    name: Windows Lab Probes
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
+        with:
+          dotnet-version: |
+            9.0.x
+            10.0.x
+      - name: Build Skia WPF core bridge compile probe
+        shell: pwsh
+        run: |
+          dotnet build apps/UniversalCouncil.MotionKit.SkiaWpfCompileProbe/UniversalCouncil.MotionKit.SkiaWpfCompileProbe.csproj -c Release --nologo
+      - name: Build Skia WPF reference acceptance probe
+        shell: pwsh
+        run: |
+          dotnet build apps/UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe/UniversalCouncil.MotionKit.SkiaWpfAcceptanceProbe.csproj -c Release --nologo
+      - name: Build Windows Composition WPF compile probe
+        shell: pwsh
+        run: |
+          dotnet build apps/UniversalCouncil.MotionKit.CompositionWpfCompileProbe/UniversalCouncil.MotionKit.CompositionWpfCompileProbe.csproj -c Release --nologo
+      - name: Build interactive Composition reference probe (no headless GUI claim)
+        run: dotnet build apps/UniversalCouncil.MotionKit.CompositionRuntimeProbe -c Release --nologo
+      - name: Run deterministic LottieGen codegen probe on Windows
+        shell: pwsh
+        run: |
+          $toolDir = Join-Path $env:GITHUB_WORKSPACE "build\motion-lottiegen"
+          $outputA = Join-Path $env:GITHUB_WORKSPACE "build\motion-lottie-a"
+          $outputB = Join-Path $env:GITHUB_WORKSPACE "build\motion-lottie-b"
+          $input = Join-Path $env:GITHUB_WORKSPACE "lab\motion-platform\lottie\MotionKitProbe.json"
+
+          if (-not (Test-Path -LiteralPath $input -PathType Leaf)) {
+            throw "Owned Lottie fixture is missing: $input"
+          }
+
+          Remove-Item -Recurse -Force $toolDir,$outputA,$outputB -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Force $toolDir,$outputA,$outputB | Out-Null
+
+          dotnet tool install --tool-path $toolDir LottieGen --version 8.2.250604
+          if ($LASTEXITCODE -ne 0) { throw "LottieGen install failed." }
+
+          $tool = Join-Path $toolDir "LottieGen.exe"
+          if (-not (Test-Path -LiteralPath $tool -PathType Leaf)) {
+            throw "Pinned LottieGen executable missing: $tool"
+          }
+
+          & $tool -InputFile $input -Language cs -OutputFolder $outputA -Namespace MotionKit.Lab -Public -Strict -TestMode
+          if ($LASTEXITCODE -ne 0) { throw "First strict LottieGen pass failed." }
+
+          & $tool -InputFile $input -Language cs -OutputFolder $outputB -Namespace MotionKit.Lab -Public -Strict -TestMode
+          if ($LASTEXITCODE -ne 0) { throw "Second strict LottieGen pass failed." }
+
+          python tools/motion_platform_lottiegen_check.py $outputA $outputB
+          if ($LASTEXITCODE -ne 0) { throw "LottieGen determinism check failed." }
+      - name: Probe pinned Rive native Windows build generation
+        shell: pwsh
+        timeout-minutes: 8
+        run: |
+          $riveDir = Join-Path $env:GITHUB_WORKSPACE "build\rive-runtime"
+          Remove-Item -Recurse -Force $riveDir -ErrorAction SilentlyContinue
+
+          git config --global core.longpaths true
+          if ($LASTEXITCODE -ne 0) { throw "Failed to enable Windows Git long paths for Rive dependencies." }
+
+          git clone --filter=blob:none --no-checkout https://github.com/rive-app/rive-runtime.git $riveDir
+          if ($LASTEXITCODE -ne 0) { throw "Rive clone failed." }
+
+          Push-Location $riveDir
+          git checkout f4da8fa42ed2c256d3d672e3828d18a328528f50
+          if ($LASTEXITCODE -ne 0) { throw "Rive pinned commit checkout failed." }
+
+          Push-Location tests
+          & ..\build\build_rive.ps1 nobuild release
+          if ($LASTEXITCODE -ne 0) { throw "Rive pinned Windows premake generation failed." }
+          Pop-Location
+
+          if (-not (Test-Path -LiteralPath "tests\out\release\rive.sln" -PathType Leaf)) {
+            throw "Rive premake generation completed without tests/out/release/rive.sln."
+          }
+
+          Write-Host "MotionKit Rive native feasibility probe: PASS (official Rive build wrapper generated VS solution)"
+          Pop-Location

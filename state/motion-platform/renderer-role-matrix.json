@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0",
+  "matrix_id": "motionkit-mp3-renderer-role-matrix-20261023",
+  "status": "EVIDENCE_MATRIX_NOT_ADOPTION_DECISION",
+  "updated_on": "2026-10-23",
+  "rules": {
+    "single_renderer_winner_required": false,
+    "production_adoption_authorized": false,
+    "evidence_class_must_match_claim": true,
+    "product_truth_may_enter_renderer": false
+  },
+  "renderers": {
+    "SKIASHARP": {
+      "current_verdict": "REFERENCE_WINDOWS_ACCEPTED_SPECIALIST_CANDIDATE",
+      "highest_evidence_class": "OWNER_VISUAL_EVIDENCE",
+      "validated_roles": [
+        "PATH_GEOMETRY",
+        "DYNAMIC_DRAWING",
+        "DATA_DRIVEN_2D",
+        "WPF_CORE_PIXEL_BRIDGE_COMPILE",
+        "WPF_CORE_PIXEL_BRIDGE_WINDOW_RUNTIME",
+        "S1_INTERACTIVE_ICON_VISUAL",
+        "S3_ROUTE_TRANSFER_RETURN",
+        "S4_HANDOFF_DETERMINISTIC_FALLBACK",
+        "S5_DENSE_REFERENCE_STRESS",
+        "WPF_NATIVE_KEYBOARD_ACCESSIBILITY_SURFACE",
+        "RENDERER_DISPOSAL_REENTRY",
+        "OWNER_VISUAL_QUALITY"
+      ],
+      "not_validated": [
+        "STATEFUL_VECTOR",
+        "PREAUTHORED_TIMELINE",
+        "HIT_TESTING",
+        "GPU_PRESENT_FRAME_PACING"
+      ],
+      "wpf_integration": {
+        "route": "OWNED_CORE_SKIA_TO_BITMAPSOURCE_BRIDGE",
+        "cost": "MEDIUM",
+        "blocked_route": "SKIASHARP_VIEWS_WPF_4_153_1_NET10_NU1701"
+      },
+      "android_parity": "TECHNICALLY_AVAILABLE_NOT_LAB_VALIDATED",
+      "reduced_motion_strategy": "EXPLICIT_STATIC_OR_REDUCED_PROFILE_VARIANT",
+      "production_adoption": false
+    },
+    "WINDOWS_COMPOSITION": {
+      "current_verdict": "INTERACTIVE_WPF_WINDOW_PROVEN_LAB_ONLY",
+      "highest_evidence_class": "WINDOW_EVIDENCE",
+      "validated_roles": [
+        "WPF_NET10_API_COEXISTENCE",
+        "COMPOSITOR_API_COMPILE",
+        "SCALAR_KEYFRAME_API_COMPILE",
+        "SPRITE_VISUAL_API_COMPILE",
+        "WPF_CONTENT_ISLAND_VISIBLE_OPACITY",
+        "FULL_TO_REDUCED_STATIC_SETTLE",
+        "REFERENCE_WINDOWS_NORMAL_PROCESS_EXIT"
+      ],
+      "not_validated": [
+        "HEADLESS_RUNTIME_SHUTDOWN_LIFECYCLE",
+        "FRAME_PACING",
+        "LIFETIME_RECOVERY",
+        "OWNER_VISUAL_QUALITY",
+        "ANDROID_PARITY"
+      ],
+      "wpf_integration": {
+        "route": "WINDOWS_APP_SDK_CONTENT_ISLAND_DESKTOP_CHILD_SITE_BRIDGE",
+        "cost": "MEDIUM_TO_HIGH"
+      },
+      "android_parity": "NONE_NATIVE_REQUIRES_DIFFERENT_ADAPTER",
+      "reduced_motion_strategy": "STATIC_SETTLE_OR_DIRECT_PROPERTY_STATE",
+      "production_adoption": false
+    },
+    "RIVE": {
+      "current_verdict": "COMPILE_FEASIBLE_NATIVE_INTEROP_SPECIALIST",
+      "highest_evidence_class": "COMPILE_EVIDENCE",
+      "validated_roles": [
+        "SOURCE_STATE_MACHINE_CAPABILITY",
+        "SOURCE_D3D11_D3D12_BACKENDS",
+        "SOURCE_WINDOWS_NATIVE_BUILD_PATH",
+        "PINNED_WINDOWS_OFFICIAL_BUILD_GENERATION"
+      ],
+      "not_validated": [
+        "DOTNET_INTEROP",
+        "WPF_HOST",
+        "WINDOW_RUNTIME_RENDERING",
+        "ASSET_AUTHORING_PIPELINE",
+        "OWNER_VISUAL_QUALITY"
+      ],
+      "wpf_integration": {
+        "route": "NATIVE_CPP_INTEROP_REQUIRED_IF_ADOPTED",
+        "cost": "HIGH",
+        "policy": "DO_NOT_BUILD_WRAPPER_UNTIL_VISUAL_VALUE_JUSTIFIES_INTEROP"
+      },
+      "android_parity": "OFFICIAL_ANDROID_RUNTIME_EXISTS_SOURCE_EVIDENCE_ONLY",
+      "reduced_motion_strategy": "REQUIRES_PROFILE_OR_STATE_MACHINE_VARIANT_PROOF",
+      "production_adoption": false,
+      "role_assignment": "UNASSIGNED_RESEARCH_ONLY",
+      "s2_disposition": "NOT_APPLICABLE_CURRENT_ACCEPTED_ROLE_SET"
+    },
+    "LOTTIE_WINDOWS": {
+      "current_verdict": "TOOLING_RUNTIME_VALIDATED_WINUI_CODEGEN_SPECIALIST",
+      "highest_evidence_class": "RUNTIME_EVIDENCE",
+      "validated_roles": [
+        "SOURCE_PREAUTHORED_TIMELINE",
+        "SOURCE_LOTTIEGEN_CODEGEN_PATH",
+        "SOURCE_MIT_LICENSE",
+        "LOTTIEGEN_PINNED_TOOL_EXECUTION",
+        "STRICT_CODEGEN",
+        "DETERMINISTIC_CSHARP_OUTPUT"
+      ],
+      "not_validated": [
+        "WINUI_RENDERER_RUNTIME_IN_OUR_LAB",
+        "WPF_HOST",
+        "OWNER_VISUAL_QUALITY"
+      ],
+      "wpf_integration": {
+        "route": "WINUI_OR_GENERATED_COMPOSITION_INTEROP_RESEARCH",
+        "cost": "HIGH"
+      },
+      "android_parity": "LOTTIE_FORMAT_ECOSYSTEM_EXISTS_BUT_WINDOWS_IMPLEMENTATION_IS_NOT_ANDROID_ADAPTER",
+      "reduced_motion_strategy": "SEPARATE_STATIC_OR_REDUCED_ASSET_PROFILE_REQUIRED",
+      "production_adoption": false
+    }
+  },
+  "next_probe_order": [
+    "MP4_EXACT_HEAD_REFERENCE_INTEGRATION_EVIDENCE",
+    "RIVE_INTEROP_ONLY_IF_REFERENCE_USE_CASE_REQUIRES_STATEFUL_VECTOR"
+  ],
+  "mp3_gate": {
+    "gate": "RENDERER_ROLE_MATRIX_ACCEPTED",
+    "technical_bakeoff_passed": true,
+    "owner_visual_acceptance": true,
+    "gate_passed": true
+  }
+}

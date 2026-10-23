@@ -1,0 +1,1 @@
+MotionKit Windows Composition runtime probe: PASS (owned DispatcherQueue loop + Compositor + SpriteVisual + ScalarKeyFrameAnimation)

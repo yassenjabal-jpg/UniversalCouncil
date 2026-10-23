@@ -1,0 +1,17 @@
+{
+  "full_samples": 30,
+  "full_unique_sprite_colors": 25,
+  "reduced_samples": 10,
+  "reduced_unique_sprite_colors": 1,
+  "sprite_sample_xy": [
+    100,
+    160
+  ],
+  "capture_region_screen_xywh": [
+    648,
+    328,
+    624,
+    400
+  ],
+  "scope": "visible pixel change and static settle only; not GPU frame pacing or owner acceptance"
+}

@@ -1,0 +1,192 @@
+{
+  "schema_version": "1.0",
+  "probe": "MotionKit MP3 reference acceptance",
+  "candidate": "SkiaSharp 4.153.1 core pixels -\u003E WPF BitmapSource \u002B native WPF input/accessibility surface",
+  "machine": "YASSIN",
+  "utc": "2026-10-23T12:33:46.7350191+00:00",
+  "interactive": true,
+  "process_session": 6,
+  "os": "Microsoft Windows NT 10.0.26200.0",
+  "framework": "10.0.13",
+  "processor_count": 12,
+  "renderer_reentry_count": 1,
+  "s2_policy": "No accepted role claims STATEFUL_VECTOR; Rive remains research-only without a .NET/WPF runtime.",
+  "performance_policy": "Reference-host measurements are informational until a fixed warmup/sample/threshold policy is approved.",
+  "owner_visual_acceptance": false,
+  "production_adoption": false,
+  "stage8_opened": false,
+  "results": [
+    {
+      "Scenario": "S1_INTERACTIVE_ICON",
+      "Mode": "FULL",
+      "Status": "PASS",
+      "Metrics": {
+        "hover_state_path": true,
+        "hardware_pointer_injection": false,
+        "focus_path": true,
+        "keyboard_space": true,
+        "keyboard_enter": true,
+        "selected_then_deselected": true,
+        "accessible_name": "MotionKit interactive icon",
+        "invoke_pattern": true,
+        "activation_latency_ms": [
+          18.652,
+          1.6473
+        ],
+        "reduced_motion_static": false
+      },
+      "EvidenceFiles": [
+        "s1-full-selected.png"
+      ],
+      "Limit": "Keyboard activation latency is a local WPF observation; hover uses the shared WPF state handler because the reference host\u0027s foreground game reclaims the hardware cursor."
+    },
+    {
+      "Scenario": "S3_ROUTE_TRANSFER",
+      "Mode": "FULL",
+      "Status": "PASS",
+      "Metrics": {
+        "artifact_identity": "route-artifact-001",
+        "return_triggered_mid_transfer": true,
+        "final_progress": 0,
+        "final_state": "SOURCE",
+        "identity_preserved": true,
+        "reduced_motion_static_settle": false
+      },
+      "EvidenceFiles": [
+        "s3-full-return-mid-transfer.png"
+      ],
+      "Limit": "Frame callback timing is WPF presentation-loop evidence, not GPU present telemetry."
+    },
+    {
+      "Scenario": "S4_SEMANTIC_OBJECT_HANDOFF",
+      "Mode": "FULL",
+      "Status": "PASS",
+      "Metrics": {
+        "destination_became_unavailable": true,
+        "fallback": "SOURCE",
+        "final_progress": 0,
+        "deterministic_final_state": true,
+        "reduced_motion_static_settle": false
+      },
+      "EvidenceFiles": [
+        "s4-full-destination-unavailable.png"
+      ],
+      "Limit": "This validates deterministic visual fallback; product truth remains outside the renderer."
+    },
+    {
+      "Scenario": "S5_DENSE_SCREEN_STRESS",
+      "Mode": "FULL",
+      "Status": "PASS",
+      "Metrics": {
+        "objects": 64,
+        "animated_frames": 240,
+        "wall_ms": 979.9208,
+        "frame_interval_median_ms": 3.2257999999999356,
+        "frame_interval_p95_ms": 7.03670000000011,
+        "frame_interval_p99_ms": 32.85370000000012,
+        "frames_over_33_333_ms": 2,
+        "cpu_percent_process_normalized": 12.490380174942029,
+        "allocated_bytes_delta": 3201208,
+        "working_set_bytes_delta": 4157440,
+        "input_dispatch_latency_median_ms": 0.0336,
+        "input_dispatch_latency_p95_ms": 2.0019,
+        "actual_keyboard_interactions": 3,
+        "actual_keyboard_activation_latency_median_ms": 10.2973,
+        "actual_keyboard_activation_latency_p95_ms": 15.4295,
+        "measurement": "WPF CompositionTarget.Rendering cadence \u002B process CPU/allocation/working-set \u002B DispatcherPriority.Input latency \u002B actual keyboard activation",
+        "performance_gating": false
+      },
+      "EvidenceFiles": [
+        "s5-full-dense-midrun.png"
+      ],
+      "Limit": "Metrics are reference-host observations, not GPU presentation timing. No wall-clock threshold was invented or lowered."
+    },
+    {
+      "Scenario": "S1_INTERACTIVE_ICON",
+      "Mode": "REDUCED",
+      "Status": "PASS",
+      "Metrics": {
+        "hover_state_path": true,
+        "hardware_pointer_injection": false,
+        "focus_path": true,
+        "keyboard_space": true,
+        "keyboard_enter": true,
+        "selected_then_deselected": true,
+        "accessible_name": "MotionKit interactive icon",
+        "invoke_pattern": true,
+        "activation_latency_ms": [
+          13.0343,
+          3.7857
+        ],
+        "reduced_motion_static": true
+      },
+      "EvidenceFiles": [
+        "s1-reduced-selected.png"
+      ],
+      "Limit": "Keyboard activation latency is a local WPF observation; hover uses the shared WPF state handler because the reference host\u0027s foreground game reclaims the hardware cursor."
+    },
+    {
+      "Scenario": "S3_ROUTE_TRANSFER",
+      "Mode": "REDUCED",
+      "Status": "PASS",
+      "Metrics": {
+        "artifact_identity": "route-artifact-001",
+        "return_triggered_mid_transfer": true,
+        "final_progress": 0,
+        "final_state": "SOURCE",
+        "identity_preserved": true,
+        "reduced_motion_static_settle": true
+      },
+      "EvidenceFiles": [
+        "s3-reduced-return-static.png"
+      ],
+      "Limit": "Frame callback timing is WPF presentation-loop evidence, not GPU present telemetry."
+    },
+    {
+      "Scenario": "S4_SEMANTIC_OBJECT_HANDOFF",
+      "Mode": "REDUCED",
+      "Status": "PASS",
+      "Metrics": {
+        "destination_became_unavailable": true,
+        "fallback": "SOURCE",
+        "final_progress": 0,
+        "deterministic_final_state": true,
+        "reduced_motion_static_settle": true
+      },
+      "EvidenceFiles": [
+        "s4-reduced-fallback-static.png"
+      ],
+      "Limit": "This validates deterministic visual fallback; product truth remains outside the renderer."
+    },
+    {
+      "Scenario": "S5_DENSE_SCREEN_STRESS",
+      "Mode": "REDUCED",
+      "Status": "PASS",
+      "Metrics": {
+        "objects": 64,
+        "animated_frames": 0,
+        "static_frame": true,
+        "actual_keyboard_interactions": 1,
+        "reduced_motion_static": true
+      },
+      "EvidenceFiles": [
+        "s5-reduced-static.png"
+      ],
+      "Limit": "Reduced Motion correctness is gating; performance is intentionally not inferred from a single static frame."
+    },
+    {
+      "Scenario": "S2_STATEFUL_SIGIL",
+      "Mode": "ROLE_MATRIX",
+      "Status": "NOT_APPLICABLE_CURRENT_ACCEPTED_ROLE_SET",
+      "Metrics": {
+        "accepted_stateful_vector_renderer": false,
+        "rive_evidence_class": "COMPILE_EVIDENCE",
+        "rive_wpf_runtime": false,
+        "unknown_forward_progress_allowed": false,
+        "decision": "Rive remains research-only and unassigned; no custom native wrapper was invented."
+      },
+      "EvidenceFiles": [],
+      "Limit": "S2 becomes mandatory again only if a renderer is assigned STATEFUL_VECTOR runtime responsibility."
+    }
+  ]
+}

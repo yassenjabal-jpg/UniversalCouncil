@@ -102,6 +102,9 @@ Gate: MOTION_PLATFORM_GENERAL_ADOPTION_APPROVED
 
 ## Permanent constraints
 
+- OPEN_SOURCE_FIRST / INTEGRATION_OVER_INVENTION;
+- MP1/MP2 are frozen for expansion after validation; only verified integration-driven corrections may change shared internals;
+- no custom renderer/timeline/vector engine when an adopted maintained dependency already provides the capability;
 - truth before motion;
 - no fake activity;
 - renderer replaceability;
@@ -115,7 +118,13 @@ Gate: MOTION_PLATFORM_GENERAL_ADOPTION_APPROVED
 
 ## Current position
 
-MP0 active.
-Architecture/research is authorized.
+MP0 foundation validated.
+MP1 semantic kernel validated and frozen for expansion.
+MP2 renderer boundary validated and frozen for expansion.
+MP3 reference-Windows technical bake-off is complete on YASSIN for the currently assigned renderer roles.
+S1, S3, S4 and S5 pass in Full and Reduced Motion; S2 is explicitly unassigned because no accepted renderer role currently claims STATEFUL_VECTOR.
+Owner visual acceptance was explicitly granted on 2026-10-23; RENDERER_ROLE_MATRIX_ACCEPTED is now passed. No renderer is production-adopted.
+See 10_MP3_REFERENCE_ACCEPTANCE.md and 11_MP3_OWNER_VISUAL_REVIEW.md for the exact scenario disposition, measurements, limits and approval record.
+Execution priority: exact-head MP4 reference integration evidence; do not expand MotionKit abstractions.
 Production renderer adoption is not authorized.
 Command Center refactor is not authorized by this roadmap alone.
