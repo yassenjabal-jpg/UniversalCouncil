@@ -15,7 +15,7 @@ Each renderer is evaluated only for the motion families it can execute truthfull
 | --- | --- | --- | --- | --- |
 | SkiaSharp 4.153.1 | RUNTIME_EVIDENCE | dynamic drawing, paths, diagrams, data-driven 2D | owned core Skia -> BitmapSource bridge | VALIDATED_SPECIALIST_CANDIDATE |
 | Windows Composition / WASDK 2.5.1 | COMPILE_EVIDENCE | Windows-native property/micro motion | WPF + unpackaged Windows App SDK; headless runtime deferred to interactive Windows | COMPILE_PROVEN_RUNTIME_DEFERRED_INTERACTIVE_WINDOWS |
-| Rive runtime @ f4da8fa42ed2c256d3d672e3828d18a328528f50 | SOURCE_EVIDENCE | stateful/interactable vector scenes | native C++ interop required | SOURCE_VALIDATED_NATIVE_INTEROP_RESEARCH |
+| Rive runtime @ f4da8fa42ed2c256d3d672e3828d18a328528f50 | COMPILE_EVIDENCE | stateful/interactable vector scenes | official Windows build generation proven; native C++ interop still required | COMPILE_FEASIBLE_NATIVE_INTEROP_SPECIALIST |
 | Lottie-Windows / LottieGen | RUNTIME_EVIDENCE (tooling) | pre-authored timelines and AE/codegen handoff | deterministic LottieGen C# codegen proven; renderer host still pending | TOOLING_RUNTIME_VALIDATED_WINUI_CODEGEN_SPECIALIST |
 
 ## SkiaSharp
@@ -69,7 +69,9 @@ Source evidence confirms:
 - D3D11/D3D12 Windows backends;
 - documented Windows native build path.
 
-There is still no MotionKit .NET/WPF interop evidence. Rive remains native-interoperability research.
+Lab evidence now proves the pinned source can run its official Windows build-generation path and produce a Visual Studio solution after enabling standard Windows Git long-path support.
+
+The pinned low-level runtime has no official C# runtime/binding project. Therefore no general MotionKit .NET wrapper will be invented now. Rive remains a specialist candidate: native interop is considered only if a concrete stateful-vector reference use case justifies its cost.
 
 ## Lottie-Windows / LottieGen
 
