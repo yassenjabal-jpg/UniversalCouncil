@@ -139,6 +139,14 @@ if lottie["lottiegen_tool_version"] != "8.2.250604":
     raise SystemExit("LottieGen tool version pin drifted")
 if set(lottie["authorized_probes"]) != {"LOTTIEGEN_CODEGEN_RUNTIME", "WINUI_COMPILE_LATER"}:
     raise SystemExit("Lottie-Windows probe authority drifted")
+lottie_findings = {item["id"]: item for item in lottie.get("observed_findings", [])}
+strict_finding = lottie_findings.get("LOTTIEGEN_STRICTMODE_HELP_PARSER_MISMATCH")
+if (
+    not strict_finding
+    or strict_finding["status"] != "OBSERVED"
+    or strict_finding["evidence_class"] != "RUNTIME_EVIDENCE"
+):
+    raise SystemExit("LottieGen strict-switch runtime finding missing")
 
 policy = state["performance_policy"]
 if policy["shared_ci_wall_clock_is_gating"]:
@@ -289,6 +297,7 @@ for marker in (
     "Rive is NOT treated as a .NET/WPF drop-in dependency.",
     "Lottie-Windows is NOT treated as a direct WPF control.",
     "LottieGen deterministic codegen probe",
+    "Observed tooling discrepancy:",
 ):
     if marker not in spec:
         raise SystemExit(f"MP3 specification drifted: {marker}")
