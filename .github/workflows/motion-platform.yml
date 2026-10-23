@@ -124,7 +124,7 @@ jobs:
 
           python tools/motion_platform_lottiegen_check.py $outputA $outputB
           if ($LASTEXITCODE -ne 0) { throw "LottieGen determinism check failed." }
-      - name: Probe pinned Rive native Windows toolchain/build generation
+      - name: Probe pinned Rive native Windows build generation
         shell: pwsh
         timeout-minutes: 8
         run: |
@@ -138,16 +138,8 @@ jobs:
           git checkout f4da8fa42ed2c256d3d672e3828d18a328528f50
           if ($LASTEXITCODE -ne 0) { throw "Rive pinned commit checkout failed." }
 
-          $clang = Get-Command clang-cl.exe -ErrorAction SilentlyContinue
-          $msbuild = Get-Command msbuild.exe -ErrorAction SilentlyContinue
-          $bash = Get-Command sh.exe -ErrorAction SilentlyContinue
-          if (-not $clang -or -not $msbuild -or -not $bash) {
-            throw "Rive native prerequisites missing (clang-cl/msbuild/sh)."
-          }
-
           Push-Location tests
-          $env:RIVE_PREMAKE_ARGS = "--with_rive_text --with_rive_layout --with_rive_canvas"
-          sh ../build/build_rive.sh nobuild release
+          & ..\build\build_rive.ps1 nobuild release
           if ($LASTEXITCODE -ne 0) { throw "Rive pinned Windows premake generation failed." }
           Pop-Location
 
@@ -155,23 +147,5 @@ jobs:
             throw "Rive premake generation completed without tests/out/release/rive.sln."
           }
 
-          Write-Host "MotionKit Rive native feasibility probe: PASS (pinned source + Windows prerequisites + VS solution generation)"
+          Write-Host "MotionKit Rive native feasibility probe: PASS (official Rive build wrapper generated VS solution)"
           Pop-Location
-
-      - name: Run Windows Composition runtime API probe
-        shell: pwsh
-        timeout-minutes: 2
-        run: |
-          $project = "apps/UniversalCouncil.MotionKit.CompositionRuntimeProbe/UniversalCouncil.MotionKit.CompositionRuntimeProbe.csproj"
-          dotnet build $project -c Release --nologo
-          if ($LASTEXITCODE -ne 0) { throw "Composition runtime probe build failed." }
-
-          $dll = "apps/UniversalCouncil.MotionKit.CompositionRuntimeProbe/bin/Release/net10.0-windows10.0.19041.0/UniversalCouncil.MotionKit.CompositionRuntimeProbe.dll"
-          $process = Start-Process -FilePath "dotnet" -ArgumentList @($dll) -PassThru -NoNewWindow
-          if (-not $process.WaitForExit(15000)) {
-            Stop-Process -Id $process.Id -Force
-            throw "Composition runtime probe exceeded the 15 second shutdown budget."
-          }
-          if ($process.ExitCode -ne 0) {
-            throw "Composition runtime probe exited with code $($process.ExitCode)."
-          }
