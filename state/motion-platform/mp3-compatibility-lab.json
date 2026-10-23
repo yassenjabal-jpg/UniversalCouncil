@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "candidate_id": "motionkit-mp3-compatibility-lab-20261023",
   "parent_mp2_sha": "8b9e3a20ca407fff6734c945db59708d2718c2b5",
-  "status": "LAB_ACTIVE_NOT_ACCEPTED",
+  "status": "REFERENCE_ACCEPTED_NOT_PRODUCTION_ADOPTED",
   "evidence_classes": [
     "SOURCE_EVIDENCE",
     "COMPILE_EVIDENCE",
@@ -320,15 +320,13 @@
     "runtime_authority_expanded": false
   },
   "reference_windows_qualification": {
-    "status": "TECHNICAL_BAKEOFF_COMPLETE_OWNER_VISUAL_ACCEPTANCE_PENDING",
+    "status": "REFERENCE_ACCEPTED_OWNER_APPROVED",
     "host": "YASSIN",
     "date": "2026-10-23",
-    "evidence_directory": "lab/motion-platform/evidence/yassin-20261023",
+    "evidence_directory": "lab/motion-platform/evidence/yassin-20261023-acceptance",
     "acceptance_gate": "RENDERER_ROLE_MATRIX_ACCEPTED",
-    "acceptance_gate_passed": false,
-    "remaining": [
-      "Owner visual acceptance"
-    ],
+    "acceptance_gate_passed": true,
+    "remaining": [],
     "mp4_preparation_ready": true,
     "technical_bakeoff_passed": true,
     "scenario_disposition": {
@@ -344,6 +342,13 @@
       "threshold_gate_defined": false,
       "reason": "Reference-host WPF presentation-loop, CPU, allocation, memory and input observations are recorded; no post-hoc performance threshold is invented."
     },
-    "input_evidence_limit": "Keyboard activation is actual WPF input; hover exercises the shared WPF hover-state handler. Hardware pointer injection is not claimed because the active reference-host game reclaims the OS cursor."
+    "input_evidence_limit": "Keyboard activation is actual WPF input; hover exercises the shared WPF hover-state handler. Hardware pointer injection is not claimed because the active reference-host game reclaims the OS cursor.",
+    "owner_visual_acceptance": true,
+    "owner_visual_decision": {
+      "status": "APPROVED",
+      "date": "2026-10-23",
+      "source": "OWNER_CHAT_APPROVAL",
+      "statement": "اكمل العمل انا موافق"
+    }
   }
 }
