@@ -74,8 +74,8 @@ jobs:
           rm -rf build/motion-lottiegen build/motion-lottie-a build/motion-lottie-b
           mkdir -p build/motion-lottiegen build/motion-lottie-a build/motion-lottie-b
           dotnet tool install --tool-path build/motion-lottiegen LottieGen --version 8.2.250604
-          build/motion-lottiegen/LottieGen             -InputFile lab/motion-platform/lottie/MotionKitProbe.json             -Language cs             -OutputFolder build/motion-lottie-a             -Namespace MotionKit.Lab             -Public             -StrictMode             -TestMode
-          build/motion-lottiegen/LottieGen             -InputFile lab/motion-platform/lottie/MotionKitProbe.json             -Language cs             -OutputFolder build/motion-lottie-b             -Namespace MotionKit.Lab             -Public             -StrictMode             -TestMode
+          build/motion-lottiegen/LottieGen             -InputFile lab/motion-platform/lottie/MotionKitProbe.json             -Language cs             -OutputFolder build/motion-lottie-a             -Namespace MotionKit.Lab             -Public             -Strict             -TestMode
+          build/motion-lottiegen/LottieGen             -InputFile lab/motion-platform/lottie/MotionKitProbe.json             -Language cs             -OutputFolder build/motion-lottie-b             -Namespace MotionKit.Lab             -Public             -Strict             -TestMode
           python tools/motion_platform_lottiegen_check.py             build/motion-lottie-a             build/motion-lottie-b
 
   windows-lab-probes:
