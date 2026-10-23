@@ -13,6 +13,8 @@ await CheckSupportedBeginDuplicateSettleAsync();
 await CheckUnsupportedCapabilityAsync();
 await CheckCancelAndNotActiveAsync();
 await CheckUnknownCapabilityRejectedAsync();
+await CheckStaticFallbackRequiresCapabilityAsync();
+CheckAdapterVersionValidation();
 await CheckConcurrentFakeRendererAsync();
 await CheckDisposalCleanupAsync();
 
@@ -38,6 +40,7 @@ void CheckFullAndReducedProfileResolution()
         ?? throw new InvalidOperationException("Reduced profile command should resolve.");
 
     Check(full.Status == MotionPreparationStatus.Ready, "Full profile should resolve.");
+    Check(fullCommand.ProfileId == "command-center-test", "Render command must carry product Motion Profile identity.");
     Check(fullCommand.VisualToken == "SIGIL_ACTIVE_FULL", "Full profile token drifted.");
     Check(fullCommand.Duration == TimeSpan.FromMilliseconds(180), "Full profile duration drifted.");
     Check(
@@ -140,6 +143,7 @@ async Task CheckSupportedBeginDuplicateSettleAsync()
 {
     await using var renderer = new DeterministicFakeRenderer(
         "fake:full",
+        "test-1.0",
         MotionRenderCapability.StaticSettle
         | MotionRenderCapability.Opacity
         | MotionRenderCapability.Scale);
@@ -157,11 +161,15 @@ async Task CheckSupportedBeginDuplicateSettleAsync()
         MotionSettleMode.Final);
 
     Check(started.Status == MotionRenderStatus.Started, "Supported command should start.");
+    Check(started.AdapterId == "fake:full", "Render result must carry adapter identity.");
+    Check(started.AdapterVersion == "test-1.0", "Render result must carry adapter version.");
     Check(duplicate.Status == MotionRenderStatus.DuplicateInstance, "Duplicate active instance must be rejected.");
     Check(settled.Status == MotionRenderStatus.Settled, "Active command should settle.");
     Check(notActive.Status == MotionRenderStatus.NotActive, "Second settle must report not active.");
 
     var diagnostics = renderer.SnapshotDiagnostics();
+    Check(diagnostics.AdapterId == "fake:full", "Diagnostics must carry adapter identity.");
+    Check(diagnostics.AdapterVersion == "test-1.0", "Diagnostics must carry adapter version.");
     Check(diagnostics.ActiveCount == 0, "Settled fake renderer must have no active command.");
     Check(diagnostics.StartedCount == 1, "Fake renderer start count drifted.");
     Check(diagnostics.SettledCount == 1, "Fake renderer settle count drifted.");
@@ -172,6 +180,7 @@ async Task CheckUnsupportedCapabilityAsync()
 {
     await using var renderer = new DeterministicFakeRenderer(
         "fake:static-only",
+        "test-1.0",
         MotionRenderCapability.StaticSettle);
 
     var command = FullCommand(
@@ -189,6 +198,7 @@ async Task CheckCancelAndNotActiveAsync()
 {
     await using var renderer = new DeterministicFakeRenderer(
         "fake:cancel",
+        "test-1.0",
         MotionRenderCapability.StaticSettle
         | MotionRenderCapability.Opacity
         | MotionRenderCapability.Scale);
@@ -224,10 +234,59 @@ async Task CheckUnknownCapabilityRejectedAsync()
     Check(renderer.SnapshotDiagnostics().RejectedCount == 1, "Invalid command diagnostic count drifted.");
 }
 
+
+async Task CheckStaticFallbackRequiresCapabilityAsync()
+{
+    await using var renderer = new DeterministicFakeRenderer(
+        "fake:no-static-fallback",
+        "test-1.0",
+        MotionRenderCapability.Opacity | MotionRenderCapability.Scale);
+
+    var command = FullCommand(
+        Guid.Parse("20000000-0000-0000-0000-000000000006"));
+
+    var started = await renderer.BeginAsync(command);
+    Check(started.Status == MotionRenderStatus.Started, "Non-static Full command should start without StaticSettle.");
+
+    var unsupported = await renderer.SettleAsync(
+        command.Identity.InstanceId,
+        MotionSettleMode.StaticFallback);
+    Check(
+        unsupported.Status == MotionRenderStatus.NotSupported,
+        "StaticFallback must fail when adapter lacks StaticSettle capability.");
+    Check(
+        renderer.SnapshotDiagnostics().ActiveCount == 1,
+        "Unsupported StaticFallback must not silently destroy the active instance.");
+
+    var final = await renderer.SettleAsync(
+        command.Identity.InstanceId,
+        MotionSettleMode.Final);
+    Check(final.Status == MotionRenderStatus.Settled, "Caller must remain able to choose an explicit supported settle.");
+}
+
+void CheckAdapterVersionValidation()
+{
+    var threw = false;
+    try
+    {
+        _ = new DeterministicFakeRenderer(
+            "fake:bad-version",
+            "",
+            MotionRenderCapability.StaticSettle);
+    }
+    catch (ArgumentException)
+    {
+        threw = true;
+    }
+
+    Check(threw, "Adapter version is mandatory evidence identity.");
+}
+
 async Task CheckConcurrentFakeRendererAsync()
 {
     await using var renderer = new DeterministicFakeRenderer(
         "fake:parallel",
+        "test-1.0",
         MotionRenderCapability.Opacity | MotionRenderCapability.Scale);
 
     var instanceIds = Enumerable.Range(1, 32)
@@ -270,6 +329,7 @@ async Task CheckDisposalCleanupAsync()
 {
     var renderer = new DeterministicFakeRenderer(
         "fake:dispose",
+        "test-1.0",
         MotionRenderCapability.Opacity | MotionRenderCapability.Scale);
 
     _ = await renderer.BeginAsync(FullCommand(
