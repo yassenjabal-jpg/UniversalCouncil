@@ -42,6 +42,8 @@ required_scope = {
     "STALE_COMPLETION_REJECTION",
     "QUEUE_FRESHNESS",
     "REDUCED_MOTION_MODE_PRESERVATION",
+    "TRUTH_REVOCATION",
+    "IMMUTABLE_CONTRACT_SNAPSHOT",
 }
 if set(candidate["scope"]) != required_scope:
     raise SystemExit("MP1 scope drifted")
@@ -87,6 +89,8 @@ required_coordinator_markers = (
     "QueuedAwaitingFreshTruth",
     "Enum.IsDefined",
     "NextUniqueInstanceId",
+    "ReconcileTruth",
+    "ToFrozenSet",
 )
 for marker in required_coordinator_markers:
     if marker not in coordinator:
@@ -105,6 +109,10 @@ required_validation_markers = (
     "CheckFutureTruthRejected",
     "CheckMissingReducedEquivalentRejected",
     "CheckUnknownEnumInputsRejected",
+    "CheckTruthRevocationStopsMotion",
+    "CheckStaleTruthRevocationCannotCancelNewerMotion",
+    "CheckTruthRevocationReleasesNextQueuedIntent",
+    "CheckContractSnapshotIsImmutable",
     "CheckQueueBound",
     "CheckCancelTarget",
 )
@@ -116,6 +124,8 @@ required_spec_markers = (
     "The kernel owns coordination, not graphics.",
     "Stale completion law",
     "Queue freshness law",
+    "Truth revocation law",
+    "Contract snapshot law",
     "MP1 does not:",
 )
 for marker in required_spec_markers:
