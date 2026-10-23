@@ -171,7 +171,18 @@
           "detail": "NuGet stable LottieGen 8.2.250604 targets .NET 9, is compatible with .NET 10, has no package dependencies, and is documented as the efficient Windows code-generation path."
         }
       ],
-      "lottiegen_tool_version": "8.2.250604"
+      "lottiegen_tool_version": "8.2.250604",
+      "observed_findings": [
+        {
+          "id": "LOTTIEGEN_STRICTMODE_HELP_PARSER_MISMATCH",
+          "evidence_class": "RUNTIME_EVIDENCE",
+          "source_head_sha": "c543906fb7e04db36a3927f351b97135325a5548",
+          "workflow_run_id": 39925941169,
+          "job_id": 120322205508,
+          "status": "OBSERVED",
+          "detail": "LottieGen 8.2.250604 help text advertises -StrictMode, but the command-line parser accepts Keyword.Strict; -StrictMode failed as Unexpected while -Strict is the source-backed strict parsing switch. The lab keeps strict parsing by using -Strict rather than weakening the probe."
+        }
+      ]
     }
   },
   "performance_policy": {
