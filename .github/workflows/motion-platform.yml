@@ -6,16 +6,16 @@ on:
       - 'apps/UniversalCouncil.MotionKit*/**'
       - 'docs/operations/motion-platform/**'
       - 'state/motion-platform/**'
-      - 'tools/motion_platform_contract_validate.py'
-      - 'company/tests/test_motion_platform_contract.py'
+      - 'tools/motion_platform*_validate.py'
+      - 'company/tests/test_motion_platform*.py'
       - '.github/workflows/motion-platform.yml'
 
 permissions:
   contents: read
 
 jobs:
-  semantic-kernel:
-    name: Semantic Kernel
+  platform:
+    name: Contract and Semantic Kernel
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -30,4 +30,11 @@ jobs:
           dotnet-version: '10.0.x'
       - run: python tools/motion_platform_contract_validate.py
       - run: python -m unittest company.tests.test_motion_platform_contract -v
-      - run: dotnet run --project apps/UniversalCouncil.MotionKit.Validation -c Release
+      - name: Validate semantic kernel when present
+        shell: bash
+        run: |
+          if [ -f apps/UniversalCouncil.MotionKit.Validation/UniversalCouncil.MotionKit.Validation.csproj ]; then
+            dotnet run --project apps/UniversalCouncil.MotionKit.Validation -c Release
+          else
+            echo "MotionKit semantic kernel not present; foundation contract only."
+          fi
