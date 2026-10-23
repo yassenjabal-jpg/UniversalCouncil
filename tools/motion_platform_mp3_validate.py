@@ -9,7 +9,12 @@ SPEC = ROOT / "docs" / "operations" / "motion-platform" / "07_COMPATIBILITY_LAB_
 SKIA_PROJECT = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaLab" / "UniversalCouncil.MotionKit.SkiaLab.csproj"
 SKIA_ADAPTER = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaLab" / "SkiaOffscreenLabAdapter.cs"
 SKIA_VALIDATION = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaLabValidation" / "Program.cs"
-WPF_PROJECT = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaWpfCompileProbe" / "UniversalCouncil.MotionKit.SkiaWpfCompileProbe.csproj"
+WPF_PROJECT = (
+    ROOT
+    / "apps"
+    / "UniversalCouncil.MotionKit.SkiaWpfCompileProbe"
+    / "UniversalCouncil.MotionKit.SkiaWpfCompileProbe.csproj"
+)
 WPF_PROBE = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaWpfCompileProbe" / "SkiaWpfProbe.cs"
 
 for path in (STATE, SPEC, SKIA_PROJECT, SKIA_ADAPTER, SKIA_VALIDATION, WPF_PROJECT, WPF_PROBE):
