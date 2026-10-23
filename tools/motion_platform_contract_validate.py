@@ -217,7 +217,10 @@ markers = {
     DOCS[2]: ("Five mandatory reference scenarios", "There may be multiple winners"),
     DOCS[3]: ("Motion Platform Cell", "APPROVED_WITH_CAPABILITY_GAP"),
     DOCS[4]: ("MP0 — Foundation Lock", "MP6 — Cross-project Proof", "OPEN_SOURCE_FIRST / INTEGRATION_OVER_INVENTION"),
-    DOCS[5]: ("Open Source / existing platform capability first.", "MP1 Semantic Kernel and MP2 Renderer Boundary are now FROZEN_FOR_EXPANSION."),
+    DOCS[5]: (
+        "Open Source / existing platform capability first.",
+        "MP1 Semantic Kernel and MP2 Renderer Boundary are now FROZEN_FOR_EXPANSION.",
+    ),
 }
 for path, required in markers.items():
     doc = path.read_text(encoding="utf-8")
