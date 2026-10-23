@@ -14,6 +14,7 @@ DOCS = [
     ROOT / "docs" / "operations" / "motion-platform" / "02_COMPATIBILITY_LAB.md",
     ROOT / "docs" / "operations" / "motion-platform" / "03_STUDIO_CAPABILITY_UPGRADE.md",
     ROOT / "docs" / "operations" / "motion-platform" / "04_MOTION_PLATFORM_ROADMAP.md",
+    ROOT / "docs" / "operations" / "motion-platform" / "08_OPEN_SOURCE_FIRST_POLICY.md",
 ]
 
 for path in (CONTRACT, CATALOG, CANDIDATES, PROFILE, *DOCS):
@@ -100,6 +101,25 @@ for key in (
 ):
     if authority[key]:
         raise SystemExit(f"foundation draft inflated authority: {key}")
+
+strategy = contract.get("implementation_strategy")
+if not strategy:
+    raise SystemExit("Motion Platform implementation strategy missing")
+if strategy["policy"] != "OPEN_SOURCE_FIRST":
+    raise SystemExit("Motion Platform stopped being open-source first")
+if strategy["mode"] != "INTEGRATION_OVER_INVENTION":
+    raise SystemExit("Motion Platform drifted back toward invention-first")
+if strategy["active_execution_wave"] != "MP3":
+    raise SystemExit("Motion Platform execution focus drifted away from MP3")
+if strategy["shared_layers_frozen_for_expansion"] != ["MP1", "MP2"]:
+    raise SystemExit("validated shared layers are no longer frozen for expansion")
+if not strategy["shared_change_requires_real_integration_gap"]:
+    raise SystemExit("shared MotionKit expansion no longer requires a real integration gap")
+for key in ("custom_renderer_engine_allowed", "custom_timeline_engine_allowed", "custom_vector_engine_allowed"):
+    if strategy[key]:
+        raise SystemExit(f"custom engine invention unexpectedly allowed: {key}")
+if not strategy["adapter_local_solution_preferred"]:
+    raise SystemExit("adapter-local solution preference was weakened")
 
 roadmap = contract["roadmap"]
 if roadmap["ordered_waves"] != [f"MP{i}" for i in range(7)]:
@@ -196,7 +216,8 @@ markers = {
     DOCS[1]: ("The renderer is replaceable. The semantic meaning is not.", "Reduced Motion is a semantic adapter mode"),
     DOCS[2]: ("Five mandatory reference scenarios", "There may be multiple winners"),
     DOCS[3]: ("Motion Platform Cell", "APPROVED_WITH_CAPABILITY_GAP"),
-    DOCS[4]: ("MP0 — Foundation Lock", "MP6 — Cross-project Proof"),
+    DOCS[4]: ("MP0 — Foundation Lock", "MP6 — Cross-project Proof", "OPEN_SOURCE_FIRST / INTEGRATION_OVER_INVENTION"),
+    DOCS[5]: ("Open Source / existing platform capability first.", "MP1 Semantic Kernel and MP2 Renderer Boundary are now FROZEN_FOR_EXPANSION."),
 }
 for path, required in markers.items():
     doc = path.read_text(encoding="utf-8")
