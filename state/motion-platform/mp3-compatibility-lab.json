@@ -23,7 +23,8 @@
       ],
       "authorized_probes": [
         "LINUX_HEADLESS_RUNTIME",
-        "WINDOWS_WPF_CORE_BRIDGE_COMPILE"
+        "WINDOWS_WPF_CORE_BRIDGE_COMPILE",
+        "WINDOWS_WPF_CORE_BRIDGE_RUNTIME"
       ],
       "observed_findings": [
         {
@@ -53,6 +54,13 @@
           "job_id": 120316395189,
           "status": "PASS",
           "detail": "net10.0-windows WPF project using core SkiaSharp 4.153.1 and SKBitmap-to-BitmapSource bridge built successfully without suppressing NU1701."
+        },
+        {
+          "id": "SKIA_YASSIN_WPF_WINDOW_PASS",
+          "evidence_class": "WINDOW_EVIDENCE",
+          "status": "PASS",
+          "detail": "600 core-Skia BitmapSource updates in visible WPF window, session 5, normal process exit 0. Static bridge fixture, not product animation.",
+          "evidence": "lab/motion-platform/evidence/yassin-20261023/skia-window.json"
         }
       ],
       "informational_measurement": {
@@ -66,7 +74,7 @@
       "repository": "microsoft/WindowsAppSDK",
       "version": "2.5.1",
       "license": "MIT",
-      "status": "COMPILE_PROVEN_RUNTIME_DEFERRED",
+      "status": "INTERACTIVE_WPF_WINDOW_PROVEN_LAB_ONLY",
       "role": [
         "WINDOWS_MICRO_MOTION",
         "VISUAL_PROPERTY_ANIMATION",
@@ -74,8 +82,8 @@
       ],
       "authorized_probes": [
         "WINDOWS_WPF_COMPOSITION_COMPILE",
-        "WINDOWS_COMPOSITION_RUNTIME_API_DEFERRED_INTERACTIVE_WINDOWS",
-        "WINDOWS_WPF_VISUAL_HOST_LATER"
+        "WINDOWS_COMPOSITION_RUNTIME_API_REFERENCE_WINDOWS",
+        "WINDOWS_WPF_VISUAL_HOST_RUNTIME"
       ],
       "source_evidence": [
         {
@@ -102,6 +110,13 @@
           "job_id": 120318791027,
           "status": "PASS",
           "detail": "Microsoft.WindowsAppSDK 2.5.1 restored and a net10.0-windows WPF compile probe using WindowsPackageType=None compiled Compositor, SpriteVisual, ScalarKeyFrameAnimation, and WPF WindowInteropHelper access."
+        },
+        {
+          "id": "COMPOSITION_YASSIN_WPF_WINDOW_PASS",
+          "evidence_class": "WINDOW_EVIDENCE",
+          "status": "PASS",
+          "detail": "WASDK ContentIsland + DesktopChildSiteBridge attached to WPF HWND. Full opacity pixel changes, Reduced static settle, normal process exit 0. Original API probe also exits 0.",
+          "evidence": "lab/motion-platform/evidence/yassin-20261023/composition-window.json"
         }
       ],
       "observed_findings": [
@@ -112,7 +127,8 @@
           "workflow_run_id": 39928447175,
           "job_id": 120330505147,
           "status": "DEFERRED_INTERACTIVE_WINDOWS",
-          "detail": "The probe owned a Microsoft.UI DispatcherQueueController, ran an explicit DispatcherQueue event loop, created/used Composition API objects, then still exceeded the 15 second process shutdown budget on the headless GitHub Windows runner. Runtime lifecycle is deferred to an interactive/reference Windows environment; no custom workaround will be invented in shared MotionKit."
+          "detail": "The probe owned a Microsoft.UI DispatcherQueueController, ran an explicit DispatcherQueue event loop, created/used Composition API objects, then still exceeded the 15 second process shutdown budget on the headless GitHub Windows runner. Runtime lifecycle is deferred to an interactive/reference Windows environment; no custom workaround will be invented in shared MotionKit.",
+          "superseded_for": "Interactive/reference Windows deferral resolved by COMPOSITION_YASSIN_WPF_WINDOW_PASS; original headless timeout remains historical."
         }
       ]
     },
@@ -242,6 +258,17 @@
           "status": "PLATFORM_TOOLING_LIMITATION",
           "detail": "Pinned LottieGen 8.2.250604 accepted -Strict but failed to find a repository-relative fixture on Ubuntu. Pinned Glob.cs appends a literal backslash to its directory path, so the deterministic codegen probe is moved to Windows rather than weakening Strict/TestMode."
         }
+      ],
+      "observed_evidence": [
+        {
+          "id": "LOTTIEGEN_BASELINE_CI_REFERENCE",
+          "evidence_class": "RUNTIME_EVIDENCE",
+          "status": "PASS",
+          "source_head_sha": "f7e2db143898e4f1d1a43e8d43dc875632c2ed0a",
+          "workflow_run_id": 39929833512,
+          "job_id": 120335079367,
+          "detail": "Verified successful strict deterministic LottieGen Windows step; tooling only."
+        }
       ]
     }
   },
@@ -257,5 +284,19 @@
     "pr72_merge_authorized": false,
     "stage8_opened": false,
     "runtime_authority_expanded": false
+  },
+  "reference_windows_qualification": {
+    "status": "FEASIBILITY_EVIDENCE_COMPLETE_ACCEPTANCE_PENDING",
+    "host": "YASSIN",
+    "date": "2026-10-23",
+    "evidence_directory": "lab/motion-platform/evidence/yassin-20261023",
+    "acceptance_gate": "RENDERER_ROLE_MATRIX_ACCEPTED",
+    "acceptance_gate_passed": false,
+    "remaining": [
+      "S1..S5 scenario acceptance and accessibility bake-off",
+      "GPU frame pacing, CPU and allocation qualification",
+      "Owner visual acceptance"
+    ],
+    "mp4_preparation_ready": true
   }
 }

@@ -1,0 +1,14 @@
+{
+  "machine": "YASSIN",
+  "utc": "2026-10-23T10:30:37.1959075+00:00",
+  "interactive": true,
+  "process_session": 5,
+  "visible": true,
+  "samples": 600,
+  "median_dispatch_interval_ms": 28.956599999999526,
+  "p95_dispatch_interval_ms": 34.90519999999992,
+  "measurement": "WPF dispatcher cadence; NOT GPU presentation or product animation",
+  "gating": false,
+  "bridge_pixel_width": 64,
+  "bridge_pixel_height": 64
+}

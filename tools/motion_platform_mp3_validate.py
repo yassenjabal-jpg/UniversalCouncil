@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -82,9 +83,9 @@ if rules["product_truth_may_enter_renderer"]:
 matrix_renderers = matrix["renderers"]
 if set(matrix_renderers) != {"SKIASHARP", "WINDOWS_COMPOSITION", "RIVE", "LOTTIE_WINDOWS"}:
     raise SystemExit("renderer role matrix candidate set drifted")
-if matrix_renderers["SKIASHARP"]["highest_evidence_class"] != "RUNTIME_EVIDENCE":
+if matrix_renderers["SKIASHARP"]["highest_evidence_class"] != "WINDOW_EVIDENCE":
     raise SystemExit("SkiaSharp role matrix evidence class drifted")
-if matrix_renderers["WINDOWS_COMPOSITION"]["highest_evidence_class"] != "COMPILE_EVIDENCE":
+if matrix_renderers["WINDOWS_COMPOSITION"]["highest_evidence_class"] != "WINDOW_EVIDENCE":
     raise SystemExit("Composition role matrix over- or under-claimed evidence")
 if matrix_renderers["RIVE"]["highest_evidence_class"] != "COMPILE_EVIDENCE":
     raise SystemExit("RIVE role matrix evidence class drifted")
@@ -112,7 +113,11 @@ if set(candidates) != required:
 skia = candidates["SKIASHARP"]
 if skia["version"] != "4.153.1" or skia["license"] != "MIT" or skia["status"] != "LAB_ONLY":
     raise SystemExit("SkiaSharp pin/license/status drifted")
-if set(skia["authorized_probes"]) != {"LINUX_HEADLESS_RUNTIME", "WINDOWS_WPF_CORE_BRIDGE_COMPILE"}:
+if set(skia["authorized_probes"]) != {
+    "LINUX_HEADLESS_RUNTIME",
+    "WINDOWS_WPF_CORE_BRIDGE_COMPILE",
+    "WINDOWS_WPF_CORE_BRIDGE_RUNTIME",
+}:
     raise SystemExit("SkiaSharp probe authority drifted")
 findings = {item["id"]: item for item in skia.get("observed_findings", [])}
 finding = findings.get("SKIA_VIEWS_WPF_NET10_NU1701")
@@ -120,12 +125,12 @@ if not finding or finding["status"] != "BLOCKED" or finding["evidence_class"] !=
     raise SystemExit("SkiaSharp Views.WPF net10 compatibility finding missing")
 
 composition = candidates["WINDOWS_COMPOSITION"]
-if composition["version"] != "2.5.1" or composition["status"] != "COMPILE_PROVEN_RUNTIME_DEFERRED":
+if composition["version"] != "2.5.1" or composition["status"] != "INTERACTIVE_WPF_WINDOW_PROVEN_LAB_ONLY":
     raise SystemExit("Windows Composition research pin/status drifted")
 if set(composition["authorized_probes"]) != {
     "WINDOWS_WPF_COMPOSITION_COMPILE",
-    "WINDOWS_COMPOSITION_RUNTIME_API_DEFERRED_INTERACTIVE_WINDOWS",
-    "WINDOWS_WPF_VISUAL_HOST_LATER",
+    "WINDOWS_COMPOSITION_RUNTIME_API_REFERENCE_WINDOWS",
+    "WINDOWS_WPF_VISUAL_HOST_RUNTIME",
 }:
     raise SystemExit("Windows Composition probe authority drifted")
 
@@ -354,5 +359,30 @@ for marker in (
 ):
     if marker not in matrix_doc:
         raise SystemExit(f"renderer role matrix documentation drifted: {marker}")
+
+
+# Reference evidence is bound to the probe source and captured artifacts, not an old CI head.
+evidence_dir = ROOT / "lab/motion-platform/evidence/yassin-20261023"
+manifest = json.loads((evidence_dir / "manifest.json").read_text(encoding="utf-8"))
+for relative, expected in manifest["sha256"].items():
+    path = (ROOT / relative).resolve()
+    if not path.is_relative_to(ROOT.resolve()):
+        raise SystemExit("reference manifest path escaped repository")
+    data = path.read_bytes()
+    if path.suffix != ".png":
+        data = data.replace(b"\r\n", b"\n")
+    if hashlib.sha256(data).hexdigest() != expected:
+        raise SystemExit(f"reference evidence/source hash mismatch: {relative}")
+if manifest["composition_exit_code"] != 0 or manifest["skia_exit_code"] != 0:
+    raise SystemExit("reference window process did not exit cleanly")
+for name in ("composition", "skia"):
+    if (evidence_dir / f"{name}.stderr.txt").read_text(encoding="utf-8").strip():
+        raise SystemExit(f"{name} reference stderr is not empty")
+pixels = json.loads((evidence_dir / "pixel-check.json").read_text(encoding="utf-8"))
+if pixels["full_unique_sprite_colors"] < 10 or pixels["reduced_unique_sprite_colors"] != 1:
+    raise SystemExit("reference Full/Reduced visible pixel evidence failed")
+qualification = state["reference_windows_qualification"]
+if qualification["acceptance_gate_passed"]:
+    raise SystemExit("feasibility evidence must not self-promote S1..S5 acceptance")
 
 print("Motion Platform MP3 validation: PASS (compatibility lab boundaries + evidence-class renderer matrix)")

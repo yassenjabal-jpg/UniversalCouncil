@@ -6,8 +6,9 @@ namespace UniversalCouncil.MotionKit.CompositionRuntimeProbe;
 internal static class Program
 {
     [STAThread]
-    private static int Main()
+    private static int Main(string[] args)
     {
+        if (args.Length == 2 && args[0] == "--interactive") return InteractiveWindowProbe.Run(args[1]);
         var queueController = DispatcherQueueController.CreateOnCurrentThread();
         var dispatcherQueue = queueController.DispatcherQueue;
 

@@ -13,8 +13,8 @@ Each renderer is evaluated only for the motion families it can execute truthfull
 
 | Candidate | Highest evidence | Current role | WPF path | Current verdict |
 | --- | --- | --- | --- | --- |
-| SkiaSharp 4.153.1 | RUNTIME_EVIDENCE | dynamic drawing, paths, diagrams, data-driven 2D | owned core Skia -> BitmapSource bridge | VALIDATED_SPECIALIST_CANDIDATE |
-| Windows Composition / WASDK 2.5.1 | COMPILE_EVIDENCE | Windows-native property/micro motion | WPF + unpackaged Windows App SDK; headless runtime deferred to interactive Windows | COMPILE_PROVEN_RUNTIME_DEFERRED_INTERACTIVE_WINDOWS |
+| SkiaSharp 4.153.1 | WINDOW_EVIDENCE | dynamic drawing, paths, diagrams, data-driven 2D | owned core Skia -> BitmapSource bridge | VALIDATED_SPECIALIST_CANDIDATE |
+| Windows Composition / WASDK 2.5.1 | WINDOW_EVIDENCE | Windows-native property/micro motion | WPF HWND + ContentIsland/DesktopChildSiteBridge on YASSIN | INTERACTIVE_WPF_WINDOW_PROVEN_LAB_ONLY |
 | Rive runtime @ f4da8fa42ed2c256d3d672e3828d18a328528f50 | COMPILE_EVIDENCE | stateful/interactable vector scenes | official Windows build generation proven; native C++ interop still required | COMPILE_FEASIBLE_NATIVE_INTEROP_SPECIALIST |
 | Lottie-Windows / LottieGen | RUNTIME_EVIDENCE (tooling) | pre-authored timelines and AE/codegen handoff | deterministic LottieGen C# codegen proven; renderer host still pending | TOOLING_RUNTIME_VALIDATED_WINUI_CODEGEN_SPECIALIST |
 
@@ -31,7 +31,7 @@ Blocked path:
 - direct `SkiaSharp.Views.WPF 4.153.1` is not accepted for .NET 10 because the probe produced NU1701 through legacy-compatible OpenTK dependency restoration.
 
 What is still missing:
-- actual WPF window rendering;
+- product-scale WPF rendering (the isolated pixel bridge window is now proven);
 - frame pacing and memory on reference Windows hardware;
 - owner-visible fidelity;
 - accessibility interaction.
@@ -54,7 +54,7 @@ What is still missing:
 - cancellation/lifetime evidence under real window close/recreate;
 - frame pacing and GPU cost.
 
-Therefore Composition remains a Windows-native candidate, but its runtime path is deferred rather than allowed to block MP3.
+The historical verdict COMPILE_PROVEN_RUNTIME_DEFERRED_INTERACTIVE_WINDOWS is superseded for YASSIN by WINDOW_EVIDENCE. Headless failure history is retained. ContentIsland hosting, visible Full opacity changes, Reduced static settle, and normal shutdown are proven; production adoption remains false.
 
 ## Rive
 
@@ -96,3 +96,7 @@ This validates the authored-animation/codegen workflow as tooling runtime eviden
 4. Command Center reference-integration preparation.
 
 None of these probes authorize production adoption or Command Center integration.
+
+## Reference Windows evidence
+
+See [YASSIN evidence and MP4 handoff](09_YASSIN_REFERENCE_EVIDENCE_AND_MP4_HANDOFF.md). The mandatory S1..S5 acceptance bake-off is not claimed by these feasibility probes.

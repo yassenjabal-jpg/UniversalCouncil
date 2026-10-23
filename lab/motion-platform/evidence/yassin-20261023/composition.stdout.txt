@@ -1,0 +1,1 @@
+Composition WPF interactive: PASS (ContentIsland, Full/Reduced, normal close)

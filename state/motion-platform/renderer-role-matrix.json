@@ -12,12 +12,13 @@
   "renderers": {
     "SKIASHARP": {
       "current_verdict": "VALIDATED_SPECIALIST_CANDIDATE",
-      "highest_evidence_class": "RUNTIME_EVIDENCE",
+      "highest_evidence_class": "WINDOW_EVIDENCE",
       "validated_roles": [
         "PATH_GEOMETRY",
         "DYNAMIC_DRAWING",
         "DATA_DRIVEN_2D",
-        "WPF_CORE_PIXEL_BRIDGE_COMPILE"
+        "WPF_CORE_PIXEL_BRIDGE_COMPILE",
+        "WPF_CORE_PIXEL_BRIDGE_WINDOW_RUNTIME"
       ],
       "not_validated": [
         "WINDOW_RUNTIME_FRAME_PACING",
@@ -36,24 +37,26 @@
       "production_adoption": false
     },
     "WINDOWS_COMPOSITION": {
-      "current_verdict": "COMPILE_PROVEN_RUNTIME_DEFERRED_INTERACTIVE_WINDOWS",
-      "highest_evidence_class": "COMPILE_EVIDENCE",
+      "current_verdict": "INTERACTIVE_WPF_WINDOW_PROVEN_LAB_ONLY",
+      "highest_evidence_class": "WINDOW_EVIDENCE",
       "validated_roles": [
         "WPF_NET10_API_COEXISTENCE",
         "COMPOSITOR_API_COMPILE",
         "SCALAR_KEYFRAME_API_COMPILE",
-        "SPRITE_VISUAL_API_COMPILE"
+        "SPRITE_VISUAL_API_COMPILE",
+        "WPF_CONTENT_ISLAND_VISIBLE_OPACITY",
+        "FULL_TO_REDUCED_STATIC_SETTLE",
+        "REFERENCE_WINDOWS_NORMAL_PROCESS_EXIT"
       ],
       "not_validated": [
         "HEADLESS_RUNTIME_SHUTDOWN_LIFECYCLE",
-        "WPF_VISUAL_HOST_RUNTIME",
         "FRAME_PACING",
         "LIFETIME_RECOVERY",
         "OWNER_VISUAL_QUALITY",
         "ANDROID_PARITY"
       ],
       "wpf_integration": {
-        "route": "WINDOWS_APP_SDK_WPF_UNPACKAGED_COMPOSITION_INTEROP",
+        "route": "WINDOWS_APP_SDK_CONTENT_ISLAND_DESKTOP_CHILD_SITE_BRIDGE",
         "cost": "MEDIUM_TO_HIGH"
       },
       "android_parity": "NONE_NATIVE_REQUIRES_DIFFERENT_ADAPTER",
@@ -111,9 +114,8 @@
     }
   },
   "next_probe_order": [
-    "WINDOW_REFERENCE_PERFORMANCE",
-    "COMMAND_CENTER_REFERENCE_INTEGRATION_PREP",
-    "RIVE_INTEROP_ONLY_IF_REFERENCE_USE_CASE_REQUIRES_STATEFUL_VECTOR",
-    "WINDOWS_COMPOSITION_INTERACTIVE_WPF_RUNTIME_LATER"
+    "MP4_IN_SCREEN_INVENTORY_AND_BOUNDED_ADAPTER_DESIGN",
+    "S1_S5_ACCEPTANCE_ACCESSIBILITY_AND_REFERENCE_PERFORMANCE",
+    "RIVE_INTEROP_ONLY_IF_REFERENCE_USE_CASE_REQUIRES_STATEFUL_VECTOR"
   ]
 }

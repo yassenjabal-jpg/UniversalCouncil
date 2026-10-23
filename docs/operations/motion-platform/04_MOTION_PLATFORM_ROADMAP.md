@@ -121,7 +121,8 @@ Gate: MOTION_PLATFORM_GENERAL_ADOPTION_APPROVED
 MP0 foundation validated.
 MP1 semantic kernel validated and frozen for expansion.
 MP2 renderer boundary validated and frozen for expansion.
-MP3 Compatibility Lab is ACTIVE.
+MP3 reference-Windows feasibility evidence is complete on YASSIN; formal acceptance remains ACTIVE.
+See 09_YASSIN_REFERENCE_EVIDENCE_AND_MP4_HANDOFF.md for evidence and the unpassed S1..S5/acceptance gates.
 Execution priority: integrate/prove open-source and platform renderers, not expand MotionKit abstractions.
 Production renderer adoption is not authorized.
 Command Center refactor is not authorized by this roadmap alone.

@@ -1,0 +1,12 @@
+{
+  "machine": "YASSIN",
+  "utc": "2026-10-23T10:30:09.098224+00:00",
+  "interactive": true,
+  "visible": true,
+  "connected": true,
+  "timer_ticks": 16,
+  "full": "Composition scalar opacity animation, 2 second repeating timeline",
+  "reduced": "StopAnimation then direct opacity=1; four second static dwell",
+  "production_adoption": false,
+  "gpu_frame_pacing_measured": false
+}

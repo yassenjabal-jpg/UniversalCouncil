@@ -6,6 +6,7 @@ on:
       - 'apps/UniversalCouncil.MotionKit*/**'
       - 'docs/operations/motion-platform/**'
       - 'state/motion-platform/**'
+      - 'lab/motion-platform/**'
       - 'tools/motion_platform*_validate.py'
       - 'company/tests/test_motion_platform*.py'
       - '.github/workflows/motion-platform.yml'
@@ -93,6 +94,8 @@ jobs:
         shell: pwsh
         run: |
           dotnet build apps/UniversalCouncil.MotionKit.CompositionWpfCompileProbe/UniversalCouncil.MotionKit.CompositionWpfCompileProbe.csproj -c Release --nologo
+      - name: Build interactive Composition reference probe (no headless GUI claim)
+        run: dotnet build apps/UniversalCouncil.MotionKit.CompositionRuntimeProbe -c Release --nologo
       - name: Run deterministic LottieGen codegen probe on Windows
         shell: pwsh
         run: |
