@@ -6,9 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 STATE = ROOT / "state" / "motion-platform" / "mp4-reference-integration.json"
 SPEC = ROOT / "docs" / "operations" / "motion-platform" / "09_MP4_REFERENCE_INTEGRATION.md"
-COMMAND_PROJECT = (
-    ROOT / "apps" / "UniversalCouncil.CommandCenter" / "UniversalCouncil.CommandCenter.csproj"
-)
+COMMAND_PROJECT = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "UniversalCouncil.CommandCenter.csproj"
 MAIN_WINDOW = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "MainWindow.xaml.cs"
 SKIA_ANIMATOR = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "SkiaMotionCueAnimator.cs"
 SCREEN_TRANSITIONS = ROOT / "apps" / "UniversalCouncil.CommandCenter" / "ScreenTransitionMotion.cs"
@@ -122,7 +120,4 @@ for marker in (
     if marker not in spec:
         raise SystemExit(f"MP4 specification drifted: {marker}")
 
-print(
-    "Motion Platform MP4 validation: PASS "
-    "(Open-Source-First Command Center Skia route/handoff integration)"
-)
+print("Motion Platform MP4 validation: PASS (Open-Source-First Command Center Skia route/handoff integration)")
