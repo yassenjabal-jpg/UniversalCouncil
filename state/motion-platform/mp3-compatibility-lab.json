@@ -146,8 +146,8 @@
         "AFTER_EFFECTS_HANDOFF"
       ],
       "authorized_probes": [
-        "WINUI_COMPILE_LATER",
-        "CODEGEN_LATER"
+        "LOTTIEGEN_CODEGEN_RUNTIME",
+        "WINUI_COMPILE_LATER"
       ],
       "source_head_sha": "dce2d4ac945b7d8d400c19bca440907315901b5f",
       "source_reviewed_on": "2026-10-23",
@@ -163,8 +163,15 @@
           "evidence_class": "SOURCE_EVIDENCE",
           "status": "PASS",
           "detail": "Repository contains LottieGen .NET global tool for generating C#/C++ and other outputs from Lottie/Bodymovin JSON; README states .NET 7 SDK or later."
+        },
+        {
+          "id": "LOTTIEGEN_NUGET_8_2_250604",
+          "evidence_class": "SOURCE_EVIDENCE",
+          "status": "PASS",
+          "detail": "NuGet stable LottieGen 8.2.250604 targets .NET 9, is compatible with .NET 10, has no package dependencies, and is documented as the efficient Windows code-generation path."
         }
-      ]
+      ],
+      "lottiegen_tool_version": "8.2.250604"
     }
   },
   "performance_policy": {
