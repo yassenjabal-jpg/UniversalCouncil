@@ -10,6 +10,8 @@ Prove that the Open-Source-First strategy reduces bespoke in-screen motion code 
 
 MP4 does not expand MotionKit Core or Runtime.
 
+Implementation boundary: **SkiaSharp inside Command Center only**.
+
 ## First integration slice
 
 Target 1: ROLE_ACTIVATION route cue.
