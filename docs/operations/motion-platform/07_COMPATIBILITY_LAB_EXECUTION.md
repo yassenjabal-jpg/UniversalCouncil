@@ -232,15 +232,15 @@ After compile feasibility is established, a separate Windows-only WPF process ex
 
 The first bounded runtime probe created a Compositor without explicitly owning the Windows App SDK DispatcherQueue and exceeded the 15-second shutdown budget. That result is retained as a lifecycle finding rather than hidden. Microsoft documents that the owner of the current-thread DispatcherQueue must shut it down before thread exit, so the corrected probe owns and shuts down that queue explicitly.
 
-A pass is classified as RUNTIME_EVIDENCE for the Composition API surface in our unpackaged WPF process model.
+The corrected owned-queue + explicit event-loop probe still exceeded the bounded shutdown budget on the headless GitHub Windows runner.
 
-It still does NOT prove:
-- attachment of the Composition visual tree to an actual WPF HWND;
-- visible pixels inside the Command Center;
-- frame pacing, GPU cost, or lifecycle during real window recreation;
-- owner-visible quality.
+Decision:
+- retain Composition as COMPILE_PROVEN;
+- classify headless runtime lifecycle as DEFERRED_INTERACTIVE_WINDOWS;
+- do not invent a custom MotionKit dispatcher/compositor lifecycle layer to rescue the probe;
+- resume runtime evidence only in an interactive/reference Windows environment where actual WPF visual hosting can be tested.
 
-The actual WPF visual-host probe remains separate.
+This preserves the open-source/platform-first strategy and prevents CI-specific infrastructure from becoming product architecture.
 
 ## LottieGen deterministic codegen probe
 
