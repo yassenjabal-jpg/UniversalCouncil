@@ -53,8 +53,10 @@ MP3 role hypothesis:
 - composition-backed route/object motion.
 
 Empirical probe:
-- Windows compile probe first;
-- actual WPF interop/runtime probe later on Windows evidence environment.
+- a `net10.0-windows10.0.19041.0` WPF project references `Microsoft.WindowsAppSDK 2.5.1`;
+- `WindowsPackageType=None` follows Microsoft's unpackaged existing-WPF guidance;
+- the probe compiles access to `Compositor`, `SpriteVisual`, and `ScalarKeyFrameAnimation` while also touching the WPF HWND surface;
+- actual compositor-to-WPF visual hosting/runtime behavior remains a later WINDOW_EVIDENCE probe.
 
 Status: LAB_ONLY.
 
@@ -186,6 +188,24 @@ It does NOT prove:
 - actual animation quality;
 - accessibility;
 - production readiness.
+
+## Windows Composition WPF compile probe
+
+The Composition probe is deliberately compile-only.
+
+Passing it proves:
+- the pinned Windows App SDK package restores in a .NET 10 WPF project;
+- WPF and Microsoft.UI.Composition API surfaces can coexist at compile time;
+- the lab can construct Composition animation API calls without migrating the product to WinUI.
+
+It does NOT prove:
+- Compositor initialization succeeds in the Command Center process;
+- visual hosting into a WPF HWND is correct;
+- composition-thread/runtime lifetime is correct;
+- frame pacing or GPU cost;
+- accessibility or owner-visible quality.
+
+Those claims require later WINDOW_EVIDENCE.
 
 ## Stop conditions
 
