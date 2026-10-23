@@ -119,11 +119,14 @@ if not finding or finding["status"] != "BLOCKED" or finding["evidence_class"] !=
     raise SystemExit("SkiaSharp Views.WPF net10 compatibility finding missing")
 
 composition = candidates["WINDOWS_COMPOSITION"]
-if composition["version"] != "2.5.1" or composition["status"] != "LAB_ONLY":
-    raise SystemExit("Windows Composition research pin drifted")
+if (
+    composition["version"] != "2.5.1"
+    or composition["status"] != "COMPILE_PROVEN_RUNTIME_DEFERRED"
+):
+    raise SystemExit("Windows Composition research pin/status drifted")
 if set(composition["authorized_probes"]) != {
     "WINDOWS_WPF_COMPOSITION_COMPILE",
-    "WINDOWS_COMPOSITION_RUNTIME_API",
+    "WINDOWS_COMPOSITION_RUNTIME_API_DEFERRED_INTERACTIVE_WINDOWS",
     "WINDOWS_WPF_VISUAL_HOST_LATER",
 }:
     raise SystemExit("Windows Composition probe authority drifted")
@@ -166,13 +169,13 @@ if (
     raise SystemExit("LottieGen Linux glob limitation finding missing")
 
 composition_findings = {item["id"]: item for item in composition.get("observed_findings", [])}
-queue_finding = composition_findings.get("WINDOWS_COMPOSITION_UNOWNED_QUEUE_SHUTDOWN_TIMEOUT")
+queue_finding = composition_findings.get("WINDOWS_COMPOSITION_HEADLESS_RUNTIME_SHUTDOWN_TIMEOUT")
 if (
     not queue_finding
-    or queue_finding["status"] != "BLOCKED_PROBE_LIFECYCLE"
+    or queue_finding["status"] != "DEFERRED_INTERACTIVE_WINDOWS"
     or queue_finding["evidence_class"] != "RUNTIME_EVIDENCE"
 ):
-    raise SystemExit("Composition unowned-queue lifecycle finding missing")
+    raise SystemExit("Composition headless runtime deferral evidence missing")
 
 policy = state["performance_policy"]
 if policy["shared_ci_wall_clock_is_gating"]:
