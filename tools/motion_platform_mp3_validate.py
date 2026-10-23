@@ -31,9 +31,7 @@ COMPOSITION_RUNTIME_PROJECT = (
     / "UniversalCouncil.MotionKit.CompositionRuntimeProbe"
     / "UniversalCouncil.MotionKit.CompositionRuntimeProbe.csproj"
 )
-COMPOSITION_RUNTIME_PROGRAM = (
-    ROOT / "apps" / "UniversalCouncil.MotionKit.CompositionRuntimeProbe" / "Program.cs"
-)
+COMPOSITION_RUNTIME_PROGRAM = ROOT / "apps" / "UniversalCouncil.MotionKit.CompositionRuntimeProbe" / "Program.cs"
 
 for path in (
     STATE,
@@ -170,10 +168,7 @@ if "<UseWPF>true</UseWPF>" not in composition_runtime_project:
     raise SystemExit("Composition runtime probe stopped using WPF process model")
 if "<WindowsPackageType>None</WindowsPackageType>" not in composition_runtime_project:
     raise SystemExit("Composition runtime probe lost unpackaged Windows App SDK contract")
-if (
-    'PackageReference Include="Microsoft.WindowsAppSDK" Version="2.5.1"'
-    not in composition_runtime_project
-):
+if 'PackageReference Include="Microsoft.WindowsAppSDK" Version="2.5.1"' not in composition_runtime_project:
     raise SystemExit("Windows App SDK pin drifted in Composition runtime probe")
 
 # External renderer packages must remain isolated to explicit lab/probe projects.
@@ -278,7 +273,4 @@ for marker in (
     if marker not in matrix_doc:
         raise SystemExit(f"renderer role matrix documentation drifted: {marker}")
 
-print(
-    "Motion Platform MP3 validation: PASS "
-    "(compatibility lab boundaries + evidence-class renderer matrix)"
-)
+print("Motion Platform MP3 validation: PASS (compatibility lab boundaries + evidence-class renderer matrix)")
