@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "candidate_id": "motionkit-mp1-semantic-kernel-20261023",
-  "parent_foundation_sha": "2663d5250ff319136df5b789e54a7f26ae08bbe3",
+  "parent_foundation_sha": "faf610d24b26cd0f566272c96d8e047f8a3eebcd",
   "status": "IMPLEMENTATION_CANDIDATE_NOT_ACCEPTED",
   "scope": [
     "RENDERER_FREE_CONTRACTS",
