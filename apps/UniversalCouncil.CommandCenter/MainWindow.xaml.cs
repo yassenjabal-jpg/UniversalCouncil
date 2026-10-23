@@ -7981,36 +7981,13 @@ public partial class MainWindow : Window
             _ => new Point(Math.Max(40, destination.X - 120), destination.Y),
         };
 
-        var route = new Line
-        {
-            X1 = origin.X,
-            Y1 = origin.Y,
-            X2 = destination.X,
-            Y2 = destination.Y,
-            Stroke = new SolidColorBrush(Color.FromArgb(210, 47, 131, 238)),
-            StrokeThickness = 3,
-            StrokeDashArray = new DoubleCollection { 5, 4 },
-            IsHitTestVisible = false,
-            Opacity = 0.92,
-        };
-        Panel.SetZIndex(route, 18);
-        SecondaryInteractionCanvas.Children.Add(route);
-
-        var duration = TimeSpan.FromMilliseconds(480);
-        var ease = new CubicEase { EasingMode = EasingMode.EaseOut };
-        var x = new DoubleAnimation(origin.X, destination.X, duration)
-        {
-            EasingFunction = ease,
-            FillBehavior = FillBehavior.Stop,
-        };
-        var y = new DoubleAnimation(origin.Y, destination.Y, duration)
-        {
-            EasingFunction = ease,
-            FillBehavior = FillBehavior.Stop,
-        };
-        x.Completed += (_, _) => SecondaryInteractionCanvas.Children.Remove(route);
-        route.BeginAnimation(Line.X2Property, x);
-        route.BeginAnimation(Line.Y2Property, y);
+        SkiaMotionCueAnimator.AnimateRouteReveal(
+            SecondaryInteractionCanvas,
+            origin,
+            destination,
+            Color.FromArgb(210, 47, 131, 238),
+            durationMs: 480,
+            zIndex: 18);
     }
 
     private void AnimateDecisionIntentCue(FrameworkElement target) =>
@@ -8238,45 +8215,13 @@ public partial class MainWindow : Window
         var endX = left + Math.Max(70, width - 40);
         var y = top + height / 2;
 
-        var route = new Line
-        {
-            X1 = startX,
-            Y1 = y,
-            X2 = endX,
-            Y2 = y,
-            Stroke = new SolidColorBrush(Color.FromArgb(150, 31, 166, 196)),
-            StrokeThickness = 3,
-            StrokeDashArray = new DoubleCollection { 5, 5 },
-            IsHitTestVisible = false,
-        };
-        var artifact = new Border
-        {
-            Width = 28,
-            Height = 22,
-            Background = new SolidColorBrush(Color.FromRgb(31, 166, 196)),
-            BorderBrush = Brushes.White,
-            BorderThickness = new Thickness(2),
-            CornerRadius = new CornerRadius(5),
-            IsHitTestVisible = false,
-        };
-        Canvas.SetLeft(artifact, startX - 14);
-        Canvas.SetTop(artifact, y - 11);
-        Panel.SetZIndex(route, 25);
-        Panel.SetZIndex(artifact, 26);
-        SecondaryInteractionCanvas.Children.Add(route);
-        SecondaryInteractionCanvas.Children.Add(artifact);
-
-        var transform = new TranslateTransform();
-        artifact.RenderTransform = transform;
-        var duration = TimeSpan.FromMilliseconds(620);
-        var ease = new CubicEase { EasingMode = EasingMode.EaseInOut };
-        var move = new DoubleAnimation(0, endX - startX, duration) { EasingFunction = ease };
-        move.Completed += (_, _) =>
-        {
-            SecondaryInteractionCanvas.Children.Remove(route);
-            SecondaryInteractionCanvas.Children.Remove(artifact);
-        };
-        transform.BeginAnimation(TranslateTransform.XProperty, move);
+        SkiaMotionCueAnimator.AnimateArtifactHandoff(
+            SecondaryInteractionCanvas,
+            new Point(startX, y),
+            new Point(endX, y),
+            Color.FromArgb(150, 31, 166, 196),
+            durationMs: 620,
+            zIndex: 26);
     }
 
     private void OpenDrawer(
