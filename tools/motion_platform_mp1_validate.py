@@ -45,6 +45,9 @@ required_scope = {
     "TRUTH_REVOCATION",
     "IMMUTABLE_CONTRACT_SNAPSHOT",
     "MONOTONIC_TRUTH_ORDERING",
+    "THREAD_SAFE_COORDINATION",
+    "INSTANCE_ID_NON_REUSE",
+    "TARGET_LIFECYCLE",
 }
 if set(candidate["scope"]) != required_scope:
     raise SystemExit("MP1 scope drifted")
@@ -93,6 +96,8 @@ required_coordinator_markers = (
     "ReconcileTruth",
     "StaleTruthIgnored",
     "_latestTruth",
+    "ForgetTarget",
+    "lock (_gate)",
     "ToFrozenSet",
 )
 for marker in required_coordinator_markers:
@@ -119,8 +124,12 @@ required_validation_markers = (
     "CheckFalseTruthSubmissionRevokesMatchingMotion",
     "CheckTruthRevocationReleasesNextQueuedIntent",
     "CheckContractSnapshotIsImmutable",
+    "CheckInstanceIdsNeverReuse",
+    "CheckConcurrentParallelSafeSubmissions",
     "CheckQueueBound",
     "CheckCancelTarget",
+    "CheckCancelPreservesTruthChronology",
+    "CheckForgetTargetResetsTruthChronology",
 )
 for marker in required_validation_markers:
     if marker not in program:
@@ -133,6 +142,8 @@ required_spec_markers = (
     "Truth revocation law",
     "Truth observations are monotonic per target + requirement",
     "Contract snapshot law",
+    "Target lifecycle law",
+    "Concurrency law",
     "MP1 does not:",
 )
 for marker in required_spec_markers:
