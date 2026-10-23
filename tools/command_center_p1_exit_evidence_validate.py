@@ -144,21 +144,25 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
     if timing.get("clock") != "STOPWATCH_REALTIME_WPF":
         raise SystemExit(f"{mode} capture clock is not real-time WPF")
     pipeline = timing.get("pipeline")
-    render_target_pipeline = "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG"
-    wgc_pipeline = "PERSISTENT_WINDOWS_GRAPHICS_CAPTURE_HWND_BGRA_TO_BACKGROUND_FFMPEG_PNG"
+    render_target_pipeline = "RENDERTARGETBITMAP_BGRA_TO_LOSSLESS_X264RGB_THEN_PNG"
+    wgc_pipeline = "PERSISTENT_WINDOWS_GRAPHICS_CAPTURE_HWND_BGRA_TO_LOSSLESS_X264RGB_THEN_PNG"
     if pipeline not in {render_target_pipeline, wgc_pipeline}:
         raise SystemExit(f"{mode} recorder pipeline is not governed")
 
-    if timing.get("background_encoder") != "FFMPEG_LOSSLESS_PNG":
-        raise SystemExit(f"{mode} background frame encoder drifted")
+    if timing.get("background_encoder") != "FFMPEG_LIBX264RGB_LOSSLESS_INTERMEDIATE":
+        raise SystemExit(f"{mode} background lossless recorder drifted")
     if timing.get("png_encoding_on_wpf_capture_thread") is not False:
         raise SystemExit(f"{mode} recorder reintroduced PNG encoding on the WPF capture thread")
+    if timing.get("png_extraction_after_capture") is not True:
+        raise SystemExit(f"{mode} PNG extraction moved back into the capture window")
+    if timing.get("intermediate_codec") != "LIBX264RGB_CRF0_ULTRAFAST":
+        raise SystemExit(f"{mode} lossless intermediate codec drifted")
     if int(timing.get("encoder_queue_capacity_frames", 0)) != 60:
         raise SystemExit(f"{mode} recorder queue capacity drifted")
     if timing.get("synchronous_layout_per_frame") is not False:
         raise SystemExit(f"{mode} recorder reintroduced synchronous layout per frame")
     if int(timing.get("png_compression_level", -1)) != 1:
-        raise SystemExit(f"{mode} background PNG compression level drifted")
+        raise SystemExit(f"{mode} post-capture PNG compression level drifted")
 
     target_capture = float(timing.get("target_capture_duration_seconds", 0))
     actual_capture = float(timing.get("actual_capture_duration_seconds", 0))

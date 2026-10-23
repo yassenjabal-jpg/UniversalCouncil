@@ -215,7 +215,7 @@ internal static partial class Program
                         clock = "STOPWATCH_REALTIME_WPF",
                         timing_authority = "COMPANION_MOTION_DRIVER",
                         observer_effect = "RENDER_CAPTURE_DIAGNOSTIC_NOT_REALTIME_AUTHORITY",
-                        pipeline = "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG",
+                        pipeline = "RENDERTARGETBITMAP_BGRA_TO_LOSSLESS_X264RGB_THEN_PNG",
                         capture_surface_cache = "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE",
                         render_target_bitmap_reused = true,
                         pixel_buffers_pooled = true,
@@ -223,6 +223,8 @@ internal static partial class Program
                         encoder_process_priority = "BELOW_NORMAL_BEST_EFFORT",
                         synchronous_layout_per_frame = false,
                         png_compression_level = 1,
+                        png_extraction_after_capture = true,
+                        intermediate_codec = "LIBX264RGB_CRF0_ULTRAFAST",
                         target_capture_duration_seconds = (double)frameCount / MotionFramesPerSecond,
                         actual_capture_duration_seconds = Math.Round(actualCaptureDurationSeconds, 3),
                         max_capture_lateness_ms = Math.Round(maxCaptureLatenessMs, 3),
@@ -230,7 +232,7 @@ internal static partial class Program
                             totalCaptureLatenessMs / Math.Max(1, frameCount),
                             3),
                         late_frame_count_over_one_frame = lateFrameCount,
-                        background_encoder = "FFMPEG_LOSSLESS_PNG",
+                        background_encoder = "FFMPEG_LIBX264RGB_LOSSLESS_INTERMEDIATE",
                         encoder_queue_capacity_frames = BackgroundPngFrameEncoder.QueueCapacityFrames,
                         png_encoding_on_wpf_capture_thread = false,
                     },
@@ -620,6 +622,7 @@ internal static partial class Program
 
         private readonly string _framesDirectory;
         private readonly int _frameCount;
+        private readonly string _intermediatePath;
         private readonly Process _process;
         private readonly Channel<byte[]> _frames;
         private readonly ConcurrentDictionary<byte[], byte> _pooledFrames = new();
@@ -632,8 +635,8 @@ internal static partial class Program
         {
             _framesDirectory = framesDirectory;
             _frameCount = frameCount;
+            _intermediatePath = Path.Combine(framesDirectory, "capture-lossless.mkv");
 
-            var outputPattern = Path.Combine(framesDirectory, "frame-%04d.png");
             var startInfo = new ProcessStartInfo
             {
                 FileName = "ffmpeg",
@@ -660,13 +663,17 @@ internal static partial class Program
                 MotionFramesPerSecond.ToString(),
                 "-i",
                 "pipe:0",
-                "-start_number",
-                "0",
                 "-frames:v",
                 frameCount.ToString(),
-                "-compression_level",
-                "1",
-                outputPattern,
+                "-c:v",
+                "libx264rgb",
+                "-preset",
+                "ultrafast",
+                "-crf",
+                "0",
+                "-pix_fmt",
+                "bgr0",
+                _intermediatePath,
             })
             {
                 startInfo.ArgumentList.Add(argument);
@@ -772,8 +779,53 @@ internal static partial class Program
             if (_process.ExitCode != 0)
             {
                 throw new InvalidOperationException(
-                    $"background ffmpeg WPF PNG encoding failed ({_process.ExitCode}). " +
+                    $"background ffmpeg WPF lossless recording failed ({_process.ExitCode}). " +
                     $"{stderr} {stdout}");
+            }
+
+            var outputPattern = Path.Combine(_framesDirectory, "frame-%04d.png");
+            var extractStartInfo = new ProcessStartInfo
+            {
+                FileName = "ffmpeg",
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true,
+            };
+
+            foreach (var argument in new[]
+            {
+                "-hide_banner",
+                "-loglevel",
+                "error",
+                "-y",
+                "-i",
+                _intermediatePath,
+                "-start_number",
+                "0",
+                "-frames:v",
+                _frameCount.ToString(),
+                "-compression_level",
+                "1",
+                outputPattern,
+            })
+            {
+                extractStartInfo.ArgumentList.Add(argument);
+            }
+
+            using var extraction = Process.Start(extractStartInfo)
+                ?? throw new InvalidOperationException(
+                    "Unable to start post-capture ffmpeg PNG extraction.");
+            var extractionStdout = extraction.StandardOutput.ReadToEndAsync();
+            var extractionStderr = extraction.StandardError.ReadToEndAsync();
+            extraction.WaitForExit();
+
+            if (extraction.ExitCode != 0)
+            {
+                throw new InvalidOperationException(
+                    $"post-capture ffmpeg PNG extraction failed ({extraction.ExitCode}). " +
+                    $"{extractionStderr.GetAwaiter().GetResult()} " +
+                    $"{extractionStdout.GetAwaiter().GetResult()}");
             }
 
             var encodedFrameCount = Directory.GetFiles(
@@ -782,9 +834,11 @@ internal static partial class Program
             if (encodedFrameCount != _frameCount)
             {
                 throw new InvalidOperationException(
-                    $"WPF background-frame encoding mismatch: expected {_frameCount}, " +
+                    $"WPF post-capture frame extraction mismatch: expected {_frameCount}, " +
                     $"got {encodedFrameCount}.");
             }
+
+            File.Delete(_intermediatePath);
         }
 
         public void Dispose()
