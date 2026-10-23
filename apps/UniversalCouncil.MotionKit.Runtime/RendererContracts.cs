@@ -27,7 +27,8 @@ public enum MotionRenderStatus
     DuplicateInstance,
     NotActive,
     Cancelled,
-    Settled
+    Settled,
+    Failed
 }
 
 public enum MotionSettleMode
@@ -66,6 +67,7 @@ public sealed record MotionProductProfile(
 
 public sealed record MotionRenderCommand(
     MotionRenderIdentity Identity,
+    string ProfileId,
     string VisualToken,
     TimeSpan Duration,
     MotionRenderCapability RequiredCapabilities);
@@ -79,10 +81,12 @@ public sealed record MotionRenderResult(
     MotionRenderStatus Status,
     Guid InstanceId,
     string AdapterId,
+    string AdapterVersion,
     string Reason);
 
 public sealed record MotionRendererDiagnostics(
     string AdapterId,
+    string AdapterVersion,
     int ActiveCount,
     long StartedCount,
     long CancelledCount,
@@ -94,6 +98,8 @@ public sealed record MotionRendererDiagnostics(
 public interface IMotionRendererAdapter : IAsyncDisposable
 {
     string AdapterId { get; }
+
+    string AdapterVersion { get; }
 
     MotionRenderCapability Capabilities { get; }
 
