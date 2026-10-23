@@ -1,0 +1,2993 @@
+{
+  "schema_version": "1.0",
+  "evidence_type": "MOTION_PLATFORM_MP4_REFERENCE",
+  "evidence_scope": "MP4_REFERENCE_INTEGRATION",
+  "candidate_sha": "c13fa2ad069075e21f35b3970b388b5922826ee8",
+  "source_surface": "ACTUAL_WPF",
+  "unedited": true,
+  "optical_flow": false,
+  "frame_interpolation": false,
+  "post_produced_animation": false,
+  "raw_frames_included": true,
+  "semantic_event_timestamps": true,
+  "mode": "reduced",
+  "reduced_motion": true,
+  "runtime_authority": false,
+  "stage8_opened": false,
+  "input_mode": "PROGRAMMATIC_UI_AUTOMATION_AGAINST_REAL_WPF_CONTROLS",
+  "width": 1440,
+  "height": 900,
+  "frame_rate": 30,
+  "frame_count": 360,
+  "encoded_duration_seconds": 12,
+  "capture_timing": {
+    "clock": "STOPWATCH_REALTIME_WPF",
+    "pipeline": "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG",
+    "capture_surface_cache": "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE",
+    "synchronous_layout_per_frame": false,
+    "png_compression_level": 1,
+    "target_capture_duration_seconds": 12,
+    "actual_capture_duration_seconds": 28.704,
+    "max_capture_lateness_ms": 16634.575,
+    "mean_capture_lateness_ms": 8451.329,
+    "late_frame_count_over_one_frame": 360,
+    "background_encoder": "FFMPEG_LOSSLESS_PNG",
+    "encoder_queue_capacity_frames": 60,
+    "png_encoding_on_wpf_capture_thread": false
+  },
+  "motion_visibility": {
+    "changed_frame_count": 11,
+    "changed_frame_ratio": 0.0306,
+    "longest_changed_run": 3,
+    "motion_run_count": 7,
+    "frame_change_rule": "mean_sample_delta\u003E=0.20 OR changed_sample_ratio\u003E=0.004"
+  },
+  "expected_video_file": "mp4-reference-reduced-motion.mp4",
+  "steps": [
+    {
+      "evidence_step_id": "step-01",
+      "frame": 30,
+      "second": 1,
+      "occurred_at_seconds": 1,
+      "event_type": "EVIDENCE_NAVIGATION",
+      "semantic_object": "screen:living-project-workspace",
+      "Name": "Navigate Home -\u003E Project Workspace"
+    },
+    {
+      "evidence_step_id": "step-02",
+      "frame": 90,
+      "second": 3,
+      "occurred_at_seconds": 3,
+      "event_type": "ROLE_ACTIVATED",
+      "semantic_object": "role:evidence",
+      "Name": "Activate Evidence role and open context"
+    },
+    {
+      "evidence_step_id": "step-03",
+      "frame": 135,
+      "second": 4.5,
+      "occurred_at_seconds": 4.5,
+      "event_type": "CONTEXT_CLOSED",
+      "semantic_object": "command-center:wpf",
+      "Name": "Close role context"
+    },
+    {
+      "evidence_step_id": "step-04",
+      "frame": 180,
+      "second": 6,
+      "occurred_at_seconds": 6,
+      "event_type": "EVIDENCE_NAVIGATION",
+      "semantic_object": "screen:pulse-visual-project-story",
+      "Name": "Navigate Project -\u003E Pulse Story"
+    },
+    {
+      "evidence_step_id": "step-05",
+      "frame": 240,
+      "second": 8,
+      "occurred_at_seconds": 8,
+      "event_type": "HANDOFF_CONTEXT_PREVIEW",
+      "semantic_object": "screen:pulse-visual-project-story",
+      "Name": "Open Handoff Pulse context"
+    },
+    {
+      "evidence_step_id": "step-06",
+      "frame": 285,
+      "second": 9.5,
+      "occurred_at_seconds": 9.5,
+      "event_type": "CONTEXT_CLOSED",
+      "semantic_object": "screen:pulse-visual-project-story",
+      "Name": "Close Handoff context"
+    },
+    {
+      "evidence_step_id": "step-07",
+      "frame": 330,
+      "second": 11,
+      "occurred_at_seconds": 11,
+      "event_type": "EVIDENCE_NAVIGATION",
+      "semantic_object": "screen:pulse-visual-project-story",
+      "Name": "Navigate Pulse -\u003E Home"
+    }
+  ],
+  "frames": [
+    {
+      "Frame": 0,
+      "File": "frame-0000.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 1,
+      "File": "frame-0001.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 2,
+      "File": "frame-0002.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 3,
+      "File": "frame-0003.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 4,
+      "File": "frame-0004.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 5,
+      "File": "frame-0005.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 6,
+      "File": "frame-0006.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 7,
+      "File": "frame-0007.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 8,
+      "File": "frame-0008.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 9,
+      "File": "frame-0009.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 10,
+      "File": "frame-0010.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 11,
+      "File": "frame-0011.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 12,
+      "File": "frame-0012.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 13,
+      "File": "frame-0013.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 14,
+      "File": "frame-0014.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 15,
+      "File": "frame-0015.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 16,
+      "File": "frame-0016.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 17,
+      "File": "frame-0017.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 18,
+      "File": "frame-0018.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 19,
+      "File": "frame-0019.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 20,
+      "File": "frame-0020.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 21,
+      "File": "frame-0021.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 22,
+      "File": "frame-0022.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 23,
+      "File": "frame-0023.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 24,
+      "File": "frame-0024.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 25,
+      "File": "frame-0025.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 26,
+      "File": "frame-0026.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 27,
+      "File": "frame-0027.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 28,
+      "File": "frame-0028.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 29,
+      "File": "frame-0029.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 30,
+      "File": "frame-0030.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 31,
+      "File": "frame-0031.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 12.6232,
+      "ChangedSampleRatio": 0.35416,
+      "VisiblyChanged": true
+    },
+    {
+      "Frame": 32,
+      "File": "frame-0032.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 33,
+      "File": "frame-0033.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 34,
+      "File": "frame-0034.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 35,
+      "File": "frame-0035.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 36,
+      "File": "frame-0036.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 37,
+      "File": "frame-0037.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 38,
+      "File": "frame-0038.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 39,
+      "File": "frame-0039.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 40,
+      "File": "frame-0040.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 41,
+      "File": "frame-0041.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 42,
+      "File": "frame-0042.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 43,
+      "File": "frame-0043.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 44,
+      "File": "frame-0044.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 45,
+      "File": "frame-0045.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 46,
+      "File": "frame-0046.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 47,
+      "File": "frame-0047.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 48,
+      "File": "frame-0048.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 49,
+      "File": "frame-0049.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 50,
+      "File": "frame-0050.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 51,
+      "File": "frame-0051.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 52,
+      "File": "frame-0052.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 53,
+      "File": "frame-0053.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 54,
+      "File": "frame-0054.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 55,
+      "File": "frame-0055.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 56,
+      "File": "frame-0056.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 57,
+      "File": "frame-0057.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 58,
+      "File": "frame-0058.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 59,
+      "File": "frame-0059.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 60,
+      "File": "frame-0060.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 61,
+      "File": "frame-0061.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 62,
+      "File": "frame-0062.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 63,
+      "File": "frame-0063.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 64,
+      "File": "frame-0064.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 65,
+      "File": "frame-0065.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 66,
+      "File": "frame-0066.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 67,
+      "File": "frame-0067.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 68,
+      "File": "frame-0068.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 69,
+      "File": "frame-0069.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 70,
+      "File": "frame-0070.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 71,
+      "File": "frame-0071.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 72,
+      "File": "frame-0072.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 73,
+      "File": "frame-0073.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 74,
+      "File": "frame-0074.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 75,
+      "File": "frame-0075.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 76,
+      "File": "frame-0076.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 77,
+      "File": "frame-0077.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 78,
+      "File": "frame-0078.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 79,
+      "File": "frame-0079.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 80,
+      "File": "frame-0080.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 81,
+      "File": "frame-0081.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 82,
+      "File": "frame-0082.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 83,
+      "File": "frame-0083.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 84,
+      "File": "frame-0084.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 85,
+      "File": "frame-0085.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 86,
+      "File": "frame-0086.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 87,
+      "File": "frame-0087.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 88,
+      "File": "frame-0088.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 89,
+      "File": "frame-0089.png",
+      "Sha256": "6e1afdb846cad8ea099b391d3be78f12198095646798ee917ba5ad39cd7b7940",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 90,
+      "File": "frame-0090.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 13.8412,
+      "ChangedSampleRatio": 0.138889,
+      "VisiblyChanged": true
+    },
+    {
+      "Frame": 91,
+      "File": "frame-0091.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 92,
+      "File": "frame-0092.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 93,
+      "File": "frame-0093.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 94,
+      "File": "frame-0094.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 95,
+      "File": "frame-0095.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 96,
+      "File": "frame-0096.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 97,
+      "File": "frame-0097.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 98,
+      "File": "frame-0098.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 99,
+      "File": "frame-0099.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 100,
+      "File": "frame-0100.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 101,
+      "File": "frame-0101.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 102,
+      "File": "frame-0102.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 103,
+      "File": "frame-0103.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 104,
+      "File": "frame-0104.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 105,
+      "File": "frame-0105.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 106,
+      "File": "frame-0106.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 107,
+      "File": "frame-0107.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 108,
+      "File": "frame-0108.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 109,
+      "File": "frame-0109.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 110,
+      "File": "frame-0110.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 111,
+      "File": "frame-0111.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 112,
+      "File": "frame-0112.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 113,
+      "File": "frame-0113.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 114,
+      "File": "frame-0114.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 115,
+      "File": "frame-0115.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 116,
+      "File": "frame-0116.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 117,
+      "File": "frame-0117.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 118,
+      "File": "frame-0118.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 119,
+      "File": "frame-0119.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 120,
+      "File": "frame-0120.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 121,
+      "File": "frame-0121.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 122,
+      "File": "frame-0122.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 123,
+      "File": "frame-0123.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 124,
+      "File": "frame-0124.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 125,
+      "File": "frame-0125.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 126,
+      "File": "frame-0126.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 127,
+      "File": "frame-0127.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 128,
+      "File": "frame-0128.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 129,
+      "File": "frame-0129.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 130,
+      "File": "frame-0130.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 131,
+      "File": "frame-0131.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 132,
+      "File": "frame-0132.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 133,
+      "File": "frame-0133.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 134,
+      "File": "frame-0134.png",
+      "Sha256": "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 135,
+      "File": "frame-0135.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 13.7021,
+      "ChangedSampleRatio": 0.136272,
+      "VisiblyChanged": true
+    },
+    {
+      "Frame": 136,
+      "File": "frame-0136.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 137,
+      "File": "frame-0137.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 138,
+      "File": "frame-0138.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 139,
+      "File": "frame-0139.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 140,
+      "File": "frame-0140.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 141,
+      "File": "frame-0141.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 142,
+      "File": "frame-0142.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 143,
+      "File": "frame-0143.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 144,
+      "File": "frame-0144.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 145,
+      "File": "frame-0145.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 146,
+      "File": "frame-0146.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 147,
+      "File": "frame-0147.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 148,
+      "File": "frame-0148.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 149,
+      "File": "frame-0149.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 150,
+      "File": "frame-0150.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 151,
+      "File": "frame-0151.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 152,
+      "File": "frame-0152.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 153,
+      "File": "frame-0153.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 154,
+      "File": "frame-0154.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 155,
+      "File": "frame-0155.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 156,
+      "File": "frame-0156.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 157,
+      "File": "frame-0157.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 158,
+      "File": "frame-0158.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 159,
+      "File": "frame-0159.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 160,
+      "File": "frame-0160.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 161,
+      "File": "frame-0161.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 162,
+      "File": "frame-0162.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 163,
+      "File": "frame-0163.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 164,
+      "File": "frame-0164.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 165,
+      "File": "frame-0165.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 166,
+      "File": "frame-0166.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 167,
+      "File": "frame-0167.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 168,
+      "File": "frame-0168.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 169,
+      "File": "frame-0169.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 170,
+      "File": "frame-0170.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 171,
+      "File": "frame-0171.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 172,
+      "File": "frame-0172.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 173,
+      "File": "frame-0173.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 174,
+      "File": "frame-0174.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 175,
+      "File": "frame-0175.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 176,
+      "File": "frame-0176.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 177,
+      "File": "frame-0177.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 178,
+      "File": "frame-0178.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 179,
+      "File": "frame-0179.png",
+      "Sha256": "cd7d838ba2781d37d3b2638fd27e517c145cd38d852a449396bb3ddbd427a137",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 180,
+      "File": "frame-0180.png",
+      "Sha256": "c2f05b61dacaa4e0cbb28b30dfd6218e6ee97ac917a7853a1e4ef2d5915da78a",
+      "MeanSampleDelta": 0.9098,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": true
+    },
+    {
+      "Frame": 181,
+      "File": "frame-0181.png",
+      "Sha256": "fe6b19d920180192d490cfede9b553024ad17edc1850d7d2b322dccf9aafc24c",
+      "MeanSampleDelta": 68.3309,
+      "ChangedSampleRatio": 0.943481,
+      "VisiblyChanged": true
+    },
+    {
+      "Frame": 182,
+      "File": "frame-0182.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 49.3083,
+      "ChangedSampleRatio": 0.932235,
+      "VisiblyChanged": true
+    },
+    {
+      "Frame": 183,
+      "File": "frame-0183.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 184,
+      "File": "frame-0184.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 185,
+      "File": "frame-0185.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 186,
+      "File": "frame-0186.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 187,
+      "File": "frame-0187.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 188,
+      "File": "frame-0188.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 189,
+      "File": "frame-0189.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 190,
+      "File": "frame-0190.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 191,
+      "File": "frame-0191.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 192,
+      "File": "frame-0192.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 193,
+      "File": "frame-0193.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 194,
+      "File": "frame-0194.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 195,
+      "File": "frame-0195.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 196,
+      "File": "frame-0196.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 197,
+      "File": "frame-0197.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 198,
+      "File": "frame-0198.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 199,
+      "File": "frame-0199.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 200,
+      "File": "frame-0200.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 201,
+      "File": "frame-0201.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 202,
+      "File": "frame-0202.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 203,
+      "File": "frame-0203.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 204,
+      "File": "frame-0204.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 205,
+      "File": "frame-0205.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 206,
+      "File": "frame-0206.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 207,
+      "File": "frame-0207.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 208,
+      "File": "frame-0208.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 209,
+      "File": "frame-0209.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 210,
+      "File": "frame-0210.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 211,
+      "File": "frame-0211.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 212,
+      "File": "frame-0212.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 213,
+      "File": "frame-0213.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 214,
+      "File": "frame-0214.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 215,
+      "File": "frame-0215.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 216,
+      "File": "frame-0216.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 217,
+      "File": "frame-0217.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 218,
+      "File": "frame-0218.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 219,
+      "File": "frame-0219.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 220,
+      "File": "frame-0220.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 221,
+      "File": "frame-0221.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 222,
+      "File": "frame-0222.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 223,
+      "File": "frame-0223.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 224,
+      "File": "frame-0224.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 225,
+      "File": "frame-0225.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 226,
+      "File": "frame-0226.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 227,
+      "File": "frame-0227.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 228,
+      "File": "frame-0228.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 229,
+      "File": "frame-0229.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 230,
+      "File": "frame-0230.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 231,
+      "File": "frame-0231.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 232,
+      "File": "frame-0232.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 233,
+      "File": "frame-0233.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 234,
+      "File": "frame-0234.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 235,
+      "File": "frame-0235.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 236,
+      "File": "frame-0236.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 237,
+      "File": "frame-0237.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 238,
+      "File": "frame-0238.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 239,
+      "File": "frame-0239.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 240,
+      "File": "frame-0240.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 15.6641,
+      "ChangedSampleRatio": 0.200049,
+      "VisiblyChanged": true
+    },
+    {
+      "Frame": 241,
+      "File": "frame-0241.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 242,
+      "File": "frame-0242.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 243,
+      "File": "frame-0243.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 244,
+      "File": "frame-0244.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 245,
+      "File": "frame-0245.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 246,
+      "File": "frame-0246.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 247,
+      "File": "frame-0247.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 248,
+      "File": "frame-0248.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 249,
+      "File": "frame-0249.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 250,
+      "File": "frame-0250.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 251,
+      "File": "frame-0251.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 252,
+      "File": "frame-0252.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 253,
+      "File": "frame-0253.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 254,
+      "File": "frame-0254.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 255,
+      "File": "frame-0255.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 256,
+      "File": "frame-0256.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 257,
+      "File": "frame-0257.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 258,
+      "File": "frame-0258.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 259,
+      "File": "frame-0259.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 260,
+      "File": "frame-0260.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 261,
+      "File": "frame-0261.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 262,
+      "File": "frame-0262.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 263,
+      "File": "frame-0263.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 264,
+      "File": "frame-0264.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 265,
+      "File": "frame-0265.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 266,
+      "File": "frame-0266.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 267,
+      "File": "frame-0267.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 268,
+      "File": "frame-0268.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 269,
+      "File": "frame-0269.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 270,
+      "File": "frame-0270.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 271,
+      "File": "frame-0271.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 272,
+      "File": "frame-0272.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 273,
+      "File": "frame-0273.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 274,
+      "File": "frame-0274.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 275,
+      "File": "frame-0275.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 276,
+      "File": "frame-0276.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 277,
+      "File": "frame-0277.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 278,
+      "File": "frame-0278.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 279,
+      "File": "frame-0279.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 280,
+      "File": "frame-0280.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 281,
+      "File": "frame-0281.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 282,
+      "File": "frame-0282.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 283,
+      "File": "frame-0283.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 284,
+      "File": "frame-0284.png",
+      "Sha256": "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 285,
+      "File": "frame-0285.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 15.6641,
+      "ChangedSampleRatio": 0.200049,
+      "VisiblyChanged": true
+    },
+    {
+      "Frame": 286,
+      "File": "frame-0286.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 287,
+      "File": "frame-0287.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 288,
+      "File": "frame-0288.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 289,
+      "File": "frame-0289.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 290,
+      "File": "frame-0290.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 291,
+      "File": "frame-0291.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 292,
+      "File": "frame-0292.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 293,
+      "File": "frame-0293.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 294,
+      "File": "frame-0294.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 295,
+      "File": "frame-0295.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 296,
+      "File": "frame-0296.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 297,
+      "File": "frame-0297.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 298,
+      "File": "frame-0298.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 299,
+      "File": "frame-0299.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 300,
+      "File": "frame-0300.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 301,
+      "File": "frame-0301.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 302,
+      "File": "frame-0302.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 303,
+      "File": "frame-0303.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 304,
+      "File": "frame-0304.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 305,
+      "File": "frame-0305.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 306,
+      "File": "frame-0306.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 307,
+      "File": "frame-0307.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 308,
+      "File": "frame-0308.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 309,
+      "File": "frame-0309.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 310,
+      "File": "frame-0310.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 311,
+      "File": "frame-0311.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 312,
+      "File": "frame-0312.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 313,
+      "File": "frame-0313.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 314,
+      "File": "frame-0314.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 315,
+      "File": "frame-0315.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 316,
+      "File": "frame-0316.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 317,
+      "File": "frame-0317.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 318,
+      "File": "frame-0318.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 319,
+      "File": "frame-0319.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 320,
+      "File": "frame-0320.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 321,
+      "File": "frame-0321.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 322,
+      "File": "frame-0322.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 323,
+      "File": "frame-0323.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 324,
+      "File": "frame-0324.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 325,
+      "File": "frame-0325.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 326,
+      "File": "frame-0326.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 327,
+      "File": "frame-0327.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 328,
+      "File": "frame-0328.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 329,
+      "File": "frame-0329.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 330,
+      "File": "frame-0330.png",
+      "Sha256": "0d119156baa39565ab490c83268d40be6a0b7181e5131512f092532682dab193",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 331,
+      "File": "frame-0331.png",
+      "Sha256": "7ef4c84222fa2555d8d690487692cc7fce8b37d9ba5be21a3d2057503eb93925",
+      "MeanSampleDelta": 101.1498,
+      "ChangedSampleRatio": 0.943605,
+      "VisiblyChanged": true
+    },
+    {
+      "Frame": 332,
+      "File": "frame-0332.png",
+      "Sha256": "f26be2fc2eb819c540cad09fdcccaf04a45344d9a00179456e041e9a932ec233",
+      "MeanSampleDelta": 101.2894,
+      "ChangedSampleRatio": 0.944444,
+      "VisiblyChanged": true
+    },
+    {
+      "Frame": 333,
+      "File": "frame-0333.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 1.8123,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": true
+    },
+    {
+      "Frame": 334,
+      "File": "frame-0334.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 335,
+      "File": "frame-0335.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 336,
+      "File": "frame-0336.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 337,
+      "File": "frame-0337.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 338,
+      "File": "frame-0338.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 339,
+      "File": "frame-0339.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 340,
+      "File": "frame-0340.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 341,
+      "File": "frame-0341.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 342,
+      "File": "frame-0342.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 343,
+      "File": "frame-0343.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 344,
+      "File": "frame-0344.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 345,
+      "File": "frame-0345.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 346,
+      "File": "frame-0346.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 347,
+      "File": "frame-0347.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 348,
+      "File": "frame-0348.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 349,
+      "File": "frame-0349.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 350,
+      "File": "frame-0350.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 351,
+      "File": "frame-0351.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 352,
+      "File": "frame-0352.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 353,
+      "File": "frame-0353.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 354,
+      "File": "frame-0354.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 355,
+      "File": "frame-0355.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 356,
+      "File": "frame-0356.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 357,
+      "File": "frame-0357.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 358,
+      "File": "frame-0358.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    },
+    {
+      "Frame": 359,
+      "File": "frame-0359.png",
+      "Sha256": "fe42815d3aaecaa293c30ff0bd75d93453451f1eca7891074fe7c14f480c2c3b",
+      "MeanSampleDelta": 0,
+      "ChangedSampleRatio": 0,
+      "VisiblyChanged": false
+    }
+  ]
+}

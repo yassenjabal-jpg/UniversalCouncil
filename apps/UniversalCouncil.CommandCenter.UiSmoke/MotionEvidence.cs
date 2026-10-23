@@ -36,7 +36,7 @@ internal static partial class Program
         double ChangedSampleRatio,
         bool VisiblyChanged);
 
-    private static int RenderMotionEvidence(string output, bool reducedMotion)
+    private static int RenderMotionEvidence(string output, bool reducedMotion, bool mp4Reference = false)
     {
         var mode = reducedMotion ? "reduced" : "full";
         var candidateSha = Environment.GetEnvironmentVariable("CANDIDATE_SHA")?.Trim().ToLowerInvariant() ?? "unknown";
@@ -53,9 +53,9 @@ internal static partial class Program
             new DispatcherSynchronizationContext(window.Dispatcher));
         ConfigureMotionEvidenceWindow(window);
 
-        var seconds = reducedMotion ? 28 : 38;
+        var seconds = mp4Reference ? 12 : reducedMotion ? 28 : 38;
         var frameCount = seconds * MotionFramesPerSecond;
-        var steps = BuildMotionSteps(reducedMotion);
+        var steps = mp4Reference ? BuildMp4MotionSteps() : BuildMotionSteps(reducedMotion);
         var stepsByFrame = steps
             .GroupBy(step => step.Frame)
             .ToDictionary(group => group.Key, group => group.ToArray());
@@ -70,7 +70,17 @@ internal static partial class Program
         var totalCaptureLatenessMs = 0d;
         var maxCaptureLatenessMs = 0d;
         var lateFrameCount = 0;
+        var frameByteLength = checked(MotionWidth * MotionHeight * 4);
         using var frameEncoder = new BackgroundPngFrameEncoder(framesDirectory, frameCount);
+        var captureSession = new MotionCaptureSession();
+        try
+        {
+            Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
+        }
+        catch
+        {
+            // Best-effort evidence scheduling only.
+        }
         var captureClock = Stopwatch.StartNew();
 
         for (var frame = 0; frame < frameCount; frame++)
@@ -99,12 +109,13 @@ internal static partial class Program
                     lateFrameCount++;
                 }
 
-            var capture = CaptureMotionFrame(window);
-            frameEncoder.Queue(capture.Pixels);
-
-            var (meanDelta, changedRatio) = previousPixels is null
+            var pixels = captureSession.Capture(window);
+            var retained = false;
+            try
+            {
+                var (meanDelta, changedRatio) = previousPixels is null
                     ? (0d, 0d)
-                    : ComputeFrameDelta(previousPixels, capture.Pixels);
+                    : ComputeFrameDelta(previousPixels, pixels, frameByteLength);
                 var visiblyChanged = meanDelta >= 0.20 || changedRatio >= 0.004;
 
                 if (visiblyChanged)
@@ -129,7 +140,29 @@ internal static partial class Program
                     Math.Round(meanDelta, 4),
                     Math.Round(changedRatio, 6),
                     visiblyChanged));
-            previousPixels = capture.Pixels;
+
+                var frameToQueue = previousPixels;
+                previousPixels = pixels;
+                retained = true;
+                if (frameToQueue is not null)
+                {
+                    frameEncoder.QueuePooled(frameToQueue, frameByteLength);
+                }
+            }
+            finally
+            {
+                if (!retained)
+                {
+                    ArrayPool<byte>.Shared.Return(pixels);
+                }
+            }
+        }
+
+        var finalFrame = previousPixels;
+        previousPixels = null;
+        if (finalFrame is not null)
+        {
+            frameEncoder.QueuePooled(finalFrame, frameByteLength);
         }
 
         captureClock.Stop();
@@ -157,7 +190,8 @@ internal static partial class Program
                 new
                 {
                     schema_version = "1.0",
-                    evidence_type = "WPF_P1_CRITICAL_PATH_MOTION",
+                    evidence_type = mp4Reference ? "MOTION_PLATFORM_MP4_REFERENCE" : "WPF_P1_CRITICAL_PATH_MOTION",
+                    evidence_scope = mp4Reference ? "MP4_REFERENCE_INTEGRATION" : "P1_CRITICAL_PATH",
                     candidate_sha = candidateSha,
                     source_surface = "ACTUAL_WPF",
                     unedited = true,
@@ -179,10 +213,18 @@ internal static partial class Program
                     capture_timing = new
                     {
                         clock = "STOPWATCH_REALTIME_WPF",
-                        pipeline = "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG",
+                        timing_authority = "COMPANION_MOTION_DRIVER",
+                        observer_effect = "RENDER_CAPTURE_DIAGNOSTIC_NOT_REALTIME_AUTHORITY",
+                        pipeline = "RENDERTARGETBITMAP_BGRA_TO_LOSSLESS_X264RGB_THEN_PNG",
                         capture_surface_cache = "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE",
+                        render_target_bitmap_reused = true,
+                        pixel_buffers_pooled = true,
+                        capture_thread_priority = "ABOVE_NORMAL_BEST_EFFORT",
+                        encoder_process_priority = "BELOW_NORMAL_BEST_EFFORT",
                         synchronous_layout_per_frame = false,
                         png_compression_level = 1,
+                        png_extraction_after_capture = true,
+                        intermediate_codec = "LIBX264RGB_CRF0_ULTRAFAST",
                         target_capture_duration_seconds = (double)frameCount / MotionFramesPerSecond,
                         actual_capture_duration_seconds = Math.Round(actualCaptureDurationSeconds, 3),
                         max_capture_lateness_ms = Math.Round(maxCaptureLatenessMs, 3),
@@ -190,7 +232,7 @@ internal static partial class Program
                             totalCaptureLatenessMs / Math.Max(1, frameCount),
                             3),
                         late_frame_count_over_one_frame = lateFrameCount,
-                        background_encoder = "FFMPEG_LOSSLESS_PNG",
+                        background_encoder = "FFMPEG_LIBX264RGB_LOSSLESS_INTERMEDIATE",
                         encoder_queue_capacity_frames = BackgroundPngFrameEncoder.QueueCapacityFrames,
                         png_encoding_on_wpf_capture_thread = false,
                     },
@@ -202,9 +244,13 @@ internal static partial class Program
                         motion_run_count = motionRunCount,
                         frame_change_rule = "mean_sample_delta>=0.20 OR changed_sample_ratio>=0.004",
                     },
-                    expected_video_file = reducedMotion
-                        ? "p1-critical-path-reduced-motion.mp4"
-                        : "p1-critical-path-motion.mp4",
+                    expected_video_file = mp4Reference
+                        ? reducedMotion
+                            ? "mp4-reference-reduced-motion.mp4"
+                            : "mp4-reference-full-motion.mp4"
+                        : reducedMotion
+                            ? "p1-critical-path-reduced-motion.mp4"
+                            : "p1-critical-path-motion.mp4",
                     steps = steps.Select((step, index) => new
                     {
                         evidence_step_id = $"step-{index + 1:D2}",
@@ -315,6 +361,22 @@ internal static partial class Program
         }
 
         return "command-center:wpf";
+    }
+
+    private static IReadOnlyList<MotionStep> BuildMp4MotionSteps()
+    {
+        int At(double seconds) => (int)Math.Round(seconds * MotionFramesPerSecond);
+
+        return
+        [
+            new(At(1), "Navigate Home -> Project Workspace", window => NavigateForEvidence(window, "ProjectWorkspace")),
+            new(At(3), "Activate Evidence role and open context", window => ClickSecondaryHotspot(window, "evidence", "Evidence")),
+            new(At(4.5), "Close role context", CloseMotionDrawer),
+            new(At(6), "Navigate Project -> Pulse Story", window => NavigateForEvidence(window, "PulseStory")),
+            new(At(8), "Open Handoff Pulse context", window => ClickSecondaryHotspot(window, "handoff")),
+            new(At(9.5), "Close Handoff context", CloseMotionDrawer),
+            new(At(11), "Navigate Pulse -> Home", window => NavigateForEvidence(window, "Home")),
+        ];
     }
 
     private static IReadOnlyList<MotionStep> BuildMotionSteps(bool reducedMotion)
@@ -519,28 +581,39 @@ internal static partial class Program
         worker.GetAwaiter().GetResult();
     }
 
-    private static MotionCapture CaptureMotionFrame(MainWindow window)
+    private sealed class MotionCaptureSession
     {
-        if (window.Content is not FrameworkElement root)
-        {
-            throw new InvalidOperationException("MainWindow root content is not a FrameworkElement.");
-        }
-
-        // Dispatcher pacing already services layout/render work before each sample.
-        // Re-running a full synchronous layout pass here turns evidence capture into
-        // a CPU benchmark and dilates WPF animation time.
-        var bitmap = new RenderTargetBitmap(
+        private readonly RenderTargetBitmap _bitmap = new(
             MotionWidth,
             MotionHeight,
             96,
             96,
             PixelFormats.Pbgra32);
-        bitmap.Render(root);
+        private readonly int _stride = MotionWidth * 4;
+        private readonly int _byteLength = checked(MotionWidth * MotionHeight * 4);
 
-        var stride = MotionWidth * 4;
-        var pixels = new byte[stride * MotionHeight];
-        bitmap.CopyPixels(pixels, stride, 0);
-        return new MotionCapture(pixels);
+        internal byte[] Capture(MainWindow window)
+        {
+            if (window.Content is not FrameworkElement root)
+            {
+                throw new InvalidOperationException("MainWindow root content is not a FrameworkElement.");
+            }
+
+            _bitmap.Clear();
+            _bitmap.Render(root);
+
+            var pixels = ArrayPool<byte>.Shared.Rent(_byteLength);
+            try
+            {
+                _bitmap.CopyPixels(pixels, _stride, 0);
+                return pixels;
+            }
+            catch
+            {
+                ArrayPool<byte>.Shared.Return(pixels);
+                throw;
+            }
+        }
     }
 
     private sealed class BackgroundPngFrameEncoder : IDisposable
@@ -549,6 +622,7 @@ internal static partial class Program
 
         private readonly string _framesDirectory;
         private readonly int _frameCount;
+        private readonly string _intermediatePath;
         private readonly Process _process;
         private readonly Channel<byte[]> _frames;
         private readonly ConcurrentDictionary<byte[], byte> _pooledFrames = new();
@@ -561,8 +635,8 @@ internal static partial class Program
         {
             _framesDirectory = framesDirectory;
             _frameCount = frameCount;
+            _intermediatePath = Path.Combine(framesDirectory, "capture-lossless.mkv");
 
-            var outputPattern = Path.Combine(framesDirectory, "frame-%04d.png");
             var startInfo = new ProcessStartInfo
             {
                 FileName = "ffmpeg",
@@ -589,13 +663,17 @@ internal static partial class Program
                 MotionFramesPerSecond.ToString(),
                 "-i",
                 "pipe:0",
-                "-start_number",
-                "0",
                 "-frames:v",
                 frameCount.ToString(),
-                "-compression_level",
-                "1",
-                outputPattern,
+                "-c:v",
+                "libx264rgb",
+                "-preset",
+                "ultrafast",
+                "-crf",
+                "0",
+                "-pix_fmt",
+                "bgr0",
+                _intermediatePath,
             })
             {
                 startInfo.ArgumentList.Add(argument);
@@ -604,6 +682,14 @@ internal static partial class Program
             _process = Process.Start(startInfo)
                 ?? throw new InvalidOperationException(
                     "Unable to start background ffmpeg WPF frame encoder.");
+            try
+            {
+                _process.PriorityClass = ProcessPriorityClass.BelowNormal;
+            }
+            catch
+            {
+                // Best-effort evidence hardening: WPF rendering retains scheduling priority.
+            }
             _stdoutTask = _process.StandardOutput.ReadToEndAsync();
             _stderrTask = _process.StandardError.ReadToEndAsync();
 
@@ -693,8 +779,53 @@ internal static partial class Program
             if (_process.ExitCode != 0)
             {
                 throw new InvalidOperationException(
-                    $"background ffmpeg WPF PNG encoding failed ({_process.ExitCode}). " +
+                    $"background ffmpeg WPF lossless recording failed ({_process.ExitCode}). " +
                     $"{stderr} {stdout}");
+            }
+
+            var outputPattern = Path.Combine(_framesDirectory, "frame-%04d.png");
+            var extractStartInfo = new ProcessStartInfo
+            {
+                FileName = "ffmpeg",
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true,
+            };
+
+            foreach (var argument in new[]
+            {
+                "-hide_banner",
+                "-loglevel",
+                "error",
+                "-y",
+                "-i",
+                _intermediatePath,
+                "-start_number",
+                "0",
+                "-frames:v",
+                _frameCount.ToString(),
+                "-compression_level",
+                "1",
+                outputPattern,
+            })
+            {
+                extractStartInfo.ArgumentList.Add(argument);
+            }
+
+            using var extraction = Process.Start(extractStartInfo)
+                ?? throw new InvalidOperationException(
+                    "Unable to start post-capture ffmpeg PNG extraction.");
+            var extractionStdout = extraction.StandardOutput.ReadToEndAsync();
+            var extractionStderr = extraction.StandardError.ReadToEndAsync();
+            extraction.WaitForExit();
+
+            if (extraction.ExitCode != 0)
+            {
+                throw new InvalidOperationException(
+                    $"post-capture ffmpeg PNG extraction failed ({extraction.ExitCode}). " +
+                    $"{extractionStderr.GetAwaiter().GetResult()} " +
+                    $"{extractionStdout.GetAwaiter().GetResult()}");
             }
 
             var encodedFrameCount = Directory.GetFiles(
@@ -703,9 +834,11 @@ internal static partial class Program
             if (encodedFrameCount != _frameCount)
             {
                 throw new InvalidOperationException(
-                    $"WPF background-frame encoding mismatch: expected {_frameCount}, " +
+                    $"WPF post-capture frame extraction mismatch: expected {_frameCount}, " +
                     $"got {encodedFrameCount}.");
             }
+
+            File.Delete(_intermediatePath);
         }
 
         public void Dispose()

@@ -312,6 +312,18 @@ internal static partial class Program
             var firstFrameLatencyMs = captureSource.FirstFrameLatencyMs;
             frameEncoder.CompleteAndVerify();
 
+            if (sourceFramesArrived <= 1 || freshSourceSampleCount <= 1)
+            {
+                throw new InvalidOperationException(
+                    $"Persistent WGC evidence is stale: sourceFramesArrived={sourceFramesArrived}, freshSamples={freshSourceSampleCount}.");
+            }
+
+            if (changedFrameCount == 0)
+            {
+                throw new InvalidOperationException(
+                    "Persistent WGC evidence observed no visible frame changes; refusing a false PASS.");
+            }
+
             var frameEvidence = samples
                 .Select(sample =>
                 {
@@ -348,7 +360,7 @@ internal static partial class Program
                 {
                     clock = "STOPWATCH_REALTIME_WPF",
                     pipeline =
-                        "PERSISTENT_WINDOWS_GRAPHICS_CAPTURE_HWND_BGRA_TO_BACKGROUND_FFMPEG_PNG",
+                        "PERSISTENT_WINDOWS_GRAPHICS_CAPTURE_HWND_BGRA_TO_LOSSLESS_X264RGB_THEN_PNG",
                     capture_source = captureSource.SourceId,
                     capture_surface = "ACTUAL_COMMAND_CENTER_HWND",
                     fallback_used = false,
@@ -379,10 +391,12 @@ internal static partial class Program
                             totalCaptureLatenessMs / Math.Max(1, frameCount),
                             3),
                     late_frame_count_over_one_frame = lateFrameCount,
-                    background_encoder = "FFMPEG_LOSSLESS_PNG",
+                    background_encoder = "FFMPEG_LIBX264RGB_LOSSLESS_INTERMEDIATE",
                     encoder_queue_capacity_frames =
                         BackgroundPngFrameEncoder.QueueCapacityFrames,
                     png_encoding_on_wpf_capture_thread = false,
+                    png_extraction_after_capture = true,
+                    intermediate_codec = "LIBX264RGB_CRF0_ULTRAFAST",
                     synchronous_layout_per_frame = false,
                     png_compression_level = 1,
                 },

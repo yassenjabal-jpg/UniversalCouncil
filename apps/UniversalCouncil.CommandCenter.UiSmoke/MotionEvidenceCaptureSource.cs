@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Channels;
 using Vortice.Direct3D;
 using Vortice.Direct3D11;
 using Vortice.DXGI;
@@ -60,10 +61,14 @@ internal sealed class PersistentWgcWindowCaptureSource : IMotionEvidenceCaptureS
     private readonly ManualResetEventSlim _firstFrame = new(false);
     private readonly AutoResetEvent _frameArrived = new(false);
     private readonly Stopwatch _lifetime = Stopwatch.StartNew();
+    private readonly Channel<Direct3D11CaptureFrame> _frameQueue;
+    private readonly Task _frameWorker;
 
     private bool _hasFrame;
     private bool _disposed;
     private long _frameSequence;
+    private long _framesArrived;
+    private long _framesDropped;
     private long _frameErrors;
     private double _firstFrameLatencyMs;
 
@@ -119,6 +124,15 @@ internal sealed class PersistentWgcWindowCaptureSource : IMotionEvidenceCaptureS
             MiscFlags = ResourceOptionFlags.None,
         });
 
+        _frameQueue = Channel.CreateBounded<Direct3D11CaptureFrame>(
+            new BoundedChannelOptions(2)
+            {
+                SingleReader = true,
+                SingleWriter = false,
+                FullMode = BoundedChannelFullMode.Wait,
+            });
+        _frameWorker = Task.Run(ProcessQueuedFramesAsync);
+
         _framePool = Direct3D11CaptureFramePool.CreateFreeThreaded(
             _winrtDevice,
             DirectXPixelFormat.B8G8R8A8UIntNormalized,
@@ -147,7 +161,9 @@ internal sealed class PersistentWgcWindowCaptureSource : IMotionEvidenceCaptureS
 
     public int Height { get; }
 
-    public long FramesArrived => Interlocked.Read(ref _frameSequence);
+    public long FramesArrived => Interlocked.Read(ref _framesArrived);
+
+    public long FramesDropped => Interlocked.Read(ref _framesDropped);
 
     public long FrameErrors => Interlocked.Read(ref _frameErrors);
 
@@ -222,64 +238,98 @@ internal sealed class PersistentWgcWindowCaptureSource : IMotionEvidenceCaptureS
             return;
         }
 
+        Direct3D11CaptureFrame? frame = null;
         try
         {
-            using var frame = sender.TryGetNextFrame();
+            frame = sender.TryGetNextFrame();
             if (frame is null)
             {
                 return;
             }
 
+            Interlocked.Increment(ref _framesArrived);
             var size = frame.ContentSize;
             if (size.Width != Width || size.Height != Height)
             {
                 Interlocked.Increment(ref _frameErrors);
+                frame.Dispose();
                 return;
             }
 
-            using var texture = PersistentWgcInterop.GetTextureFromSurface(frame.Surface);
-            _context.CopyResource(_staging, texture);
-
-            var mapped = _context.Map(
-                _staging,
-                0,
-                MapMode.Read,
-                Vortice.Direct3D11.MapFlags.None);
-
-            try
+            if (!_frameQueue.Writer.TryWrite(frame))
             {
-                var rowBytes = checked(Width * 4);
-                lock (_frameLock)
-                {
-                    for (var y = 0; y < Height; y++)
-                    {
-                        Marshal.Copy(
-                            IntPtr.Add(mapped.DataPointer, y * (int)mapped.RowPitch),
-                            _latestPixels,
-                            y * rowBytes,
-                            rowBytes);
-                    }
-
-                    _frameSequence++;
-                    if (!_hasFrame)
-                    {
-                        _firstFrameLatencyMs = _lifetime.Elapsed.TotalMilliseconds;
-                    }
-
-                    _hasFrame = true;
-                }
-
-                _firstFrame.Set();
-                _frameArrived.Set();
+                Interlocked.Increment(ref _framesDropped);
+                frame.Dispose();
+                return;
             }
-            finally
-            {
-                _context.Unmap(_staging, 0);
-            }
+
+            frame = null;
         }
         catch
         {
+            frame?.Dispose();
             Interlocked.Increment(ref _frameErrors);
+        }
+    }
+
+    private async Task ProcessQueuedFramesAsync()
+    {
+        await foreach (var frame in _frameQueue.Reader.ReadAllAsync())
+        {
+            using (frame)
+            {
+                try
+                {
+                    ProcessFrame(frame);
+                }
+                catch
+                {
+                    Interlocked.Increment(ref _frameErrors);
+                }
+            }
+        }
+    }
+
+    private void ProcessFrame(Direct3D11CaptureFrame frame)
+    {
+        using var texture = PersistentWgcInterop.GetTextureFromSurface(frame.Surface);
+        _context.CopyResource(_staging, texture);
+
+        var mapped = _context.Map(
+            _staging,
+            0,
+            MapMode.Read,
+            Vortice.Direct3D11.MapFlags.None);
+
+        try
+        {
+            var rowBytes = checked(Width * 4);
+            lock (_frameLock)
+            {
+                for (var y = 0; y < Height; y++)
+                {
+                    Marshal.Copy(
+                        IntPtr.Add(mapped.DataPointer, y * (int)mapped.RowPitch),
+                        _latestPixels,
+                        y * rowBytes,
+                        rowBytes);
+                }
+
+                _frameSequence++;
+                if (!_hasFrame)
+                {
+                    _firstFrameLatencyMs = _lifetime.Elapsed.TotalMilliseconds;
+                }
+
+                _hasFrame = true;
+            }
+
+            _firstFrame.Set();
+            _frameArrived.Set();
+        }
+        finally
+        {
+            _context.Unmap(_staging, 0);
         }
     }
 
@@ -305,6 +355,16 @@ internal sealed class PersistentWgcWindowCaptureSource : IMotionEvidenceCaptureS
         }
         catch
         {
+        }
+
+        _frameQueue.Writer.TryComplete();
+        try
+        {
+            _frameWorker.GetAwaiter().GetResult();
+        }
+        catch
+        {
+            Interlocked.Increment(ref _frameErrors);
         }
 
         try

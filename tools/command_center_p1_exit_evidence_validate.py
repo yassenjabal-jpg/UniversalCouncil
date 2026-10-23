@@ -21,6 +21,70 @@ def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
+def validate_motion_driver_timing(
+    folder: Path,
+    mode: str,
+    expected_candidate: str,
+    timeline: list[dict],
+    target_seconds: float,
+) -> None:
+    path = folder / "motion-driver-timing.json"
+    if not path.exists():
+        raise SystemExit(f"{mode} real-time motion-driver timing evidence is missing")
+
+    driver = load(path)
+    if driver.get("evidence_type") != "WPF_REALTIME_MOTION_DRIVER_TIMING":
+        raise SystemExit(f"{mode} motion-driver evidence type drifted")
+    if str(driver.get("candidate_sha", "")).lower() != expected_candidate:
+        raise SystemExit(f"{mode} motion-driver timing is not bound to the exact candidate SHA")
+    if driver.get("clock") != "STOPWATCH_REALTIME_WPF_DRIVER":
+        raise SystemExit(f"{mode} motion-driver clock drifted")
+    if driver.get("timing_authority") is not True or driver.get("capture_observer") is not False:
+        raise SystemExit(f"{mode} motion-driver timing authority drifted")
+    if driver.get("scheduler") != "DEDICATED_STOPWATCH_WORKER_TO_DISPATCHER_SEND":
+        raise SystemExit(f"{mode} motion-driver scheduler drifted")
+    if driver.get("dispatcher_timer_timing_authority") is not False:
+        raise SystemExit(f"{mode} motion-driver restored DispatcherTimer timing authority")
+    if driver.get("scheduler_thread_priority") != "ABOVE_NORMAL_BEST_EFFORT":
+        raise SystemExit(f"{mode} motion-driver scheduler priority evidence drifted")
+    if driver.get("lateness_semantics") != "DISPATCH_START_MINUS_TARGET":
+        raise SystemExit(f"{mode} motion-driver lateness semantics drifted")
+    if driver.get("execution_duration_reported_separately") is not True:
+        raise SystemExit(f"{mode} motion-driver stopped separating execution duration")
+    if driver.get("mode") != mode or driver.get("reduced_motion") is not (mode == "reduced"):
+        raise SystemExit(f"{mode} motion-driver mode drifted")
+    if driver.get("mp4_reference") is not False:
+        raise SystemExit(f"{mode} P1 timing was replaced by focused MP4 timing")
+
+    target = float(driver.get("target_duration_seconds", 0))
+    actual = float(driver.get("actual_duration_seconds", 0))
+    if abs(target - target_seconds) > 0.001:
+        raise SystemExit(f"{mode} motion-driver target duration drifted")
+    if abs(actual - target) > 1.25:
+        raise SystemExit(f"{mode} real WPF timing exceeded tolerance ({actual:.3f}s actual vs {target:.3f}s target)")
+    if float(driver.get("max_step_lateness_ms", 999999)) > 100:
+        raise SystemExit(f"{mode} real WPF semantic timing missed cadence by more than 100ms")
+
+    driver_steps = driver.get("steps")
+    if not isinstance(driver_steps, list) or not driver_steps:
+        raise SystemExit(f"{mode} motion-driver semantic timeline is missing")
+    for item in driver_steps:
+        for key in ("ActualSeconds", "CompletedSeconds", "LatenessMs", "ExecutionMs"):
+            if key not in item:
+                raise SystemExit(f"{mode} motion-driver step timing field is missing: {key}")
+        if float(item["CompletedSeconds"]) < float(item["ActualSeconds"]):
+            raise SystemExit(f"{mode} motion-driver step completed before dispatch start")
+        if float(item["ExecutionMs"]) < 0:
+            raise SystemExit(f"{mode} motion-driver step execution duration is invalid")
+    computed_max_execution = max(float(item["ExecutionMs"]) for item in driver_steps)
+    if abs(float(driver.get("max_step_execution_ms", -1)) - computed_max_execution) > 0.01:
+        raise SystemExit(f"{mode} motion-driver max execution duration evidence drifted")
+    driver_bindings = [(int(item.get("Frame", -1)), item.get("Name")) for item in driver_steps]
+    manifest_bindings = [(int(item.get("frame", -1)), item.get("Name")) for item in timeline]
+    if driver_bindings != manifest_bindings:
+        raise SystemExit(f"{mode} motion-driver and visual evidence semantic timelines diverged")
+
+
 def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
     folder = root / mode
     manifest_path = folder / "motion-evidence-manifest.json"
@@ -98,25 +162,45 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
     if timing.get("clock") != "STOPWATCH_REALTIME_WPF":
         raise SystemExit(f"{mode} capture clock is not real-time WPF")
     pipeline = timing.get("pipeline")
-    render_target_pipeline = "RENDERTARGETBITMAP_BGRA_TO_BACKGROUND_FFMPEG_PNG"
-    wgc_pipeline = "PERSISTENT_WINDOWS_GRAPHICS_CAPTURE_HWND_BGRA_TO_BACKGROUND_FFMPEG_PNG"
+    render_target_pipeline = "RENDERTARGETBITMAP_BGRA_TO_LOSSLESS_X264RGB_THEN_PNG"
+    wgc_pipeline = "PERSISTENT_WINDOWS_GRAPHICS_CAPTURE_HWND_BGRA_TO_LOSSLESS_X264RGB_THEN_PNG"
     if pipeline not in {render_target_pipeline, wgc_pipeline}:
         raise SystemExit(f"{mode} recorder pipeline is not governed")
 
-    if timing.get("background_encoder") != "FFMPEG_LOSSLESS_PNG":
-        raise SystemExit(f"{mode} background frame encoder drifted")
+    if timing.get("background_encoder") != "FFMPEG_LIBX264RGB_LOSSLESS_INTERMEDIATE":
+        raise SystemExit(f"{mode} background lossless recorder drifted")
     if timing.get("png_encoding_on_wpf_capture_thread") is not False:
         raise SystemExit(f"{mode} recorder reintroduced PNG encoding on the WPF capture thread")
+    if timing.get("png_extraction_after_capture") is not True:
+        raise SystemExit(f"{mode} PNG extraction moved back into the capture window")
+    if timing.get("intermediate_codec") != "LIBX264RGB_CRF0_ULTRAFAST":
+        raise SystemExit(f"{mode} lossless intermediate codec drifted")
     if int(timing.get("encoder_queue_capacity_frames", 0)) != 60:
         raise SystemExit(f"{mode} recorder queue capacity drifted")
     if timing.get("synchronous_layout_per_frame") is not False:
         raise SystemExit(f"{mode} recorder reintroduced synchronous layout per frame")
     if int(timing.get("png_compression_level", -1)) != 1:
-        raise SystemExit(f"{mode} background PNG compression level drifted")
+        raise SystemExit(f"{mode} post-capture PNG compression level drifted")
+
+    target_capture = float(timing.get("target_capture_duration_seconds", 0))
+    actual_capture = float(timing.get("actual_capture_duration_seconds", 0))
+    if target_capture <= 0 or actual_capture <= 0:
+        raise SystemExit(f"{mode} capture timing diagnostics are incomplete")
 
     if pipeline == render_target_pipeline:
         if timing.get("capture_surface_cache") != "REFERENCE_HOST_AND_CONTEXT_DRAWER_BITMAP_CACHE":
             raise SystemExit(f"{mode} governed WPF capture cache drifted")
+        if timing.get("timing_authority") != "COMPANION_MOTION_DRIVER":
+            raise SystemExit(f"{mode} RenderTargetBitmap observer claimed real-time timing authority")
+        if timing.get("observer_effect") != "RENDER_CAPTURE_DIAGNOSTIC_NOT_REALTIME_AUTHORITY":
+            raise SystemExit(f"{mode} RenderTargetBitmap observer-effect label drifted")
+        validate_motion_driver_timing(
+            folder,
+            mode,
+            expected_candidate,
+            timeline,
+            target_capture,
+        )
     else:
         if timing.get("capture_surface") != "ACTUAL_COMMAND_CENTER_HWND":
             raise SystemExit(f"{mode} WGC evidence did not capture the actual Command Center HWND")
@@ -132,17 +216,17 @@ def validate_motion(root: Path, mode: str, minimum_seconds: float) -> None:
             raise SystemExit(f"{mode} WGC source reported frame errors")
         if float(timing.get("first_frame_latency_ms", 0)) <= 0:
             raise SystemExit(f"{mode} WGC first-frame latency evidence is missing")
-        if int(timing.get("unique_sampled_source_frames", 0)) <= 0:
-            raise SystemExit(f"{mode} WGC source-frame diagnostics are missing")
-    target_capture = float(timing.get("target_capture_duration_seconds", 0))
-    actual_capture = float(timing.get("actual_capture_duration_seconds", 0))
-    if abs(actual_capture - target_capture) > 1.25:
-        raise SystemExit(
-            f"{mode} recorder time dilation exceeded tolerance "
-            f"({actual_capture:.3f}s actual vs {target_capture:.3f}s target)"
-        )
-    if float(timing.get("max_capture_lateness_ms", 999999)) > 100:
-        raise SystemExit(f"{mode} recorder missed the WPF sampling cadence by more than 100ms")
+        if int(timing.get("unique_sampled_source_frames", 0)) <= 1:
+            raise SystemExit(f"{mode} WGC source did not refresh beyond the first frame")
+        if int(timing.get("fresh_source_sample_count", 0)) <= 1:
+            raise SystemExit(f"{mode} WGC evidence did not sample fresh source frames")
+        if abs(actual_capture - target_capture) > 1.25:
+            raise SystemExit(
+                f"{mode} WGC recorder time dilation exceeded tolerance "
+                f"({actual_capture:.3f}s actual vs {target_capture:.3f}s target)"
+            )
+        if float(timing.get("max_capture_lateness_ms", 999999)) > 100:
+            raise SystemExit(f"{mode} WGC recorder missed the sampling cadence by more than 100ms")
 
     visibility = manifest.get("motion_visibility")
     if not isinstance(visibility, dict):

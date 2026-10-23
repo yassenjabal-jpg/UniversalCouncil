@@ -80,6 +80,15 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+      - name: Record real-time WPF semantic timing
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          New-Item -ItemType Directory -Force artifacts/p1-exit-evidence/full | Out-Null
+          New-Item -ItemType Directory -Force artifacts/p1-exit-evidence/reduced | Out-Null
+          dotnet run --project apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-build -- artifacts/p1-exit-evidence/full --motion-driver
+          dotnet run --project apps/UniversalCouncil.CommandCenter.UiSmoke/UniversalCouncil.CommandCenter.UiSmoke.csproj --configuration Release --no-build -- artifacts/p1-exit-evidence/reduced --motion-driver --reduced-motion
+
       - name: Record full and Reduced Motion frames
         shell: pwsh
         run: |
@@ -132,9 +141,11 @@ jobs:
           path: |
             artifacts/p1-exit-evidence/full/p1-critical-path-motion.mp4
             artifacts/p1-exit-evidence/full/motion-evidence-manifest.json
+            artifacts/p1-exit-evidence/full/motion-driver-timing.json
             artifacts/p1-exit-evidence/full/motion-video-integrity.json
             artifacts/p1-exit-evidence/reduced/p1-critical-path-reduced-motion.mp4
             artifacts/p1-exit-evidence/reduced/motion-evidence-manifest.json
+            artifacts/p1-exit-evidence/reduced/motion-driver-timing.json
             artifacts/p1-exit-evidence/reduced/motion-video-integrity.json
           if-no-files-found: error
           retention-days: 14

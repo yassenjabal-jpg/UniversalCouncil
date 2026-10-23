@@ -125,6 +125,6 @@ MP3 reference-Windows technical bake-off is complete on YASSIN for the currently
 S1, S3, S4 and S5 pass in Full and Reduced Motion; S2 is explicitly unassigned because no accepted renderer role currently claims STATEFUL_VECTOR.
 Owner visual acceptance was explicitly granted on 2026-10-23; RENDERER_ROLE_MATRIX_ACCEPTED is now passed. No renderer is production-adopted.
 See 10_MP3_REFERENCE_ACCEPTANCE.md and 11_MP3_OWNER_VISUAL_REVIEW.md for the exact scenario disposition, measurements, limits and approval record.
-Execution priority: exact-head MP4 reference integration evidence; do not expand MotionKit abstractions.
+MP4 focused reference runtime evidence is complete on YASSIN for ROLE_ACTIVATION and ARTIFACT_HANDOFF_RETURN in Full and Reduced Motion. Execution priority: owner visual review of the committed MP4 package; do not expand MotionKit abstractions before that decision.
 Production renderer adoption is not authorized.
 Command Center refactor is not authorized by this roadmap alone.

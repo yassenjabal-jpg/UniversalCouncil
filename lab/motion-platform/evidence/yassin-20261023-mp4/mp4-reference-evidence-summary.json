@@ -1,0 +1,107 @@
+﻿{
+    "schema_version":  "1.0",
+    "evidence_id":  "motionkit-mp4-yassin-reference-20261023",
+    "candidate_sha":  "c13fa2ad069075e21f35b3970b388b5922826ee8",
+    "host":  "YASSIN",
+    "source_surface":  "ACTUAL_WPF_RENDER_TARGET_BITMAP",
+    "hash_mode":  "CANONICAL_LF_TEXT_OR_RAW_BINARY",
+    "renderer":  "SkiaSharp 4.153.1",
+    "full":  {
+                 "frame_count":  360,
+                 "duration_seconds":  12,
+                 "changed_frame_count":  32,
+                 "longest_changed_run":  9,
+                 "motion_run_count":  9,
+                 "role_peak_frame":  92,
+                 "handoff_peak_frame":  246
+             },
+    "reduced":  {
+                    "frame_count":  360,
+                    "duration_seconds":  12,
+                    "changed_frame_count":  11,
+                    "longest_changed_run":  3,
+                    "motion_run_count":  7,
+                    "role_state_change_frame":  90,
+                    "role_settled_frame":  102,
+                    "handoff_state_change_frame":  240,
+                    "handoff_settled_frame":  253
+                },
+    "same_semantic_steps":  true,
+    "semantic_steps":  [
+                           "Navigate Home -\u003e Project Workspace",
+                           "Activate Evidence role and open context",
+                           "Close role context",
+                           "Navigate Project -\u003e Pulse Story",
+                           "Open Handoff Pulse context",
+                           "Close Handoff context",
+                           "Navigate Pulse -\u003e Home"
+                       ],
+    "wgc_diagnostic":  {
+                           "status":  "REJECTED_STALE_SOURCE",
+                           "source_frames_arrived":  1,
+                           "fresh_source_sample_count":  1,
+                           "stale_source_sample_count":  1139,
+                           "changed_frame_count":  0,
+                           "fail_closed_guard_added":  true
+                       },
+    "owner_visual_acceptance":  false,
+    "production_adoption":  false,
+    "stage8_opened":  false,
+    "files":  [
+                  {
+                      "name":  "full-handoff-mid.png",
+                      "bytes":  858897,
+                      "sha256":  "df1a48b7669f71ca007c8357a82599a4501564ab61e81ffca7c4a59b9b80deea"
+                  },
+                  {
+                      "name":  "full-motion-evidence-manifest.json",
+                      "bytes":  92569,
+                      "sha256":  "4d966501c00f86c9dc394fc8d4c23911477e06a7b4a5edc9efcbe56add526132"
+                  },
+                  {
+                      "name":  "full-role-activation-mid.png",
+                      "bytes":  375707,
+                      "sha256":  "b1139fb796b38bbeda614e0704ebfe3114b3ec6667a9b5cb4346884662e9f563"
+                  },
+                  {
+                      "name":  "mp4-owner-review-contact-sheet.png",
+                      "bytes":  407492,
+                      "sha256":  "bdcf0b3989097901e10b5683ca78c4dd5da694cd4777ea52713d6b7cd2f7b91d"
+                  },
+                  {
+                      "name":  "mp4-reference-full-motion.mp4",
+                      "bytes":  777166,
+                      "sha256":  "80c2a14a4d55100b7ce15c57727c517e3a34ff80ef86afadf51bc333c9ef78d9"
+                  },
+                  {
+                      "name":  "mp4-reference-reduced-motion.mp4",
+                      "bytes":  461443,
+                      "sha256":  "07ce92e3769f4bce29dc033ade298aacaba33bbeaa8a3cf1b2ad0f5c3b0bbdb1"
+                  },
+                  {
+                      "name":  "reduced-handoff-settled.png",
+                      "bytes":  745969,
+                      "sha256":  "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105"
+                  },
+                  {
+                      "name":  "reduced-handoff-state-change.png",
+                      "bytes":  745969,
+                      "sha256":  "0fef1e855705a9fcb623e33c5460384225181832c70abb866b382f0134cbe105"
+                  },
+                  {
+                      "name":  "reduced-motion-evidence-manifest.json",
+                      "bytes":  92224,
+                      "sha256":  "894fc407e616a47905ac364585c6a2d5af6f959c3a9d3e8fb8823d79a2128079"
+                  },
+                  {
+                      "name":  "reduced-role-settled.png",
+                      "bytes":  369351,
+                      "sha256":  "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de"
+                  },
+                  {
+                      "name":  "reduced-role-state-change.png",
+                      "bytes":  369351,
+                      "sha256":  "99ab2a4da322942ee6de36d73351f071e56af396a26d9c719523c210dab368de"
+                  }
+              ]
+}
