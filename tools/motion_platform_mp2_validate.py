@@ -51,6 +51,9 @@ required_scope = {
     "ADAPTER_CONTRACT",
     "DETERMINISTIC_FAKE_RENDERER",
     "RENDERER_DIAGNOSTICS",
+    "PROFILE_IDENTITY_EVIDENCE",
+    "ADAPTER_VERSION_EVIDENCE",
+    "STATIC_FALLBACK_CAPABILITY_GUARD",
 }
 if set(candidate["scope"]) != required_scope:
     raise SystemExit("MP2 scope drifted")
@@ -115,6 +118,8 @@ required_contract_markers = (
     "MotionVisualRule",
     "MotionProductProfile",
     "MotionRenderCommand",
+    "ProfileId",
+    "AdapterVersion",
     "IMotionRendererAdapter",
 )
 for marker in required_contract_markers:
@@ -126,6 +131,7 @@ required_guard_markers = (
     "MaxDuration",
     "ValidateCommand",
     "ValidateAdapter",
+    "Adapter version is invalid.",
     "Supports",
     "KnownCapabilitySet",
 )
@@ -146,6 +152,8 @@ for marker in (
     "DuplicateInstance",
     "NotSupported",
     "SnapshotDiagnostics",
+    "Static fallback requires StaticSettle capability.",
+    "AdapterVersion",
     "lock (_gate)",
 ):
     if marker not in fake:
@@ -161,6 +169,8 @@ required_validation_markers = (
     "CheckUnsupportedCapabilityAsync",
     "CheckCancelAndNotActiveAsync",
     "CheckUnknownCapabilityRejectedAsync",
+    "CheckStaticFallbackRequiresCapabilityAsync",
+    "CheckAdapterVersionValidation",
     "CheckConcurrentFakeRendererAsync",
     "CheckDisposalCleanupAsync",
 )
@@ -172,6 +182,8 @@ for marker in (
     "Truth firewall",
     "Reduced Motion is therefore a first-class variant",
     "Deterministic fake renderer",
+    "product Motion Profile ID",
+    "explicit adapter version",
     "no silent fallback",
 ):
     if marker not in spec:
