@@ -31,7 +31,12 @@ MP3 role hypothesis:
 
 Empirical probes authorized now:
 - Linux headless offscreen rendering;
-- Windows WPF package compile probe.
+- Windows WPF core-bridge compile probe.
+
+Observed compile evidence:
+- direct `SkiaSharp.Views.WPF 4.153.1` on `net10.0-windows` emitted NU1701 because its OpenTK/OpenTK.GLWpfControl dependency path restored through .NET Framework compatibility;
+- this warning is treated as a real compatibility risk and is NOT suppressed;
+- the lab therefore tests a direct bridge from core `SkiaSharp` pixels into WPF `BitmapSource` instead of treating the Views.WPF package as production-ready.
 
 Status: LAB_ONLY.
 
@@ -168,11 +173,13 @@ STATIC_SETTLE | OPACITY | TRANSLATION | SCALE | ROTATION | PATH_GEOMETRY | DYNAM
 Explicitly NOT claimed:
 STATEFUL_VECTOR | PREAUTHORED_TIMELINE | HIT_TESTING
 
-## Windows WPF compile probe
+## Windows WPF core-bridge compile probe
 
-A separate Windows-only project references SkiaSharp.Views.WPF and touches SKElement.
+A separate Windows-only project references core SkiaSharp 4.153.1 and compiles a direct `SKBitmap -> BitmapSource` bridge under `net10.0-windows`.
 
-Passing this probe proves package/API compile compatibility only.
+This probe exists because the direct SkiaSharp.Views.WPF package path produced unsuppressed NU1701 compatibility warnings under .NET 10.
+
+Passing the core-bridge probe proves managed API/package compile compatibility only.
 It does NOT prove:
 - runtime frame pacing;
 - WPF visual-host correctness;
