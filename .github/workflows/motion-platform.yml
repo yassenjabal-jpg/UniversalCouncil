@@ -88,5 +88,18 @@ jobs:
           dotnet build apps/UniversalCouncil.MotionKit.CompositionWpfCompileProbe/UniversalCouncil.MotionKit.CompositionWpfCompileProbe.csproj -c Release --nologo
       - name: Run Windows Composition runtime API probe
         shell: pwsh
+        timeout-minutes: 2
         run: |
-          dotnet run --project apps/UniversalCouncil.MotionKit.CompositionRuntimeProbe/UniversalCouncil.MotionKit.CompositionRuntimeProbe.csproj -c Release
+          $project = "apps/UniversalCouncil.MotionKit.CompositionRuntimeProbe/UniversalCouncil.MotionKit.CompositionRuntimeProbe.csproj"
+          dotnet build $project -c Release --nologo
+          if ($LASTEXITCODE -ne 0) { throw "Composition runtime probe build failed." }
+
+          $dll = "apps/UniversalCouncil.MotionKit.CompositionRuntimeProbe/bin/Release/net10.0-windows10.0.19041.0/UniversalCouncil.MotionKit.CompositionRuntimeProbe.dll"
+          $process = Start-Process -FilePath "dotnet" -ArgumentList @($dll) -PassThru -NoNewWindow
+          if (-not $process.WaitForExit(15000)) {
+            Stop-Process -Id $process.Id -Force
+            throw "Composition runtime probe exceeded the 15 second shutdown budget."
+          }
+          if ($process.ExitCode -ne 0) {
+            throw "Composition runtime probe exited with code $($process.ExitCode)."
+          }
