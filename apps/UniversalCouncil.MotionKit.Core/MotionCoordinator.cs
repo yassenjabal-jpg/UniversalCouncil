@@ -184,6 +184,32 @@ public sealed class MotionCoordinator
             _active.Remove(targetId);
             _queued.Remove(targetId);
 
+            return new MotionTransition(
+                MotionDisposition.TargetCancelled,
+                StartedLease: null,
+                ReleasedPending: null,
+                CancelledInstances: cancelled,
+                string.IsNullOrWhiteSpace(reason) ? "Target cancelled." : reason);
+        }
+    }
+
+
+    public MotionTransition ForgetTarget(string targetId, string reason)
+    {
+        lock (_gate)
+        {
+            if (!ValidIdentifier(targetId))
+            {
+                return Transition(MotionDisposition.RejectedInvalid, "Target ID is invalid.");
+            }
+
+            var cancelled = _active.TryGetValue(targetId, out var active)
+                ? active.Select(item => item.InstanceId).ToArray()
+                : [];
+
+            _active.Remove(targetId);
+            _queued.Remove(targetId);
+
             foreach (var key in _latestTruth.Keys
                          .Where(key => string.Equals(key.TargetId, targetId, StringComparison.Ordinal))
                          .ToArray())
@@ -192,11 +218,11 @@ public sealed class MotionCoordinator
             }
 
             return new MotionTransition(
-                MotionDisposition.TargetCancelled,
+                MotionDisposition.TargetForgotten,
                 StartedLease: null,
                 ReleasedPending: null,
                 CancelledInstances: cancelled,
-                string.IsNullOrWhiteSpace(reason) ? "Target cancelled." : reason);
+                string.IsNullOrWhiteSpace(reason) ? "Target identity forgotten." : reason);
         }
     }
 
