@@ -102,6 +102,9 @@ Gate: MOTION_PLATFORM_GENERAL_ADOPTION_APPROVED
 
 ## Permanent constraints
 
+- OPEN_SOURCE_FIRST / INTEGRATION_OVER_INVENTION;
+- MP1/MP2 are frozen for expansion after validation; only verified integration-driven corrections may change shared internals;
+- no custom renderer/timeline/vector engine when an adopted maintained dependency already provides the capability;
 - truth before motion;
 - no fake activity;
 - renderer replaceability;
@@ -115,7 +118,10 @@ Gate: MOTION_PLATFORM_GENERAL_ADOPTION_APPROVED
 
 ## Current position
 
-MP0 active.
-Architecture/research is authorized.
+MP0 foundation validated.
+MP1 semantic kernel validated and frozen for expansion.
+MP2 renderer boundary validated and frozen for expansion.
+MP3 Compatibility Lab is ACTIVE.
+Execution priority: integrate/prove open-source and platform renderers, not expand MotionKit abstractions.
 Production renderer adoption is not authorized.
 Command Center refactor is not authorized by this roadmap alone.
