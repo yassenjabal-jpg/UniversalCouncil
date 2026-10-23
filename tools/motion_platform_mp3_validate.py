@@ -16,8 +16,30 @@ WPF_PROJECT = (
     / "UniversalCouncil.MotionKit.SkiaWpfCompileProbe.csproj"
 )
 WPF_PROBE = ROOT / "apps" / "UniversalCouncil.MotionKit.SkiaWpfCompileProbe" / "SkiaWpfProbe.cs"
+COMPOSITION_PROJECT = (
+    ROOT
+    / "apps"
+    / "UniversalCouncil.MotionKit.CompositionWpfCompileProbe"
+    / "UniversalCouncil.MotionKit.CompositionWpfCompileProbe.csproj"
+)
+COMPOSITION_PROBE = (
+    ROOT
+    / "apps"
+    / "UniversalCouncil.MotionKit.CompositionWpfCompileProbe"
+    / "CompositionWpfProbe.cs"
+)
 
-for path in (STATE, SPEC, SKIA_PROJECT, SKIA_ADAPTER, SKIA_VALIDATION, WPF_PROJECT, WPF_PROBE):
+for path in (
+    STATE,
+    SPEC,
+    SKIA_PROJECT,
+    SKIA_ADAPTER,
+    SKIA_VALIDATION,
+    WPF_PROJECT,
+    WPF_PROBE,
+    COMPOSITION_PROJECT,
+    COMPOSITION_PROBE,
+):
     if not path.exists():
         raise SystemExit(f"missing MP3 artifact: {path.relative_to(ROOT)}")
 
@@ -57,6 +79,11 @@ if not finding or finding["status"] != "BLOCKED" or finding["evidence_class"] !=
 composition = candidates["WINDOWS_COMPOSITION"]
 if composition["version"] != "2.5.1" or composition["status"] != "LAB_ONLY":
     raise SystemExit("Windows Composition research pin drifted")
+if set(composition["authorized_probes"]) != {
+    "WINDOWS_WPF_COMPOSITION_COMPILE",
+    "WINDOWS_RUNTIME_LATER",
+}:
+    raise SystemExit("Windows Composition probe authority drifted")
 
 if candidates["RIVE"]["status"] != "NATIVE_INTEROP_RESEARCH":
     raise SystemExit("Rive was promoted without native interop evidence")
@@ -89,6 +116,14 @@ if 'PackageReference Include="SkiaSharp" Version="4.153.1"' not in wpf_project:
 if "SkiaSharp.Views.WPF" in wpf_project:
     raise SystemExit("blocked SkiaSharp.Views.WPF path re-entered .NET 10 probe")
 
+composition_project = COMPOSITION_PROJECT.read_text(encoding="utf-8")
+if "<UseWPF>true</UseWPF>" not in composition_project:
+    raise SystemExit("Composition compile probe stopped being WPF")
+if "<WindowsPackageType>None</WindowsPackageType>" not in composition_project:
+    raise SystemExit("Composition WPF probe lost unpackaged Windows App SDK initialization contract")
+if 'PackageReference Include="Microsoft.WindowsAppSDK" Version="2.5.1"' not in composition_project:
+    raise SystemExit("Windows App SDK pin drifted in Composition probe")
+
 # External renderer packages must remain isolated to explicit lab/probe projects.
 for path in (ROOT / "apps").glob("UniversalCouncil.MotionKit.*/*.csproj"):
     text = path.read_text(encoding="utf-8")
@@ -98,6 +133,11 @@ for path in (ROOT / "apps").glob("UniversalCouncil.MotionKit.*/*.csproj"):
         "UniversalCouncil.MotionKit.SkiaWpfCompileProbe",
     }:
         raise SystemExit(f"SkiaSharp leaked outside MP3 lab boundary: {path.relative_to(ROOT)}")
+    has_winappsdk = "Microsoft.WindowsAppSDK" in text
+    if has_winappsdk and path.parent.name != "UniversalCouncil.MotionKit.CompositionWpfCompileProbe":
+        raise SystemExit(
+            f"Windows App SDK leaked outside MP3 Composition probe: {path.relative_to(ROOT)}"
+        )
 
 adapter = SKIA_ADAPTER.read_text(encoding="utf-8")
 for marker in (
@@ -136,11 +176,23 @@ for marker in ("BitmapSource.Create", "bitmap.GetPixels()", "PixelFormats.Bgra32
     if marker not in probe:
         raise SystemExit(f"Skia WPF core bridge marker missing: {marker}")
 
+composition_probe = COMPOSITION_PROBE.read_text(encoding="utf-8")
+for marker in (
+    "Microsoft.UI.Composition",
+    "Compositor",
+    "CreateScalarKeyFrameAnimation",
+    "CreateSpriteVisual",
+    "WindowInteropHelper",
+):
+    if marker not in composition_probe:
+        raise SystemExit(f"Composition WPF compile marker missing: {marker}")
+
 spec = SPEC.read_text(encoding="utf-8")
 for marker in (
     "A lower evidence class must never be described as a higher one.",
     "Skia headless probe",
     "Windows WPF core-bridge compile probe",
+    "Windows Composition WPF compile probe",
     "shared CI runners are not stable performance reference hardware",
     "Rive is NOT treated as a .NET/WPF drop-in dependency.",
     "Lottie-Windows is NOT treated as a direct WPF control.",
