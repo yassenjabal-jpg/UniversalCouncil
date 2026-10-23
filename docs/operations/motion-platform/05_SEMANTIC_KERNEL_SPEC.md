@@ -22,6 +22,8 @@ The kernel must:
 - never auto-start queued work from a stale truth snapshot;
 - stop matching active motion when its backing truth is revoked;
 - reject stale truth revocation from cancelling motion backed by newer truth;
+- reject stale true snapshots from restarting motion after a newer false truth;
+- reject conflicting snapshots that claim the same observation time;
 - snapshot mutable contract inputs before retention;
 - expose deterministic results that can be unit/console tested.
 
@@ -71,7 +73,13 @@ When a newer false truth snapshot is reconciled for a target:
 - if another queued intent becomes eligible for consideration, it is released only as semantic intent;
 - released intent MUST be resubmitted with fresh truth before it can start.
 
+Truth observations are monotonic per target + requirement inside a coordinator lifetime.
+
 An older false truth observation MUST NOT cancel a lease backed by a newer truth observation.
+An older true observation MUST NOT restart motion after a newer false observation.
+Two materially conflicting observations with the same timestamp fail closed.
+
+Submitting a motion request with false backing truth is rejected and also reconciles that false truth against matching active motion.
 
 ## Contract snapshot law
 
@@ -117,6 +125,9 @@ MP1 candidate must pass:
 - Reduced Motion lease preservation;
 - truth revocation stops matching motion;
 - stale truth revocation cannot cancel newer motion;
+- stale true truth cannot restart after newer false truth;
+- equal-time conflicting truth fails closed;
+- false-truth submit revokes matching active motion;
 - contract snapshot immutability;
 - bounded queue;
 - cancel-target cleanup.
