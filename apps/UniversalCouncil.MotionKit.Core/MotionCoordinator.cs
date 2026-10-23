@@ -303,6 +303,22 @@ public sealed class MotionCoordinator
             return "Motion purpose set is empty.";
         }
 
+        if (request.Contract.Purposes.Any(
+                purpose => !Enum.IsDefined(typeof(MotionPurpose), purpose)))
+        {
+            return "Motion purpose set contains an unknown value.";
+        }
+
+        if (!Enum.IsDefined(typeof(MotionInterruptionMode), request.Contract.InterruptionMode))
+        {
+            return "Interruption mode is unknown.";
+        }
+
+        if (!Enum.IsDefined(typeof(MotionAccessibilityMode), request.AccessibilityMode))
+        {
+            return "Accessibility mode is unknown.";
+        }
+
         if (!ValidIdentifier(request.Contract.TruthRequirementId))
         {
             return "Truth requirement ID is invalid.";
