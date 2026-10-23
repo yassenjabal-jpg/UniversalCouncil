@@ -71,15 +71,18 @@ void CheckReplaceAndStaleCompletion()
             MotionAccessibilityMode.Full),
         now.AddMilliseconds(10));
 
-    Check(first.StartedLease is not null, "first request should start");
+    var firstLease = first.StartedLease
+        ?? throw new InvalidOperationException("first request should start");
+    var secondLease = second.StartedLease
+        ?? throw new InvalidOperationException("replacement request should start");
     Check(second.Disposition == MotionDisposition.ReplacedAndStarted, "second request should replace first");
-    Check(second.CancelledInstances.Contains(first.StartedLease.InstanceId), "replacement must identify cancelled instance");
+    Check(second.CancelledInstances.Contains(firstLease.InstanceId), "replacement must identify cancelled instance");
 
-    var stale = coordinator.Complete(first.StartedLease.InstanceId);
+    var stale = coordinator.Complete(firstLease.InstanceId);
     Check(stale.Disposition == MotionDisposition.StaleCompletionIgnored, "replaced completion must be stale");
     Check(coordinator.ActiveCount(target) == 1, "stale completion must not affect replacement");
 
-    var completed = coordinator.Complete(second.StartedLease!.InstanceId);
+    var completed = coordinator.Complete(secondLease.InstanceId);
     Check(completed.Disposition == MotionDisposition.Completed, "current instance should complete");
     Check(coordinator.ActiveCount(target) == 0, "completed instance should leave no active lease");
 }
@@ -145,20 +148,23 @@ void CheckQueueRequiresFreshTruth()
     Check(queued.Disposition == MotionDisposition.QueuedAwaitingFreshTruth, "return should queue behind active handoff");
     Check(coordinator.QueuedCount(target) == 1, "queued intent should be retained");
 
-    var release = coordinator.Complete(first.StartedLease!.InstanceId);
+    var handoffLease = first.StartedLease
+        ?? throw new InvalidOperationException("handoff request should start");
+    var release = coordinator.Complete(handoffLease.InstanceId);
 
     Check(release.Disposition == MotionDisposition.CompletedQueueReleased, "completion should release queued intent");
-    Check(release.ReleasedPending is not null, "released queue item should be explicit");
+    var releasedPending = release.ReleasedPending
+        ?? throw new InvalidOperationException("released queue item should be explicit");
     Check(coordinator.ActiveCount(target) == 0, "released queue item must not auto-start from stale truth");
     Check(coordinator.QueuedCount(target) == 0, "released queue item must leave the queue");
 
     var refreshed = coordinator.Submit(
         Request(
-            release.ReleasedPending.RequestId,
+            releasedPending.RequestId,
             target,
-            release.ReleasedPending.Contract,
+            releasedPending.Contract,
             Truth("RETURN_EVENT_EXISTS", true, "state-v2"),
-            release.ReleasedPending.AccessibilityMode),
+            releasedPending.AccessibilityMode),
         now.AddSeconds(1));
 
     Check(refreshed.Disposition == MotionDisposition.Started, "released intent should start after fresh truth resubmission");
@@ -192,9 +198,10 @@ void CheckReducedMotionPreserved()
             MotionAccessibilityMode.Reduced),
         now);
 
-    Check(result.StartedLease is not null, "reduced motion request should start a semantic lease");
+    var reducedLease = result.StartedLease
+        ?? throw new InvalidOperationException("reduced motion request should start a semantic lease");
     Check(
-        result.StartedLease.AccessibilityMode == MotionAccessibilityMode.Reduced,
+        reducedLease.AccessibilityMode == MotionAccessibilityMode.Reduced,
         "reduced mode must survive coordination");
 }
 
@@ -303,9 +310,10 @@ void CheckCancelTarget()
 
     var cancelled = coordinator.CancelTarget("fork:1", "state changed");
 
-    Check(result.StartedLease is not null, "cancel test must start first");
+    var cancelLease = result.StartedLease
+        ?? throw new InvalidOperationException("cancel test must start first");
     Check(cancelled.Disposition == MotionDisposition.TargetCancelled, "target cancellation must be explicit");
-    Check(cancelled.CancelledInstances.Contains(result.StartedLease.InstanceId), "cancel result must identify active instance");
+    Check(cancelled.CancelledInstances.Contains(cancelLease.InstanceId), "cancel result must identify active instance");
     Check(coordinator.ActiveCount("fork:1") == 0, "target cancellation must clear active motion");
 }
 
