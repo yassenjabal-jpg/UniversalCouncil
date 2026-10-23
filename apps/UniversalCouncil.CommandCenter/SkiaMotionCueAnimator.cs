@@ -197,10 +197,21 @@ internal static class SkiaMotionCueAnimator
 
         if (routeMode == RouteMode.Reveal)
         {
-            using var trim = SKPathEffect.CreateTrim(0, (float)progress);
-            using var composed = SKPathEffect.CreateCompose(dash, trim);
-            routePaint.PathEffect = composed;
-            canvas.DrawPath(path, routePaint);
+            if (progress >= 1)
+            {
+                routePaint.PathEffect = dash;
+                canvas.DrawPath(path, routePaint);
+            }
+            else if (progress > 0)
+            {
+                using var trim = SKPathEffect.CreateTrim(0, (float)progress);
+                if (trim is not null)
+                {
+                    using var composed = SKPathEffect.CreateCompose(dash, trim);
+                    routePaint.PathEffect = composed;
+                    canvas.DrawPath(path, routePaint);
+                }
+            }
         }
         else
         {
