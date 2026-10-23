@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0",
+  "registry_id": "motionkit-open-source-candidates",
+  "researched_on": "2026-10-23",
+  "status": "RESEARCH_REGISTRY",
+  "candidates": [
+    {
+      "id": "RIVE",
+      "repository": "rive-app/rive-runtime",
+      "license": "MIT",
+      "status": "LAB_ONLY",
+      "role_hypothesis": ["INTERACTIVE_VECTOR", "STATE_MACHINE", "SIGIL", "CHARACTER"],
+      "evidence": [
+        "low-level C++ runtime advances animations and state machines",
+        "abstract Renderer interface",
+        "GPU backends include D3D11, D3D12, Metal, Vulkan and OpenGL/WebGL",
+        "official Android runtime exists"
+      ],
+      "source": "https://github.com/rive-app/rive-runtime"
+    },
+    {
+      "id": "LOTTIE_ANDROID",
+      "repository": "airbnb/lottie-android",
+      "license": "Apache-2.0",
+      "status": "LAB_ONLY",
+      "role_hypothesis": ["PREAUTHORED_SEQUENCE", "AFTER_EFFECTS_HANDOFF", "ANDROID_COMPOSE"],
+      "evidence": [
+        "renders After Effects animations natively",
+        "Android and Compose ecosystem"
+      ],
+      "source": "https://github.com/airbnb/lottie-android"
+    },
+    {
+      "id": "SKIASHARP",
+      "repository": "mono/SkiaSharp",
+      "license": "MIT",
+      "status": "LAB_ONLY",
+      "role_hypothesis": ["CUSTOM_2D", "DYNAMIC_ROUTE", "DIAGRAM", "DATA_DRIVEN_DRAWING"],
+      "evidence": [
+        "cross-platform .NET 2D graphics API",
+        "supports Windows classic desktop/WPF and Android"
+      ],
+      "source": "https://github.com/mono/SkiaSharp"
+    },
+    {
+      "id": "AVALONIA_COMPOSITION",
+      "repository": "AvaloniaUI/Avalonia",
+      "license": "MIT",
+      "status": "REFERENCE_ONLY",
+      "role_hypothesis": ["RENDER_THREAD_ARCHITECTURE_REFERENCE"],
+      "evidence": [
+        "composition animations run on render thread",
+        "programmatic composition model"
+      ],
+      "source": "https://github.com/AvaloniaUI/Avalonia"
+    },
+    {
+      "id": "FLAUI",
+      "repository": "FlaUI/FlaUI",
+      "license": "MIT",
+      "status": "QA_CANDIDATE",
+      "role_hypothesis": ["WINDOWS_UI_AUTOMATION", "WPF_ACTUAL_WINDOW_TESTING"],
+      "evidence": [
+        "UI Automation library for .NET",
+        "UIA3 path is suitable for WPF testing"
+      ],
+      "source": "https://github.com/FlaUI/FlaUI"
+    },
+    {
+      "id": "BENCHMARKDOTNET",
+      "repository": "dotnet/BenchmarkDotNet",
+      "license": "MIT",
+      "status": "QA_CANDIDATE",
+      "role_hypothesis": ["PERFORMANCE_BENCHMARK", "PROCESS_ISOLATED_MEASUREMENT"],
+      "evidence": [
+        "stand-alone benchmark processes",
+        "warmup and measurement infrastructure"
+      ],
+      "source": "https://github.com/dotnet/BenchmarkDotNet"
+    },
+    {
+      "id": "XAML_BEHAVIORS_WPF",
+      "repository": "microsoft/XamlBehaviorsWpf",
+      "license": "MIT",
+      "status": "DEFERRED_REFERENCE",
+      "role_hypothesis": ["WPF_INTERACTION_REUSE"],
+      "evidence": [
+        "reusable WPF interactivity with minimal code"
+      ],
+      "source": "https://github.com/microsoft/XamlBehaviorsWpf"
+    }
+  ]
+}
