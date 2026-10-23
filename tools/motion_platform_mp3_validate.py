@@ -22,12 +22,7 @@ COMPOSITION_PROJECT = (
     / "UniversalCouncil.MotionKit.CompositionWpfCompileProbe"
     / "UniversalCouncil.MotionKit.CompositionWpfCompileProbe.csproj"
 )
-COMPOSITION_PROBE = (
-    ROOT
-    / "apps"
-    / "UniversalCouncil.MotionKit.CompositionWpfCompileProbe"
-    / "CompositionWpfProbe.cs"
-)
+COMPOSITION_PROBE = ROOT / "apps" / "UniversalCouncil.MotionKit.CompositionWpfCompileProbe" / "CompositionWpfProbe.cs"
 
 for path in (
     STATE,
@@ -135,9 +130,7 @@ for path in (ROOT / "apps").glob("UniversalCouncil.MotionKit.*/*.csproj"):
         raise SystemExit(f"SkiaSharp leaked outside MP3 lab boundary: {path.relative_to(ROOT)}")
     has_winappsdk = "Microsoft.WindowsAppSDK" in text
     if has_winappsdk and path.parent.name != "UniversalCouncil.MotionKit.CompositionWpfCompileProbe":
-        raise SystemExit(
-            f"Windows App SDK leaked outside MP3 Composition probe: {path.relative_to(ROOT)}"
-        )
+        raise SystemExit(f"Windows App SDK leaked outside MP3 Composition probe: {path.relative_to(ROOT)}")
 
 adapter = SKIA_ADAPTER.read_text(encoding="utf-8")
 for marker in (
