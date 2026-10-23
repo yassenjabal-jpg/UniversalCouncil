@@ -74,7 +74,8 @@
       ],
       "authorized_probes": [
         "WINDOWS_WPF_COMPOSITION_COMPILE",
-        "WINDOWS_RUNTIME_LATER"
+        "WINDOWS_COMPOSITION_RUNTIME_API",
+        "WINDOWS_WPF_VISUAL_HOST_LATER"
       ],
       "source_evidence": [
         {
