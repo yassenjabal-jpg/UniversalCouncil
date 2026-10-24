@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261024-091141-rsnew1",
+  "created_at": "2026-10-24T09:11:41.615Z",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "decision",
+  "subject": "revenuesystem.rebuild.clean_foundation",
+  "summary": "Owner chooses rebuilding المطابقة from scratch rather than building on legacy structure, errors or assumptions that may not fit the new architecture.",
+  "details": {
+    "owner_choice": "New program foundation for Windows and Android; supersedes assistant recommendation of incremental reuse of legacy architecture.",
+    "preserved_requirements": [
+      "Approved Editorial Financial Engraving identity and owner reference images",
+      "Interactive component/state/event foundation from inception",
+      "Business capabilities and financial rules, independently specified and verified",
+      "Three computers and three Android devices with no-subscription operating target",
+      "Open-source and specialist-evidence research before custom implementation"
+    ],
+    "implementation_interpretation": "Build isolated new foundation; legacy application is evidence for capability inventory and comparison, not mandatory architectural dependency. Existing data requires separately verified migration, not deletion.",
+    "status": "Owner direction recorded; framework selection, new implementation and migration not performed in this turn."
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "clean-rebuild",
+    "architecture",
+    "android",
+    "windows"
+  ],
+  "source": {
+    "type": "owner_chat",
+    "ref": "Owner prefers rebuilding from scratch to avoid legacy errors and unsuitable structure"
+  }
+}
