@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261024-090034-intf01",
+  "created_at": "2026-10-24T09:00:34.090Z",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "revenuesystem.ui.interactive_foundation",
+  "summary": "Owner requires Windows and Android screens to be designed on an interactive architectural foundation from inception, rather than retrofitting movement onto static screens.",
+  "details": {
+    "required": [
+      "State-driven components with explicit events, actions and data binding",
+      "Purposeful in-element motion designed together with workflow and visual identity",
+      "Working representative screen on real Windows and Android devices before expanding implementation",
+      "Preserve approved artistic and visual direction",
+      "Research suitable maintained open-source components and specialist evidence before custom implementation"
+    ],
+    "prohibited_approach": "Static screen or slideshow first, then decorative animation retrofit.",
+    "technical_interpretation": "Interactive foundation is a component/state/event architecture requirement, not proof that a particular framework is required or that WPF/MAUI cannot support it.",
+    "acceptance": "Demonstrate input, data changes, commands, loading, confirmed save, errors and conflicts in functional components; transitions and screenshots alone do not establish compliance.",
+    "implementation_status": "Requirement recorded; no implementation or framework approval claimed."
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "interactive-foundation",
+    "ui",
+    "android",
+    "windows",
+    "motion"
+  ],
+  "source": {
+    "type": "owner_chat",
+    "ref": "Owner explicitly requires interactive screen foundations instead of retrofitted static screens"
+  }
+}
