@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261024-084807-free06",
+  "created_at": "2026-10-24T08:48:07.291Z",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "revenuesystem.deployment.six_devices_no_subscription",
+  "summary": "Owner requests a free operating approach for المطابقة on three computers and three Android devices.",
+  "details": {
+    "device_counts": {
+      "windows": 3,
+      "android": 3
+    },
+    "cost_requirement": "Find a no-subscription deployment using existing equipment; power, internet, maintenance and any new hardware remain real costs.",
+    "proposed_not_approved": {
+      "hosting": "Existing always-on Windows PC hosting authoritative API and SQL Server Express; three Windows clients and three Android clients share the API.",
+      "connectivity": "LAN/Wi-Fi locally; NetBird Cloud Free candidate for remote access, currently up to 5 network users and 100 machines; six devices do not imply six users. More than five distinct network users needs another plan or self-hosting assessment.",
+      "limitations": "Android app and API still require implementation; availability depends on host and network; no live deployment performed.",
+      "sources": [
+        "https://netbird.io/pricing",
+        "https://docs.netbird.io/get-started/install/android",
+        "https://www.microsoft.com/licensing/guidance/SQL",
+        "https://dotnet.microsoft.com/en-us/platform/free"
+      ]
+    }
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "free-operation",
+    "android",
+    "windows",
+    "six-devices"
+  ],
+  "source": {
+    "type": "owner_chat",
+    "ref": "2026-10-24 request free operation on 3 computers and 3 Android devices"
+  }
+}
