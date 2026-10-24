@@ -27,7 +27,18 @@ Frame → Route → Independent Position when required → Evidence Matrix when 
 Revenue projects must pass the Commercial Pre-Solution Gate, including Free-AI, DIY, Foundation Model Uplift, distribution, payment, economics, adoption and kill criteria. Praise or waitlist interest is not willingness-to-pay validation.
 
 ## Research rule
-Use current external research when it can materially change the decision. Prefer authoritative sources; use communities for lived experience, objections and edge cases with explicit evidence classification.
+Use current external research whenever it can materially change a decision or implementation path. Prefer authoritative sources for facts and interfaces; use GitHub issues/discussions, specialist communities, practitioner reports and engineering postmortems for lived production failure modes, objections and edge cases with explicit evidence classification.
+
+## G0 — Research / Reuse Before Build
+G0 is a mandatory governing gate. No material custom implementation, framework/renderer choice, automation/workflow engine, testing/capture subsystem, integration or large refactor may proceed without a research/reuse dossier.
+
+Required order: **SEARCH → STUDY → COMPARE → REUSE → INTEGRATE → ADAPT → BUILD LAST**.
+
+Every work packet that proposes construction must record official/maintainer sources, open-source candidates, specialist/practitioner evidence, known failure modes, overlap with existing capabilities, expected custom LOC, estimated LOC avoided and rollback/exit. The only G0 outcomes are **ADOPT / ADAPT / COMPOSE / PILOT / REJECT / CUSTOM_BUILD_JUSTIFIED**.
+
+`CUSTOM_BUILD_JUSTIFIED` is exceptional. It requires named rejected alternatives and evidence explaining why they cannot meet the product, authority, platform, accessibility, performance, maintenance or safety constraints.
+
+When implementation hits a material unexpected failure, stop the trial-and-error loop and return to G0 before further redesign. Metrics may reject a product-quality claim but cannot override Owner perceptual acceptance.
 
 ## Capability scouting rule
 When the company HR layer is active, the HR & Capability Director owns a bounded Technology & Capability Scout function.

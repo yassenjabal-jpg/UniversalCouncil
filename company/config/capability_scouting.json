@@ -1,10 +1,22 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "enabled": true,
   "owner": "HR & Capability Director",
   "function_name": "Technology & Capability Scout",
   "permanent_new_role": false,
   "mode": "READ_ONLY_DISCOVERY_BY_DEFAULT",
+  "governing_gate": {
+    "id": "G0",
+    "name": "RESEARCH_REUSE_BEFORE_BUILD",
+    "mandatory": true,
+    "cannot_be_skipped": true,
+    "sequence": ["SEARCH", "STUDY", "COMPARE", "REUSE", "INTEGRATE", "ADAPT", "BUILD_LAST"],
+    "decisions": ["ADOPT", "ADAPT", "COMPOSE", "PILOT", "REJECT", "CUSTOM_BUILD_JUSTIFIED"],
+    "custom_build_is_default": false,
+    "custom_build_requires_rejected_alternatives": true,
+    "trial_and_error_returns_to_g0": true,
+    "metrics_may_reject_but_not_approve_owner_quality": true
+  },
   "cadence": {
     "event_driven": true,
     "periodic_active_days": 7,
@@ -51,7 +63,20 @@
     "kill_trigger",
     "version_or_commit_pin"
   ],
+  "g0_required_evidence_fields": [
+    "problem_statement",
+    "official_or_maintainer_sources",
+    "github_or_open_source_candidates",
+    "specialist_community_evidence",
+    "known_failure_modes",
+    "existing_capability_overlap",
+    "decision",
+    "expected_custom_loc",
+    "estimated_loc_avoided",
+    "rollback_or_exit_plan"
+  ],
   "approval_gates": [
+    "G0_RESEARCH_REUSE",
     "HR_DISCOVERY",
     "SECURITY_REVIEW",
     "ARCHITECTURE_AND_DUPLICATION_REVIEW",

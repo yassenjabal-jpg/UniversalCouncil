@@ -55,6 +55,28 @@ REQUIRED_CANDIDATE_FIELDS = (
     "version_or_commit_pin",
 )
 
+G0_DECISIONS = {
+    "ADOPT",
+    "ADAPT",
+    "COMPOSE",
+    "PILOT",
+    "REJECT",
+    "CUSTOM_BUILD_JUSTIFIED",
+}
+
+REQUIRED_G0_EVIDENCE_FIELDS = (
+    "problem_statement",
+    "official_or_maintainer_sources",
+    "github_or_open_source_candidates",
+    "specialist_community_evidence",
+    "known_failure_modes",
+    "existing_capability_overlap",
+    "decision",
+    "expected_custom_loc",
+    "estimated_loc_avoided",
+    "rollback_or_exit_plan",
+)
+
 
 def _parse_iso(value):
     if isinstance(value, datetime):
@@ -154,4 +176,53 @@ def validate_candidate(candidate):
         "missing_fields": missing,
         "blockers": blockers,
         "next_gate": "SECURITY_REVIEW" if ready else "HR_DISCOVERY",
+    }
+
+
+def validate_g0_evidence(evidence):
+    """Validate the mandatory Research / Reuse Before Build gate.
+
+    G0 is renderer-, framework-, and project-agnostic. It does not select a
+    technology; it proves that existing solutions and practitioner evidence
+    were reviewed before custom implementation is allowed.
+    """
+    missing = [field for field in REQUIRED_G0_EVIDENCE_FIELDS if field not in evidence]
+    blockers = []
+
+    decision = str(evidence.get("decision", "")).strip().upper()
+    if decision and decision not in G0_DECISIONS:
+        blockers.append("decision must be one of the governed G0 decisions")
+
+    for field in (
+        "official_or_maintainer_sources",
+        "github_or_open_source_candidates",
+        "specialist_community_evidence",
+        "known_failure_modes",
+    ):
+        if field in evidence and not evidence.get(field):
+            blockers.append(f"{field} must contain evidence, not an empty placeholder")
+
+    if decision == "CUSTOM_BUILD_JUSTIFIED":
+        if not str(evidence.get("custom_build_justification", "")).strip():
+            blockers.append("custom build requires explicit justification")
+        if not evidence.get("rejected_alternatives"):
+            blockers.append("custom build requires documented rejected alternatives")
+
+    for field in ("expected_custom_loc", "estimated_loc_avoided"):
+        if field in evidence:
+            try:
+                value = int(evidence[field])
+            except (TypeError, ValueError):
+                blockers.append(f"{field} must be a non-negative integer")
+            else:
+                if value < 0:
+                    blockers.append(f"{field} must be a non-negative integer")
+
+    passed = not missing and not blockers
+    return {
+        "g0_passed": passed,
+        "missing_fields": missing,
+        "blockers": blockers,
+        "decision": decision or None,
+        "next_gate": "ARCHITECTURE_AND_DUPLICATION_REVIEW" if passed else "G0_RESEARCH_REUSE",
     }
