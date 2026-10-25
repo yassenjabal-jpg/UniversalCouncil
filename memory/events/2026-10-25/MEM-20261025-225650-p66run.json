@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261025-225650-p66run",
+  "created_at": "2026-10-25T22:56:50+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L2_PROJECT",
+  "kind": "status",
+  "subject": "revenuesystem.web_phase66.status",
+  "summary": "Phase 6.6 source candidate is in progress on the dedicated visual-parity branch. Revenue, Matching and Import have been recomposed with reusable engraved/document primitives, but runtime validation and screenshots remain HOLD because repository GitHub Actions jobs are terminating before steps and both authorized desktop runners are offline.",
+  "details": {
+    "branch": "rebuild/rs3-web-visual-parity-phase66-20261025",
+    "reviewed_source_head": "49e654a022d652c0976e0d2383d10f9b84660f37",
+    "source_state": "candidate",
+    "merge_allowed": false,
+    "runtime_evidence_available": false,
+    "blockers": [
+      "GitHub Actions jobs terminate before executing steps",
+      "YASSIN offline",
+      "DESKTOP-RQUULE9 offline"
+    ],
+    "next_gate": "successful build + Chromium Desktop/Mobile screenshots + reference comparison + owner visual acceptance"
+  },
+  "supersedes": [],
+  "confidence": "evidence_backed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "phase6.6",
+    "status",
+    "runtime-hold",
+    "visual-parity"
+  ],
+  "source": {
+    "type": "repository_evidence",
+    "ref": "RevenueSystem5 phase6.6",
+    "commit": "49e654a022d652c0976e0d2383d10f9b84660f37"
+  }
+}
