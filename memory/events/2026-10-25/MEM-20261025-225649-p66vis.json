@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261025-225649-p66vis",
+  "created_at": "2026-10-25T22:56:49+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L4_OWNER_DIRECTIVE",
+  "kind": "requirement",
+  "subject": "revenuesystem.visual_parity.current",
+  "summary": "Phase 6.5 is retained as an interaction/motion milestone but its rendered UI is not accepted as visual parity. Phase 6.6 must rebase Revenue Entry, Matching and Import toward the eight owner-approved Editorial Financial Engraving references at the composition level, and owner screenshot acceptance is required before visual-parity closure.",
+  "details": {
+    "phase65_visual_parity_rejected": true,
+    "preserve_phase65_interaction_work": true,
+    "active_phase": "6.6 Visual Parity Rebase",
+    "reference_authority": "eight owner-approved reference images",
+    "reject_palette_only_similarity": true,
+    "required_composition_traits": [
+      "engraved document frames",
+      "ledger density",
+      "abstract guilloche/security-print linework",
+      "financial seals/medallions",
+      "editorial Arabic hierarchy",
+      "restrained forest/cobalt/brass palette"
+    ],
+    "prohibited_drift": [
+      "generic SaaS card shell",
+      "dark fintech",
+      "glassmorphism/neon/purple",
+      "architecture/building motifs",
+      "national emblems"
+    ],
+    "owner_screenshot_acceptance_required": true
+  },
+  "supersedes": [],
+  "confidence": "owner_confirmed",
+  "sensitivity": "normal",
+  "tags": [
+    "revenuesystem",
+    "web",
+    "visual-parity",
+    "phase6.6",
+    "editorial-financial-engraving"
+  ],
+  "source": {
+    "type": "owner_directive",
+    "ref": "ChatGPT 2026-10-25 visual review",
+    "commit": "49e654a022d652c0976e0d2383d10f9b84660f37"
+  }
+}
