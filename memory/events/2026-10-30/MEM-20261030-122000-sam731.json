@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261030-122000-sam731",
+  "created_at": "2026-10-30T12:20:00+03:00",
+  "scope": "project/revenuesystem",
+  "level": "L2_PROJECT",
+  "kind": "evidence",
+  "subject": "revenuesystem.login.sam31_candidate",
+  "summary": "SAM31-derived isolated R7 candidate implemented and real Brave MP4 delivered; technical checks pass, artistic acceptance remains on hold.",
+  "details": {
+    "path": "E:\\GPT\\Tools\\AI_Environment_20261028\\Motabaqa_Login_R7_SAM31_Fronds_20261030",
+    "base": "existing R7; R5/R6/R7/R8/R9 and production preserved",
+    "frond_groups": 20,
+    "segmentation_limit": "radial crown groups, not individually semantic main fronds; hidden surfaces not recovered",
+    "tests": "5/5 Brave, 0 errors, 0px horizontal overflow, reduced desktop/mobile, demo auth; TypeScript/build pass",
+    "video": {
+      "width": 1366,
+      "height": 768,
+      "duration_seconds": 28.28,
+      "frames": 707,
+      "sha256": "f08606e90cab12b8f60e717b623d4d1f17bf03e68e174e125f49c331e295d4ac",
+      "library_file_id": "libfile_20c1c266faa481918267429791d3900f"
+    },
+    "review": "one real independent source-only reviewer; no independent visual Council/Studio/Murtakaz review claimed",
+    "art": "HOLD_OWNER; clean plate and seam-free frond acceptance incomplete",
+    "production_approved": false
+  },
+  "supersedes": [],
+  "confidence": "evidence_backed",
+  "sensitivity": "normal",
+  "tags": [
+    "login",
+    "sam31",
+    "art-motion",
+    "candidate",
+    "hold-owner"
+  ],
+  "source": {
+    "type": "runtime_artifact",
+    "ref": "SAM31_DELIVERY.md"
+  }
+}
