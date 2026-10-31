@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "event_id": "MEM-20261031-004300-wdprep",
+  "created_at": "2026-10-31T00:43:00Z",
+  "scope": "project/revenuesystem",
+  "level": "L2_PROJECT",
+  "kind": "capability",
+  "subject": "windows.design.readiness.lab",
+  "summary": "Owner requested maximum practical Windows design preparation before rebuilding. Independent native WPF component lab built and runtime-tested; product rebuild not started by this task.",
+  "details": {
+    "owner_directive": "Develop Windows design capability before rebuilding; reduce time lost to repeated screen redesign.",
+    "lab_path": "E:\\GPT\\Tools\\AI_Environment_20261028\\Windows_Design_Lab_20261031",
+    "preflight": "20261031T003456Z-0c5ec3f343",
+    "build_job": "0673b78f09364234aebe5fd866b3ce76",
+    "runtime_job": "0648d9d479db4852b91476096124cb9f",
+    "runtime_checks": "7/7",
+    "reference_controls": "5/5, eight original SHA256 references pinned",
+    "capabilities": [
+      "Shared XAML theme and native editable controls",
+      "RTL shell with LTR English numeric editing",
+      "Focus/caret/tab traversal proof",
+      "Reduced-motion aware transform/opacity",
+      "Exact-size image comparison with negative controls",
+      "Original eight references visually reviewed and mapped to reusable components"
+    ],
+    "limitations": [
+      "Not eight-screen implementation or owner visual acceptance",
+      "DPI raster simulation only; no physical multi-monitor/IME proof",
+      "VS and Blend installed; designer and Hot Reload not tested",
+      "8fps capture is not 60fps performance proof"
+    ],
+    "preservation": "No product or parallel Windows_Clean source modified by this task. R71 lock belonged to another quality run; waited for release, did not delete lock."
+  },
+  "supersedes": [],
+  "confidence": "verified",
+  "sensitivity": "private_non_sensitive",
+  "tags": [
+    "windows",
+    "wpf",
+    "design",
+    "readiness",
+    "no-rebuild"
+  ],
+  "source": {
+    "type": "runtime_evidence",
+    "ref": "E:\\GPT\\Tools\\AI_Environment_20261028\\Windows_Design_Lab_20261031\\DELIVERY_REPORT_AR.md"
+  }
+}
